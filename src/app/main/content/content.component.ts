@@ -8,13 +8,12 @@ import { noctuaAnimations } from '@noctua/animations/index';
 import { NoctuaConfigService } from '@noctua/services/config.service';
 
 @Component({
-    selector   : 'noctua-content',
+    selector: 'noctua-content',
     templateUrl: './content.component.html',
-    styleUrls  : ['./content.component.scss'],
-    animations : noctuaAnimations
+    styleUrls: ['./content.component.scss'],
+    animations: noctuaAnimations
 })
-export class NoctuaContentComponent implements OnDestroy
-{
+export class NoctuaContentComponent implements OnDestroy {
     onConfigChanged: Subscription;
     noctuaSettings: any;
 
@@ -28,14 +27,12 @@ export class NoctuaContentComponent implements OnDestroy
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private noctuaConfig: NoctuaConfigService
-    )
-    {
+    ) {
         this.router.events.pipe(
             filter((event) => event instanceof NavigationEnd),
             map(() => this.activatedRoute)
         ).subscribe((event) => {
-            switch ( this.noctuaSettings.routerAnimation )
-            {
+            switch (this.noctuaSettings.routerAnimation) {
                 case 'fadeIn':
                     this.routeAnimationFade = !this.routeAnimationFade;
                     break;
@@ -63,8 +60,7 @@ export class NoctuaContentComponent implements OnDestroy
                 );
     }
 
-    ngOnDestroy()
-    {
+    ngOnDestroy() {
         this.onConfigChanged.unsubscribe();
     }
 }

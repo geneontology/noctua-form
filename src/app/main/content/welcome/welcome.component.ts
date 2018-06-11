@@ -13,5 +13,6 @@ import { locale as turkish } from './i18n/tr';
 export class NoctuaWelcomeComponent {
     constructor(private noctuaTranslationLoader: NoctuaTranslationLoaderService) {
         this.noctuaTranslationLoader.loadTranslations(english, turkish);
+
     }
 }
