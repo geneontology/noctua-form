@@ -11,12 +11,12 @@ import { NoctuaSharedModule } from '@noctua/shared.module';
 import { noctuaConfig } from './noctua-config';
 import { AppComponent } from './app.component';
 import { NoctuaMainModule } from './main/main.module';
-import { NoctuaWelcomeModule } from './main/content/welcome/welcome.module';
+import { PagesModule } from './main/content/pages/pages.module';
 
 const appRoutes: Routes = [
     {
         path: '**',
-        redirectTo: 'sample'
+        redirectTo: 'review'
     }
 ];
 
@@ -35,7 +35,7 @@ const appRoutes: Routes = [
         NoctuaModule.forRoot(noctuaConfig),
         NoctuaSharedModule,
         NoctuaMainModule,
-        NoctuaWelcomeModule
+        PagesModule
     ],
     bootstrap: [
         AppComponent
