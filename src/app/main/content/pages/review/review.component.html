@@ -1,13 +1,28 @@
-<div fxLayout="column" fxLayoutAlign="start center">
-  <form fxLayout="row" name="searchForm" [formGroup]="searchForm" class="noc-container noc-search-form">
-    <mat-form-field class="" fxFlex="25">
-      <input matInput formControlName="geneProduct" placeholder="Gene Product" />
-    </mat-form-field>
-    <mat-form-field class="" fxFlex="25">
-      <input matInput formControlName="goTerm" placeholder="Go Term" />
-    </mat-form-field>
-    <mat-form-field class="" fxFlex="25">
-      <input matInput formControlName="pmid" placeholder="PMID" />
-    </mat-form-field>
-  </form>
+<div class="noc-page-container">
+  <div fxLayout="column" fxLayoutAlign="start center">
+    <form fxLayout="column" fxLayoutAlign="start stretch" name="searchForm" [formGroup]="searchForm" class="noc-container mat-elevation-z2 noc-search-form">
+      <div>
+        <h2>
+          Annotation Review
+        </h2>
+      </div>
+      <mat-form-field appearance="standard" class="m-4" fxFlex="">
+        <mat-label>Enter Gene Product</mat-label>
+        <input matInput formControlName="geneProduct" placeholder="" />
+      </mat-form-field>
+      <mat-form-field appearance="standard" class="m-4" fxFlex="30">
+        <mat-label>Enter Go Term</mat-label>
+        <input matInput formControlName="goTerm" placeholder="" />
+      </mat-form-field>
+      <mat-form-field appearance="standard" class="m-4" fxFlex="15">
+        <mat-label>Enter PMID</mat-label>
+        <input matInput formControlName="pmid" placeholder="PMID" />
+      </mat-form-field>
+      <div>
+        <span fxFlex></span>
+        <button type="button" mat-raised-button color="">Cancel</button>
+        <button type="button" mat-raised-button color="primary">Search</button>
+      </div>
+    </form>
+  </div>
 </div>

@@ -1,6 +1,4 @@
-// Material theming
 @import "theming";
-// Breakpoint mixins
 @import "mixins/breakpoints";
 $noc-primary-color: #039be5;
 $noc-secondary-color: #995014;
@@ -23,6 +21,11 @@ $noc-secondary-color: #995014;
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.noc-page-container {
+  width: 100%;
+  padding: 20px;
 }
 
 .noc-container {

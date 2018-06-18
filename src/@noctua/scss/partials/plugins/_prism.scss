@@ -104,9 +104,9 @@ $code-color-attr-name: #B65611 !default;
 
         // whitespace management
         white-space: pre; // fallback
-        white-space: pre-wrap;
-        word-break: break-all;
-        word-wrap: break-word;
+        //white-space: pre-wrap;
+        //word-break: break-all;
+        //word-wrap: break-word;
 
         font-family: $code-font-family;
         font-size: $code-font-size;
