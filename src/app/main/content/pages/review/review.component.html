@@ -1,3 +1,13 @@
-<p>
-  review works!
-</p>
+<div fxLayout="column" fxLayoutAlign="start center">
+  <form fxLayout="row" name="searchForm" [formGroup]="searchForm" class="noc-container noc-search-form">
+    <mat-form-field class="" fxFlex="25">
+      <input matInput formControlName="geneProduct" placeholder="Gene Product" />
+    </mat-form-field>
+    <mat-form-field class="" fxFlex="25">
+      <input matInput formControlName="goTerm" placeholder="Go Term" />
+    </mat-form-field>
+    <mat-form-field class="" fxFlex="25">
+      <input matInput formControlName="pmid" placeholder="PMID" />
+    </mat-form-field>
+  </form>
+</div>

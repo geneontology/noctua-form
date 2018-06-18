@@ -13,7 +13,7 @@ const routes = [{
     RouterModule.forChild(routes),
     TranslateModule,
     NoctuaSharedModule
-  ],
+  ]
 })
 
 export class PagesModule {
