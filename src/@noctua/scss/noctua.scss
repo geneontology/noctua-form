@@ -35,3 +35,23 @@ $noc-secondary-color: #995014;
     width: 100% !important;
   }
 }
+
+.noc-breadcrumbs {
+  .noc-breadcrumb {
+    font-size: 20px;
+    color: #777;
+    button {
+      font-size: 20px;
+      color: #999;
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+    &.noc-active {
+      color: #000;
+    }
+  }
+  md-icon {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
