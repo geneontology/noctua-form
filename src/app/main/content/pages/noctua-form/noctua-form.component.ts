@@ -6,11 +6,11 @@ import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loa
 import { locale as english } from './i18n/en';
 
 @Component({
-  selector: 'app-review',
-  templateUrl: './review.component.html',
-  styleUrls: ['./review.component.scss']
+  selector: 'app-noctua-form',
+  templateUrl: './noctua-form.component.html',
+  styleUrls: ['./noctua-form.component.scss']
 })
-export class ReviewComponent {
+export class NoctuaFormComponent {
   searchCriteria: any = {};
   searchForm: FormGroup;
 
