@@ -5,5 +5,6 @@ export const noctuaConfig = {
         footer: 'mat-dark-900-bg'
     },
     customScrollbars: true,
-    routerAnimation: 'fadeIn' // fadeIn, slideUp, slideDown, slideRight, slideLeft, none
+    routerAnimation: 'fadeIn', // fadeIn, slideUp, slideDown, slideRight, slideLeft, none
+
 };

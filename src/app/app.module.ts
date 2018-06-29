@@ -12,17 +12,17 @@ import { noctuaConfig } from './noctua-config';
 import { AppComponent } from './app.component';
 import { NoctuaMainModule } from './main/main.module';
 import { PagesModule } from './main/content/pages/pages.module';
+import { UserComponent } from './components/user/user.component';
 
-const appRoutes: Routes = [
-    {
-        path: '**',
-        redirectTo: 'review'
-    }
-];
+const appRoutes: Routes = [{
+    path: '**',
+    redirectTo: 'review'
+}];
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        UserComponent
     ],
     imports: [
         BrowserModule,
