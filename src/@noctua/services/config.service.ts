@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 
 import * as _ from 'lodash';
 
-export const NOCTUA_CONFIG = new InjectionToken('noctuaFormConfig');
+export const NOCTUA_CONFIG = new InjectionToken('noctuaCustomConfig');
 
 @Injectable()
 export class NoctuaConfigService {
