@@ -14,6 +14,33 @@ $noc-secondary-color: #995014;
   max-height: $number;
 }
 
+input[type=text] {
+  &.noc-textbox-legacy {
+    padding-left: 10px;
+    height: 36px;
+    line-height: 36px;
+    outline: none;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    background: #fff;
+    border: 1px solid #bbb;
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+  }
+}
+
+.noc-button-border {
+  border: 1px solid #bbb;
+  height: 36px;
+  line-height: 36px;
+  @include deep-width(36px);
+  border-radius: 0;
+  background-color: #F2F2F2;
+}
+
 .noc-truncate {
   display: block;
   margin: 0;

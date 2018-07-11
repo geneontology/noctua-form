@@ -5,14 +5,15 @@
   flex: 0 0 auto;
   z-index: 4;
   .noc-logo-filler {
-    @include deep-width(80px);
+    @include deep-width(50px);
     img {
-      height: 40px;
+      height: 30px;
     }
   }
   .mat-toolbar {
-    @include deep-height(80px);
-    background: inherit;
+    padding-right: 10px;
+    background-color: #FFF;
+    @include deep-height(50px);
     color: inherit;
     position: relative;
     mat-toolbar-row {
@@ -36,11 +37,25 @@
       width: 100%;
     }
   }
-  .logo {
-    display: flex;
-    align-items: center;
-    .logo-icon {
-      width: 38px;
+  .noc-logo {
+    //@include deep-width(130px);
+    .noc-main-logo,
+    .noc-sub-logo {
+      cursor: pointer;
+      font-size: 20px;
+      text-decoration: none !important;
+      text-align: left;
+      color: #555;
+      &:hover {
+        color: #000000;
+      }
+    }
+    .noc-main-logo {
+      margin-right: 4px;
+      font-weight: bold;
+    }
+    .noc-sub-logo {
+      font-weight: normal;
     }
   }
 }

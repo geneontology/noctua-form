@@ -14,6 +14,9 @@
       ],
       "@noctua.sparql": [
         "@noctua.sparql/"
+      ],
+      "@noctua.search": [
+        "@noctua.search/"
       ]
     },
     "target": "es5",

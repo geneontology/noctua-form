@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { MatButtonModule, MatIconModule, MatMenuModule, MatProgressBarModule, MatToolbarModule } from '@angular/material';
 import { NoctuaSharedModule } from '@noctua/shared.module';
 import { NoctuaToolbarComponent } from 'app/main/toolbar/toolbar.component';
+import { NoctuaSearchBarModule } from '@noctua.search/components';
 
 @NgModule({
     declarations: [
@@ -16,6 +17,7 @@ import { NoctuaToolbarComponent } from 'app/main/toolbar/toolbar.component';
         MatProgressBarModule,
         MatToolbarModule,
         NoctuaSharedModule,
+        NoctuaSearchBarModule
     ],
     exports: [
         NoctuaToolbarComponent

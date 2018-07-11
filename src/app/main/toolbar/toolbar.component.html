@@ -1,49 +1,32 @@
-<mat-toolbar class="p-0 mat-elevation-z1" fxLayout="row" fxLayoutAlign="start">
+<mat-toolbar class="mat-elevation-z1" fxLayout="row" fxLayoutAlign="start center">
   <mat-progress-bar *ngIf="showLoadingBar" class="loading-bar" color="accent" mode="indeterminate"></mat-progress-bar>
-  <div fxLayoutAlign="center center" class="noc-logo-filler">
-    <button mat-icon-button target="_blank">
-      <img src="assets/images/logos/go-logo.png">
-    </button>
+  <div fxLayout="row" fxLayoutAlign="start center" fxFlex="250px">
+    <div fxLayoutAlign="center center" class="noc-logo-filler">
+      <button mat-icon-button target="_blank">
+        <img src="assets/images/logos/go-logo.png">
+      </button>
+    </div>
+    <div class="noc-logo" fxLayout="row" fxLayoutAlign="start">
+      <a class="noc-main-logo" target="_blank">
+        Noctua
+      </a>
+      <a class="noc-sub-logo" target="_blank">
+        Annotation Review
+      </a>
+    </div>
   </div>
-  <div fxFlex="100">
-    <mat-toolbar-row>
-      <div class="noc-breadcrumbs" fxLyout="row" fxLayoutAlign="start center">
-        <div class="noc-breadcrumb">
-          <button mat-button target="_blank">
-            Noctua
-          </button>
-        </div>
-        <mat-icon>chevron_right</mat-icon>
-        <div class="noc-breadcrumb noc-active">
-          <button mat-button>
-            Annotation Review
-          </button>
-        </div>
-      </div>
-      <div fxFlex fxFill fxLayout="row" fxLayoutAlign="start center">
-        <div fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
-          <button mat-icon-button class="toggle-button-navbar" *ngIf="!noNav" (click)="toggleSidebarOpened('navbar')" fxHide.gt-md>
-            <mat-icon>menu</mat-icon>
-          </button>
-          <div class="toolbar-separator" fxHide.gt-md></div>
-          <div fxLayout="row" fxLayoutAlign="start center" *ngIf="horizontalNav">
-            <div class="logo ml-16">
-              <img class="logo-icon" src="assets/images/logos/go-logo.png">
-            </div>
-          </div>
-        </div>
-      </div>
-    </mat-toolbar-row>
-    <mat-toolbar-row class="noc-subtoolbar">
-      <button mat-button class="" target="_blank">
-        VIEW
-      </button>
-      <button mat-button class="" target="_blank">
-        DETAILS
-      </button>
-      <button mat-button class="mat-green-600-bg" target="_blank">
-        TAKE A TOUR
-      </button>
-    </mat-toolbar-row>
+  <div class="toolbar-separator"></div>
+  <div fxLayout="row" fxLayoutAlign="center center" fxFlex="100">
+    <noctua-search-bar fxFlex="60" (input)="search($event)"></noctua-search-bar>
+  </div>
+  <div class="toolbar-separator"></div>
+  <div fxLayout="row" fxLayoutAlign="end center" fxFlex="250px">
+    <button mat-button class="" target="_blank">
+      <mat-icon class="s-20">map</mat-icon>
+      Take a Tour
+    </button>
+    <button mat-button class="" target="_blank">
+      Login
+    </button>
   </div>
 </mat-toolbar>

@@ -47,6 +47,10 @@ export class NoctuaToolbarComponent {
             });
     }
 
+    search(value): void {
+        console.log(value);
+    }
+
     setLanguage(lang) {
         this.selectedLanguage = lang;
         this.translate.use(lang.id);
