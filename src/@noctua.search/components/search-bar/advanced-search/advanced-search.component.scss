@@ -1,0 +1,7 @@
+@import "src/@noctua/scss/noctua";
+:host {
+  padding: 14px;
+  display: block;
+  background: white;
+  @include mat-elevation(4);
+}

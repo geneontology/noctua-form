@@ -1,29 +1,5 @@
 <div class="noc-page-container" noctuaPerfectScrollbar>
   <div fxLayout="column" fxLayoutAlign="start center" noctuaPerfectScrollbar>
-    <form fxLayout="column" fxLayoutAlign="start stretch" name="searchForm" [formGroup]="searchForm" class="noc-container mat-elevation-z2 noc-search-form">
-      <div>
-        <h2>
-          Search Annotations
-        </h2>
-      </div>
-      <mat-form-field appearance="standard" class="" fxFlex="">
-        <mat-label>Gene Product</mat-label>
-        <input matInput formControlName="geneProduct" placeholder="Enter a Gene Product" />
-      </mat-form-field>
-      <mat-form-field appearance="standard" class="" fxFlex="30">
-        <mat-label>Go Term</mat-label>
-        <input matInput formControlName="goTerm" placeholder="Enter a Go Term" />
-      </mat-form-field>
-      <mat-form-field appearance="standard" class="" fxFlex="15">
-        <mat-label>PMID</mat-label>
-        <input matInput formControlName="pmid" placeholder="Enter PMID" />
-      </mat-form-field>
-      <div>
-        <span fxFlex></span>
-        <button type="button" mat-raised-button color="" class="mr-8">Cancel</button>
-        <button type="button" mat-raised-button color="primary">Search</button>
-      </div>
-    </form>
     <div class="agb-species-panel w-100-p h-100-p" fxLayout="column" fxLayoutAlign="start stretch">
       <div class="agb-column-toolbar" fxLayout="row">
         <mat-form-field fxFlex="80" class="">
