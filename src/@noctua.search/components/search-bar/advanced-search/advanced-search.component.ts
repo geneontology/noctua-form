@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator, MatSort } from '@angular/material';
@@ -14,6 +14,9 @@ import { forEach } from '@angular/router/src/utils/collection';
 
 import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loader.service';
 import { locale as english } from './i18n/en';
+
+import { FILE_PREVIEW_DIALOG_DATA } from './advanced-search.tokens';
+import { AdvancedSearchOverlayRef } from './advanced-search-ref';
 
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 
@@ -31,11 +34,14 @@ export class NoctuaAdvancedSearchComponent implements OnInit, OnDestroy {
   private unsubscribeAll: Subject<any>;
 
   constructor(private route: ActivatedRoute,
+    public dialogRef: AdvancedSearchOverlayRef,
+    @Inject(FILE_PREVIEW_DIALOG_DATA) public data: any,
     private sparqlService: SparqlService,
     private noctuaTranslationLoader: NoctuaTranslationLoaderService) {
     this.noctuaTranslationLoader.loadTranslations(english);
     this.searchForm = this.createAnswerForm();
 
+    console.dir(data);
     this.unsubscribeAll = new Subject();
   }
 

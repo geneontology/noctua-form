@@ -1,15 +1,38 @@
-import { Injectable, Inject, ElementRef, ViewChild } from '@angular/core';
-import { Overlay, OverlayConfig, OriginConnectionPosition, OverlayConnectionPosition } from '@angular/cdk/overlay';
-import { ComponentPortal } from '@angular/cdk/portal';
+import { Injectable, Inject, Injector, ElementRef, ComponentRef, ViewChild } from '@angular/core';
+import {
+    Overlay,
+    OverlayRef,
+    OverlayConfig,
+    OriginConnectionPosition,
+    OverlayConnectionPosition,
+    PositionStrategy
+} from '@angular/cdk/overlay';
+import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
 import { AdvancedSearchOverlayRef } from './advanced-search/advanced-search-ref';
+import { FILE_PREVIEW_DIALOG_DATA } from './advanced-search/advanced-search.tokens';
 
 import { NoctuaAdvancedSearchComponent } from './advanced-search/advanced-search.component';
 
+export interface SearchCriiteria {
+    gp: string;
+    url: string;
+}
 
-const DEFAULT_CONFIG: OverlayConfig = {
+export interface AdvancedSearchDialogConfig {
+    panelClass?: string;
+    hasBackdrop?: boolean;
+    backdropClass?: string;
+    positionStrategy?: PositionStrategy;
+    width?: string;
+    data?: any;
+}
+
+const DEFAULT_CONFIG: AdvancedSearchDialogConfig = {
     hasBackdrop: true,
-    backdropClass: 'dark-backdrop',
-    //panelClass: 'tm-file-preview-dialog-panel'
+    // backdropClass: 'dark-backdrop',
+    panelClass: 'tm-file-preview-dialog-panel',
+    // width: '600px',
+    data: null
 };
 
 @Injectable({
@@ -18,21 +41,20 @@ const DEFAULT_CONFIG: OverlayConfig = {
 export class SearchBarService {
 
     constructor(
+        private injector: Injector,
         private overlay: Overlay) { }
 
-
-    open(elementToConnectTo: ElementRef, config: OverlayConfig = {}) {
+    open(elementToConnectTo: ElementRef, config: AdvancedSearchDialogConfig = {}) {
         const dialogConfig = { ...DEFAULT_CONFIG, ...config };
+
+        console.dir(elementToConnectTo.nativeElement.width)
         dialogConfig['positionStrategy'] = this._getPosition(elementToConnectTo);
+        dialogConfig['width'] = elementToConnectTo.nativeElement.clientWidth;
+        const originRect = elementToConnectTo.nativeElement;
         const overlayRef = this.createOverlay(dialogConfig);
-
         const dialogRef = new AdvancedSearchOverlayRef(overlayRef);
-        const filePreviewPortal = new ComponentPortal(NoctuaAdvancedSearchComponent);
+        const overlayComponent = this.attachDialogContainer(overlayRef, dialogConfig, dialogRef);
 
-
-        console.dir(overlayRef);
-
-        overlayRef.attach(filePreviewPortal);
         overlayRef.backdropClick().subscribe(_ => dialogRef.close());
 
         return dialogRef;
@@ -42,22 +64,39 @@ export class SearchBarService {
         // this.overlayRef.dispose();
     }
 
-    private createOverlay(config: OverlayConfig) {
+    private createInjector(config: AdvancedSearchDialogConfig, dialogRef: AdvancedSearchOverlayRef): PortalInjector {
+        const injectionTokens = new WeakMap();
+
+        injectionTokens.set(AdvancedSearchOverlayRef, dialogRef);
+        injectionTokens.set(FILE_PREVIEW_DIALOG_DATA, config.data);
+
+        return new PortalInjector(this.injector, injectionTokens);
+    }
+
+    private attachDialogContainer(overlayRef: OverlayRef, config: AdvancedSearchDialogConfig, dialogRef: AdvancedSearchOverlayRef) {
+        const injector = this.createInjector(config, dialogRef);
+
+        const containerPortal = new ComponentPortal(NoctuaAdvancedSearchComponent, null, injector);
+        const containerRef: ComponentRef<NoctuaAdvancedSearchComponent> = overlayRef.attach(containerPortal);
+
+        return containerRef.instance;
+    }
+
+    private createOverlay(config: AdvancedSearchDialogConfig) {
         const overlayConfig = this.getOverlayConfig(config);
 
         return this.overlay.create(overlayConfig);
     }
 
-    private getOverlayConfig(config: OverlayConfig): OverlayConfig {
+    private getOverlayConfig(config: AdvancedSearchDialogConfig): OverlayConfig {
         const overlayConfig = new OverlayConfig({
             hasBackdrop: config.hasBackdrop,
             backdropClass: config.backdropClass,
+            width: config.width,
             panelClass: config.panelClass,
             scrollStrategy: this.overlay.scrollStrategies.block(),
             positionStrategy: config.positionStrategy
         });
-
-
 
         return overlayConfig;
     }
@@ -83,8 +122,8 @@ export class SearchBarService {
 
         return this.overlay.position()
             .flexibleConnectedTo(elementToConnectTo)
-            .withFlexibleDimensions(false)
-            .withPush(false)
+            .withFlexibleDimensions(true)
+            .withPush(true)
             .withPositions([{
                 overlayX: 'start',
                 overlayY: 'top',

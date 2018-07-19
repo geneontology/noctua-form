@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  spaqrlApiUrl: 'http://rdf.geneontology.org/blazegraph/sparql',
+  // gorestApiUrl: 'https://api.geneontology.cloud/'
+  gorestApiUrl: 'http://localhost:3000/'
 };
 
 /*

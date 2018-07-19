@@ -1,19 +1,19 @@
-<div fxLayout="column" fxLayoutAlign="start center">
-  <form fxLayout="column" fxLayoutAlign="start stretch" name="searchForm" [formGroup]="searchForm" class="noc-container mat-elevation-z2 noc-search-form">
+<div fxLayout="column" fxLayoutAlign="start center" class="w-100-p">
+  <form fxLayout="column" fxLayoutAlign="start stretch" name="searchForm" [formGroup]="searchForm" class="w-100-p noc-search-form">
     <div>
       <h2>
-        Search Annotations
+        Advanced Search
       </h2>
     </div>
     <mat-form-field appearance="standard" class="" fxFlex="">
       <mat-label>Gene Product</mat-label>
       <input matInput formControlName="geneProduct" placeholder="Enter a Gene Product" />
     </mat-form-field>
-    <mat-form-field appearance="standard" class="" fxFlex="30">
+    <mat-form-field appearance="standard" class="" fxFlex="">
       <mat-label>Go Term</mat-label>
       <input matInput formControlName="goTerm" placeholder="Enter a Go Term" />
     </mat-form-field>
-    <mat-form-field appearance="standard" class="" fxFlex="15">
+    <mat-form-field appearance="standard" class="" fxFlex="">
       <mat-label>PMID</mat-label>
       <input matInput formControlName="pmid" placeholder="Enter PMID" />
     </mat-form-field>

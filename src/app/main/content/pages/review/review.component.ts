@@ -17,6 +17,7 @@ import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loa
 import { locale as english } from './i18n/en';
 
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
+import { GoRestService } from '@noctua.sparql/services/sparql/gorest.service';
 
 @Component({
   selector: 'app-review',
@@ -45,6 +46,7 @@ export class ReviewComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
     private sparqlService: SparqlService,
+    private goRestService: GoRestService,
     private noctuaTranslationLoader: NoctuaTranslationLoaderService) {
     this.noctuaTranslationLoader.loadTranslations(english);
     this.searchForm = this.createAnswerForm();
@@ -53,11 +55,10 @@ export class ReviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.sparqlService.getAllModelsGOs().subscribe((response: any) => {
+    this.goRestService.getModels().subscribe((response: any) => {
       this.cams = this.sparqlService.cams = response;
       this.sparqlService.onCamsChanged.next(this.cams);
       this.loadCams();
-      console.dir(response);
     });
 
     fromEvent(this.filter.nativeElement, 'keyup')

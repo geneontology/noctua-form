@@ -4,7 +4,7 @@ import { Overlay, OverlayConfig, OriginConnectionPosition, OverlayConnectionPosi
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { SearchBarService } from './search-bar.service';
+import { SearchBarService, AdvancedSearchDialogConfig } from './search-bar.service';
 
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 
@@ -17,7 +17,8 @@ export class NoctuaSearchBarComponent implements OnInit, OnDestroy {
     collapsed: boolean;
     noctuaConfig: any;
 
-    @ViewChild('advancedSearchTrigger') advancedSearchTrigger: ElementRef;
+    @ViewChild('advancedSearchTrigger', { read: ElementRef })
+    private advancedSearchTrigger: ElementRef;
 
     @Output()
     input: EventEmitter<any>;
@@ -33,7 +34,10 @@ export class NoctuaSearchBarComponent implements OnInit, OnDestroy {
     ngOnInit(): void { }
 
     openAdvancedSearch() {
-        this.searchBarService.open(this.advancedSearchTrigger);
+        const data = {
+            data: 'poo',
+        };
+        this.searchBarService.open(this.advancedSearchTrigger, data);
     }
 
     ngOnDestroy(): void {
@@ -52,5 +56,4 @@ export class NoctuaSearchBarComponent implements OnInit, OnDestroy {
     search(event): void {
         this.input.emit(event.target.value);
     }
-
 }
