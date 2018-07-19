@@ -1,7 +1,23 @@
 @import "src/@noctua/scss/noctua";
 :host {
-  width: 100%;
-  padding: 14px; // display: block;
-  background: white;
+  width: 100%; // display: block;
+  background-color: white;
   @include mat-elevation(4);
+  .noc-header {
+    @include deep-height(30px);
+    background-color: #EEE;
+    border-bottom: #CCC solid 1px;
+    mat-icon-button {
+      @include deep-height(30px);
+      @include deep-width(30px);
+      line-height: 30px;
+    }
+    .noc-title {
+      font-size: 10px;
+      padding: 0 14px;
+    }
+  }
+  .noc-body {
+    padding: 0 14px 14px 14px;
+  }
 }

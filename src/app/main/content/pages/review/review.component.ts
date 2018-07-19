@@ -27,7 +27,17 @@ import { GoRestService } from '@noctua.sparql/services/sparql/gorest.service';
 })
 export class ReviewComponent implements OnInit, OnDestroy {
   dataSource: CamsDataSource | null;
-  displayedColumns = ['goname'];
+  displayedColumns = ['model',
+    'annotatedEntity',
+    'relationship',
+    'aspect',
+    'term',
+    'relationshipExt',
+    'extension',
+    'evidence',
+    'reference',
+    'with',
+    'assignedBy'];
 
   searchCriteria: any = {};
   searchForm: FormGroup;
@@ -55,7 +65,7 @@ export class ReviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.goRestService.getModels().subscribe((response: any) => {
+    this.sparqlService.getCamsGoTerms().subscribe((response: any) => {
       this.cams = this.sparqlService.cams = response;
       this.sparqlService.onCamsChanged.next(this.cams);
       this.loadCams();

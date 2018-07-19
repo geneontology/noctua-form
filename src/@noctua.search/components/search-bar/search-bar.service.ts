@@ -29,7 +29,7 @@ export interface AdvancedSearchDialogConfig {
 
 const DEFAULT_CONFIG: AdvancedSearchDialogConfig = {
     hasBackdrop: true,
-    // backdropClass: 'dark-backdrop',
+    backdropClass: 'dark-backdrop',
     panelClass: 'tm-file-preview-dialog-panel',
     // width: '600px',
     data: null

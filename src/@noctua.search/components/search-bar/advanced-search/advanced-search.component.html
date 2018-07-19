@@ -1,10 +1,14 @@
 <div fxLayout="column" fxLayoutAlign="start center" class="w-100-p">
-  <form fxLayout="column" fxLayoutAlign="start stretch" name="searchForm" [formGroup]="searchForm" class="w-100-p noc-search-form">
-    <div>
-      <h2>
-        Advanced Search
-      </h2>
+  <div fxLayout="row" fxLayoutAlign="start center" class="noc-header w-100-p">
+    <div class="noc-title">
+      Advanced Search
     </div>
+    <span fxFlex></span>
+    <button type="button" mat-icon-button color="" class="">
+      <mat-icon class="s-16 secondary-text">close</mat-icon>
+    </button>
+  </div>
+  <form fxLayout="column" fxLayoutAlign="start stretch" name="searchForm" [formGroup]="searchForm" class="noc-body w-100-p noc-search-form">
     <mat-form-field appearance="standard" class="" fxFlex="">
       <mat-label>Gene Product</mat-label>
       <input matInput formControlName="geneProduct" placeholder="Enter a Gene Product" />
