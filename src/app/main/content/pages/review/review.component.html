@@ -16,15 +16,15 @@
       <div class="cams-table" fxLayout="column" fxLayoutAlign="start stretch">
         <mat-table fxFlex="1 1 auto" class="" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}" noctuaPerfectScrollbar>
           <ng-container cdkColumnDef="model">
-            <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="160px">Model Id</mat-header-cell>
+            <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="160px">Model</mat-header-cell>
             <mat-cell *cdkCellDef="let cam" fxFlex="160px">
-              <p class="text-truncate">{{cam.model.value}}</p>
+              <p class="text-truncate">{{cam.model?.title }}</p>
             </mat-cell>
           </ng-container>
           <ng-container cdkColumnDef="annotatedEntity">
             <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="160px">Annotated Entity</mat-header-cell>
             <mat-cell *cdkCellDef="let cam" fxFlex="150px">
-              <p class="text-truncate">{{cam.annotatedEntity?.value}}</p>
+              <p class="text-truncate">{{cam.annotatedEntity?.label}}</p>
             </mat-cell>
           </ng-container>
           <ng-container cdkColumnDef="relationship">
@@ -36,13 +36,13 @@
           <ng-container cdkColumnDef="aspect">
             <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="160px">Asp</mat-header-cell>
             <mat-cell *cdkCellDef="let cam" fxFlex="150px">
-              <p class="text-truncate">{{cam.aspect?.value}}</p>
+              <p class="text-truncate">{{cam.aspect}}</p>
             </mat-cell>
           </ng-container>
           <ng-container cdkColumnDef="term">
             <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="160px">Term</mat-header-cell>
             <mat-cell *cdkCellDef="let cam" fxFlex="150px">
-              <p class="text-truncate">{{cam.term?.value}}</p>
+              <p class="text-truncate">{{cam.term?.label</p>
             </mat-cell>
           </ng-container>
           <ng-container cdkColumnDef="relationshipExt">

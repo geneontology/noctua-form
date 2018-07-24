@@ -2,7 +2,21 @@ import { environment } from 'environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subscriber } from 'rxjs';
-import { map, catchError, retry } from 'rxjs/operators';
+import { map, filter, reduce, catchError, retry, tap } from 'rxjs/operators';
+
+export interface Cam {
+  model?: {};
+  annotatedEntity?: {};
+  relationship?: string;
+  aspect?: string;
+  term?: {};
+  relationshipExt?: string;
+  extension?: string;
+  evidence?: string;
+  reference?: string;
+  with?: string;
+  assignedBy?: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -17,33 +31,56 @@ export class SparqlService {
   }
 
   getCamsGoTerms(): Observable<any> {
-    return this.httpClient.get(this.baseUrl + this.buildCamsGoTermsQuery())
+    return this.httpClient
+      .get(this.baseUrl + this.buildCamsGoTermsQuery())
       .pipe(
         map(res => res['results']),
-        map(res => res['bindings'])
+        map(res => res['bindings']),
+        tap(val => console.dir(val)),
+        // filter((model) => (website.endsWith('net') || website.endsWith('org'))),
+        map(res => {
+          let result: Array<Cam> = [];
+          res.forEach((erg) => {
+            result.push({
+              model: Object.assign({}, { id: erg.model.value, title: erg.modelTitle.value }),
+              annotatedEntity: {},
+              relationship: '',
+              aspect: erg.aspect.value,
+              term: Object.assign({}, { id: erg.term.value, label: erg.termLabel.value }),
+              relationshipExt: '',
+              extension: '',
+              evidence: '',
+              reference: '',
+              with: '',
+              assignedBy: '',
+            });
+          });
+          return result;
+        }),
+
+        tap(val => console.dir(val))
       );
   }
 
   getCamsGps(): Observable<any> {
-    return this.httpClient.get(this.baseUrl + this.buildCamsGpsQuery())
-      .pipe(
-        map(res => res['results']),
-        map(res => res['bindings'])
-      );
+    return this.httpClient.get(this.baseUrl + this.buildCamsGpsQuery()).pipe(
+      map(res => res['results']),
+      map(res => res['bindings'])
+    );
   }
 
   buildCamsGoTermsQuery() {
     const query = `
         PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX dc: <http://purl.org/dc/elements/1.1/> 
         PREFIX metago: <http://model.geneontology.org/>
     	  PREFIX owl: <http://www.w3.org/2002/07/owl#>
-        PREFIX definition: <http://purl.obolibrary.org/obo/IAO_0000115>
         PREFIX BP: <http://purl.obolibrary.org/obo/GO_0008150>
         PREFIX MF: <http://purl.obolibrary.org/obo/GO_0003674>
         PREFIX CC: <http://purl.obolibrary.org/obo/GO_0005575>
 
-		    SELECT distinct ?model ?aspect ?term ?gonames ?definitions
+		    SELECT distinct ?model ?modelTitle ?aspect ?term ?termLabel 
         WHERE
         {
   		    GRAPH ?model {
@@ -54,18 +91,19 @@ export class SparqlService {
           VALUES ?aspect { BP: MF: CC:  } .
           # rdf:type faster then subClassOf+ but require filter
           # ?term rdfs:subClassOf+ ?aspect .
-    		  ?entity rdf:type ?aspect .
+          ?entity rdf:type ?aspect .
+          ?model dc:title ?modelTitle .
 
   			  # Filtering out the root BP, MF & CC terms
 			    filter(?term != MF: )
   			  filter(?term != BP: )
           filter(?term != CC: )
 
-          # then getting their definitions
-    		  ?term rdfs:label ?gonames .
-  		    ?term definition: ?definitions .
+    		  ?term rdfs:label ?termLabel  .
         }
-		    ORDER BY DESC(?model)`;
+     
+        ORDER BY DESC(?model)
+        LIMIT 20`;
 
     return '?query=' + encodeURIComponent(query);
   }
