@@ -1,59 +1,72 @@
 import { Inject, Injectable, InjectionToken } from '@angular/core';
-import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
 import { Platform } from '@angular/cdk/platform';
-import { BehaviorSubject } from 'rxjs';
-
+import { BehaviorSubject, Observable } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 export const NOCTUA_CONFIG = new InjectionToken('noctuaCustomConfig');
 
 @Injectable()
 export class NoctuaConfigService {
-    config: any;
-    defaultConfig: any;
-    isSetConfigRan = false;
-
-    onConfigChanged: BehaviorSubject<any>;
+    private _configSubject: BehaviorSubject<any>;
+    private readonly _defaultConfig: any;
 
     constructor(
-        private router: Router,
-        public platform: Platform,
-        @Inject(NOCTUA_CONFIG) config
+        private _platform: Platform,
+        private _router: Router,
+        @Inject(NOCTUA_CONFIG) private _config
     ) {
-        this.defaultConfig = config;
+        this._defaultConfig = _config;
+        this._init();
+    }
 
-        if (this.platform.ANDROID || this.platform.IOS) {
-            this.defaultConfig.customScrollbars = false;
+    set config(value) {
+        let config = this._configSubject.getValue();
+
+        config = _.merge({}, config, value);
+        this._configSubject.next(config);
+    }
+
+    get config(): any | Observable<any> {
+        return this._configSubject.asObservable();
+    }
+
+    get defaultConfig(): any {
+        return this._defaultConfig;
+    }
+
+    private _init(): void {
+        if (this._platform.ANDROID || this._platform.IOS) {
+            this._defaultConfig.customScrollbars = false;
         }
 
-        this.config = _.cloneDeep(this.defaultConfig);
-
-        router.events.subscribe(
-            (event) => {
-                if (event instanceof NavigationStart) {
-                    this.isSetConfigRan = false;
+        this._configSubject = new BehaviorSubject(_.cloneDeep(this._defaultConfig));
+        this._router.events
+            .pipe(filter(event => event instanceof NavigationStart))
+            .subscribe(() => {
+                if (!_.isEqual(this._configSubject.getValue(), this._defaultConfig)) {
+                    const config = _.cloneDeep(this._defaultConfig);
+                    this._configSubject.next(config);
                 }
-
-                if (event instanceof NavigationEnd) {
-                    if (this.isSetConfigRan) {
-                        return;
-                    }
-
-                    this.setConfig({
-                        layout: this.defaultConfig.layout
-                    }
-                    );
-                }
-            }
-        );
-
-        this.onConfigChanged = new BehaviorSubject(this.config);
+            });
     }
 
-    setConfig(config): void {
-        this.isSetConfigRan = true;
-        this.config = _.merge({}, this.config, config);
-        this.onConfigChanged.next(this.config);
+    setConfig(value, opts = { emitEvent: true }): void {
+        let config = this._configSubject.getValue();
+
+        config = _.merge({}, config, value);
+
+        if (opts.emitEvent === true) {
+            this._configSubject.next(config);
+        }
+    }
+
+    getConfig(): Observable<any> {
+        return this._configSubject.asObservable();
+    }
+
+    resetToDefaults(): void {
+        this._configSubject.next(_.cloneDeep(this._defaultConfig));
     }
 }
-

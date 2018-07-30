@@ -4,23 +4,22 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NoctuaSharedModule } from '@noctua/shared.module';
 
 const routes = [{
-  path: '',
-  loadChildren: './home/home.module#HomeModule'
-}, {
   path: 'review',
   loadChildren: './review/review.module#ReviewModule'
 }, {
-  path: 'noctua-form',
+  path: 'form',
   loadChildren: './noctua-form/noctua-form.module#NoctuaFormModule'
 }];
 
 @NgModule({
+  declarations: [],
   imports: [
     RouterModule.forChild(routes),
     TranslateModule,
-    NoctuaSharedModule
+    NoctuaSharedModule,
   ]
+
 })
 
-export class PagesModule {
+export class AppsModule {
 }

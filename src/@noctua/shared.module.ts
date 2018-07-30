@@ -5,8 +5,8 @@ import { CommonModule } from '@angular/common';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { NoctuaDirectivesModule } from '@noctua/directives/directives';
-import { NoctuaPipesModule } from '@noctua/pipes/pipes.module';
+import { NoctuaDirectivesModule } from './directives/directives';
+import { NoctuaPipesModule } from './pipes/pipes.module';
 
 @NgModule({
     imports: [

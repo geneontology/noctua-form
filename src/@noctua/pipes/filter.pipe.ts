@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { NoctuaUtils } from '@noctua/utils/noctua-utils';
+import { NoctuaUtils } from '../utils/noctua-utils';
 
 @Pipe({ name: 'filter' })
 export class FilterPipe implements PipeTransform {

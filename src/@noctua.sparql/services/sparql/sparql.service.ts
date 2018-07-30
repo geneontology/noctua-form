@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subscriber } from 'rxjs';
 import { map, filter, reduce, catchError, retry, tap } from 'rxjs/operators';
 
+import { NoctuaUtils } from '@noctua/utils/noctua-utils';
+
 export interface Cam {
   model?: {};
   annotatedEntity?: {};
@@ -42,11 +44,17 @@ export class SparqlService {
           let result: Array<Cam> = [];
           res.forEach((erg) => {
             result.push({
-              model: Object.assign({}, { id: erg.model.value, title: erg.modelTitle.value }),
+              model: Object.assign({}, {
+                id: erg.model.value,
+                title: erg.modelTitle.value
+              }),
               annotatedEntity: {},
               relationship: '',
               aspect: erg.aspect.value,
-              term: Object.assign({}, { id: erg.term.value, label: erg.termLabel.value }),
+              term: Object.assign({}, {
+                id: erg.term.value,
+                label: erg.termLabel.value
+              }),
               relationshipExt: '',
               extension: '',
               evidence: '',

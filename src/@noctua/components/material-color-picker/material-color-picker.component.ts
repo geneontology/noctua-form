@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
 
-import { noctuaAnimations } from '@noctua/animations';
-import { MatColors } from '@noctua/mat-colors';
+import { noctuaAnimations } from '../../animations';
+import { MatColors } from '../../mat-colors';
 
 @Component({
     selector: 'noctua-material-color-picker',

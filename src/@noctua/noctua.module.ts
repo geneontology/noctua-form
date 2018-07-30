@@ -1,9 +1,9 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 
-import { NOCTUA_CONFIG, NoctuaConfigService } from '@noctua/services/config.service';
-import { NoctuaMatchMediaService } from '@noctua/services/match-media.service';
-import { NoctuaSplashScreenService } from '@noctua/services/splash-screen.service';
-import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loader.service';
+import { NOCTUA_CONFIG, NoctuaConfigService } from './services/config.service';
+import { NoctuaMatchMediaService } from './services/match-media.service';
+import { NoctuaSplashScreenService } from './services/splash-screen.service';
+import { NoctuaTranslationLoaderService } from './services/translation-loader.service';
 
 @NgModule({
     entryComponents: [],

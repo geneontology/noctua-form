@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { MatButtonModule, MatDialogModule } from '@angular/material';
-import { NoctuaConfirmDialogComponent } from '@noctua/components/confirm-dialog/confirm-dialog.component';
+import { NoctuaConfirmDialogComponent } from './confirm-dialog.component';
 
 @NgModule({
     declarations: [

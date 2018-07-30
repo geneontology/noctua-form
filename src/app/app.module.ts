@@ -5,18 +5,22 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import 'hammerjs';
-
+import { MatSidenavModule } from '@angular/material';
 import { NoctuaModule } from '@noctua/noctua.module';
+import { NoctuaProgressBarModule } from '@noctua/components';
+
 import { NoctuaSharedModule } from '@noctua/shared.module';
 import { noctuaConfig } from './noctua-config';
 import { AppComponent } from './app.component';
-import { NoctuaMainModule } from './main/main.module';
-import { PagesModule } from './main/content/pages/pages.module';
+import { LayoutModule } from 'app/layout/layout.module';
+
+import { PagesModule } from './main/pages/pages.module';
+import { AppsModule } from './main/apps/apps.module';
 
 const appRoutes: Routes = [
     {
         path: '**',
-        redirectTo: 'review'
+        redirectTo: ''
     }
 ];
 
@@ -34,8 +38,14 @@ const appRoutes: Routes = [
         // Noctua Main and Shared modules
         NoctuaModule.forRoot(noctuaConfig),
         NoctuaSharedModule,
-        NoctuaMainModule,
-        PagesModule
+        LayoutModule,
+        RouterModule,
+        MatSidenavModule,
+        NoctuaProgressBarModule,
+
+        //Noctua App
+        PagesModule,
+        AppsModule
     ],
     bootstrap: [
         AppComponent

@@ -1,60 +1,144 @@
-import { AfterViewInit, Directive, ElementRef, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, HostListener, Input, OnDestroy } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { Platform } from '@angular/cdk/platform';
-import { Subscription } from 'rxjs';
-
+import { Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
 import PerfectScrollbar from 'perfect-scrollbar';
+import * as _ from 'lodash';
 
 import { NoctuaConfigService } from '@noctua/services/config.service';
 
 @Directive({
     selector: '[noctuaPerfectScrollbar]'
 })
-export class NoctuaPerfectScrollbarDirective implements OnInit, AfterViewInit, OnDestroy {
-    onConfigChanged: Subscription;
-    isDisableCustomScrollbars = false;
-    isMobile = false;
-    isInitialized = true;
+export class NoctuaPerfectScrollbarDirective implements AfterViewInit, OnDestroy {
+    isInitialized: boolean;
+    isMobile: boolean;
     ps: PerfectScrollbar;
 
+    private _enabled: boolean | '';
+    private _debouncedUpdate: any;
+    private _options: any;
+    private _unsubscribeAll: Subject<any>;
+
     constructor(
-        public element: ElementRef,
-        private noctuaConfig: NoctuaConfigService,
-        private platform: Platform
+        public elementRef: ElementRef,
+        private _noctuaConfigService: NoctuaConfigService,
+        private _platform: Platform,
+        private _router: Router
     ) {
+        this.isInitialized = false;
+        this.isMobile = false;
+
+        this._enabled = false;
+        this._debouncedUpdate = _.debounce(this.update, 150);
+        this._options = {
+            updateOnRouteChange: false
+        };
+        this._unsubscribeAll = new Subject();
     }
 
-    ngOnInit() {
-        this.onConfigChanged =
-            this.noctuaConfig.onConfigChanged.subscribe(
-                (settings) => {
-                    this.isDisableCustomScrollbars = !settings.customScrollbars;
-                }
-            );
+    @Input()
+    set noctuaPerfectScrollbarOptions(value) {
+        this._options = _.merge({}, this._options, value);
+    }
 
-        if (this.platform.ANDROID || this.platform.IOS) {
-            this.isMobile = true;
+    get noctuaPerfectScrollbarOptions(): any {
+        return this._options;
+    }
+
+    @Input('noctuaPerfectScrollbar')
+    set enabled(value: boolean | '') {
+        if (value === '') {
+            value = true;
         }
-    }
 
-    ngAfterViewInit() {
-        if (this.isMobile || this.isDisableCustomScrollbars) {
-            this.isInitialized = false;
+        if (this.enabled === value) {
             return;
         }
 
-        this.ps = new PerfectScrollbar(this.element.nativeElement, {
-            wheelPropagation: true
+        this._enabled = value;
+
+        if (this.enabled) {
+            this._init();
+        } else {
+            this._destroy();
+        }
+    }
+
+    get enabled(): boolean | '' {
+        return this._enabled;
+    }
+
+    ngAfterViewInit(): void {
+        this._noctuaConfigService.config
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe(
+                (settings) => {
+                    this.enabled = settings.customScrollbars;
+                }
+            );
+
+        if (this.noctuaPerfectScrollbarOptions.updateOnRouteChange) {
+            this._router.events
+                .pipe(
+                    takeUntil(this._unsubscribeAll),
+                    filter(event => event instanceof NavigationEnd)
+                )
+                .subscribe(() => {
+                    setTimeout(() => {
+                        this.scrollToTop();
+                        this.update();
+                    }, 0);
+                });
+        }
+    }
+
+    ngOnDestroy(): void {
+        this._destroy();
+        this._unsubscribeAll.next();
+        this._unsubscribeAll.complete();
+    }
+
+    _init(): void {
+        if (this.isInitialized) {
+            return;
+        }
+
+        if (this._platform.ANDROID || this._platform.IOS) {
+            this.isMobile = true;
+        }
+
+        if (this.isMobile) {
+            return;
+        }
+
+        this.isInitialized = true;
+
+        this.ps = new PerfectScrollbar(this.elementRef.nativeElement, {
+            ...this.noctuaPerfectScrollbarOptions
         });
     }
 
-    ngOnDestroy() {
+    _destroy(): void {
         if (!this.isInitialized || !this.ps) {
             return;
         }
 
-        this.onConfigChanged.unsubscribe();
-
         this.ps.destroy();
+
+        this.ps = null;
+        this.isInitialized = false;
+    }
+
+    /**
+     * Update scrollbars on window resize
+     *
+     * @private
+     */
+    @HostListener('window:resize')
+    _updateOnResize(): void {
+        this._debouncedUpdate();
     }
 
     @HostListener('document:click', ['$event'])
@@ -63,66 +147,62 @@ export class NoctuaPerfectScrollbarDirective implements OnInit, AfterViewInit, O
             return;
         }
 
-        // Update the scrollbar on document click..
-        // This isn't the most elegant solution but there is no other way
-        // of knowing when the contents of the scrollable container changes.
-        // Therefore, we update scrollbars on every document click.
         this.ps.update();
     }
 
-    update() {
+    update(): void {
         if (!this.isInitialized) {
             return;
         }
 
-        // Update the perfect-scrollbar
         this.ps.update();
     }
 
-    destroy() {
+    destroy(): void {
         this.ngOnDestroy();
     }
 
-    scrollToX(x: number, speed?: number) {
+    scrollToX(x: number, speed?: number): void {
         this.animateScrolling('scrollLeft', x, speed);
     }
 
-    scrollToY(y: number, speed?: number) {
+    scrollToY(y: number, speed?: number): void {
         this.animateScrolling('scrollTop', y, speed);
     }
 
-    scrollToTop(offset?: number, speed?: number) {
+    scrollToTop(offset?: number, speed?: number): void {
         this.animateScrolling('scrollTop', (offset || 0), speed);
     }
 
-    scrollToLeft(offset?: number, speed?: number) {
+    scrollToLeft(offset?: number, speed?: number): void {
         this.animateScrolling('scrollLeft', (offset || 0), speed);
     }
 
-    scrollToRight(offset?: number, speed?: number) {
-        const width = this.element.nativeElement.scrollWidth;
+    scrollToRight(offset?: number, speed?: number): void {
+        const width = this.elementRef.nativeElement.scrollWidth;
 
         this.animateScrolling('scrollLeft', width - (offset || 0), speed);
     }
 
-    scrollToBottom(offset?: number, speed?: number) {
-        const height = this.element.nativeElement.scrollHeight;
+    scrollToBottom(offset?: number, speed?: number): void {
+        const height = this.elementRef.nativeElement.scrollHeight;
 
         this.animateScrolling('scrollTop', height - (offset || 0), speed);
     }
 
-    animateScrolling(target: string, value: number, speed?: number) {
+    animateScrolling(target: string, value: number, speed?: number): void {
         if (!speed) {
-            this.element.nativeElement[target] = value;
+            this.elementRef.nativeElement[target] = value;
 
+            // PS has weird event sending order, this is a workaround for that
             this.update();
             this.update();
-        } else if (value !== this.element.nativeElement[target]) {
+        } else if (value !== this.elementRef.nativeElement[target]) {
             let newValue = 0;
             let scrollCount = 0;
 
             let oldTimestamp = performance.now();
-            let oldValue = this.element.nativeElement[target];
+            let oldValue = this.elementRef.nativeElement[target];
 
             const cosParameter = (oldValue - value) / 2;
 
@@ -131,18 +211,15 @@ export class NoctuaPerfectScrollbarDirective implements OnInit, AfterViewInit, O
 
                 newValue = Math.round(value + cosParameter + cosParameter * Math.cos(scrollCount));
 
-                // Only continue animation if scroll position has not changed
-                if (this.element.nativeElement[target] === oldValue) {
+                if (this.elementRef.nativeElement[target] === oldValue) {
                     if (scrollCount >= Math.PI) {
-                        this.element.nativeElement[target] = value;
+                        this.elementRef.nativeElement[target] = value;
 
                         this.update();
                         this.update();
                     } else {
-                        this.element.nativeElement[target] = oldValue = newValue;
-
+                        this.elementRef.nativeElement[target] = oldValue = newValue;
                         oldTimestamp = newTimestamp;
-
                         window.requestAnimationFrame(step);
                     }
                 }
