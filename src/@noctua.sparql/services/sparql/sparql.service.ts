@@ -34,7 +34,7 @@ export class SparqlService {
 
   getCamsGoTerms(): Observable<any> {
     return this.httpClient
-      .get(this.baseUrl + this.buildCamsGoTermsQuery())
+      .get(this.baseUrl + this.buildCamsGoTermQuery('GO:0099160'))
       .pipe(
         map(res => res['results']),
         map(res => res['bindings']),
@@ -75,6 +75,39 @@ export class SparqlService {
       map(res => res['results']),
       map(res => res['bindings'])
     );
+  }
+
+
+  buildCamsGoTermQuery(go) {
+    go = go.replace(":", "_");
+    var query = `
+    	PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX dc: <http://purl.org/dc/elements/1.1/> 
+      PREFIX metago: <http://model.geneontology.org/>
+      PREFIX owl: <http://www.w3.org/2002/07/owl#>
+      PREFIX BP: <http://purl.obolibrary.org/obo/GO_0008150>
+      PREFIX MF: <http://purl.obolibrary.org/obo/GO_0003674>
+      PREFIX CC: <http://purl.obolibrary.org/obo/GO_0005575>
+
+      SELECT distinct ?model ?modelTitle ?aspect ?term ?termLabel 
+      WHERE 
+      {
+        GRAPH ?model {
+            ?model metago:graphType metago:noctuaCam .    
+            ?entity rdf:type owl:NamedIndividual .
+            ?entity rdf:type ?term .
+            FILTER(?term = <http://purl.obolibrary.org/obo/` + go + `>)
+          }
+          VALUES ?aspect { BP: MF: CC: } .
+          ?entity rdf:type ?aspect .
+          ?model dc:title ?modelTitle .
+
+          ?term rdfs:label ?termLabel  .
+
+      } `;
+
+    return '?query=' + encodeURIComponent(query);
   }
 
   buildCamsGoTermsQuery() {

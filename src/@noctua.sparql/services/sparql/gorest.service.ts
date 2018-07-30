@@ -32,7 +32,6 @@ export class GOCamGO {
   definitions: [string]
 }
 
-
 @Injectable({
   providedIn: 'root'
 })
