@@ -12,6 +12,9 @@
       "@noctua": [
         "@noctua/"
       ],
+      "@noctua.curie": [
+        "@noctua.curie/"
+      ],
       "@noctua.sparql": [
         "@noctua.sparql/"
       ],

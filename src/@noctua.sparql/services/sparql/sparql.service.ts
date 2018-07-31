@@ -6,6 +6,8 @@ import { map, filter, reduce, catchError, retry, tap } from 'rxjs/operators';
 
 import { NoctuaUtils } from '@noctua/utils/noctua-utils';
 
+import {CurieService} from '@noctua.curie/services/curie.service';
+
 export interface Cam {
   model?: {};
   annotatedEntity?: {};
@@ -25,11 +27,19 @@ export interface Cam {
 })
 export class SparqlService {
   baseUrl = environment.spaqrlApiUrl;
+  curieUtil:any;
   cams: any[] = [];
   onCamsChanged: BehaviorSubject<any>;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private curieService: CurieService) {
     this.onCamsChanged = new BehaviorSubject({});
+
+    this.curieUtil =  this.curieService.getCurieUtil();
+
+    let a = this.curieUtil.getCurie("http://identifiers.org/zfin/ZDB-GENE-031112-7");
+    let b = this.curieUtil.getCurie("http://identifiers.org/mgi/MGI:34340");
+
+    console.log(a, b)
   }
 
   getCamsGoTerms(): Observable<any> {
@@ -50,7 +60,7 @@ export class SparqlService {
               }),
               annotatedEntity: {},
               relationship: '',
-              aspect: erg.aspect.value,
+              aspect: this.curieUtil.getCurie(erg.aspect.value),
               term: Object.assign({}, {
                 id: erg.term.value,
                 label: erg.termLabel.value
