@@ -14,13 +14,32 @@ $noc-secondary-color: #995014;
   max-height: $number;
 }
 
-.noc-paginator {
-  overflow: hidden;
-  @include deep-height(40px);
-  background-color: #EEE;
-  .mat-paginator-container {
-    @include deep-height(40px !important);
+input[type=text] {
+  &.noc-textbox-legacy {
+    padding-left: 10px;
+    height: 36px;
+    line-height: 36px;
+    outline: none;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    background: #fff;
+    border: 1px solid #bbb;
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+    transition: all 0.30s ease-in-out;
   }
+}
+
+.noc-button-border {
+  border: 1px solid #bbb;
+  height: 36px;
+  line-height: 36px;
+  @include deep-width(36px);
+  border-radius: 0;
+  background-color: #F2F2F2;
 }
 
 .noc-truncate {
@@ -50,25 +69,17 @@ $noc-secondary-color: #995014;
     font-size: 20px;
     color: #777;
     button {
-      margin-right: 0px;
-      margin-left: 0px;
       font-size: 20px;
       color: #999;
-      padding-left: 4px;
-      padding-right: 4px;
+      padding-left: 8px;
+      padding-right: 8px;
     }
     &.noc-active {
       color: #000;
     }
   }
-  .noc-breadcrumb-separator {
-    // margin-top: 10px; //margin-left: 10px;
-    // margin-right: 10px;
-    @include deep-width(24px);
-    padding-left: 0px !important;
-    padding-right: 0px !important;
-    mat-icon {
-      // @include deep-width(14px);
-    }
+  md-icon {
+    margin-left: 10px;
+    margin-right: 10px;
   }
 }

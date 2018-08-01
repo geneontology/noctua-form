@@ -35,11 +35,6 @@ export class SparqlService {
     this.onCamsChanged = new BehaviorSubject({});
 
     this.curieUtil =  this.curieService.getCurieUtil();
-
-    let a = this.curieUtil.getCurie("http://identifiers.org/zfin/ZDB-GENE-031112-7");
-    let b = this.curieUtil.getCurie("http://identifiers.org/mgi/MGI:34340");
-
-    console.log(a, b)
   }
 
   getCamsGoTerms(): Observable<any> {
@@ -62,7 +57,7 @@ export class SparqlService {
               relationship: '',
               aspect: this.curieUtil.getCurie(erg.aspect.value),
               term: Object.assign({}, {
-                id: erg.term.value,
+                id: this.curieUtil.getCurie(erg.term.value),
                 label: erg.termLabel.value
               }),
               relationshipExt: '',
@@ -86,7 +81,6 @@ export class SparqlService {
       map(res => res['bindings'])
     );
   }
-
 
   buildCamsGoTermQuery(go) {
     go = go.replace(":", "_");

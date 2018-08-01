@@ -21,8 +21,6 @@ export class CurieService {
   constructor(private httpClient: HttpClient) {
     const map = parseContext(goContext);
     this._curie = new CurieUtil(map);
-
-    console.log('init curie');
   }
 
   getCurieUtil() {
