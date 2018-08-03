@@ -4,8 +4,8 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NoctuaSharedModule } from '@noctua/shared.module';
-import { NoctuaSearchBarComponent } from './search-bar.component';
-import { NoctuaAdvancedSearchComponent } from './advanced-search/advanced-search.component';
+import { NoctuaSearchBarComponent } from './components/search-bar/search-bar.component';
+import { NoctuaAdvancedSearchComponent } from './components/search-bar/advanced-search/advanced-search.component';
 
 @NgModule({
     declarations: [

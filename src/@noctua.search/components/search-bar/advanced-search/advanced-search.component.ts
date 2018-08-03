@@ -15,10 +15,10 @@ import { forEach } from '@angular/router/src/utils/collection';
 import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loader.service';
 import { locale as english } from './i18n/en';
 
-import { FILE_PREVIEW_DIALOG_DATA } from './advanced-search.tokens';
+import { advancedSearchData } from './advanced-search.tokens';
 import { AdvancedSearchOverlayRef } from './advanced-search-ref';
 
-import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
+import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
 
 @Component({
   selector: 'app-advanced-search',
@@ -35,8 +35,8 @@ export class NoctuaAdvancedSearchComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
     public dialogRef: AdvancedSearchOverlayRef,
-    @Inject(FILE_PREVIEW_DIALOG_DATA) public data: any,
-    private sparqlService: SparqlService,
+    @Inject(advancedSearchData) public data: any,
+    private noctuaSearchService: NoctuaSearchService,
     private noctuaTranslationLoader: NoctuaTranslationLoaderService) {
     this.noctuaTranslationLoader.loadTranslations(english);
     this.searchForm = this.createAnswerForm();
@@ -45,8 +45,16 @@ export class NoctuaAdvancedSearchComponent implements OnInit, OnDestroy {
     this.unsubscribeAll = new Subject();
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void { }
 
+  cancel() {
+    this.dialogRef.close();
+  }
+
+  search() {
+    let search = this.searchForm;
+    console.dir(search)
+    this.noctuaSearchService.search();
   }
 
   createAnswerForm() {

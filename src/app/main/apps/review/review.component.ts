@@ -65,11 +65,13 @@ export class ReviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    /*
     this.sparqlService.getCamsGoTerms().subscribe((response: any) => {
       this.cams = this.sparqlService.cams = response;
       this.sparqlService.onCamsChanged.next(this.cams);
       this.loadCams();
     });
+    */
 
     fromEvent(this.filter.nativeElement, 'keyup')
       .pipe(

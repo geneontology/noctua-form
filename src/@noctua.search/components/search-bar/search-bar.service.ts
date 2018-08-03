@@ -9,7 +9,7 @@ import {
 } from '@angular/cdk/overlay';
 import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
 import { AdvancedSearchOverlayRef } from './advanced-search/advanced-search-ref';
-import { FILE_PREVIEW_DIALOG_DATA } from './advanced-search/advanced-search.tokens';
+import { advancedSearchData } from './advanced-search/advanced-search.tokens';
 
 import { NoctuaAdvancedSearchComponent } from './advanced-search/advanced-search.component';
 
@@ -47,7 +47,6 @@ export class SearchBarService {
     open(elementToConnectTo: ElementRef, config: AdvancedSearchDialogConfig = {}) {
         const dialogConfig = { ...DEFAULT_CONFIG, ...config };
 
-        console.dir(elementToConnectTo.nativeElement.width)
         dialogConfig['positionStrategy'] = this._getPosition(elementToConnectTo);
         dialogConfig['width'] = elementToConnectTo.nativeElement.clientWidth;
         const originRect = elementToConnectTo.nativeElement;
@@ -60,7 +59,7 @@ export class SearchBarService {
         return dialogRef;
     }
 
-    close(): void {
+    close(data): void {
         // this.overlayRef.dispose();
     }
 
@@ -68,7 +67,7 @@ export class SearchBarService {
         const injectionTokens = new WeakMap();
 
         injectionTokens.set(AdvancedSearchOverlayRef, dialogRef);
-        injectionTokens.set(FILE_PREVIEW_DIALOG_DATA, config.data);
+        injectionTokens.set(advancedSearchData, config.data);
 
         return new PortalInjector(this.injector, injectionTokens);
     }

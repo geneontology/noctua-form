@@ -6,7 +6,7 @@ import { map, filter, reduce, catchError, retry, tap } from 'rxjs/operators';
 
 import { NoctuaUtils } from '@noctua/utils/noctua-utils';
 
-import {CurieService} from '@noctua.curie/services/curie.service';
+import { CurieService } from '@noctua.curie/services/curie.service';
 
 export interface Cam {
   model?: {};
@@ -27,19 +27,20 @@ export interface Cam {
 })
 export class SparqlService {
   baseUrl = environment.spaqrlApiUrl;
-  curieUtil:any;
+  curieUtil: any;
   cams: any[] = [];
   onCamsChanged: BehaviorSubject<any>;
 
   constructor(private httpClient: HttpClient, private curieService: CurieService) {
     this.onCamsChanged = new BehaviorSubject({});
 
-    this.curieUtil =  this.curieService.getCurieUtil();
+    this.curieUtil = this.curieService.getCurieUtil();
   }
 
-  getCamsGoTerms(): Observable<any> {
+  //GO:0099160
+  getCamsGoTerms(term): Observable<any> {
     return this.httpClient
-      .get(this.baseUrl + this.buildCamsGoTermQuery('GO:0099160'))
+      .get(this.baseUrl + this.buildCamsGoTermQuery(term))
       .pipe(
         map(res => res['results']),
         map(res => res['bindings']),
