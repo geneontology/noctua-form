@@ -52,9 +52,9 @@ export class NoctuaAdvancedSearchComponent implements OnInit, OnDestroy {
   }
 
   search() {
-    let search = this.searchForm;
-    console.dir(search)
-    this.noctuaSearchService.search();
+    let searchCriteria = this.searchForm.value;
+    console.dir(searchCriteria)
+    this.noctuaSearchService.search(searchCriteria);
   }
 
   createAnswerForm() {

@@ -73,6 +73,13 @@ export class ReviewComponent implements OnInit, OnDestroy {
     });
     */
 
+    this.sparqlService.onCamsChanged
+      .pipe(takeUntil(this.unsubscribeAll))
+      .subscribe(cams => {
+        this.cams = cams;
+        this.loadCams();
+      });
+
     fromEvent(this.filter.nativeElement, 'keyup')
       .pipe(
         takeUntil(this.unsubscribeAll),
