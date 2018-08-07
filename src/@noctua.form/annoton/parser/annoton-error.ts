@@ -3,6 +3,11 @@ const each = require('lodash/forEach');
 
 
 export default class AnnotonError {
+  category;
+  type;
+  message;
+  meta;
+
   constructor(category, type, message, meta) {
     this.category = category;
     this.type = type;

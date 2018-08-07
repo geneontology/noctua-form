@@ -4,6 +4,12 @@ const each = require('lodash/forEach');
 import AnnotonError from './annoton-error.js';
 
 export default class AnnotonParser {
+  saeConstants;
+  rules;
+  errors;
+  warnings;
+  clean;
+
   constructor(saeConstants) {
     this.saeConstants = saeConstants;
     this.rules = [];
@@ -18,7 +24,7 @@ export default class AnnotonParser {
 
     let edges = [];
     let result = true;
-    let error = ""
+    let error;
 
     each(sourceEdges, function (edge) {
       let predicateId = edge.predicate_id();
@@ -68,7 +74,7 @@ export default class AnnotonParser {
   parseNodeOntology(node) {
     const self = this;
     let result = true;
-    let error = "";
+    let error;
 
     if (!_.includes(node.closures, node.lookupGroup)) {
       let meta = {
@@ -90,7 +96,7 @@ export default class AnnotonParser {
   parseNodeOntologyAll(node, ontologyId) {
     const self = this;
     let result = true;
-    let error = "";
+    let error;
     let prefix = ontologyId.split(":")[0].toLowerCase();
 
     each(node.term.ontologyClass, function (ontologyClass) {
@@ -188,7 +194,7 @@ export default class AnnotonParser {
 
     let edges2 = [];
     let result = true;
-    let error = ""
+    let error;
 
     each(sourceEdges, function (edge) {
       let predicateId = edge.predicate_id();
@@ -244,7 +250,7 @@ export default class AnnotonParser {
       }
     });
 
-    self.clean &= result;
+    self.clean = self.clean & result;
     return result;
   }
 

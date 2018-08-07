@@ -26,7 +26,40 @@ var local_minerva_definition_name = typeof global_minerva_definition_name !== 'u
 var local_barista_token = typeof global_barista_token !== 'undefined' ? global_barista_token : 'global_barista_token';
 var local_collapsible_relations = typeof global_collapsible_relations !== 'undefined' ? global_collapsible_relations : 'global_collapsible_relations';
 
-export default class GraphService {
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class GraphService {
+  config;
+  saeConstants;
+  $http;
+  $q;
+  $rootScope;
+  $timeout;
+  $mdDialog;
+  model_id;
+  golr_server;
+  barista_location;
+  minerva_definition_name;
+  barista_token;
+  collapsible_relations;
+  engine;
+  linker;
+  manager;
+  graph;
+  loggedIn;
+  lookup;
+  formGrid;;
+  dialogService;;
+  userInfo;
+  modelInfo;
+  localClosures;
+  modelTitle;
+  modelState;
+  gridData
+
   constructor(saeConstants, config, $http, $q, $rootScope, $timeout, $mdDialog, dialogService, lookup, formGrid) {
     this.config = config;
     this.saeConstants = saeConstants
@@ -76,9 +109,9 @@ export default class GraphService {
 
     this.manager = manager;
 
-    function _shields_up() {}
+    function _shields_up() { }
 
-    function _shields_down() {}
+    function _shields_down() { }
 
     // Internal registrations.
     manager.register('prerun', _shields_up);
@@ -90,13 +123,13 @@ export default class GraphService {
       }, 10);
 
     // Likely the result of unhappiness on Minerva.
-    manager.register('warning', function (resp /*, man */ ) {
+    manager.register('warning', function (resp /*, man */) {
       alert('Warning: ' + resp.message() + '; ' +
         'your operation was likely not performed');
     }, 10);
 
     // Likely the result of serious unhappiness on Minerva.
-    manager.register('error', function (resp /*, man */ ) {
+    manager.register('error', function (resp /*, man */) {
       var perm_flag = 'InsufficientPermissionsException';
       var token_flag = 'token';
       if (resp.message() && resp.message().indexOf(perm_flag) !== -1) {
@@ -109,7 +142,7 @@ export default class GraphService {
       }
     }, 10);
 
-    manager.register('meta', function ( /* resp , man */ ) {
+    manager.register('meta', function ( /* resp , man */) {
       console.log('## a meta callback?');
     });
 
@@ -136,10 +169,10 @@ export default class GraphService {
       }
 
       self.graphPreParse(self.graph).then(function (data) {
-          let deferred = self.$q.defer();
-          deferred.resolve(data);
-          return deferred.promise;
-        })
+        let deferred = self.$q.defer();
+        deferred.resolve(data);
+        return deferred.promise;
+      })
         .then(function (data) {
           return self.graphToCCOnly(self.graph);
         })
@@ -159,7 +192,7 @@ export default class GraphService {
       self.title = self.graph.get_annotations_by_key('title');
     }
 
-    manager.register('merge', function ( /* resp */ ) {
+    manager.register('merge', function ( /* resp */) {
       manager.get_model(self.model_id);
     });
     manager.register('rebuild', function (resp) {
@@ -438,8 +471,8 @@ export default class GraphService {
         let predicateId = toMFEdge.predicate_id();
 
         if (_.find(self.saeConstants.causalEdges, {
-            id: predicateId
-          })) {
+          id: predicateId
+        })) {
           result = self.saeConstants.annotonModelType.options.bpOnly.name;
         }
       });
@@ -601,8 +634,8 @@ export default class GraphService {
               let closureRange = self.lookup.getLocalClosureRange(subjectNode.term.id, self.config.closureCheck[predicateId]);
 
               if (!closureRange && !_.find(self.saeConstants.causalEdges, {
-                  id: predicateId
-                })) {
+                id: predicateId
+              })) {
                 isDoomed = true;
                 annoton.parser.setCardinalityError(annotonNode, node.object.getTerm(), predicateId);
               }
@@ -862,8 +895,8 @@ export default class GraphService {
 
             if (srcTerm.id === node.getTerm().id) {
               if (!_.find(meta.linkedNodes, {
-                  modelId: node.modelId
-                })) {
+                modelId: node.modelId
+              })) {
                 meta.linkedNodes.push(node);
               }
             }
@@ -912,7 +945,7 @@ export default class GraphService {
               let info = new AnnotonError('error', 2, "No CC found, added  ", meta);
 
               infos.push(info);
-            } else if (cc11Node.hasValue()) {}
+            } else if (cc11Node.hasValue()) { }
           }
           break;
         }
@@ -1038,11 +1071,11 @@ export default class GraphService {
           resp.message_type() + '): ' + resp.message());
       }, 10);
 
-    manager.register('warning', function (resp /*, man */ ) {
+    manager.register('warning', function (resp /*, man */) {
       alert('Warning: ' + resp.message() + '; ' +
         'your operation was likely not performed');
     }, 10);
-    manager.register('error', function (resp /*, man */ ) {
+    manager.register('error', function (resp /*, man */) {
       var perm_flag = 'InsufficientPermissionsException';
       var token_flag = 'token';
       if (resp.message() && resp.message().indexOf(perm_flag) !== -1) {
@@ -1054,7 +1087,7 @@ export default class GraphService {
         console.log('error:', resp, resp.message_type(), resp.message());
       }
     }, 10);
-    manager.register('meta', function ( /* resp , man */ ) {
+    manager.register('meta', function ( /* resp , man */) {
       console.log('## a meta callback?');
     });
 

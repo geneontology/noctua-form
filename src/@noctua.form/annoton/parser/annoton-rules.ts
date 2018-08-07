@@ -3,11 +3,14 @@ const each = require('lodash/forEach');
 
 
 export default class AnnotonRules {
+  rules
+  errors
+  allowedEdges;
+
   constructor() {
-    self.saeConstants = {};
+    this.saeConstants = {};
     this.rules = [];
     this.errors = [];
-
     this.allowedEdges = "";
 
   }

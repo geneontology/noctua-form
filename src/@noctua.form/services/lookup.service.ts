@@ -22,7 +22,24 @@ import {
   ECHILD
 } from 'constants';
 
-export default class LookupService {
+
+@Injectable({
+  providedIn: 'root'
+})
+export class LookupService {
+  name;
+  $http;
+  $q;
+  $timeout;
+  $location;
+  $sce;
+  $rootScope;
+  $mdDialog;
+  linker;
+  golrURLBase;
+  trusted;
+  localClosures;
+
   constructor($http, $q, $timeout, $location, $sce, $rootScope, $mdDialog) {
     this.name = 'DefaultLookupName';
     this.$http = $http;
@@ -61,22 +78,22 @@ export default class LookupService {
     requestParams.q = self.buildQ(searchText);
 
     return this.$http.jsonp(
-        self.trusted, {
-          // withCredentials: false,
-          jsonpCallbackParam: 'json.wrf',
-          params: requestParams
-        })
+      self.trusted, {
+        // withCredentials: false,
+        jsonpCallbackParam: 'json.wrf',
+        params: requestParams
+      })
       .then(function (response) {
-          var data = response.data.response.docs;
-          var result = data.map(function (item) {
-            return {
-              id: item.annotation_class,
-              label: item.annotation_class_label
-            };
-          });
+        var data = response.data.response.docs;
+        var result = data.map(function (item) {
+          return {
+            id: item.annotation_class,
+            label: item.annotation_class_label
+          };
+        });
 
-          return result;
-        },
+        return result;
+      },
         function (error) {
           console.log('GOLR error: ', self.golrURLBase, requestParams, error);
         }
@@ -165,53 +182,53 @@ export default class LookupService {
     }
 
     self.$http.jsonp(
-        self.$sce.trustAsResourceUrl('http://golr.berkeleybop.org/select'), {
-          // withCredentials: false,
-          jsonpCallbackParam: 'json.wrf',
-          params: requestParams
-        })
+      self.$sce.trustAsResourceUrl('http://golr.berkeleybop.org/select'), {
+        // withCredentials: false,
+        jsonpCallbackParam: 'json.wrf',
+        params: requestParams
+      })
       .then(function (response) {
-          var docs = response.data.response.docs;
-          let result = {};
-          let annoton
-          // console.log('poo', data);
+        var docs = response.data.response.docs;
+        let result = {};
+        let annoton
+        // console.log('poo', data);
 
-          each(docs, function (doc) {
-            let annotonNode = new AnnotonNode();
-            let evidence = new Evidence();
+        each(docs, function (doc) {
+          let annotonNode = new AnnotonNode();
+          let evidence = new Evidence();
 
-            evidence.setEvidence({
-              id: doc.evidence,
-              label: doc.evidence_label
-            });
-
-            if (doc.reference && doc.reference.length > 0) {
-              evidence.setReference(doc.reference[0], self.linker.url(doc.reference[0]));
-            }
-
-            if (doc.evidence_with && doc.evidence_with.length > 0) {
-              evidence.setWith(doc.evidence_with[0], self.linker.url(doc.evidence_with[0]));
-            }
-
-            evidence.setAssignedBy(doc.assigned_by);
-
-            annotonNode.setTerm({
-              id: doc.annotation_class,
-              label: doc.annotation_class_label
-            })
-            annotonNode.evidence[0] = evidence;
-
-            if (!result[doc.annotation_class]) {
-              result[doc.annotation_class] = {};
-              result[doc.annotation_class].term = annotonNode.getTerm();
-              result[doc.annotation_class].annotations = [];
-            }
-            result[doc.annotation_class].annotations.push(annotonNode);
-
+          evidence.setEvidence({
+            id: doc.evidence,
+            label: doc.evidence_label
           });
 
-          deferred.resolve(result);
-        },
+          if (doc.reference && doc.reference.length > 0) {
+            evidence.setReference(doc.reference[0], self.linker.url(doc.reference[0]));
+          }
+
+          if (doc.evidence_with && doc.evidence_with.length > 0) {
+            evidence.setWith(doc.evidence_with[0], self.linker.url(doc.evidence_with[0]));
+          }
+
+          evidence.setAssignedBy(doc.assigned_by);
+
+          annotonNode.setTerm({
+            id: doc.annotation_class,
+            label: doc.annotation_class_label
+          })
+          annotonNode.evidence[0] = evidence;
+
+          if (!result[doc.annotation_class]) {
+            result[doc.annotation_class] = {};
+            result[doc.annotation_class].term = annotonNode.getTerm();
+            result[doc.annotation_class].annotations = [];
+          }
+          result[doc.annotation_class].annotations.push(annotonNode);
+
+        });
+
+        deferred.resolve(result);
+      },
         function (error) {
           console.log('Companion Lookup: ', error);
           deferred.reject(error);
@@ -268,19 +285,19 @@ export default class LookupService {
 
 
     this.$http.jsonp(
-        self.trusted, {
-          // withCredentials: false,
-          jsonpCallbackParam: 'json.wrf',
-          params: requestParams
-        })
+      self.trusted, {
+        // withCredentials: false,
+        jsonpCallbackParam: 'json.wrf',
+        params: requestParams
+      })
       .then(function (response) {
-          var data = response.data.response.docs;
-          var result = data.length > 0;
-          // console.log('GOLR success', response, requestParams, data, result);
-          // console.log(a, b, result);
+        var data = response.data.response.docs;
+        var result = data.length > 0;
+        // console.log('GOLR success', response, requestParams, data, result);
+        // console.log(a, b, result);
 
-          deferred.resolve(result);
-        },
+        deferred.resolve(result);
+      },
         function (error) {
           console.log('GOLR isClosure error: ', error);
           deferred.reject(error);
@@ -294,12 +311,12 @@ export default class LookupService {
 
   openPopulateDialog(ev) {
     this.$mdDialog.show({
-        controller: 'PopulateDialogController as populateCtrl',
-        templateUrl: './dialogs/populate/populate-dialog.html',
-        targetEvent: ev,
-        clickOutsideToClose: true,
-      })
-      .then(function (answer) {}, function () {});
+      controller: 'PopulateDialogController as populateCtrl',
+      templateUrl: './dialogs/populate/populate-dialog.html',
+      targetEvent: ev,
+      clickOutsideToClose: true,
+    })
+      .then(function (answer) { }, function () { });
   }
 
 
@@ -311,7 +328,7 @@ export default class LookupService {
     return curie.replace(/_/, ':');
   }
 
-  inlineLookup(colName, oldValue, val /*, acEntry */ ) {
+  inlineLookup(colName, oldValue, val /*, acEntry */) {
     var inlineBlock = this.parsedConfig.inline;
 
     var terms = [];
@@ -331,7 +348,7 @@ export default class LookupService {
       });
     }
 
-    return new Promise(function (resolve /*, reject */ ) {
+    return new Promise(function (resolve /*, reject */) {
       setTimeout(function () {
         resolve(matches);
       }, 20);
@@ -404,6 +421,3 @@ export default class LookupService {
     return self.localClosures;
   }
 }
-
-
-LookupService.$inject = ['$http', '$q', '$timeout', '$location', '$sce', '$rootScope', '$mdDialog'];

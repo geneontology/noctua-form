@@ -2,6 +2,10 @@ import _ from 'lodash';
 const each = require('lodash/forEach');
 
 export default class SaeGraph {
+  nodes;
+  edges;
+  numberOfEdges;
+
   constructor() {
     this.nodes = [];
     this.edges = [];
@@ -48,15 +52,13 @@ export default class SaeGraph {
   };
 
   editEdge(subjectId, objectId, srcEdge) {
-    const self = this;
-    let destEdge = self.getEdge(subjectId, objectId);
+    let destEdge = this.getEdge(subjectId, objectId);
 
     destEdge.edge = srcEdge;
   }
 
   getEdge(subjectId, objectId) {
-    const self = this;
-    let edge = self.edges[subjectId];
+    let edge = this.edges[subjectId];
     let result
 
     if (edge) {
@@ -75,7 +77,7 @@ export default class SaeGraph {
   };
 
   removeEdge(source, object) {
-    var objectNodes = self.edges[source.id]['nodes']
+    var objectNodes = this.edges[source.id]['nodes']
     if (objectNodes) {
       _.remove(objectNodes, function (objectNodes) {
         return objectNode.id === object.id

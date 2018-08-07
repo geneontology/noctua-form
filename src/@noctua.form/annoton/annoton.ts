@@ -5,6 +5,15 @@ import SaeGraph from './sae-graph.js';
 import AnnotonError from "./parser/annoton-error.js";
 
 export default class Annoton extends SaeGraph {
+  nodes;
+  annotonType;
+  annotonModelType;
+  complexAnnotonData;
+  errors;
+  submitErrors;
+  id;
+  label;
+
   constructor() {
     super();
     this.annotonType = "simple";

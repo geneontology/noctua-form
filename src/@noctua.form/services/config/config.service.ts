@@ -1,10 +1,18 @@
 import _ from 'lodash';
 const each = require('lodash/forEach');
 const uuid = require('uuid/v1');
-import AnnotonNode from './../annoton/annoton-node.js';
-import Annoton from './../annoton/annoton.js';
+import AnnotonNode from './../annoton/annoton-node';
+import { Annoton } from './../annoton/annoton';
 
 export default class ConfigService {
+
+  saeConstants;
+  baseRequestParams
+  requestParams
+  _annotonData
+  _modelRelationship
+  closureCheck;
+
   constructor(saeConstants) {
     this.saeConstants = saeConstants;
 
@@ -664,7 +672,7 @@ export default class ConfigService {
     return annoton;
   }
 
-  createAnnotonModel(annotonType, modelType, srcAnnoton) {
+  createAnnotonModel(annotonType, modelType, srcAnnoton?) {
     const self = this;
     let annoton = new Annoton();
     let modelIds = _.cloneDeep(self._modelRelationship);
@@ -735,7 +743,7 @@ export default class ConfigService {
     return overrides.displaySection;
   }
 
-  generateNode(id, overrides) {
+  generateNode(id, overrides?) {
     const self = this;
 
     let nodeData = JSON.parse(JSON.stringify(self._annotonData[id]));
@@ -758,7 +766,7 @@ export default class ConfigService {
     return annotonNode;
   }
 
-  addGPAnnotonData(annoton, id) {
+  addGPAnnotonData(annoton, id?) {
     const self = this;
 
     let nodeData = JSON.parse(JSON.stringify(self._annotonData['gp']));
@@ -1000,5 +1008,3 @@ export default class ConfigService {
     return steps;
   }
 }
-
-ConfigService.$inject = ['saeConstants'];

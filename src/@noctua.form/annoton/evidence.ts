@@ -4,6 +4,11 @@ const each = require('lodash/forEach');
 import AnnotonError from "./parser/annoton-error.js";
 
 export default class Evidence {
+  evidence;
+  reference;
+  with;
+  assignedBy;
+
   constructor() {
     this.evidence = {
       "validation": {
@@ -55,19 +60,19 @@ export default class Evidence {
 
   }
 
-  getAssignedBy(value) {
+  getAssignedBy() {
     return this.assignedBy.control.value;
   }
 
-  getEvidence(value) {
+  getEvidence() {
     return this.evidence.control.value;
   }
 
-  getReference(value) {
+  getReference() {
     return this.reference.control.value;
   }
 
-  getWith(value) {
+  getWith() {
     return this.with.control.value;
   }
 
@@ -77,7 +82,7 @@ export default class Evidence {
     return self.evidence.control.value.id && self.reference.control.value;
   }
 
-  setAssignedBy(value, link) {
+  setAssignedBy(value, link?) {
     this.assignedBy.control.value = value;
     this.assignedBy.control.link = {
       label: value,
@@ -97,7 +102,7 @@ export default class Evidence {
     this.evidence.control.value = value;
   }
 
-  setReference(value, link) {
+  setReference(value, link?) {
     this.reference.control.value = value;
     this.reference.control.link = {
       label: value,
@@ -105,7 +110,7 @@ export default class Evidence {
     }
   }
 
-  setWith(value, link) {
+  setWith(value, link?) {
     this.with.control.value = value;
     if (link) {
       this.with.control.link = {

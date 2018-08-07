@@ -8,6 +8,27 @@ import {
 } from 'constants';
 
 export default class AnnotonNode {
+  id;
+  nodeGroup;
+  displaySection
+  displayGroup
+  annoton;
+  ontologyClass;
+  modelId;
+  isComplement;
+  term;
+  closures;
+  edgeOption;
+  _evidenceMeta;
+  evidence;
+  assignedBy;
+  termRequiredList;
+  evidenceRequiredList
+  evidenceNotRequiredList
+  errors
+  warnings
+  status
+
   constructor() {
     this.id;
     this.nodeGroup = {}
@@ -158,7 +179,7 @@ export default class AnnotonNode {
     self.ontologyClass = node.ontologyClass;
     self.assignedBy = node.assignedBy;
     self.termRequiredList = node.termRequiredList;
-    self.evidenceRequiredLis = node.evidenceRequiredList
+    self.evidenceRequiredList = node.evidenceRequiredList
     self.evidenceNotRequiredList = node.evidenceNotRequiredList;
     self.errors = node.errors;
     self.warnings = node.warnings;
@@ -203,7 +224,7 @@ export default class AnnotonNode {
     let result = true;
 
     if (self.nodeGroup) {
-      if (self.nodeGroup.isComplement && self.treeLevel > 0)[
+      if (self.nodeGroup.isComplement && self.treeLevel > 0) [
         result = false
       ]
     }
