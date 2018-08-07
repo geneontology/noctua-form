@@ -17,7 +17,6 @@ import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loa
 import { locale as english } from './i18n/en';
 
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
-import { GoRestService } from '@noctua.sparql/services/sparql/gorest.service';
 
 @Component({
   selector: 'app-review',
@@ -56,7 +55,6 @@ export class ReviewComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
     private sparqlService: SparqlService,
-    private goRestService: GoRestService,
     private noctuaTranslationLoader: NoctuaTranslationLoaderService) {
     this.noctuaTranslationLoader.loadTranslations(english);
     this.searchForm = this.createAnswerForm();
