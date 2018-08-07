@@ -1,10 +1,12 @@
-import _ from 'lodash';
+import * as _ from 'lodash';
+
+import { AnnotonNode } from './annoton-node';
 const each = require('lodash/forEach');
 
-export default class SaeGraph {
-  nodes;
+export class SaeGraph {
+  nodes: AnnotonNode[];
   edges;
-  numberOfEdges;
+  numberOfEdges: number;
 
   constructor() {
     this.nodes = [];
@@ -13,7 +15,7 @@ export default class SaeGraph {
   }
 
   getNode(id) {
-    return _.find(this.nodes, {
+    return <AnnotonNode>_.find(this.nodes, {
       id: id
     });
   }

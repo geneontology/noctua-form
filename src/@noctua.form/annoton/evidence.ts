@@ -1,9 +1,9 @@
-import _ from 'lodash';
+import * as _ from 'lodash';
 const each = require('lodash/forEach');
 
-import AnnotonError from "./parser/annoton-error.js";
+import { AnnotonError } from "./parser/annoton-error";
 
-export default class Evidence {
+export class Evidence {
   evidence;
   reference;
   with;
@@ -135,9 +135,9 @@ export default class Evidence {
     const self = this;
 
     self.setEvidence(evidence.getEvidence());
-    !_.includes(except, 'reference') ? self.setReference(evidence.getReference()) : angular.noop;
-    !_.includes(except, 'with') ? self.setWith(evidence.getWith()) : angular.noop;
-    !_.includes(except, 'assignedBy') ? self.setAssignedBy(evidence.getAssignedBy()) : angular.noop;;
+    !_.includes(except, 'reference') ? self.setReference(evidence.getReference()) : null;
+    !_.includes(except, 'with') ? self.setWith(evidence.getWith()) : null;
+    !_.includes(except, 'assignedBy') ? self.setAssignedBy(evidence.getAssignedBy()) : null;;
   }
 
   isEvidenceEqual(evidence) {

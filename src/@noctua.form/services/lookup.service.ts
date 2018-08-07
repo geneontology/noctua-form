@@ -1,26 +1,20 @@
-import _ from 'lodash';
+import { Injectable } from '@angular/core'
+import * as _ from 'lodash';
+import AnnotonNode from './../annoton/annoton-node.js';
+import Evidence from './../annoton/evidence.js';
+
 const each = require('lodash/forEach');
 
-var bbop = require('bbop-core');
-var amigo = require('amigo2');
-var golr_conf = require('golr-conf');
-var gconf = new golr_conf.conf(amigo.data.golr);
-var gserv = "http://golr.berkeleybop.org/";
-var impl_engine = require('bbop-rest-manager').jquery;
-var golr_manager = require('bbop-manager-golr');
-var golr_response = require('bbop-response-golr');
-var engine = new impl_engine(golr_response);
+const bbop = require('bbop-core');
+const amigo = require('amigo2');
+const golr_conf = require('golr-conf');
+const gconf = new golr_conf.conf(amigo.data.golr);
+const gserv = "http://golr.berkeleybop.org/";
+const impl_engine = require('bbop-rest-manager').jquery;
+const golr_manager = require('bbop-manager-golr');
+const golr_response = require('bbop-response-golr');
+const engine = new impl_engine(golr_response);
 engine.use_jsonp(true)
-
-import {
-  read
-} from 'fs';
-
-import AnnotonNode from './annoton/annoton-node.js';
-import Evidence from './annoton/evidence.js';
-import {
-  ECHILD
-} from 'constants';
 
 
 @Injectable({

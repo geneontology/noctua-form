@@ -1,9 +1,9 @@
-import _ from 'lodash';
+import * as _ from 'lodash';
 const each = require('lodash/forEach');
 const uuid = require('uuid/v1');
 import Evidence from "../annoton/evidence.js";
 
-export default class Util {
+export class Util {
 
     static getMFNodes(annotons, except) {
         let result = [];

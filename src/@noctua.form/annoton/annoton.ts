@@ -1,10 +1,10 @@
-import _ from 'lodash';
+import * as _ from 'lodash';
 const each = require('lodash/forEach');
 const uuid = require('uuid/v1');
-import SaeGraph from './sae-graph.js';
-import AnnotonError from "./parser/annoton-error.js";
+import { SaeGraph } from './sae-graph.js';
+import { AnnotonError } from "./parser/annoton-error.js";
 
-export default class Annoton extends SaeGraph {
+export class Annoton extends SaeGraph {
   nodes;
   annotonType;
   annotonModelType;
@@ -13,6 +13,7 @@ export default class Annoton extends SaeGraph {
   submitErrors;
   id;
   label;
+  edgeOption;
 
   constructor() {
     super();
@@ -36,7 +37,6 @@ export default class Annoton extends SaeGraph {
     } else {
       return self.getNode('mc');
     }
-    return null;
   }
 
   copyStructure(srcAnnoton) {
@@ -121,28 +121,6 @@ export default class Annoton extends SaeGraph {
         result = false;
       }
     }
-
-    /*
-    if (self.annotonType === 'complex') {
-      if (self.complexAnnotonData.mcNode.term.control.value && !self.complexAnnotonData.mcNode.term.control.value.id) {
-        let meta = {
-          aspect: self.complexAnnotonData.mcNode.label
-        }
-        let error = new AnnotonError('error', 1, "A '" + self.complexAnnotonData.mcNode.label + "' is required", meta)
-        self.submitErrors.push(error);
-        result = false;
-      }
-
-      if (self.complexAnnotonData.geneProducts === 0) {
-        let meta = {
-          aspect: self.complexAnnotonData.mcNode.label
-        }
-        let error = new AnnotonError('error', 1, "At least one gene product 'has part' is required if you choose macromolecular complex", meta)
-        self.submitErrors.push(error);
-        result = false;
-      }
-    }
-    */
 
     return result;
   }

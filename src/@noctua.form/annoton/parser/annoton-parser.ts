@@ -1,9 +1,9 @@
-import _ from 'lodash';
+import * as _ from 'lodash';
 const each = require('lodash/forEach');
 
-import AnnotonError from './annoton-error.js';
+import { AnnotonError } from './annoton-error.js';
 
-export default class AnnotonParser {
+export class AnnotonParser {
   saeConstants;
   rules;
   errors;
@@ -11,7 +11,7 @@ export default class AnnotonParser {
   clean;
 
   constructor(saeConstants) {
-    this.saeConstants = saeConstants;
+    noctuaFormConfig = saeConstants;
     this.rules = [];
     this.errors = [];
     this.warnings = [];
@@ -30,7 +30,7 @@ export default class AnnotonParser {
       let predicateId = edge.predicate_id();
       let predicateLabel = self.getPredicateLabel(predicateId);
 
-      if (_.includes(self.saeConstants.noDuplicateEdges, predicateId)) {
+      if (_.includes(noctuaFormConfig.noDuplicateEdges, predicateId)) {
         if (_.includes(edges, predicateId)) {
           let meta = {
             aspect: node.label,
@@ -62,7 +62,7 @@ export default class AnnotonParser {
 
   getPredicateLabel(id) {
     const self = this;
-    let predicate = _.find(self.saeConstants.edge, function (val) {
+    let predicate = _.find(noctuaFormConfig.edge, function (val) {
       return val.id === id;
     });
     return predicate ? predicate.label : id;
@@ -184,7 +184,7 @@ export default class AnnotonParser {
 
   allowedEdge(predicateId) {
     const self = this;
-    return _.find(self.saeConstants.causalEdges, function (edge) {
+    return _.find(noctuaFormConfig.causalEdges, function (edge) {
       return edge.id === predicateId
     });
   }
@@ -256,7 +256,7 @@ export default class AnnotonParser {
 
   canDuplicateEdge(predicateId) {
     const self = this;
-    return _.find(self.saeConstants.canDuplicateEdges, function (edge) {
+    return _.find(noctuaFormConfig.canDuplicateEdges, function (edge) {
       return edge.id === predicateId
     });
   }

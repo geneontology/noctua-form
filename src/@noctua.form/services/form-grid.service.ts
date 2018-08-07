@@ -1,20 +1,24 @@
-import _ from 'lodash';
+import { Injector } from '@angular/core';
+
+
+import * as _ from 'lodash';
 const each = require('lodash/forEach');
 
-export default class FormGridService {
+export class FormGridService {
   saeConstants;
   config
   $timeout
   lookup
   annoton;
+
   constructor(saeConstants, config, $timeout, lookup) {
-    this.saeConstants = saeConstants
+    noctuaFormConfig = saeConstants
     this.config = config;
     this.$timeout = $timeout;
     this.lookup = lookup;
     this.annoton = this.config.createAnnotonModel(
-      this.saeConstants.annotonType.options.simple.name,
-      this.saeConstants.annotonModelType.options.default.name
+      noctuaFormConfig.annotonType.options.simple.name,
+      noctuaFormConfig.annotonModelType.options.default.name
     );
 
   }
@@ -22,28 +26,28 @@ export default class FormGridService {
   setAnnotonType(annoton, annotonType) {
     annoton.setAnnotonType(annotonType.name);
 
-    const self = this;
 
-    self.annoton = self.config.createAnnotonModel(
+
+    this.annoton = this.config.createAnnotonModel(
       annotonType,
       annoton.annotonModelType,
       annoton
     )
-    self.initalizeForm();
+    this.initalizeForm();
   }
 
   setAnnotonModelType(annoton, annotonModelType) {
-    const self = this;
 
-    self.annoton = self.config.createAnnotonModel(
+
+    this.annoton = this.config.createAnnotonModel(
       annoton.annotonType,
       annotonModelType,
       annoton)
-    self.initalizeForm();
+    this.initalizeForm();
   }
 
   getAnnotonPresentation(annoton) {
-    const self = this;
+
 
     let result = {
       geneProduct: annoton.getNode('gp'),
@@ -75,7 +79,6 @@ export default class FormGridService {
   }
 
   addAnnotonPresentation(annoton, displaySectionId) {
-    const self = this;
     let result = {};
     result[displaySectionId] = {};
 
@@ -96,7 +99,7 @@ export default class FormGridService {
       }
     });
 
-    self.annotonPresentation.extra.push(result);
+    this.annotonPresentation.extra.push(result);
 
     return result[displaySectionId];
 
@@ -107,39 +110,39 @@ export default class FormGridService {
    *  Populates the grid with GO Terms, MF, CC, BP as roots
    */
   initalizeForm() {
-    const self = this;
 
-    self.annotonPresentation = self.getAnnotonPresentation(this.annoton);
+
+    this.annotonPresentation = this.getAnnotonPresentation(this.annoton);
 
   }
 
   addGPNode(annoton) {
-    const self = this;
+
 
     let id = 'gp-' + annoton.nodes.length;
 
-    self.config.addGPAnnotonData(annoton, id);
+    this.config.addGPAnnotonData(annoton, id);
   }
 
   initalizeFormData() {
-    const self = this;
+
 
     this.annoton = this.config.createAnnotonModelFakeData();
-    self.initalizeForm()
+    this.initalizeForm()
 
   }
 
   linkFormNode(entity, srcNode) {
-    const self = this;
+
 
     entity.modelId = srcNode.modelId;
     entity.setTerm(srcNode.getTerm());
   }
 
   cloneForm(srcAnnoton, filterNodes) {
-    const self = this;
 
-    self.annoton = self.config.createAnnotonModel(
+
+    this.annoton = this.config.createAnnotonModel(
       srcAnnoton.annotonType,
       srcAnnoton.annotonModelType
     );
@@ -147,29 +150,29 @@ export default class FormGridService {
     if (filterNodes) {
       each(filterNodes, function (srcNode) {
 
-        //self.complexAnnotonData.geneProducts = srcAnnoton.complexAnnotonData.geneProducts;
-        // self.complexAnnotonData.mcNode.copyValues(srcAnnoton.complexAnnotonData.mcNode);
+        //this.complexAnnotonData.geneProducts = srcAnnoton.complexAnnotonData.geneProducts;
+        // this.complexAnnotonData.mcNode.copyValues(srcAnnoton.complexAnnotonData.mcNode);
 
-        let destNode = self.annoton.getNode(srcNode.id);
+        let destNode = this.annoton.getNode(srcNode.id);
         if (destNode) {
           destNode.copyValues(srcNode);
         }
       })
     } else {
-      self.annoton.copyValues(srcAnnoton);
+      this.annoton.copyValues(srcAnnoton);
     }
 
-    self.initalizeForm();
+    this.initalizeForm();
   }
 
 
   clearForm() {
-    const self = this;
 
-    self.annoton = self.config.createAnnotonModel(
-      self.annoton.annotonType,
-      self.annoton.annotonModelType
+
+    this.annoton = this.config.createAnnotonModel(
+      this.annoton.annotonType,
+      this.annoton.annotonModelType
     )
-    self.initalizeForm();
+    this.initalizeForm();
   }
 }

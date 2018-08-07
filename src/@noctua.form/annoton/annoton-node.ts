@@ -1,17 +1,19 @@
-import _ from 'lodash';
+import * as _ from 'lodash';
 const each = require('lodash/forEach');
 
-import Evidence from './evidence.js';
-import AnnotonError from "./parser/annoton-error.js";
-import {
-  ECHILD
-} from 'constants';
+import { Evidence } from './evidence.js';
+import { AnnotonError } from "./parser/annoton-error.js";
 
-export default class AnnotonNode {
+export class AnnotonNode {
   id;
+  aspect;
+  label;
+  lookupGroup;
   nodeGroup;
   displaySection
+  relationship;
   displayGroup
+  treeLevel;
   annoton;
   ontologyClass;
   modelId;

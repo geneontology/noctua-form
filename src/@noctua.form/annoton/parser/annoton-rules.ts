@@ -1,14 +1,13 @@
-import _ from 'lodash';
+import * as _ from 'lodash';
 const each = require('lodash/forEach');
 
 
-export default class AnnotonRules {
+export class AnnotonRules {
   rules
   errors
   allowedEdges;
 
   constructor() {
-    this.saeConstants = {};
     this.rules = [];
     this.errors = [];
     this.allowedEdges = "";

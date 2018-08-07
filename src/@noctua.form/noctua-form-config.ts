@@ -55,8 +55,7 @@ const edge = {
   },
 }
 
-
-export const noctuaConfig = {
+export const noctuaFormConfig = {
   "annotonType": {
     "options": {
       'simple': {

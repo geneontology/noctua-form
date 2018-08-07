@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import * as _ from 'lodash';
 const each = require('lodash/forEach');
 
 export class SummaryGridService {
@@ -12,7 +12,7 @@ export class SummaryGridService {
 
 
   constructor(saeConstants, uiGridConstants, config, $timeout, lookup) {
-    this.saeConstants = saeConstants;
+    noctuaFormConfig = saeConstants;
     this.uiGridConstants = uiGridConstants;
     this.config = config;
     this.$timeout = $timeout;
@@ -312,11 +312,11 @@ export class SummaryGridService {
     let display = false;
 
     switch (row.annoton.annotonModelType) {
-      case self.saeConstants.annotonModelType.options.default.name:
-      case self.saeConstants.annotonModelType.options.bpOnly.name:
+      case noctuaFormConfig.annotonModelType.options.default.name:
+      case noctuaFormConfig.annotonModelType.options.bpOnly.name:
         display = node.id === 'mf';
         break;
-      case self.saeConstants.annotonModelType.options.ccOnly.name:
+      case noctuaFormConfig.annotonModelType.options.ccOnly.name:
         display = node.id === 'cc';
         break;
     }
@@ -326,7 +326,7 @@ export class SummaryGridService {
   tableCanDisplayEnabledBy(node) {
     const self = this;
 
-    return node.relationship.id === self.saeConstants.edge.enabledBy.id
+    return node.relationship.id === noctuaFormConfig.edge.enabledBy.id
   }
 
   tableDisplayExtension(node) {

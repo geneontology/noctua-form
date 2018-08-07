@@ -1,8 +1,7 @@
-import _ from 'lodash';
+import * as _ from 'lodash';
 const each = require('lodash/forEach');
 
-
-export default class AnnotonError {
+export class AnnotonError {
   category;
   type;
   message;

@@ -1,37 +1,38 @@
-import Annoton from './annoton/annoton.js';
-import AnnotonParser from './annoton/parser/annoton-parser.js';
-import AnnotonError from "./annoton/parser/annoton-error.js";
-import Evidence from './annoton/evidence.js';
+import { Injectable } from '@angular/core';
+import { Annoton } from './../annoton/annoton';
+import { AnnotonParser } from './../annoton/parser/annoton-parser';
+import { AnnotonError } from "./../annoton/parser/annoton-error";
+import { Evidence } from './../annoton/evidence';
 
 const each = require('lodash/forEach');
 const forOwn = require('lodash/forOwn');
 const uuid = require('uuid/v1');
 const annotationTitleKey = 'title';
-
-var model = require('bbop-graph-noctua');
-var amigo = require('amigo2');
-var golr_response = require('bbop-response-golr');
-var golr_manager = require('bbop-manager-golr');
-var golr_conf = require("golr-conf");
-var node_engine = require('bbop-rest-manager').node;
-var barista_response = require('bbop-response-barista');
-var minerva_requests = require('minerva-requests');
-var jquery_engine = require('bbop-rest-manager').jquery;
-var class_expression = require('class-expression');
-var minerva_manager = require('bbop-manager-minerva');
-var local_id = typeof global_id !== 'undefined' ? global_id : 'global_id';
-var local_golr_server = typeof global_golr_server !== 'undefined' ? global_golr_server : 'global_id';
-var local_barista_location = typeof global_barista_location !== 'undefined' ? global_barista_location : 'global_barista_location';
-var local_minerva_definition_name = typeof global_minerva_definition_name !== 'undefined' ? global_minerva_definition_name : 'global_minerva_definition_name';
-var local_barista_token = typeof global_barista_token !== 'undefined' ? global_barista_token : 'global_barista_token';
-var local_collapsible_relations = typeof global_collapsible_relations !== 'undefined' ? global_collapsible_relations : 'global_collapsible_relations';
-
+const model = require('bbop-graph-noctua');
+const amigo = require('amigo2');
+const golr_response = require('bbop-response-golr');
+const golr_manager = require('bbop-manager-golr');
+const golr_conf = require("golr-conf");
+const node_engine = require('bbop-rest-manager').node;
+const barista_response = require('bbop-response-barista');
+const minerva_requests = require('minerva-requests');
+const jquery_engine = require('bbop-rest-manager').jquery;
+const class_expression = require('class-expression');
+const minerva_manager = require('bbop-manager-minerva');
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class GraphService {
+  local_id;
+  local_golr_server;
+  local_barista_location;
+  local_minerva_definition_name
+  local_barista_token;
+  local_collapsible_relations;
+
+
   config;
   saeConstants;
   $http;
@@ -60,25 +61,18 @@ export class GraphService {
   modelState;
   gridData
 
-  constructor(saeConstants, config, $http, $q, $rootScope, $timeout, $mdDialog, dialogService, lookup, formGrid) {
+  constructor() {
     this.config = config;
-    this.saeConstants = saeConstants
+    noctuaFormConfig = saeConstants
     this.$http = $http;
     this.$q = $q;
     this.$rootScope = $rootScope;
     this.$timeout = $timeout;
     this.$mdDialog = $mdDialog;
-    this.model_id = local_id;
-    this.golr_server = local_golr_server;
-    this.barista_location = local_barista_location;
-    this.minerva_definition_name = local_minerva_definition_name;
-    this.barista_token = local_barista_token;
-    this.collapsible_relations = local_collapsible_relations;
     this.engine = null;
     this.linker = new amigo.linker();
     this.manager = null;
     this.graph = null;
-    this.loggedIn = local_barista_token && (local_barista_token.length > 0);
     this.lookup = lookup;
     this.formGrid = formGrid;
     this.dialogService = dialogService;
@@ -453,10 +447,10 @@ export class GraphService {
   determineAnnotonType(gpObjectNode) {
     const self = this;
 
-    if (self.lookup.getLocalClosure(gpObjectNode.term.id, self.saeConstants.closures.gp.id)) {
-      return self.saeConstants.annotonType.options.simple.name;
-    } else if (self.lookup.getLocalClosure(gpObjectNode.term.id, self.saeConstants.closures.mc.id)) {
-      return self.saeConstants.annotonType.options.complex.name;
+    if (self.lookup.getLocalClosure(gpObjectNode.term.id, noctuaFormConfig.closures.gp.id)) {
+      return noctuaFormConfig.annotonType.options.simple.name;
+    } else if (self.lookup.getLocalClosure(gpObjectNode.term.id, noctuaFormConfig.closures.mc.id)) {
+      return noctuaFormConfig.annotonType.options.complex.name;
     }
 
     return null;
@@ -464,16 +458,16 @@ export class GraphService {
 
   determineAnnotonModelType(mfNode, mfEdgesIn) {
     const self = this;
-    let result = self.saeConstants.annotonModelType.options.default.name;
+    let result = noctuaFormConfig.annotonModelType.options.default.name;
 
-    if (mfNode.term.id === self.saeConstants.rootNode.mf.id) {
+    if (mfNode.term.id === noctuaFormConfig.rootNode.mf.id) {
       each(mfEdgesIn, function (toMFEdge) {
         let predicateId = toMFEdge.predicate_id();
 
-        if (_.find(self.saeConstants.causalEdges, {
+        if (_.find(noctuaFormConfig.causalEdges, {
           id: predicateId
         })) {
-          result = self.saeConstants.annotonModelType.options.bpOnly.name;
+          result = noctuaFormConfig.annotonModelType.options.bpOnly.name;
         }
       });
     }
@@ -486,7 +480,7 @@ export class GraphService {
     var annotons = [];
 
     each(graph.all_edges(), function (e) {
-      if (e.predicate_id() === self.saeConstants.edge.enabledBy.id) {
+      if (e.predicate_id() === noctuaFormConfig.edge.enabledBy.id) {
         let mfId = e.subject_id();
         let gpId = e.object_id();
         let evidence = self.edgeToEvidence(graph, e);
@@ -499,7 +493,7 @@ export class GraphService {
         let annotonModelType = self.determineAnnotonModelType(mfSubjectNode, mfEdgesIn);
 
         let annoton = self.config.createAnnotonModel(
-          annotonType ? annotonType : self.saeConstants.annotonType.options.simple.name,
+          annotonType ? annotonType : noctuaFormConfig.annotonType.options.simple.name,
           annotonModelType
         );
 
@@ -509,18 +503,18 @@ export class GraphService {
         annotonNode.setIsComplement(mfSubjectNode.isComplement);
         annotonNode.modelId = mfId;
 
-        annoton.parser = new AnnotonParser(self.saeConstants);
+        annoton.parser = new AnnotonParser(noctuaFormConfig);
 
         if (annotonType) {
-          if (!self.lookup.getLocalClosure(mfSubjectNode.term.id, self.saeConstants.closures.mf.id)) {
+          if (!self.lookup.getLocalClosure(mfSubjectNode.term.id, noctuaFormConfig.closures.mf.id)) {
             isDoomed = true;
           }
         } else {
-          annoton.parser.setCardinalityError(annotonNode, gpObjectNode.term, self.saeConstants.edge.enabledBy.id);
+          annoton.parser.setCardinalityError(annotonNode, gpObjectNode.term, noctuaFormConfig.edge.enabledBy.id);
         }
 
         if (isDoomed) {
-          annoton.parser.setCardinalityError(annotonNode, gpObjectNode.term, self.saeConstants.edge.enabledBy.id);
+          annoton.parser.setCardinalityError(annotonNode, gpObjectNode.term, noctuaFormConfig.edge.enabledBy.id);
         }
 
         self.graphToAnnatonDFS(graph, annoton, mfEdgesIn, annotonNode, isDoomed);
@@ -539,7 +533,7 @@ export class GraphService {
     var annotons = [];
 
     each(graph.all_edges(), function (e) {
-      if (e.predicate_id() === self.saeConstants.edge.partOf.id) {
+      if (e.predicate_id() === noctuaFormConfig.edge.partOf.id) {
         let predicateId = e.predicate_id();
         let gpId = e.subject_id();
         let ccId = e.object_id();
@@ -552,8 +546,8 @@ export class GraphService {
         let annotonType = self.determineAnnotonType(gpSubjectNode);
 
         let annoton = self.config.createAnnotonModel(
-          annotonType ? annotonType : self.saeConstants.annotonType.options.simple.name,
-          self.saeConstants.annotonModelType.options.ccOnly.name
+          annotonType ? annotonType : noctuaFormConfig.annotonType.options.simple.name,
+          noctuaFormConfig.annotonModelType.options.ccOnly.name
         );
 
         let annotonNode = annoton.getNode('gp');
@@ -562,7 +556,7 @@ export class GraphService {
         annotonNode.setIsComplement(gpSubjectNode.isComplement);
         annotonNode.modelId = gpId;
 
-        annoton.parser = new AnnotonParser(self.saeConstants);
+        annoton.parser = new AnnotonParser(noctuaFormConfig);
 
         if (annotonType) {
           let closureRange = self.lookup.getLocalClosureRange(ccObjectNode.term.id, self.config.closureCheck[predicateId]);
@@ -577,7 +571,7 @@ export class GraphService {
 
           self.graphToAnnatonDFS(graph, annoton, gpEdgesIn, annotonNode, isDoomed);
 
-          if (annoton.annotonType === self.saeConstants.annotonType.options.complex.name) {
+          if (annoton.annotonType === noctuaFormConfig.annotonType.options.complex.name) {
             annoton.populateComplexData();
           }
 
@@ -604,12 +598,12 @@ export class GraphService {
         let evidence = self.edgeToEvidence(graph, toMFEdge);
         let toMFObject = toMFEdge.object_id();
 
-        if (annotonNode.id === "mc" && predicateId === self.saeConstants.edge.hasPart.id) {
+        if (annotonNode.id === "mc" && predicateId === noctuaFormConfig.edge.hasPart.id) {
           self.config.addGPAnnotonData(annoton, toMFObject);
         }
 
-        if (annoton.annotonModelType === self.saeConstants.annotonModelType.options.bpOnly.name) {
-          let causalEdge = _.find(self.saeConstants.causalEdges, {
+        if (annoton.annotonModelType === noctuaFormConfig.annotonModelType.options.bpOnly.name) {
+          let causalEdge = _.find(noctuaFormConfig.causalEdges, {
             id: predicateId
           })
 
@@ -620,7 +614,7 @@ export class GraphService {
 
         each(edge.nodes, function (node) {
           if (predicateId === node.edge.id) {
-            if (predicateId === self.saeConstants.edge.hasPart.id && toMFObject !== node.object.id) {
+            if (predicateId === noctuaFormConfig.edge.hasPart.id && toMFObject !== node.object.id) {
               //do nothing
             } else {
               let subjectNode = self.subjectToTerm(graph, toMFObject);
@@ -633,7 +627,7 @@ export class GraphService {
               //self.check
               let closureRange = self.lookup.getLocalClosureRange(subjectNode.term.id, self.config.closureCheck[predicateId]);
 
-              if (!closureRange && !_.find(self.saeConstants.causalEdges, {
+              if (!closureRange && !_.find(noctuaFormConfig.causalEdges, {
                 id: predicateId
               })) {
                 isDoomed = true;
@@ -845,9 +839,9 @@ export class GraphService {
 
 
 
-    if (mfNode && bpNode && annoton.annotonModelType === self.saeConstants.annotonModelType.options.bpOnly.name) {
-      mfNode.displaySection = self.saeConstants.displaySection.fd;
-      mfNode.displayGroup = self.saeConstants.displayGroup.mf;
+    if (mfNode && bpNode && annoton.annotonModelType === noctuaFormConfig.annotonModelType.options.bpOnly.name) {
+      mfNode.displaySection = noctuaFormConfig.displaySection.fd;
+      mfNode.displayGroup = noctuaFormConfig.displayGroup.mf;
       annoton.editEdge('mf', 'bp', srcEdge);
       bpNode.relationship = annoton.getEdge('mf', 'bp').edge;
     }
@@ -920,7 +914,7 @@ export class GraphService {
     let infos = []; //self.checkIfNodeExist(annoton);
 
     switch (annoton.annotonModelType) {
-      case self.saeConstants.annotonModelType.options.default.name:
+      case noctuaFormConfig.annotonModelType.options.default.name:
         {
           let mfNode = annoton.getNode('mf');
           let ccNode = annoton.getNode('cc');
@@ -936,7 +930,7 @@ export class GraphService {
                   label: mfNode.term.control.value.label
                 },
                 edge: {
-                  label: self.saeConstants.edge.occursIn
+                  label: noctuaFormConfig.edge.occursIn
                 },
                 objectNode: {
                   label: cc1Node.term.control.value.label
@@ -949,7 +943,7 @@ export class GraphService {
           }
           break;
         }
-      case self.saeConstants.annotonModelType.options.bpOnly.name:
+      case noctuaFormConfig.annotonModelType.options.bpOnly.name:
         {
           let mfNode = annoton.getNode('mf');
           let bpNode = annoton.getNode('bp');
@@ -985,8 +979,8 @@ export class GraphService {
       if (srcNode.hasValue()) {
         let destNode = srcNode;
 
-        if (destAnnoton.annotonType === self.saeConstants.annotonType.options.simple.name) {
-          if (srcNode.displayGroup.id !== self.saeConstants.displayGroup.mc.id) {
+        if (destAnnoton.annotonType === noctuaFormConfig.annotonType.options.simple.name) {
+          if (srcNode.displayGroup.id !== noctuaFormConfig.displayGroup.mc.id) {
             destAnnoton.addNode(destNode);
           }
         } else {
@@ -1017,7 +1011,7 @@ export class GraphService {
     const self = this;
 
     switch (annoton.annotonModelType) {
-      case self.saeConstants.annotonModelType.options.default.name:
+      case noctuaFormConfig.annotonModelType.options.default.name:
         {
           let mfNode = annoton.getNode('mf');
           let ccNode = annoton.getNode('cc');
@@ -1027,19 +1021,19 @@ export class GraphService {
 
           if (!ccNode.hasValue()) {
             if (cc1Node.hasValue()) {
-              ccNode.setTerm(self.saeConstants.rootNode[ccNode.id]);
+              ccNode.setTerm(noctuaFormConfig.rootNode[ccNode.id]);
               ccNode.evidence = cc1Node.evidence;
             } else if (cc11Node.hasValue()) {
-              ccNode.setTerm(self.saeConstants.rootNode[ccNode.id]);
+              ccNode.setTerm(noctuaFormConfig.rootNode[ccNode.id]);
               ccNode.evidence = cc11Node.evidence;
             } else if (cc111Node.hasValue()) {
-              ccNode.setTerm(self.saeConstants.rootNode[ccNode.id]);
+              ccNode.setTerm(noctuaFormConfig.rootNode[ccNode.id]);
               ccNode.evidence = cc111Node.evidence;
             }
           }
           break;
         }
-      case self.saeConstants.annotonModelType.options.bpOnly.name:
+      case noctuaFormConfig.annotonModelType.options.bpOnly.name:
         {
           let mfNode = annoton.getNode('mf');
           let bpNode = annoton.getNode('bp');
@@ -1110,7 +1104,7 @@ export class GraphService {
     const self = this;
     let geneProduct;
 
-    if (annoton.annotonType === self.saeConstants.annotonType.options.complex.name) {
+    if (annoton.annotonType === noctuaFormConfig.annotonType.options.complex.name) {
       geneProduct = annoton.getNode('mc');
     } else {
       geneProduct = annoton.getNode('gp');

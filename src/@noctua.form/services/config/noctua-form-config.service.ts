@@ -1,20 +1,25 @@
-import _ from 'lodash';
+import { Injectable } from '@angular/core';
+import { noctuaFormConfig } from './../../noctua-form-config';
+
+import * as _ from 'lodash';
+
 const each = require('lodash/forEach');
 const uuid = require('uuid/v1');
-import AnnotonNode from './../annoton/annoton-node';
-import { Annoton } from './../annoton/annoton';
+import { AnnotonNode } from './../../annoton/annoton-node';
+import { Annoton } from './../../annoton/annoton';
 
-export default class ConfigService {
 
-  saeConstants;
+@Injectable({
+  providedIn: 'root'
+})
+export class NoctuaFormConfigService {
   baseRequestParams
   requestParams
   _annotonData
   _modelRelationship
   closureCheck;
 
-  constructor(saeConstants) {
-    this.saeConstants = saeConstants;
+  constructor() {
 
     this.baseRequestParams = {
       defType: 'edismax',
@@ -63,9 +68,9 @@ export default class ConfigService {
       "mc": {
         'id': 'mc',
         "label": 'Macromolecular Complex',
-        "relationship": this.saeConstants.edge.hasPart,
-        "displaySection": this.saeConstants.displaySection.mc,
-        "displayGroup": this.saeConstants.displayGroup.mc,
+        "relationship": noctuaFormConfig.edge.hasPart,
+        "displaySection": noctuaFormConfig.displaySection.gp,
+        "displayGroup": noctuaFormConfig.displayGroup.mc,
         "lookupGroup": 'GO:0032991',
         'treeLevel': 0,
         "term": {
@@ -82,9 +87,9 @@ export default class ConfigService {
       },
       "gp": {
         "label": 'Gene Product',
-        "relationship": this.saeConstants.edge.enabledBy,
-        "displaySection": this.saeConstants.displaySection.gp,
-        "displayGroup": this.saeConstants.displayGroup.gp,
+        "relationship": noctuaFormConfig.edge.enabledBy,
+        "displaySection": noctuaFormConfig.displaySection.gp,
+        "displayGroup": noctuaFormConfig.displayGroup.gp,
         "lookupGroup": 'CHEBI:33695',
         'treeLevel': 0,
         "term": {
@@ -103,9 +108,9 @@ export default class ConfigService {
       'mf': {
         "label": 'Molecular Function',
         'aspect': 'F',
-        "relationship": this.saeConstants.edge.enabledBy,
-        "displaySection": this.saeConstants.displaySection.fd,
-        "displayGroup": this.saeConstants.displayGroup.mf,
+        "relationship": noctuaFormConfig.edge.enabledBy,
+        "displaySection": noctuaFormConfig.displaySection.fd,
+        "displayGroup": noctuaFormConfig.displayGroup.mf,
         "lookupGroup": 'GO:0003674',
         'treeLevel': 0,
         "term": {
@@ -122,9 +127,9 @@ export default class ConfigService {
       },
       'mf-1': {
         "label": 'Has Input (Gene Product/Chemical)',
-        "relationship": this.saeConstants.edge.hasInput,
-        "displaySection": this.saeConstants.displaySection.fd,
-        "displayGroup": this.saeConstants.displayGroup.mf,
+        "relationship": noctuaFormConfig.edge.hasInput,
+        "displaySection": noctuaFormConfig.displaySection.fd,
+        "displayGroup": noctuaFormConfig.displayGroup.mf,
         "lookupGroup": 'CHEBI:23367',
         'treeLevel': 1,
         "term": {
@@ -141,9 +146,9 @@ export default class ConfigService {
       },
       'mf-2': {
         "label": 'Happens During (Temporal Phase)',
-        "relationship": this.saeConstants.edge.happensDuring,
-        "displaySection": this.saeConstants.displaySection.fd,
-        "displayGroup": this.saeConstants.displayGroup.mf,
+        "relationship": noctuaFormConfig.edge.happensDuring,
+        "displaySection": noctuaFormConfig.displaySection.fd,
+        "displayGroup": noctuaFormConfig.displayGroup.mf,
         "lookupGroup": 'GO:0044848',
         'treeLevel': 1,
         "term": {
@@ -161,9 +166,9 @@ export default class ConfigService {
       'cc': {
         "label": 'MF occurs in Cellular Component',
         'aspect': 'C',
-        "relationship": this.saeConstants.edge.occursIn,
-        "displaySection": this.saeConstants.displaySection.fd,
-        "displayGroup": this.saeConstants.displayGroup.cc,
+        "relationship": noctuaFormConfig.edge.occursIn,
+        "displaySection": noctuaFormConfig.displaySection.fd,
+        "displayGroup": noctuaFormConfig.displayGroup.cc,
         "lookupGroup": 'GO:0005575',
         'treeLevel': 0,
         "term": {
@@ -181,9 +186,9 @@ export default class ConfigService {
       'cc-1': {
         "label": 'Part Of (CC)',
         'aspect': 'C',
-        "relationship": this.saeConstants.edge.partOf,
-        "displaySection": this.saeConstants.displaySection.fd,
-        "displayGroup": this.saeConstants.displayGroup.cc,
+        "relationship": noctuaFormConfig.edge.partOf,
+        "displaySection": noctuaFormConfig.displaySection.fd,
+        "displayGroup": noctuaFormConfig.displayGroup.cc,
         "lookupGroup": 'GO:0005575',
         'treeLevel': 1,
         "term": {
@@ -200,9 +205,9 @@ export default class ConfigService {
       },
       'cc-1-1': {
         "label": 'Part Of (Cell Type)',
-        "relationship": this.saeConstants.edge.partOf,
-        "displaySection": this.saeConstants.displaySection.fd,
-        "displayGroup": this.saeConstants.displayGroup.cc,
+        "relationship": noctuaFormConfig.edge.partOf,
+        "displaySection": noctuaFormConfig.displaySection.fd,
+        "displayGroup": noctuaFormConfig.displayGroup.cc,
         "lookupGroup": 'CL:0000003',
         'treeLevel': 2,
         "term": {
@@ -219,9 +224,9 @@ export default class ConfigService {
       },
       'cc-1-1-1': {
         "label": 'Part Of (Anatomy)',
-        "relationship": this.saeConstants.edge.partOf,
-        "displaySection": this.saeConstants.displaySection.fd,
-        "displayGroup": this.saeConstants.displayGroup.cc,
+        "relationship": noctuaFormConfig.edge.partOf,
+        "displaySection": noctuaFormConfig.displaySection.fd,
+        "displayGroup": noctuaFormConfig.displayGroup.cc,
         "lookupGroup": 'UBERON:0000061',
         'treeLevel': 3,
         "term": {
@@ -239,9 +244,9 @@ export default class ConfigService {
       'bp': {
         "label": 'MF part of Biological Process',
         'aspect': 'P',
-        "relationship": this.saeConstants.edge.partOf,
-        "displaySection": this.saeConstants.displaySection.fd,
-        "displayGroup": this.saeConstants.displayGroup.bp,
+        "relationship": noctuaFormConfig.edge.partOf,
+        "displaySection": noctuaFormConfig.displaySection.fd,
+        "displayGroup": noctuaFormConfig.displayGroup.bp,
         "lookupGroup": 'GO:0008150',
         'treeLevel': 0,
         "term": {
@@ -259,9 +264,9 @@ export default class ConfigService {
       'bp-1': {
         "label": 'Part Of (BP)',
         'aspect': 'P',
-        "relationship": this.saeConstants.edge.partOf,
-        "displaySection": this.saeConstants.displaySection.fd,
-        "displayGroup": this.saeConstants.displayGroup.bp,
+        "relationship": noctuaFormConfig.edge.partOf,
+        "displaySection": noctuaFormConfig.displaySection.fd,
+        "displayGroup": noctuaFormConfig.displayGroup.bp,
         "lookupGroup": 'GO:0008150',
         'treeLevel': 1,
         "term": {
@@ -279,9 +284,9 @@ export default class ConfigService {
       'bp-1-1': {
         "label": 'Part Of (BP)',
         'aspect': 'P',
-        "relationship": this.saeConstants.edge.partOf,
-        "displaySection": this.saeConstants.displaySection.fd,
-        "displayGroup": this.saeConstants.displayGroup.bp,
+        "relationship": noctuaFormConfig.edge.partOf,
+        "displaySection": noctuaFormConfig.displaySection.fd,
+        "displayGroup": noctuaFormConfig.displayGroup.bp,
         "lookupGroup": 'GO:0008150',
         'treeLevel': 2,
         "term": {
@@ -306,54 +311,54 @@ export default class ConfigService {
         triples: [{
           subject: 'mf',
           object: 'mc',
-          edge: this.saeConstants.edge.enabledBy
+          edge: noctuaFormConfig.edge.enabledBy
         }, {
           subject: 'mf',
           object: 'gp',
-          edge: this.saeConstants.edge.enabledBy
+          edge: noctuaFormConfig.edge.enabledBy
         }, {
           subject: 'mf',
           object: 'bp',
-          edge: this.saeConstants.edge.partOf
+          edge: noctuaFormConfig.edge.partOf
         }, {
           subject: 'mf',
           object: 'cc',
-          edge: this.saeConstants.edge.occursIn
+          edge: noctuaFormConfig.edge.occursIn
         }, {
           subject: 'mf',
           object: 'mf-1',
-          edge: this.saeConstants.edge.hasInput
+          edge: noctuaFormConfig.edge.hasInput
         }, {
           subject: 'mf',
           object: 'mf-2',
-          edge: this.saeConstants.edge.happensDuring
+          edge: noctuaFormConfig.edge.happensDuring
         }, {
           subject: 'bp',
           object: 'bp-1',
-          edge: this.saeConstants.edge.partOf
+          edge: noctuaFormConfig.edge.partOf
         }, {
           subject: 'bp-1',
           object: 'bp-1-1',
-          edge: this.saeConstants.edge.partOf
+          edge: noctuaFormConfig.edge.partOf
         }, {
           subject: 'cc',
           object: 'cc-1',
-          edge: this.saeConstants.edge.partOf
+          edge: noctuaFormConfig.edge.partOf
         }, {
           subject: 'cc-1',
           object: 'cc-1-1',
-          edge: this.saeConstants.edge.partOf
+          edge: noctuaFormConfig.edge.partOf
         }, {
           subject: 'cc-1-1',
           object: 'cc-1-1-1',
-          edge: this.saeConstants.edge.partOf
+          edge: noctuaFormConfig.edge.partOf
         }],
         simple: {
           node: 'gp',
           triple: {
             subject: 'mf',
             object: 'gp',
-            edge: this.saeConstants.edge.enabledBy
+            edge: noctuaFormConfig.edge.enabledBy
           }
         },
         complex: {
@@ -361,7 +366,7 @@ export default class ConfigService {
           triple: {
             subject: 'mf',
             object: 'mc',
-            edge: this.saeConstants.edge.enabledBy
+            edge: noctuaFormConfig.edge.enabledBy
           }
         }
       },
@@ -373,44 +378,44 @@ export default class ConfigService {
           'cc': {
             id: 'cc',
             label: "GP part of Cellular Component",
-            relationship: this.saeConstants.edge.partOf
+            relationship: noctuaFormConfig.edge.partOf
           },
           'cc-1': {
             id: 'cc-1',
-            relationship: this.saeConstants.edge.partOf
+            relationship: noctuaFormConfig.edge.partOf
           },
           'cc-1-1': {
             id: 'cc-1-1',
-            relationship: this.saeConstants.edge.partOf
+            relationship: noctuaFormConfig.edge.partOf
           }
         },
         triples: [{
           subject: 'gp',
           object: 'cc',
-          edge: this.saeConstants.edge.partOf
+          edge: noctuaFormConfig.edge.partOf
         }, {
           subject: 'mc',
           object: 'cc',
-          edge: this.saeConstants.edge.partOf
+          edge: noctuaFormConfig.edge.partOf
         }, {
           subject: 'cc',
           object: 'cc-1',
-          edge: this.saeConstants.edge.partOf
+          edge: noctuaFormConfig.edge.partOf
         }, {
           subject: 'cc-1',
           object: 'cc-1-1',
-          edge: this.saeConstants.edge.partOf,
+          edge: noctuaFormConfig.edge.partOf,
         }, {
           subject: 'cc-1-1',
           object: 'cc-1-1-1',
-          edge: this.saeConstants.edge.partOf
+          edge: noctuaFormConfig.edge.partOf
         }],
         simple: {
           node: 'gp',
           triple: {
             subject: 'gp',
             object: 'cc',
-            edge: this.saeConstants.edge.partOf
+            edge: noctuaFormConfig.edge.partOf
           }
         },
         complex: {
@@ -418,7 +423,7 @@ export default class ConfigService {
           triple: {
             subject: 'mc',
             object: 'cc',
-            edge: this.saeConstants.edge.partOf
+            edge: noctuaFormConfig.edge.partOf
           }
         }
       },
@@ -442,19 +447,19 @@ export default class ConfigService {
           'cc-1-1': {
             id: 'cc-1-1',
             label: "occurs in (Cell Type)",
-            relationship: this.saeConstants.edge.occursIn,
+            relationship: noctuaFormConfig.edge.occursIn,
             display: {
-              displaySection: this.saeConstants.displaySection.fd,
-              displayGroup: this.saeConstants.displayGroup.bp,
+              displaySection: noctuaFormConfig.displaySection.fd,
+              displayGroup: noctuaFormConfig.displayGroup.bp,
             },
             treeLevel: 1
           },
           'cc-1-1-1': {
             id: 'cc-1-1-1',
-            relationship: this.saeConstants.edge.occursIn,
+            relationship: noctuaFormConfig.edge.occursIn,
             display: {
-              displaySection: this.saeConstants.displaySection.fd,
-              displayGroup: this.saeConstants.displayGroup.bp,
+              displaySection: noctuaFormConfig.displaySection.fd,
+              displayGroup: noctuaFormConfig.displayGroup.bp,
             },
             label: "occurs in (Anatomy)",
             treeLevel: 2
@@ -463,32 +468,32 @@ export default class ConfigService {
         triples: [{
           subject: 'mf',
           object: 'mc',
-          edge: this.saeConstants.edge.enabledBy
+          edge: noctuaFormConfig.edge.enabledBy
         }, {
           subject: 'mf',
           object: 'gp',
-          edge: this.saeConstants.edge.enabledBy
+          edge: noctuaFormConfig.edge.enabledBy
         }, {
           subject: 'bp',
           object: 'cc-1-1',
-          edge: this.saeConstants.edge.occursIn
+          edge: noctuaFormConfig.edge.occursIn
         }, {
           subject: 'cc-1-1',
           object: 'cc-1-1-1',
-          edge: this.saeConstants.edge.occursIn
+          edge: noctuaFormConfig.edge.occursIn
         }, {
           subject: 'mf',
           object: 'bp',
-          edge: this.saeConstants.edge.upstreamOfOrWithin,
+          edge: noctuaFormConfig.edge.upstreamOfOrWithin,
           edgeOption: {
-            selected: this.saeConstants.edge.upstreamOfOrWithin,
+            selected: noctuaFormConfig.edge.upstreamOfOrWithin,
             options: [
-              this.saeConstants.edge.upstreamOfOrWithin,
-              this.saeConstants.edge.upstreamOf,
-              this.saeConstants.edge.upstreamOfPositiveEffect,
-              this.saeConstants.edge.upstreamOfNegativeEffect,
-              // this.saeConstants.edge.upstreamOfOrWithinPositiveEffect,
-              //this.saeConstants.edge.upstreamOfOrWithinNegativeEffect,
+              noctuaFormConfig.edge.upstreamOfOrWithin,
+              noctuaFormConfig.edge.upstreamOf,
+              noctuaFormConfig.edge.upstreamOfPositiveEffect,
+              noctuaFormConfig.edge.upstreamOfNegativeEffect,
+              // noctuaFormConfig.edge.upstreamOfOrWithinPositiveEffect,
+              //noctuaFormConfig.edge.upstreamOfOrWithinNegativeEffect,
             ]
           }
         }],
@@ -497,7 +502,7 @@ export default class ConfigService {
           triple: {
             subject: 'mf',
             object: 'gp',
-            edge: this.saeConstants.edge.enabledBy
+            edge: noctuaFormConfig.edge.enabledBy
           }
         },
         complex: {
@@ -505,7 +510,7 @@ export default class ConfigService {
           triple: {
             subject: 'mf',
             object: 'mc',
-            edge: this.saeConstants.edge.enabledBy
+            edge: noctuaFormConfig.edge.enabledBy
           }
         }
       },
@@ -526,16 +531,16 @@ export default class ConfigService {
         triples: [{
           subject: 'mf',
           object: 'mf',
-          edge: this.saeConstants.edge.upstreamOfOrWithin,
+          edge: noctuaFormConfig.edge.upstreamOfOrWithin,
           edgeOption: {
-            selected: this.saeConstants.edge.upstreamOfOrWithin,
+            selected: noctuaFormConfig.edge.upstreamOfOrWithin,
             options: [
-              this.saeConstants.edge.upstreamOfOrWithin,
-              this.saeConstants.edge.upstreamOf,
-              this.saeConstants.edge.upstreamOfPositiveEffect,
-              this.saeConstants.edge.upstreamOfNegativeEffect,
-              this.saeConstants.edge.upstreamOfOrWithinPositiveEffect,
-              this.saeConstants.edge.upstreamOfOrWithinNegativeEffect,
+              noctuaFormConfig.edge.upstreamOfOrWithin,
+              noctuaFormConfig.edge.upstreamOf,
+              noctuaFormConfig.edge.upstreamOfPositiveEffect,
+              noctuaFormConfig.edge.upstreamOfNegativeEffect,
+              noctuaFormConfig.edge.upstreamOfOrWithinPositiveEffect,
+              noctuaFormConfig.edge.upstreamOfOrWithinNegativeEffect,
             ]
           }
         }],
@@ -545,105 +550,105 @@ export default class ConfigService {
 
     this.closureCheck = {}
 
-    this.closureCheck[this.saeConstants.edge.enabledBy.id] = {
-      edge: this.saeConstants.edge.enabledBy,
+    this.closureCheck[noctuaFormConfig.edge.enabledBy.id] = {
+      edge: noctuaFormConfig.edge.enabledBy,
       closures: [{
-        subject: this.saeConstants.closures.mf
+        subject: noctuaFormConfig.closures.mf
       }, {
-        object: this.saeConstants.closures.gp
+        object: noctuaFormConfig.closures.gp
       }, {
-        object: this.saeConstants.closures.mc
+        object: noctuaFormConfig.closures.mc
       }]
     };
 
-    this.closureCheck[this.saeConstants.edge.upstreamOf.id] = {
-      edge: this.saeConstants.edge.upstreamOf,
+    this.closureCheck[noctuaFormConfig.edge.upstreamOf.id] = {
+      edge: noctuaFormConfig.edge.upstreamOf,
       closures: [{
-        object: this.saeConstants.closures.bp
+        object: noctuaFormConfig.closures.bp
       }, {
-        subject: this.saeConstants.closures.mf
+        subject: noctuaFormConfig.closures.mf
       }]
     }
 
-    this.closureCheck[this.saeConstants.edge.upstreamOfOrWithin.id] = {
-      edge: this.saeConstants.edge.upstreamOfOrWithin,
+    this.closureCheck[noctuaFormConfig.edge.upstreamOfOrWithin.id] = {
+      edge: noctuaFormConfig.edge.upstreamOfOrWithin,
       closures: [{
-        object: this.saeConstants.closures.bp
+        object: noctuaFormConfig.closures.bp
       }, {
-        subject: this.saeConstants.closures.mf
+        subject: noctuaFormConfig.closures.mf
       }]
     }
 
-    this.closureCheck[this.saeConstants.edge.partOf.id] = {
-      edge: this.saeConstants.edge.partOf,
+    this.closureCheck[noctuaFormConfig.edge.partOf.id] = {
+      edge: noctuaFormConfig.edge.partOf,
       closures: [{
-        subject: this.saeConstants.closures.bp
+        subject: noctuaFormConfig.closures.bp
       }, {
-        subject: this.saeConstants.closures.cl
+        subject: noctuaFormConfig.closures.cl
       }, {
-        subject: this.saeConstants.closures.ub
+        subject: noctuaFormConfig.closures.ub
       }, {
-        subject: this.saeConstants.closures.gp
+        subject: noctuaFormConfig.closures.gp
       }, {
-        object: this.saeConstants.closures.bp
+        object: noctuaFormConfig.closures.bp
       }, {
-        object: this.saeConstants.closures.cl
+        object: noctuaFormConfig.closures.cl
       }, {
-        object: this.saeConstants.closures.ub
+        object: noctuaFormConfig.closures.ub
       }, {
-        object: this.saeConstants.closures.cc
+        object: noctuaFormConfig.closures.cc
       }]
     };
 
-    this.closureCheck[this.saeConstants.edge.occursIn.id] = {
-      edge: this.saeConstants.edge.occursIn,
+    this.closureCheck[noctuaFormConfig.edge.occursIn.id] = {
+      edge: noctuaFormConfig.edge.occursIn,
       closures: [{
-        object: this.saeConstants.closures.cc
+        object: noctuaFormConfig.closures.cc
       }, {
-        object: this.saeConstants.closures.cl
+        object: noctuaFormConfig.closures.cl
       }, {
-        object: this.saeConstants.closures.ub
+        object: noctuaFormConfig.closures.ub
       }, {
-        subject: this.saeConstants.closures.bp
+        subject: noctuaFormConfig.closures.bp
       }, {
-        subject: this.saeConstants.closures.cl
+        subject: noctuaFormConfig.closures.cl
       }, {
-        subject: this.saeConstants.closures.ub
+        subject: noctuaFormConfig.closures.ub
       }, {
-        subject: this.saeConstants.closures.cc
+        subject: noctuaFormConfig.closures.cc
       }, {
-        subject: this.saeConstants.closures.mf
+        subject: noctuaFormConfig.closures.mf
       }]
     }
 
-    this.closureCheck[this.saeConstants.edge.hasInput.id] = {
-      edge: this.saeConstants.edge.hasInput,
+    this.closureCheck[noctuaFormConfig.edge.hasInput.id] = {
+      edge: noctuaFormConfig.edge.hasInput,
       closures: [{
-        object: this.saeConstants.closures.gpHasInput
+        object: noctuaFormConfig.closures.gpHasInput
       }, {
-        subject: this.saeConstants.closures.gpHasInput
+        subject: noctuaFormConfig.closures.gpHasInput
       }, {
-        subject: this.saeConstants.closures.mf
+        subject: noctuaFormConfig.closures.mf
       }, {
-        object: this.saeConstants.closures.mc
+        object: noctuaFormConfig.closures.mc
       }]
     };
 
-    this.closureCheck[this.saeConstants.edge.happensDuring.id] = {
-      edge: this.saeConstants.edge.happensDuring,
+    this.closureCheck[noctuaFormConfig.edge.happensDuring.id] = {
+      edge: noctuaFormConfig.edge.happensDuring,
       closures: [{
-        subject: this.saeConstants.closures.mf
+        subject: noctuaFormConfig.closures.mf
       }, {
-        object: this.saeConstants.closures.tp
+        object: noctuaFormConfig.closures.tp
       }]
     }
 
-    this.closureCheck[this.saeConstants.edge.hasPart.id] = {
-      edge: this.saeConstants.edge.hasPart,
+    this.closureCheck[noctuaFormConfig.edge.hasPart.id] = {
+      edge: noctuaFormConfig.edge.hasPart,
       closures: [{
-        subject: this.saeConstants.closures.mc
+        subject: noctuaFormConfig.closures.mc
       }, {
-        object: this.saeConstants.closures.gp
+        object: noctuaFormConfig.closures.gp
       }]
     }
   }
@@ -653,14 +658,14 @@ export default class ConfigService {
     let annoton = new Annoton();
     let modelIds = _.cloneDeep(self._modelRelationship);
     let edgeOption = {
-      selected: this.saeConstants.edge.upstreamOfOrWithin,
+      selected: noctuaFormConfig.edge.upstreamOfOrWithin,
       options: [
-        this.saeConstants.edge.upstreamOfOrWithin,
-        this.saeConstants.edge.upstreamOf,
-        this.saeConstants.edge.upstreamOfPositiveEffect,
-        this.saeConstants.edge.upstreamOfNegativeEffect,
-        this.saeConstants.edge.upstreamOfOrWithinPositiveEffect,
-        this.saeConstants.edge.upstreamOfOrWithinNegativeEffect,
+        noctuaFormConfig.edge.upstreamOfOrWithin,
+        noctuaFormConfig.edge.upstreamOf,
+        noctuaFormConfig.edge.upstreamOfPositiveEffect,
+        noctuaFormConfig.edge.upstreamOfNegativeEffect,
+        noctuaFormConfig.edge.upstreamOfOrWithinPositiveEffect,
+        noctuaFormConfig.edge.upstreamOfOrWithinNegativeEffect,
       ]
     }
 
@@ -698,15 +703,16 @@ export default class ConfigService {
     }
 
     each(modelIds[modelType].overrides, function (overridesData) {
-      let node = annoton.getNode(overridesData.id);
-      overridesData.treeLevel ? node.treeLevel = overridesData.treeLevel : angular.noop;;
-      overridesData.termRequiredList ? node.termRequiredList = overridesData.termRequiredList : angular.noop;
-      overridesData.term ? node.setTerm(overridesData.term) : angular.noop;
-      overridesData.display ? node.setDisplay(overridesData.display) : angular.noop;
-      overridesData.label ? node.label = overridesData.label : angular.noop;
-      overridesData.relationship ? node.relationship = overridesData.relationship : angular.noop;
-      overridesData.evidence ? node.evidence[0].setEvidence(overridesData.evidence) : angular.noop;
-      overridesData.reference ? node.evidence[0].setReference(overridesData.reference) : angular.noop;
+      let node: AnnotonNode = annoton.getNode(overridesData.id);
+
+      overridesData.treeLevel ? node.treeLevel = overridesData.treeLevel : null;
+      overridesData.termRequiredList ? node.termRequiredList = overridesData.termRequiredList : null;
+      overridesData.term ? node.setTerm(overridesData.term) : null;
+      overridesData.display ? node.setDisplay(overridesData.display) : null;
+      overridesData.label ? node.label = overridesData.label : null;
+      overridesData.relationship ? node.relationship = overridesData.relationship : null;
+      overridesData.evidence ? node.evidence[0].setEvidence(overridesData.evidence) : null;
+      overridesData.reference ? node.evidence[0].setReference(overridesData.reference) : null;
     });
 
     return annoton;
@@ -721,7 +727,6 @@ export default class ConfigService {
     let modelIds = _.cloneDeep(self._modelRelationship);
 
     each(modelIds[modelType].nodes, function (id) {
-      overrides.id = uuid();
       annoton.addNode(self.generateNode(id, overrides));
     });
 
@@ -734,10 +739,10 @@ export default class ConfigService {
 
     each(modelIds[modelType].overrides, function (overridesData) {
       let node = annoton.getNode(overridesData.id);
-      overridesData.term ? node.setTerm(overridesData.term) : angular.noop;
-      overridesData.display ? node.setDisplay(overridesData.display) : angular.noop;
-      overridesData.label ? node.label = overridesData.label : angular.noop;
-      overridesData.relationship ? node.relationship = overridesData.relationship : angular.noop;
+      overridesData.term ? node.setTerm(overridesData.term) : null;
+      overridesData.display ? node.setDisplay(overridesData.display) : null;
+      overridesData.label ? node.label = overridesData.label : null;
+      overridesData.relationship ? node.relationship = overridesData.relationship : null;
     });
 
     return overrides.displaySection;
@@ -749,7 +754,6 @@ export default class ConfigService {
     let nodeData = JSON.parse(JSON.stringify(self._annotonData[id]));
     let annotonNode = new AnnotonNode()
 
-    annotonNode.primaryId = id;
     annotonNode.id = (overrides && overrides.id) ? id + overrides.id : id;
     annotonNode.aspect = nodeData.aspect;
     annotonNode.ontologyClass = nodeData.ontologyClass;
@@ -781,8 +785,8 @@ export default class ConfigService {
     annotonNode.ontologyClass = nodeData.ontologyClass;
     annotonNode.label = "has part (GP)";
     annotonNode.relationship = nodeData.relationship;
-    annotonNode.displaySection = self.saeConstants.displaySection.gp;
-    annotonNode.displayGroup = self.saeConstants.displayGroup.mc;
+    annotonNode.displaySection = noctuaFormConfig.displaySection.gp;
+    annotonNode.displayGroup = noctuaFormConfig.displayGroup.mc;
     annotonNode.lookupGroup = nodeData.lookupGroup;
     annotonNode.treeLevel = 1;
     annotonNode.setTermLookup(nodeData.term.lookup.requestParams);
@@ -792,7 +796,7 @@ export default class ConfigService {
     // annotonData[id].node = annotonNode;
     annoton.addNode(annotonNode);
 
-    annoton.addEdgeById('mc', id, self.saeConstants.edge.hasPart);
+    annoton.addEdgeById('mc', id, noctuaFormConfig.edge.hasPart);
 
     return annotonNode;
   }
@@ -801,8 +805,8 @@ export default class ConfigService {
     const self = this;
 
     let annoton = self.createAnnotonModel(
-      self.saeConstants.annotonType.options.simple.name,
-      self.saeConstants.annotonModelType.options.default.name
+      noctuaFormConfig.annotonType.options.simple.name,
+      noctuaFormConfig.annotonModelType.options.default.name
     );
     let nodes = [{
       "id": "gp",
