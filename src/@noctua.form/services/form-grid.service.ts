@@ -1,34 +1,29 @@
 import { Injector } from '@angular/core';
 
+//Config
+import { noctuaFormConfig } from './../noctua-form-config';
+import { NoctuaFormConfigService } from './config/noctua-form-config.service';
+import { NoctuaLookupService } from './lookup.service';
 
 import * as _ from 'lodash';
 const each = require('lodash/forEach');
 
 export class FormGridService {
-  saeConstants;
-  config
-  $timeout
-  lookup
   annoton;
+  annotonPresentation;
 
-  constructor(saeConstants, config, $timeout, lookup) {
-    noctuaFormConfig = saeConstants
-    this.config = config;
-    this.$timeout = $timeout;
-    this.lookup = lookup;
-    this.annoton = this.config.createAnnotonModel(
+  constructor(private noctuaFormConfigService: NoctuaFormConfigService,
+    private noctuaLookupService: NoctuaLookupService) {
+    this.annoton = this.noctuaFormConfigService.createAnnotonModel(
       noctuaFormConfig.annotonType.options.simple.name,
       noctuaFormConfig.annotonModelType.options.default.name
     );
-
   }
 
   setAnnotonType(annoton, annotonType) {
     annoton.setAnnotonType(annotonType.name);
 
-
-
-    this.annoton = this.config.createAnnotonModel(
+    this.annoton = this.noctuaFormConfigService.createAnnotonModel(
       annotonType,
       annoton.annotonModelType,
       annoton
@@ -39,7 +34,7 @@ export class FormGridService {
   setAnnotonModelType(annoton, annotonModelType) {
 
 
-    this.annoton = this.config.createAnnotonModel(
+    this.annoton = this.noctuaFormConfigService.createAnnotonModel(
       annoton.annotonType,
       annotonModelType,
       annoton)
@@ -47,8 +42,6 @@ export class FormGridService {
   }
 
   getAnnotonPresentation(annoton) {
-
-
     let result = {
       geneProduct: annoton.getNode('gp'),
       mcNode: annoton.getNode('mc'),
@@ -75,7 +68,6 @@ export class FormGridService {
     });
 
     return result;
-
   }
 
   addAnnotonPresentation(annoton, displaySectionId) {
@@ -105,44 +97,29 @@ export class FormGridService {
 
   }
 
-
-  /**
-   *  Populates the grid with GO Terms, MF, CC, BP as roots
-   */
   initalizeForm() {
-
-
     this.annotonPresentation = this.getAnnotonPresentation(this.annoton);
-
   }
 
   addGPNode(annoton) {
-
-
     let id = 'gp-' + annoton.nodes.length;
 
-    this.config.addGPAnnotonData(annoton, id);
+    this.noctuaFormConfigService.addGPAnnotonData(annoton, id);
   }
 
   initalizeFormData() {
-
-
-    this.annoton = this.config.createAnnotonModelFakeData();
+    this.annoton = this.noctuaFormConfigService.createAnnotonModelFakeData();
     this.initalizeForm()
 
   }
 
   linkFormNode(entity, srcNode) {
-
-
     entity.modelId = srcNode.modelId;
     entity.setTerm(srcNode.getTerm());
   }
 
   cloneForm(srcAnnoton, filterNodes) {
-
-
-    this.annoton = this.config.createAnnotonModel(
+    this.annoton = this.noctuaFormConfigService.createAnnotonModel(
       srcAnnoton.annotonType,
       srcAnnoton.annotonModelType
     );
@@ -167,9 +144,7 @@ export class FormGridService {
 
 
   clearForm() {
-
-
-    this.annoton = this.config.createAnnotonModel(
+    this.annoton = this.noctuaFormConfigService.createAnnotonModel(
       this.annoton.annotonType,
       this.annoton.annotonModelType
     )

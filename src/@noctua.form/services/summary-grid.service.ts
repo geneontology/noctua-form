@@ -1,25 +1,19 @@
+//Config
+import { noctuaFormConfig } from './../noctua-form-config';
+import { NoctuaFormConfigService } from './config/noctua-form-config.service';
+import { NoctuaLookupService } from './lookup.service';
+
+
 import * as _ from 'lodash';
 const each = require('lodash/forEach');
 
 export class SummaryGridService {
-  saeConstants
-  uiGridConstants
-  config
-  $timeout
-  lookup
-  gridApi
   columnDefs
+  gridOptions
 
 
-  constructor(saeConstants, uiGridConstants, config, $timeout, lookup) {
-    noctuaFormConfig = saeConstants;
-    this.uiGridConstants = uiGridConstants;
-    this.config = config;
-    this.$timeout = $timeout;
-    this.lookup = lookup;
-
-    this.gridApi = null;
-
+  constructor(private noctuaFormConfigService: NoctuaFormConfigService,
+    private noctuaLookupService: NoctuaLookupService) {
 
     this.columnDefs = [{
       name: 'gp',
@@ -218,56 +212,7 @@ export class SummaryGridService {
       // keyDownOverrides: [{keyCode: 27}]
       columnDefs: this.columnDefs,
       data: [],
-
     };
-
-    this.registerApi();
-  }
-
-  setGridScope(scope) {
-    const self = this;
-    self.gridOptions.appScopeProvider = scope;
-  }
-
-
-  registerApi() {
-    const self = this;
-    self.gridOptions.onRegisterApi = function (gridApi) {
-      self.gridApi = gridApi;
-
-      self.$timeout(function () {
-        self.gridApi.core.handleWindowResize();
-      }, 0);
-    };
-  }
-
-
-  /**
-   * Expands all nodes. Expanded state is the default on initialization 
-   */
-  expandAll() {
-    const self = this;
-    self.$timeout(function () {
-      self.gridApi.treeBase.expandAllRows();
-    });
-  }
-
-  setGrid(annotonData) {
-    const self = this;
-    let gridData = [];
-
-    each(annotonData, function (row, key) {
-      each(row.annotonPresentation.fd, function (nodeGroup) {
-        each(nodeGroup.nodes, function (node) {
-          let term = node.getTerm();
-
-          if (node.id !== 'mc' && node.id !== 'gp' && term.id) {
-            self.setGridRow(row, node, gridData);
-          }
-        });
-      });
-    });
-    self.gridOptions.data = gridData;
   }
 
   setGridRow(row, node, gridData) {

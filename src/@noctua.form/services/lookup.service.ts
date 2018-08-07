@@ -22,24 +22,19 @@ engine.use_jsonp(true)
 })
 export class NoctuaLookupService {
   name;
-  $http;
-  $q;
-  $timeout;
-  $location;
-  $sce;
-  $rootScope;
+
   $mdDialog;
   linker;
   golrURLBase;
   trusted;
   localClosures;
 
-  constructor($http, $q, $timeout, $location, $sce, $rootScope, $mdDialog) {
+  constructor() {
     this.name = 'DefaultLookupName';
 
     this.linker = new amigo.linker();
     this.golrURLBase = `/select`;
-    this.trusted = this.$sce.trustAsResourceUrl(this.golrURLBase);
+    // this.trusted = this.$sce.trustAsResourceUrl(this.golrURLBase);
 
     this.localClosures = [];
 
@@ -331,7 +326,7 @@ export class NoctuaLookupService {
 
   localClosureExist(term, closure) {
     const self = this;
-    let data = new AnnotonNodeClosure(term, closure)
+    let data = new AnnotonNodeClosure(term, closure);
 
     return (_.find(self.localClosures, data));
   }

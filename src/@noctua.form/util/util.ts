@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 const each = require('lodash/forEach');
 const uuid = require('uuid/v1');
-import Evidence from "../annoton/evidence.js";
+import { Evidence } from "../annoton/evidence.js";
 
 export class Util {
 
