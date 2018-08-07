@@ -4,6 +4,11 @@ import { AnnotonParser } from './../annoton/parser/annoton-parser';
 import { AnnotonError } from "./../annoton/parser/annoton-error";
 import { Evidence } from './../annoton/evidence';
 
+//Config
+import { noctuaFormConfig } from './../noctua-form-config';
+import { NoctuaFormConfigService } from './config/noctua-form-config.service';
+import { NoctuaLookupService } from './lookup.service';
+
 const each = require('lodash/forEach');
 const forOwn = require('lodash/forOwn');
 const uuid = require('uuid/v1');
@@ -24,7 +29,7 @@ const minerva_manager = require('bbop-manager-minerva');
 @Injectable({
   providedIn: 'root'
 })
-export class GraphService {
+export class NoctuaGraphService {
   local_id;
   local_golr_server;
   local_barista_location;
@@ -32,14 +37,7 @@ export class GraphService {
   local_barista_token;
   local_collapsible_relations;
 
-
-  config;
-  saeConstants;
-  $http;
-  $q;
-  $rootScope;
-  $timeout;
-  $mdDialog;
+  title;
   model_id;
   golr_server;
   barista_location;
@@ -51,9 +49,7 @@ export class GraphService {
   manager;
   graph;
   loggedIn;
-  lookup;
-  formGrid;;
-  dialogService;;
+
   userInfo;
   modelInfo;
   localClosures;
@@ -61,21 +57,12 @@ export class GraphService {
   modelState;
   gridData
 
-  constructor() {
-    this.config = config;
-    noctuaFormConfig = saeConstants
-    this.$http = $http;
-    this.$q = $q;
-    this.$rootScope = $rootScope;
-    this.$timeout = $timeout;
-    this.$mdDialog = $mdDialog;
+  constructor(private noctuaFormConfigService: NoctuaFormConfigService,
+    private noctuaLookupService: NoctuaLookupService) {
     this.engine = null;
     this.linker = new amigo.linker();
     this.manager = null;
     this.graph = null;
-    this.lookup = lookup;
-    this.formGrid = formGrid;
-    this.dialogService = dialogService;
     this.userInfo = {
       groups: [],
       selectedGroup: {}
@@ -83,7 +70,6 @@ export class GraphService {
     this.modelInfo = {
       graphEditorUrl: ""
     }
-
     this.localClosures = [];
   }
 
@@ -95,7 +81,7 @@ export class GraphService {
 
     this.engine = new jquery_engine(barista_response);
     this.engine.method('POST');
-    var manager = new minerva_manager(
+    let manager = new minerva_manager(
       this.barista_location,
       this.minerva_definition_name,
       this.barista_token,
@@ -124,8 +110,8 @@ export class GraphService {
 
     // Likely the result of serious unhappiness on Minerva.
     manager.register('error', function (resp /*, man */) {
-      var perm_flag = 'InsufficientPermissionsException';
-      var token_flag = 'token';
+      let perm_flag = 'InsufficientPermissionsException';
+      let token_flag = 'token';
       if (resp.message() && resp.message().indexOf(perm_flag) !== -1) {
         alert('Error: it seems like you do not have permission to ' +
           'perform that operation. Did you remember to login?');
@@ -144,9 +130,8 @@ export class GraphService {
       let noctua_graph = model.graph;
 
       self.graph = new noctua_graph();
-      self.model_id = local_id = global_id = resp.data().id;
+      self.model_id = resp.data().id;
       self.graph.load_data_basic(resp.data());
-
       self.modelTitle = null;
       self.modelState = null;
 
@@ -155,11 +140,11 @@ export class GraphService {
       let stateAnnotations = self.graph.get_annotations_by_key('state');
 
       if (annotations.length > 0) {
-        self.modelTitle = annotations[0].value(); // there should be only one
+        self.modelTitle = annotations[0].value();
       }
 
       if (stateAnnotations.length > 0) {
-        self.modelState = stateAnnotations[0].value(); // there should be only one
+        self.modelState = stateAnnotations[0].value();
       }
 
       self.graphPreParse(self.graph).then(function (data) {
@@ -175,12 +160,6 @@ export class GraphService {
           self.gridData = {
             annotons: [...self.annotonsToTable(self.graph, annotons), ...self.ccComponentsToTable(self.graph, data)]
           };
-
-          self.$timeout(() => {
-            self.$rootScope.$emit('rebuilt', {
-              gridData: self.gridData
-            });
-          }, 10);
         });
 
       self.title = self.graph.get_annotations_by_key('title');
@@ -269,7 +248,7 @@ export class GraphService {
   }
 
   getNodeLabel(node) {
-    var label = '';
+    let label = '';
     if (node) {
       each(node.types(), function (in_type) {
 
@@ -289,7 +268,7 @@ export class GraphService {
   }
 
   getNodeId(node) {
-    var result = null;
+    let result = null;
     if (node) {
       each(node.types(), function (in_type) {
         let type;
@@ -383,8 +362,8 @@ export class GraphService {
         let objectNode = graph.get_node(e.object_id())
         let objectTermId = self.getNodeId(objectNode);
 
-        if (self.config.closureCheck[predicateId]) {
-          each(self.config.closureCheck[predicateId].closures, function (closure) {
+        if (self.noctuaFormConfigService.closureCheck[predicateId]) {
+          each(self.noctuaFormConfigService.closureCheck[predicateId].closures, function (closure) {
             if (closure.subject) {
               promises.push(self.isaClosurePreParse(termId, closure.subject.id, node));
             }
@@ -398,7 +377,7 @@ export class GraphService {
     });
 
     return self.$q.all(promises).then(function (data) {
-      // console.log('all closures', self.lookup.getAllLocalClosures())
+      // console.log('all closures', self.snoctuaLookupService.getAllLocalClosures())
 
       // each(data, function (entity) {
       //entity.annoton.parser.parseNodeOntology(entity.node);
@@ -410,10 +389,10 @@ export class GraphService {
     const self = this;
     let deferred = self.$q.defer();
 
-    self.lookup.isaClosure(a, b).then(function (data) {
+    self.noctuaLookupService.isaClosure(a, b).then(function (data) {
       let nodeId = node.id();
 
-      self.lookup.addLocalClosure(a, b, data);
+      self.noctuaLookupService.addLocalClosure(a, b, data);
 
       deferred.resolve({
         node: node,
@@ -428,7 +407,7 @@ export class GraphService {
     const self = this;
     let deferred = self.$q.defer();
 
-    self.lookup.isaClosure(a, b).then(function (data) {
+    self.noctuaLookupService.isaClosure(a, b).then(function (data) {
       if (data) {
         node.closures.push(a);
         //annoton.parser.parseNodeOntology(node, data);
@@ -447,9 +426,9 @@ export class GraphService {
   determineAnnotonType(gpObjectNode) {
     const self = this;
 
-    if (self.lookup.getLocalClosure(gpObjectNode.term.id, noctuaFormConfig.closures.gp.id)) {
+    if (self.noctuaLookupService.getLocalClosure(gpObjectNode.term.id, noctuaFormConfig.closures.gp.id)) {
       return noctuaFormConfig.annotonType.options.simple.name;
-    } else if (self.lookup.getLocalClosure(gpObjectNode.term.id, noctuaFormConfig.closures.mc.id)) {
+    } else if (self.noctuaLookupService.getLocalClosure(gpObjectNode.term.id, noctuaFormConfig.closures.mc.id)) {
       return noctuaFormConfig.annotonType.options.complex.name;
     }
 
@@ -492,7 +471,7 @@ export class GraphService {
         let annotonType = self.determineAnnotonType(gpObjectNode);
         let annotonModelType = self.determineAnnotonModelType(mfSubjectNode, mfEdgesIn);
 
-        let annoton = self.config.createAnnotonModel(
+        let annoton = self.noctuaFormConfigService.createAnnotonModel(
           annotonType ? annotonType : noctuaFormConfig.annotonType.options.simple.name,
           annotonModelType
         );
@@ -506,7 +485,7 @@ export class GraphService {
         annoton.parser = new AnnotonParser(noctuaFormConfig);
 
         if (annotonType) {
-          if (!self.lookup.getLocalClosure(mfSubjectNode.term.id, noctuaFormConfig.closures.mf.id)) {
+          if (!self.noctuaLookupService.getLocalClosure(mfSubjectNode.term.id, noctuaFormConfig.closures.mf.id)) {
             isDoomed = true;
           }
         } else {
@@ -545,7 +524,7 @@ export class GraphService {
         let isDoomed = false
         let annotonType = self.determineAnnotonType(gpSubjectNode);
 
-        let annoton = self.config.createAnnotonModel(
+        let annoton = self.noctuaFormConfigService.createAnnotonModel(
           annotonType ? annotonType : noctuaFormConfig.annotonType.options.simple.name,
           noctuaFormConfig.annotonModelType.options.ccOnly.name
         );
@@ -559,7 +538,7 @@ export class GraphService {
         annoton.parser = new AnnotonParser(noctuaFormConfig);
 
         if (annotonType) {
-          let closureRange = self.lookup.getLocalClosureRange(ccObjectNode.term.id, self.config.closureCheck[predicateId]);
+          let closureRange = self.noctuaLookupService.getLocalClosureRange(ccObjectNode.term.id, self.noctuaFormConfigService.closureCheck[predicateId]);
 
           if (!closureRange) {
             isDoomed = true;
@@ -572,7 +551,7 @@ export class GraphService {
           self.graphToAnnatonDFS(graph, annoton, gpEdgesIn, annotonNode, isDoomed);
 
           if (annoton.annotonType === noctuaFormConfig.annotonType.options.complex.name) {
-            annoton.populateComplexData();
+            //annoton.populateComplexData();
           }
 
           annotons.push(annoton);
@@ -599,7 +578,7 @@ export class GraphService {
         let toMFObject = toMFEdge.object_id();
 
         if (annotonNode.id === "mc" && predicateId === noctuaFormConfig.edge.hasPart.id) {
-          self.config.addGPAnnotonData(annoton, toMFObject);
+          self.noctuaFormConfigService.addGPAnnotonData(annoton, toMFObject);
         }
 
         if (annoton.annotonModelType === noctuaFormConfig.annotonModelType.options.bpOnly.name) {
@@ -625,7 +604,7 @@ export class GraphService {
               node.object.setIsComplement(subjectNode.isComplement)
 
               //self.check
-              let closureRange = self.lookup.getLocalClosureRange(subjectNode.term.id, self.config.closureCheck[predicateId]);
+              let closureRange = self.noctuaLookupService.getLocalClosureRange(subjectNode.term.id, self.noctuaFormConfigService.closureCheck[predicateId]);
 
               if (!closureRange && !_.find(noctuaFormConfig.causalEdges, {
                 id: predicateId
@@ -658,7 +637,7 @@ export class GraphService {
       each(annoton.nodes, function (node) {
         let term = node.getTerm();
         if (term) {
-          promises.push(self.isaNodeClosure(node.lookupGroup, term.id, node, annoton));
+          promises.push(self.isaNodeClosure(node.noctuaLookupServiceGroup, term.id, node, annoton));
 
           forOwn(annoton.edges, function (srcEdge, key) {
             each(srcEdge.nodes, function (srcNode) {
@@ -1070,8 +1049,8 @@ export class GraphService {
         'your operation was likely not performed');
     }, 10);
     manager.register('error', function (resp /*, man */) {
-      var perm_flag = 'InsufficientPermissionsException';
-      var token_flag = 'token';
+      let perm_flag = 'InsufficientPermissionsException';
+      let token_flag = 'token';
       if (resp.message() && resp.message().indexOf(perm_flag) !== -1) {
         alert('Error: it seems like you do not have permission to ' +
           'perform that operation. Did you remember to login?');
@@ -1145,7 +1124,7 @@ export class GraphService {
   deleteAnnoton(annoton, ev) {
     const self = this;
 
-    var confirm = self.$mdDialog.confirm()
+    let confirm = self.$mdDialog.confirm()
       .title('Delete Annoton')
       .textContent('All of the nodes associated with this annoton model will be deleted')
       .ariaLabel('Delete Annoton')
@@ -1166,4 +1145,3 @@ export class GraphService {
   }
 
 }
-GraphService.$inject = ['saeConstants', 'config', '$http', '$q', '$rootScope', '$timeout', '$mdDialog', 'dialogService', 'lookup', 'formGrid'];

@@ -14,6 +14,7 @@ export class Annoton extends SaeGraph {
   id;
   label;
   edgeOption;
+  parser;
 
   constructor() {
     super();

@@ -70,7 +70,7 @@ export class AnnotonNode {
 
   }
 
-  getTerm(value) {
+  getTerm() {
     return this.term.control.value;
   }
 

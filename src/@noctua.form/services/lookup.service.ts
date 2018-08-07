@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core'
 import * as _ from 'lodash';
-import AnnotonNode from './../annoton/annoton-node.js';
-import Evidence from './../annoton/evidence.js';
+import { AnnotonNode } from './../annoton/annoton-node.js';
+import { AnnotonNodeClosure } from './../annoton/annoton-noode-closure';
+import { Evidence } from './../annoton/evidence.js';
 
 const each = require('lodash/forEach');
-
 const bbop = require('bbop-core');
 const amigo = require('amigo2');
 const golr_conf = require('golr-conf');
@@ -20,7 +20,7 @@ engine.use_jsonp(true)
 @Injectable({
   providedIn: 'root'
 })
-export class LookupService {
+export class NoctuaLookupService {
   name;
   $http;
   $q;
@@ -36,16 +36,9 @@ export class LookupService {
 
   constructor($http, $q, $timeout, $location, $sce, $rootScope, $mdDialog) {
     this.name = 'DefaultLookupName';
-    this.$http = $http;
-    this.$q = $q;
-    this.$timeout = $timeout;
-    this.$location = $location;
-    this.$sce = $sce;
-    this.$rootScope = $rootScope;
-    this.$mdDialog = $mdDialog;
+
     this.linker = new amigo.linker();
-    /* global global_golr_neo_server */
-    this.golrURLBase = `${global_golr_neo_server}/select`;
+    this.golrURLBase = `/select`;
     this.trusted = this.$sce.trustAsResourceUrl(this.golrURLBase);
 
     this.localClosures = [];
@@ -322,38 +315,6 @@ export class LookupService {
     return curie.replace(/_/, ':');
   }
 
-  inlineLookup(colName, oldValue, val /*, acEntry */) {
-    var inlineBlock = this.parsedConfig.inline;
-
-    var terms = [];
-    if (inlineBlock && inlineBlock[colName]) {
-      terms = inlineBlock[colName];
-    }
-
-    var matches = [];
-
-    val = val || '';
-    if (val !== null) {
-      var valUpper = val.toUpperCase();
-      _.each(terms, function (v) {
-        if (v.label.toUpperCase().indexOf(valUpper) >= 0) {
-          matches.push(v);
-        }
-      });
-    }
-
-    return new Promise(function (resolve /*, reject */) {
-      setTimeout(function () {
-        resolve(matches);
-      }, 20);
-    });
-
-
-
-
-    // return matches;
-  }
-
   //Closures
   addLocalClosure(term, closure, isaClosure) {
     const self = this;
@@ -370,10 +331,7 @@ export class LookupService {
 
   localClosureExist(term, closure) {
     const self = this;
-    let data = {
-      term: term,
-      closure: closure
-    }
+    let data = new AnnotonNodeClosure(term, closure)
 
     return (_.find(self.localClosures, data));
   }
