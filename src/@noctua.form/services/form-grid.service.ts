@@ -2,6 +2,11 @@ import _ from 'lodash';
 const each = require('lodash/forEach');
 
 export default class FormGridService {
+  saeConstants;
+  config
+  $timeout
+  lookup
+  annoton;
   constructor(saeConstants, config, $timeout, lookup) {
     this.saeConstants = saeConstants
     this.config = config;
@@ -167,7 +172,4 @@ export default class FormGridService {
     )
     self.initalizeForm();
   }
-
-
 }
-FormGridService.$inject = ['saeConstants', 'config', '$timeout', 'lookup'];

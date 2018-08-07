@@ -1,7 +1,16 @@
 import _ from 'lodash';
 const each = require('lodash/forEach');
 
-export default class SummaryGridService {
+export class SummaryGridService {
+  saeConstants
+  uiGridConstants
+  config
+  $timeout
+  lookup
+  gridApi
+  columnDefs
+
+
   constructor(saeConstants, uiGridConstants, config, $timeout, lookup) {
     this.saeConstants = saeConstants;
     this.uiGridConstants = uiGridConstants;
@@ -331,6 +340,4 @@ export default class SummaryGridService {
       return node.relationship.label;
     }
   }
-
 }
-SummaryGridService.$inject = ['saeConstants', 'uiGridConstants', 'config', '$timeout', 'lookup'];
