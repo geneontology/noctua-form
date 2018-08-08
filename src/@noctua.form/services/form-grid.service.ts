@@ -6,6 +6,7 @@ import { NoctuaFormConfigService } from './config/noctua-form-config.service';
 import { NoctuaLookupService } from './lookup.service';
 
 import * as _ from 'lodash';
+declare const require: any;
 const each = require('lodash/forEach');
 
 export class FormGridService {

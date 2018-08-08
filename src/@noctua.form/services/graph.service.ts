@@ -1,4 +1,9 @@
 import { Injectable } from '@angular/core';
+
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, Subscriber } from 'rxjs';
+import { map, filter, reduce, catchError, retry, tap } from 'rxjs/operators';
+
 import { Annoton } from './../annoton/annoton';
 import { AnnotonParser } from './../annoton/parser/annoton-parser';
 import { AnnotonError } from "./../annoton/parser/annoton-error";
@@ -8,6 +13,9 @@ import { Evidence } from './../annoton/evidence';
 import { noctuaFormConfig } from './../noctua-form-config';
 import { NoctuaFormConfigService } from './config/noctua-form-config.service';
 import { NoctuaLookupService } from './lookup.service';
+
+import * as _ from 'lodash';
+declare const require: any;
 
 const each = require('lodash/forEach');
 const forOwn = require('lodash/forOwn');
@@ -58,6 +66,7 @@ export class NoctuaGraphService {
   gridData
 
   constructor(private noctuaFormConfigService: NoctuaFormConfigService,
+    private httpClient: HttpClient,
     private noctuaLookupService: NoctuaLookupService) {
     this.engine = null;
     this.linker = new amigo.linker();
@@ -76,7 +85,7 @@ export class NoctuaGraphService {
   initialize() {
     const self = this;
 
-    self.getUserInfo();
+    //   self.getUserInfo();
     self.createGraphUrls(self.model_id);
 
     this.engine = new jquery_engine(barista_response);
@@ -147,6 +156,7 @@ export class NoctuaGraphService {
         self.modelState = stateAnnotations[0].value();
       }
 
+      /*
       self.graphPreParse(self.graph).then(function (data) {
         let deferred = self.$q.defer();
         deferred.resolve(data);
@@ -161,6 +171,7 @@ export class NoctuaGraphService {
             annotons: [...self.annotonsToTable(self.graph, annotons), ...self.ccComponentsToTable(self.graph, data)]
           };
         });
+      */
 
       self.title = self.graph.get_annotations_by_key('title');
     }
@@ -227,6 +238,7 @@ export class NoctuaGraphService {
     }]
   }
 
+  /*
   getUserInfo() {
     const self = this;
     let url = self.barista_location + "/user_info_by_token/" + self.barista_token;
@@ -241,6 +253,7 @@ export class NoctuaGraphService {
         }
       });
   }
+  */
 
   addModel() {
     const self = this
@@ -349,42 +362,36 @@ export class NoctuaGraphService {
 
     return result;
   }
-
-  graphPreParse(graph) {
-    const self = this;
-    var promises = [];
-
-    each(graph.get_nodes(), function (node) {
-      let termId = self.getNodeId(node);
-
-      each(graph.get_edges_by_subject(node.id()), function (e) {
-        let predicateId = e.predicate_id();
-        let objectNode = graph.get_node(e.object_id())
-        let objectTermId = self.getNodeId(objectNode);
-
-        if (self.noctuaFormConfigService.closureCheck[predicateId]) {
-          each(self.noctuaFormConfigService.closureCheck[predicateId].closures, function (closure) {
-            if (closure.subject) {
-              promises.push(self.isaClosurePreParse(termId, closure.subject.id, node));
-            }
-
-            if (objectTermId && closure.object) {
-              promises.push(self.isaClosurePreParse(objectTermId, closure.object.id, node));
-            }
-          });
-        }
+  /*
+    graphPreParse(graph) {
+      const self = this;
+      var promises = [];
+  
+      each(graph.get_nodes(), function (node) {
+        let termId = self.getNodeId(node);
+  
+        each(graph.get_edges_by_subject(node.id()), function (e) {
+          let predicateId = e.predicate_id();
+          let objectNode = graph.get_node(e.object_id())
+          let objectTermId = self.getNodeId(objectNode);
+  
+          if (self.noctuaFormConfigService.closureCheck[predicateId]) {
+            each(self.noctuaFormConfigService.closureCheck[predicateId].closures, function (closure) {
+              if (closure.subject) {
+                promises.push(self.isaClosurePreParse(termId, closure.subject.id, node));
+              }
+  
+              if (objectTermId && closure.object) {
+                promises.push(self.isaClosurePreParse(objectTermId, closure.object.id, node));
+              }
+            });
+          }
+        });
       });
-    });
-
-    return self.$q.all(promises).then(function (data) {
-      // console.log('all closures', self.snoctuaLookupService.getAllLocalClosures())
-
-      // each(data, function (entity) {
-      //entity.annoton.parser.parseNodeOntology(entity.node);
-      // });
-    });
-  }
-
+  
+    }
+  */
+  /*
   isaClosurePreParse(a, b, node) {
     const self = this;
     let deferred = self.$q.defer();
@@ -435,6 +442,7 @@ export class NoctuaGraphService {
     return null;
   }
 
+  */
   determineAnnotonModelType(mfNode, mfEdgesIn) {
     const self = this;
     let result = noctuaFormConfig.annotonModelType.options.default.name;
@@ -468,7 +476,7 @@ export class NoctuaGraphService {
         let gpObjectNode = self.subjectToTerm(graph, gpId);
         let gpVerified = false;
         let isDoomed = false
-        let annotonType = self.determineAnnotonType(gpObjectNode);
+        let annotonType = '';// self.determineAnnotonType(gpObjectNode);
         let annotonModelType = self.determineAnnotonModelType(mfSubjectNode, mfEdgesIn);
 
         let annoton = self.noctuaFormConfigService.createAnnotonModel(
@@ -482,12 +490,12 @@ export class NoctuaGraphService {
         annotonNode.setIsComplement(mfSubjectNode.isComplement);
         annotonNode.modelId = mfId;
 
-        annoton.parser = new AnnotonParser(noctuaFormConfig);
+        //  annoton.parser = new AnnotonParser(noctuaFormConfig);
 
         if (annotonType) {
-          if (!self.noctuaLookupService.getLocalClosure(mfSubjectNode.term.id, noctuaFormConfig.closures.mf.id)) {
-            isDoomed = true;
-          }
+          //  if (!self.noctuaLookupService.getLocalClosure(mfSubjectNode.term.id, noctuaFormConfig.closures.mf.id)) {
+          //     isDoomed = true;
+          //    }
         } else {
           annoton.parser.setCardinalityError(annotonNode, gpObjectNode.term, noctuaFormConfig.edge.enabledBy.id);
         }
@@ -502,7 +510,7 @@ export class NoctuaGraphService {
       }
     });
 
-    self.parseNodeClosure(annotons);
+    // self.parseNodeClosure(annotons);
 
     return annotons;
   }
@@ -522,7 +530,7 @@ export class NoctuaGraphService {
         let gpSubjectNode = self.subjectToTerm(graph, gpId);
         let gpVerified = false;
         let isDoomed = false
-        let annotonType = self.determineAnnotonType(gpSubjectNode);
+        let annotonType = '';//self.determineAnnotonType(gpSubjectNode);
 
         let annoton = self.noctuaFormConfigService.createAnnotonModel(
           annotonType ? annotonType : noctuaFormConfig.annotonType.options.simple.name,
@@ -535,14 +543,14 @@ export class NoctuaGraphService {
         annotonNode.setIsComplement(gpSubjectNode.isComplement);
         annotonNode.modelId = gpId;
 
-        annoton.parser = new AnnotonParser(noctuaFormConfig);
+        //annoton.parser = new AnnotonParser(noctuaFormConfig);
 
         if (annotonType) {
-          let closureRange = self.noctuaLookupService.getLocalClosureRange(ccObjectNode.term.id, self.noctuaFormConfigService.closureCheck[predicateId]);
+          //   let closureRange = self.noctuaLookupService.getLocalClosureRange(ccObjectNode.term.id, self.noctuaFormConfigService.closureCheck[predicateId]);
 
-          if (!closureRange) {
-            isDoomed = true;
-          }
+          //   if (!closureRange) {
+          //      isDoomed = true;
+          //  }
 
           if (isDoomed) {
             annoton.parser.setCardinalityError(annotonNode, ccObjectNode.term, predicateId);
@@ -562,7 +570,7 @@ export class NoctuaGraphService {
       }
     });
 
-    self.parseNodeClosure(annotons);
+    //  self.parseNodeClosure(annotons);
 
     return annotons;
   }
@@ -587,7 +595,7 @@ export class NoctuaGraphService {
           })
 
           if (causalEdge) {
-            self.adjustBPOnly(annoton, causalEdge);
+            //   self.adjustBPOnly(annoton, causalEdge);
           }
         }
 
@@ -604,7 +612,7 @@ export class NoctuaGraphService {
               node.object.setIsComplement(subjectNode.isComplement)
 
               //self.check
-              let closureRange = self.noctuaLookupService.getLocalClosureRange(subjectNode.term.id, self.noctuaFormConfigService.closureCheck[predicateId]);
+              let closureRange = 'false';// self.noctuaLookupService.getLocalClosureRange(subjectNode.term.id, self.noctuaFormConfigService.closureCheck[predicateId]);
 
               if (!closureRange && !_.find(noctuaFormConfig.causalEdges, {
                 id: predicateId
@@ -629,6 +637,7 @@ export class NoctuaGraphService {
 
   }
 
+  /*
   parseNodeClosure(annotons) {
     const self = this;
     let promises = [];
@@ -659,6 +668,7 @@ export class NoctuaGraphService {
       });
     });
   }
+  */
 
   graphToAnnatonDFSError(annoton, annotonNode) {
     const self = this;
@@ -693,7 +703,7 @@ export class NoctuaGraphService {
       gp: gpNode.term.control.value.label,
       original: JSON.parse(JSON.stringify(annoton)),
       annoton: annoton,
-      annotonPresentation: self.formGrid.getAnnotonPresentation(annoton),
+      //    annotonPresentation: self.formGrid.getAnnotonPresentation(annoton),
     }
 
     return row;
@@ -704,13 +714,15 @@ export class NoctuaGraphService {
     let result = [];
 
     each(annotons, function (annoton) {
-      let annotonRows = self.ccComponentsToTableRows(graph, annoton);
+      //   let annotonRows = self.ccComponentsToTableRows(graph, annoton);
 
-      result = result.concat(annotonRows);
+      //  result = result.concat(annotonRows);
     });
 
     return result;
   }
+
+  /*
 
   ccComponentsToTableRows(graph, annoton) {
     const self = this;
@@ -731,6 +743,7 @@ export class NoctuaGraphService {
 
     return row;
   }
+  */
 
   addIndividual(reqs, node) {
     node.saveMeta = {};
@@ -797,6 +810,7 @@ export class NoctuaGraphService {
       }
     });
   }
+  /*
 
   evidenceUseGroups(reqs, evidence) {
     const self = this;
@@ -1044,11 +1058,11 @@ export class NoctuaGraphService {
           resp.message_type() + '): ' + resp.message());
       }, 10);
 
-    manager.register('warning', function (resp /*, man */) {
+    manager.register('warning', function (resp ) {
       alert('Warning: ' + resp.message() + '; ' +
         'your operation was likely not performed');
     }, 10);
-    manager.register('error', function (resp /*, man */) {
+    manager.register('error', function (resp) {
       let perm_flag = 'InsufficientPermissionsException';
       let token_flag = 'token';
       if (resp.message() && resp.message().indexOf(perm_flag) !== -1) {
@@ -1060,7 +1074,7 @@ export class NoctuaGraphService {
         console.log('error:', resp, resp.message_type(), resp.message());
       }
     }, 10);
-    manager.register('meta', function ( /* resp , man */) {
+    manager.register('meta', function () {
       console.log('## a meta callback?');
     });
 
@@ -1143,5 +1157,6 @@ export class NoctuaGraphService {
 
     });
   }
+  */
 
 }

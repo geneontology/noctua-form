@@ -3,6 +3,8 @@ import { noctuaFormConfig } from './../../noctua-form-config';
 
 import * as _ from 'lodash';
 
+declare const require: any;
+
 const each = require('lodash/forEach');
 const uuid = require('uuid/v1');
 import { AnnotonNode } from './../../annoton/annoton-node';

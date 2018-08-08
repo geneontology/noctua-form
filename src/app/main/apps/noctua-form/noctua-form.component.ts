@@ -6,9 +6,7 @@ import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loa
 import { locale as english } from './i18n/en';
 
 import * as _ from 'lodash';
-const each = require('lodash/forEach');
-import AnnotonError from "@noctua.form//annoton/parser/annoton-error.js";
-import Util from "./util/util.js";
+
 
 @Component({
   selector: 'app-noctua-form',

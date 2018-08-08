@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+declare const require: any;
 const each = require('lodash/forEach');
 
 import { AnnotonError } from "./parser/annoton-error";

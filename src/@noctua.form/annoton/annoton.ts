@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+declare const require: any;
 const each = require('lodash/forEach');
 const uuid = require('uuid/v1');
 import { SaeGraph } from './sae-graph.js';

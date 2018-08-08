@@ -1,17 +1,19 @@
 import * as _ from 'lodash';
+declare const require: any;
 const each = require('lodash/forEach');
+
+import { noctuaFormConfig } from './../../noctua-form-config';
 
 import { AnnotonError } from './annoton-error.js';
 
 export class AnnotonParser {
-  saeConstants;
   rules;
   errors;
   warnings;
-  clean;
+  clean: boolean;
+  noctuaFormConfig
 
-  constructor(saeConstants) {
-    noctuaFormConfig = saeConstants;
+  constructor() {
     this.rules = [];
     this.errors = [];
     this.warnings = [];
@@ -56,7 +58,7 @@ export class AnnotonParser {
       }
     });
 
-    self.clean &= result;
+    self.clean = self.clean && result;
     return result;
   }
 
@@ -89,7 +91,7 @@ export class AnnotonParser {
       result = false;
     }
 
-    self.clean &= result;
+    self.clean = self.clean && result;
     return result;
   }
 
@@ -114,7 +116,7 @@ export class AnnotonParser {
       }
     });
 
-    self.clean &= result;
+    self.clean = self.clean && result;
     return result;
   }
 
@@ -250,7 +252,7 @@ export class AnnotonParser {
       }
     });
 
-    self.clean = self.clean & result;
+    self.clean = self.clean && result;
     return result;
   }
 

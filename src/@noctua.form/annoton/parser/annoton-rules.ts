@@ -1,4 +1,6 @@
 import * as _ from 'lodash';
+declare const require: any;
+
 const each = require('lodash/forEach');
 
 

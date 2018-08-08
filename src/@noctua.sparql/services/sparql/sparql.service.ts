@@ -5,7 +5,6 @@ import { BehaviorSubject, Observable, Subscriber } from 'rxjs';
 import { map, filter, reduce, catchError, retry, tap } from 'rxjs/operators';
 
 import { NoctuaUtils } from '@noctua/utils/noctua-utils';
-
 import { CurieService } from '@noctua.curie/services/curie.service';
 
 export interface Cam {

@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 
 import { AnnotonNode } from './annoton-node';
+declare const require: any;
 const each = require('lodash/forEach');
 
 export class SaeGraph {
@@ -80,12 +81,14 @@ export class SaeGraph {
 
   removeEdge(source, object) {
     var objectNodes = this.edges[source.id]['nodes']
+    /*
     if (objectNodes) {
-      _.remove(objectNodes, function (objectNodes) {
+      _.remove(objectNodes, function (objectNode) {
         return objectNode.id === object.id
       });
       this.numberOfEdges--;
     }
+    */
   };
 
   size() {
@@ -168,10 +171,6 @@ export class SaeGraph {
     path.push(j);
     return path.reverse().join('-');
   };
-  print() {
-    console.log(this.nodes.map(function (node) {
-      return (node + ' -> ' + this.edges[node].join(', ')).trim();
-    }, this).join(' | '));
-  };
+
 
 }
