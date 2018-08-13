@@ -17,6 +17,9 @@ const routes = [{
     RouterModule.forChild(routes),
     TranslateModule,
     NoctuaSharedModule,
+  ],
+  providers: [
+
   ]
 
 })

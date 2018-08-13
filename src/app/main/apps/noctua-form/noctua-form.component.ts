@@ -3,6 +3,8 @@ import { FormBuilder, FormControl, FormGroup, FormArray } from '@angular/forms';
 
 import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loader.service';
 
+import { NoctuaGraphService } from '@noctua.form/services/graph.service'
+
 import { locale as english } from './i18n/en';
 
 import * as _ from 'lodash';
@@ -14,7 +16,8 @@ import * as _ from 'lodash';
   styleUrls: ['./noctua-form.component.scss']
 })
 export class NoctuaFormComponent {
-  constructor() {
+  constructor(private noctuaGraphService: NoctuaGraphService) {
+    // noctuaGraphService.
   }
 
 }

@@ -4,6 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { NoctuaFormComponent } from './noctua-form.component';
 import { NoctuaSharedModule } from '@noctua/shared.module';
 
+import { NoctuaGraphService } from '@noctua.form/services/graph.service'
+
 const routes = [{
   path: '',
   component: NoctuaFormComponent
@@ -16,6 +18,7 @@ const routes = [{
     RouterModule.forChild(routes),
   ],
   providers: [
+    NoctuaGraphService
   ],
   declarations: [
     NoctuaFormComponent,

@@ -1,4 +1,7 @@
+import { environment } from 'environments/environment';
 import { Injectable } from '@angular/core';
+
+
 
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subscriber } from 'rxjs';
@@ -38,20 +41,12 @@ const minerva_manager = require('bbop-manager-minerva');
   providedIn: 'root'
 })
 export class NoctuaGraphService {
-  local_id;
-  local_golr_server;
-  local_barista_location;
-  local_minerva_definition_name
-  local_barista_token;
-  local_collapsible_relations;
-
   title;
   model_id;
-  golr_server;
-  barista_location;
-  minerva_definition_name;
+  golrServer = environment.globalGolrServer;
+  baristaLocation = environment.globalBaristaLocation;
+  minervaDefinitionName = environment.globalMinervaDefinitionName;
   barista_token;
-  collapsible_relations;
   engine;
   linker;
   manager;
@@ -80,6 +75,8 @@ export class NoctuaGraphService {
       graphEditorUrl: ""
     }
     this.localClosures = [];
+
+    this.initialize();
   }
 
   initialize() {
@@ -91,8 +88,8 @@ export class NoctuaGraphService {
     this.engine = new jquery_engine(barista_response);
     this.engine.method('POST');
     let manager = new minerva_manager(
-      this.barista_location,
-      this.minerva_definition_name,
+      this.baristaLocation,
+      this.minervaDefinitionName,
       this.barista_token,
       this.engine, 'async');
 
@@ -207,8 +204,8 @@ export class NoctuaGraphService {
     self.modelInfo.gpadUrl = window.location.origin + "/download/" + modelId + "/gpad";
     self.modelInfo.graphEditorUrl = window.location.origin + "/editor/graph/" + modelId + "?" + (this.loggedIn ? parameterize(baristaParams) : '');
     self.modelInfo.saeUrl = window.location.origin + '/workbench/simple-annoton-editor?' + (this.loggedIn ? parameterize(Object.assign({}, modelIdParams, baristaParams)) : '');
-    self.modelInfo.logoutUrl = self.barista_location + '/logout?' + parameterize(baristaParams) + '&amp;return=' + window.location.origin + '/workbench/simple-annoton-editor?' + parameterize(baristaParams)
-    self.modelInfo.loginUrl = self.barista_location + '/login?return=' + window.location.origin + '/workbench/simple-annoton-editor';
+    self.modelInfo.logoutUrl = self.baristaLocation + '/logout?' + parameterize(baristaParams) + '&amp;return=' + window.location.origin + '/workbench/simple-annoton-editor?' + parameterize(baristaParams)
+    self.modelInfo.loginUrl = self.baristaLocation + '/login?return=' + window.location.origin + '/workbench/simple-annoton-editor';
 
     //Workbenches 
     self.modelInfo.workbenches = [{
