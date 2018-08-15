@@ -17,6 +17,8 @@ import { noctuaFormConfig } from './../noctua-form-config';
 import { NoctuaFormConfigService } from './config/noctua-form-config.service';
 import { NoctuaLookupService } from './lookup.service';
 
+import 'rxjs/add/observable/forkJoin';
+
 import * as _ from 'lodash';
 declare const require: any;
 
@@ -42,7 +44,7 @@ const minerva_manager = require('bbop-manager-minerva');
 })
 export class NoctuaGraphService {
   title;
-  model_id;
+  model_id = 'gomodel:5b4695e900000033';
   golrServer = environment.globalGolrServer;
   baristaLocation = environment.globalBaristaLocation;
   minervaDefinitionName = environment.globalMinervaDefinitionName;
@@ -96,7 +98,6 @@ export class NoctuaGraphService {
     this.manager = manager;
 
     function _shields_up() { }
-
     function _shields_down() { }
 
     // Internal registrations.
@@ -153,22 +154,12 @@ export class NoctuaGraphService {
         self.modelState = stateAnnotations[0].value();
       }
 
-      /*
-      self.graphPreParse(self.graph).then(function (data) {
-        let deferred = self.$q.defer();
-        deferred.resolve(data);
-        return deferred.promise;
+      self.graphPreParse(self.graph).subscribe((data) => {
+        let annotons = self.graphToAnnotons(self.graph);
+        self.gridData = {
+          annotons: [...self.annotonsToTable(self.graph, annotons), ...self.ccComponentsToTable(self.graph, data)]
+        };
       })
-        .then(function (data) {
-          return self.graphToCCOnly(self.graph);
-        })
-        .then(function (data) {
-          let annotons = self.graphToAnnotons(self.graph);
-          self.gridData = {
-            annotons: [...self.annotonsToTable(self.graph, annotons), ...self.ccComponentsToTable(self.graph, data)]
-          };
-        });
-      */
 
       self.title = self.graph.get_annotations_by_key('title');
     }
@@ -182,6 +173,7 @@ export class NoctuaGraphService {
 
     manager.get_model(this.model_id);
   }
+
 
   createGraphUrls(modelId) {
     const self = this;
@@ -359,54 +351,48 @@ export class NoctuaGraphService {
 
     return result;
   }
-  /*
-    graphPreParse(graph) {
-      const self = this;
-      var promises = [];
-  
-      each(graph.get_nodes(), function (node) {
-        let termId = self.getNodeId(node);
-  
-        each(graph.get_edges_by_subject(node.id()), function (e) {
-          let predicateId = e.predicate_id();
-          let objectNode = graph.get_node(e.object_id())
-          let objectTermId = self.getNodeId(objectNode);
-  
-          if (self.noctuaFormConfigService.closureCheck[predicateId]) {
-            each(self.noctuaFormConfigService.closureCheck[predicateId].closures, function (closure) {
-              if (closure.subject) {
-                promises.push(self.isaClosurePreParse(termId, closure.subject.id, node));
-              }
-  
-              if (objectTermId && closure.object) {
-                promises.push(self.isaClosurePreParse(objectTermId, closure.object.id, node));
-              }
-            });
-          }
-        });
-      });
-  
-    }
-  */
-  /*
-  isaClosurePreParse(a, b, node) {
+
+  graphPreParse(graph) {
     const self = this;
-    let deferred = self.$q.defer();
+    var promises = [];
 
-    self.noctuaLookupService.isaClosure(a, b).then(function (data) {
-      let nodeId = node.id();
+    each(graph.get_nodes(), function (node) {
+      let termId = self.getNodeId(node);
 
-      self.noctuaLookupService.addLocalClosure(a, b, data);
+      each(graph.get_edges_by_subject(node.id()), function (e) {
+        let predicateId = e.predicate_id();
+        let objectNode = graph.get_node(e.object_id())
+        let objectTermId = self.getNodeId(objectNode);
 
-      deferred.resolve({
-        node: node,
-        result: data
+        if (self.noctuaFormConfigService.closureCheck[predicateId]) {
+          each(self.noctuaFormConfigService.closureCheck[predicateId].closures, function (closure) {
+            if (closure.subject) {
+              promises.push(self.isaClosurePreParse(termId, closure.subject.id, node));
+            }
+
+            if (objectTermId && closure.object) {
+              promises.push(self.isaClosurePreParse(objectTermId, closure.object.id, node));
+            }
+          });
+        }
       });
     });
 
-    return deferred.promise;
+    return Observable.forkJoin(promises);
   }
 
+  isaClosurePreParse(a, b, node) {
+    const self = this;
+
+    return self.noctuaLookupService.isaClosure(a, b);
+    /*
+    .subscribe(function (data) {
+      self.noctuaLookupService.addLocalClosure(a, b, data);
+    });
+    */
+  }
+
+  /*
   isaNodeClosure(a, b, node, annoton) {
     const self = this;
     let deferred = self.$q.defer();
@@ -426,7 +412,7 @@ export class NoctuaGraphService {
 
     return deferred.promise;
   }
-
+*/
   determineAnnotonType(gpObjectNode) {
     const self = this;
 
@@ -439,7 +425,6 @@ export class NoctuaGraphService {
     return null;
   }
 
-  */
   determineAnnotonModelType(mfNode, mfEdgesIn) {
     const self = this;
     let result = noctuaFormConfig.annotonModelType.options.default.name;
@@ -638,13 +623,13 @@ export class NoctuaGraphService {
   parseNodeClosure(annotons) {
     const self = this;
     let promises = [];
-
+  
     each(annotons, function (annoton) {
       each(annoton.nodes, function (node) {
         let term = node.getTerm();
         if (term) {
           promises.push(self.isaNodeClosure(node.noctuaLookupServiceGroup, term.id, node, annoton));
-
+  
           forOwn(annoton.edges, function (srcEdge, key) {
             each(srcEdge.nodes, function (srcNode) {
               //  let nodeExist = destAnnoton.getNode(key);
@@ -656,10 +641,10 @@ export class NoctuaGraphService {
         }
       });
     });
-
+  
     self.$q.all(promises).then(function (data) {
       console.log('done node clodure', data)
-
+  
       each(data, function (entity) {
         //entity.annoton.parser.parseNodeOntology(entity.node);
       });
@@ -720,14 +705,14 @@ export class NoctuaGraphService {
   }
 
   /*
-
+  
   ccComponentsToTableRows(graph, annoton) {
     const self = this;
     let result = [];
-
+  
     let gpNode = annoton.getGPNode();
     let ccNode = annoton.getNode('cc');
-
+  
     let row = {
       gp: gpNode.term.control.value.label,
       cc: ccNode.term.control.value.label,
@@ -735,9 +720,9 @@ export class NoctuaGraphService {
       annoton: annoton,
       annotonPresentation: self.formGrid.getAnnotonPresentation(annoton),
     }
-
+  
     row.evidence = gpNode.evidence
-
+  
     return row;
   }
   */
