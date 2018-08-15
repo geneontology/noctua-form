@@ -63,13 +63,12 @@ export class ReviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    /*
-    this.sparqlService.getCamsGoTerms().subscribe((response: any) => {
+
+    this.sparqlService.getCamsGoTerms('GO:0099160').subscribe((response: any) => {
       this.cams = this.sparqlService.cams = response;
       this.sparqlService.onCamsChanged.next(this.cams);
       this.loadCams();
     });
-    */
 
     this.sparqlService.onCamsChanged
       .pipe(takeUntil(this.unsubscribeAll))
@@ -77,19 +76,20 @@ export class ReviewComponent implements OnInit, OnDestroy {
         this.cams = cams;
         this.loadCams();
       });
-
-    fromEvent(this.filter.nativeElement, 'keyup')
-      .pipe(
-        takeUntil(this.unsubscribeAll),
-        debounceTime(150),
-        distinctUntilChanged()
-      )
-      .subscribe(() => {
-        if (!this.dataSource) {
-          return;
-        }
-        this.dataSource.filter = this.filter.nativeElement.value;
-      });
+    /*
+        fromEvent(this.filter.nativeElement, 'keyup')
+          .pipe(
+            takeUntil(this.unsubscribeAll),
+            debounceTime(150),
+            distinctUntilChanged()
+          )
+          .subscribe(() => {
+            if (!this.dataSource) {
+              return;
+            }
+            this.dataSource.filter = this.filter.nativeElement.value;
+          });
+          */
   }
 
   createAnswerForm() {

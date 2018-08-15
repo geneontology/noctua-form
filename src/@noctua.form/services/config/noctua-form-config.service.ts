@@ -9,6 +9,7 @@ const each = require('lodash/forEach');
 const uuid = require('uuid/v1');
 import { AnnotonNode } from './../../annoton/annoton-node';
 import { Annoton } from './../../annoton/annoton';
+import { rootRenderNodes } from '@angular/core/src/view';
 
 
 @Injectable({
@@ -1012,5 +1013,11 @@ export class NoctuaFormConfigService {
     }];
 
     return steps;
+  }
+
+  getAspect(id) {
+    const rootNode = _.find(noctuaFormConfig.rootNode, { id: id });
+
+    return rootNode ? rootNode.aspect : '';
   }
 }

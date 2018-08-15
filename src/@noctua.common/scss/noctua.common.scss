@@ -1,0 +1,49 @@
+$agb-toolbar-color: #e7ecf4;
+.agb-column-toolbar {
+  padding: 5px;
+  @include deep-height(40px); // @include mat-elevation(2);
+  border-bottom: #BBB solid 1px;
+  background-color: $agb-toolbar-color;
+  z-index: 10;
+  button {
+    @include deep-height(30px);
+    line-height: 30px;
+  }
+}
+
+.agb-column-subtoolbar {
+  padding: 5px;
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 12px; //line-height: 20px;
+  font-weight: 500;
+  @include deep-height(40px);
+  @include mat-elevation(2);
+  border-bottom: #BBB solid 1px;
+  background-color: #FFF;
+  z-index: 10;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.agb-alert {
+  padding: 10px;
+  font-size: 12px;
+  font-style: italic;
+}
+
+.agb-card-simple {
+  margin-bottom: 20px;
+  .agb-header {
+    padding: 10px;
+    @include deep-height(40px);
+    @include deep-width(100%);
+    border-bottom: #CCC solid 1px;
+    .agb-title {
+      font-size: 14px;
+      font-weight: bold;
+    }
+  }
+  .agb-body {
+    @include deep-width(100%);
+    padding: 10px;
+  }
+}

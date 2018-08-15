@@ -156,15 +156,18 @@ export const noctuaFormConfig = {
   rootNode: {
     mf: {
       'id': 'GO:0003674',
-      'label': 'molecular_function'
+      'label': 'molecular_function',
+      'aspect': 'F'
     },
     bp: {
       'id': 'GO:0008150',
-      'label': 'biological_process'
+      'label': 'biological_process',
+      'aspect': 'P'
     },
     cc: {
       'id': 'GO:0005575',
-      'label': 'cellular_component'
+      'label': 'cellular_component',
+      'aspect': 'C'
     }
   },
 

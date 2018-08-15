@@ -14,6 +14,15 @@ $noc-secondary-color: #995014;
   max-height: $number;
 }
 
+.noc-paginator {
+  overflow: hidden;
+  @include deep-height(40px);
+  background-color: #DDD;
+  .mat-paginator-container {
+    @include deep-height(40px !important);
+  }
+}
+
 input[type=text] {
   &.noc-textbox-legacy {
     padding-left: 10px;

@@ -18,8 +18,8 @@ import { NoctuaFormConfigService } from './config/noctua-form-config.service';
 import { NoctuaLookupService } from './lookup.service';
 
 import 'rxjs/add/observable/forkJoin';
-
 import * as _ from 'lodash';
+
 declare const require: any;
 
 const each = require('lodash/forEach');
@@ -37,7 +37,6 @@ const minerva_requests = require('minerva-requests');
 const jquery_engine = require('bbop-rest-manager').jquery;
 const class_expression = require('class-expression');
 const minerva_manager = require('bbop-manager-minerva');
-
 
 @Injectable({
   providedIn: 'root'
@@ -173,7 +172,6 @@ export class NoctuaGraphService {
 
     manager.get_model(this.model_id);
   }
-
 
   createGraphUrls(modelId) {
     const self = this;
@@ -413,6 +411,7 @@ export class NoctuaGraphService {
     return deferred.promise;
   }
 */
+
   determineAnnotonType(gpObjectNode) {
     const self = this;
 
@@ -472,7 +471,7 @@ export class NoctuaGraphService {
         annotonNode.setIsComplement(mfSubjectNode.isComplement);
         annotonNode.modelId = mfId;
 
-        //  annoton.parser = new AnnotonParser(noctuaFormConfig);
+        annoton.parser = new AnnotonParser();
 
         if (annotonType) {
           //  if (!self.noctuaLookupService.getLocalClosure(mfSubjectNode.term.id, noctuaFormConfig.closures.mf.id)) {
@@ -525,7 +524,7 @@ export class NoctuaGraphService {
         annotonNode.setIsComplement(gpSubjectNode.isComplement);
         annotonNode.modelId = gpId;
 
-        //annoton.parser = new AnnotonParser(noctuaFormConfig);
+        annoton.parser = new AnnotonParser();
 
         if (annotonType) {
           //   let closureRange = self.noctuaLookupService.getLocalClosureRange(ccObjectNode.term.id, self.noctuaFormConfigService.closureCheck[predicateId]);

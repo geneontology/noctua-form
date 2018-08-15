@@ -7,7 +7,7 @@ import { map, filter, reduce, catchError, retry, tap } from 'rxjs/operators';
 
 import * as _ from 'lodash';
 import { AnnotonNode } from './../annoton/annoton-node.js';
-import { AnnotonNodeClosure } from './../annoton/annoton-noode-closure';
+import { AnnotonNodeClosure } from './../annoton/annoton-node-closure';
 import { Evidence } from './../annoton/evidence.js';
 
 declare const require: any;
@@ -276,7 +276,7 @@ export class NoctuaLookupService {
 
     return this.httpClient.jsonp(url, 'json.wrf').pipe(
       map(response => {
-        let data = response['data'].response.docs;
+        let data = response["response"].docs;
         let result = data.length > 0;
         return result;
       }))

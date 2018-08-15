@@ -6,6 +6,7 @@ import { map, filter, reduce, catchError, retry, tap } from 'rxjs/operators';
 
 import { NoctuaUtils } from '@noctua/utils/noctua-utils';
 import { CurieService } from '@noctua.curie/services/curie.service';
+import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
 
 export interface Cam {
   model?: {};
@@ -30,7 +31,7 @@ export class SparqlService {
   cams: any[] = [];
   onCamsChanged: BehaviorSubject<any>;
 
-  constructor(private httpClient: HttpClient, private curieService: CurieService) {
+  constructor(private noctuaFormConfigService: NoctuaFormConfigService, private httpClient: HttpClient, private curieService: CurieService) {
     this.onCamsChanged = new BehaviorSubject({});
 
     this.curieUtil = this.curieService.getCurieUtil();
@@ -55,7 +56,7 @@ export class SparqlService {
               }),
               annotatedEntity: {},
               relationship: '',
-              aspect: this.curieUtil.getCurie(erg.aspect.value),
+              aspect: this.noctuaFormConfigService.getAspect(this.curieUtil.getCurie(erg.aspect.value)),
               term: Object.assign({}, {
                 id: this.curieUtil.getCurie(erg.term.value),
                 label: erg.termLabel.value
