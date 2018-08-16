@@ -6,16 +6,19 @@
       <strong class=""></strong>
     </div>
     <span fxFlex=""></span>
-    <button mat-icon-button matTooltip="{{speciesDetail?.long_name}} details" [matTooltipShowDelay]="1000" (click)="openSpeciesDetail()">
-      <mat-icon class="fa fa-info s-16"> </mat-icon>
-    </button>
-    <button mat-button matTooltip="Export To CSV" [matTooltipShowDelay]="1000" (click)="download()">
-      Export
-    </button>
-
   </div>
   <div class="cams-table" fxLayout="column" fxLayoutAlign="start stretch">
     <mat-table fxFlex="1 1 auto" class="" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}" noctuaPerfectScrollbar>
+      <ng-container cdkColumnDef="expand">
+        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="30px"></mat-header-cell>
+        <mat-cell *cdkCellDef="let cam" fxFlex="30px">
+          <mat-icon *ngIf="true" class="s-16 fa fa-caret-right">
+          </mat-icon>
+          <mat-icon *ngIf="false" class="mat-icon-rtl-mirror s-10">
+            signal_cellular_4_bar
+          </mat-icon>
+        </mat-cell>
+      </ng-container>
       <ng-container cdkColumnDef="model">
         <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="160px">Model</mat-header-cell>
         <mat-cell *cdkCellDef="let cam" fxFlex="160px">

@@ -26,7 +26,9 @@ import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 })
 export class ReviewComponent implements OnInit, OnDestroy {
   dataSource: CamsDataSource | null;
-  displayedColumns = ['model',
+  displayedColumns = [
+    'expand',
+    'model',
     'annotatedEntity',
     'relationship',
     'aspect',
