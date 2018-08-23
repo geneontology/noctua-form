@@ -1,0 +1,95 @@
+<div class="agb-species-panel w-100-p h-100-p" fxLayout="column" fxLayoutAlign="start stretch">
+  <div class="agb-column-toolbar" fxLayout="row" fxLayoutAlign="start center">
+    Filter
+    <input class="agb-select-legacy ml-12" fxFlex="300px" matInput #filter placeholder="" autocomplete="off">
+    <div>
+      <strong class=""></strong>
+    </div>
+    <span fxFlex=""></span>
+  </div>
+  <div class="cams-table" fxLayout="column" fxLayoutAlign="start stretch">
+    <mat-table fxFlex="1 1 auto" class="" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}" noctuaPerfectScrollbar>
+      <ng-container cdkColumnDef="expand">
+        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="30px"></mat-header-cell>
+        <mat-cell *cdkCellDef="let cam" fxFlex="30px">
+          <mat-icon *ngIf="true" class="s-16 fa fa-caret-right">
+          </mat-icon>
+          <mat-icon *ngIf="false" class="mat-icon-rtl-mirror s-10">
+            signal_cellular_4_bar
+          </mat-icon>
+        </mat-cell>
+      </ng-container>
+      <ng-container cdkColumnDef="model">
+        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="160px">Model</mat-header-cell>
+        <mat-cell *cdkCellDef="let cam" fxFlex="160px">
+          <p class="text-truncate">{{cam.model?.title }}</p>
+        </mat-cell>
+      </ng-container>
+      <ng-container cdkColumnDef="annotatedEntity">
+        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="160px">Annotated Entity</mat-header-cell>
+        <mat-cell *cdkCellDef="let cam" fxFlex="150px">
+          <p class="text-truncate">{{cam.annotatedEntity?.label}}</p>
+        </mat-cell>
+      </ng-container>
+      <ng-container cdkColumnDef="relationship">
+        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="160px">Relationship</mat-header-cell>
+        <mat-cell *cdkCellDef="let cam" fxFlex="150px">
+          <p class="text-truncate">{{cam.relationship?.value}}</p>
+        </mat-cell>
+      </ng-container>
+      <ng-container cdkColumnDef="aspect">
+        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="80px">Asp</mat-header-cell>
+        <mat-cell *cdkCellDef="let cam" fxFlex="150px">
+          <p class="text-truncate">{{cam.aspect}}</p>
+        </mat-cell>
+      </ng-container>
+      <ng-container cdkColumnDef="term">
+        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="160px">Term</mat-header-cell>
+        <mat-cell *cdkCellDef="let cam" fxFlex="150px">
+          <p class="text-truncate">{{cam.term?.label}}</p>
+        </mat-cell>
+      </ng-container>
+      <ng-container cdkColumnDef="relationshipExt">
+        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="160px">Relationship (ext)</mat-header-cell>
+        <mat-cell *cdkCellDef="let cam" fxFlex="150px">
+          <p class="text-truncate">{{cam.relationshipExt?.value}}</p>
+        </mat-cell>
+      </ng-container>
+      <ng-container cdkColumnDef="extension">
+        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="160px">Extension</mat-header-cell>
+        <mat-cell *cdkCellDef="let cam" fxFlex="150px">
+          <p class="text-truncate">{{cam.extension?.value}}</p>
+        </mat-cell>
+      </ng-container>
+      <ng-container cdkColumnDef="evidence">
+        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="160px">Evidence</mat-header-cell>
+        <mat-cell *cdkCellDef="let cam" fxFlex="150px">
+          <p class="text-truncate">{{cam.evidence?.value}}</p>
+        </mat-cell>
+      </ng-container>
+      <ng-container cdkColumnDef="reference">
+        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="160px">Reference</mat-header-cell>
+        <mat-cell *cdkCellDef="let cam" fxFlex="150px">
+          <p class="text-truncate">{{cam.reference?.value}}</p>
+        </mat-cell>
+      </ng-container>
+      <ng-container cdkColumnDef="with">
+        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="160px">With</mat-header-cell>
+        <mat-cell *cdkCellDef="let cam" fxFlex="150px">
+          <p class="text-truncate">{{cam.with?.value}}</p>
+        </mat-cell>
+      </ng-container>
+      <ng-container cdkColumnDef="assignedBy">
+        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="160px">Assigned By</mat-header-cell>
+        <mat-cell *cdkCellDef="let cam" fxFlex="150px">
+          <p class="text-truncate">{{cam.assignedBy?.value}}</p>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *cdkRowDef="let cam; columns: displayedColumns;" class="cam" matRipple [routerLink]="['/cam', cam.ptn]"></mat-row>
+    </mat-table>
+    <mat-paginator class="noc-paginator" #paginator [length]="dataSource?.filteredData?.length" [pageIndex]="0" [pageSize]="50"
+      [pageSizeOptions]="[5, 10, 25, 100]">
+    </mat-paginator>
+  </div>
+</div>
