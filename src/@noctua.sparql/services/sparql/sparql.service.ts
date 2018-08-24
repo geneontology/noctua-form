@@ -49,10 +49,12 @@ export class SparqlService {
         map(res => {
           let result: Array<Cam> = [];
           res.forEach((erg) => {
+            let modelId = this.noctuaFormConfigService.getModelId(erg.model.value);
             result.push({
               model: Object.assign({}, {
-                id: this.noctuaFormConfigService.getModelId(erg.model.value),
-                title: erg.modelTitle.value
+                id: modelId,
+                title: erg.modelTitle.value,
+                modelInfo: this.noctuaFormConfigService.getModelUrls(modelId)
               }),
               annotatedEntity: {},
               relationship: '',

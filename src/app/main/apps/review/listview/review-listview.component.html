@@ -1,12 +1,5 @@
 <div class="agb-species-panel w-100-p h-100-p" fxLayout="column" fxLayoutAlign="start stretch">
-  <div class="agb-column-toolbar" fxLayout="row" fxLayoutAlign="start center">
-    Filter
-    <input class="agb-select-legacy ml-12" fxFlex="300px" matInput #filter placeholder="" autocomplete="off">
-    <div>
-      <strong class=""></strong>
-    </div>
-    <span fxFlex=""></span>
-  </div>
+
   <div class="cams-table" fxLayout="column" fxLayoutAlign="start stretch">
     <mat-table fxFlex="1 1 auto" class="" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}" noctuaPerfectScrollbar>
       <ng-container cdkColumnDef="expand">
@@ -19,12 +12,16 @@
               signal_cellular_4_bar
             </mat-icon>
           </button>
-          <a mat-icon-button href="http://noctua.geneontology.org/workbench/simple-annoton-editor/?model_id=gomodel:{{cam.model?.id}}"
-            target="_blank">
+          <button mat-button [matMenuTriggerFor]="changeView">
             <mat-icon>
               apps
             </mat-icon>
-          </a>
+          </button>
+          <mat-menu #changeView="matMenu">
+            <a *ngFor="let workbench of cam.model?.modelInfo.workbenches" href="{{workbench.url}}" target="_blank" mat-menu-item>
+              {{workbench.label}}
+            </a>
+          </mat-menu>
         </mat-cell>
       </ng-container>
       <ng-container cdkColumnDef="model">

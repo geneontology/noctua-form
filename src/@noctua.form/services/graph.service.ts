@@ -84,7 +84,7 @@ export class NoctuaGraphService {
     const self = this;
 
     //   self.getUserInfo();
-    self.createGraphUrls(self.model_id);
+    // self.createGraphUrls(self.model_id);
 
     this.engine = new jquery_engine(barista_response);
     this.engine.method('POST');
@@ -141,7 +141,7 @@ export class NoctuaGraphService {
       self.modelTitle = null;
       self.modelState = null;
 
-      self.createGraphUrls(self.model_id);
+      // self.createGraphUrls(self.model_id);
       let annotations = self.graph.get_annotations_by_key(annotationTitleKey);
       let stateAnnotations = self.graph.get_annotations_by_key('state');
 
@@ -173,57 +173,7 @@ export class NoctuaGraphService {
     manager.get_model(this.model_id);
   }
 
-  createGraphUrls(modelId) {
-    const self = this;
 
-    let baristaParams = {
-      'barista_token': this.barista_token
-    }
-
-    let modelIdParams = {
-      'model_id': modelId
-    }
-
-    function parameterize(params) {
-      return Object.keys(params).map(key => key + '=' + params[key]).join('&');
-    }
-
-    self.modelInfo.goUrl = 'http://www.geneontology.org/';
-    self.modelInfo.noctuaUrl = window.location.origin + "?" + (this.loggedIn ? parameterize(baristaParams) : '');
-    self.modelInfo.owlUrl = window.location.origin + "/download/" + modelId + "/owl";
-    self.modelInfo.gpadUrl = window.location.origin + "/download/" + modelId + "/gpad";
-    self.modelInfo.graphEditorUrl = window.location.origin + "/editor/graph/" + modelId + "?" + (this.loggedIn ? parameterize(baristaParams) : '');
-    self.modelInfo.saeUrl = window.location.origin + '/workbench/simple-annoton-editor?' + (this.loggedIn ? parameterize(Object.assign({}, modelIdParams, baristaParams)) : '');
-    self.modelInfo.logoutUrl = self.baristaLocation + '/logout?' + parameterize(baristaParams) + '&amp;return=' + window.location.origin + '/workbench/simple-annoton-editor?' + parameterize(baristaParams)
-    self.modelInfo.loginUrl = self.baristaLocation + '/login?return=' + window.location.origin + '/workbench/simple-annoton-editor';
-
-    //Workbenches 
-    self.modelInfo.workbenches = [{
-      label: 'Annotation Preview',
-      url: window.location.origin + '/workbench/annpreview?' + (this.loggedIn ? parameterize(Object.assign({}, modelIdParams, baristaParams)) : ''),
-    }, {
-      label: 'Function Companion',
-      url: window.location.origin + '/workbench/companion?' + (this.loggedIn ? parameterize(Object.assign({}, modelIdParams, baristaParams)) : ''),
-    }, {
-      label: 'Cytoscape Layout Tool',
-      url: window.location.origin + '/workbench/cytoview?' + (this.loggedIn ? parameterize(Object.assign({}, modelIdParams, baristaParams)) : ''),
-    }, {
-      label: "Gosling (Noctua's little GOOSE)",
-      url: window.location.origin + '/workbench/gosling-model?' + (this.loggedIn ? parameterize(Object.assign({}, modelIdParams, baristaParams)) : ''),
-    }, {
-      label: 'Inference Explanations',
-      url: window.location.origin + '/workbench/inferredrelations?' + (this.loggedIn ? parameterize(Object.assign({}, modelIdParams, baristaParams)) : ''),
-    }, {
-      label: 'Macromolecular Complex Creator',
-      url: window.location.origin + '/workbench/mmcc?' + (this.loggedIn ? parameterize(Object.assign({}, modelIdParams, baristaParams)) : ''),
-    }, {
-      label: 'Pathway View',
-      url: window.location.origin + '/workbench/pathwayview?' + (this.loggedIn ? parameterize(Object.assign({}, modelIdParams, baristaParams)) : ''),
-    }, {
-      label: 'Annotation Preview',
-      url: window.location.origin + '/workbench/simple-annoton-editor?' + (this.loggedIn ? parameterize(Object.assign({}, modelIdParams, baristaParams)) : ''),
-    }]
-  }
 
   /*
   getUserInfo() {
