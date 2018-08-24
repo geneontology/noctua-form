@@ -2,8 +2,6 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { MatPaginator, MatSort } from '@angular/material';
-import { DataSource } from '@angular/cdk/collections';
 import { merge, Observable, BehaviorSubject, fromEvent, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
@@ -15,6 +13,8 @@ import { forEach } from '@angular/router/src/utils/collection';
 
 import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loader.service';
 import { locale as english } from './../i18n/en';
+import { TreeNode } from 'primeng/api';
+
 
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 
@@ -25,33 +25,100 @@ import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
   animations: noctuaAnimations
 })
 export class ReviewTreeviewComponent implements OnInit, OnDestroy {
-  dataSource: CamsDataSource | null;
-  displayedColumns = [
-    'expand',
-    'model',
-    'annotatedEntity',
-    'relationship',
-    'aspect',
-    'term',
-    'relationshipExt',
-    'extension',
-    'evidence',
-    'reference',
-    'with',
-    'assignedBy'];
 
   searchCriteria: any = {};
   searchForm: FormGroup;
 
-  @ViewChild(MatPaginator)
-  paginator: MatPaginator;
-
-  @ViewChild('filter')
-  filter: ElementRef;
-
-  @ViewChild(MatSort)
-  sort: MatSort;
   cams: any[] = [];
+
+  files1: TreeNode[];
+  //files2: TreeNode[];
+
+  cols: any[];
+
+  files2: TreeNode[] = [{
+    "data":
+      [
+        {
+          "data": {
+            "name": "Documents",
+            "size": "75kb",
+            "type": "Folder"
+          },
+          "children": [
+            {
+              "data": {
+                "name": "Work",
+                "size": "55kb",
+                "type": "Folder"
+              },
+              "children": [
+                {
+                  "data": {
+                    "name": "Expenses.doc",
+                    "size": "30kb",
+                    "type": "Document"
+                  }
+                },
+                {
+                  "data": {
+                    "name": "Resume.doc",
+                    "size": "25kb",
+                    "type": "Resume"
+                  }
+                }
+              ]
+            },
+            {
+              "data": {
+                "name": "Home",
+                "size": "20kb",
+                "type": "Folder"
+              },
+              "children": [
+                {
+                  "data": {
+                    "name": "Invoices",
+                    "size": "20kb",
+                    "type": "Text"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "data": {
+            "name": "Pictures",
+            "size": "150kb",
+            "type": "Folder"
+          },
+          "children": [
+            {
+              "data": {
+                "name": "barcelona.jpg",
+                "size": "90kb",
+                "type": "Picture"
+              }
+            },
+            {
+              "data": {
+                "name": "primeui.png",
+                "size": "30kb",
+                "type": "Picture"
+              }
+            },
+            {
+              "data": {
+                "name": "optimus.jpg",
+                "size": "30kb",
+                "type": "Picture"
+              }
+            }
+          ]
+        }
+      ]
+  }]
 
   private unsubscribeAll: Subject<any>;
 
@@ -66,6 +133,35 @@ export class ReviewTreeviewComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
+    //    this.nodeService.getFilesystem().then(files => this.files1 = files);
+    //   this.nodeService.getFilesystem().then(files => this.files2 = files);
+
+    /*
+
+    this.cols = [
+      { field: 'name', header: 'Name' },
+      { field: 'size', header: 'Size' },
+      { field: 'type', header: 'Type' }
+    ];
+*/
+
+    this.cols = [
+      //  { field: 'expand', header: '' },
+      { field: 'model', header: 'Model' },
+      { field: 'annotatedEntity', header: 'Annotated Entity' },
+      { field: 'relationship', header: 'Relationship' },
+      { field: 'aspect', header: 'Asp' },
+      { field: 'term', header: 'Term' },
+      { field: 'relationshipExt', header: '' },
+      { field: 'extension', header: 'Ext' },
+      { field: 'evidence', header: 'Evidence' },
+      { field: 'reference', header: 'Reference' },
+      { field: 'with', header: 'With' },
+      { field: 'assignedBy', header: 'Assigned By' }
+
+    ]
+
+
     this.sparqlService.getCamsGoTerms('GO:0099160').subscribe((response: any) => {
       this.cams = this.sparqlService.cams = response;
       this.sparqlService.onCamsChanged.next(this.cams);
@@ -78,20 +174,6 @@ export class ReviewTreeviewComponent implements OnInit, OnDestroy {
         this.cams = cams;
         this.loadCams();
       });
-    /*
-        fromEvent(this.filter.nativeElement, 'keyup')
-          .pipe(
-            takeUntil(this.unsubscribeAll),
-            debounceTime(150),
-            distinctUntilChanged()
-          )
-          .subscribe(() => {
-            if (!this.dataSource) {
-              return;
-            }
-            this.dataSource.filter = this.filter.nativeElement.value;
-          });
-          */
   }
 
   createAnswerForm() {
@@ -104,92 +186,10 @@ export class ReviewTreeviewComponent implements OnInit, OnDestroy {
 
   loadCams() {
     this.cams = this.sparqlService.cams;
-    this.dataSource = new CamsDataSource(this.sparqlService, this.paginator, this.sort);
   }
 
   ngOnDestroy(): void {
     this.unsubscribeAll.next();
     this.unsubscribeAll.complete();
-  }
-}
-
-export class CamsDataSource extends DataSource<any> {
-  private filterChange = new BehaviorSubject('');
-  private filteredDataChange = new BehaviorSubject('');
-
-  constructor(
-    private sparqlService: SparqlService,
-    private matPaginator: MatPaginator,
-    private matSort: MatSort
-  ) {
-    super();
-    this.filteredData = this.sparqlService.cams;
-  }
-
-  get filteredData(): any {
-    return this.filteredDataChange.value;
-  }
-
-  set filteredData(value: any) {
-    this.filteredDataChange.next(value);
-  }
-
-  get filter(): string {
-    return this.filterChange.value;
-  }
-
-  set filter(filter: string) {
-    this.filterChange.next(filter);
-  }
-
-  connect(): Observable<any[]> {
-    const displayDataChanges = [
-      this.sparqlService.onCamsChanged,
-      this.matPaginator.page,
-      this.filterChange,
-      this.matSort.sortChange
-    ];
-
-    return merge(...displayDataChanges).pipe(map(() => {
-      let data = this.sparqlService.cams.slice();
-      data = this.filterData(data);
-      this.filteredData = [...data];
-      data = this.sortData(data);
-      const startIndex = this.matPaginator.pageIndex * this.matPaginator.pageSize;
-      return data.splice(startIndex, this.matPaginator.pageSize);
-    })
-    );
-  }
-
-  filterData(data): any {
-    if (!this.filter) {
-      return data;
-    }
-    return NoctuaUtils.filterArrayByString(data, this.filter);
-  }
-
-  sortData(data): any[] {
-    if (!this.matSort.active || this.matSort.direction === '') {
-      return data;
-    }
-
-    return data.sort((a, b) => {
-      let propertyA: number | string = '';
-      let propertyB: number | string = '';
-
-      switch (this.matSort.active) {
-        case 'goname':
-          [propertyA, propertyB] = [a.goname, b.goname];
-          break;
-      }
-
-      const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
-      const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
-
-      return (valueA < valueB ? -1 : 1) * (this.matSort.direction === 'asc' ? 1 : -1);
-    });
-  }
-
-  disconnect(): void {
   }
 }

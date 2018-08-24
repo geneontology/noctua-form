@@ -1020,4 +1020,8 @@ export class NoctuaFormConfigService {
 
     return rootNode ? rootNode.aspect : '';
   }
+
+  getModelId(url: string) {
+    return url.substr(url.lastIndexOf('/') + 1)
+  }
 }

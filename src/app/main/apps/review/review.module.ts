@@ -11,7 +11,7 @@ import { TreeNode } from 'primeng/api';
 const routes = [
   {
     path: '',
-    component: ReviewTreeviewComponent
+    component: ReviewListviewComponent
   }
 ];
 

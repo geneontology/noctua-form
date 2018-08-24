@@ -51,7 +51,7 @@ export class SparqlService {
           res.forEach((erg) => {
             result.push({
               model: Object.assign({}, {
-                id: erg.model.value,
+                id: this.noctuaFormConfigService.getModelId(erg.model.value),
                 title: erg.modelTitle.value
               }),
               annotatedEntity: {},
