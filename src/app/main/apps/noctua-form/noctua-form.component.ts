@@ -19,5 +19,4 @@ export class NoctuaFormComponent {
   constructor(private noctuaGraphService: NoctuaGraphService) {
     // noctuaGraphService.
   }
-
 }

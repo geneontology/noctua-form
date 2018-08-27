@@ -12,10 +12,12 @@ import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-for
 import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
 
 import * as _ from 'lodash';
+import { v4 as uuid } from 'uuid';
 declare const require: any;
 const each = require('lodash/forEach');
 
 export interface Cam {
+  id: string,
   graph?: {};
   model?: {};
   annotatedEntity?: {};
@@ -56,7 +58,6 @@ export class SparqlService {
         map(res => res['results']),
         map(res => res['bindings']),
         tap(val => console.dir(val)),
-        // filter((model) => (website.endsWith('net') || website.endsWith('org'))),
         map(res => this.addCam(res)),
         tap(val => console.dir(val))
       );
@@ -64,9 +65,11 @@ export class SparqlService {
 
   addCam(res) {
     let result: Array<Cam> = [];
+
     res.forEach((erg) => {
       let modelId = this.noctuaFormConfigService.getModelId(erg.model.value);
       result.push({
+        id: uuid(),
         graph: this.noctuaGraphService.getGraphInfo(modelId),
         model: Object.assign({}, {
           id: modelId,
@@ -93,10 +96,11 @@ export class SparqlService {
 
   addCamChildren(srcCam, annotons) {
     const self = this;
+    let index = _.findIndex(self.cams, { id: srcCam.id })
 
     _.each(annotons, function (annoton) {
       let cam = self.annotonToCam(srcCam, annoton);
-      self.cams.push(cam)
+      self.cams.splice(index + 1, 0, cam);
     });
 
     this.onCamsChanged.next(this.cams);
@@ -106,6 +110,7 @@ export class SparqlService {
 
     console.log(annoton)
     let result: Cam = {
+      id: uuid(),
       model: cam.model,
       annotatedEntity: {
         id: '',
@@ -120,7 +125,6 @@ export class SparqlService {
       reference: '',
       with: '',
       assignedBy: annoton.assignedBy,
-
     }
 
     return result;
