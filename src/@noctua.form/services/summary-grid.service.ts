@@ -220,7 +220,6 @@ export class SummaryGridService {
     };
   }
 
-
   getGrid(annotons) {
     const self = this;
     let gridData = [];

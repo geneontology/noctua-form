@@ -57,52 +57,29 @@ export class SparqlService {
         map(res => res['bindings']),
         tap(val => console.dir(val)),
         // filter((model) => (website.endsWith('net') || website.endsWith('org'))),
-        map(res => {
-          let result: Array<Cam> = [];
-          res.forEach((erg) => {
-            let modelId = this.noctuaFormConfigService.getModelId(erg.model.value);
-            result.push({
-              graph: this.noctuaGraphService.getGraphInfo(modelId),
-              model: Object.assign({}, {
-                id: modelId,
-                title: erg.modelTitle.value,
-                modelInfo: this.noctuaFormConfigService.getModelUrls(modelId)
-              }),
-              annotatedEntity: {},
-              relationship: '',
-              aspect: this.noctuaFormConfigService.getAspect(this.curieUtil.getCurie(erg.aspect.value)),
-              term: Object.assign({}, {
-                id: this.curieUtil.getCurie(erg.term.value),
-                label: erg.termLabel.value
-              }),
-              relationshipExt: '',
-              extension: '',
-              evidence: '',
-              reference: '',
-              with: '',
-              assignedBy: '',
-            });
-          });
-          return result;
-        }),
-
+        map(res => this.addCam(res)),
         tap(val => console.dir(val))
       );
   }
 
-  getChildren(cam) {
-
-    //let modelId = this.noctuaFormConfigService.getModelId(erg.model.value);
+  addCam(res) {
     let result: Array<Cam> = [];
-
-    _.each(cam.graph.annotons, function (annotonData) {
-      console.log(annotonData.annoton.nodes)
+    res.forEach((erg) => {
+      let modelId = this.noctuaFormConfigService.getModelId(erg.model.value);
       result.push({
-        model: cam.model,
+        graph: this.noctuaGraphService.getGraphInfo(modelId),
+        model: Object.assign({}, {
+          id: modelId,
+          title: erg.modelTitle.value,
+          modelInfo: this.noctuaFormConfigService.getModelUrls(modelId)
+        }),
         annotatedEntity: {},
         relationship: '',
-        //aspect:
-        //term: 
+        aspect: this.noctuaFormConfigService.getAspect(this.curieUtil.getCurie(erg.aspect.value)),
+        term: Object.assign({}, {
+          id: this.curieUtil.getCurie(erg.term.value),
+          label: erg.termLabel.value
+        }),
         relationshipExt: '',
         extension: '',
         evidence: '',
@@ -110,7 +87,42 @@ export class SparqlService {
         with: '',
         assignedBy: '',
       });
-    })
+    });
+    return result;
+  }
+
+  addCamChildren(srcCam, annotons) {
+    const self = this;
+
+    _.each(annotons, function (annoton) {
+      let cam = self.annotonToCam(srcCam, annoton);
+      self.cams.push(cam)
+    });
+
+    this.onCamsChanged.next(this.cams);
+  }
+
+  annotonToCam(cam, annoton) {
+
+    console.log(annoton)
+    let result: Cam = {
+      model: cam.model,
+      annotatedEntity: {
+        id: '',
+        label: annoton.gp
+      },
+      relationship: '',
+      aspect: annoton.aspect,
+      //term: 
+      relationshipExt: 'sss',
+      extension: '',
+      evidence: '',
+      reference: '',
+      with: '',
+      assignedBy: annoton.assignedBy,
+
+    }
+
     return result;
   }
 
