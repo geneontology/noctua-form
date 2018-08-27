@@ -1,3 +1,4 @@
+import { Injectable } from '@angular/core';
 //Config
 import { noctuaFormConfig } from './../noctua-form-config';
 import { NoctuaFormConfigService } from './config/noctua-form-config.service';
@@ -8,6 +9,9 @@ import * as _ from 'lodash';
 declare const require: any;
 const each = require('lodash/forEach');
 
+@Injectable({
+  providedIn: 'root'
+})
 export class SummaryGridService {
   columnDefs
   gridOptions
@@ -216,8 +220,28 @@ export class SummaryGridService {
     };
   }
 
-  setGridRow(row, node, gridData) {
+
+  getGrid(annotons) {
     const self = this;
+    let gridData = [];
+
+    each(annotons, function (row, key) {
+      each(row.annotonPresentation.fd, function (nodeGroup) {
+        each(nodeGroup.nodes, function (node) {
+          let term = node.getTerm();
+
+          if (node.id !== 'mc' && node.id !== 'gp' && term.id) {
+            self.getGridRow(row, node, gridData);
+          }
+        });
+      });
+    });
+    return gridData;
+  }
+
+  getGridRow(row, node, gridData) {
+    const self = this;
+
     let extension = node.treeLevel > 0;
     let term = node.getTerm();
 
@@ -249,6 +273,7 @@ export class SummaryGridService {
         annoton: row.annoton
       })
     }
+
   }
 
 

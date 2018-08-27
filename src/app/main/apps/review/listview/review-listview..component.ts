@@ -1,4 +1,3 @@
-
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -15,6 +14,9 @@ import { forEach } from '@angular/router/src/utils/collection';
 
 import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loader.service';
 import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
+import { NoctuaGraphService } from '@noctua.form/services/graph.service';
+import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
+
 import { locale as english } from './../i18n/en';
 
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
@@ -58,6 +60,8 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
     private noctuaFormConfigService: NoctuaFormConfigService,
+    private noctuaGraphService: NoctuaGraphService,
+    private summaryGridService: SummaryGridService,
     private sparqlService: SparqlService,
     private noctuaTranslationLoader: NoctuaTranslationLoaderService) {
     this.noctuaTranslationLoader.loadTranslations(english);
@@ -107,6 +111,21 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
   loadCams() {
     this.cams = this.sparqlService.cams;
     this.dataSource = new CamsDataSource(this.sparqlService, this.paginator, this.sort);
+  }
+
+  toggleExpand(cam) {
+    console.dir(cam)
+    //  this.cams = this.sparqlService.cams = response;
+    // this.sparqlService.onCamsChanged.next(this.cams);
+    //  this.loadCams();
+
+
+    let data = this.summaryGridService.getGrid(cam.graph.annotons);
+
+    console.log('---', data)
+
+    // this.noctuaGraphService.
+
   }
 
   ngOnDestroy(): void {

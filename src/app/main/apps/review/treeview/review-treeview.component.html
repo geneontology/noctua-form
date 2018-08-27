@@ -1,7 +1,7 @@
 <div class="agb-species-panel w-100-p h-100-p" fxLayout="column" fxLayoutAlign="start stretch">
 
   <div class="cams-table" fxLayout="column" fxLayoutAlign="start stretch">
-    <p-treeTable [value]="cams" [columns]="cols">
+    <p-treeTable [value]="camsTable" *ngIf="camsTable" [columns]="cols">
       <ng-template pTemplate="header" let-columns>
         <tr>
           <th *ngFor="let col of columns">
@@ -10,17 +10,43 @@
         </tr>
       </ng-template>
 
+
+
       <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
-        {{rowData | json}}
         <tr>
-          <td *ngFor="let col of columns; let i = index">
-
-
-            <!--  
+          <td>
             <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0"></p-treeTableToggler>
-            {{rowData[col.field]}}  -->
-
-            {{rowData | json}}
+            {{rowData.model?.title}}
+          </td>
+          <td>
+            {{rowData.annotatedEntity.label}}
+          </td>
+          <td>
+            {{rowData.relationship}}
+          </td>
+          <td>
+            {{rowData.aspect}}
+          </td>
+          <td>
+            {{rowData.term?.label}}
+          </td>
+          <td>
+            {{rowData.relationshipExt}}
+          </td>
+          <td>
+            {{rowData.extension}}
+          </td>
+          <td>
+            {{rowData.evidence}}
+          </td>
+          <td>
+            {{rowData.reference}}
+          </td>
+          <td>
+            {{rowData.with}}
+          </td>
+          <td>
+            {{rowData.assignedBy}}
           </td>
         </tr>
       </ng-template>

@@ -12,6 +12,9 @@ const routes = [
   {
     path: '',
     component: ReviewListviewComponent
+  }, {
+    path: 'tree',
+    component: ReviewTreeviewComponent
   }
 ];
 

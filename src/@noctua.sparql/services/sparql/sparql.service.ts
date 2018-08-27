@@ -6,9 +6,17 @@ import { map, filter, reduce, catchError, retry, tap } from 'rxjs/operators';
 
 import { NoctuaUtils } from '@noctua/utils/noctua-utils';
 import { CurieService } from '@noctua.curie/services/curie.service';
+import { NoctuaGraphService } from '@noctua.form/services/graph.service';
+
 import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
+import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
+
+import * as _ from 'lodash';
+declare const require: any;
+const each = require('lodash/forEach');
 
 export interface Cam {
+  graph?: {};
   model?: {};
   annotatedEntity?: {};
   relationship?: string;
@@ -31,9 +39,12 @@ export class SparqlService {
   cams: any[] = [];
   onCamsChanged: BehaviorSubject<any>;
 
-  constructor(private noctuaFormConfigService: NoctuaFormConfigService, private httpClient: HttpClient, private curieService: CurieService) {
+  constructor(private noctuaFormConfigService: NoctuaFormConfigService,
+    private summaryGridService: SummaryGridService,
+    private httpClient: HttpClient,
+    private noctuaGraphService: NoctuaGraphService,
+    private curieService: CurieService) {
     this.onCamsChanged = new BehaviorSubject({});
-
     this.curieUtil = this.curieService.getCurieUtil();
   }
 
@@ -51,6 +62,7 @@ export class SparqlService {
           res.forEach((erg) => {
             let modelId = this.noctuaFormConfigService.getModelId(erg.model.value);
             result.push({
+              graph: this.noctuaGraphService.getGraphInfo(modelId),
               model: Object.assign({}, {
                 id: modelId,
                 title: erg.modelTitle.value,
@@ -76,6 +88,30 @@ export class SparqlService {
 
         tap(val => console.dir(val))
       );
+  }
+
+  getChildren(cam) {
+
+    //let modelId = this.noctuaFormConfigService.getModelId(erg.model.value);
+    let result: Array<Cam> = [];
+
+    _.each(cam.graph.annotons, function (annotonData) {
+      console.log(annotonData.annoton.nodes)
+      result.push({
+        model: cam.model,
+        annotatedEntity: {},
+        relationship: '',
+        //aspect:
+        //term: 
+        relationshipExt: '',
+        extension: '',
+        evidence: '',
+        reference: '',
+        with: '',
+        assignedBy: '',
+      });
+    })
+    return result;
   }
 
   getCamsGps(): Observable<any> {

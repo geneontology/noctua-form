@@ -660,14 +660,11 @@ export class NoctuaFormConfigService {
   }
 
   getModelUrls(modelId) {
-    const self = this;
 
     let modelInfo: any = {};
-
     let baristaParams = {
       'barista_token': this.baristaToken
     }
-
     let modelIdParams = {
       'model_id': 'gomodel:' + modelId
     }
@@ -675,8 +672,6 @@ export class NoctuaFormConfigService {
     function parameterize(params) {
       return Object.keys(params).map(key => key + '=' + params[key]).join('&');
     }
-
-
 
     modelInfo.goUrl = 'http://www.geneontology.org/';
     modelInfo.noctuaUrl = window.location.origin + "?" + (this.loggedIn ? parameterize(baristaParams) : '');

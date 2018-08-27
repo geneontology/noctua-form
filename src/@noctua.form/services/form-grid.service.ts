@@ -1,4 +1,4 @@
-import { Injector } from '@angular/core';
+import { Injector, Injectable } from '@angular/core';
 
 //Config
 import { noctuaFormConfig } from './../noctua-form-config';
@@ -9,6 +9,9 @@ import * as _ from 'lodash';
 declare const require: any;
 const each = require('lodash/forEach');
 
+@Injectable({
+  providedIn: 'root'
+})
 export class FormGridService {
   annoton;
   annotonPresentation;

@@ -17,6 +17,7 @@ import { TreeNode } from 'primeng/api';
 
 
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
+import { Tree } from '@angular/router/src/utils/tree';
 
 @Component({
   selector: 'app-review-treeview',
@@ -30,95 +31,100 @@ export class ReviewTreeviewComponent implements OnInit, OnDestroy {
   searchForm: FormGroup;
 
   cams: any[] = [];
+  camsTable: any[] = [];
 
   files1: TreeNode[];
   //files2: TreeNode[];
 
   cols: any[];
 
-  files2: TreeNode[] = [{
-    "data":
-      [
-        {
-          "data": {
-            "name": "Documents",
-            "size": "75kb",
-            "type": "Folder"
-          },
-          "children": [
-            {
-              "data": {
-                "name": "Work",
-                "size": "55kb",
-                "type": "Folder"
-              },
-              "children": [
-                {
-                  "data": {
-                    "name": "Expenses.doc",
-                    "size": "30kb",
-                    "type": "Document"
-                  }
-                },
-                {
-                  "data": {
-                    "name": "Resume.doc",
-                    "size": "25kb",
-                    "type": "Resume"
-                  }
-                }
-              ]
-            },
-            {
-              "data": {
-                "name": "Home",
-                "size": "20kb",
-                "type": "Folder"
-              },
-              "children": [
-                {
-                  "data": {
-                    "name": "Invoices",
-                    "size": "20kb",
-                    "type": "Text"
-                  }
-                }
-              ]
-            }
-          ]
+
+
+  camsTable2: TreeNode[] =
+    [
+      {
+        "data": {
+          "name": "Documents",
+          "size": "75kb",
+          "type": "Folder"
         },
-        {
-          "data": {
-            "name": "Pictures",
-            "size": "150kb",
-            "type": "Folder"
+        "children": [
+          {
+            "data": {
+              "name": "Work",
+              "size": "55kb",
+              "type": "Folder"
+            },
+            "children": [
+              {
+                "data": {
+                  "name": "Expenses.doc",
+                  "size": "30kb",
+                  "type": "Document"
+                }
+              },
+              {
+                "data": {
+                  "name": "Resume.doc",
+                  "size": "25kb",
+                  "type": "Resume"
+                }
+              }
+            ]
           },
-          "children": [
-            {
-              "data": {
-                "name": "barcelona.jpg",
-                "size": "90kb",
-                "type": "Picture"
-              }
+          {
+            "data": {
+              "name": "Home",
+              "size": "20kb",
+              "type": "Folder"
             },
-            {
-              "data": {
-                "name": "primeui.png",
-                "size": "30kb",
-                "type": "Picture"
+            "children": [
+              {
+                "data": {
+                  "name": "Invoices",
+                  "size": "20kb",
+                  "type": "Text"
+                }
               }
-            },
-            {
-              "data": {
-                "name": "optimus.jpg",
-                "size": "30kb",
-                "type": "Picture"
-              }
+            ]
+          }
+        ]
+      },
+      {
+        "data": {
+          "name": "Pictures",
+          "size": "150kb",
+          "type": "Folder"
+        },
+        "children": [
+          {
+            "data": {
+              "name": "barcelona.jpg",
+              "size": "90kb",
+              "type": "Picture"
             }
-          ]
-        }
-      ]
-  }]
+          },
+          {
+            "data": {
+              "name": "primeui.png",
+              "size": "30kb",
+              "type": "Picture"
+            }
+          },
+          {
+            "data": {
+              "name": "optimus.jpg",
+              "size": "30kb",
+              "type": "Picture"
+            }
+          }
+        ]
+      }
+    ]
+
+  treeNode: TreeNode = {
+    data: this.camsTable
+  }
 
   private unsubscribeAll: Subject<any>;
 
@@ -136,14 +142,14 @@ export class ReviewTreeviewComponent implements OnInit, OnDestroy {
     //    this.nodeService.getFilesystem().then(files => this.files1 = files);
     //   this.nodeService.getFilesystem().then(files => this.files2 = files);
 
-    /*
 
-    this.cols = [
-      { field: 'name', header: 'Name' },
-      { field: 'size', header: 'Size' },
-      { field: 'type', header: 'Type' }
-    ];
-*/
+    /*
+        this.cols = [
+          { field: 'name', header: 'Name' },
+          { field: 'size', header: 'Size' },
+          { field: 'type', header: 'Type' }
+        ];
+      */
 
     this.cols = [
       //  { field: 'expand', header: '' },
@@ -161,9 +167,10 @@ export class ReviewTreeviewComponent implements OnInit, OnDestroy {
 
     ]
 
-
     this.sparqlService.getCamsGoTerms('GO:0099160').subscribe((response: any) => {
       this.cams = this.sparqlService.cams = response;
+      this.camsTable = this.cams.map(x => ({ data: x }));
+      console.dir(this.camsTable)
       this.sparqlService.onCamsChanged.next(this.cams);
       this.loadCams();
     });

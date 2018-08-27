@@ -16,7 +16,6 @@ import { Evidence } from './../annoton/evidence';
 import { noctuaFormConfig } from './../noctua-form-config';
 import { NoctuaFormConfigService } from './config/noctua-form-config.service';
 import { NoctuaLookupService } from './lookup.service';
-import { FormGridService } from '../services/form-grid.service';
 
 import 'rxjs/add/observable/forkJoin';
 import * as _ from 'lodash';
@@ -49,17 +48,26 @@ export class NoctuaGraphService {
   baristaLocation = environment.globalBaristaLocation;
   minervaDefinitionName = environment.globalMinervaDefinitionName;
   barista_token;
+  engine;
   linker;
+  manager;
+  graph;
   loggedIn;
+
   userInfo;
   modelInfo;
   localClosures;
+  modelTitle;
+  modelState;
+  gridData
 
   constructor(private noctuaFormConfigService: NoctuaFormConfigService,
-    private formGridService: FormGridService,
     private httpClient: HttpClient,
     private noctuaLookupService: NoctuaLookupService) {
+    this.engine = null;
     this.linker = new amigo.linker();
+    this.manager = null;
+    this.graph = null;
     this.userInfo = {
       groups: [],
       selectedGroup: {}
@@ -68,18 +76,112 @@ export class NoctuaGraphService {
       graphEditorUrl: ""
     }
     this.localClosures = [];
+
+    this.initialize();
   }
 
-  getGraphInfo(modelId) {
+  initialize() {
+    const self = this;
+
+    //   self.getUserInfo();
+    // self.createGraphUrls(self.model_id);
+
+    this.engine = new jquery_engine(barista_response);
+    this.engine.method('POST');
+    let manager = new minerva_manager(
+      this.baristaLocation,
+      this.minervaDefinitionName,
+      this.barista_token,
+      this.engine, 'async');
+
+    this.manager = manager;
+
+    function _shields_up() { }
+    function _shields_down() { }
+
+    // Internal registrations.
+    manager.register('prerun', _shields_up);
+    manager.register('postrun', _shields_down, 9);
+    manager.register('manager_error',
+      function (resp) {
+        console.log('There was a manager error (' +
+          resp.message_type() + '): ' + resp.message());
+      }, 10);
+
+    // Likely the result of unhappiness on Minerva.
+    manager.register('warning', function (resp /*, man */) {
+      alert('Warning: ' + resp.message() + '; ' +
+        'your operation was likely not performed');
+    }, 10);
+
+    // Likely the result of serious unhappiness on Minerva.
+    manager.register('error', function (resp /*, man */) {
+      let perm_flag = 'InsufficientPermissionsException';
+      let token_flag = 'token';
+      if (resp.message() && resp.message().indexOf(perm_flag) !== -1) {
+        alert('Error: it seems like you do not have permission to ' +
+          'perform that operation. Did you remember to login?');
+      } else if (resp.message() && resp.message().indexOf(token_flag) !== -1) {
+        alert('Error: it seems like you have a bad token...');
+      } else {
+        console.log('error:', resp, resp.message_type(), resp.message());
+      }
+    }, 10);
+
+    manager.register('meta', function ( /* resp , man */) {
+      console.log('## a meta callback?');
+    });
+
+    function rebuild(resp) {
+      let noctua_graph = model.graph;
+
+      self.graph = new noctua_graph();
+      self.model_id = resp.data().id;
+      self.graph.load_data_basic(resp.data());
+      self.modelTitle = null;
+      self.modelState = null;
+
+      // self.createGraphUrls(self.model_id);
+      let annotations = self.graph.get_annotations_by_key(annotationTitleKey);
+      let stateAnnotations = self.graph.get_annotations_by_key('state');
+
+      if (annotations.length > 0) {
+        self.modelTitle = annotations[0].value();
+      }
+
+      if (stateAnnotations.length > 0) {
+        self.modelState = stateAnnotations[0].value();
+      }
+
+      self.graphPreParse(self.graph).subscribe((data) => {
+        let annotons = self.graphToAnnotons(self.graph);
+        self.gridData = {
+          annotons: [...self.annotonsToTable(self.graph, annotons), ...self.ccComponentsToTable(self.graph, data)]
+        };
+      })
+
+      self.title = self.graph.get_annotations_by_key('title');
+    }
+
+    manager.register('merge', function ( /* resp */) {
+      manager.get_model(self.model_id);
+    });
+    manager.register('rebuild', function (resp) {
+      rebuild(resp);
+    }, 10);
+
+    manager.get_model(this.model_id);
+  }
+
+  getGraphInfo() {
     const self = this;
 
     let graphInfo = {
       engine: new jquery_engine(barista_response),
       graph: null,
-      modelId: modelId,
+      model_id: null,
       modelTitle: null,
       modelState: null,
-      annotons: null,
     }
 
     graphInfo.engine.method('POST');
@@ -129,7 +231,7 @@ export class NoctuaGraphService {
       let noctua_graph = model.graph;
 
       graphInfo.graph = new noctua_graph();
-      graphInfo.modelId = resp.data().id;
+      graphInfo.model_id = resp.data().id;
       graphInfo.graph.load_data_basic(resp.data());
       graphInfo.modelTitle = null;
       graphInfo.modelState = null;
@@ -148,14 +250,16 @@ export class NoctuaGraphService {
 
       self.graphPreParse(graphInfo.graph).subscribe((data) => {
         let annotons = self.graphToAnnotons(graphInfo.graph);
-        graphInfo.annotons = [...self.annotonsToTable(graphInfo.graph, annotons), ...self.ccComponentsToTable(graphInfo.graph, data)]
+        self.gridData = {
+          annotons: [...self.annotonsToTable(graphInfo.graph, annotons), ...self.ccComponentsToTable(graphInfo.graph, data)]
+        };
       })
 
       //  title = graph.get_annotations_by_key('title');
     }
 
     manager.register('merge', function ( /* resp */) {
-      manager.get_model(graphInfo.modelId);
+      manager.get_model(graphInfo.model_id);
     });
     manager.register('rebuild', function (resp) {
       rebuild(resp);
@@ -165,6 +269,9 @@ export class NoctuaGraphService {
 
     return graphInfo;
   }
+
+
+
 
 
 
@@ -185,8 +292,9 @@ export class NoctuaGraphService {
   }
   */
 
-  addModel(manager) {
-    manager.add_model();
+  addModel() {
+    const self = this
+    self.manager.add_model();
   }
 
   getNodeLabel(node) {
@@ -626,7 +734,7 @@ export class NoctuaGraphService {
       gp: gpNode.term.control.value.label,
       original: JSON.parse(JSON.stringify(annoton)),
       annoton: annoton,
-      annotonPresentation: self.formGridService.getAnnotonPresentation(annoton),
+      //    annotonPresentation: self.formGrid.getAnnotonPresentation(annoton),
     }
 
     return row;
