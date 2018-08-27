@@ -119,14 +119,19 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
     // this.sparqlService.onCamsChanged.next(this.cams);
     //  this.loadCams();
 
-    let data = this.summaryGridService.getGrid(cam.graph.annotons);
+    cam.graph = this.noctuaGraphService.getGraphInfo(cam.model.id)
 
-    this.sparqlService.addCamChildren(cam, data);
+    cam.graph.onGraphChanged.subscribe((annotons) => {
+      let data = this.summaryGridService.getGrid(cam.graph.annotons);
 
-    // this.cams.concat(cams)
-    // this.sparqlService.cams = this.cams;
-    this.dataSource = new CamsDataSource(this.sparqlService, this.paginator, this.sort);
-    console.log('---', data)
+      this.sparqlService.addCamChildren(cam, data);
+
+      // this.cams.concat(cams)
+      // this.sparqlService.cams = this.cams;
+      this.dataSource = new CamsDataSource(this.sparqlService, this.paginator, this.sort);
+      console.log('------', data)
+    });
+
 
     // this.noctuaGraphService. 
 

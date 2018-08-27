@@ -44,7 +44,6 @@ const minerva_manager = require('bbop-manager-minerva');
 })
 export class NoctuaGraphService {
   title;
-  model_id = 'gomodel:5b4695e900000033';
   golrServer = environment.globalGolrServer;
   baristaLocation = environment.globalBaristaLocation;
   minervaDefinitionName = environment.globalMinervaDefinitionName;
@@ -75,6 +74,7 @@ export class NoctuaGraphService {
 
     let graphInfo = {
       engine: new jquery_engine(barista_response),
+      onGraphChanged: new BehaviorSubject({}),
       graph: null,
       modelId: modelId,
       modelTitle: null,
@@ -149,6 +149,7 @@ export class NoctuaGraphService {
       self.graphPreParse(graphInfo.graph).subscribe((data) => {
         let annotons = self.graphToAnnotons(graphInfo.graph);
         graphInfo.annotons = [...self.annotonsToTable(graphInfo.graph, annotons), ...self.ccComponentsToTable(graphInfo.graph, data)]
+        graphInfo.onGraphChanged.next(annotations);
       })
 
       //  title = graph.get_annotations_by_key('title');
@@ -161,7 +162,7 @@ export class NoctuaGraphService {
       rebuild(resp);
     }, 10);
 
-    manager.get_model(this.model_id);
+    manager.get_model('gomodel:' + modelId);
 
     return graphInfo;
   }

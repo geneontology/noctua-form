@@ -70,7 +70,7 @@ export class SparqlService {
       let modelId = this.noctuaFormConfigService.getModelId(erg.model.value);
       result.push({
         id: uuid(),
-        graph: this.noctuaGraphService.getGraphInfo(modelId),
+        graph: null,
         model: Object.assign({}, {
           id: modelId,
           title: erg.modelTitle.value,
@@ -118,7 +118,7 @@ export class SparqlService {
       },
       relationship: '',
       aspect: annoton.aspect,
-      //term: 
+      term: annoton.term,
       relationshipExt: 'sss',
       extension: '',
       evidence: '',
