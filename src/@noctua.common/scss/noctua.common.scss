@@ -1,4 +1,7 @@
 $agb-toolbar-color: #e7ecf4;
+$sae-primary-color: #3b5998;
+$sae-primary-color-accent: #8b9dc3;
+$sae-primary-color-light: #dfe3ee;
 .agb-column-toolbar {
   padding: 5px;
   @include deep-height(40px); // @include mat-elevation(2);

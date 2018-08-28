@@ -71,7 +71,6 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
     this.sparqlService.getCamsGoTerms('GO:0099160').subscribe((response: any) => {
       this.cams = this.sparqlService.cams = response;
       this.sparqlService.onCamsChanged.next(this.cams);
@@ -114,27 +113,13 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
   }
 
   toggleExpand(cam) {
-    console.dir(cam)
-    //  this.cams = this.sparqlService.cams = response;
-    // this.sparqlService.onCamsChanged.next(this.cams);
-    //  this.loadCams();
-
+    cam.expanded = true;
     cam.graph = this.noctuaGraphService.getGraphInfo(cam.model.id)
-
     cam.graph.onGraphChanged.subscribe((annotons) => {
       let data = this.summaryGridService.getGrid(cam.graph.annotons);
-
       this.sparqlService.addCamChildren(cam, data);
-
-      // this.cams.concat(cams)
-      // this.sparqlService.cams = this.cams;
       this.dataSource = new CamsDataSource(this.sparqlService, this.paginator, this.sort);
-      console.log('------', data)
     });
-
-
-    // this.noctuaGraphService. 
-
   }
 
   ngOnDestroy(): void {

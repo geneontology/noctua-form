@@ -246,16 +246,17 @@ export class SummaryGridService {
 
     gridData.push({
       displayEnabledBy: self.tableCanDisplayEnabledBy(node),
+      treeLevel: node.treeLevel,
       gp: self.tableDisplayGp(row, node),
       relationship: extension ? '' : self.tableDisplayExtension(node),
-      extRelationship: extension ? node.relationship.label : '',
+      relationshipExt: extension ? node.relationship.label : '',
       term: extension ? {} : term,
       extension: extension ? term : {},
       aspect: node.aspect,
-      evidence: node.evidence[0].evidence.control.value.label,
+      evidence: node.evidence[0].evidence.control.value,
       reference: node.evidence[0].reference.control.link,
       with: node.evidence[0].with.control.value,
-      assignedBy: node.evidence[0].assignedBy.control.link,
+      assignedBy: node.evidence[0].assignedBy.control,
       node: node,
       annoton: row.annoton
       // $$treeLevel: node.treeLevel,
@@ -264,10 +265,11 @@ export class SummaryGridService {
 
     for (let i = 1; i < node.evidence.length; i++) {
       gridData.push({
-        evidence: node.evidence[i].evidence.control.value.label,
+        treeLevel: node.treeLevel,
+        evidence: node.evidence[i].evidence.control.value,
         reference: node.evidence[i].reference.control.link,
         with: node.evidence[i].with.control.value,
-        assignedBy: node.evidence[i].assignedBy.control.link,
+        assignedBy: node.evidence[i].assignedBy.control,
         node: node,
         annoton: row.annoton
       })

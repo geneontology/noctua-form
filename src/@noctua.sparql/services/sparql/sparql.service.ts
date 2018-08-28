@@ -10,27 +10,12 @@ import { NoctuaGraphService } from '@noctua.form/services/graph.service';
 
 import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
 import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
+import { Cam } from '../../models/cam';
 
 import * as _ from 'lodash';
 import { v4 as uuid } from 'uuid';
 declare const require: any;
 const each = require('lodash/forEach');
-
-export interface Cam {
-  id: string,
-  graph?: {};
-  model?: {};
-  annotatedEntity?: {};
-  relationship?: string;
-  aspect?: string;
-  term?: {};
-  relationshipExt?: string;
-  extension?: string;
-  evidence?: string;
-  reference?: string;
-  with?: string;
-  assignedBy?: string;
-}
 
 @Injectable({
   providedIn: 'root'
@@ -70,6 +55,7 @@ export class SparqlService {
       let modelId = this.noctuaFormConfigService.getModelId(erg.model.value);
       result.push({
         id: uuid(),
+        treeLevel: 0,
         graph: null,
         model: Object.assign({}, {
           id: modelId,
@@ -84,11 +70,11 @@ export class SparqlService {
           label: erg.termLabel.value
         }),
         relationshipExt: '',
-        extension: '',
-        evidence: '',
+        extension: {},
+        evidence: {},
         reference: '',
         with: '',
-        assignedBy: '',
+        assignedBy: {},
       });
     });
     return result;
@@ -111,19 +97,20 @@ export class SparqlService {
     console.log(annoton)
     let result: Cam = {
       id: uuid(),
+      treeLevel: annoton.treeLevel,
       model: cam.model,
       annotatedEntity: {
         id: '',
         label: annoton.gp
       },
-      relationship: '',
+      relationship: annoton.relationship,
       aspect: annoton.aspect,
       term: annoton.term,
-      relationshipExt: 'sss',
-      extension: '',
-      evidence: '',
-      reference: '',
-      with: '',
+      relationshipExt: annoton.relationshipExt,
+      extension: annoton.extension,
+      evidence: annoton.evidence,
+      reference: annoton.reference,
+      with: annoton.with,
       assignedBy: annoton.assignedBy,
     }
 

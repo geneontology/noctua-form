@@ -78,7 +78,7 @@ export class NoctuaFormConfigService {
         "displaySection": noctuaFormConfig.displaySection.gp,
         "displayGroup": noctuaFormConfig.displayGroup.mc,
         "lookupGroup": 'GO:0032991',
-        'treeLevel': 0,
+        'treeLevel': 1,
         "term": {
           "ontologyClass": [],
           "lookup": {
@@ -97,7 +97,7 @@ export class NoctuaFormConfigService {
         "displaySection": noctuaFormConfig.displaySection.gp,
         "displayGroup": noctuaFormConfig.displayGroup.gp,
         "lookupGroup": 'CHEBI:33695',
-        'treeLevel': 0,
+        'treeLevel': 1,
         "term": {
           "ontologyClass": [],
           "lookup": {
@@ -118,7 +118,7 @@ export class NoctuaFormConfigService {
         "displaySection": noctuaFormConfig.displaySection.fd,
         "displayGroup": noctuaFormConfig.displayGroup.mf,
         "lookupGroup": 'GO:0003674',
-        'treeLevel': 0,
+        'treeLevel': 1,
         "term": {
           "ontologyClass": ['go'],
           "lookup": {
@@ -137,7 +137,7 @@ export class NoctuaFormConfigService {
         "displaySection": noctuaFormConfig.displaySection.fd,
         "displayGroup": noctuaFormConfig.displayGroup.mf,
         "lookupGroup": 'CHEBI:23367',
-        'treeLevel': 1,
+        'treeLevel': 2,
         "term": {
           "ontologyClass": [],
           "lookup": {
@@ -156,7 +156,7 @@ export class NoctuaFormConfigService {
         "displaySection": noctuaFormConfig.displaySection.fd,
         "displayGroup": noctuaFormConfig.displayGroup.mf,
         "lookupGroup": 'GO:0044848',
-        'treeLevel': 1,
+        'treeLevel': 2,
         "term": {
           "ontologyClass": ['go'],
           "lookup": {
@@ -176,7 +176,7 @@ export class NoctuaFormConfigService {
         "displaySection": noctuaFormConfig.displaySection.fd,
         "displayGroup": noctuaFormConfig.displayGroup.cc,
         "lookupGroup": 'GO:0005575',
-        'treeLevel': 0,
+        'treeLevel': 1,
         "term": {
           "ontologyClass": ['go'],
           "lookup": {
@@ -196,7 +196,7 @@ export class NoctuaFormConfigService {
         "displaySection": noctuaFormConfig.displaySection.fd,
         "displayGroup": noctuaFormConfig.displayGroup.cc,
         "lookupGroup": 'GO:0005575',
-        'treeLevel': 1,
+        'treeLevel': 2,
         "term": {
           "ontologyClass": ['go'],
           "lookup": {
@@ -215,7 +215,7 @@ export class NoctuaFormConfigService {
         "displaySection": noctuaFormConfig.displaySection.fd,
         "displayGroup": noctuaFormConfig.displayGroup.cc,
         "lookupGroup": 'CL:0000003',
-        'treeLevel': 2,
+        'treeLevel': 3,
         "term": {
           "ontologyClass": ['cl'],
           "lookup": {
@@ -234,7 +234,7 @@ export class NoctuaFormConfigService {
         "displaySection": noctuaFormConfig.displaySection.fd,
         "displayGroup": noctuaFormConfig.displayGroup.cc,
         "lookupGroup": 'UBERON:0000061',
-        'treeLevel': 3,
+        'treeLevel': 4,
         "term": {
           "ontologyClass": ['uberon'],
           "lookup": {
@@ -254,7 +254,7 @@ export class NoctuaFormConfigService {
         "displaySection": noctuaFormConfig.displaySection.fd,
         "displayGroup": noctuaFormConfig.displayGroup.bp,
         "lookupGroup": 'GO:0008150',
-        'treeLevel': 0,
+        'treeLevel': 1,
         "term": {
           "ontologyClass": ['go'],
           "lookup": {
@@ -274,7 +274,7 @@ export class NoctuaFormConfigService {
         "displaySection": noctuaFormConfig.displaySection.fd,
         "displayGroup": noctuaFormConfig.displayGroup.bp,
         "lookupGroup": 'GO:0008150',
-        'treeLevel': 1,
+        'treeLevel': 2,
         "term": {
           "ontologyClass": ['go'],
           "lookup": {
@@ -294,7 +294,7 @@ export class NoctuaFormConfigService {
         "displaySection": noctuaFormConfig.displaySection.fd,
         "displayGroup": noctuaFormConfig.displayGroup.bp,
         "lookupGroup": 'GO:0008150',
-        'treeLevel': 2,
+        'treeLevel': 3,
         "term": {
           "ontologyClass": ['go'],
           "lookup": {

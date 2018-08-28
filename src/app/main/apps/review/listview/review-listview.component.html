@@ -4,15 +4,15 @@
     <mat-table fxFlex="1 1 auto" class="" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}" noctuaPerfectScrollbar>
       <ng-container cdkColumnDef="expand">
         <mat-header-cell *cdkHeaderCellDef fxFlex="80px"></mat-header-cell>
-        <mat-cell *cdkCellDef="let cam" fxFlex="80px">
+        <mat-cell *cdkCellDef="let cam" fxFlex="80px" [style.padding-left]="cam.treeLevel * 20+'px'">
           <button mat-icon-button (click)="toggleExpand(cam)" ckass="noc-button-small">
-            <mat-icon *ngIf="true" class="s-16 fa fa-caret-right">
+            <mat-icon *ngIf="!cam.expanded" class="s-16 fa fa-caret-right">
             </mat-icon>
-            <mat-icon *ngIf="false" class="mat-icon-rtl-mirror s-10">
+            <mat-icon *ngIf="cam.expanded" class="mat-icon-rtl-mirror s-10">
               signal_cellular_4_bar
             </mat-icon>
           </button>
-          <button mat-icon-button [matMenuTriggerFor]="changeView">
+          <button *ngIf="cam.treeLevel===0" mat-icon-button [matMenuTriggerFor]="changeView">
             <mat-icon>
               apps
             </mat-icon>
@@ -31,63 +31,63 @@
         </mat-cell>
       </ng-container>
       <ng-container cdkColumnDef="annotatedEntity">
-        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="160px">Annotated Entity</mat-header-cell>
+        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="150px">Annotated Entity</mat-header-cell>
         <mat-cell *cdkCellDef="let cam" fxFlex="150px">
           <p class="text-truncate">{{cam.annotatedEntity?.label}}</p>
         </mat-cell>
       </ng-container>
       <ng-container cdkColumnDef="relationship">
-        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="160px">Relationship</mat-header-cell>
-        <mat-cell *cdkCellDef="let cam" fxFlex="150px">
-          <p class="text-truncate">{{cam.relationship?.value}}</p>
+        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="120px">Relationship</mat-header-cell>
+        <mat-cell *cdkCellDef="let cam" fxFlex="120px">
+          <p class="text-truncate">{{cam.relationship}}</p>
         </mat-cell>
       </ng-container>
       <ng-container cdkColumnDef="aspect">
         <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="80px">Asp</mat-header-cell>
-        <mat-cell *cdkCellDef="let cam" fxFlex="150px">
+        <mat-cell *cdkCellDef="let cam" fxFlex="80px">
           <p class="text-truncate">{{cam.aspect}}</p>
         </mat-cell>
       </ng-container>
       <ng-container cdkColumnDef="term">
-        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="160px">Term</mat-header-cell>
+        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="150px">Term</mat-header-cell>
         <mat-cell *cdkCellDef="let cam" fxFlex="150px">
           <p class="text-truncate">{{cam.term?.label}}</p>
         </mat-cell>
       </ng-container>
       <ng-container cdkColumnDef="relationshipExt">
-        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="160px">Relationship (ext)</mat-header-cell>
-        <mat-cell *cdkCellDef="let cam" fxFlex="150px">
-          <p class="text-truncate">{{cam.relationshipExt?.value}}</p>
+        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="120px">Relationship (ext)</mat-header-cell>
+        <mat-cell *cdkCellDef="let cam" fxFlex="120px">
+          <p class="text-truncate">{{cam.relationshipExt}}</p>
         </mat-cell>
       </ng-container>
       <ng-container cdkColumnDef="extension">
-        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="160px">Extension</mat-header-cell>
+        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="150px">Extension</mat-header-cell>
         <mat-cell *cdkCellDef="let cam" fxFlex="150px">
-          <p class="text-truncate">{{cam.extension?.value}}</p>
+          <p class="text-truncate">{{cam.extension?.label}}</p>
         </mat-cell>
       </ng-container>
       <ng-container cdkColumnDef="evidence">
-        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="160px">Evidence</mat-header-cell>
+        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="150px">Evidence</mat-header-cell>
         <mat-cell *cdkCellDef="let cam" fxFlex="150px">
-          <p class="text-truncate">{{cam.evidence?.value}}</p>
+          <p class="text-truncate">{{cam.evidence?.label}}</p>
         </mat-cell>
       </ng-container>
       <ng-container cdkColumnDef="reference">
-        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="160px">Reference</mat-header-cell>
+        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="150px">Reference</mat-header-cell>
         <mat-cell *cdkCellDef="let cam" fxFlex="150px">
-          <p class="text-truncate">{{cam.reference?.value}}</p>
+          <a href="{{cam.reference?.url}}" class="text-truncate" target="_blank">{{cam.reference?.label}}</a>
         </mat-cell>
       </ng-container>
       <ng-container cdkColumnDef="with">
-        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="160px">With</mat-header-cell>
+        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="120px">With</mat-header-cell>
         <mat-cell *cdkCellDef="let cam" fxFlex="150px">
-          <p class="text-truncate">{{cam.with?.value}}</p>
+          <p class="text-truncate">{{cam.with}}</p>
         </mat-cell>
       </ng-container>
       <ng-container cdkColumnDef="assignedBy">
-        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="160px">Assigned By</mat-header-cell>
+        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="150px">Assigned By</mat-header-cell>
         <mat-cell *cdkCellDef="let cam" fxFlex="150px">
-          <p class="text-truncate">{{cam.assignedBy?.value}}</p>
+          <a href="{{cam.assignedBy?.link?.url}}" class="text-truncate" target="_blank">{{cam.assignedBy?.link?.value}}</a>
         </mat-cell>
       </ng-container>
       <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
