@@ -1,0 +1,175 @@
+<div class="dialog-content-wrapper">
+  <mat-toolbar class="mat-accent m-0">
+    <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="start center">
+      <span class="title dialog-title">{{gene?.ptn}}</span>
+      <span fxFlex></span>
+      <a mat-icon-button [routerLink]="['genes/', gene.ptn]" target="_blank" aria-label="Open Gene Detail Page">
+        <mat-icon>fullscreen</mat-icon>
+      </a>
+      <button mat-icon-button (click)="close()" aria-label="Close dialog">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <div mat-dialog-content class="" noctuaPerfectScrollbar>
+    <div class="agb-gene-panel w-100-p h-100-p" fxLayout="column" fxLayoutAlign="start center" noctuaPerfectScrollbar>
+      <div class="agb-gene-detail" fxLayout="column" fxLayoutAlign="start stretch">
+        <div class="agb-card-simple mat-elevation-z1">
+          <div class="agb-header" fxLayout="row" fxLayoutAlign="start center">
+            <div class="agb-title">
+              Protein Name
+            </div>
+          </div>
+          <div *ngIf="gene?.name;else no_info_content" class="agb-body">
+            <p>
+              {{gene.name}}
+            </p>
+          </div>
+        </div>
+        <div class="agb-card-simple mat-elevation-z1">
+          <div class="agb-header" fxLayout="row" fxLayoutAlign="start center">
+            <div class="agb-title">
+              Ancestral Species
+            </div>
+          </div>
+          <div *ngIf="gene?.species;else no_info_content" class="agb-body">
+            <p>
+              {{gene.species}}
+            </p>
+          </div>
+        </div>
+        <div class="agb-card-simple mat-elevation-z1">
+          <div class="agb-header" fxLayout="row" fxLayoutAlign="start center">
+            <div class="agb-title">
+              PANTHER Family
+            </div>
+          </div>
+          <div *ngIf="gene?.pthr;else no_info_content" class="agb-body">
+            <p>
+              <a href="http://www.pantherdb.org/panther/family.do?clsAccession={{gene.pthr}}">
+                {{gene.pthr}}
+              </a>
+              <a href="http://www.pantherdb.org/panther/family.do?clsAccession={{gene.pthr}}">
+                ({{gene.family_name}})
+              </a>
+            </p>
+            <p>
+              <a href="http://pantherdb.org/treeViewer/treeViewer.jsp?book={{gene.pthr}}">
+                Gene Tree Viewer
+              </a>
+            </p>
+          </div>
+        </div>
+        <div class="agb-card-simple mat-elevation-z1">
+          <div class="agb-header" fxLayout="row" fxLayoutAlign="start center">
+            <div class="agb-title">
+              Inferred Ancestral Protein Sequence
+            </div>
+          </div>
+          <div *ngIf="gene?.sequence;else no_info_content" class="agb-body">
+            <textarea class="agb-sequence" rows="10" readonly>
+              {{gene.sequence | uppercase}}
+            </textarea>
+          </div>
+        </div>
+
+        <div class="agb-card-simple mat-elevation-z1">
+          <div class="agb-header" fxLayout="row" fxLayoutAlign="start center">
+            <div class="agb-title">
+              Direct Gene Ontology annotations to this ancestral gene
+            </div>
+          </div>
+          <div class="agb-body p-0">
+            <mat-table [dataSource]="dataSource_da" class="" matSort>
+              <ng-container matColumnDef="go_accession">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> GO Accession </mat-header-cell>
+                <mat-cell *matCellDef="let direct_anno">
+                  <a href="http://amigo.geneontology.org/amigo/term/{{direct_anno.go_accession}}">
+                    {{direct_anno.go_accession}}
+                  </a>
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="go_name">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> GO Name </mat-header-cell>
+                <mat-cell *matCellDef="let direct_anno">
+                  <a href="http://amigo.geneontology.org/amigo/term/{{direct_anno.go_accession}}">
+                    {{direct_anno.go_name}}
+                  </a>
+                </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="displayedColumns_da"></mat-header-row>
+              <mat-row *matRowDef="let direct_anno; columns: displayedColumns_da;"></mat-row>
+            </mat-table>
+          </div>
+        </div>
+        <div class="agb-card-simple mat-elevation-z1">
+          <div class="agb-header" fxLayout="row" fxLayoutAlign="start center">
+            <div class="agb-title">
+              Inherited Gene Ontology annotations to this ancestral gene
+            </div>
+          </div>
+          <div class="agb-body p-0">
+            <mat-table [dataSource]="dataSource_ia" class="" matSort>
+              <ng-container matColumnDef="go_accession">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> GO Accession </mat-header-cell>
+                <mat-cell *matCellDef="let inherited_anno">
+                  <a href="http://amigo.geneontology.org/amigo/term/{{inherited_anno.go_accession}}">
+                    {{inherited_anno.go_accession}}
+                  </a>
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="go_name">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> GO Name </mat-header-cell>
+                <mat-cell *matCellDef="let inherited_anno">
+                  <a href="http://amigo.geneontology.org/amigo/term/{{inherited_anno.go_accession}}">
+                    {{inherited_anno.go_name}}
+                  </a>
+                </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="displayedColumns_da"></mat-header-row>
+              <mat-row *matRowDef="let direct_anno; columns: displayedColumns_da;"></mat-row>
+            </mat-table>
+          </div>
+        </div>
+        
+        <div *ngIf="hasProxyGene" class="agb-card-simple mat-elevation-z1">
+          <div class="agb-header" fxLayout="row" fxLayoutAlign="start center">
+            <div class="agb-title">
+              Proxy Genes in Extant Species
+            </div>
+            <span fxFlex></span>
+            <mat-form-field class>
+              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+            </mat-form-field>
+          </div>
+          <div class="agb-body p-0">
+            <mat-table [dataSource]="dataSource" class="" matSort>
+              <ng-container matColumnDef="proxy_org_long">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Extant Species </mat-header-cell>
+                <mat-cell *matCellDef="let proxy"> {{proxy.proxy_org_long}} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="proxy_gene">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> PANTHER Identifier of Proxy Gene </mat-header-cell>
+                <mat-cell *matCellDef="let proxy">
+                  <a href="http://pantherdb.org/genes/gene.do?acc={{proxy.proxy_gene}}">
+                    {{proxy.proxy_gene}}
+                  </a>
+                </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let proxy; columns: displayedColumns;"></mat-row>
+            </mat-table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #no_info_content>
+  <div class="agb-alert">
+    no information yet
+  </div>
+</ng-template>

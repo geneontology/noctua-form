@@ -19,6 +19,8 @@ import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
 
 import { locale as english } from './../i18n/en';
 
+import { ReviewDialogService } from './../dialog.service';
+
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 
 @Component({
@@ -60,6 +62,7 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
     private noctuaFormConfigService: NoctuaFormConfigService,
+    private reviewDialogService: ReviewDialogService,
     private noctuaGraphService: NoctuaGraphService,
     private summaryGridService: SummaryGridService,
     private sparqlService: SparqlService,
@@ -121,6 +124,10 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
       this.sparqlService.addCamChildren(cam, data);
       this.dataSource = new CamsDataSource(this.sparqlService, this.paginator, this.sort);
     });
+  }
+
+  openCamEdit(cam) {
+    this.reviewDialogService.openCamRowEdit(cam);
   }
 
   ngOnDestroy(): void {

@@ -1,0 +1,36 @@
+@import "src/@noctua/scss/noctua";
+@import "src/@noctua.common/scss/noctua.common";
+.gene-detail-dialog {
+  @include media-breakpoint('xs') {
+    width: 100%;
+  }
+  @include media-breakpoint-up('sm') {
+    width: 600px;
+    @include deep-height(95%);
+  }
+  .agb-gene-panel {
+    padding: 15px 5px;
+    background-color: #F7F7F7;
+    width: 100%; // border-left: #DDD solid 1px;
+  }
+  .agb-column-toolbar {}
+  .agb-gene-detail {
+    padding: 10px;
+    width: 100%;
+  }
+  .agb-sequence {
+    @include deep-width(100%);
+    resize: none;
+  }
+  .mat-dialog-container {
+    padding: 0;
+  }
+  .mat-dialog-content {
+    @include deep-height(95%);
+  }
+  .dialog-content-wrapper {
+    @include deep-height(95%);
+    display: flex;
+    flex-direction: column;
+  }
+}

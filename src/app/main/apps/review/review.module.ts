@@ -7,6 +7,10 @@ import { ReviewTreeviewComponent } from './treeview/review-treeview.component';
 import { NoctuaSharedModule } from '@noctua/shared.module';
 import { TreeTableModule } from 'primeng/treetable';
 import { TreeNode } from 'primeng/api';
+import { ReviewDialogService } from './dialog.service';
+
+import { CamRowEditDialogComponent } from './dialogs/cam-row-edit/cam-row-edit.component';
+
 
 const routes = [
   {
@@ -25,14 +29,14 @@ const routes = [
     TreeTableModule,
     RouterModule.forChild(routes),
   ],
-  providers: [
-  ],
+  providers: [ReviewDialogService],
   declarations: [
     ReviewComponent,
+    CamRowEditDialogComponent,
     ReviewListviewComponent,
     ReviewTreeviewComponent
   ],
-  entryComponents: [ReviewComponent]
+  entryComponents: [ReviewComponent, CamRowEditDialogComponent]
 })
 
 export class ReviewModule {
