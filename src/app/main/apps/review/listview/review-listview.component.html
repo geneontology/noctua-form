@@ -6,10 +6,10 @@
         <mat-header-cell *cdkHeaderCellDef fxFlex="80px"></mat-header-cell>
         <mat-cell *cdkCellDef="let cam" fxFlex="80px" [style.padding-left]="cam.treeLevel * 20+'px'">
           <button mat-icon-button (click)="toggleExpand(cam)" ckass="noc-button-small">
-            <mat-icon *ngIf="!cam.expanded" class="s-16 fa fa-caret-right">
+            <mat-icon *ngIf="!cam.expanded && cam.treeLevel===0" class="s-16 fa fa-caret-right">
             </mat-icon>
-            <mat-icon *ngIf="cam.expanded" class="mat-icon-rtl-mirror s-10">
-              signal_cellular_4_bar
+            <mat-icon *ngIf="cam.expanded" class="mat-icon-rtl-mirror">
+              refresh
             </mat-icon>
           </button>
           <button *ngIf="cam.treeLevel===0" mat-icon-button [matMenuTriggerFor]="changeView">

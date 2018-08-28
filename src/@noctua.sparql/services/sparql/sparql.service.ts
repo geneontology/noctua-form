@@ -98,7 +98,7 @@ export class SparqlService {
     let result: Cam = {
       id: uuid(),
       treeLevel: annoton.treeLevel,
-      model: cam.model,
+      // model: cam.model,
       annotatedEntity: {
         id: '',
         label: annoton.gp

@@ -241,10 +241,10 @@ export class SummaryGridService {
   getGridRow(row, node, gridData) {
     const self = this;
 
-    let extension = node.treeLevel > 0;
+    let extension = node.treeLevel > 1;
     let term = node.getTerm();
 
-    gridData.push({
+    gridData.unshift({
       displayEnabledBy: self.tableCanDisplayEnabledBy(node),
       treeLevel: node.treeLevel,
       gp: self.tableDisplayGp(row, node),
@@ -264,7 +264,7 @@ export class SummaryGridService {
     })
 
     for (let i = 1; i < node.evidence.length; i++) {
-      gridData.push({
+      gridData.unshift({
         treeLevel: node.treeLevel,
         evidence: node.evidence[i].evidence.control.value,
         reference: node.evidence[i].reference.control.link,

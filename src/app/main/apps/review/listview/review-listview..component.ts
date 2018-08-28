@@ -71,6 +71,7 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
     this.sparqlService.getCamsGoTerms('GO:0099160').subscribe((response: any) => {
       this.cams = this.sparqlService.cams = response;
       this.sparqlService.onCamsChanged.next(this.cams);
