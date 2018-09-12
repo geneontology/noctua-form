@@ -4,7 +4,7 @@
     <mat-table fxFlex="1 1 auto" class="" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}" noctuaPerfectScrollbar>
       <ng-container cdkColumnDef="expand">
         <mat-header-cell *cdkHeaderCellDef fxFlex="80px"></mat-header-cell>
-        <mat-cell *cdkCellDef="let cam" fxFlex="80px" [style.padding-left]="cam.treeLevel * 20+'px'">
+        <mat-cell *cdkCellDef="let cam" fxFlex="80px" [style.padding-left]="cam.treeLevel * 20+'px'" (click)="$event.stopPropagation()">
           <button mat-icon-button (click)="toggleExpand(cam)" ckass="noc-button-small">
             <mat-icon *ngIf="!cam.expanded && cam.treeLevel===0" class="s-16 fa fa-caret-right">
             </mat-icon>
