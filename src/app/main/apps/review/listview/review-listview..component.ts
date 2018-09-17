@@ -20,6 +20,7 @@ import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
 import { locale as english } from './../i18n/en';
 
 import { ReviewDialogService } from './../dialog.service';
+import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
 
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 
@@ -62,6 +63,7 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
     private noctuaFormConfigService: NoctuaFormConfigService,
+    private noctuaSearchService: NoctuaSearchService,
     private reviewDialogService: ReviewDialogService,
     private noctuaGraphService: NoctuaGraphService,
     private summaryGridService: SummaryGridService,
@@ -102,6 +104,12 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
             this.dataSource.filter = this.filter.nativeElement.value;
           });
           */
+  }
+
+  search() {
+    let searchCriteria = this.searchForm.value;
+    console.dir(searchCriteria)
+    this.noctuaSearchService.search(searchCriteria);
   }
 
   createAnswerForm() {
