@@ -2,6 +2,7 @@
 @import "mixins/breakpoints";
 $noc-primary-color: #039be5;
 $noc-secondary-color: #995014;
+
 @mixin deep-width($number) {
   width: $number;
   min-width: $number;
@@ -14,10 +15,17 @@ $noc-secondary-color: #995014;
   max-height: $number;
 }
 
+@mixin noc-icon-size($number) {
+  font-size: $number;
+  @include deep-width($number);
+  @include deep-height($number);
+}
+
 .noc-paginator {
   overflow: hidden;
   @include deep-height(40px);
   background-color: #DDD;
+
   .mat-paginator-container {
     @include deep-height(40px !important);
   }
@@ -68,6 +76,7 @@ input[type=text] {
 .noc-container {
   position: relative;
   width: 1100px;
+
   .noc-full-w {
     width: 100% !important;
   }
@@ -77,16 +86,19 @@ input[type=text] {
   .noc-breadcrumb {
     font-size: 20px;
     color: #777;
+
     button {
       font-size: 20px;
       color: #999;
       padding-left: 8px;
       padding-right: 8px;
     }
+
     &.noc-active {
       color: #000;
     }
   }
+
   md-icon {
     margin-left: 10px;
     margin-right: 10px;

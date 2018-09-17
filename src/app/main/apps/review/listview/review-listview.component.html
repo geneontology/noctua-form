@@ -1,7 +1,69 @@
-<div class="agb-species-panel w-100-p h-100-p" fxLayout="column" fxLayoutAlign="start stretch">
+<div class="w-100-p h-100-p" fxLayout="column" fxLayoutAlign="start stretch">
 
+
+  <div class="noc-form-container w-100-p" fxLayout="column" fxLayoutAlign="start center">
+    <form fxLayout="column" fxLayoutAlign="start stretch" name="searchForm" [formGroup]="searchForm" class="noc-container noc-search-form">
+      <div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+        <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start start">
+          <div class="noc-section-heading">
+            Gene Product
+          </div>
+          <span fxFlex></span>
+        </div>
+        <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
+          <div class="noc-term-group" fxLayout="row">
+            <div class="pb-20" fxLayout="column" fxFlex>
+              <div class="ph-15 noc-annoton-group-row" fxLayout="column">
+                <div class="" fxLayout="column" fxLayoutAlign="start stretch">
+                  <mat-form-field appearance="standard" class="" fxFlex="">
+                    <mat-label>Gene Product</mat-label>
+                    <input matInput formControlName="geneProduct" placeholder="Enter a Gene Product" />
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+        <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start start">
+          <div class="noc-section-heading">
+            Function Description
+          </div>
+          <span fxFlex></span>
+        </div>
+        <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
+          <div class="noc-term-group md-whiteframe-1dp" fxLayout="row">
+            <div class="pb-20" fxLayout="column" fxFlex>
+              <div class="ph-15 noc-annoton-group-row" fxLayout="column">
+                <div class="" fxLayout="column" fxLayoutAlign="start stretch">
+                  <mat-form-field appearance="standard" class="" fxFlex="">
+                    <mat-label>Go Term</mat-label>
+                    <input matInput formControlName="goTerm" placeholder="Enter a Go Term" />
+                  </mat-form-field>
+                  <mat-form-field appearance="standard" class="" fxFlex="">
+                    <mat-label>PMID</mat-label>
+                    <input matInput formControlName="pmid" placeholder="Enter PMID" />
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div layout="row" class="sae-submit-row">
+        <button *ngIf="false" (click)='cancel()' type="button" mat-raised-button color="" class="mr-8">
+          Why is the "Search" button disabled?
+        </button>
+        <span fxFlex></span>
+        <button (click)='cancel()' type="button" mat-raised-button color="" class="mr-8">Clear</button>
+        <button (click)="search()" type="button" mat-raised-button color="primary">Search</button>
+      </div>
+    </form>
+  </div>
   <div class="cams-table" fxLayout="column" fxLayoutAlign="start stretch">
-    <mat-table fxFlex="1 1 auto" class="" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}" noctuaPerfectScrollbar>
+    <mat-table fxFlex="1 1 auto" class="" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}"
+      noctuaPerfectScrollbar>
       <ng-container cdkColumnDef="expand">
         <mat-header-cell *cdkHeaderCellDef fxFlex="80px"></mat-header-cell>
         <mat-cell *cdkCellDef="let cam" fxFlex="80px" [style.padding-left]="cam.treeLevel * 20+'px'" (click)="$event.stopPropagation()">
@@ -18,7 +80,8 @@
             </mat-icon>
           </button>
           <mat-menu #changeView="matMenu">
-            <a *ngFor="let workbench of cam.model?.modelInfo.workbenches" href="{{workbench.url}}" target="_blank" mat-menu-item>
+            <a *ngFor="let workbench of cam.model?.modelInfo.workbenches" href="{{workbench.url}}" target="_blank"
+              mat-menu-item>
               {{workbench.label}}
             </a>
           </mat-menu>
@@ -93,8 +156,8 @@
       <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *cdkRowDef="let cam; columns: displayedColumns;" class="cam" matRipple (click)="openCamEdit(cam)"></mat-row>
     </mat-table>
-    <mat-paginator class="noc-paginator" #paginator [length]="dataSource?.filteredData?.length" [pageIndex]="0" [pageSize]="50"
-      [pageSizeOptions]="[5, 10, 25, 100]">
+    <mat-paginator class="noc-paginator" #paginator [length]="dataSource?.filteredData?.length" [pageIndex]="0"
+      [pageSize]="50" [pageSizeOptions]="[5, 10, 25, 100]">
     </mat-paginator>
   </div>
 </div>

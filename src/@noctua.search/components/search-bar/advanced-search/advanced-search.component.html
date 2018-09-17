@@ -21,6 +21,16 @@
       <mat-label>PMID</mat-label>
       <input matInput formControlName="pmid" placeholder="Enter PMID" />
     </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input type="text" placeholder="search word" aria-label="Number" matInput [formControl]="searchTerm"
+        [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let item of searchResult" [value]="item">
+          {{ item }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
     <div>
       <span fxFlex></span>
       <button (click)='cancel()' type="button" mat-raised-button color="" class="mr-8">Cancel</button>
