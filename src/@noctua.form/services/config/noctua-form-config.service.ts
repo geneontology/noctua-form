@@ -659,6 +659,14 @@ export class NoctuaFormConfigService {
     }
   }
 
+  getRequestParams(id) {
+    const self = this;
+
+    let nodeData = JSON.parse(JSON.stringify(self._annotonData[id]));
+
+    return nodeData.term.lookup.requestParams;
+  }
+
   getModelUrls(modelId) {
 
     let modelInfo: any = {};

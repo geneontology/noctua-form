@@ -19,6 +19,11 @@
                     <mat-label>Gene Product</mat-label>
                     <input matInput formControlName="geneProduct" placeholder="Enter a Gene Product" />
                   </mat-form-field>
+
+
+
+
+
                 </div>
               </div>
             </div>
@@ -37,10 +42,22 @@
             <div class="pb-20" fxLayout="column" fxFlex>
               <div class="ph-15 noc-annoton-group-row" fxLayout="column">
                 <div class="" fxLayout="column" fxLayoutAlign="start stretch">
+                  <!--
                   <mat-form-field appearance="standard" class="" fxFlex="">
                     <mat-label>Go Term</mat-label>
                     <input matInput formControlName="goTerm" placeholder="Enter a Go Term" />
                   </mat-form-field>
+                  -->
+                  <mat-form-field class="">
+                    <input type="text" matInput formControlName="goTerm" placeholder="Enter a Go Term"
+                      [matAutocomplete]="auto" />
+                    <mat-autocomplete #auto="matAutocomplete">
+                      <mat-option *ngFor="let item of searchResults" [value]="item">
+                        {{ item.label }}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+
                   <mat-form-field appearance="standard" class="" fxFlex="">
                     <mat-label>PMID</mat-label>
                     <input matInput formControlName="pmid" placeholder="Enter PMID" />
@@ -51,7 +68,7 @@
           </div>
         </div>
       </div>
-      <div layout="row" class="sae-submit-row">
+      <div layout="row" class="noc-submit-row">
         <button *ngIf="false" (click)='cancel()' type="button" mat-raised-button color="" class="mr-8">
           Why is the "Search" button disabled?
         </button>

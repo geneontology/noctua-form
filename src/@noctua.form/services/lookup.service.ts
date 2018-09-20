@@ -10,6 +10,8 @@ import { AnnotonNode } from './../annoton/annoton-node.js';
 import { AnnotonNodeClosure } from './../annoton/annoton-node-closure';
 import { Evidence } from './../annoton/evidence.js';
 
+import { NoctuaFormConfigService } from './config/noctua-form-config.service';
+
 declare const require: any;
 
 const each = require('lodash/forEach');
@@ -34,7 +36,8 @@ export class NoctuaLookupService {
   golrURLBase;
   localClosures;
 
-  constructor(private httpClient: HttpClient, ) {
+  constructor(private httpClient: HttpClient,
+    private noctuaFormConfigService: NoctuaFormConfigService) {
     this.name = 'DefaultLookupName';
     this.linker = new amigo.linker();
     this.golrURLBase = environment.globalGolrServer + `/select?`;
@@ -43,6 +46,10 @@ export class NoctuaLookupService {
     this.localClosures = [];
 
     //  this.golrLookupManager();
+
+  }
+
+  goLookup() {
 
   }
 
@@ -60,29 +67,43 @@ export class NoctuaLookupService {
     return manager.get_query(str);
   }
 
+  golrTermLookup(searchText) {
+    const self = this;
+
+    let requestParams = self.noctuaFormConfigService.getRequestParams('mf');
+
+    return self.golrLookup(searchText, requestParams);
+  }
 
   golrLookup(searchText, requestParams) {
     const self = this;
 
     requestParams.q = self.buildQ(searchText);
 
-    const params = new HttpParams()
-      .set('jsonpCallbackParam', 'json.wrf')
-      .set('params', requestParams);
+    let params = new HttpParams({
+      fromObject: requestParams
+    })
+    // .set('callback', 'JSONP_CALLBACK')
+    //.set('jsonpCallbackParam', 'json.wrf')
+    // .set('params', requestParams);
+
+
     const url = this.golrURLBase + params.toString();
 
-    return this.httpClient.jsonp(url, 'json.wrf').subscribe(response => {
-      let data = response['data'].response.docs;
-      let result = data.map((item) => {
-        return {
-          id: item.annotation_class,
-          label: item.annotation_class_label
-        };
-      });
-      return result;
-    }, error => {
-      console.error(error);
+    return this.httpClient.jsonp(url, 'json.wrf').pipe(
+      map(response => self._foo(response))
+    );
+  }
+
+  _foo(response) {
+    let data = response.response.docs;
+    let result = data.map((item) => {
+      return {
+        id: item.annotation_class,
+        label: item.annotation_class_label
+      };
     });
+    return result;
   }
 
   golrLookupManager(searchText, requestParams) {

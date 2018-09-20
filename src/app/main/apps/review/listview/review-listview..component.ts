@@ -15,6 +15,7 @@ import { forEach } from '@angular/router/src/utils/collection';
 import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loader.service';
 import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
 import { NoctuaGraphService } from '@noctua.form/services/graph.service';
+import { NoctuaLookupService } from '@noctua.form/services/lookup.service';
 import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
 
 import { locale as english } from './../i18n/en';
@@ -59,12 +60,15 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
   sort: MatSort;
   cams: any[] = [];
 
+  searchResults = [];
+
   private unsubscribeAll: Subject<any>;
 
   constructor(private route: ActivatedRoute,
     private noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaSearchService: NoctuaSearchService,
     private reviewDialogService: ReviewDialogService,
+    private noctuaLookupService: NoctuaLookupService,
     private noctuaGraphService: NoctuaGraphService,
     private summaryGridService: SummaryGridService,
     private sparqlService: SparqlService,
@@ -90,6 +94,20 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
         this.cams = cams;
         this.loadCams();
       });
+
+    // console.dir(this.searchForm.get('goTerm'));
+
+
+    this.searchForm.get('goTerm').valueChanges
+      //  .debounceTime(400) 
+      .subscribe(data => {
+        this.noctuaLookupService.golrTermLookup(data).subscribe(response => {
+          this.searchResults = response
+          console.log(this.searchResults)
+        })
+      })
+
+
     /*
         fromEvent(this.filter.nativeElement, 'keyup')
           .pipe(
@@ -110,6 +128,10 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
     let searchCriteria = this.searchForm.value;
     console.dir(searchCriteria)
     this.noctuaSearchService.search(searchCriteria);
+  }
+
+  autocomplete(searchTerm) {
+    this.noctuaLookupService.golrTermLookup(searchTerm);
   }
 
   createAnswerForm() {

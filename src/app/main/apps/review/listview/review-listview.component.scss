@@ -39,6 +39,7 @@
       margin: 10px 0;
       width: 100%;
       background-color: #FFF;
+      @include mat-elevation(2);
 
       .noc-section-header {
         height: 40px;
@@ -150,10 +151,10 @@
   }
 
   .cams-table {
-    position: relative;
-    flex: 1 1 auto;
-    border-bottom: 1px solid rgba(0, 0, 0, .12);
-    overflow: auto;
+    // position: relative;
+    //  flex: 1 1 auto;
+    //    border-bottom: 1px solid rgba(0, 0, 0, .12);
+    //  overflow: auto;
 
     .mat-header-row {
       padding: 0;
@@ -172,16 +173,16 @@
       font-size: 12px !important;
     }
 
-    .mat-header-cell,
-      {}
+    .mat-header-cell {}
 
+    /*
     .noc-paginator {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
     }
-
+*/
     .cam {
       position: relative;
       cursor: pointer;
