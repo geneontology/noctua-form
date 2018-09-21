@@ -18,6 +18,7 @@ import { rootRenderNodes } from '@angular/core/src/view';
 })
 export class NoctuaFormConfigService {
   baseRequestParams
+  baseSpeciesRequestParam
   requestParams
   _annotonData
   _modelRelationship
@@ -60,6 +61,40 @@ export class NoctuaFormConfigService {
       ],
       _: Date.now()
     };
+
+    this.baseSpeciesRequestParam = {
+      defType: 'edismax',
+      qt: 'standard',
+      indent: 'on',
+      wt: 'json',
+      rows: '10',
+      start: '0',
+      fl: 'bioentity,bioentity_name,qualifier,annotation_class,annotation_extension_json,assigned_by,taxon,evidence_type,evidence_with,panther_family,type,bioentity_isoform,reference,date,bioentity_label,annotation_class_label,taxon_label,panther_family_label,score,id',
+      ' facet': true,
+      'facet.mincount': 1,
+      'facet.sort': 'count',
+      ' json.nl': 'arrarr',
+      'facet.limit': 0,
+      //   hl: true
+      ////    hl.simple.pre: <em class="hilite">
+      //   hl.snippets: 1000
+      'f.taxon_subset_closure_label.facet.limit': -1,
+      'fq': 'document_category:"annotation"',
+      'facet.field': ['aspect'
+        , 'taxon_subset_closure_label'
+        , 'type'
+        , 'evidence_subset_closure_label'
+        , 'regulates_closure_label'
+        , 'annotation_class_label'
+        , 'qualifier'
+        , 'annotation_extension_class_closure_label'
+        , 'assigned_by'
+        , 'panther_family_label'],
+      //  q: *:*
+      packet: 3,
+      callback_type: 'search',
+    }
+
 
     this.requestParams = {
       "evidence": Object.assign({}, JSON.parse(JSON.stringify(this.baseRequestParams)), {
@@ -552,7 +587,6 @@ export class NoctuaFormConfigService {
         }],
       },
     }
-
 
     this.closureCheck = {}
 

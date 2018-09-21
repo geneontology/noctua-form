@@ -1,6 +1,4 @@
-<div class="w-100-p h-100-p" fxLayout="column" fxLayoutAlign="start stretch">
-
-
+<div class="w-100-p h-100-p" noctuaPerfectScrollbar>
   <div class="noc-form-container w-100-p" fxLayout="column" fxLayoutAlign="start center">
     <form fxLayout="column" fxLayoutAlign="start stretch" name="searchForm" [formGroup]="searchForm" class="noc-container noc-search-form">
       <div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
@@ -14,16 +12,36 @@
           <div class="noc-term-group" fxLayout="row">
             <div class="pb-20" fxLayout="column" fxFlex>
               <div class="ph-15 noc-annoton-group-row" fxLayout="column">
-                <div class="" fxLayout="column" fxLayoutAlign="start stretch">
-                  <mat-form-field appearance="standard" class="" fxFlex="">
-                    <mat-label>Gene Product</mat-label>
-                    <input matInput formControlName="geneProduct" placeholder="Enter a Gene Product" />
+                <div class="" fxLayout="row" fxLayoutAlign="start">
+                  <mat-form-field class="mr-8" fxFlex="30">
+                    <input type="text" matInput formControlName="species" placeholder="Species" [matAutocomplete]="auto" />
+                    <mat-autocomplete #auto="matAutocomplete">
+                      <mat-option *ngFor="let item of searchResults" [value]="item.id">
+                        <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
+                          <div>
+                            {{ item.id }}
+                          </div>
+                          <span fxFlex></span>
+                          {{ item.label }}
+                        </div>
+                      </mat-option>
+                    </mat-autocomplete>
                   </mat-form-field>
-
-
-
-
-
+                  <mat-form-field class="" fxFlex="70">
+                    <input type="text" matInput formControlName="geneProduct" placeholder="Enter a Gene Product"
+                      [matAutocomplete]="auto" />
+                    <mat-autocomplete #auto="matAutocomplete">
+                      <mat-option *ngFor="let item of searchResults" [value]="item.id">
+                        <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
+                          <div>
+                            {{ item.id }}
+                          </div>
+                          <span fxFlex></span>
+                          {{ item.label }}
+                        </div>
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
                 </div>
               </div>
             </div>
@@ -42,26 +60,88 @@
             <div class="pb-20" fxLayout="column" fxFlex>
               <div class="ph-15 noc-annoton-group-row" fxLayout="column">
                 <div class="" fxLayout="column" fxLayoutAlign="start stretch">
-                  <!--
-                  <mat-form-field appearance="standard" class="" fxFlex="">
-                    <mat-label>Go Term</mat-label>
-                    <input matInput formControlName="goTerm" placeholder="Enter a Go Term" />
-                  </mat-form-field>
-                  -->
-                  <mat-form-field class="">
-                    <input type="text" matInput formControlName="goTerm" placeholder="Enter a Go Term"
-                      [matAutocomplete]="auto" />
-                    <mat-autocomplete #auto="matAutocomplete">
-                      <mat-option *ngFor="let item of searchResults" [value]="item">
-                        {{ item.label }}
-                      </mat-option>
-                    </mat-autocomplete>
-                  </mat-form-field>
+                  <div class="" fxLayout="row" fxLayoutAlign="start">
+                    <mat-form-field appearance="standard" class="mr-8" fxFlex="70">
+                      <input type="text" matInput formControlName="goTerm" placeholder="Enter a Go Term"
+                        [matAutocomplete]="auto" />
+                      <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let item of searchResults" [value]="item.id">
+                          <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
+                            <div>
+                              {{ item.id }}
+                            </div>
+                            <span fxFlex></span>
+                            {{ item.label }}
+                          </div>
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                    <mat-form-field appearance="standard" class="" fxFlex="30">
+                      <mat-label>PMID</mat-label>
+                      <input matInput formControlName="pmid" placeholder="Enter PMID" />
+                    </mat-form-field>
+                  </div>
+                  <mat-accordion>
+                    <mat-expansion-panel>
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          <a>Advanced Search</a>
+                        </mat-panel-title>
+                        <mat-panel-description>
+                          Choose any specific term
+                        </mat-panel-description>
+                      </mat-expansion-panel-header>
+                      <div class="" fxLayout="column" fxLayoutAlign="start stretch">
+                        <mat-form-field class="">
+                          <input type="text" matInput formControlName="mf" placeholder="Molecular Function"
+                            [matAutocomplete]="auto" />
+                          <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let item of searchResults" [value]="item.id">
+                              <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
+                                <div>
+                                  {{ item.id }}
+                                </div>
+                                <span fxFlex></span>
+                                {{ item.label }}
+                              </div>
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                        <mat-form-field class="">
+                          <input type="text" matInput formControlName="bp" placeholder="Biological Process"
+                            [matAutocomplete]="auto" />
+                          <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let item of searchResults" [value]="item.id">
+                              <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
+                                <div>
+                                  {{ item.id }}
+                                </div>
+                                <span fxFlex></span>
+                                {{ item.label }}
+                              </div>
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                        <mat-form-field class="">
+                          <input type="text" matInput formControlName="cc" placeholder="Cellular Component"
+                            [matAutocomplete]="auto" />
+                          <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let item of searchResults" [value]="item.id">
+                              <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
+                                <div>
+                                  {{ item.id }}
+                                </div>
+                                <span fxFlex></span>
+                                {{ item.label }}
+                              </div>
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                      </div>
+                    </mat-expansion-panel>
+                  </mat-accordion>
 
-                  <mat-form-field appearance="standard" class="" fxFlex="">
-                    <mat-label>PMID</mat-label>
-                    <input matInput formControlName="pmid" placeholder="Enter PMID" />
-                  </mat-form-field>
+
                 </div>
               </div>
             </div>
@@ -78,8 +158,8 @@
       </div>
     </form>
   </div>
-  <div class="cams-table" fxLayout="column" fxLayoutAlign="start stretch">
-    <mat-table fxFlex="1 1 auto" class="" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}"
+  <div class="cams-table">
+    <mat-table fxFlex="1 1 auto" class="w-100-p" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}"
       noctuaPerfectScrollbar>
       <ng-container cdkColumnDef="expand">
         <mat-header-cell *cdkHeaderCellDef fxFlex="80px"></mat-header-cell>

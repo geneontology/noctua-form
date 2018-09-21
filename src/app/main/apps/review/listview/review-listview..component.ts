@@ -136,9 +136,13 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
 
   createAnswerForm() {
     return new FormGroup({
-      goTerm: new FormControl(this.searchCriteria.goTerm),
+      species: new FormControl(this.searchCriteria.species),
       geneProduct: new FormControl(this.searchCriteria.geneProduct),
+      goTerm: new FormControl(this.searchCriteria.goTerm),
       pmid: new FormControl(this.searchCriteria.pmid),
+      mf: new FormControl(this.searchCriteria.mf),
+      bp: new FormControl(this.searchCriteria.bp),
+      cc: new FormControl(this.searchCriteria.cc),
     });
   }
 
