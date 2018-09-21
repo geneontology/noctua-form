@@ -58,9 +58,13 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatSort)
   sort: MatSort;
+
+  showAdvancedSearch = false;
   cams: any[] = [];
 
   searchResults = [];
+
+
 
   private unsubscribeAll: Subject<any>;
 
@@ -136,19 +140,22 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
 
   createAnswerForm() {
     return new FormGroup({
-      species: new FormControl(this.searchCriteria.species),
       geneProduct: new FormControl(this.searchCriteria.geneProduct),
       goTerm: new FormControl(this.searchCriteria.goTerm),
       pmid: new FormControl(this.searchCriteria.pmid),
-      mf: new FormControl(this.searchCriteria.mf),
-      bp: new FormControl(this.searchCriteria.bp),
-      cc: new FormControl(this.searchCriteria.cc),
+      contributor: new FormControl(this.searchCriteria.contributor),
+      assignedBy: new FormControl(this.searchCriteria.assignedBy),
+      species: new FormControl(this.searchCriteria.species),
     });
   }
 
   loadCams() {
     this.cams = this.sparqlService.cams;
     this.dataSource = new CamsDataSource(this.sparqlService, this.paginator, this.sort);
+  }
+
+  toggleAdvancedSearch() {
+    this.showAdvancedSearch = !this.showAdvancedSearch;
   }
 
   toggleExpand(cam) {

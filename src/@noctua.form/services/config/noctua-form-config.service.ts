@@ -21,6 +21,7 @@ export class NoctuaFormConfigService {
   baseSpeciesRequestParam
   requestParams
   _annotonData
+  _reviewSearchData
   _modelRelationship
   closureCheck;
   baristaToken;
@@ -343,6 +344,112 @@ export class NoctuaFormConfigService {
         }
       },
     }
+
+    this._reviewSearchData = {
+      "species": {
+        'id': 'mc',
+        "label": 'Macromolecular Complex',
+        "lookupGroup": 'GO:0032991',
+        'treeLevel': 1,
+        "term": {
+          "ontologyClass": [],
+          "lookup": {
+            "requestParams": Object.assign({}, JSON.parse(JSON.stringify(this.baseRequestParams)), {
+              fq: [
+                'document_category:"ontology_class"',
+                'isa_closure:"GO:0032991"'
+              ],
+            }),
+          }
+        }
+      },
+      "mc": {
+        'id': 'mc',
+        "label": 'Macromolecular Complex',
+        "lookupGroup": 'GO:0032991',
+        'treeLevel': 1,
+        "term": {
+          "ontologyClass": [],
+          "lookup": {
+            "requestParams": Object.assign({}, JSON.parse(JSON.stringify(this.baseRequestParams)), {
+              fq: [
+                'document_category:"ontology_class"',
+                'isa_closure:"GO:0032991"'
+              ],
+            }),
+          }
+        }
+      },
+      "gp": {
+        "label": 'Gene Product',
+        "lookupGroup": 'CHEBI:33695',
+        'treeLevel': 1,
+        "term": {
+          "ontologyClass": [],
+          "lookup": {
+            "requestParams": Object.assign({}, JSON.parse(JSON.stringify(this.baseRequestParams)), {
+              fq: [
+                'document_category:"ontology_class"',
+                'isa_closure:"CHEBI:33695"'
+                //'isa_closure:"CHEBI:23367"'
+              ],
+            }),
+          }
+        }
+      },
+      'mf': {
+        "label": 'Molecular Function',
+        'aspect': 'F',
+        "lookupGroup": 'GO:0003674',
+        'treeLevel': 1,
+        "term": {
+          "ontologyClass": ['go'],
+          "lookup": {
+            "requestParams": Object.assign({}, JSON.parse(JSON.stringify(this.baseRequestParams)), {
+              fq: [
+                'document_category:"ontology_class"',
+                'isa_closure:"GO:0003674"'
+              ],
+            }),
+          }
+        }
+      },
+      'cc': {
+        "label": 'Cellular Component',
+        'aspect': 'C',
+        "lookupGroup": 'GO:0005575',
+        'treeLevel': 1,
+        "term": {
+          "ontologyClass": ['go'],
+          "lookup": {
+            "requestParams": Object.assign({}, JSON.parse(JSON.stringify(this.baseRequestParams)), {
+              fq: [
+                'document_category:"ontology_class"',
+                'isa_closure:"GO:0005575"'
+              ],
+            }),
+          }
+        }
+      },
+      'bp': {
+        "label": 'Biological Process',
+        'aspect': 'P',
+        "lookupGroup": 'GO:0008150',
+        'treeLevel': 1,
+        "term": {
+          "ontologyClass": ['go'],
+          "lookup": {
+            "requestParams": Object.assign({}, JSON.parse(JSON.stringify(this.baseRequestParams)), {
+              fq: [
+                'document_category:"ontology_class"',
+                'isa_closure:"GO:0008150"'
+              ],
+            }),
+          }
+        }
+      },
+    }
+
 
     this._modelRelationship = {
       default: {
