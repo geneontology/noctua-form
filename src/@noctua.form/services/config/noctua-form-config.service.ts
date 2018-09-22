@@ -363,23 +363,6 @@ export class NoctuaFormConfigService {
           }
         }
       },
-      "mc": {
-        'id': 'mc',
-        "label": 'Macromolecular Complex',
-        "lookupGroup": 'GO:0032991',
-        'treeLevel': 1,
-        "term": {
-          "ontologyClass": [],
-          "lookup": {
-            "requestParams": Object.assign({}, JSON.parse(JSON.stringify(this.baseRequestParams)), {
-              fq: [
-                'document_category:"ontology_class"',
-                'isa_closure:"GO:0032991"'
-              ],
-            }),
-          }
-        }
-      },
       "gp": {
         "label": 'Gene Product',
         "lookupGroup": 'CHEBI:33695',
@@ -397,7 +380,7 @@ export class NoctuaFormConfigService {
           }
         }
       },
-      'mf': {
+      'goTerm': {
         "label": 'Molecular Function',
         'aspect': 'F',
         "lookupGroup": 'GO:0003674',
@@ -409,40 +392,6 @@ export class NoctuaFormConfigService {
               fq: [
                 'document_category:"ontology_class"',
                 'isa_closure:"GO:0003674"'
-              ],
-            }),
-          }
-        }
-      },
-      'cc': {
-        "label": 'Cellular Component',
-        'aspect': 'C',
-        "lookupGroup": 'GO:0005575',
-        'treeLevel': 1,
-        "term": {
-          "ontologyClass": ['go'],
-          "lookup": {
-            "requestParams": Object.assign({}, JSON.parse(JSON.stringify(this.baseRequestParams)), {
-              fq: [
-                'document_category:"ontology_class"',
-                'isa_closure:"GO:0005575"'
-              ],
-            }),
-          }
-        }
-      },
-      'bp': {
-        "label": 'Biological Process',
-        'aspect': 'P',
-        "lookupGroup": 'GO:0008150',
-        'treeLevel': 1,
-        "term": {
-          "ontologyClass": ['go'],
-          "lookup": {
-            "requestParams": Object.assign({}, JSON.parse(JSON.stringify(this.baseRequestParams)), {
-              fq: [
-                'document_category:"ontology_class"',
-                'isa_closure:"GO:0008150"'
               ],
             }),
           }

@@ -59,7 +59,6 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort)
   sort: MatSort;
 
-  showAdvancedSearch = false;
   cams: any[] = [];
 
   searchResults = [];
@@ -98,9 +97,6 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
         this.cams = cams;
         this.loadCams();
       });
-
-    // console.dir(this.searchForm.get('goTerm'));
-
 
     this.searchForm.get('goTerm').valueChanges
       //  .debounceTime(400) 
@@ -152,10 +148,6 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
   loadCams() {
     this.cams = this.sparqlService.cams;
     this.dataSource = new CamsDataSource(this.sparqlService, this.paginator, this.sort);
-  }
-
-  toggleAdvancedSearch() {
-    this.showAdvancedSearch = !this.showAdvancedSearch;
   }
 
   toggleExpand(cam) {
