@@ -10,6 +10,8 @@ import { noctuaAnimations } from '@noctua/animations';
 import { NoctuaUtils } from '@noctua/utils/noctua-utils';
 
 import { takeUntil } from 'rxjs/internal/operators';
+import "rxjs/add/operator/debounceTime";
+import "rxjs/add/operator/distinctUntilChanged";
 import { forEach } from '@angular/router/src/utils/collection';
 
 import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loader.service';
@@ -48,6 +50,7 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
     'assignedBy'];
 
   searchCriteria: any = {};
+  searchFormData: any = []
   searchForm: FormGroup;
 
   @ViewChild(MatPaginator)
@@ -77,6 +80,8 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
     private sparqlService: SparqlService,
     private noctuaTranslationLoader: NoctuaTranslationLoaderService) {
     this.noctuaTranslationLoader.loadTranslations(english);
+
+    this.searchFormData = this.noctuaFormConfigService.createReviewSearchFormData();
     this.searchForm = this.createAnswerForm();
 
     this.unsubscribeAll = new Subject();
@@ -98,30 +103,7 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
         this.loadCams();
       });
 
-    this.searchForm.get('goTerm').valueChanges
-      //  .debounceTime(400) 
-      .subscribe(data => {
-        this.noctuaLookupService.golrTermLookup(data).subscribe(response => {
-          this.searchResults = response
-          console.log(this.searchResults)
-        })
-      })
-
-
-    /*
-        fromEvent(this.filter.nativeElement, 'keyup')
-          .pipe(
-            takeUntil(this.unsubscribeAll),
-            debounceTime(150),
-            distinctUntilChanged()
-          )
-          .subscribe(() => {
-            if (!this.dataSource) {
-              return;
-            }
-            this.dataSource.filter = this.filter.nativeElement.value;
-          });
-          */
+    this.onValueChanges();
   }
 
   search() {
@@ -130,17 +112,13 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
     this.noctuaSearchService.search(searchCriteria);
   }
 
-  autocomplete(searchTerm) {
-    this.noctuaLookupService.golrTermLookup(searchTerm);
-  }
-
   createAnswerForm() {
     return new FormGroup({
-      geneProduct: new FormControl(this.searchCriteria.geneProduct),
+      gp: new FormControl(this.searchCriteria.gp),
       goTerm: new FormControl(this.searchCriteria.goTerm),
       pmid: new FormControl(this.searchCriteria.pmid),
       contributor: new FormControl(this.searchCriteria.contributor),
-      assignedBy: new FormControl(this.searchCriteria.assignedBy),
+      providedBy: new FormControl(this.searchCriteria.providedBy),
       species: new FormControl(this.searchCriteria.species),
     });
   }
@@ -162,6 +140,32 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
 
   openCamEdit(cam) {
     this.reviewDialogService.openCamRowEdit(cam);
+  }
+
+  onValueChanges() {
+    const self = this;
+
+    this.searchForm.get('goTerm').valueChanges
+      .distinctUntilChanged()
+      .debounceTime(400)
+      .subscribe(data => {
+        let searchData = self.searchFormData['goTerm'];
+        this.searchResults = [];
+        this.noctuaLookupService.golrTermLookup(data, searchData.id).subscribe(response => {
+          self.searchFormData['goTerm'].searchResults = response
+        });
+      });
+
+    this.searchForm.get('gp').valueChanges
+      .distinctUntilChanged()
+      .debounceTime(400)
+      .subscribe(data => {
+        let searchData = self.searchFormData['gp'];
+        this.searchResults = [];
+        this.noctuaLookupService.golrTermLookup(data, searchData.id).subscribe(response => {
+          self.searchFormData['gp'].searchResults = response
+        })
+      })
   }
 
   ngOnDestroy(): void {

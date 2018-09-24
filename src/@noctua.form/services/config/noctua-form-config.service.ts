@@ -347,7 +347,7 @@ export class NoctuaFormConfigService {
 
     this._reviewSearchData = {
       "species": {
-        'id': 'mc',
+        'id': 'species',
         "label": 'Macromolecular Complex',
         "lookupGroup": 'GO:0032991',
         'treeLevel': 1,
@@ -361,9 +361,11 @@ export class NoctuaFormConfigService {
               ],
             }),
           }
-        }
+        },
+        'searchResults': []
       },
       "gp": {
+        'id': 'gp',
         "label": 'Gene Product',
         "lookupGroup": 'CHEBI:33695',
         'treeLevel': 1,
@@ -378,9 +380,11 @@ export class NoctuaFormConfigService {
               ],
             }),
           }
-        }
+        },
+        'searchResults': []
       },
       'goTerm': {
+        'id': 'goTerm',
         "label": 'Molecular Function',
         'aspect': 'F',
         "lookupGroup": 'GO:0003674',
@@ -395,7 +399,44 @@ export class NoctuaFormConfigService {
               ],
             }),
           }
-        }
+        },
+        'searchResults': []
+      },
+      'contributor': {
+        "label": 'Contributor',
+        'aspect': 'F',
+        "lookupGroup": 'GO:0003674',
+        'treeLevel': 1,
+        "term": {
+          "ontologyClass": ['go'],
+          "lookup": {
+            "requestParams": Object.assign({}, JSON.parse(JSON.stringify(this.baseRequestParams)), {
+              fq: [
+                'document_category:"ontology_class"',
+                'isa_closure:"GO:0003674"'
+              ],
+            }),
+          }
+        },
+        'searchResults': []
+      },
+      'providedBy': {
+        "label": 'Contributor',
+        'aspect': 'F',
+        "lookupGroup": 'GO:0003674',
+        'treeLevel': 1,
+        "term": {
+          "ontologyClass": ['go'],
+          "lookup": {
+            "requestParams": Object.assign({}, JSON.parse(JSON.stringify(this.baseRequestParams)), {
+              fq: [
+                'document_category:"ontology_class"',
+                'isa_closure:"GO:0003674"'
+              ],
+            }),
+          }
+        },
+        'searchResults': []
       },
     }
 
@@ -752,7 +793,7 @@ export class NoctuaFormConfigService {
   getRequestParams(id) {
     const self = this;
 
-    let nodeData = JSON.parse(JSON.stringify(self._annotonData[id]));
+    let nodeData = JSON.parse(JSON.stringify(self._reviewSearchData[id]));
 
     return nodeData.term.lookup.requestParams;
   }
@@ -811,6 +852,13 @@ export class NoctuaFormConfigService {
     }]
 
     return modelInfo;
+  }
+
+  createReviewSearchFormData() {
+    const self = this;
+
+    return self._reviewSearchData;
+
   }
 
   createAnnotonConnectorModel() {

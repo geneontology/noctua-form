@@ -67,10 +67,10 @@ export class NoctuaLookupService {
     return manager.get_query(str);
   }
 
-  golrTermLookup(searchText) {
+  golrTermLookup(searchText, id) {
     const self = this;
 
-    let requestParams = self.noctuaFormConfigService.getRequestParams('mf');
+    let requestParams = self.noctuaFormConfigService.getRequestParams(id);
 
     return self.golrLookup(searchText, requestParams);
   }
