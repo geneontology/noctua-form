@@ -55,29 +55,29 @@
         <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
           <div class="ph-15 noc-annoton-group-row" fxLayout="column">
             <mat-form-field class="">
-              <input type="text" matInput formControlName="contributor" placeholder="Contributor" [matAutocomplete]="auto" />
-              <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let item of searchFormData['goTerm']?.searchResults" [value]="item.id">
+              <input type="text" matInput formControlName="contributor" placeholder="Contributor" [matAutocomplete]="contributorAuto" />
+              <mat-autocomplete #contributorAuto="matAutocomplete">
+                <mat-option *ngFor="let item of searchFormData['contributor']?.searchResults" [value]="item.orcid">
                   <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
                     <div>
-                      {{ item.id }}
+                      {{ item.name }}
                     </div>
                     <span fxFlex></span>
-                    {{ item.label }}
+                    {{ item.orcid }}
                   </div>
                 </mat-option>
               </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="">
-              <input type="text" matInput formControlName="providedBy" placeholder="Group" [matAutocomplete]="auto" />
-              <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let item of searchFormData['goTerm']?.searchResults" [value]="item.id">
+              <input type="text" matInput formControlName="providedBy" placeholder="Group" [matAutocomplete]="providedByAuto" />
+              <mat-autocomplete #providedByAuto="matAutocomplete">
+                <mat-option *ngFor="let item of searchFormData['providedBy']?.searchResults" [value]="item.url">
                   <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
                     <div>
-                      {{ item.id }}
+                      {{ item.name }}
                     </div>
                     <span fxFlex></span>
-                    {{ item.label }}
+                    {{ item.url }}
                   </div>
                 </mat-option>
               </mat-autocomplete>
@@ -95,9 +95,9 @@
         <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
           <div class="ph-15 noc-annoton-group-row" fxLayout="column">
             <mat-form-field class="">
-              <input type="text" matInput formControlName="species" placeholder="Species" [matAutocomplete]="auto" />
-              <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let item of searchFormData['goTerm']?.searchResults" [value]="item.id">
+              <input type="text" matInput formControlName="species" placeholder="Species" [matAutocomplete]="speciesAuto" />
+              <mat-autocomplete #speciesAuto="matAutocomplete">
+                <mat-option *ngFor="let item of searchFormData['species']?.searchResults" [value]="item.id">
                   <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
                     <div>
                       {{ item.id }}

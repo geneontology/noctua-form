@@ -11,6 +11,8 @@ import { NoctuaGraphService } from '@noctua.form/services/graph.service';
 import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
 import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
 import { Cam } from '../../models/cam';
+import { Contributor } from '../../models/contributor';
+import { Group } from '../../models/group';
 
 import * as _ from 'lodash';
 import { v4 as uuid } from 'uuid';
@@ -48,6 +50,30 @@ export class SparqlService {
       );
   }
 
+  getAllContributors(): Observable<any> {
+    return this.httpClient
+      .get(this.baseUrl + this.buildAllContributorsQuery())
+      .pipe(
+        map(res => res['results']),
+        map(res => res['bindings']),
+        tap(val => console.dir(val)),
+        map(res => this.addContributor(res)),
+        tap(val => console.dir(val))
+      );
+  }
+
+  getAllGroups(): Observable<any> {
+    return this.httpClient
+      .get(this.baseUrl + this.buildAllGroupsQuery())
+      .pipe(
+        map(res => res['results']),
+        map(res => res['bindings']),
+        tap(val => console.dir(val)),
+        map(res => this.addGroup(res)),
+        tap(val => console.dir(val))
+      );
+  }
+
   addCam(res) {
     let result: Array<Cam> = [];
 
@@ -75,6 +101,33 @@ export class SparqlService {
         reference: '',
         with: '',
         assignedBy: {},
+      });
+    });
+    return result;
+  }
+
+  addContributor(res) {
+    let result: Array<Contributor> = [];
+
+    res.forEach((erg) => {
+      result.push({
+        orcid: erg.orcid.value,
+        name: erg.name.value,
+        cams: erg.cams.value
+      });
+    });
+    return result;
+  }
+
+  addGroup(res) {
+    let result: Array<Group> = [];
+
+    res.forEach((erg) => {
+      result.push({
+        url: erg.url.value,
+        name: erg.name.value,
+        cams: erg.cams.value,
+        members: erg.members.value
       });
     });
     return result;
@@ -219,6 +272,58 @@ export class SparqlService {
       }
     }
     GROUP BY ?models`;
+
+    return '?query=' + encodeURIComponent(query);
+  }
+
+  buildAllContributorsQuery() {
+    let query = `
+      PREFIX metago: <http://model.geneontology.org/>
+      PREFIX dc: <http://purl.org/dc/elements/1.1/>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+      PREFIX has_affiliation: <http://purl.obolibrary.org/obo/ERO_0000066> 
+          
+      SELECT  ?orcid ?name    (GROUP_CONCAT(distinct ?organization;separator="@@") AS ?organizations) 
+                              (GROUP_CONCAT(distinct ?affiliation;separator="@@") AS ?affiliations) 
+                              (COUNT(distinct ?cam) AS ?cams)
+      WHERE 
+      {
+          ?cam metago:graphType metago:noctuaCam .
+          ?cam dc:contributor ?orcid .
+                  
+          BIND( IRI(?orcid) AS ?orcidIRI ).
+                  
+          optional { ?orcidIRI rdfs:label ?name } .
+          optional { ?orcidIRI <http://www.w3.org/2006/vcard/ns#organization-name> ?organization } .
+          optional { ?orcidIRI has_affiliation: ?affiliation } .
+            
+          BIND(IF(bound(?name), ?name, ?orcid) as ?name) .            
+      }
+      GROUP BY ?orcid ?name 
+      `
+    return '?query=' + encodeURIComponent(query);
+  }
+
+  buildAllGroupsQuery() {
+    let query = `
+    PREFIX metago: <http://model.geneontology.org/>
+        PREFIX dc: <http://purl.org/dc/elements/1.1/>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+        PREFIX has_affiliation: <http://purl.obolibrary.org/obo/ERO_0000066> 
+		PREFIX hint: <http://www.bigdata.com/queryHints#>
+    
+        SELECT  distinct ?name ?url         (COUNT(distinct ?orcidIRI) AS ?members)
+                                            (COUNT(distinct ?cam) AS ?cams)
+        WHERE    
+        {
+          ?cam metago:graphType metago:noctuaCam .
+          ?cam dc:contributor ?orcid .
+          BIND( IRI(?orcid) AS ?orcidIRI ).  
+          ?orcidIRI has_affiliation: ?url .
+          ?url rdfs:label ?name .     
+          hint:Prior hint:runLast true .
+        }
+        GROUP BY ?url ?name`
 
     return '?query=' + encodeURIComponent(query);
   }

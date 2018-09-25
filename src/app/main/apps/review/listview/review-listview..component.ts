@@ -9,7 +9,8 @@ import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { noctuaAnimations } from '@noctua/animations';
 import { NoctuaUtils } from '@noctua/utils/noctua-utils';
 
-import { takeUntil } from 'rxjs/internal/operators';
+import { takeUntil, startWith } from 'rxjs/internal/operators';
+
 import "rxjs/add/operator/debounceTime";
 import "rxjs/add/operator/distinctUntilChanged";
 import { forEach } from '@angular/router/src/utils/collection';
@@ -63,9 +64,7 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
   sort: MatSort;
 
   cams: any[] = [];
-
   searchResults = [];
-
 
 
   private unsubscribeAll: Subject<any>;
@@ -96,6 +95,19 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
       this.loadCams();
     });
 */
+
+    this.sparqlService.getAllContributors().subscribe((response: any) => {
+      this.searchFormData['contributor'].searchResults = response;
+      // this.sparqlService.onCamsChanged.next(this.cams);
+      // this.loadCams();
+    });
+
+    this.sparqlService.getAllGroups().subscribe((response: any) => {
+      this.searchFormData['providedBy'].searchResults = response;
+      // this.sparqlService.onCamsChanged.next(this.cams);
+      // this.loadCams();
+    });
+
     this.sparqlService.onCamsChanged
       .pipe(takeUntil(this.unsubscribeAll))
       .subscribe(cams => {
@@ -166,6 +178,16 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
           self.searchFormData['gp'].searchResults = response
         })
       })
+
+
+
+    self.searchFormData['contributor'].filteredResult = this.searchForm.get('contributor').valueChanges
+      .distinctUntilChanged()
+      .debounceTime(400)
+      .pipe(
+        startWith(''),
+        //  map(value => this._filter(value))
+      )
   }
 
   ngOnDestroy(): void {
