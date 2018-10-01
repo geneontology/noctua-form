@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, FormArray } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatMenuTrigger } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
+import { takeUntil, startWith } from 'rxjs/internal/operators';
 import * as _ from 'lodash';
 import { Cam } from '@noctua.sparql/models/cam';
 import { MatTableDataSource, MatSort } from '@angular/material';
@@ -18,22 +19,19 @@ import { NoctuaSearchService } from '@noctua.search/services/noctua-search.servi
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 
 @Component({
-  selector: 'cam-row-edit-dialog',
-  templateUrl: './cam-row-edit.component.html',
-  styleUrls: ['./cam-row-edit.component.scss'],
+  selector: 'cam-row',
+  templateUrl: './cam-row.component.html',
+  styleUrls: ['./cam-row.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 
-export class CamRowEditDialogComponent implements OnInit, OnDestroy {
+export class CamRowComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any>;
   searchForm: FormGroup;
   searchFormData: any = {};
   cam: any = {};
 
   constructor(
-    private _matDialogRef: MatDialogRef<CamRowEditDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) private _data: any,
-    private _matDialog: MatDialog,
     private route: ActivatedRoute,
     private noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaSearchService: NoctuaSearchService,
@@ -46,17 +44,23 @@ export class CamRowEditDialogComponent implements OnInit, OnDestroy {
     this._unsubscribeAll = new Subject();
 
     this.searchFormData = this.noctuaFormConfigService.createReviewSearchFormData();
-    this.cam = this._data.cam
-    this.searchForm = this.createAnswerForm();
-    this.onValueChanges();
+
   }
 
   ngOnInit() {
-    console.log(this.cam)
+    this.sparqlService.onCamChanged
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(cam => {
+        if (cam.model) {
+          this.cam = cam;
+          this.loadCam();
+        }
+      });
   }
 
-  close() {
-    this._matDialogRef.close();
+  loadCam() {
+    this.searchForm = this.createAnswerForm();
+    this.onValueChanges();
   }
 
   createAnswerForm() {
@@ -88,5 +92,4 @@ export class CamRowEditDialogComponent implements OnInit, OnDestroy {
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
   }
-
 }

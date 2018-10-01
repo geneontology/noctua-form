@@ -78,34 +78,17 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
     private summaryGridService: SummaryGridService,
     private sparqlService: SparqlService,
     private noctuaTranslationLoader: NoctuaTranslationLoaderService) {
+
     this.noctuaTranslationLoader.loadTranslations(english);
-
     this.searchFormData = this.noctuaFormConfigService.createReviewSearchFormData();
-    this.searchForm = this.createAnswerForm();
-
     this.unsubscribeAll = new Subject();
   }
 
   ngOnInit(): void {
-
-    /*
     this.sparqlService.getCamsGoTerms('GO:0099160').subscribe((response: any) => {
       this.cams = this.sparqlService.cams = response;
       this.sparqlService.onCamsChanged.next(this.cams);
       this.loadCams();
-    });
-*/
-
-    this.sparqlService.getAllContributors().subscribe((response: any) => {
-      this.searchFormData['contributor'].searchResults = response;
-      // this.sparqlService.onCamsChanged.next(this.cams);
-      // this.loadCams();
-    });
-
-    this.sparqlService.getAllGroups().subscribe((response: any) => {
-      this.searchFormData['providedBy'].searchResults = response;
-      // this.sparqlService.onCamsChanged.next(this.cams);
-      // this.loadCams();
     });
 
     this.sparqlService.onCamsChanged
@@ -114,25 +97,12 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
         this.cams = cams;
         this.loadCams();
       });
-
-    this.onValueChanges();
   }
 
   search() {
     let searchCriteria = this.searchForm.value;
     console.dir(searchCriteria)
     this.noctuaSearchService.search(searchCriteria);
-  }
-
-  createAnswerForm() {
-    return new FormGroup({
-      gp: new FormControl(this.searchCriteria.gp),
-      goTerm: new FormControl(this.searchCriteria.goTerm),
-      pmid: new FormControl(this.searchCriteria.pmid),
-      contributor: new FormControl(this.searchCriteria.contributor),
-      providedBy: new FormControl(this.searchCriteria.providedBy),
-      species: new FormControl(this.searchCriteria.species),
-    });
   }
 
   loadCams() {
@@ -154,45 +124,9 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
     this.reviewDialogService.openCamRowEdit(cam);
   }
 
-  onValueChanges() {
-    const self = this;
-
-    this.searchForm.get('goTerm').valueChanges
-      .distinctUntilChanged()
-      .debounceTime(400)
-      .subscribe(data => {
-        let searchData = self.searchFormData['goTerm'];
-        this.searchResults = [];
-        this.noctuaLookupService.golrTermLookup(data, searchData.id).subscribe(response => {
-          self.searchFormData['goTerm'].searchResults = response
-        });
-      });
-
-    this.searchForm.get('gp').valueChanges
-      .distinctUntilChanged()
-      .debounceTime(400)
-      .subscribe(data => {
-        let searchData = self.searchFormData['gp'];
-        this.searchResults = [];
-        this.noctuaLookupService.golrTermLookup(data, searchData.id).subscribe(response => {
-          self.searchFormData['gp'].searchResults = response
-        })
-      })
-
-
-
-    self.searchFormData['contributor'].filteredResult = this.searchForm.get('contributor').valueChanges
-      .distinctUntilChanged()
-      .debounceTime(400)
-      .pipe(
-        startWith(''),
-        //  map(value => this._filter(value))
-      )
-  }
-
   ngOnDestroy(): void {
     this.unsubscribeAll.next();
-    this.unsubscribeAll.complete();
+    this.unsubscribeAll.complete(); ``
   }
 }
 

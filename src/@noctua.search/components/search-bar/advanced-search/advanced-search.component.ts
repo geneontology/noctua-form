@@ -13,12 +13,16 @@ import { takeUntil } from 'rxjs/internal/operators';
 import { forEach } from '@angular/router/src/utils/collection';
 
 import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loader.service';
+import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
+import { NoctuaLookupService } from '@noctua.form/services/lookup.service';
 import { locale as english } from './i18n/en';
 
 import { advancedSearchData } from './advanced-search.tokens';
 import { AdvancedSearchOverlayRef } from './advanced-search-ref';
-
 import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
+
+
+import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 
 @Component({
   selector: 'app-advanced-search',
@@ -29,6 +33,7 @@ import { NoctuaSearchService } from '@noctua.search/services/noctua-search.servi
 export class NoctuaAdvancedSearchComponent implements OnInit, OnDestroy {
   searchCriteria: any = {};
   searchForm: FormGroup;
+  searchFormData: any = []
   cams: any[] = [];
 
   private unsubscribeAll: Subject<any>;
@@ -37,15 +42,30 @@ export class NoctuaAdvancedSearchComponent implements OnInit, OnDestroy {
     public dialogRef: AdvancedSearchOverlayRef,
     @Inject(advancedSearchData) public data: any,
     private noctuaSearchService: NoctuaSearchService,
+    private noctuaFormConfigService: NoctuaFormConfigService,
+    private noctuaLookupService: NoctuaLookupService,
+    private sparqlService: SparqlService,
     private noctuaTranslationLoader: NoctuaTranslationLoaderService) {
     this.noctuaTranslationLoader.loadTranslations(english);
     this.searchForm = this.createAnswerForm();
 
-    console.dir(data);
     this.unsubscribeAll = new Subject();
+
+    this.searchFormData = this.noctuaFormConfigService.createReviewSearchFormData();
+    this.onValueChanges();
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+
+    this.sparqlService.getAllContributors().subscribe((response: any) => {
+      this.searchFormData['contributor'].searchResults = response;
+    });
+
+    this.sparqlService.getAllGroups().subscribe((response: any) => {
+      this.searchFormData['providedBy'].searchResults = response;
+    });
+
+  }
 
   cancel() {
     this.dialogRef.close();
@@ -60,10 +80,45 @@ export class NoctuaAdvancedSearchComponent implements OnInit, OnDestroy {
 
   createAnswerForm() {
     return new FormGroup({
+      gp: new FormControl(this.searchCriteria.gp),
       goTerm: new FormControl(this.searchCriteria.goTerm),
-      geneProduct: new FormControl(this.searchCriteria.geneProduct),
       pmid: new FormControl(this.searchCriteria.pmid),
+      contributor: new FormControl(this.searchCriteria.contributor),
+      providedBy: new FormControl(this.searchCriteria.providedBy),
+      species: new FormControl(this.searchCriteria.species),
     });
+  }
+
+  onValueChanges() {
+    const self = this;
+
+    this.searchForm.get('goTerm').valueChanges
+      .distinctUntilChanged()
+      .debounceTime(400)
+      .subscribe(data => {
+        let searchData = self.searchFormData['goTerm'];
+        this.noctuaLookupService.golrTermLookup(data, searchData.id).subscribe(response => {
+          self.searchFormData['goTerm'].searchResults = response
+        });
+      });
+
+    this.searchForm.get('gp').valueChanges
+      .distinctUntilChanged()
+      .debounceTime(400)
+      .subscribe(data => {
+        let searchData = self.searchFormData['gp'];
+        this.noctuaLookupService.golrTermLookup(data, searchData.id).subscribe(response => {
+          self.searchFormData['gp'].searchResults = response
+        })
+      })
+
+    self.searchFormData['contributor'].filteredResult = this.searchForm.get('contributor').valueChanges
+      .distinctUntilChanged()
+      .debounceTime(400)
+      .pipe(
+        //    startWith(''),
+        //  map(value => this._filter(value))
+      )
   }
 
   ngOnDestroy(): void {

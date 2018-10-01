@@ -27,6 +27,7 @@ export class SparqlService {
   curieUtil: any;
   cams: any[] = [];
   onCamsChanged: BehaviorSubject<any>;
+  onCamChanged: BehaviorSubject<any>;
 
   constructor(private noctuaFormConfigService: NoctuaFormConfigService,
     private summaryGridService: SummaryGridService,
@@ -34,6 +35,7 @@ export class SparqlService {
     private noctuaGraphService: NoctuaGraphService,
     private curieService: CurieService) {
     this.onCamsChanged = new BehaviorSubject({});
+    this.onCamChanged = new BehaviorSubject({});
     this.curieUtil = this.curieService.getCurieUtil();
   }
 
@@ -41,6 +43,18 @@ export class SparqlService {
   getCamsGoTerms(term): Observable<any> {
     return this.httpClient
       .get(this.baseUrl + this.buildCamsGoTermQuery(term))
+      .pipe(
+        map(res => res['results']),
+        map(res => res['bindings']),
+        tap(val => console.dir(val)),
+        map(res => this.addCam(res)),
+        tap(val => console.dir(val))
+      );
+  }
+
+  getCamsPMIDTerms(term): Observable<any> {
+    return this.httpClient
+      .get(this.baseUrl + this.buildCamsPMIDQuery(term))
       .pipe(
         map(res => res['results']),
         map(res => res['bindings']),
@@ -77,23 +91,23 @@ export class SparqlService {
   addCam(res) {
     let result: Array<Cam> = [];
 
-    res.forEach((erg) => {
-      let modelId = this.noctuaFormConfigService.getModelId(erg.model.value);
+    res.forEach((row) => {
+      let modelId = this.noctuaFormConfigService.getModelId(row.model.value);
       result.push({
         id: uuid(),
         treeLevel: 0,
         graph: null,
         model: Object.assign({}, {
           id: modelId,
-          title: erg.modelTitle.value,
+          title: row.modelTitle.value,
           modelInfo: this.noctuaFormConfigService.getModelUrls(modelId)
         }),
         annotatedEntity: {},
         relationship: '',
-        aspect: this.noctuaFormConfigService.getAspect(this.curieUtil.getCurie(erg.aspect.value)),
+        aspect: this.noctuaFormConfigService.getAspect(this.curieUtil.getCurie(row.aspect.value)),
         term: Object.assign({}, {
-          id: this.curieUtil.getCurie(erg.term.value),
-          label: erg.termLabel.value
+          id: this.curieUtil.getCurie(row.term.value),
+          label: row.termLabel.value
         }),
         relationshipExt: '',
         extension: {},
@@ -139,6 +153,8 @@ export class SparqlService {
 
     _.each(annotons, function (annoton) {
       let cam = self.annotonToCam(srcCam, annoton);
+
+      cam.model = srcCam.model;
       self.cams.splice(index + 1, 0, cam);
     });
 
@@ -324,6 +340,27 @@ export class SparqlService {
           hint:Prior hint:runLast true .
         }
         GROUP BY ?url ?name`
+
+    return '?query=' + encodeURIComponent(query);
+  }
+
+  buildCamsPMIDQuery(pmid) {
+    let query = `
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX metago: <http://model.geneontology.org/>
+
+		SELECT distinct ?gocam
+        WHERE 
+        {
+	        GRAPH ?gocam {
+    	        ?gocam metago:graphType metago:noctuaCam .    	
+        	    ?s dc:source ?source .
+            	BIND(REPLACE(?source, " ", "") AS ?source) .
+	            FILTER((CONTAINS(?source, "` + pmid + `")))
+    	    }           
+
+        }`
 
     return '?query=' + encodeURIComponent(query);
   }
