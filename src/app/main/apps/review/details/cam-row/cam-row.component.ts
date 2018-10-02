@@ -27,12 +27,14 @@ import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 
 export class CamRowComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any>;
-  searchForm: FormGroup;
-  searchFormData: any = {};
+  camForm: FormGroup;
+  evidenceFormArray: FormArray;
+  camFormData: any = {};
   cam: any = {};
 
   constructor(
     private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
     private noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaSearchService: NoctuaSearchService,
     private noctuaLookupService: NoctuaLookupService,
@@ -43,46 +45,70 @@ export class CamRowComponent implements OnInit, OnDestroy {
   ) {
     this._unsubscribeAll = new Subject();
 
-    this.searchFormData = this.noctuaFormConfigService.createReviewSearchFormData();
+    this.camFormData = this.noctuaFormConfigService.createReviewSearchFormData();
 
   }
 
   ngOnInit() {
+
+    this.loadCam();
     this.sparqlService.onCamChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(cam => {
         if (cam.model) {
           this.cam = cam;
+          console.log(cam)
           this.loadCam();
         }
       });
   }
 
   loadCam() {
-    this.searchForm = this.createAnswerForm();
+    this.camForm = this.createCamForm();
     this.onValueChanges();
   }
 
-  createAnswerForm() {
+  createCamForm() {
     return new FormGroup({
-      annotatedEntity: new FormControl(this.cam.annotatedEntity.id),
-      term: new FormControl(this.cam.term.id),
-      evidence: new FormControl(this.cam.evidence.id),
-      reference: new FormControl(this.cam.reference.label),
-      with: new FormControl(this.cam.with),
+      annotatedEntity: new FormControl(this.cam.annotatedEntity ? this.cam.annotatedEntity.id : ''),
+      term: new FormControl(this.cam.node ? this.cam.node.term.control.value.label : ''),
+      evidenceFormArray: this.formBuilder.array(this.createFormEvidence())
     });
+  }
+
+  createFormEvidence(): FormGroup[] {
+    const self = this;
+    let evidenceGroup: FormGroup[] = [];
+
+    if (self.cam.node) {
+      _.each(self.cam.node.evidence, function (evidence) {
+        evidenceGroup.push(self.formBuilder.group({
+          evidence: new FormControl(evidence.evidence.control.value.label),
+          reference: new FormControl(evidence.reference.control.value),
+          with: new FormControl(evidence.with.control.value),
+        }));
+      });
+    } else {
+      evidenceGroup.push(this.formBuilder.group({
+        evidence: new FormControl(),
+        reference: new FormControl(),
+        with: new FormControl(),
+      }));
+    }
+
+    return evidenceGroup;
   }
 
   onValueChanges() {
     const self = this;
 
-    this.searchForm.get('term').valueChanges
+    this.camForm.get('term').valueChanges
       .distinctUntilChanged()
       .debounceTime(400)
       .subscribe(data => {
-        let searchData = self.searchFormData['goTerm'];
+        let searchData = self.camFormData['goTerm'];
         this.noctuaLookupService.golrTermLookup(data, searchData.id).subscribe(response => {
-          self.searchFormData['goTerm'].searchResults = response
+          self.camFormData['goTerm'].searchResults = response
         });
       });
   }
