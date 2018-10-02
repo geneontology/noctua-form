@@ -74,8 +74,5 @@
     <div *ngIf="cams?.length===0" class="noc-no-info">
       no results yet.
     </div>
-    <mat-paginator class="noc-paginator" #paginator [length]="dataSource?.filteredData?.length" [pageIndex]="0"
-      [pageSize]="50" [pageSizeOptions]="[5, 10, 25, 100]">
-    </mat-paginator>
   </div>
 </div>

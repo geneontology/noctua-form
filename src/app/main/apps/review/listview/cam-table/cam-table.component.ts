@@ -54,15 +54,6 @@ export class CamTableComponent implements OnInit, OnDestroy {
 
   @Input() camRow: string;
 
-  @ViewChild(MatPaginator)
-  paginator: MatPaginator;
-
-  @ViewChild('filter')
-  filter: ElementRef;
-
-  @ViewChild(MatSort)
-  sort: MatSort;
-
   cams: any[] = [];
   searchResults = [];
 
@@ -108,7 +99,6 @@ export class CamTableComponent implements OnInit, OnDestroy {
     cam.graph.onGraphChanged.subscribe((annotons) => {
       let data = this.summaryGridService.getGrid(cam.graph.annotons);
       this.sparqlService.addCamChildren(cam, data);
-      this.dataSource = new CamsDataSource(this.sparqlService, this.paginator, this.sort);
     });
   }
 
