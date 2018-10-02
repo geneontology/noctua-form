@@ -16,13 +16,12 @@
           {{cam.relationship}}
         </div>
         <div>
-          {{cam.term.id}}
+          {{cam.term?.id}}
         </div>
         <mat-form-field appearance="standard" class="" fxFlex="">
           <mat-label>Annotated Entity</mat-label>
           <input matInput formControlName="annotatedEntity" placeholder="Gene Product" />
         </mat-form-field>
-
         <mat-form-field class="">
           <input type="text" matInput formControlName="term" placeholder="Go Term" [matAutocomplete]="termAuto" />
           <mat-autocomplete #termAuto="matAutocomplete">

@@ -9,6 +9,7 @@ import { TreeTableModule } from 'primeng/treetable';
 import { TreeNode } from 'primeng/api';
 import { ReviewDialogService } from './dialog.service';
 
+import { CamTableComponent } from './listview/cam-table/cam-table.component';
 import { CamRowComponent } from './details/cam-row/cam-row.component';
 
 import { CamRowEditDialogComponent } from './dialogs/cam-row-edit/cam-row-edit.component';
@@ -34,6 +35,7 @@ const routes = [
   providers: [ReviewDialogService],
   declarations: [
     ReviewComponent,
+    CamTableComponent,
     CamRowComponent,
     CamRowEditDialogComponent,
     ReviewListviewComponent,

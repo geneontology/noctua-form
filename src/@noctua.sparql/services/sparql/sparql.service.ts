@@ -11,6 +11,7 @@ import { NoctuaGraphService } from '@noctua.form/services/graph.service';
 import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
 import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
 import { Cam } from '../../models/cam';
+import { CamRow } from '../../models/cam-row';
 import { Contributor } from '../../models/contributor';
 import { Group } from '../../models/group';
 
@@ -91,30 +92,22 @@ export class SparqlService {
   addCam(res) {
     let result: Array<Cam> = [];
 
-    res.forEach((row) => {
-      let modelId = this.noctuaFormConfigService.getModelId(row.model.value);
+    res.forEach((cam) => {
+      let modelId = this.noctuaFormConfigService.getModelId(cam.model.value);
       result.push({
         id: uuid(),
-        treeLevel: 0,
         graph: null,
         model: Object.assign({}, {
           id: modelId,
-          title: row.modelTitle.value,
+          title: cam.modelTitle.value,
           modelInfo: this.noctuaFormConfigService.getModelUrls(modelId)
         }),
         annotatedEntity: {},
-        relationship: '',
-        aspect: this.noctuaFormConfigService.getAspect(this.curieUtil.getCurie(row.aspect.value)),
-        term: Object.assign({}, {
-          id: this.curieUtil.getCurie(row.term.value),
-          label: row.termLabel.value
-        }),
-        relationshipExt: '',
-        extension: {},
-        evidence: {},
-        reference: '',
-        with: '',
-        assignedBy: {},
+        // aspect: this.noctuaFormConfigService.getAspect(this.curieUtil.getCurie(cam.aspect.value)),
+        // term: Object.assign({}, {
+        //    id: this.curieUtil.getCurie(cam.term.value),
+        //  label: cam.termLabel.value
+        //   }),
       });
     });
     return result;
@@ -149,23 +142,23 @@ export class SparqlService {
 
   addCamChildren(srcCam, annotons) {
     const self = this;
-    let index = _.findIndex(self.cams, { id: srcCam.id })
+
+    srcCam.camRow = [];
 
     _.each(annotons, function (annoton) {
       let cam = self.annotonToCam(srcCam, annoton);
 
       cam.model = srcCam.model;
-      self.cams.splice(index + 1, 0, cam);
+      srcCam.camRow.push(cam);
     });
 
-    this.onCamsChanged.next(this.cams);
+    this.onCamsChanged.next(srcCam.camRow);
   }
 
   annotonToCam(cam, annoton) {
 
-    console.log(annoton)
-    let result: Cam = {
-      id: uuid(),
+    let result: CamRow = {
+      // id: uuid(),
       treeLevel: annoton.treeLevel,
       // model: cam.model,
       annotatedEntity: {
@@ -181,6 +174,7 @@ export class SparqlService {
       reference: annoton.reference,
       with: annoton.with,
       assignedBy: annoton.assignedBy,
+      node: annoton.node
     }
 
     return result;

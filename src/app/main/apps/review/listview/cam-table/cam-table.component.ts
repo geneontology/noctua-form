@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, Input, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator, MatSort } from '@angular/material';
@@ -21,24 +21,22 @@ import { NoctuaGraphService } from '@noctua.form/services/graph.service';
 import { NoctuaLookupService } from '@noctua.form/services/lookup.service';
 import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
 
-import { locale as english } from './../i18n/en';
 
-import { ReviewDialogService } from './../dialog.service';
+import { ReviewDialogService } from './../../dialog.service';
 import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
 
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 
 @Component({
-  selector: 'app-review-listview',
-  templateUrl: './review-listview.component.html',
-  styleUrls: ['./review-listview.component.scss'],
+  selector: 'app-cam-table',
+  templateUrl: './cam-table.component.html',
+  styleUrls: ['./cam-table.component.scss'],
   animations: noctuaAnimations
 })
-export class ReviewListviewComponent implements OnInit, OnDestroy {
+export class CamTableComponent implements OnInit, OnDestroy {
   dataSource: CamsDataSource | null;
   displayedColumns = [
     'expand',
-    'model',
     'annotatedEntity',
     'relationship',
     'aspect',
@@ -53,6 +51,8 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
   searchCriteria: any = {};
   searchFormData: any = []
   searchForm: FormGroup;
+
+  @Input() camRow: string;
 
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
@@ -78,18 +78,11 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
     private sparqlService: SparqlService,
     private noctuaTranslationLoader: NoctuaTranslationLoaderService) {
 
-    this.noctuaTranslationLoader.loadTranslations(english);
     this.searchFormData = this.noctuaFormConfigService.createReviewSearchFormData();
     this.unsubscribeAll = new Subject();
   }
 
   ngOnInit(): void {
-    this.sparqlService.getCamsGoTerms('GO:0099160').subscribe((response: any) => {
-      this.cams = this.sparqlService.cams = response;
-      this.sparqlService.onCamsChanged.next(this.cams);
-      this.loadCams();
-    });
-
     this.sparqlService.onCamsChanged
       .pipe(takeUntil(this.unsubscribeAll))
       .subscribe(cams => {
@@ -106,16 +99,16 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
 
   loadCams() {
     this.cams = this.sparqlService.cams;
-    this.dataSource = new CamsDataSource(this.sparqlService, this.paginator, this.sort);
+    // this.dataSource = this.camRow; //new CamsDataSource(this.sparqlService, this.paginator, this.sort);
   }
 
   toggleExpand(cam) {
     cam.expanded = true;
     cam.graph = this.noctuaGraphService.getGraphInfo(cam.model.id)
     cam.graph.onGraphChanged.subscribe((annotons) => {
-      let data = this.summaryGridService.getGrid(annotons);
+      let data = this.summaryGridService.getGrid(cam.graph.annotons);
       this.sparqlService.addCamChildren(cam, data);
-      //  this.dataSource = new CamsDataSource(this.sparqlService, this.paginator, this.sort);
+      this.dataSource = new CamsDataSource(this.sparqlService, this.paginator, this.sort);
     });
   }
 

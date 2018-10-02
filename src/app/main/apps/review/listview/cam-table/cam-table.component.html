@@ -1,57 +1,11 @@
 <div class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
-  <div class="cams-table" fxFlex="" noctuaPerfectScrollbar>
-    <div *ngFor="let cam of cams">
-      <div class="noc-cam-table-heading" fxLayout="row" fxLayoutAlign="start center">
-        <div fxFlex="80px" (click)="$event.stopPropagation()">
-          <button mat-icon-button (click)="toggleExpand(cam)" ckass="noc-button-small">
-            <mat-icon *ngIf="!cam.expanded" class="s-16 fa fa-caret-right">
-            </mat-icon>
-            <mat-icon *ngIf="cam.expanded" class="mat-icon-rtl-mirror">
-              refresh
-            </mat-icon>
-          </button>
-          <button mat-icon-button [matMenuTriggerFor]="changeView">
-            <mat-icon>
-              apps
-            </mat-icon>
-          </button>
-          <mat-menu #changeView="matMenu">
-            <a *ngFor="let workbench of cam.model?.modelInfo.workbenches" href="{{workbench.url}}" target="_blank"
-              mat-menu-item>
-              {{workbench.label}}
-            </a>
-          </mat-menu>
-        </div>
-        {{cam.model?.title }}
-      </div>
-      <app-cam-table [camRow]="cam.camRow" class="noc-cam-table-body" fxLayout="row" fxLayoutAlign="start center">
-
-      </app-cam-table>
-    </div>
-    <!--
-    <mat-table class="w-100-p" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}"
+  <div class="cams-table" fxFlex="">
+    <mat-table class="w-100-p" #table [dataSource]="camRow" matSort [@animateStagger]="{value:'50'}"
       noctuaPerfectScrollbar>
       <ng-container cdkColumnDef="expand">
         <mat-header-cell *cdkHeaderCellDef fxFlex="80px"></mat-header-cell>
         <mat-cell *cdkCellDef="let cam" fxFlex="80px" [style.padding-left]="cam.treeLevel * 20+'px'" (click)="$event.stopPropagation()">
-          <button mat-icon-button (click)="toggleExpand(cam)" ckass="noc-button-small">
-            <mat-icon *ngIf="!cam.expanded && cam.treeLevel===0" class="s-16 fa fa-caret-right">
-            </mat-icon>
-            <mat-icon *ngIf="cam.expanded" class="mat-icon-rtl-mirror">
-              refresh
-            </mat-icon>
-          </button>
-          <button *ngIf="cam.treeLevel===0" mat-icon-button [matMenuTriggerFor]="changeView">
-            <mat-icon>
-              apps
-            </mat-icon>
-          </button>
-          <mat-menu #changeView="matMenu">
-            <a *ngFor="let workbench of cam.model?.modelInfo.workbenches" href="{{workbench.url}}" target="_blank"
-              mat-menu-item>
-              {{workbench.label}}
-            </a>
-          </mat-menu>
+
         </mat-cell>
       </ng-container>
       <ng-container cdkColumnDef="annotatedEntity">
@@ -122,10 +76,6 @@
     </div>
     <mat-paginator class="noc-paginator" #paginator [length]="dataSource?.filteredData?.length" [pageIndex]="0"
       [pageSize]="50" [pageSizeOptions]="[5, 10, 25, 100]">
-    </mat-paginator>-->
-  </div>
-  <div class="cam-detail" fxFlex="400px" noctuaPerfectScrollbar>
-    <cam-row>
-    </cam-row>
+    </mat-paginator>
   </div>
 </div>

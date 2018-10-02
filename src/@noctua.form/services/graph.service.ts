@@ -149,7 +149,7 @@ export class NoctuaGraphService {
       self.graphPreParse(graphInfo.graph).subscribe((data) => {
         let annotons = self.graphToAnnotons(graphInfo.graph);
         graphInfo.annotons = [...self.annotonsToTable(graphInfo.graph, annotons), ...self.ccComponentsToTable(graphInfo.graph, data)]
-        graphInfo.onGraphChanged.next(annotations);
+        graphInfo.onGraphChanged.next(graphInfo.annotons);
       })
 
       //  title = graph.get_annotations_by_key('title');

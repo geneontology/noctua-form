@@ -5,10 +5,6 @@
   padding: 0px;
   width: 100%;
 
-  .noc-cam-table-heading {
-    @include deep-height(40px);
-    border-bottom: #BBB solid 1px;
-  }
 
   .noc-form-container {
     background-color: #EEE;
@@ -38,8 +34,6 @@
   }
 
   .cams-table {
-    @include deep-height(100%);
-    padding-bottom: 300px;
     // position: relative;
     //  flex: 1 1 auto;
     //    border-bottom: 1px solid rgba(0, 0, 0, .12);
@@ -70,10 +64,7 @@
     .mat-header-cell {}
 
     .noc-paginator {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      @include deep-height(0);
     }
 
     .cam {
@@ -101,11 +92,5 @@
       display:flex;
       justify-content:flex-end;
      } */
-  }
-
-  .cam-detail {
-    @include deep-height(100%);
-    background-color: #F2F2F2;
-    border-left: #BBB solid 1px;
   }
 }
