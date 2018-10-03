@@ -5,6 +5,10 @@
   padding: 0px;
   width: 100%;
 
+  .mat-drawer-content {
+    width: 100%;
+  }
+
   .noc-cam-table-heading {
     @include deep-height(40px);
     border-bottom: #BBB solid 1px;
@@ -38,6 +42,7 @@
   }
 
   .cams-table {
+    width: 100%;
     @include deep-height(100%);
     padding-bottom: 300px;
     // position: relative;

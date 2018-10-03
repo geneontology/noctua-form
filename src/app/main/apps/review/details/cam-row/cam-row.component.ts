@@ -16,6 +16,9 @@ import { NoctuaLookupService } from '@noctua.form/services/lookup.service';
 import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
 import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
 
+import { ReviewDialogService } from './../../dialog.service';
+import { ReviewService } from '../../services/review.service';
+
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 
 @Component({
@@ -37,10 +40,13 @@ export class CamRowComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaSearchService: NoctuaSearchService,
+    private reviewService: ReviewService,
+    private reviewDialogService: ReviewDialogService,
     private noctuaLookupService: NoctuaLookupService,
     private noctuaGraphService: NoctuaGraphService,
     private summaryGridService: SummaryGridService,
     private sparqlService: SparqlService,
+
     private noctuaTranslationLoader: NoctuaTranslationLoaderService
   ) {
     this._unsubscribeAll = new Subject();
@@ -111,6 +117,10 @@ export class CamRowComponent implements OnInit, OnDestroy {
           self.camFormData['goTerm'].searchResults = response
         });
       });
+  }
+
+  close() {
+    this.reviewService.close();
   }
 
   ngOnDestroy(): void {

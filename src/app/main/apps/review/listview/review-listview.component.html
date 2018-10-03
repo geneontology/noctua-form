@@ -1,5 +1,5 @@
-<div class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
-  <div class="cams-table" fxFlex="" noctuaPerfectScrollbar>
+<mat-drawer-container class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
+  <mat-drawer-content class="cams-table" noctuaPerfectScrollbar>
     <div class="noc-cams-table-header w-100-p">
       <div fxFlex="80px">
 
@@ -60,15 +60,14 @@
             </a>
           </mat-menu>
         </div>
-        {{cam.model?.title }}
+        <span class="grey-500-fg">Model: </span> {{cam.model?.title }}
       </div>
       <app-cam-table [camRow]="cam.camRow" class="noc-cam-table-body" fxLayout="row" fxLayoutAlign="start center">
-
       </app-cam-table>
     </div>
-  </div>
-  <div class="cam-detail" fxFlex="400px" noctuaPerfectScrollbar>
+  </mat-drawer-content>
+  <mat-drawer #camDrawer class="cam-detail" fxFlex="500px" noctuaPerfectScrollbar mode="side" position="end">
     <cam-row>
     </cam-row>
-  </div>
-</div>
+  </mat-drawer>
+</mat-drawer-container>

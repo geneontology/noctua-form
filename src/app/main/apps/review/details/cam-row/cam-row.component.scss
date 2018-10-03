@@ -1,6 +1,15 @@
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
 
+.cam-relationship {
+  margin: 10px 2px;
+  text-align: center;
+  font-size: 12px;
+  color: #999;
+}
+
+:host {}
+
 .cam-row-edit-dialog {
   width: 900px;
 

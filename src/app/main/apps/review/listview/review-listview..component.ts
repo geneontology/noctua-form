@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator, MatSort, MatDrawer } from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
 import { merge, Observable, BehaviorSubject, fromEvent, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
@@ -23,6 +23,7 @@ import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
 
 import { locale as english } from './../i18n/en';
 
+import { ReviewService } from './../services/review.service';
 import { ReviewDialogService } from './../dialog.service';
 import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
 
@@ -54,6 +55,9 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
   searchFormData: any = []
   searchForm: FormGroup;
 
+  @ViewChild('camDrawer')
+  camDrawer: MatDrawer;
+
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
 
@@ -71,6 +75,7 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute,
     private noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaSearchService: NoctuaSearchService,
+    private reviewService: ReviewService,
     private reviewDialogService: ReviewDialogService,
     private noctuaLookupService: NoctuaLookupService,
     private noctuaGraphService: NoctuaGraphService,
@@ -84,6 +89,8 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.reviewService.setCamDrawer(this.camDrawer);
+
     this.sparqlService.getCamsGoTerms('GO:0099160').subscribe((response: any) => {
       this.cams = this.sparqlService.cams = response;
       this.sparqlService.onCamsChanged.next(this.cams);

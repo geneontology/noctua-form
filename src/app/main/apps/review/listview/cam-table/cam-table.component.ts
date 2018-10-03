@@ -21,8 +21,8 @@ import { NoctuaGraphService } from '@noctua.form/services/graph.service';
 import { NoctuaLookupService } from '@noctua.form/services/lookup.service';
 import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
 
-
 import { ReviewDialogService } from './../../dialog.service';
+import { ReviewService } from '../../services/review.service';
 import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
 
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
@@ -61,6 +61,7 @@ export class CamTableComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
     private noctuaFormConfigService: NoctuaFormConfigService,
+    private reviewService: ReviewService,
     private noctuaSearchService: NoctuaSearchService,
     private reviewDialogService: ReviewDialogService,
     private noctuaLookupService: NoctuaLookupService,
@@ -108,6 +109,7 @@ export class CamTableComponent implements OnInit, OnDestroy {
 
   selectCam(cam) {
     this.sparqlService.onCamChanged.next(cam);
+    this.reviewService.open();
   }
 
   ngOnDestroy(): void {

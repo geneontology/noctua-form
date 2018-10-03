@@ -1,4 +1,4 @@
-<div *ngIf="cam.model" class="" fxLayout="column" fxLayoutAlign="start stretch">
+<div *ngIf="cam.node" class="h-100-p" fxLayout="column" fxLayoutAlign="start stretch">
   <mat-toolbar class="m-0">
     <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="start center">
       <span class="title dialog-title">
@@ -12,8 +12,8 @@
   <div class="p-12" fxFlex="100%" noctuaPerfectScrollbar>
     <div fxLayout="column" fxLayoutAlign="start center" class="w-100-p">
       <form fxLayout="column" fxLayoutAlign="start stretch" name="camForm" [formGroup]="camForm" class="noc-body w-100-p noc-search-form">
-        <div>
-          {{cam.relationship}}
+        <div class="cam-relationship">
+          {{cam.node.label}}
         </div>
         <div>
           {{cam.term?.id}}
@@ -43,11 +43,11 @@
               <mat-label>Evidence</mat-label>
               <input matInput formControlName="evidence" placeholder="Evidence" />
             </mat-form-field>
-            <mat-form-field appearance="standard" class="" fxFlex="25">
+            <mat-form-field appearance="standard" class="ml-8" fxFlex="25">
               <mat-label>Reference</mat-label>
               <input matInput formControlName="reference" placeholder="Reference" />
             </mat-form-field>
-            <mat-form-field appearance="standard" class="" fxFlex="25">
+            <mat-form-field appearance="standard" class="ml-8" fxFlex="25">
               <mat-label>With</mat-label>
               <input matInput formControlName="with" placeholder="With" />
             </mat-form-field>
