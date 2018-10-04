@@ -55,8 +55,12 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
   searchFormData: any = []
   searchForm: FormGroup;
 
-  @ViewChild('camDrawer')
-  camDrawer: MatDrawer;
+
+  @ViewChild('leftDrawer')
+  leftDrawer: MatDrawer;
+
+  @ViewChild('rightDrawer')
+  rightDrawer: MatDrawer;
 
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
@@ -89,7 +93,8 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.reviewService.setCamDrawer(this.camDrawer);
+    this.reviewService.setLeftDrawer(this.leftDrawer);
+    this.reviewService.setRightDrawer(this.rightDrawer);
 
     this.sparqlService.getCamsGoTerms('GO:0099160').subscribe((response: any) => {
       this.cams = this.sparqlService.cams = response;
@@ -103,6 +108,10 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
         this.cams = cams;
         this.loadCams();
       });
+  }
+
+  showSearch() {
+    this.reviewService.openLeftDrawer();
   }
 
   search() {

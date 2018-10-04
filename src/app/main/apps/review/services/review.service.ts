@@ -25,22 +25,33 @@ const each = require('lodash/forEach');
 })
 export class ReviewService {
 
-  private camDrawer: MatDrawer;
+  private leftDrawer: MatDrawer;
+  private rightDrawer: MatDrawer;
+
   constructor() { }
 
-  public setCamDrawer(camDrawer: MatDrawer) {
-    this.camDrawer = camDrawer;
+  public setLeftDrawer(leftDrawer: MatDrawer) {
+    this.leftDrawer = leftDrawer;
   }
 
-  public open() {
-    return this.camDrawer.open();
+  public openLeftDrawer() {
+    return this.leftDrawer.open();
   }
 
-  public close() {
-    return this.camDrawer.close();
+  public closeLeftDrawer() {
+    return this.leftDrawer.close();
   }
 
-  public toggle(): void {
-    this.camDrawer.toggle();
+  public setRightDrawer(rightDrawer: MatDrawer) {
+    this.rightDrawer = rightDrawer;
   }
+
+  public openRightDrawer() {
+    return this.rightDrawer.open();
+  }
+
+  public closeRightDrawer() {
+    return this.rightDrawer.close();
+  }
+
 }

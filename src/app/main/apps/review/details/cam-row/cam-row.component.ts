@@ -22,7 +22,7 @@ import { ReviewService } from '../../services/review.service';
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 
 @Component({
-  selector: 'cam-row',
+  selector: 'noc-cam-row',
   templateUrl: './cam-row.component.html',
   styleUrls: ['./cam-row.component.scss'],
   encapsulation: ViewEncapsulation.None
@@ -120,7 +120,7 @@ export class CamRowComponent implements OnInit, OnDestroy {
   }
 
   close() {
-    this.reviewService.close();
+    this.reviewService.closeRightDrawer();
   }
 
   ngOnDestroy(): void {

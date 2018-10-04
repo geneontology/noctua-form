@@ -1,14 +1,12 @@
 <div *ngIf="cam.node" class="h-100-p" fxLayout="column" fxLayoutAlign="start stretch">
-  <mat-toolbar class="m-0">
-    <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="start center">
-      <span class="title dialog-title">
-        Edit {{cam?.model?.title}}</span>
-      <span fxFlex></span>
-      <button mat-icon-button (click)="close()" aria-label="Close dialog">
-        <mat-icon>close</mat-icon>
-      </button>
-    </mat-toolbar-row>
-  </mat-toolbar>
+  <div class="noc-cam-header" fxLayout="row" fxLayoutAlign="start center">
+    <span class="noc-cam-header-title">
+      Edit {{cam?.model?.title}}</span>
+    <span fxFlex></span>
+    <button mat-icon-button (click)="close()" aria-label="Close dialog">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
   <div class="p-12" fxFlex="100%" noctuaPerfectScrollbar>
     <div fxLayout="column" fxLayoutAlign="start center" class="w-100-p">
       <form fxLayout="column" fxLayoutAlign="start stretch" name="camForm" [formGroup]="camForm" class="noc-body w-100-p noc-search-form">

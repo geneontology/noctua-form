@@ -8,33 +8,14 @@
   color: #999;
 }
 
-:host {}
+.noc-cam-header {
+  padding: 0 12px;
+  @include deep-height(50px);
+  background-color: #FFF;
+  @include mat-elevation(1);
 
-.cam-row-edit-dialog {
-  width: 900px;
-
-  @include media-breakpoint('xs') {
-    width: 100%;
-  }
-
-  @include media-breakpoint-up('sm') {
-    width: 600px;
-  }
-
-  .noc-dialog-body {
-    margin: 0;
-    padding: 15px 10px;
-    @include deep-width(100%);
-  }
-
-  .mat-dialog-container {
-    padding: 0;
-  }
-
-  .mat-dialog-content {}
-
-  .dialog-content-wrapper {
-    display: flex;
-    flex-direction: column;
+  .noc-cam-header-title {
+    font-size: 12px;
+    font-weight: bold;
   }
 }

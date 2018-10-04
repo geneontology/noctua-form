@@ -109,7 +109,7 @@ export class CamTableComponent implements OnInit, OnDestroy {
 
   selectCam(cam) {
     this.sparqlService.onCamChanged.next(cam);
-    this.reviewService.open();
+    this.reviewService.openRightDrawer();
   }
 
   ngOnDestroy(): void {
