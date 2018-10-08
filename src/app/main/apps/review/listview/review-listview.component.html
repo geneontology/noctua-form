@@ -1,14 +1,23 @@
 <div class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
   <div class="noc-sidemenu" fxLayout="column" fxLayoutAlign="start center">
-    <button mat-icon-button (click)="showSearch()">
-      <mat-icon>
-        search
-      </mat-icon>
+    <button mat-icon-button (click)="showSearch()" matTooltip="Search" [matTooltipPosition]="'after'"
+      [matTooltipShowDelay]="1500">
+      <mat-icon> search </mat-icon>
+    </button>
+    <button mat-icon-button (click)="showSearch()" matTooltip="Search by curator" [matTooltipPosition]="'after'"
+      [matTooltipShowDelay]="1000">
+      <mat-icon> group </mat-icon>
+    </button>
+    <button mat-icon-button (click)="showSearch()" matTooltip="Search by species" [matTooltipPosition]="'after'"
+      [matTooltipShowDelay]="1000">
+      <mat-icon> pets </mat-icon>
     </button>
   </div>
   <mat-drawer-container class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
-    <mat-drawer #leftDrawer class="noc-left-drawer" fxFlex="300px" noctuaPerfectScrollbar mode="side" position="start">
+    <mat-drawer #leftDrawer class="noc-left-drawer" fxFlex="400px" noctuaPerfectScrollbar mode="side" position="start">
       <noc-review-search></noc-review-search>
+      <noc-review-curators></noc-review-curators>
+      <noc-review-species></noc-review-species>
     </mat-drawer>
     <mat-drawer-content class="cams-table" noctuaPerfectScrollbar>
       <div class="noc-cams-table-header w-100-p">

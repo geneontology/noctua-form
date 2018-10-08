@@ -9,7 +9,10 @@ import { TreeTableModule } from 'primeng/treetable';
 import { TreeNode } from 'primeng/api';
 import { ReviewDialogService } from './dialog.service';
 
-import { ReviewSearchComponent } from './sidenavs/review-search/review-search.component'
+import { ReviewSearchComponent } from './sidenavs/review-search/review-search.component';
+import { ReviewCuratorsComponent } from './sidenavs/review-curators/review-curators.component';
+import { ReviewSpeciesComponent } from './sidenavs/review-species/review-species.component';
+
 import { CamTableComponent } from './listview/cam-table/cam-table.component';
 import { CamRowComponent } from './details/cam-row/cam-row.component';
 
@@ -37,6 +40,8 @@ const routes = [
   declarations: [
     ReviewComponent,
     ReviewSearchComponent,
+    ReviewCuratorsComponent,
+    ReviewSpeciesComponent,
     CamTableComponent,
     CamRowComponent,
     CamRowEditDialogComponent,

@@ -120,7 +120,10 @@ export class SparqlService {
       result.push({
         orcid: erg.orcid.value,
         name: erg.name.value,
-        cams: erg.cams.value
+        cams: erg.cams.value,
+        group: {
+          url: erg.affiliations.value
+        }
       });
     });
     return result;
@@ -314,13 +317,103 @@ export class SparqlService {
     return '?query=' + encodeURIComponent(query);
   }
 
+  buildContributorModelsQuery(orcid) {
+    //  var modOrcid = utils.getOrcid(orcid);
+    let modOrcid = orcid;
+    let query = `
+      PREFIX metago: <http://model.geneontology.org/>
+      PREFIX dc: <http://purl.org/dc/elements/1.1/>
+      PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+      PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+      PREFIX has_affiliation: <http://purl.obolibrary.org/obo/ERO_0000066> 
+      PREFIX enabled_by: <http://purl.obolibrary.org/obo/RO_0002333>
+      PREFIX obo: <http://www.geneontology.org/formats/oboInOwl#>
+      PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+      PREFIX owl: <http://www.w3.org/2002/07/owl#>
+      PREFIX BP: <http://purl.obolibrary.org/obo/GO_0008150>
+      PREFIX MF: <http://purl.obolibrary.org/obo/GO_0003674>
+      PREFIX CC: <http://purl.obolibrary.org/obo/GO_0005575>
+          
+      SELECT  ?gocam ?date ?title	(GROUP_CONCAT(distinct ?spec;separator="&&") as ?species)
+                (GROUP_CONCAT(distinct ?goid;separator="&&") as ?bpids)
+                (GROUP_CONCAT(distinct ?goname;separator="&&") as ?bpnames)
+                (GROUP_CONCAT(distinct ?gpid;separator="&&") as ?gpids)
+                (GROUP_CONCAT(distinct ?gpname;separator="&&") as ?gpnames)
+      WHERE 
+      {
+          #BIND("SynGO:SynGO-pim"^^xsd:string as ?orcid) .
+          #BIND("http://orcid.org/0000-0001-7476-6306"^^xsd:string as ?orcid)
+          #BIND("http://orcid.org/0000-0003-1074-8103"^^xsd:string as ?orcid) .
+          #BIND("http://orcid.org/0000-0001-5259-4945"^^xsd:string as ?orcid) .
+            
+          BIND(` + modOrcid + ` as ?orcid) .
+          BIND(IRI(?orcid) as ?orcidIRI) .
+                    
+          # Getting some information on the model
+          GRAPH ?gocam 
+          {
+              ?gocam 	metago:graphType metago:noctuaCam ;
+                      dc:date ?date ;
+                      dc:title ?title ;
+                      dc:contributor ?orcid .
+              
+              ?entity rdf:type owl:NamedIndividual .
+             ?entity rdf:type ?goid .
+  
+              ?s enabled_by: ?gpentity .    
+              ?gpentity rdf:type ?gpid .
+              FILTER(?gpid != owl:NamedIndividual) .
+         }
+
+            
+          VALUES ?GO_class { BP: } . 
+          # rdf:type faster then subClassOf+ but require filter 			
+          # ?goid rdfs:subClassOf+ ?GO_class .
+      ?entity rdf:type ?GO_class .
+      
+      # Filtering out the root BP, MF & CC terms
+    filter(?goid != MF: )
+      filter(?goid != BP: )
+      filter(?goid != CC: )
+
+      ?goid rdfs:label ?goname .
+            
+          # Getting some information on the contributor
+          optional { ?orcidIRI rdfs:label ?name } .
+          BIND(IF(bound(?name), ?name, ?orcid) as ?name) .
+          optional { ?orcidIRI vcard:organization-name ?organization } .
+          optional { 
+              ?orcidIRI has_affiliation: ?affiliationIRI .
+              ?affiliationIRI rdfs:label ?affiliation
+          } .
+            
+        
+          # Require each GP to have a correct URI, not the case for SYNGO at this time
+          optional {
+      ?gpid rdfs:label ?gpname .
+
+          ?gpid rdfs:subClassOf ?v0 . 
+          ?v0 owl:onProperty <http://purl.obolibrary.org/obo/RO_0002162> . 
+          ?v0 owl:someValuesFrom ?taxon .
+                
+          ?taxon rdfs:label ?spec .  
+          }
+
+            
+      }
+  GROUP BY ?gocam ?date ?title
+  ORDER BY DESC(?date)
+      `
+    return '?query=' + encodeURIComponent(query);
+  }
+
   buildAllGroupsQuery() {
     let query = `
-    PREFIX metago: <http://model.geneontology.org/>
+        PREFIX metago: <http://model.geneontology.org/>
         PREFIX dc: <http://purl.org/dc/elements/1.1/>
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
         PREFIX has_affiliation: <http://purl.obolibrary.org/obo/ERO_0000066> 
-		PREFIX hint: <http://www.bigdata.com/queryHints#>
+		    PREFIX hint: <http://www.bigdata.com/queryHints#>
     
         SELECT  distinct ?name ?url         (COUNT(distinct ?orcidIRI) AS ?members)
                                             (COUNT(distinct ?cam) AS ?cams)

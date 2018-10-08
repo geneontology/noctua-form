@@ -22,16 +22,16 @@ import { NoctuaSearchService } from '@noctua.search/services/noctua-search.servi
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 
 @Component({
-  selector: 'noc-review-search',
-  templateUrl: './review-search.component.html',
-  styleUrls: ['./review-search.component.scss'],
+  selector: 'noc-review-curators',
+  templateUrl: './review-curators.component.html',
+  styleUrls: ['./review-curators.component.scss'],
 })
 
-export class ReviewSearchComponent implements OnInit, OnDestroy {
+export class ReviewCuratorsComponent implements OnInit, OnDestroy {
   searchCriteria: any = {};
   searchForm: FormGroup;
   searchFormData: any = []
-  cams: any[] = [];
+  contributors: any[] = [];
 
   private unsubscribeAll: Subject<any>;
 
@@ -42,24 +42,20 @@ export class ReviewSearchComponent implements OnInit, OnDestroy {
     private reviewService: ReviewService,
     private sparqlService: SparqlService,
     private noctuaTranslationLoader: NoctuaTranslationLoaderService) {
-    this.searchForm = this.createAnswerForm();
+    this.contributors = this.reviewService.contributors;
+    let grouped = this.reviewService.groupContributors();
 
     this.unsubscribeAll = new Subject();
-
-    this.searchFormData = this.noctuaFormConfigService.createReviewSearchFormData();
-    this.onValueChanges();
   }
 
   ngOnInit(): void {
-
-    this.sparqlService.getAllContributors().subscribe((response: any) => {
-      this.searchFormData['contributor'].searchResults = response;
-    });
-
-    this.sparqlService.getAllGroups().subscribe((response: any) => {
-      this.searchFormData['providedBy'].searchResults = response;
-    });
-
+    this.reviewService.onContributorsChanged
+      .pipe(takeUntil(this.unsubscribeAll))
+      .subscribe(contributors => {
+        this.contributors = contributors;
+        let grouped = this.reviewService.groupContributors();
+        console.log('-----', grouped)
+      });
   }
 
   search() {
@@ -67,49 +63,6 @@ export class ReviewSearchComponent implements OnInit, OnDestroy {
 
     console.dir(searchCriteria)
     this.noctuaSearchService.search(searchCriteria);
-  }
-
-  createAnswerForm() {
-    return new FormGroup({
-      gp: new FormControl(this.searchCriteria.gp),
-      goTerm: new FormControl(this.searchCriteria.goTerm),
-      pmid: new FormControl(this.searchCriteria.pmid),
-      contributor: new FormControl(this.searchCriteria.contributor),
-      providedBy: new FormControl(this.searchCriteria.providedBy),
-      species: new FormControl(this.searchCriteria.species),
-    });
-  }
-
-  onValueChanges() {
-    const self = this;
-
-    this.searchForm.get('goTerm').valueChanges
-      .distinctUntilChanged()
-      .debounceTime(400)
-      .subscribe(data => {
-        let searchData = self.searchFormData['goTerm'];
-        this.noctuaLookupService.golrTermLookup(data, searchData.id).subscribe(response => {
-          self.searchFormData['goTerm'].searchResults = response
-        });
-      });
-
-    this.searchForm.get('gp').valueChanges
-      .distinctUntilChanged()
-      .debounceTime(400)
-      .subscribe(data => {
-        let searchData = self.searchFormData['gp'];
-        this.noctuaLookupService.golrTermLookup(data, searchData.id).subscribe(response => {
-          self.searchFormData['gp'].searchResults = response
-        })
-      })
-
-    self.searchFormData['contributor'].filteredResult = this.searchForm.get('contributor').valueChanges
-      .distinctUntilChanged()
-      .debounceTime(400)
-      .pipe(
-        //    startWith(''),
-        //  map(value => this._filter(value))
-      )
   }
 
   close() {

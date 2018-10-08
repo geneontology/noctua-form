@@ -15,6 +15,9 @@ import { NoctuaGraphService } from '@noctua.form/services/graph.service';
 import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
 import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
 
+import { Contributor } from '@noctua.sparql/models/contributor';
+import { Group } from '@noctua.sparql//models/group';
+
 import * as _ from 'lodash';
 import { v4 as uuid } from 'uuid';
 declare const require: any;
@@ -25,10 +28,19 @@ const each = require('lodash/forEach');
 })
 export class ReviewService {
 
+  onContributorsChanged: BehaviorSubject<any>;
+  onGroupsChanged: BehaviorSubject<any>;
+
+  contributors: Contributor[] = [];
+  groups: Group[] = [];
+
   private leftDrawer: MatDrawer;
   private rightDrawer: MatDrawer;
 
-  constructor() { }
+  constructor() {
+    this.onContributorsChanged = new BehaviorSubject({});
+    this.onGroupsChanged = new BehaviorSubject({});
+  }
 
   public setLeftDrawer(leftDrawer: MatDrawer) {
     this.leftDrawer = leftDrawer;
@@ -52,6 +64,12 @@ export class ReviewService {
 
   public closeRightDrawer() {
     return this.rightDrawer.close();
+  }
+
+  public groupContributors() {
+    return _.groupBy(this.contributors, function (contributor) {
+      return contributor.group['url'];
+    });
   }
 
 }

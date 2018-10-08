@@ -22,12 +22,12 @@ import { NoctuaSearchService } from '@noctua.search/services/noctua-search.servi
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 
 @Component({
-  selector: 'noc-review-search',
-  templateUrl: './review-search.component.html',
-  styleUrls: ['./review-search.component.scss'],
+  selector: 'noc-review-species',
+  templateUrl: './review-species.component.html',
+  styleUrls: ['./review-species.component.scss'],
 })
 
-export class ReviewSearchComponent implements OnInit, OnDestroy {
+export class ReviewSpeciesComponent implements OnInit, OnDestroy {
   searchCriteria: any = {};
   searchForm: FormGroup;
   searchFormData: any = []
@@ -59,7 +59,6 @@ export class ReviewSearchComponent implements OnInit, OnDestroy {
     this.sparqlService.getAllGroups().subscribe((response: any) => {
       this.searchFormData['providedBy'].searchResults = response;
     });
-
   }
 
   search() {

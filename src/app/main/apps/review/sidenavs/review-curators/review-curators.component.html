@@ -1,0 +1,13 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" class="w-100-p">
+  <div class="noc-drawer-header" fxLayout="row" fxLayoutAlign="start center">
+    <span class="noc-drawer-header-title">
+      Curators</span>
+    <span fxFlex></span>
+    <button mat-icon-button (click)="close()" aria-label="Close dialog">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <form fxLayout="column" fxLayoutAlign="start stretch" class="noc-search-form">
+    {{contributors| json}}
+  </form>
+</div>

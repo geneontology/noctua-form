@@ -3,6 +3,18 @@ $noc-primary-color: #3b5998;
 $noc-primary-color-accent: #8b9dc3;
 $noc-primary-color-light: #dfe3ee;
 
+.noc-drawer-header {
+  padding: 0 12px;
+  @include deep-height(50px);
+  background-color: #FFF;
+  @include mat-elevation(1);
+
+  .noc-drawer-header-title {
+    font-size: 12px;
+    font-weight: bold;
+  }
+}
+
 .noc-column-toolbar {
   padding: 5px;
   @include deep-height(40px); // @include mat-elevation(2);

@@ -1,6 +1,6 @@
 export interface Contributor {
     orcid: string,
     name?: string;
-    //  group?: {]}
+    group?: {};
     cams?: number;
 }
