@@ -8,6 +8,12 @@
     </button>
   </div>
   <form fxLayout="column" fxLayoutAlign="start stretch" class="noc-search-form">
-    {{contributors| json}}
+    <div *ngFor="let group of groups" fxLayout="row" fxLayoutAlign="start center">
+      <div>
+        {{ group.name }}
+      </div>
+      <span fxFlex></span>
+      {{ group.cams }}
+    </div>
   </form>
 </div>

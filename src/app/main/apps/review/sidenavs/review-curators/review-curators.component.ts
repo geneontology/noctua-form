@@ -30,22 +30,28 @@ import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 export class ReviewCuratorsComponent implements OnInit, OnDestroy {
   searchCriteria: any = {};
   searchForm: FormGroup;
+  groupsForm: FormGroup;
   searchFormData: any = []
+  groups: any[] = [];
   contributors: any[] = [];
 
   private unsubscribeAll: Subject<any>;
 
   constructor(private route: ActivatedRoute,
     private noctuaSearchService: NoctuaSearchService,
+    private formBuilder: FormBuilder,
     private noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaLookupService: NoctuaLookupService,
     private reviewService: ReviewService,
     private sparqlService: SparqlService,
     private noctuaTranslationLoader: NoctuaTranslationLoaderService) {
     this.contributors = this.reviewService.contributors;
-    let grouped = this.reviewService.groupContributors();
 
     this.unsubscribeAll = new Subject();
+
+    this.groupsForm = this.formBuilder.group({
+      groups: []
+    })
   }
 
   ngOnInit(): void {
@@ -56,6 +62,15 @@ export class ReviewCuratorsComponent implements OnInit, OnDestroy {
         let grouped = this.reviewService.groupContributors();
         console.log('-----', grouped)
       });
+
+    this.reviewService.onGroupsChanged
+      .pipe(takeUntil(this.unsubscribeAll))
+      .subscribe(groups => {
+        this.groups = groups;
+        console.log('-++----', groups)
+      });
+
+    //this.searchForm = this.createSearchForm();
   }
 
   search() {
@@ -67,6 +82,13 @@ export class ReviewCuratorsComponent implements OnInit, OnDestroy {
 
   close() {
     this.reviewService.closeLeftDrawer();
+  }
+
+  createSearchForm() {
+    return new FormGroup({
+      term: new FormControl(),
+      groups: this.groupsForm,
+    });
   }
 
   ngOnDestroy(): void {

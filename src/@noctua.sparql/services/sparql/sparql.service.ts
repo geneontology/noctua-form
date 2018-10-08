@@ -137,7 +137,10 @@ export class SparqlService {
         url: erg.url.value,
         name: erg.name.value,
         cams: erg.cams.value,
-        members: erg.members.value
+        membersCount: erg.members.value,
+        members: erg.orcids.value.split('@@').map(function (ordcid) {
+          return { orcid: ordcid };
+        }),
       });
     });
     return result;
@@ -415,7 +418,8 @@ export class SparqlService {
         PREFIX has_affiliation: <http://purl.obolibrary.org/obo/ERO_0000066> 
 		    PREFIX hint: <http://www.bigdata.com/queryHints#>
     
-        SELECT  distinct ?name ?url         (COUNT(distinct ?orcidIRI) AS ?members)
+        SELECT  distinct ?name ?url         (GROUP_CONCAT(distinct ?orcidIRI;separator="@@") AS ?orcids) 
+                                            (COUNT(distinct ?orcidIRI) AS ?members)
                                             (COUNT(distinct ?cam) AS ?cams)
         WHERE    
         {

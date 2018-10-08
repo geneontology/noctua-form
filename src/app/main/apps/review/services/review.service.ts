@@ -38,8 +38,8 @@ export class ReviewService {
   private rightDrawer: MatDrawer;
 
   constructor() {
-    this.onContributorsChanged = new BehaviorSubject({});
-    this.onGroupsChanged = new BehaviorSubject({});
+    this.onContributorsChanged = new BehaviorSubject([]);
+    this.onGroupsChanged = new BehaviorSubject([]);
   }
 
   public setLeftDrawer(leftDrawer: MatDrawer) {
@@ -52,6 +52,10 @@ export class ReviewService {
 
   public closeLeftDrawer() {
     return this.leftDrawer.close();
+  }
+
+  public toggleLeftDrawer() {
+    this.leftDrawer.toggle();
   }
 
   public setRightDrawer(rightDrawer: MatDrawer) {
@@ -68,8 +72,10 @@ export class ReviewService {
 
   public groupContributors() {
     return _.groupBy(this.contributors, function (contributor) {
-      return contributor.group['url'];
+      return contributor.group;
     });
+
+
   }
 
 }
