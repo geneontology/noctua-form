@@ -37,7 +37,16 @@ export class NoctuaSearchService {
 
     search(searchCriteria) {
         if (searchCriteria.goTerm) {
-            this.sparqlService.getCamsGoTerms(searchCriteria.goTerm).subscribe((response: any) => {
+            this.sparqlService.getCamsByGoTerm(searchCriteria.goTerm).subscribe((response: any) => {
+                this.cams = this.sparqlService.cams = response;
+                this.sparqlService.onCamsChanged.next(this.cams);
+            });
+        }
+    }
+
+    searchByCurator(searchCriteria) {
+        if (searchCriteria.curator) {
+            this.sparqlService.getCamsByCurator(searchCriteria.curator).subscribe((response: any) => {
                 this.cams = this.sparqlService.cams = response;
                 this.sparqlService.onCamsChanged.next(this.cams);
             });

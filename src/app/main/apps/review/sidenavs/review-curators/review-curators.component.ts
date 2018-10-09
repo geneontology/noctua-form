@@ -73,6 +73,12 @@ export class ReviewCuratorsComponent implements OnInit, OnDestroy {
     //this.searchForm = this.createSearchForm();
   }
 
+  selectCurator(curator) {
+    this.searchCriteria.curator = curator.orcid;
+    this.noctuaSearchService.searchByCurator(this.searchCriteria)
+  }
+
+
   search() {
     let searchCriteria = this.searchForm.value;
 

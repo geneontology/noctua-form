@@ -9,8 +9,7 @@
   </div>
   <form fxLayout="column" fxLayoutAlign="start stretch" class="noc-search-form">
     <mat-accordion>
-      <mat-expansion-panel *ngFor="let group of groups" fxLayout="column" fxLayoutAlign="start stretch" class="agb-comparison-expansion agb-passed"
-        [expanded]="true">
+      <mat-expansion-panel *ngFor="let group of groups" fxLayout="column" fxLayoutAlign="start stretch" class="agb-comparison-expansion agb-passed">
         <mat-expansion-panel-header>
           <mat-panel-title fxLayout="row" fxLayoutAlign="start center">
             <div class="agb-comparison-toggle" fxLayout="column" fxLayoutAlign="center center">
@@ -28,7 +27,8 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div class="agb-expansion-panel-body">
-          <div *ngFor="let curator of group.members" class="" fxLayout="column" fxLayoutAlign="start stretch">
+          <div *ngFor="let curator of group.curators" (click)="selectCurator(curator)" class="" fxLayout="column"
+            fxLayoutAlign="start stretch">
             <div class="noc-group-row" fxLayout="row" fxLayoutAlign="start center">
               <div>
                 {{ curator.orcid }}

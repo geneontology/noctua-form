@@ -41,9 +41,9 @@ export class SparqlService {
   }
 
   //GO:0099160
-  getCamsGoTerms(term): Observable<any> {
+  getCamsByGoTerm(term): Observable<any> {
     return this.httpClient
-      .get(this.baseUrl + this.buildCamsGoTermQuery(term))
+      .get(this.baseUrl + this.buildCamsByGoTermQuery(term))
       .pipe(
         map(res => res['results']),
         map(res => res['bindings']),
@@ -53,9 +53,21 @@ export class SparqlService {
       );
   }
 
-  getCamsPMIDTerms(term): Observable<any> {
+  getCamsByCurator(orcid): Observable<any> {
     return this.httpClient
-      .get(this.baseUrl + this.buildCamsPMIDQuery(term))
+      .get(this.baseUrl + this.buildCamsByCuratorQuery(orcid))
+      .pipe(
+        map(res => res['results']),
+        map(res => res['bindings']),
+        tap(val => console.dir(val)),
+        map(res => this.addCam(res)),
+        tap(val => console.dir(val))
+      );
+  }
+
+  getCamsByPMID(pmid): Observable<any> {
+    return this.httpClient
+      .get(this.baseUrl + this.buildCamsPMIDQuery(pmid))
       .pipe(
         map(res => res['results']),
         map(res => res['bindings']),
@@ -137,7 +149,7 @@ export class SparqlService {
         url: erg.url.value,
         name: erg.name.value,
         cams: erg.cams.value,
-        curatorsCount: erg.members.value,
+        curatorsCount: erg.curators.value,
         curators: erg.orcids.value.split('@@').map(function (ordcid) {
           return { orcid: ordcid };
         }),
@@ -150,7 +162,7 @@ export class SparqlService {
     const self = this;
 
     _.each(groups, (group) => {
-      _.each(group.members, (member) => {
+      _.each(group.curators, (curator) => {
       });
     })
   }
@@ -202,9 +214,8 @@ export class SparqlService {
     );
   }
 
-
-  buildCamsGoTermQuery(go) {
-    go = go.replace(":", "_");
+  buildCamsByGoTermQuery(goTerm) {
+    goTerm = goTerm.replace(":", "_");
     var query = `
     	PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -214,7 +225,6 @@ export class SparqlService {
       PREFIX BP: <http://purl.obolibrary.org/obo/GO_0008150>
       PREFIX MF: <http://purl.obolibrary.org/obo/GO_0003674>
       PREFIX CC: <http://purl.obolibrary.org/obo/GO_0005575>
-
       SELECT distinct ?model ?modelTitle ?aspect ?term ?termLabel 
       WHERE 
       {
@@ -222,20 +232,18 @@ export class SparqlService {
             ?model metago:graphType metago:noctuaCam .    
             ?entity rdf:type owl:NamedIndividual .
             ?entity rdf:type ?term .
-            FILTER(?term = <http://purl.obolibrary.org/obo/` + go + `>)
+            FILTER(?term = <http://purl.obolibrary.org/obo/` + goTerm + `>)
           }
           VALUES ?aspect { BP: MF: CC: } .
           ?entity rdf:type ?aspect .
           ?model dc:title ?modelTitle .
-
           ?term rdfs:label ?termLabel  .
-
       } `;
 
     return '?query=' + encodeURIComponent(query);
   }
 
-  buildCamsGoTermsQuery() {
+  buildCamsByGoTermsQuery() {
     const query = `
         PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -245,7 +253,6 @@ export class SparqlService {
         PREFIX BP: <http://purl.obolibrary.org/obo/GO_0008150>
         PREFIX MF: <http://purl.obolibrary.org/obo/GO_0003674>
         PREFIX CC: <http://purl.obolibrary.org/obo/GO_0005575>
-
 		    SELECT distinct ?model ?modelTitle ?aspect ?term ?termLabel 
         WHERE
         {
@@ -259,12 +266,10 @@ export class SparqlService {
           # ?term rdfs:subClassOf+ ?aspect .
           ?entity rdf:type ?aspect .
           ?model dc:title ?modelTitle .
-
   			  # Filtering out the root BP, MF & CC terms
 			    filter(?term != MF: )
   			  filter(?term != BP: )
           filter(?term != CC: )
-
     		  ?term rdfs:label ?termLabel  .
         }
      
@@ -284,7 +289,6 @@ export class SparqlService {
     PREFIX in_taxon: <http://purl.obolibrary.org/obo/RO_0002162>
     SELECT ?models (GROUP_CONCAT(distinct ?identifier;separator=";") as ?identifiers)
             (GROUP_CONCAT(distinct ?name;separator=";") as ?names)
-
     WHERE
     {
       GRAPH ?models {
@@ -315,7 +319,7 @@ export class SparqlService {
       WHERE 
       {
           ?cam metago:graphType metago:noctuaCam .
-          ?cam dc:curator ?orcid .
+          ?cam dc:contributor ?orcid .
                   
           BIND( IRI(?orcid) AS ?orcidIRI ).
                   
@@ -330,9 +334,9 @@ export class SparqlService {
     return '?query=' + encodeURIComponent(query);
   }
 
-  buildCuratorModelsQuery(orcid) {
-    //  var modOrcid = utils.getOrcid(orcid);
-    let modOrcid = orcid;
+  buildCamsByCuratorQuery(orcid) {
+    let modOrcid = this.getOrcid(orcid);
+
     let query = `
       PREFIX metago: <http://model.geneontology.org/>
       PREFIX dc: <http://purl.org/dc/elements/1.1/>
@@ -347,7 +351,7 @@ export class SparqlService {
       PREFIX MF: <http://purl.obolibrary.org/obo/GO_0003674>
       PREFIX CC: <http://purl.obolibrary.org/obo/GO_0005575>
           
-      SELECT  ?gocam ?date ?title	(GROUP_CONCAT(distinct ?spec;separator="&&") as ?species)
+      SELECT  ?model ?modelTitle	(GROUP_CONCAT(distinct ?spec;separator="&&") as ?species)
                 (GROUP_CONCAT(distinct ?goid;separator="&&") as ?bpids)
                 (GROUP_CONCAT(distinct ?goname;separator="&&") as ?bpnames)
                 (GROUP_CONCAT(distinct ?gpid;separator="&&") as ?gpids)
@@ -363,12 +367,12 @@ export class SparqlService {
           BIND(IRI(?orcid) as ?orcidIRI) .
                     
           # Getting some information on the model
-          GRAPH ?gocam 
+          GRAPH ?model 
           {
-              ?gocam 	metago:graphType metago:noctuaCam ;
+              ?model 	metago:graphType metago:noctuaCam ;
                       dc:date ?date ;
-                      dc:title ?title ;
-                      dc:curator ?orcid .
+                      dc:title ?modelTitle ;
+                      dc:contributor ?orcid .
               
               ?entity rdf:type owl:NamedIndividual .
              ?entity rdf:type ?goid .
@@ -377,21 +381,19 @@ export class SparqlService {
               ?gpentity rdf:type ?gpid .
               FILTER(?gpid != owl:NamedIndividual) .
          }
-
             
-          VALUES ?GO_class { BP: } . 
+          VALUES ?aspect { BP: } . 
           # rdf:type faster then subClassOf+ but require filter 			
-          # ?goid rdfs:subClassOf+ ?GO_class .
-      ?entity rdf:type ?GO_class .
+          # ?goid rdfs:subClassOf+ ?aspect .
+      ?entity rdf:type ?aspect .
       
       # Filtering out the root BP, MF & CC terms
-    filter(?goid != MF: )
+      filter(?goid != MF: )
       filter(?goid != BP: )
       filter(?goid != CC: )
-
       ?goid rdfs:label ?goname .
             
-          # Getting some information on the curator
+          # Getting some information on the contributor
           optional { ?orcidIRI rdfs:label ?name } .
           BIND(IF(bound(?name), ?name, ?orcid) as ?name) .
           optional { ?orcidIRI vcard:organization-name ?organization } .
@@ -403,19 +405,17 @@ export class SparqlService {
         
           # Require each GP to have a correct URI, not the case for SYNGO at this time
           optional {
-      ?gpid rdfs:label ?gpname .
-
+          ?gpid rdfs:label ?gpname .
           ?gpid rdfs:subClassOf ?v0 . 
           ?v0 owl:onProperty <http://purl.obolibrary.org/obo/RO_0002162> . 
           ?v0 owl:someValuesFrom ?taxon .
                 
           ?taxon rdfs:label ?spec .  
           }
-
             
       }
-  GROUP BY ?gocam ?date ?title
-  ORDER BY DESC(?date)
+      GROUP BY ?model ?modelTitle
+      ORDER BY DESC(?date)
       `
     return '?query=' + encodeURIComponent(query);
   }
@@ -429,12 +429,12 @@ export class SparqlService {
 		    PREFIX hint: <http://www.bigdata.com/queryHints#>
     
         SELECT  distinct ?name ?url         (GROUP_CONCAT(distinct ?orcidIRI;separator="@@") AS ?orcids) 
-                                            (COUNT(distinct ?orcidIRI) AS ?members)
+                                            (COUNT(distinct ?orcidIRI) AS ?curators)
                                             (COUNT(distinct ?cam) AS ?cams)
         WHERE    
         {
           ?cam metago:graphType metago:noctuaCam .
-          ?cam dc:curator ?orcid .
+          ?cam dc:contributor ?orcid .
           BIND( IRI(?orcid) AS ?orcidIRI ).  
           ?orcidIRI has_affiliation: ?url .
           ?url rdfs:label ?name .     
@@ -450,7 +450,6 @@ export class SparqlService {
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         PREFIX metago: <http://model.geneontology.org/>
-
 		SELECT distinct ?gocam
         WHERE 
         {
@@ -460,9 +459,12 @@ export class SparqlService {
             	BIND(REPLACE(?source, " ", "") AS ?source) .
 	            FILTER((CONTAINS(?source, "` + pmid + `")))
     	    }           
-
         }`
 
     return '?query=' + encodeURIComponent(query);
+  }
+
+  getOrcid(orcid) {
+    return "\"" + orcid + "\"^^xsd:string";
   }
 }

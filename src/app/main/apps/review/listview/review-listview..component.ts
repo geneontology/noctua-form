@@ -96,7 +96,7 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
     this.reviewService.setLeftDrawer(this.leftDrawer);
     this.reviewService.setRightDrawer(this.rightDrawer);
 
-    this.sparqlService.getCamsGoTerms('GO:0099160').subscribe((response: any) => {
+    this.sparqlService.getCamsByGoTerm('GO:0099160').subscribe((response: any) => {
       this.cams = this.sparqlService.cams = response;
       this.sparqlService.onCamsChanged.next(this.cams);
       this.loadCams();

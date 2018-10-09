@@ -167,7 +167,7 @@ export class ReviewTreeviewComponent implements OnInit, OnDestroy {
 
     ]
 
-    this.sparqlService.getCamsGoTerms('GO:0099160').subscribe((response: any) => {
+    this.sparqlService.getCamsByGoTerm('GO:0099160').subscribe((response: any) => {
       this.cams = this.sparqlService.cams = response;
       this.camsTable = this.cams.map(x => ({ data: x }));
       console.dir(this.camsTable)
