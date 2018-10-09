@@ -1,23 +1,26 @@
 <div class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
   <div class="noc-sidemenu" fxLayout="column" fxLayoutAlign="start center">
-    <button mat-icon-button (click)="showSearch()" matTooltip="Search" [matTooltipPosition]="'after'"
-      [matTooltipShowDelay]="1500">
+    <button mat-icon-button (click)="toggleLeftDrawer(reviewService.leftPanel.search)" matTooltip="Search"
+      [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
       <mat-icon> search </mat-icon>
     </button>
-    <button mat-icon-button (click)="showSearch()" matTooltip="Search by curator" [matTooltipPosition]="'after'"
-      [matTooltipShowDelay]="1000">
+    <button mat-icon-button (click)="toggleLeftDrawer(reviewService.leftPanel.curator)" matTooltip="Search by curator"
+      [matTooltipPosition]="'after'" [matTooltipShowDelay]="1000">
       <mat-icon> group </mat-icon>
     </button>
-    <button mat-icon-button (click)="showSearch()" matTooltip="Search by species" [matTooltipPosition]="'after'"
-      [matTooltipShowDelay]="1000">
+    <button mat-icon-button (click)="toggleLeftDrawer(reviewService.leftPanel.species)" matTooltip="Search by species"
+      [matTooltipPosition]="'after'" [matTooltipShowDelay]="1000">
       <mat-icon> pets </mat-icon>
     </button>
   </div>
   <mat-drawer-container class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
     <mat-drawer #leftDrawer class="noc-left-drawer" fxFlex="400px" noctuaPerfectScrollbar mode="side" position="start">
-      <noc-review-search></noc-review-search>
-      <noc-review-curators></noc-review-curators>
-      <noc-review-species></noc-review-species>
+
+      <div [ngSwitch]="reviewService.selectedLeftPanel.id">
+        <noc-review-search *ngSwitchCase="reviewService.leftPanel.search.id"></noc-review-search>
+        <noc-review-curators *ngSwitchCase="reviewService.leftPanel.curator.id"></noc-review-curators>
+        <noc-review-species *ngSwitchCase="reviewService.leftPanel.species.id"></noc-review-species>
+      </div>
     </mat-drawer>
     <mat-drawer-content class="cams-table" noctuaPerfectScrollbar>
       <div class="noc-cams-table-header w-100-p">
@@ -31,7 +34,7 @@
           <p>Relationship</p>
         </div>
         <div fxFlex="50px">
-          <p>Asp</p>
+          <p>Asp {{reviewService.selectedLeftPanel.id+':'+reviewService.leftPanel.search.id}}</p>
         </div>
         <div fxFlex="150px">
           <p>Term</p>

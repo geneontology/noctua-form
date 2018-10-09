@@ -52,8 +52,8 @@ export class ReviewSearchComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.sparqlService.getAllContributors().subscribe((response: any) => {
-      this.searchFormData['contributor'].searchResults = response;
+    this.sparqlService.getAllCurators().subscribe((response: any) => {
+      this.searchFormData['curator'].searchResults = response;
     });
 
     this.sparqlService.getAllGroups().subscribe((response: any) => {
@@ -74,7 +74,7 @@ export class ReviewSearchComponent implements OnInit, OnDestroy {
       gp: new FormControl(this.searchCriteria.gp),
       goTerm: new FormControl(this.searchCriteria.goTerm),
       pmid: new FormControl(this.searchCriteria.pmid),
-      contributor: new FormControl(this.searchCriteria.contributor),
+      curator: new FormControl(this.searchCriteria.curator),
       providedBy: new FormControl(this.searchCriteria.providedBy),
       species: new FormControl(this.searchCriteria.species),
     });
@@ -103,7 +103,7 @@ export class ReviewSearchComponent implements OnInit, OnDestroy {
         })
       })
 
-    self.searchFormData['contributor'].filteredResult = this.searchForm.get('contributor').valueChanges
+    self.searchFormData['curator'].filteredResult = this.searchForm.get('curator').valueChanges
       .distinctUntilChanged()
       .debounceTime(400)
       .pipe(

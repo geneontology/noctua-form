@@ -27,6 +27,12 @@
     padding: 0 14px 14px 14px;
   }
 
+  .noc-group-row {
+    padding: 0 10px;
+    @include deep-height(40px);
+    border-bottom: #CCC solid 1px;
+  }
+
   .noc-search-form {
     .noc-form-section {
       width: 100%;

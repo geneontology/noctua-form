@@ -33,7 +33,7 @@ export class ReviewCuratorsComponent implements OnInit, OnDestroy {
   groupsForm: FormGroup;
   searchFormData: any = []
   groups: any[] = [];
-  contributors: any[] = [];
+  curators: any[] = [];
 
   private unsubscribeAll: Subject<any>;
 
@@ -45,7 +45,7 @@ export class ReviewCuratorsComponent implements OnInit, OnDestroy {
     private reviewService: ReviewService,
     private sparqlService: SparqlService,
     private noctuaTranslationLoader: NoctuaTranslationLoaderService) {
-    this.contributors = this.reviewService.contributors;
+    this.curators = this.reviewService.curators;
 
     this.unsubscribeAll = new Subject();
 
@@ -55,11 +55,11 @@ export class ReviewCuratorsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.reviewService.onContributorsChanged
+    this.reviewService.onCuratorsChanged
       .pipe(takeUntil(this.unsubscribeAll))
-      .subscribe(contributors => {
-        this.contributors = contributors;
-        let grouped = this.reviewService.groupContributors();
+      .subscribe(curators => {
+        this.curators = curators;
+        let grouped = this.reviewService.groupCurators();
         console.log('-----', grouped)
       });
 

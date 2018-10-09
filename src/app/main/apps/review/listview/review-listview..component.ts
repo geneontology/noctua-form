@@ -79,7 +79,7 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute,
     private noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaSearchService: NoctuaSearchService,
-    private reviewService: ReviewService,
+    public reviewService: ReviewService,
     private reviewDialogService: ReviewDialogService,
     private noctuaLookupService: NoctuaLookupService,
     private noctuaGraphService: NoctuaGraphService,
@@ -102,10 +102,10 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
       this.loadCams();
     });
 
-    this.sparqlService.getAllContributors().subscribe((response: any) => {
-      this.reviewService.contributors = response;
-      this.reviewService.onContributorsChanged.next(response);
-      this.searchFormData['contributor'].searchResults = response;
+    this.sparqlService.getAllCurators().subscribe((response: any) => {
+      this.reviewService.curators = response;
+      this.reviewService.onCuratorsChanged.next(response);
+      this.searchFormData['curator'].searchResults = response;
     });
 
     this.sparqlService.getAllGroups().subscribe((response: any) => {
@@ -122,8 +122,8 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
       });
   }
 
-  showSearch() {
-    this.reviewService.openLeftDrawer();
+  toggleLeftDrawer(panel) {
+    this.reviewService.toggleLeftDrawer(panel);
   }
 
   search() {

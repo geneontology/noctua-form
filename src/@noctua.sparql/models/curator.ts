@@ -1,4 +1,4 @@
-export interface Contributor {
+export interface Curator {
     orcid: string,
     name?: string;
     group?: {};

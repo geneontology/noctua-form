@@ -15,7 +15,7 @@ import { NoctuaGraphService } from '@noctua.form/services/graph.service';
 import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
 import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
 
-import { Contributor } from '@noctua.sparql/models/contributor';
+import { Curator } from '@noctua.sparql/models/curator';
 import { Group } from '@noctua.sparql//models/group';
 
 import * as _ from 'lodash';
@@ -28,18 +28,39 @@ const each = require('lodash/forEach');
 })
 export class ReviewService {
 
-  onContributorsChanged: BehaviorSubject<any>;
+  leftPanel = {
+    search: {
+      id: 1
+    },
+    curator: {
+      id: 2
+    }, species: {
+      id: 3
+    }
+  }
+
+  selectedLeftPanel;
+
+  onCuratorsChanged: BehaviorSubject<any>;
   onGroupsChanged: BehaviorSubject<any>;
 
-  contributors: Contributor[] = [];
+  curators: Curator[] = [];
   groups: Group[] = [];
 
   private leftDrawer: MatDrawer;
   private rightDrawer: MatDrawer;
 
   constructor() {
-    this.onContributorsChanged = new BehaviorSubject([]);
+    this.onCuratorsChanged = new BehaviorSubject([]);
     this.onGroupsChanged = new BehaviorSubject([]);
+
+    this.selectedLeftPanel = this.leftPanel.search;
+    console.log(this.selectedLeftPanel)
+
+  }
+
+  selectLeftPanel(panel) {
+    this.selectedLeftPanel = panel;
   }
 
   public setLeftDrawer(leftDrawer: MatDrawer) {
@@ -54,8 +75,13 @@ export class ReviewService {
     return this.leftDrawer.close();
   }
 
-  public toggleLeftDrawer() {
-    this.leftDrawer.toggle();
+  public toggleLeftDrawer(panel) {
+    if (this.selectedLeftPanel.id === panel.id) {
+      this.leftDrawer.toggle();
+    } else {
+      this.selectLeftPanel(panel)
+      return this.openLeftDrawer();
+    }
   }
 
   public setRightDrawer(rightDrawer: MatDrawer) {
@@ -70,11 +96,10 @@ export class ReviewService {
     return this.rightDrawer.close();
   }
 
-  public groupContributors() {
-    return _.groupBy(this.contributors, function (contributor) {
-      return contributor.group;
+  public groupCurators() {
+    return _.groupBy(this.curators, function (curator) {
+      return curator.group;
     });
-
 
   }
 

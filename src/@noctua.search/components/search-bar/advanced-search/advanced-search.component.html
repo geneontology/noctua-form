@@ -63,9 +63,9 @@
       <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
         <div class="ph-15 noc-annoton-group-row" fxLayout="column">
           <mat-form-field class="">
-            <input type="text" matInput formControlName="contributor" placeholder="Contributor" [matAutocomplete]="contributorAuto" />
-            <mat-autocomplete #contributorAuto="matAutocomplete">
-              <mat-option *ngFor="let item of searchFormData['contributor']?.searchResults" [value]="item.orcid">
+            <input type="text" matInput formControlName="curator" placeholder="Curator" [matAutocomplete]="curatorAuto" />
+            <mat-autocomplete #curatorAuto="matAutocomplete">
+              <mat-option *ngFor="let item of searchFormData['curator']?.searchResults" [value]="item.orcid">
                 <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
                   <div>
                     {{ item.name }}

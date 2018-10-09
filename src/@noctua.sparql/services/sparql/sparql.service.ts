@@ -12,7 +12,7 @@ import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-for
 import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
 import { Cam } from '../../models/cam';
 import { CamRow } from '../../models/cam-row';
-import { Contributor } from '../../models/contributor';
+import { Curator } from '../../models/curator';
 import { Group } from '../../models/group';
 
 import * as _ from 'lodash';
@@ -65,14 +65,14 @@ export class SparqlService {
       );
   }
 
-  getAllContributors(): Observable<any> {
+  getAllCurators(): Observable<any> {
     return this.httpClient
-      .get(this.baseUrl + this.buildAllContributorsQuery())
+      .get(this.baseUrl + this.buildAllCuratorsQuery())
       .pipe(
         map(res => res['results']),
         map(res => res['bindings']),
         tap(val => console.dir(val)),
-        map(res => this.addContributor(res)),
+        map(res => this.addCurator(res)),
         tap(val => console.dir(val))
       );
   }
@@ -113,8 +113,8 @@ export class SparqlService {
     return result;
   }
 
-  addContributor(res) {
-    let result: Array<Contributor> = [];
+  addCurator(res) {
+    let result: Array<Curator> = [];
 
     res.forEach((erg) => {
       result.push({
@@ -137,13 +137,22 @@ export class SparqlService {
         url: erg.url.value,
         name: erg.name.value,
         cams: erg.cams.value,
-        membersCount: erg.members.value,
-        members: erg.orcids.value.split('@@').map(function (ordcid) {
+        curatorsCount: erg.members.value,
+        curators: erg.orcids.value.split('@@').map(function (ordcid) {
           return { orcid: ordcid };
         }),
       });
     });
     return result;
+  }
+
+  addGroupCurators(groups: Group, curators) {
+    const self = this;
+
+    _.each(groups, (group) => {
+      _.each(group.members, (member) => {
+      });
+    })
   }
 
   addCamChildren(srcCam, annotons) {
@@ -192,6 +201,7 @@ export class SparqlService {
       map(res => res['bindings'])
     );
   }
+
 
   buildCamsGoTermQuery(go) {
     go = go.replace(":", "_");
@@ -292,7 +302,7 @@ export class SparqlService {
     return '?query=' + encodeURIComponent(query);
   }
 
-  buildAllContributorsQuery() {
+  buildAllCuratorsQuery() {
     let query = `
       PREFIX metago: <http://model.geneontology.org/>
       PREFIX dc: <http://purl.org/dc/elements/1.1/>
@@ -305,7 +315,7 @@ export class SparqlService {
       WHERE 
       {
           ?cam metago:graphType metago:noctuaCam .
-          ?cam dc:contributor ?orcid .
+          ?cam dc:curator ?orcid .
                   
           BIND( IRI(?orcid) AS ?orcidIRI ).
                   
@@ -320,7 +330,7 @@ export class SparqlService {
     return '?query=' + encodeURIComponent(query);
   }
 
-  buildContributorModelsQuery(orcid) {
+  buildCuratorModelsQuery(orcid) {
     //  var modOrcid = utils.getOrcid(orcid);
     let modOrcid = orcid;
     let query = `
@@ -358,7 +368,7 @@ export class SparqlService {
               ?gocam 	metago:graphType metago:noctuaCam ;
                       dc:date ?date ;
                       dc:title ?title ;
-                      dc:contributor ?orcid .
+                      dc:curator ?orcid .
               
               ?entity rdf:type owl:NamedIndividual .
              ?entity rdf:type ?goid .
@@ -381,7 +391,7 @@ export class SparqlService {
 
       ?goid rdfs:label ?goname .
             
-          # Getting some information on the contributor
+          # Getting some information on the curator
           optional { ?orcidIRI rdfs:label ?name } .
           BIND(IF(bound(?name), ?name, ?orcid) as ?name) .
           optional { ?orcidIRI vcard:organization-name ?organization } .
@@ -424,7 +434,7 @@ export class SparqlService {
         WHERE    
         {
           ?cam metago:graphType metago:noctuaCam .
-          ?cam dc:contributor ?orcid .
+          ?cam dc:curator ?orcid .
           BIND( IRI(?orcid) AS ?orcidIRI ).  
           ?orcidIRI has_affiliation: ?url .
           ?url rdfs:label ?name .     
