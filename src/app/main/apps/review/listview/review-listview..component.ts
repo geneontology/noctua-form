@@ -106,13 +106,16 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
       this.reviewService.curators = response;
       this.reviewService.onCuratorsChanged.next(response);
       this.searchFormData['curator'].searchResults = response;
+
+      this.sparqlService.getAllGroups().subscribe((response: any) => {
+        this.reviewService.groups = response;
+        this.reviewService.onGroupsChanged.next(response);
+        this.searchFormData['providedBy'].searchResults = response;
+
+        this.sparqlService.addGroupCurators(this.reviewService.groups, this.reviewService.curators)
+      });
     });
 
-    this.sparqlService.getAllGroups().subscribe((response: any) => {
-      this.reviewService.groups = response;
-      this.reviewService.onGroupsChanged.next(response);
-      this.searchFormData['providedBy'].searchResults = response;
-    });
 
     this.sparqlService.onCamsChanged
       .pipe(takeUntil(this.unsubscribeAll))

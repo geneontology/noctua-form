@@ -174,11 +174,14 @@ export class SparqlService {
     return result;
   }
 
-  addGroupCurators(groups: Group, curators) {
+  addGroupCurators(groups, curators) {
     const self = this;
 
     _.each(groups, (group) => {
       _.each(group.curators, (curator) => {
+        let srcCurator = _.find(curators, { orcid: curator.orcid })
+        curator.name = srcCurator['name'];
+        curator.cams = srcCurator['cams'];
       });
     })
   }
