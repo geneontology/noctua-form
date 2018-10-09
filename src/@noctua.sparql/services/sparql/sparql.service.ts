@@ -53,18 +53,6 @@ export class SparqlService {
       );
   }
 
-  getCamsByCurator(orcid): Observable<any> {
-    return this.httpClient
-      .get(this.baseUrl + this.buildCamsByCuratorQuery(orcid))
-      .pipe(
-        map(res => res['results']),
-        map(res => res['bindings']),
-        tap(val => console.dir(val)),
-        map(res => this.addCam(res)),
-        tap(val => console.dir(val))
-      );
-  }
-
   //PMID:25869803
   getCamsByPMID(pmid): Observable<any> {
     return this.httpClient
@@ -77,6 +65,33 @@ export class SparqlService {
         tap(val => console.dir(val))
       );
   }
+
+  //Ina Rnor (RGD:2911)
+  getCamsByGP(gp): Observable<any> {
+    return this.httpClient
+      .get(this.baseUrl + this.buildCamsByGP(gp))
+      .pipe(
+        map(res => res['results']),
+        map(res => res['bindings']),
+        tap(val => console.dir(val)),
+        map(res => this.addCam(res)),
+        tap(val => console.dir(val))
+      );
+  }
+
+  getCamsByCurator(orcid): Observable<any> {
+    return this.httpClient
+      .get(this.baseUrl + this.buildCamsByCuratorQuery(orcid))
+      .pipe(
+        map(res => res['results']),
+        map(res => res['bindings']),
+        tap(val => console.dir(val)),
+        map(res => this.addCam(res)),
+        tap(val => console.dir(val))
+      );
+  }
+
+
 
   getAllCurators(): Observable<any> {
     return this.httpClient
@@ -208,13 +223,6 @@ export class SparqlService {
     return result;
   }
 
-  getCamsGps(): Observable<any> {
-    return this.httpClient.get(this.baseUrl + this.buildCamsGpsQuery()).pipe(
-      map(res => res['results']),
-      map(res => res['bindings'])
-    );
-  }
-
   buildCamsByGoTermQuery(goTerm) {
     goTerm = goTerm.replace(":", "_");
     var query = `
@@ -230,14 +238,14 @@ export class SparqlService {
       WHERE 
       {
         GRAPH ?model {
-            ?model metago:graphType metago:noctuaCam .    
+            ?model metago:graphType metago:noctuaCam;
+                  dc:title ?modelTitle .   
             ?entity rdf:type owl:NamedIndividual .
             ?entity rdf:type ?term .
             FILTER(?term = <http://purl.obolibrary.org/obo/` + goTerm + `>)
           }
           VALUES ?aspect { BP: MF: CC: } .
           ?entity rdf:type ?aspect .
-          ?model dc:title ?modelTitle .
           ?term rdfs:label ?termLabel  .
       } `;
 
@@ -463,6 +471,37 @@ export class SparqlService {
 	            FILTER((CONTAINS(?source, "` + pmid + `")))
     	    }           
         }`
+
+    return '?query=' + encodeURIComponent(query);
+  }
+
+  buildCamsByGP(gp) {
+
+    const id = this.curieUtil.getIri(gp)
+
+    console.log(id, "===")
+    let query = `
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#> 
+    PREFIX dc: <http://purl.org/dc/elements/1.1/> 
+    PREFIX metago: <http://model.geneontology.org/>
+    
+    PREFIX enabled_by: <http://purl.obolibrary.org/obo/RO_0002333>
+    
+    SELECT distinct ?model ?modelTitle
+    
+    WHERE 
+    {
+    
+      GRAPH ?model {
+        ?model metago:graphType metago:noctuaCam;
+             dc:title ?modelTitle .
+        ?s enabled_by: ?gpnode .    
+        ?gpnode rdf:type ?identifier .
+        FILTER(?identifier = <` + id + `>) .         
+      }
+      
+    }`
 
     return '?query=' + encodeURIComponent(query);
   }
