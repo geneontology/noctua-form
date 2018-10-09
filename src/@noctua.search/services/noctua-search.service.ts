@@ -42,6 +42,13 @@ export class NoctuaSearchService {
                 this.sparqlService.onCamsChanged.next(this.cams);
             });
         }
+
+        if (searchCriteria.pmid) {
+            this.sparqlService.getCamsByPMID(searchCriteria.pmid).subscribe((response: any) => {
+                this.cams = this.sparqlService.cams = response;
+                this.sparqlService.onCamsChanged.next(this.cams);
+            });
+        }
     }
 
     searchByCurator(searchCriteria) {

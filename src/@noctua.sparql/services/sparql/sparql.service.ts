@@ -65,6 +65,7 @@ export class SparqlService {
       );
   }
 
+  //PMID:25869803
   getCamsByPMID(pmid): Observable<any> {
     return this.httpClient
       .get(this.baseUrl + this.buildCamsPMIDQuery(pmid))
@@ -374,7 +375,7 @@ export class SparqlService {
                       dc:title ?modelTitle ;
                       dc:contributor ?orcid .
               
-              ?entity rdf:type owl:NamedIndividual .
+             ?entity rdf:type owl:NamedIndividual .
              ?entity rdf:type ?goid .
   
               ?s enabled_by: ?gpentity .    
@@ -447,14 +448,16 @@ export class SparqlService {
 
   buildCamsPMIDQuery(pmid) {
     let query = `
-    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX dc: <http://purl.org/dc/elements/1.1/> 
         PREFIX metago: <http://model.geneontology.org/>
-		SELECT distinct ?gocam
+		    SELECT distinct ?model ?modelTitle
         WHERE 
         {
-	        GRAPH ?gocam {
-    	        ?gocam metago:graphType metago:noctuaCam .    	
+	        GRAPH ?model {
+              ?model metago:graphType metago:noctuaCam ;    
+                      dc:title ?modelTitle .
         	    ?s dc:source ?source .
             	BIND(REPLACE(?source, " ", "") AS ?source) .
 	            FILTER((CONTAINS(?source, "` + pmid + `")))

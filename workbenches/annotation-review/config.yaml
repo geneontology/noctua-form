@@ -1,0 +1,7 @@
+menu-name: "Annotation Review"
+page-name: "Annotation Review v0.1.1"
+type: "universal"
+help-link: "https://github.com/geneontology/noctua-annotation-review/issues"
+javascript:
+  - main.js
+css: []
