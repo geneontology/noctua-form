@@ -14,6 +14,7 @@ import { Evidence } from './../annoton/evidence';
 
 //Config
 import { noctuaFormConfig } from './../noctua-form-config';
+import { NoctuaConfigService } from '@noctua/services/config.service';
 import { NoctuaFormConfigService } from './config/noctua-form-config.service';
 import { NoctuaLookupService } from './lookup.service';
 import { FormGridService } from '../services/form-grid.service';
@@ -54,7 +55,9 @@ export class NoctuaGraphService {
   modelInfo;
   localClosures;
 
-  constructor(private noctuaFormConfigService: NoctuaFormConfigService,
+  constructor(
+    private noctuaConfigService: NoctuaConfigService,
+    private noctuaFormConfigService: NoctuaFormConfigService,
     private formGridService: FormGridService,
     private httpClient: HttpClient,
     private noctuaLookupService: NoctuaLookupService) {
@@ -691,18 +694,25 @@ export class NoctuaGraphService {
   }
 
   editIndividual(graphInfo, srcNode, destNode) {
-    this.noctuaFormConfigService.baristaToken
-    let reqs = new minerva_requests.request_set(this.noctuaFormConfigService.baristaToken, graphInfo.model.id);
+    this.noctuaConfigService.baristaToken
+    let reqs = new minerva_requests.request_set(this.noctuaConfigService.baristaToken, graphInfo.modelId);
 
     if (srcNode.hasValue() && destNode.hasValue()) {
       let ce = new class_expression(destNode.term.control.value.id);
       reqs.remove_type_from_individual(
         class_expression.cls(srcNode.getTerm().id),
-        //srcNode.
+        srcNode.modelId,
+        graphInfo.modelId,
       );
-      destNode.saveMeta.term = reqs.add_individual(ce);
 
-      destNode.modelId = destNode.saveMeta.term;
+      reqs.add_type_to_individual(
+        class_expression.cls(destNode.getTerm().id),
+        srcNode.modelId,
+        graphInfo.modelId,
+      );
+
+      graphInfo.manager.user_token(this.noctuaConfigService.baristaToken);
+      graphInfo.manager.request_with(reqs);
     }
   }
 

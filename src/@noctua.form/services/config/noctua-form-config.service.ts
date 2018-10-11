@@ -813,10 +813,10 @@ export class NoctuaFormConfigService {
     }
 
     modelInfo.goUrl = 'http://www.geneontology.org/';
-    modelInfo.noctuaUrl = window.location.origin + "?" + (this.loggedIn ? parameterize(baristaParams) : '');
-    modelInfo.owlUrl = window.location.origin + "/download/" + modelId + "/owl";
-    modelInfo.gpadUrl = window.location.origin + "/download/" + modelId + "/gpad";
-    modelInfo.graphEditorUrl = window.location.origin + "/editor/graph/" + modelId + "?" + (this.loggedIn ? parameterize(baristaParams) : '');
+    modelInfo.noctuaUrl = environment.noctuaUrl + "?" + (this.loggedIn ? parameterize(baristaParams) : '');
+    modelInfo.owlUrl = environment.noctuaUrl + "/download/" + modelId + "/owl";
+    modelInfo.gpadUrl = environment.noctuaUrl + "/download/" + modelId + "/gpad";
+    modelInfo.graphEditorUrl = environment.noctuaUrl + "/editor/graph/gomodel:" + modelId + "?" + (this.loggedIn ? parameterize(baristaParams) : '');
     modelInfo.saeUrl = environment.workbenchUrl + 'simple-annoton-editor?' + (this.loggedIn ? parameterize(Object.assign({}, modelIdParams, baristaParams)) : '');
     // modelInfo.logoutUrl = self.baristaLocation + '/logout?' + parameterize(baristaParams) + '&amp;return=' + environment.workbenchUrl+'simple-annoton-editor?' + parameterize(baristaParams)
     // modelInfo.loginUrl = self.baristaLocation + '/login?return=' + environment.workbenchUrl+'simple-annoton-editor';
@@ -825,6 +825,9 @@ export class NoctuaFormConfigService {
     modelInfo.workbenches = [{
       label: 'Noctua Form',
       url: environment.workbenchUrl + 'simple-annoton-editor?' + (this.loggedIn ? parameterize(Object.assign({}, modelIdParams, baristaParams)) : parameterize(Object.assign({}, modelIdParams))),
+    }, {
+      label: 'Graph Editor',
+      url: modelInfo.graphEditorUrl
     }, {
       label: 'Annotation Preview',
       url: environment.workbenchUrl + 'annpreview?' + (this.loggedIn ? parameterize(Object.assign({}, modelIdParams, baristaParams)) : parameterize(Object.assign({}, modelIdParams))),

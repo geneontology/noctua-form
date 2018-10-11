@@ -37,7 +37,7 @@ export class NoctuaConfigService {
         this._baristaToken = value;
         localStorage.setItem('barista_token', value);
 
-        console.log('barista_token', value);
+        console.log('barista___token', value);
     }
 
     get baristaToken() {
