@@ -4,7 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NoctuaSharedModule } from '@noctua/shared.module';
 
 const routes = [{
-  path: 'review',
+  path: '',
   loadChildren: './review/review.module#ReviewModule'
 }, {
   path: 'form',

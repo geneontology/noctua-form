@@ -14,9 +14,8 @@
     </button>
   </div>
   <mat-drawer-container class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
-    <mat-drawer #leftDrawer class="noc-left-drawer" fxFlex="400px" noctuaPerfectScrollbar mode="side" position="start">
-
-      <div [ngSwitch]="reviewService.selectedLeftPanel.id">
+    <mat-drawer #leftDrawer class="noc-left-drawer" fxFlex="400px" mode="side" position="start">
+      <div [ngSwitch]="reviewService.selectedLeftPanel.id" class="h-100-p">
         <noc-review-search *ngSwitchCase="reviewService.leftPanel.search.id"></noc-review-search>
         <noc-review-curators *ngSwitchCase="reviewService.leftPanel.curator.id"></noc-review-curators>
         <noc-review-species *ngSwitchCase="reviewService.leftPanel.species.id"></noc-review-species>

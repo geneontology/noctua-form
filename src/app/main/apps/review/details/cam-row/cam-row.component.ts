@@ -6,7 +6,10 @@ import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil, startWith } from 'rxjs/internal/operators';
 import * as _ from 'lodash';
+
+import { AnnotonNode } from '@noctua.form/annoton/annoton-node';
 import { Cam } from '@noctua.sparql/models/cam';
+import { CamRow } from '@noctua.sparql/models/cam-row';
 import { MatTableDataSource, MatSort } from '@angular/material';
 
 import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loader.service';
@@ -34,6 +37,7 @@ export class CamRowComponent implements OnInit, OnDestroy {
   evidenceFormArray: FormArray;
   camFormData: any = {};
   cam: any = {};
+  saveNode: AnnotonNode[] = []
 
   constructor(
     private route: ActivatedRoute,
@@ -52,6 +56,8 @@ export class CamRowComponent implements OnInit, OnDestroy {
     this._unsubscribeAll = new Subject();
 
     this.camFormData = this.noctuaFormConfigService.createReviewSearchFormData();
+
+
 
   }
 
@@ -74,10 +80,14 @@ export class CamRowComponent implements OnInit, OnDestroy {
     this.onValueChanges();
   }
 
+  save(camRow: CamRow) {
+    this.noctuaGraphService.editIndividual(camRow.graph, camRow.srcNode, camRow.destNode);
+  }
+
   createCamForm() {
     return new FormGroup({
       annotatedEntity: new FormControl(this.cam.annotatedEntity ? this.cam.annotatedEntity.id : ''),
-      term: new FormControl(this.cam.node ? this.cam.node.term.control.value.label : ''),
+      term: new FormControl(this.cam.destNode ? this.cam.destNode.term.control.value.label : ''),
       evidenceFormArray: this.formBuilder.array(this.createFormEvidence())
     });
   }
@@ -86,8 +96,8 @@ export class CamRowComponent implements OnInit, OnDestroy {
     const self = this;
     let evidenceGroup: FormGroup[] = [];
 
-    if (self.cam.node) {
-      _.each(self.cam.node.evidence, function (evidence) {
+    if (self.cam.destNode) {
+      _.each(self.cam.destNode.evidence, function (evidence) {
         evidenceGroup.push(self.formBuilder.group({
           evidence: new FormControl(evidence.evidence.control.value.label),
           reference: new FormControl(evidence.reference.control.value),

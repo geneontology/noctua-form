@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 import { NoctuaConfigService } from '@noctua/services/config.service';
@@ -21,6 +21,7 @@ export class NoctuaToolbarComponent {
 
     constructor(
         private router: Router,
+        private route: ActivatedRoute,
         private noctuaConfig: NoctuaConfigService,
         private translate: TranslateService
     ) {
@@ -36,7 +37,15 @@ export class NoctuaToolbarComponent {
 
         this.selectedLanguage = this.languages[0];
 
-        router.events.subscribe(
+        this.route
+            .queryParams
+            .subscribe(params => {
+                // Defaults to 0 if no query param provided.
+                let baristaToken = params['barista_token'] || 0;
+                noctuaConfig.baristaToken = baristaToken;
+            });
+
+        this.router.events.subscribe(
             (event) => {
                 if (event instanceof NavigationStart) {
                     this.showLoadingBar = true;

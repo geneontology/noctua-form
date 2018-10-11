@@ -1,4 +1,4 @@
-<div *ngIf="cam.node" class="h-100-p" fxLayout="column" fxLayoutAlign="start stretch">
+<div *ngIf="cam.destNode" class="h-100-p" fxLayout="column" fxLayoutAlign="start stretch">
   <div class="noc-drawer-header" fxLayout="row" fxLayoutAlign="start center">
     <span class="noc-drawer-header-title">
       Edit {{cam?.model?.title}}</span>
@@ -11,7 +11,7 @@
     <div fxLayout="column" fxLayoutAlign="start center" class="w-100-p">
       <form fxLayout="column" fxLayoutAlign="start stretch" name="camForm" [formGroup]="camForm" class="noc-body w-100-p noc-search-form">
         <div class="cam-relationship">
-          {{cam.node.label}}
+          {{cam.destNode.label}}
         </div>
         <div>
           {{cam.term?.id}}
@@ -63,6 +63,6 @@
     </button>
     <span fxFlex></span>
     <button (click)='close()' type="button" mat-raised-button color="" class="mr-8">Cancel</button>
-    <button (click)="search()" type="button" mat-raised-button color="primary">Save</button>
+    <button (click)="save()" type="button" mat-raised-button color="primary">Save</button>
   </div>
 </div>

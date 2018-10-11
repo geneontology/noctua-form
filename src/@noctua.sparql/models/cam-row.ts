@@ -1,3 +1,6 @@
+
+import { AnnotonNode } from '@noctua.form/annoton/annoton-node';
+
 export interface CamRow {
     treeLevel: number;
     expanded?: boolean,
@@ -13,5 +16,6 @@ export interface CamRow {
     reference?: string;
     with?: string;
     assignedBy?: {};
-    node: Node;
+    srcNode: AnnotonNode;
+    destNode: AnnotonNode;
 }

@@ -11,6 +11,8 @@
     background-color: #EEE;
     border-bottom: #CCC solid 1px;
 
+
+
     mat-icon-button {
       @include deep-height(30px);
       @include deep-width(30px);
@@ -27,10 +29,64 @@
     padding: 0 14px 14px 14px;
   }
 
+  .noc-group-expansion {
+    width: 100%;
+
+    mat-expansion-panel-header {
+      padding: 0 20px 0 10px;
+      @include deep-height(50px);
+      border-bottom: #999 solid 1px;
+      margin-bottom: 5px;
+
+      .noc-comparison-toggle {
+        @include deep-width(30px);
+        @include deep-height(50px);
+      }
+    }
+
+    .mat-expansion-panel-body {
+      padding: 0 !important;
+    }
+
+    .noc-title {
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+    .noc-description {
+      font-size: 12px
+    }
+
+    .noc-expansion-panel-body {
+      //padding: 10px 0;
+      @include deep-width(100%);
+    }
+
+  }
+
   .noc-group-row {
-    padding: 0 10px;
+    padding: 0 5px;
     @include deep-height(40px);
     border-bottom: #CCC solid 1px;
+  }
+
+  .noc-curator-row {
+    padding: 0 10px;
+    @include deep-height(50px);
+    border-top: #CCC solid 1px;
+    font-size: 12px;
+
+    .noc-cams-number {
+      padding: 2px 5px;
+      @include deep-height(20px);
+      background-color: #DDD;
+      font-size: 10px;
+      border-radius: 25%;
+    }
+
+    &:hover {
+      background-color: #F2F2F2;
+    }
   }
 
   .noc-search-form {

@@ -3,7 +3,13 @@ $noc-primary-color: #3b5998;
 $noc-primary-color-accent: #8b9dc3;
 $noc-primary-color-light: #dfe3ee;
 
+.mat-expansion-panel-body {
+  padding: 0 !important;
+}
+
 .noc-drawer-header {
+  position: sticky;
+  position: -webkit-sticky;
   padding: 0 12px;
   @include deep-height(50px);
   background-color: #FFF;

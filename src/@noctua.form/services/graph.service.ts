@@ -75,6 +75,7 @@ export class NoctuaGraphService {
     let graphInfo = {
       engine: new jquery_engine(barista_response),
       onGraphChanged: new BehaviorSubject({}),
+      manager: null,
       graph: null,
       modelId: modelId,
       modelTitle: null,
@@ -88,6 +89,8 @@ export class NoctuaGraphService {
       this.minervaDefinitionName,
       this.barista_token,
       graphInfo.engine, 'async');
+
+    graphInfo.manager = manager;
 
     function _shields_up() { }
     function _shields_down() { }
@@ -684,6 +687,22 @@ export class NoctuaGraphService {
       }
 
       node.modelId = node.saveMeta.term;
+    }
+  }
+
+  editIndividual(graphInfo, srcNode, destNode) {
+    this.noctuaFormConfigService.baristaToken
+    let reqs = new minerva_requests.request_set(this.noctuaFormConfigService.baristaToken, graphInfo.model.id);
+
+    if (srcNode.hasValue() && destNode.hasValue()) {
+      let ce = new class_expression(destNode.term.control.value.id);
+      reqs.remove_type_from_individual(
+        class_expression.cls(srcNode.getTerm().id),
+        //srcNode.
+      );
+      destNode.saveMeta.term = reqs.add_individual(ce);
+
+      destNode.modelId = destNode.saveMeta.term;
     }
   }
 

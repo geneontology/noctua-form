@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormArray } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loader.service';
 
@@ -10,13 +11,19 @@ import { locale as english } from './i18n/en';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   searchCriteria: any = {};
   searchForm: FormGroup;
 
-  constructor(private noctuaTranslationLoader: NoctuaTranslationLoaderService) {
+  constructor(private noctuaTranslationLoader: NoctuaTranslationLoaderService,
+    private route: ActivatedRoute,
+    private router: Router) {
     this.noctuaTranslationLoader.loadTranslations(english);
     this.searchForm = this.createAnswerForm();
+  }
+
+  ngOnInit() {
+
   }
 
   createAnswerForm() {

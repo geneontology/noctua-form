@@ -8,6 +8,7 @@ import { NoctuaUtils } from '@noctua/utils/noctua-utils';
 import { CurieService } from '@noctua.curie/services/curie.service';
 import { NoctuaGraphService } from '@noctua.form/services/graph.service';
 
+import { AnnotonNode } from '@noctua.form/annoton/annoton-node';
 import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
 import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
 import { Cam } from '../../models/cam';
@@ -195,6 +196,7 @@ export class SparqlService {
       let cam = self.annotonToCam(srcCam, annoton);
 
       cam.model = srcCam.model;
+      cam.graph = srcCam.graph;
       srcCam.camRow.push(cam);
     });
 
@@ -202,6 +204,9 @@ export class SparqlService {
   }
 
   annotonToCam(cam, annoton) {
+
+    let destNode = new AnnotonNode()
+    destNode.deepCopyValues(annoton.node);
 
     let result: CamRow = {
       // id: uuid(),
@@ -220,7 +225,8 @@ export class SparqlService {
       reference: annoton.reference,
       with: annoton.with,
       assignedBy: annoton.assignedBy,
-      node: annoton.node
+      srcNode: annoton.node,
+      destNode: destNode
     }
 
     return result;
