@@ -698,7 +698,7 @@ export class NoctuaGraphService {
     let reqs = new minerva_requests.request_set(this.noctuaConfigService.baristaToken, graphInfo.modelId);
 
     if (srcNode.hasValue() && destNode.hasValue()) {
-      let ce = new class_expression(destNode.term.control.value.id);
+      // let ce = new class_expression(destNode.term.control.value.id);
       reqs.remove_type_from_individual(
         class_expression.cls(srcNode.getTerm().id),
         srcNode.modelId,

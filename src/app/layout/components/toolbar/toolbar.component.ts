@@ -19,12 +19,16 @@ export class NoctuaToolbarComponent {
     noNav: boolean;
     navigation: any;
 
+    loginUrl;
+
     constructor(
         private router: Router,
         private route: ActivatedRoute,
         private noctuaConfig: NoctuaConfigService,
         private translate: TranslateService
     ) {
+        console.log(window.location)
+        this.loginUrl = 'http://barista-dev.berkeleybop.org/login?return=' + window.location.origin;
         this.languages = [{
             'id': 'en',
             'title': 'English',
@@ -54,6 +58,7 @@ export class NoctuaToolbarComponent {
                     this.showLoadingBar = false;
                 }
             });
+
     }
 
     search(value): void {
