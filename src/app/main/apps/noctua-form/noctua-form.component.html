@@ -1,175 +1,96 @@
-<div class="w-100-p h-100-p" fxLayout="column" fxLayoutAlign="start stretch">
-
-
-  <div class="noc-form-container w-100-p" fxLayout="column" fxLayoutAlign="start center">
-    <form fxLayout="column" fxLayoutAlign="start stretch" name="searchForm" [formGroup]="searchForm" class="noc-container noc-search-form">
-      <div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
-        <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start start">
-          <div class="noc-section-heading">
-            Gene Product
-          </div>
-          <span fxFlex></span>
-        </div>
-        <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
-          <div class="noc-term-group" fxLayout="row">
-            <div class="pb-20" fxLayout="column" fxFlex>
-              <div class="ph-15 noc-annoton-group-row" fxLayout="column">
-                <div class="" fxLayout="column" fxLayoutAlign="start stretch">
-                  <mat-form-field appearance="standard" class="" fxFlex="">
-                    <mat-label>Gene Product</mat-label>
-                    <input matInput formControlName="geneProduct" placeholder="Enter a Gene Product" />
-                  </mat-form-field>
-
-
-
-                  <mat-form-field class="example-full-width">
-                    <input type="text" placeholder="search word" aria-label="Number" matInput [formControl]="searchTerm"
-                      [matAutocomplete]="auto">
-                    <mat-autocomplete #auto="matAutocomplete">
-                      <mat-option *ngFor="let item of searchResult" [value]="item">
-                        {{ item }}
-                      </mat-option>
-                    </mat-autocomplete>
-                  </mat-form-field>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
-        <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start start">
-          <div class="noc-section-heading">
-            Function Description
-          </div>
-          <span fxFlex></span>
-        </div>
-        <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
-          <div class="noc-term-group md-whiteframe-1dp" fxLayout="row">
-            <div class="pb-20" fxLayout="column" fxFlex>
-              <div class="ph-15 noc-annoton-group-row" fxLayout="column">
-                <div class="" fxLayout="column" fxLayoutAlign="start stretch">
-                  <mat-form-field appearance="standard" class="" fxFlex="">
-                    <mat-label>Go Term</mat-label>
-                    <input matInput formControlName="goTerm" placeholder="Enter a Go Term" />
-                  </mat-form-field>
-                  <mat-form-field appearance="standard" class="" fxFlex="">
-                    <mat-label>PMID</mat-label>
-                    <input matInput formControlName="pmid" placeholder="Enter PMID" />
-                  </mat-form-field>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div layout="row" class="noc-submit-row">
-        <button *ngIf="false" (click)='cancel()' type="button" mat-raised-button color="" class="mr-8">
-          Why is the "Search" button disabled?
-        </button>
-        <span fxFlex></span>
-        <button (click)='cancel()' type="button" mat-raised-button color="" class="mr-8">Clear</button>
-        <button (click)="search()" type="button" mat-raised-button color="primary">Search</button>
-      </div>
-    </form>
+<div class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
+  <div class="noc-sidemenu" fxLayout="column" fxLayoutAlign="start center">
+    <button mat-icon-button (click)="toggleLeftDrawer(noctuaFormService.leftPanel.search)" matTooltip="Search"
+      [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
+      <mat-icon> search </mat-icon>
+    </button>
+    <button mat-icon-button (click)="toggleLeftDrawer(noctuaFormService.leftPanel.curator)" matTooltip="Search by curator"
+      [matTooltipPosition]="'after'" [matTooltipShowDelay]="1000">
+      <mat-icon> group </mat-icon>
+    </button>
+    <button mat-icon-button (click)="toggleLeftDrawer(noctuaFormService.leftPanel.species)" matTooltip="Search by species"
+      [matTooltipPosition]="'after'" [matTooltipShowDelay]="1000">
+      <mat-icon> pets </mat-icon>
+    </button>
   </div>
-  <div class="cams-table" fxLayout="column" fxLayoutAlign="start stretch">
-    <mat-table fxFlex="1 1 auto" class="" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}"
-      noctuaPerfectScrollbar>
-      <ng-container cdkColumnDef="expand">
-        <mat-header-cell *cdkHeaderCellDef fxFlex="80px"></mat-header-cell>
-        <mat-cell *cdkCellDef="let cam" fxFlex="80px" [style.padding-left]="cam.treeLevel * 20+'px'" (click)="$event.stopPropagation()">
-          <button mat-icon-button (click)="toggleExpand(cam)" ckass="noc-button-small">
-            <mat-icon *ngIf="!cam.expanded && cam.treeLevel===0" class="s-16 fa fa-caret-right">
-            </mat-icon>
-            <mat-icon *ngIf="cam.expanded" class="mat-icon-rtl-mirror">
-              refresh
-            </mat-icon>
-          </button>
-          <button *ngIf="cam.treeLevel===0" mat-icon-button [matMenuTriggerFor]="changeView">
-            <mat-icon>
-              apps
-            </mat-icon>
-          </button>
-          <mat-menu #changeView="matMenu">
-            <a *ngFor="let workbench of cam.model?.modelInfo.workbenches" href="{{workbench.url}}" target="_blank"
-              mat-menu-item>
-              {{workbench.label}}
-            </a>
-          </mat-menu>
-        </mat-cell>
-      </ng-container>
-      <ng-container cdkColumnDef="model">
-        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="160px">Model</mat-header-cell>
-        <mat-cell *cdkCellDef="let cam" fxFlex="160px">
-          <p class="text-truncate">{{cam.model?.title }}</p>
-        </mat-cell>
-      </ng-container>
-      <ng-container cdkColumnDef="annotatedEntity">
-        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="150px">Annotated Entity</mat-header-cell>
-        <mat-cell *cdkCellDef="let cam" fxFlex="150px">
-          <p class="text-truncate">{{cam.annotatedEntity?.label}}</p>
-        </mat-cell>
-      </ng-container>
-      <ng-container cdkColumnDef="relationship">
-        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="120px">Relationship</mat-header-cell>
-        <mat-cell *cdkCellDef="let cam" fxFlex="120px">
-          <p class="text-truncate">{{cam.relationship}}</p>
-        </mat-cell>
-      </ng-container>
-      <ng-container cdkColumnDef="aspect">
-        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="80px">Asp</mat-header-cell>
-        <mat-cell *cdkCellDef="let cam" fxFlex="80px">
-          <p class="text-truncate">{{cam.aspect}}</p>
-        </mat-cell>
-      </ng-container>
-      <ng-container cdkColumnDef="term">
-        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="150px">Term</mat-header-cell>
-        <mat-cell *cdkCellDef="let cam" fxFlex="150px">
-          <p class="text-truncate">{{cam.term?.label}}</p>
-        </mat-cell>
-      </ng-container>
-      <ng-container cdkColumnDef="relationshipExt">
-        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="120px">Relationship (ext)</mat-header-cell>
-        <mat-cell *cdkCellDef="let cam" fxFlex="120px">
-          <p class="text-truncate">{{cam.relationshipExt}}</p>
-        </mat-cell>
-      </ng-container>
-      <ng-container cdkColumnDef="extension">
-        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="150px">Extension</mat-header-cell>
-        <mat-cell *cdkCellDef="let cam" fxFlex="150px">
-          <p class="text-truncate">{{cam.extension?.label}}</p>
-        </mat-cell>
-      </ng-container>
-      <ng-container cdkColumnDef="evidence">
-        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="150px">Evidence</mat-header-cell>
-        <mat-cell *cdkCellDef="let cam" fxFlex="150px">
-          <p class="text-truncate">{{cam.evidence?.label}}</p>
-        </mat-cell>
-      </ng-container>
-      <ng-container cdkColumnDef="reference">
-        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="150px">Reference</mat-header-cell>
-        <mat-cell *cdkCellDef="let cam" fxFlex="150px">
-          <a href="{{cam.reference?.url}}" class="text-truncate" target="_blank">{{cam.reference?.label}}</a>
-        </mat-cell>
-      </ng-container>
-      <ng-container cdkColumnDef="with">
-        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="120px">With</mat-header-cell>
-        <mat-cell *cdkCellDef="let cam" fxFlex="150px">
-          <p class="text-truncate">{{cam.with}}</p>
-        </mat-cell>
-      </ng-container>
-      <ng-container cdkColumnDef="assignedBy">
-        <mat-header-cell *cdkHeaderCellDef mat-sort-header fxFlex="150px">Assigned By</mat-header-cell>
-        <mat-cell *cdkCellDef="let cam" fxFlex="150px">
-          <a href="{{cam.assignedBy?.link?.url}}" class="text-truncate" target="_blank">{{cam.assignedBy?.link?.value}}</a>
-        </mat-cell>
-      </ng-container>
-      <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *cdkRowDef="let cam; columns: displayedColumns;" class="cam" matRipple (click)="openCamEdit(cam)"></mat-row>
-    </mat-table>
-    <mat-paginator class="noc-paginator" #paginator [length]="dataSource?.filteredData?.length" [pageIndex]="0"
-      [pageSize]="50" [pageSizeOptions]="[5, 10, 25, 100]">
-    </mat-paginator>
-  </div>
+  <mat-drawer-container class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
+    <mat-drawer #leftDrawer class="noc-left-drawer" fxFlex="400px" mode="side" position="start">
+      <div [ngSwitch]="noctuaFormService.selectedLeftPanel.id" class="h-100-p">
+        <noc-noctuaForm-search *ngSwitchCase="noctuaFormService.leftPanel.search.id"></noc-noctuaForm-search>
+        <noc-noctuaForm-curators *ngSwitchCase="noctuaFormService.leftPanel.curator.id"></noc-noctuaForm-curators>
+        <noc-noctuaForm-species *ngSwitchCase="noctuaFormService.leftPanel.species.id"></noc-noctuaForm-species>
+      </div>
+    </mat-drawer>
+    <mat-drawer-content class="cams-table" noctuaPerfectScrollbar>
+      <div class="noc-cams-table-header w-100-p">
+        <div fxFlex="80px">
+
+        </div>
+        <div fxFlex="150px">
+          <p> Annotated Entity</p>
+        </div>
+        <div fxFlex="120px">
+          <p>Relationship</p>
+        </div>
+        <div fxFlex="50px">
+          <p>Asp {{noctuaFormService.selectedLeftPanel.id+':'+noctuaFormService.leftPanel.search.id}}</p>
+        </div>
+        <div fxFlex="150px">
+          <p>Term</p>
+        </div>
+        <div fxFlex="120px">
+          <p>Relationship Ext</p>
+        </div>
+        <div fxFlex="150px">
+          <p>Extension</p>
+        </div>
+        <div fxFlex="150px">
+          <p>Evidence</p>
+        </div>
+        <div fxFlex="120px">
+          <p>Reference</p>
+        </div>
+        <div fxFlex="120px">
+          <p>Evidence</p>
+        </div>
+        <div fxFlex="120px">
+          <p>With</p>
+        </div>
+        <div fxFlex="120px">
+          <p>Assigned By</p>
+        </div>
+      </div>
+      <div *ngFor="let cam of cams">
+        <div class="noc-cam-table-heading" fxLayout="row" fxLayoutAlign="start center">
+          <div fxFlex="80px" (click)="$event.stopPropagation()">
+            <button mat-icon-button (click)="toggleExpand(cam)" ckass="noc-button-small">
+              <mat-icon *ngIf="!cam.expanded" class="s-16 fa fa-caret-right">
+              </mat-icon>
+              <mat-icon *ngIf="cam.expanded" class="s-12 mat-icon-rtl-mirror">
+                signal_cellular_4_bar
+              </mat-icon>
+            </button>
+            <button mat-icon-button [matMenuTriggerFor]="changeView">
+              <mat-icon>
+                apps
+              </mat-icon>
+            </button>
+            <mat-menu #changeView="matMenu">
+              <a *ngFor="let workbench of cam.model?.modelInfo.workbenches" href="{{workbench.url}}" target="_blank"
+                mat-menu-item>
+                {{workbench.label}}
+              </a>
+            </mat-menu>
+          </div>
+          <span class="grey-500-fg">Model: </span> {{cam.model?.title }}
+        </div>
+        <app-cam-table [camRow]="cam.camRow" class="noc-cam-table-body" fxLayout="row" fxLayoutAlign="start center">
+        </app-cam-table>
+      </div>
+    </mat-drawer-content>
+    <mat-drawer #rightDrawer class="noc-right-drawer" fxFlex="500px" noctuaPerfectScrollbar mode="side" position="end">
+      <noc-cam-row>
+      </noc-cam-row>
+    </mat-drawer>
+  </mat-drawer-container>
 </div>

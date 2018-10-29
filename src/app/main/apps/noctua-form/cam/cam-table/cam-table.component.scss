@@ -4,31 +4,18 @@
 :host {
   padding: 0px;
   width: 100%;
-  background-color: #FFF;
 
-  .mat-drawer-content {
-    width: 100%;
-  }
-
-  .noc-sidemenu {
-    padding: 10px 0;
-    margin-right: 5px;
-    @include deep-height(100%);
-    @include deep-width(50px);
-    @include mat-elevation(4);
-    border-right: #999 solid 1px;
-  }
-
-  .noc-cam-table-heading {
-    @include deep-height(50px);
-    background-color: #FFF;
-    // @include mat-elevation(2);
-    border-bottom: #EEE solid 1px;
-  }
 
   .noc-form-container {
     background-color: #EEE;
     padding: 20px 10px;
+  }
+
+  .mat-tab-group,
+  .mat-tab-body-wrapper,
+  .tab-content {
+    flex: 1 1 auto;
+    max-width: 100%;
   }
 
   .noc-toolbar {
@@ -47,26 +34,43 @@
   }
 
   .cams-table {
-    width: 100%;
-    @include deep-height(100%);
-    padding-bottom: 300px;
     // position: relative;
     //  flex: 1 1 auto;
     //    border-bottom: 1px solid rgba(0, 0, 0, .12);
     //  overflow: auto;
 
-    .noc-cams-table-header {
-      padding: 0;
-      margin-bottom: 5px;
-      @include deep-height(50px);
+
+
+    .mat-header-cell,
+    .mat-cell {
+      padding: 0 10px;
+      font-size: 10px !important;
+      color: #000;
+    }
+
+    .mat-header-cell {
+      font-size: 10px !important;
+      font-weight: bold;
+    }
+
+    .mat-header-cell,
+    .mat-header-row {
+      display: none;
+      @include deep-height(0);
+      /*
+      //padding: 0;
+      min-height: 40px;
       position: sticky;
       position: -webkit-sticky;
       top: 0;
       z-index: 1000;
-      background-color: #FFF;
-      @include mat-elevation(1);
       //  background-color: $noc-primary-color-light;
       // font-size: 3px !important;
+      */
+    }
+
+    .noc-paginator {
+      @include deep-height(0);
     }
 
     .cam {
@@ -94,18 +98,5 @@
       display:flex;
       justify-content:flex-end;
      } */
-  }
-
-  .noc-left-drawer {
-    @include deep-height(100%);
-    background-color: #FFF;
-    border-right: #BBB solid 1px;
-    @include mat-elevation(4);
-  }
-
-  .noc-right-drawer {
-    @include deep-height(100%);
-    background-color: #FFF;
-    border-left: #BBB solid 1px;
   }
 }

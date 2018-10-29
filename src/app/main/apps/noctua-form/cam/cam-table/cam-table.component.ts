@@ -1,7 +1,7 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, Input, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { MatPaginator, MatSort, MatDrawer } from '@angular/material';
+import { MatPaginator, MatSort } from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
 import { merge, Observable, BehaviorSubject, fromEvent, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
@@ -21,25 +21,22 @@ import { NoctuaGraphService } from '@noctua.form/services/graph.service';
 import { NoctuaLookupService } from '@noctua.form/services/lookup.service';
 import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
 
-import { locale as english } from './i18n/en';
-
-import { NoctuaFormService } from './services/noctua-form.service';
-import { NoctuaFormDialogService } from './dialog.service';
+import { NoctuaFormDialogService } from './../../dialog.service';
+import { NoctuaFormService } from '../../services/noctua-form.service';
 import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
 
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 
 @Component({
-  selector: 'app-noctua-form',
-  templateUrl: './noctua-form.component.html',
-  styleUrls: ['./noctua-form.component.scss'],
+  selector: 'app-cam-table',
+  templateUrl: './cam-table.component.html',
+  styleUrls: ['./cam-table.component.scss'],
   animations: noctuaAnimations
 })
-export class NoctuaFormComponent implements OnInit, OnDestroy {
+export class CamTableComponent implements OnInit, OnDestroy {
   dataSource: CamsDataSource | null;
   displayedColumns = [
     'expand',
-    'model',
     'annotatedEntity',
     'relationship',
     'aspect',
@@ -55,21 +52,7 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
   searchFormData: any = []
   searchForm: FormGroup;
 
-
-  @ViewChild('leftDrawer')
-  leftDrawer: MatDrawer;
-
-  @ViewChild('rightDrawer')
-  rightDrawer: MatDrawer;
-
-  @ViewChild(MatPaginator)
-  paginator: MatPaginator;
-
-  @ViewChild('filter')
-  filter: ElementRef;
-
-  @ViewChild(MatSort)
-  sort: MatSort;
+  @Input() camRow: string;
 
   cams: any[] = [];
   searchResults = [];
@@ -78,8 +61,8 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
     private noctuaFormConfigService: NoctuaFormConfigService,
+    private noctuaFormService: NoctuaFormService,
     private noctuaSearchService: NoctuaSearchService,
-    public noctuaFormService: NoctuaFormService,
     private noctuaFormDialogService: NoctuaFormDialogService,
     private noctuaLookupService: NoctuaLookupService,
     private noctuaGraphService: NoctuaGraphService,
@@ -87,46 +70,17 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
     private sparqlService: SparqlService,
     private noctuaTranslationLoader: NoctuaTranslationLoaderService) {
 
-    this.noctuaTranslationLoader.loadTranslations(english);
     this.searchFormData = this.noctuaFormConfigService.createReviewSearchFormData();
     this.unsubscribeAll = new Subject();
   }
 
   ngOnInit(): void {
-    this.noctuaFormService.setLeftDrawer(this.leftDrawer);
-    this.noctuaFormService.setRightDrawer(this.rightDrawer);
-
-    this.sparqlService.getCamsByCurator('http://orcid.org/0000-0002-1706-4196').subscribe((response: any) => {
-      this.cams = this.sparqlService.cams = response;
-      this.sparqlService.onCamsChanged.next(this.cams);
-      this.loadCams();
-    });
-
-    this.sparqlService.getAllCurators().subscribe((response: any) => {
-      this.noctuaFormService.curators = response;
-      this.noctuaFormService.onCuratorsChanged.next(response);
-      this.searchFormData['curator'].searchResults = response;
-
-      this.sparqlService.getAllGroups().subscribe((response: any) => {
-        this.noctuaFormService.groups = response;
-        this.noctuaFormService.onGroupsChanged.next(response);
-        this.searchFormData['providedBy'].searchResults = response;
-
-        this.sparqlService.addGroupCurators(this.noctuaFormService.groups, this.noctuaFormService.curators)
-      });
-    });
-
-
     this.sparqlService.onCamsChanged
       .pipe(takeUntil(this.unsubscribeAll))
       .subscribe(cams => {
         this.cams = cams;
         this.loadCams();
       });
-  }
-
-  toggleLeftDrawer(panel) {
-    this.noctuaFormService.toggleLeftDrawer(panel);
   }
 
   search() {
@@ -137,16 +91,15 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
 
   loadCams() {
     this.cams = this.sparqlService.cams;
-    this.dataSource = new CamsDataSource(this.sparqlService, this.paginator, this.sort);
+    // this.dataSource = this.camRow; //new CamsDataSource(this.sparqlService, this.paginator, this.sort);
   }
 
   toggleExpand(cam) {
     cam.expanded = true;
     cam.graph = this.noctuaGraphService.getGraphInfo(cam.model.id)
     cam.graph.onGraphChanged.subscribe((annotons) => {
-      let data = this.summaryGridService.getGrid(annotons);
+      let data = this.summaryGridService.getGrid(cam.graph.annotons);
       this.sparqlService.addCamChildren(cam, data);
-      //  this.dataSource = new CamsDataSource(this.sparqlService, this.paginator, this.sort);
     });
   }
 
@@ -156,6 +109,7 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
 
   selectCam(cam) {
     this.sparqlService.onCamChanged.next(cam);
+    this.noctuaFormService.openRightDrawer();
   }
 
   ngOnDestroy(): void {

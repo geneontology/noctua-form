@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { MatDialog, MatDialogRef } from '@angular/material';
-import { CamRowEditDialogComponent } from './dialogs/cam-row-edit/cam-row-edit.component';
 
 import 'rxjs/add/operator/map';
 
@@ -16,6 +15,7 @@ export class NoctuaFormDialogService {
         private _matDialog: MatDialog) {
     }
 
+    /*
     openCamRowEdit(cam): void {
         this.dialogRef = this._matDialog.open(CamRowEditDialogComponent, {
             panelClass: 'cam-row-edit-dialog',
@@ -27,5 +27,5 @@ export class NoctuaFormDialogService {
             .subscribe(response => {
 
             });
-    }
+    } */
 }
