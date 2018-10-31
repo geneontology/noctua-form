@@ -1,40 +1,50 @@
 <div fxLayout="column" fxLayoutAlign="start stretch" class="w-100-p">
   <div class="noc-drawer-header" fxLayout="row" fxLayoutAlign="start center">
     <span class="noc-drawer-header-title">
-      Search</span>
+      Form</span>
     <span fxFlex></span>
     <button mat-icon-button (click)="close()" aria-label="Close dialog">
       <mat-icon>close</mat-icon>
     </button>
   </div>
-  <form fxLayout="column" fxLayoutAlign="start stretch" name="searchForm" [formGroup]="searchForm" class="noc-container noc-search-form">
+  <form fxLayout="column" fxLayoutAlign="start stretch" name="camForm" [formGroup]="camForm" class="noc-container noc-cam-form">
     <div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
       <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
         <div class="noc-section-heading">
-          Required
+          Model Information
         </div>
         <span fxFlex></span>
       </div>
       <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
-        <div class="noc-annoton-group-row" fxLayout="column">
-          <mat-form-field class="">
-            <input type="text" matInput formControlName="goTerm" placeholder="Go Term" [matAutocomplete]="goTermAuto" />
-            <mat-autocomplete #goTermAuto="matAutocomplete">
-              <mat-option *ngFor="let item of searchFormData['goTerm']?.searchResults" [value]="item.id">
-                <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
-                  <div>
-                    {{ item.id }}
-                  </div>
-                  <span fxFlex></span>
-                  {{ item.label }}
-                </div>
-              </mat-option>
-            </mat-autocomplete>
+        <div class="noc-annoton-group-row" fxLayout="row">
+          <mat-form-field class="mr-8" fxFlex="40">
+            <mat-label>Title</mat-label>
+            <input matInput formControlName="title" placeholder="Title" />
           </mat-form-field>
+          <mat-form-field class="mr-8" fxFlex="25">
+            <mat-label>State</mat-label>
+            <input matInput formControlName="state" placeholder="State" />
+          </mat-form-field>
+          <mat-form-field class="" fxFlex="25">
+            <mat-label>Group</mat-label>
+            <input matInput formControlName="group" placeholder="Group" />
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+      <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
+        <div class="noc-section-heading">
+          Gene Product
+        </div>
+        <span fxFlex></span>
+      </div>
+      <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
+        <div class="ph-15 noc-annoton-group-row" fxLayout="column">
           <mat-form-field class="">
             <input type="text" matInput formControlName="gp" placeholder="Gene Product" [matAutocomplete]="gpAuto" />
             <mat-autocomplete #gpAuto="matAutocomplete">
-              <mat-option *ngFor="let item of searchFormData['gp']?.searchResults" [value]="item.id">
+              <mat-option *ngFor="let item of camFormData['gp']?.searchResults" [value]="item.id">
                 <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
                   <div>
                     {{ item.id }}
@@ -45,76 +55,36 @@
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
-          <mat-form-field class="">
-            <mat-label>PMID</mat-label>
-            <input matInput formControlName="pmid" placeholder="PMID" />
-          </mat-form-field>
         </div>
       </div>
     </div>
     <div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
       <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
         <div class="noc-section-heading">
-          Curator (optional)
+          Function Description
         </div>
         <span fxFlex></span>
       </div>
       <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
-        <div class="ph-15 noc-annoton-group-row" fxLayout="column">
-          <mat-form-field class="">
-            <input type="text" matInput formControlName="curator" placeholder="Curator" [matAutocomplete]="curatorAuto" />
-            <mat-autocomplete #curatorAuto="matAutocomplete">
-              <mat-option *ngFor="let item of searchFormData['curator']?.searchResults" [value]="item.orcid">
-                <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
-                  <div>
-                    {{ item.name }}
-                  </div>
-                  <span fxFlex></span>
-                  {{ item.orcid }}
-                </div>
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-          <mat-form-field class="">
-            <input type="text" matInput formControlName="providedBy" placeholder="Group" [matAutocomplete]="providedByAuto" />
-            <mat-autocomplete #providedByAuto="matAutocomplete">
-              <mat-option *ngFor="let item of searchFormData['providedBy']?.searchResults" [value]="item.url">
-                <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
-                  <div>
-                    {{ item.name }}
-                  </div>
-                  <span fxFlex></span>
-                  {{ item.url }}
-                </div>
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-        </div>
-      </div>
-    </div>
-    <div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
-      <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
-        <div class="noc-section-heading">
-          Species
-        </div>
-        <span fxFlex></span>
-      </div>
-      <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
-        <div class="ph-15 noc-annoton-group-row" fxLayout="column">
-          <mat-form-field class="">
-            <input type="text" matInput formControlName="species" placeholder="Species" [matAutocomplete]="speciesAuto" />
-            <mat-autocomplete #speciesAuto="matAutocomplete">
-              <mat-option *ngFor="let item of searchFormData['species']?.searchResults" [value]="item.id">
-                <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
-                  <div>
-                    {{ item.id }}
-                  </div>
-                  <span fxFlex></span>
-                  {{ item.label }}
-                </div>
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
+        <div formArrayName="evidenceFormArray" *ngFor="let item of camForm.get('evidenceFormArray').controls; let i = index;">
+          <div [formGroupName]="i" fxLayout="row" fxLayoutAlign="start center" class="ph-15 noc-annoton-group-row w-100-p">
+            <mat-form-field class="mr-8" fxFlex="40">
+              <mat-label>Term</mat-label>
+              <input matInput formControlName="term" placeholder="Term" />
+            </mat-form-field>
+            <mat-form-field class="mr-8" fxFlex="30">
+              <mat-label>Evidence</mat-label>
+              <input matInput formControlName="evidence" placeholder="Evidence" />
+            </mat-form-field>
+            <mat-form-field class="mr-8" fxFlex="15">
+              <mat-label>Reference</mat-label>
+              <input matInput formControlName="reference" placeholder="Reference" />
+            </mat-form-field>
+            <mat-form-field class="mr-8" fxFlex="15">
+              <mat-label>With</mat-label>
+              <input matInput formControlName="with" placeholder="With" />
+            </mat-form-field>
+          </div>
         </div>
       </div>
     </div>
@@ -124,7 +94,7 @@
       </button>
       <span fxFlex></span>
       <button (click)='cancel()' type="button" mat-raised-button color="" class="mr-8">Clear</button>
-      <button (click)="search()" type="button" mat-raised-button color="primary">Search</button>
+      <button (click)="search()" type="button" mat-raised-button color="primary">Save</button>
     </div>
   </form>
 </div>

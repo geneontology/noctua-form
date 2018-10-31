@@ -2,23 +2,13 @@
   <div class="noc-sidemenu" fxLayout="column" fxLayoutAlign="start center">
     <button mat-icon-button (click)="toggleLeftDrawer(noctuaFormService.leftPanel.search)" matTooltip="Search"
       [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
-      <mat-icon> search </mat-icon>
-    </button>
-    <button mat-icon-button (click)="toggleLeftDrawer(noctuaFormService.leftPanel.curator)" matTooltip="Search by curator"
-      [matTooltipPosition]="'after'" [matTooltipShowDelay]="1000">
-      <mat-icon> group </mat-icon>
-    </button>
-    <button mat-icon-button (click)="toggleLeftDrawer(noctuaFormService.leftPanel.species)" matTooltip="Search by species"
-      [matTooltipPosition]="'after'" [matTooltipShowDelay]="1000">
-      <mat-icon> pets </mat-icon>
+      <mat-icon> assignment </mat-icon>
     </button>
   </div>
   <mat-drawer-container class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
-    <mat-drawer #leftDrawer class="noc-left-drawer" fxFlex="400px" mode="side" position="start">
+    <mat-drawer #leftDrawer class="noc-left-drawer" fxFlex="700px" mode="side" position="start">
       <div [ngSwitch]="noctuaFormService.selectedLeftPanel.id" class="h-100-p">
-        <noc-noctuaForm-search *ngSwitchCase="noctuaFormService.leftPanel.search.id"></noc-noctuaForm-search>
-        <noc-noctuaForm-curators *ngSwitchCase="noctuaFormService.leftPanel.curator.id"></noc-noctuaForm-curators>
-        <noc-noctuaForm-species *ngSwitchCase="noctuaFormService.leftPanel.species.id"></noc-noctuaForm-species>
+        <noc-cam-form *ngSwitchCase="noctuaFormService.leftPanel.search.id"></noc-cam-form>
       </div>
     </mat-drawer>
     <mat-drawer-content class="cams-table" noctuaPerfectScrollbar>

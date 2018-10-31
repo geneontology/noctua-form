@@ -39,7 +39,6 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
   dataSource: CamsDataSource | null;
   displayedColumns = [
     'expand',
-    'model',
     'annotatedEntity',
     'relationship',
     'aspect',

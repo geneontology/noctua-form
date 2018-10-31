@@ -29,41 +29,43 @@ import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 
 export class CamFormComponent implements OnInit, OnDestroy {
   searchCriteria: any = {};
-  searchForm: FormGroup;
-  searchFormData: any = []
+  camForm: FormGroup;
+  evidenceFormArray: FormArray;
+  camFormData: any = []
   cams: any[] = [];
 
   private unsubscribeAll: Subject<any>;
 
   constructor(private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
     private noctuaSearchService: NoctuaSearchService,
     private noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaLookupService: NoctuaLookupService,
     private noctuaFormService: NoctuaFormService,
     private sparqlService: SparqlService,
     private noctuaTranslationLoader: NoctuaTranslationLoaderService) {
-    this.searchForm = this.createAnswerForm();
+    this.camForm = this.createAnswerForm();
 
     this.unsubscribeAll = new Subject();
 
-    this.searchFormData = this.noctuaFormConfigService.createReviewSearchFormData();
+    this.camFormData = this.noctuaFormConfigService.createReviewSearchFormData();
     this.onValueChanges();
   }
 
   ngOnInit(): void {
 
     this.sparqlService.getAllCurators().subscribe((response: any) => {
-      this.searchFormData['curator'].searchResults = response;
+      this.camFormData['curator'].searchResults = response;
     });
 
     this.sparqlService.getAllGroups().subscribe((response: any) => {
-      this.searchFormData['providedBy'].searchResults = response;
+      this.camFormData['providedBy'].searchResults = response;
     });
 
   }
 
   search() {
-    let searchCriteria = this.searchForm.value;
+    let searchCriteria = this.camForm.value;
 
     console.dir(searchCriteria)
     this.noctuaSearchService.search(searchCriteria);
@@ -71,45 +73,44 @@ export class CamFormComponent implements OnInit, OnDestroy {
 
   createAnswerForm() {
     return new FormGroup({
-      gp: new FormControl(this.searchCriteria.gp),
-      goTerm: new FormControl(this.searchCriteria.goTerm),
-      pmid: new FormControl(this.searchCriteria.pmid),
-      curator: new FormControl(this.searchCriteria.curator),
-      providedBy: new FormControl(this.searchCriteria.providedBy),
-      species: new FormControl(this.searchCriteria.species),
+      title: new FormControl(),
+      state: new FormControl(),
+      group: new FormControl(),
+      gp: new FormControl(),
+      evidenceFormArray: this.formBuilder.array(this.createFormEvidence())
     });
+  }
+
+  createFormEvidence(): FormGroup[] {
+    const self = this;
+    let evidenceGroup: FormGroup[] = [];
+
+    for (let i = 0; i < 9; i++) {
+      evidenceGroup.push(this.formBuilder.group({
+        term: new FormControl(),
+        evidence: new FormControl(),
+        reference: new FormControl(),
+        with: new FormControl(),
+      }));
+    }
+
+
+
+    return evidenceGroup;
   }
 
   onValueChanges() {
     const self = this;
 
-    this.searchForm.get('goTerm').valueChanges
+    this.camForm.get('gp').valueChanges
       .distinctUntilChanged()
       .debounceTime(400)
       .subscribe(data => {
-        let searchData = self.searchFormData['goTerm'];
+        let searchData = self.camFormData['gp'];
         this.noctuaLookupService.golrTermLookup(data, searchData.id).subscribe(response => {
-          self.searchFormData['goTerm'].searchResults = response
-        });
-      });
-
-    this.searchForm.get('gp').valueChanges
-      .distinctUntilChanged()
-      .debounceTime(400)
-      .subscribe(data => {
-        let searchData = self.searchFormData['gp'];
-        this.noctuaLookupService.golrTermLookup(data, searchData.id).subscribe(response => {
-          self.searchFormData['gp'].searchResults = response
+          self.camFormData['gp'].searchResults = response
         })
       })
-
-    self.searchFormData['curator'].filteredResult = this.searchForm.get('curator').valueChanges
-      .distinctUntilChanged()
-      .debounceTime(400)
-      .pipe(
-        //    startWith(''),
-        //  map(value => this._filter(value))
-      )
   }
 
   close() {
