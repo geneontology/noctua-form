@@ -66,7 +66,8 @@
         <span fxFlex></span>
       </div>
       <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
-        <div formArrayName="evidenceFormArray" *ngFor="let item of camForm.get('evidenceFormArray').controls; let i = index;">
+        <div *ngFor="let item of camForm.get('fd').controls| keyvalue; let i = index;">
+          <!--
           <div [formGroupName]="i" fxLayout="row" fxLayoutAlign="start center" class="ph-15 noc-annoton-group-row w-100-p">
             <mat-form-field class="mr-8" fxFlex="40">
               <mat-label>Term</mat-label>
@@ -84,7 +85,7 @@
               <mat-label>With</mat-label>
               <input matInput formControlName="with" placeholder="With" />
             </mat-form-field>
-          </div>
+          </div>-->
         </div>
       </div>
     </div>

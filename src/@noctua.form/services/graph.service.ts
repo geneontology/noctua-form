@@ -17,7 +17,7 @@ import { noctuaFormConfig } from './../noctua-form-config';
 import { NoctuaConfigService } from '@noctua/services/config.service';
 import { NoctuaFormConfigService } from './config/noctua-form-config.service';
 import { NoctuaLookupService } from './lookup.service';
-import { FormGridService } from '../services/form-grid.service';
+import { NoctuaFormGridService } from '../services/form-grid.service';
 
 import 'rxjs/add/observable/forkJoin';
 import * as _ from 'lodash';
@@ -58,7 +58,7 @@ export class NoctuaGraphService {
   constructor(
     private noctuaConfigService: NoctuaConfigService,
     private noctuaFormConfigService: NoctuaFormConfigService,
-    private formGridService: FormGridService,
+    private formGridService: NoctuaFormGridService,
     private httpClient: HttpClient,
     private noctuaLookupService: NoctuaLookupService) {
     this.linker = new amigo.linker();

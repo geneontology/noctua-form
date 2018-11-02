@@ -12,9 +12,9 @@ const each = require('lodash/forEach');
 @Injectable({
   providedIn: 'root'
 })
-export class FormGridService {
-  annoton;
-  annotonPresentation;
+export class NoctuaFormGridService {
+  public annoton;
+  public annotonPresentation;
 
   constructor(private noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaLookupService: NoctuaLookupService) {
@@ -98,7 +98,6 @@ export class FormGridService {
     this.annotonPresentation.extra.push(result);
 
     return result[displaySectionId];
-
   }
 
   initalizeForm() {
