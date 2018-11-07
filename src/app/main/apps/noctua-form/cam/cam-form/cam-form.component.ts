@@ -125,8 +125,6 @@ export class CamFormComponent implements OnInit, OnDestroy {
       })
   }
 
-
-
   close() {
     this.noctuaFormService.closeLeftDrawer();
   }

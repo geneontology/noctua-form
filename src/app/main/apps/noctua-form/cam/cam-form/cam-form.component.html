@@ -66,26 +66,27 @@
         <span fxFlex></span>
       </div>
       <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
-        <div *ngFor="let item of camForm.get('fd').controls| keyvalue; let i = index;">
-          <!--
-          <div [formGroupName]="i" fxLayout="row" fxLayoutAlign="start center" class="ph-15 noc-annoton-group-row w-100-p">
-            <mat-form-field class="mr-8" fxFlex="40">
-              <mat-label>Term</mat-label>
-              <input matInput formControlName="term" placeholder="Term" />
-            </mat-form-field>
-            <mat-form-field class="mr-8" fxFlex="30">
-              <mat-label>Evidence</mat-label>
-              <input matInput formControlName="evidence" placeholder="Evidence" />
-            </mat-form-field>
-            <mat-form-field class="mr-8" fxFlex="15">
-              <mat-label>Reference</mat-label>
-              <input matInput formControlName="reference" placeholder="Reference" />
-            </mat-form-field>
-            <mat-form-field class="mr-8" fxFlex="15">
-              <mat-label>With</mat-label>
-              <input matInput formControlName="with" placeholder="With" />
-            </mat-form-field>
-          </div>-->
+        <div [formGroupName]="'fd'" *ngFor="let nodeGroup of camForm.get('fd').controls| keyvalue; let i = index;">
+          <div [formGroupName]="nodeGroup.key" *ngFor="let entity of nodeGroup.value.controls| keyvalue; let j = index;">
+            <div [formGroupName]="entity.key" fxLayout="row" fxLayoutAlign="start center" class="ph-15 noc-annoton-group-row w-100-p">
+              <mat-form-field class="mr-8" fxFlex="40">
+                <mat-label>Term</mat-label>
+                <input matInput formControlName="term" placeholder="Term" />
+              </mat-form-field>
+              <mat-form-field class="mr-8" fxFlex="30">
+                <mat-label>Evidence</mat-label>
+                <input matInput formControlName="evidence" placeholder="Evidence" />
+              </mat-form-field>
+              <mat-form-field class="mr-8" fxFlex="15">
+                <mat-label>Reference</mat-label>
+                <input matInput formControlName="reference" placeholder="Reference" />
+              </mat-form-field>
+              <mat-form-field class="mr-8" fxFlex="15">
+                <mat-label>With</mat-label>
+                <input matInput formControlName="with" placeholder="With" />
+              </mat-form-field>
+            </div>
+          </div>
         </div>
       </div>
     </div>
