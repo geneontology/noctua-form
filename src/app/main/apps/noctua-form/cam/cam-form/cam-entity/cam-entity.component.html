@@ -1,0 +1,49 @@
+<div [formGroup]="entityFormGroup">
+  <div *ngIf="entity.treeLevel>2" class="sae-tree-input sae-level-3">
+  </div>
+  <mat-form-field class="mr-8" fxFlex="40">
+    <input matInput formControlName="term" placeholder="{{entity.label}}" />
+  </mat-form-field>
+  <mat-form-field class="mr-8" fxFlex="30">
+    <mat-label>Evidence</mat-label>
+    <input matInput formControlName="evidence" placeholder="Evidence" />
+  </mat-form-field>
+  <mat-form-field class="mr-8" fxFlex="15">
+    <mat-label>Reference</mat-label>
+    <input matInput formControlName="reference" placeholder="Reference" />
+  </mat-form-field>
+  <mat-form-field class="mr-8" fxFlex="15">
+    <mat-label>With</mat-label>
+    <input matInput formControlName="with" placeholder="With" />
+  </mat-form-field>
+  <span fxFlex=""></span>
+  <button mat-icon-button fxFlex="40px" [matMenuTriggerFor]="menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button class="" (click)="appCtrl.removeHasPartGP(appCtrl.formGrid.annoton, entity)">
+      Remove GP
+    </button>
+    <h6 class="sae-menu-heading"> Evidence</h6>
+    <button mat-menu-item class="" (click)="openSelectEvidenceDialog($event, entity)">
+      Clone Evidence
+    </button>
+    <button mat-menu-item class="" (click)="openAddEvidenceDialog($event, entity)">
+      More Evidence
+    </button>
+    <button mat-menu-item class="" (click)="addNDEvidence(entity.evidence[0])">
+      Add ND Reference
+    </button>
+    <h6 class="sae-menu-heading"> Term </h6>
+    <button mat-menu-item *ngIf="entity.treeLevel===0" class="" (click)="toggleIsComplement(entity)">
+      NOT Qualifier
+    </button>
+    <button mat-menu-item class="" (click)="entity.clearValues()">
+      Clear
+    </button>
+    <h6 class="sae-menu-heading"> Search </h6>
+    <button mat-menu-item *ngIf="entity.aspect" class="" (click)="openPopulateDialog($event, entity)">
+      Search Database
+    </button>
+  </mat-menu>
+</div>

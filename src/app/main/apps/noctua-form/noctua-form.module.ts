@@ -8,6 +8,7 @@ import { TreeNode } from 'primeng/api';
 import { NoctuaFormDialogService } from './dialog.service';
 
 import { CamFormComponent } from './cam/cam-form/cam-form.component';
+import { CamFormEntityComponent } from './cam/cam-form/cam-entity/cam-entity.component';
 
 import { CamTableComponent } from './cam/cam-table/cam-table.component';
 import { CamRowComponent } from './cam/cam-row/cam-row.component';
@@ -33,6 +34,7 @@ const routes = [
   declarations: [
     NoctuaFormComponent,
     CamFormComponent,
+    CamFormEntityComponent,
     CamTableComponent,
     CamRowComponent,
     CamRowEditDialogComponent,
