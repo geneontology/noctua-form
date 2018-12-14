@@ -1,12 +1,38 @@
-<div [formGroup]="entityFormGroup">
-  <div *ngIf="entity.treeLevel>2" class="sae-tree-input sae-level-3">
+<div [formGroup]="entityFormGroup" fxLayout="row" fxLayoutAlign="start center" class="w-100-p">
+  <div *ngIf="entity.treeLevel>0" class="noc-tree-input noc-level-1">
   </div>
-  <mat-form-field class="mr-8" fxFlex="40">
-    <input matInput formControlName="term" placeholder="{{entity.label}}" />
+  <div *ngIf="entity.treeLevel>1" class="noc-tree-input noc-level-2">
+  </div>
+  <div *ngIf="entity.treeLevel>2" class="noc-tree-input noc-level-3">
+  </div>
+  <mat-form-field class="mr-8" fxFlex>
+    <input type="text" matInput formControlName="term" placeholder="{{entity.label}}" [matAutocomplete]="termAuto" />
+
+    <mat-autocomplete #termAuto="matAutocomplete">
+      <mat-option *ngFor="let item of autcompleteResults.term" [value]="item.id">
+        <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
+          <div>
+            {{ item.id }}
+          </div>
+          <span fxFlex></span>
+          {{ item.label }}
+        </div>
+      </mat-option>
+    </mat-autocomplete>
   </mat-form-field>
   <mat-form-field class="mr-8" fxFlex="30">
-    <mat-label>Evidence</mat-label>
-    <input matInput formControlName="evidence" placeholder="Evidence" />
+    <input type="text" matInput formControlName="evidence" placeholder="Evidence" [matAutocomplete]="evidenceAuto" />
+    <mat-autocomplete #evidenceAuto="matAutocomplete">
+      <mat-option *ngFor="let item of autcompleteResults.evidence" [value]="item.id">
+        <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
+          <div>
+            {{ item.id }}
+          </div>
+          <span fxFlex></span>
+          {{ item.label }}
+        </div>
+      </mat-option>
+    </mat-autocomplete>
   </mat-form-field>
   <mat-form-field class="mr-8" fxFlex="15">
     <mat-label>Reference</mat-label>
@@ -16,15 +42,14 @@
     <mat-label>With</mat-label>
     <input matInput formControlName="with" placeholder="With" />
   </mat-form-field>
-  <span fxFlex=""></span>
-  <button mat-icon-button fxFlex="40px" [matMenuTriggerFor]="menu">
+  <button mat-icon-button class="noc-action-button" fxFlex="40px" [matMenuTriggerFor]="menu">
     <mat-icon>menu</mat-icon>
   </button>
-  <mat-menu #menu="matMenu">
+  <mat-menu #menu="matMenu" class="noc-dropdown-menu">
     <button class="" (click)="appCtrl.removeHasPartGP(appCtrl.formGrid.annoton, entity)">
       Remove GP
     </button>
-    <h6 class="sae-menu-heading"> Evidence</h6>
+    <h6 class="noc-menu-heading"> Evidence</h6>
     <button mat-menu-item class="" (click)="openSelectEvidenceDialog($event, entity)">
       Clone Evidence
     </button>
@@ -34,14 +59,14 @@
     <button mat-menu-item class="" (click)="addNDEvidence(entity.evidence[0])">
       Add ND Reference
     </button>
-    <h6 class="sae-menu-heading"> Term </h6>
+    <h6 class="noc-menu-heading"> Term </h6>
     <button mat-menu-item *ngIf="entity.treeLevel===0" class="" (click)="toggleIsComplement(entity)">
       NOT Qualifier
     </button>
     <button mat-menu-item class="" (click)="entity.clearValues()">
       Clear
     </button>
-    <h6 class="sae-menu-heading"> Search </h6>
+    <h6 class="noc-menu-heading"> Search </h6>
     <button mat-menu-item *ngIf="entity.aspect" class="" (click)="openPopulateDialog($event, entity)">
       Search Database
     </button>

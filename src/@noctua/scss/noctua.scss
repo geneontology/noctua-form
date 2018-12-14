@@ -21,6 +21,22 @@ $noc-secondary-color: #995014;
   @include deep-height($number);
 }
 
+.noc-dropdown-menu {
+  .noc-menu-heading {
+    margin: 0;
+    padding: 10px 14px;
+    background-color: #E2E2E2;
+  }
+
+  .noc-item {
+    @include deep-height(30px);
+    margin: 0;
+    padding: 10px 14px;
+  }
+}
+
+
+
 .noc-paginator {
   overflow: hidden;
   @include deep-height(40px);

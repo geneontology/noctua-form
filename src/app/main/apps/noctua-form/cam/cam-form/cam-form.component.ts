@@ -105,14 +105,21 @@ export class CamFormComponent implements OnInit, OnDestroy {
       let nodeFormGroup: FormGroup = camFdFormGroup.controls[nodeKey] as FormGroup;
 
       each(nodeGroup.nodes, (entity, entityKey) => {
-        nodeFormGroup.addControl(entity.id, new FormGroup({
-          term: new FormControl(),
-          evidence: new FormControl(),
-          reference: new FormControl(),
-          with: new FormControl(),
-        }));
+        nodeFormGroup.addControl(entity.id, new FormGroup({}))
       });
-    })
+    });
+
+    /*
+    each(nodeGroup.nodes, (entity, entityKey) => {
+      nodeFormGroup.addControl(entity.id, new FormGroup({
+        term: new FormControl(),
+        evidence: new FormControl(),
+        reference: new FormControl(),
+        with: new FormControl(),
+      }));
+    });
+  
+  })  */
   }
 
   onValueChanges() {

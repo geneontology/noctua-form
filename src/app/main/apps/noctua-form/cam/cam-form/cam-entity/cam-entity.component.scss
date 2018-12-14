@@ -5,6 +5,38 @@
   width: 100%; // display: block;
   background-color: white;
 
+  .noc-tree-input {
+    $border-color: rgba(#000, 0.12);
+    @include deep-width(20px);
+    border-right: $border-color solid 1px;
+
+    &.noc-level-0 {
+      border: none;
+    }
+  }
+
+
+  .noc-action-button {
+    margin: 8px 0 0 0;
+    background-color: #FAFAFA;
+    width: 35px;
+    height: 35px;
+
+    icon {
+      @include noc-icon-size(14px);
+      color: #AAA;
+      line-height: 18px;
+    }
+
+    &:hover {
+      background-color: #999;
+
+      icon {
+        color: #222;
+      }
+    }
+  }
+
   .noc-header {
     @include deep-height(30px);
     background-color: #EEE;
@@ -77,38 +109,11 @@
         }
       }
 
-      .noc-action-button {
-        margin: 8px 0 0 0;
-        background-color: #FAFAFA;
-        width: 35px;
-        height: 35px;
 
-        md-icon {
-          @include noc-icon-size(14px);
-          color: #AAA;
-          line-height: 18px;
-        }
-
-        &:hover {
-          background-color: #999;
-
-          md-icon {
-            color: #222;
-          }
-        }
-      }
     }
 
 
-    .noc-tree-input {
-      $border-color: rgba(#000, 0.12);
-      @include deep-width(20px);
-      border-right: $border-color solid 1px;
 
-      &.noc-level-0 {
-        border: none;
-      }
-    }
 
     md-input-container {
       margin: 0; //border-bottom: #555 solid 1px; 

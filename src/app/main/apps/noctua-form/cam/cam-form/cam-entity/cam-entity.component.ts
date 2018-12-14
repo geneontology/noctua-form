@@ -38,7 +38,10 @@ export class CamFormEntityComponent implements OnInit, OnDestroy {
   camForm: FormGroup;
   camFormPresentation: any;
   evidenceFormArray: FormArray;
-  camFormData: any = []
+  autcompleteResults = {
+    term: [],
+    evidence: []
+  };
   cams: any[] = [];
 
   nodeGroup: any = {}
@@ -66,13 +69,11 @@ export class CamFormEntityComponent implements OnInit, OnDestroy {
     this.unsubscribeAll = new Subject();
 
     this.camFormPresentation = this.noctuaFormGridService.annotonPresentation;
-    this.camForm = this.createEntityGroup();
 
-    this.camFormData = this.noctuaFormConfigService.createReviewSearchFormData();
-    // this.onValueChanges();
   }
 
   ngOnInit(): void {
+    this.entityFormGroup = this.createEntityGroup();
     console.log("FD Form Group", this.entityFormGroup);
     console.log("entityName", this.entityName, this.nodeGroupName);
 
@@ -80,6 +81,7 @@ export class CamFormEntityComponent implements OnInit, OnDestroy {
     this.entity = _.find(this.nodeGroup.nodes, { id: this.entityName });
 
     console.log("entity", this.entity, this.nodeGroup);
+    this.onValueChanges();
   }
 
   search() {
@@ -100,15 +102,23 @@ export class CamFormEntityComponent implements OnInit, OnDestroy {
   onValueChanges() {
     const self = this;
 
-    this.camForm.get('gp').valueChanges
+    this.entityFormGroup.get('term').valueChanges
       .distinctUntilChanged()
       .debounceTime(400)
       .subscribe(data => {
-        let searchData = self.camFormData['gp'];
-        this.noctuaLookupService.golrTermLookup(data, searchData.id).subscribe(response => {
-          self.camFormData['gp'].searchResults = response
-        })
-      })
+        this.noctuaLookupService.golrLookup(data, this.entity.term.lookup.requestParams).subscribe(response => {
+          self.autcompleteResults.term = response;
+        });
+      });
+
+    this.entityFormGroup.get('evidence').valueChanges
+      .distinctUntilChanged()
+      .debounceTime(400)
+      .subscribe(data => {
+        this.noctuaLookupService.golrLookup(data, this.entity.evidence[0].evidence.lookup.requestParams).subscribe(response => {
+          self.autcompleteResults.evidence = response;
+        });
+      });
   }
 
   close() {
