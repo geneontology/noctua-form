@@ -2,6 +2,44 @@
   <div class="cams-table" fxFlex="">
     <mat-table class="w-100-p" #table [dataSource]="camRow" matSort [@animateStagger]="{value:'50'}"
       noctuaPerfectScrollbar>
+      <div class="noc-cams-table-header w-100-p">
+        <div fxFlex="80px">
+
+        </div>
+        <div fxFlex="150px">
+          <p> Annotated Entity</p>
+        </div>
+        <div fxFlex="120px">
+          <p>Relationship</p>
+        </div>
+        <div fxFlex="50px">
+          <p>Asp</p>
+        </div>
+        <div fxFlex="150px">
+          <p>Term</p>
+        </div>
+        <div fxFlex="120px">
+          <p>Relationship Ext</p>
+        </div>
+        <div fxFlex="150px">
+          <p>Extension</p>
+        </div>
+        <div fxFlex="150px">
+          <p>Evidence</p>
+        </div>
+        <div fxFlex="120px">
+          <p>Reference</p>
+        </div>
+        <div fxFlex="120px">
+          <p>Evidence</p>
+        </div>
+        <div fxFlex="120px">
+          <p>With</p>
+        </div>
+        <div fxFlex="120px">
+          <p>Assigned By</p>
+        </div>
+      </div>
       <ng-container cdkColumnDef="expand">
         <mat-header-cell *cdkHeaderCellDef fxFlex="80px"></mat-header-cell>
         <mat-cell *cdkCellDef="let cam" fxFlex="80px" [style.padding-left]="cam.treeLevel * 20+'px'" (click)="$event.stopPropagation()">

@@ -23,41 +23,10 @@
     </mat-drawer>
     <mat-drawer-content class="cams-table" noctuaPerfectScrollbar>
       <div class="noc-cams-table-header w-100-p">
-        <div fxFlex="80px">
-
-        </div>
-        <div fxFlex="150px">
-          <p> Annotated Entity</p>
-        </div>
-        <div fxFlex="120px">
-          <p>Relationship</p>
-        </div>
         <div fxFlex="50px">
-          <p>Asp {{reviewService.selectedLeftPanel.id+':'+reviewService.leftPanel.search.id}}</p>
         </div>
-        <div fxFlex="150px">
-          <p>Term</p>
-        </div>
-        <div fxFlex="120px">
-          <p>Relationship Ext</p>
-        </div>
-        <div fxFlex="150px">
-          <p>Extension</p>
-        </div>
-        <div fxFlex="150px">
-          <p>Evidence</p>
-        </div>
-        <div fxFlex="120px">
-          <p>Reference</p>
-        </div>
-        <div fxFlex="120px">
-          <p>Evidence</p>
-        </div>
-        <div fxFlex="120px">
-          <p>With</p>
-        </div>
-        <div fxFlex="120px">
-          <p>Assigned By</p>
+        <div fxFlex="200px">
+          <p>{{cams.length}} Models</p>
         </div>
       </div>
       <div *ngFor="let cam of cams">
@@ -84,7 +53,8 @@
           </div>
           <span class="grey-500-fg">Model: </span> {{cam.model?.title }}
         </div>
-        <app-cam-table [camRow]="cam.camRow" class="noc-cam-table-body" fxLayout="row" fxLayoutAlign="start center">
+        <app-cam-table [camRow]="cam.camRow" *ngIf="cam.expanded" class="noc-cam-table-body" fxLayout="row"
+          fxLayoutAlign="start center">
         </app-cam-table>
       </div>
     </mat-drawer-content>

@@ -141,13 +141,17 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
   }
 
   toggleExpand(cam) {
-    cam.expanded = true;
-    cam.graph = this.noctuaGraphService.getGraphInfo(cam.model.id)
-    cam.graph.onGraphChanged.subscribe((annotons) => {
-      let data = this.summaryGridService.getGrid(annotons);
-      this.sparqlService.addCamChildren(cam, data);
-      //  this.dataSource = new CamsDataSource(this.sparqlService, this.paginator, this.sort);
-    });
+    if (cam.expanded) {
+      cam.expanded = false;
+    } else {
+      cam.expanded = true;
+      cam.graph = this.noctuaGraphService.getGraphInfo(cam.model.id)
+      cam.graph.onGraphChanged.subscribe((annotons) => {
+        let data = this.summaryGridService.getGrid(annotons);
+        this.sparqlService.addCamChildren(cam, data);
+        //  this.dataSource = new CamsDataSource(this.sparqlService, this.paginator, this.sort);
+      });
+    }
   }
 
   openCamEdit(cam) {

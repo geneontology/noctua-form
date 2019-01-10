@@ -78,8 +78,8 @@ export class CamTableComponent implements OnInit, OnDestroy {
     this.sparqlService.onCamsChanged
       .pipe(takeUntil(this.unsubscribeAll))
       .subscribe(cams => {
-        this.cams = cams;
-        this.loadCams();
+        //    this.cams = cams;
+        //  this.loadCams();
       });
   }
 
