@@ -54,15 +54,10 @@ export class CamRowComponent implements OnInit, OnDestroy {
     private noctuaTranslationLoader: NoctuaTranslationLoaderService
   ) {
     this._unsubscribeAll = new Subject();
-
     this.camFormData = this.noctuaFormConfigService.createReviewSearchFormData();
-
-
-
   }
 
   ngOnInit() {
-
     this.loadCam();
     this.sparqlService.onCamChanged
       .pipe(takeUntil(this._unsubscribeAll))
@@ -81,7 +76,6 @@ export class CamRowComponent implements OnInit, OnDestroy {
   }
 
   save() {
-
     let destCam = this.camForm.value;
     console.log(destCam)
     this.cam.destNode.setTerm({ id: destCam.term })

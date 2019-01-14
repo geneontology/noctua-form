@@ -20,10 +20,12 @@
   }
 
   .noc-cam-table-heading {
-    @include deep-height(50px);
+    padding: 5px;
+    margin-bottom: 4px;
+    // @include deep-height(80px);
+    min-height: 50px;
     background-color: #FFF;
-    // @include mat-elevation(2);
-    border-bottom: #EEE solid 1px;
+    @include mat-elevation(1);
   }
 
   .noc-form-container {

@@ -25,13 +25,22 @@
       <div class="noc-cams-table-header w-100-p">
         <div fxFlex="50px">
         </div>
-        <div fxFlex="200px">
-          <p>{{cams.length}} Models</p>
+        <div fxFlex="30%">
+          <p>Title</p>
+        </div>
+        <div fxFlex="10%">
+          <p>Id</p>
+        </div>
+        <div fxFlex="20%">
+          <p>Contributors</p>
+        </div>
+        <div fxFlex="10%">
+          <p>State</p>
         </div>
       </div>
-      <div *ngFor="let cam of cams">
+      <div *ngFor="let cam of cams" class="">
         <div class="noc-cam-table-heading" fxLayout="row" fxLayoutAlign="start center">
-          <div fxFlex="80px" (click)="$event.stopPropagation()">
+          <div fxFlex="50px" (click)="$event.stopPropagation()">
             <button mat-icon-button (click)="toggleExpand(cam)" ckass="noc-button-small">
               <mat-icon *ngIf="!cam.expanded" class="s-16 fa fa-caret-right">
               </mat-icon>
@@ -39,10 +48,30 @@
                 signal_cellular_4_bar
               </mat-icon>
             </button>
-            <button mat-icon-button [matMenuTriggerFor]="changeView">
-              <mat-icon>
-                apps
-              </mat-icon>
+          </div>
+          <div class="" fxFlex="30%">
+            {{cam.model?.title }}
+          </div>
+          <div class="" fxFlex="10%">
+            {{cam.model?.id }}
+          </div>
+          <div class="" fxFlex="20%">
+          </div>
+          <div class="" fxFlex="10%">
+            production
+          </div>
+          <span fxFlex=""></span>
+          <div fxLayout="row" fxLayoutAlign="end center" fxFlex="20%" class="h-100-p">
+            <button mat-raised-button (click)="toggleExpand(cam)" ckass="noc-button-small">
+              <span *ngIf="!cam.expanded" class="">
+                Exapnd
+              </span>
+              <span *ngIf="cam.expanded" class="">
+                Collapse
+              </span>
+            </button>
+            <button mat-raised-button [matMenuTriggerFor]="changeView">
+              View
             </button>
             <mat-menu #changeView="matMenu">
               <a *ngFor="let workbench of cam.model?.modelInfo.workbenches" href="{{workbench.url}}" target="_blank"
@@ -51,10 +80,8 @@
               </a>
             </mat-menu>
           </div>
-          <span class="grey-500-fg">Model: </span> {{cam.model?.title }}
         </div>
-        <app-cam-table [camRow]="cam.camRow" *ngIf="cam.expanded" class="noc-cam-table-body" fxLayout="row"
-          fxLayoutAlign="start center">
+        <app-cam-table [cam]="cam" *ngIf="cam.expanded" class="noc-cam-table-body" fxLayout="row" fxLayoutAlign="start center">
         </app-cam-table>
       </div>
     </mat-drawer-content>

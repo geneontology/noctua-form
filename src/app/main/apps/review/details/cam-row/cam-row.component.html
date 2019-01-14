@@ -32,7 +32,6 @@
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
-
         <div formArrayName="evidenceFormArray" *ngFor="let item of camForm.get('evidenceFormArray').controls; let i = index;">
           <div [formGroupName]="i" fxLayout="row" fxLayoutAlign="start center" class="w-100-p">
             <mat-form-field appearance="standard" class="" fxFlex="50">

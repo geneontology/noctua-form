@@ -55,7 +55,6 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
   searchFormData: any = []
   searchForm: FormGroup;
 
-
   @ViewChild('leftDrawer')
   leftDrawer: MatDrawer;
 

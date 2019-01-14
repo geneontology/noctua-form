@@ -52,7 +52,7 @@ export class CamTableComponent implements OnInit, OnDestroy {
   searchFormData: any = []
   searchForm: FormGroup;
 
-  @Input() camRow: string;
+  @Input() cam: string;
 
   cams: any[] = [];
   searchResults = [];
@@ -75,6 +75,8 @@ export class CamTableComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log('----', this.cam)
+
     this.sparqlService.onCamsChanged
       .pipe(takeUntil(this.unsubscribeAll))
       .subscribe(cams => {

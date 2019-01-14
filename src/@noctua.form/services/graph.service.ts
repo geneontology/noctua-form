@@ -76,6 +76,7 @@ export class NoctuaGraphService {
     const self = this;
 
     let graphInfo = {
+      error: false,
       engine: new jquery_engine(barista_response),
       onGraphChanged: new BehaviorSubject({}),
       manager: null,
@@ -124,6 +125,10 @@ export class NoctuaGraphService {
         alert('Error: it seems like you have a bad token...');
       } else {
         console.log('error:', resp, resp.message_type(), resp.message());
+
+        if (resp.message().includes('UnknownIdentifierException')) {
+          graphInfo.error = true
+        }
       }
     }, 10);
 
