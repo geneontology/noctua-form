@@ -85,7 +85,7 @@ export class CamRowComponent implements OnInit, OnDestroy {
     let destCam = this.camForm.value;
     console.log(destCam)
     this.cam.destNode.setTerm({ id: destCam.term })
-    this.noctuaGraphService.editIndividual(this.cam.graph, this.cam.srcNode, this.cam.destNode);
+    this.noctuaGraphService.edit(this.cam.graph, this.cam.srcNode, this.cam.destNode);
   }
 
   createCamForm() {

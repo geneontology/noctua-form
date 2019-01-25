@@ -8,6 +8,8 @@ import { takeUntil, startWith } from 'rxjs/internal/operators';
 import * as _ from 'lodash';
 
 import { AnnotonNode } from '@noctua.form/annoton/annoton-node';
+import { Evidence } from '@noctua.form/annoton/evidence';
+
 import { Cam } from '@noctua.sparql/models/cam';
 import { CamRow } from '@noctua.sparql/models/cam-row';
 import { MatTableDataSource, MatSort } from '@angular/material';
@@ -79,7 +81,20 @@ export class CamRowComponent implements OnInit, OnDestroy {
     let destCam = this.camForm.value;
     console.log(destCam)
     this.cam.destNode.setTerm({ id: destCam.term })
-    this.noctuaGraphService.editIndividual(this.cam.graph, this.cam.srcNode, this.cam.destNode);
+
+    let evidenceArray: Evidence[] = destCam.evidenceFormArray.map((evidence) => {
+      let result = new Evidence()
+      result.setEvidence({ id: evidence.evidence })
+      result.setReference(evidence.reference)
+      result.setWith(evidence.with)
+      return result;
+    })
+    this.cam.destNode.addEvidences(evidenceArray);
+
+
+
+
+    //  this.noctuaGraphService.edit(this.cam.graph, this.cam.srcNode, this.cam.destNode);
   }
 
   createCamForm() {

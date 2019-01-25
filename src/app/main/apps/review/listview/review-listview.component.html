@@ -13,7 +13,7 @@
       <mat-icon> pets </mat-icon>
     </button>
   </div>
-  <mat-drawer-container class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
+  <mat-drawer-container class="w-100-p h-100-p noc-drawer-container" fxLayout="row" fxLayoutAlign="start start">
     <mat-drawer #leftDrawer class="noc-left-drawer" fxFlex="400px" mode="side" position="start">
       <div [ngSwitch]="reviewService.selectedLeftPanel.id" class="h-100-p">
         <noc-review-search *ngSwitchCase="reviewService.leftPanel.search.id"></noc-review-search>
@@ -22,56 +22,22 @@
       </div>
     </mat-drawer>
     <mat-drawer-content class="cams-table" noctuaPerfectScrollbar>
-      <div class="noc-cams-table-header w-100-p">
-        <div fxFlex="50px">
-        </div>
-        <div fxFlex="30%">
-          <p>Title</p>
-        </div>
-        <div fxFlex="10%">
-          <p>Id</p>
-        </div>
-        <div fxFlex="20%">
-          <p>Contributors</p>
-        </div>
-        <div fxFlex="10%">
-          <p>State</p>
+      <div class="noc-cams-table-header mat-elevation-z2 mb-16 w-100-p">
+        <div fxFlex="80px">
         </div>
       </div>
-      <div *ngFor="let cam of cams" class="">
+      <div *ngFor="let cam of cams" class="mat-elevation-z2 mb-16">
         <div class="noc-cam-table-heading" fxLayout="row" fxLayoutAlign="start center">
-          <div fxFlex="50px" (click)="$event.stopPropagation()">
-            <button mat-icon-button (click)="toggleExpand(cam)" ckass="noc-button-small">
+          <div fxFlex="80px" (click)="$event.stopPropagation()">
+            <button mat-icon-button (click)="toggleExpand(cam)" class="noc-button-small">
               <mat-icon *ngIf="!cam.expanded" class="s-16 fa fa-caret-right">
               </mat-icon>
               <mat-icon *ngIf="cam.expanded" class="s-12 mat-icon-rtl-mirror">
                 signal_cellular_4_bar
               </mat-icon>
             </button>
-          </div>
-          <div class="" fxFlex="30%">
-            {{cam.model?.title }}
-          </div>
-          <div class="" fxFlex="10%">
-            {{cam.model?.id }}
-          </div>
-          <div class="" fxFlex="20%">
-          </div>
-          <div class="" fxFlex="10%">
-            production
-          </div>
-          <span fxFlex=""></span>
-          <div fxLayout="row" fxLayoutAlign="end center" fxFlex="20%" class="h-100-p">
-            <button mat-raised-button (click)="toggleExpand(cam)" ckass="noc-button-small">
-              <span *ngIf="!cam.expanded" class="">
-                Exapnd
-              </span>
-              <span *ngIf="cam.expanded" class="">
-                Collapse
-              </span>
-            </button>
-            <button mat-raised-button [matMenuTriggerFor]="changeView">
-              View
+            <button mat-icon-button [matMenuTriggerFor]="changeView">
+              <mat-icon>apps</mat-icon>
             </button>
             <mat-menu #changeView="matMenu">
               <a *ngFor="let workbench of cam.model?.modelInfo.workbenches" href="{{workbench.url}}" target="_blank"
@@ -79,6 +45,27 @@
                 {{workbench.label}}
               </a>
             </mat-menu>
+          </div>
+          <div class="" fxFlex="200px">
+            <div class="text-truncate">
+              <small>Id: </small> {{cam.model?.id }}
+            </div>
+          </div>
+          <div class="" fxFlex="30%">
+            <div class="text-truncate">
+              <small>Title: </small> {{cam.model?.title }}
+            </div>
+          </div>
+          <span fxFlex=""></span>
+          <div class="" fxFlex="150px" fxLayout="row" fxLayoutAlign="end center">
+            <button mat-icon-button (click)="toggleExpand(cam)" class="noc-button-small">
+              <mat-icon *ngIf="!cam.expanded" class="">
+                keyboard_arrow_down
+              </mat-icon>
+              <mat-icon *ngIf="cam.expanded" class="">
+                keyboard_arrow_up
+              </mat-icon>
+            </button>
           </div>
         </div>
         <app-cam-table [cam]="cam" *ngIf="cam.expanded" class="noc-cam-table-body" fxLayout="row" fxLayoutAlign="start center">

@@ -698,7 +698,39 @@ export class NoctuaGraphService {
     }
   }
 
-  editIndividual(graphInfo, srcNode, destNode) {
+  edit(graphInfo, srcNode, destNode) {
+    const self = this;
+    this.noctuaConfigService.baristaToken
+    let reqs = new minerva_requests.request_set(this.noctuaConfigService.baristaToken, graphInfo.modelId);
+
+    if (srcNode.hasValue() && destNode.hasValue()) {
+      self.editIndividual(reqs, graphInfo, srcNode, destNode);
+    }
+  }
+
+  editIndividual(reqs, graphInfo, srcNode, destNode) {
+    if (srcNode.hasValue() && destNode.hasValue()) {
+      reqs.remove_type_from_individual(
+        class_expression.cls(srcNode.getTerm().id),
+        srcNode.modelId,
+        graphInfo.modelId,
+      );
+
+      reqs.add_type_to_individual(
+        class_expression.cls(destNode.getTerm().id),
+        srcNode.modelId,
+        graphInfo.modelId,
+      );
+    }
+  }
+
+  deleteIndividual(reqs, node) {
+    if (node.modelId) {
+      reqs.remove_individual(node.modelId);
+    }
+  }
+
+  addEvidence(graphInfo, srcNode, destNode) {
     this.noctuaConfigService.baristaToken
     let reqs = new minerva_requests.request_set(this.noctuaConfigService.baristaToken, graphInfo.modelId);
 
@@ -718,12 +750,6 @@ export class NoctuaGraphService {
 
       graphInfo.manager.user_token(this.noctuaConfigService.baristaToken);
       graphInfo.manager.request_with(reqs);
-    }
-  }
-
-  deleteIndividual(reqs, node) {
-    if (node.modelId) {
-      reqs.remove_individual(node.modelId);
     }
   }
 

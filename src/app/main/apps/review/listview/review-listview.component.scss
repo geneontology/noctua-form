@@ -4,7 +4,11 @@
 :host {
   padding: 0px;
   width: 100%;
-  background-color: #FFF;
+  background-color: #EEE;
+
+  .noc-drawer-container {
+    background-color: #DDD;
+  }
 
   .mat-drawer-content {
     width: 100%;
@@ -16,6 +20,7 @@
     @include deep-height(100%);
     @include deep-width(50px);
     @include mat-elevation(4);
+    background-color: #CCC;
     border-right: #999 solid 1px;
   }
 
@@ -24,8 +29,13 @@
     margin-bottom: 4px;
     // @include deep-height(80px);
     min-height: 50px;
+    background-color: #f7f7f7;
+    font-size: 16px;
+    //  @include mat-elevation(1);
+  }
+
+  .noc-cam-table-body {
     background-color: #FFF;
-    @include mat-elevation(1);
   }
 
   .noc-form-container {
@@ -65,8 +75,8 @@
       position: -webkit-sticky;
       top: 0;
       z-index: 1000;
-      background-color: #FFF;
-      @include mat-elevation(1);
+      background-color: #F7F7F7;
+      //  @include mat-elevation(1);
       //  background-color: $noc-primary-color-light;
       // font-size: 3px !important;
     }
