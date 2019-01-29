@@ -3,9 +3,6 @@
     <mat-table class="w-100-p" #table [dataSource]="cam.camRow" matSort [@animateStagger]="{value:'50'}"
       noctuaPerfectScrollbar>
       <div class="noc-cams-table-header w-100-p">
-        <div fxFlex="80px">
-
-        </div>
         <div fxFlex="150px">
           <p> Annotated Entity</p>
         </div>
@@ -40,12 +37,6 @@
           <p>Assigned By</p>
         </div>
       </div>
-      <ng-container cdkColumnDef="expand">
-        <mat-header-cell *cdkHeaderCellDef fxFlex="80px"></mat-header-cell>
-        <mat-cell *cdkCellDef="let cam" fxFlex="80px" [style.padding-left]="cam.treeLevel * 20+'px'" (click)="$event.stopPropagation()">
-
-        </mat-cell>
-      </ng-container>
       <ng-container cdkColumnDef="annotatedEntity">
         <mat-header-cell *cdkHeaderCellDef fxFlex="150px">Annotated Entity</mat-header-cell>
         <mat-cell *cdkCellDef="let cam" fxFlex="150px">

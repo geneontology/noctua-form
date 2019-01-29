@@ -54,6 +54,9 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
   searchCriteria: any = {};
   searchFormData: any = []
   searchForm: FormGroup;
+  summary: any = {
+    expanded: false,
+  }
 
   @ViewChild('leftDrawer')
   leftDrawer: MatDrawer;
@@ -72,6 +75,7 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
 
   cams: any[] = [];
   searchResults = [];
+
 
   private unsubscribeAll: Subject<any>;
 
@@ -115,7 +119,6 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
       });
     });
 
-
     this.sparqlService.onCamsChanged
       .pipe(takeUntil(this.unsubscribeAll))
       .subscribe(cams => {
@@ -137,6 +140,10 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
   loadCams() {
     this.cams = this.sparqlService.cams;
     this.dataSource = new CamsDataSource(this.sparqlService, this.paginator, this.sort);
+  }
+
+  toggleSummaryExpand() {
+    this.summary.expanded = !this.summary.expanded;
   }
 
   toggleExpand(cam) {

@@ -25,13 +25,16 @@
   }
 
   .noc-cam-table-heading {
-    padding: 5px;
     margin-bottom: 4px;
     // @include deep-height(80px);
     min-height: 50px;
     background-color: #f7f7f7;
     font-size: 16px;
+
     //  @include mat-elevation(1);
+    button {
+      border-radius: 0 !important;
+    }
   }
 
   .noc-cam-table-body {

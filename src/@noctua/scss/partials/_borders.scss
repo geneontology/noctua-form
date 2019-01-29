@@ -1,0 +1,21 @@
+$noc-border-color: #BBB;
+
+.noc-b {
+  border: 1px solid $noc-border-color !important;
+}
+
+.noc-bl {
+  border-left: 1px solid $noc-border-color !important;
+}
+
+.noc-br {
+  border-right: 1px solid $noc-border-color !important;
+}
+
+.noc-bt {
+  border-top: 1px solid $noc-border-color !important;
+}
+
+.noc-bb {
+  border-bottom: 1px solid $noc-border-color !important;
+}

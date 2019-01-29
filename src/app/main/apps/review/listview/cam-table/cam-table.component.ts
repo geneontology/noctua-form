@@ -36,7 +36,6 @@ import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 export class CamTableComponent implements OnInit, OnDestroy {
   dataSource: CamsDataSource | null;
   displayedColumns = [
-    'expand',
     'annotatedEntity',
     'relationship',
     'aspect',

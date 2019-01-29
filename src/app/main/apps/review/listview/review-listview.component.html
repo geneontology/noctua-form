@@ -22,54 +22,78 @@
       </div>
     </mat-drawer>
     <mat-drawer-content class="cams-table" noctuaPerfectScrollbar>
-      <div class="noc-cams-table-header mat-elevation-z2 mb-16 w-100-p">
-        <div fxFlex="80px">
-        </div>
-      </div>
-      <div *ngFor="let cam of cams" class="mat-elevation-z2 mb-16">
-        <div class="noc-cam-table-heading" fxLayout="row" fxLayoutAlign="start center">
-          <div fxFlex="80px" (click)="$event.stopPropagation()">
-            <button mat-icon-button (click)="toggleExpand(cam)" class="noc-button-small">
-              <mat-icon *ngIf="!cam.expanded" class="s-16 fa fa-caret-right">
+      <div class="mat-elevation-z2 mb-16">
+        <div class="noc-cams-table-header w-100-p" fxLayout="row" fxLayoutAlign="start center">
+          <div fxFlex="50px" (click)="$event.stopPropagation()">
+            <button mat-icon-button (click)="toggleSummaryExpand()" class="noc-br">
+              <mat-icon *ngIf="!summary.expanded" class="s-16 fa fa-caret-right">
               </mat-icon>
-              <mat-icon *ngIf="cam.expanded" class="s-12 mat-icon-rtl-mirror">
+              <mat-icon *ngIf="summary.expanded" class="s-12 mat-icon-rtl-mirror">
                 signal_cellular_4_bar
               </mat-icon>
             </button>
-            <button mat-icon-button [matMenuTriggerFor]="changeView">
-              <mat-icon>apps</mat-icon>
-            </button>
-            <mat-menu #changeView="matMenu">
-              <a *ngFor="let workbench of cam.model?.modelInfo.workbenches" href="{{workbench.url}}" target="_blank"
-                mat-menu-item>
-                {{workbench.label}}
-              </a>
-            </mat-menu>
           </div>
           <div class="" fxFlex="200px">
-            <div class="text-truncate">
-              <small>Id: </small> {{cam.model?.id }}
+            <div class="">
+              <small>Models: </small> {{cams.length }}
             </div>
-          </div>
-          <div class="" fxFlex="30%">
-            <div class="text-truncate">
-              <small>Title: </small> {{cam.model?.title }}
-            </div>
-          </div>
-          <span fxFlex=""></span>
-          <div class="" fxFlex="150px" fxLayout="row" fxLayoutAlign="end center">
-            <button mat-icon-button (click)="toggleExpand(cam)" class="noc-button-small">
-              <mat-icon *ngIf="!cam.expanded" class="">
-                keyboard_arrow_down
-              </mat-icon>
-              <mat-icon *ngIf="cam.expanded" class="">
-                keyboard_arrow_up
-              </mat-icon>
-            </button>
           </div>
         </div>
-        <app-cam-table [cam]="cam" *ngIf="cam.expanded" class="noc-cam-table-body" fxLayout="row" fxLayoutAlign="start center">
-        </app-cam-table>
+        <div *ngIf="summary.expanded" class="noc-cam-table-body" fxLayout="row" fxLayoutAlign="start center">
+          Search Criteria
+        </div>
+      </div>
+      <div class="w-100-p p-8">
+        <div *ngFor="let cam of cams" class="mat-elevation-z2 mb-16">
+          <div class="noc-cam-table-heading" fxLayout="row" fxLayoutAlign="start center">
+            <div fxFlex="50px" (click)="$event.stopPropagation()">
+              <button mat-icon-button (click)="toggleExpand(cam)" class="noc-br">
+                <mat-icon *ngIf="!cam.expanded" class="s-16 fa fa-caret-right">
+                </mat-icon>
+                <mat-icon *ngIf="cam.expanded" class="s-12 mat-icon-rtl-mirror">
+                  signal_cellular_4_bar
+                </mat-icon>
+              </button>
+            </div>
+            <div class="" fxFlex="200px">
+              <div class="text-truncate">
+                <small>Id: </small> {{cam.model?.id }}
+              </div>
+            </div>
+            <div class="" fxFlex="50%">
+              <div class="text-truncate">
+                <small>Title: </small> {{cam.model?.title }}
+              </div>
+            </div>
+            <span fxFlex=""></span>
+            <div class="" fxFlex="150px" fxLayout="row" fxLayoutAlign="end center">
+              <button mat-icon-button [matMenuTriggerFor]="changeView" class="noc-bl">
+                <mat-icon>apps</mat-icon>
+              </button>
+              <button mat-icon-button (click)="refresh(cam)" class="noc-bl">
+                <mat-icon class="">
+                  refresh
+                </mat-icon>
+              </button>
+              <mat-menu #changeView="matMenu">
+                <a *ngFor="let workbench of cam.model?.modelInfo.workbenches" href="{{workbench.url}}" target="_blank"
+                  mat-menu-item>
+                  {{workbench.label}}
+                </a>
+              </mat-menu>
+              <button mat-icon-button (click)="toggleExpand(cam)" class="noc-bl">
+                <mat-icon *ngIf="!cam.expanded" class="">
+                  keyboard_arrow_down
+                </mat-icon>
+                <mat-icon *ngIf="cam.expanded" class="">
+                  keyboard_arrow_up
+                </mat-icon>
+              </button>
+            </div>
+          </div>
+          <app-cam-table [cam]="cam" *ngIf="cam.expanded" class="noc-cam-table-body" fxLayout="row" fxLayoutAlign="start center">
+          </app-cam-table>
+        </div>
       </div>
     </mat-drawer-content>
     <mat-drawer #rightDrawer class="noc-right-drawer" fxFlex="500px" noctuaPerfectScrollbar mode="side" position="end">
