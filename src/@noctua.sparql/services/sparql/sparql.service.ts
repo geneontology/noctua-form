@@ -31,6 +31,8 @@ export class SparqlService {
   onCamsChanged: BehaviorSubject<any>;
   onCamChanged: BehaviorSubject<any>;
 
+  searchSummary: any = {}
+
   constructor(private noctuaFormConfigService: NoctuaFormConfigService,
     private summaryGridService: SummaryGridService,
     private httpClient: HttpClient,
@@ -81,18 +83,24 @@ export class SparqlService {
   }
 
   getCamsByCurator(orcid): Observable<any> {
+    const self = this;
+
     return this.httpClient
       .get(this.baseUrl + this.buildCamsByCuratorQuery(orcid))
       .pipe(
         map(res => res['results']),
         map(res => res['bindings']),
+        tap(res => {
+          self.searchSummary =
+            {
+              curator: orcid
+            }
+        }),
         tap(val => console.dir(val)),
         map(res => this.addCam(res)),
         tap(val => console.dir(val))
       );
   }
-
-
 
   getAllCurators(): Observable<any> {
     return this.httpClient

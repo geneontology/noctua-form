@@ -12,8 +12,8 @@ $noc-primary-color-light: #dfe3ee;
   position: -webkit-sticky;
   padding: 0 12px;
   @include deep-height(50px);
-  background-color: #FFF;
-  @include mat-elevation(1);
+  background-color: #F7F7F7;
+  @include mat-elevation(2);
 
   .noc-drawer-header-title {
     font-size: 12px;

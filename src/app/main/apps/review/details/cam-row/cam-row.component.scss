@@ -11,8 +11,8 @@
 .noc-cam-header {
   padding: 0 12px;
   @include deep-height(50px);
-  background-color: #FFF;
-  @include mat-elevation(1);
+  background-color: #F7F7F7;
+  @include mat-elevation(2);
 
   .noc-cam-header-title {
     font-size: 12px;

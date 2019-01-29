@@ -22,7 +22,7 @@
       </div>
     </mat-drawer>
     <mat-drawer-content class="cams-table" noctuaPerfectScrollbar>
-      <div class="mat-elevation-z2 mb-16">
+      <div class="mat-elevation-z2 mb-8">
         <div class="noc-cams-table-header w-100-p" fxLayout="row" fxLayoutAlign="start center">
           <div fxFlex="50px" (click)="$event.stopPropagation()">
             <button mat-icon-button (click)="toggleSummaryExpand()" class="noc-br">
@@ -38,9 +38,35 @@
               <small>Models: </small> {{cams.length }}
             </div>
           </div>
+          <span fxFlex=""></span>
+          <div class="" fxFlex="150px" fxLayout="row" fxLayoutAlign="end center">
+            <button mat-icon-button (click)="refresh(cam)" class="noc-bl">
+              <mat-icon class="">
+                refresh
+              </mat-icon>
+            </button>
+            <button mat-icon-button (click)="toggleSummaryExpand(cam)" class="noc-bl">
+              <mat-icon *ngIf="!summary.expanded" class="">
+                keyboard_arrow_down
+              </mat-icon>
+              <mat-icon *ngIf="summary.expanded" class="">
+                keyboard_arrow_up
+              </mat-icon>
+            </button>
+          </div>
         </div>
-        <div *ngIf="summary.expanded" class="noc-cam-table-body" fxLayout="row" fxLayoutAlign="start center">
-          Search Criteria
+        <div *ngIf="summary.expanded" class="noc-cam-table-body p-8 w-100-p" fxLayout="column" fxLayoutAlign="start">
+          <h2>
+            Search Summary
+          </h2>
+          <div class="pt-16 pb-16" *ngFor="let summaryDetail of summary.detail | keyvalue" fxLayout="row" fxLayoutAlign="start center">
+            <div fxFlex="200px">
+              <strong> {{summaryDetail.key}}</strong>
+            </div>
+            <div>
+              :{{summaryDetail.value}}
+            </div>
+          </div>
         </div>
       </div>
       <div class="w-100-p p-8">
@@ -96,7 +122,7 @@
         </div>
       </div>
     </mat-drawer-content>
-    <mat-drawer #rightDrawer class="noc-right-drawer" fxFlex="500px" noctuaPerfectScrollbar mode="side" position="end">
+    <mat-drawer #rightDrawer class="noc-right-drawer" fxFlex="600px" noctuaPerfectScrollbar mode="side" position="end">
       <noc-cam-row>
       </noc-cam-row>
     </mat-drawer>
