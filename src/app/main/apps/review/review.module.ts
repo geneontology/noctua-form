@@ -8,6 +8,7 @@ import { NoctuaSharedModule } from '@noctua/shared.module';
 import { TreeTableModule } from 'primeng/treetable';
 import { TreeNode } from 'primeng/api';
 import { ReviewDialogService } from './dialog.service';
+import { NoctuaDataService } from '@noctua.common/services/noctua-data.service';
 
 import { ReviewSearchComponent } from './sidenavs/review-search/review-search.component';
 import { ReviewCuratorsComponent } from './sidenavs/review-curators/review-curators.component';
@@ -36,7 +37,11 @@ const routes = [
     TreeTableModule,
     RouterModule.forChild(routes),
   ],
-  providers: [ReviewDialogService],
+  providers: [
+    ReviewDialogService,
+    NoctuaDataService
+
+  ],
   declarations: [
     ReviewComponent,
     ReviewSearchComponent,

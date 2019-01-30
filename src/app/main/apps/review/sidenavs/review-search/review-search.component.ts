@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit, ElementRef, OnDestroy, ViewEncapsulation, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator, MatOption, MatSort } from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
 import { merge, Observable, BehaviorSubject, fromEvent, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { debounceTime, startWith, distinctUntilChanged, map } from 'rxjs/operators';
 
 import { noctuaAnimations } from '@noctua/animations';
 import { NoctuaUtils } from '@noctua/utils/noctua-utils';
@@ -20,6 +20,8 @@ import { NoctuaLookupService } from '@noctua.form/services/lookup.service';
 import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
 
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
+import { NoctuaDataService } from '@noctua.common/services/noctua-data.service';
+
 
 @Component({
   selector: 'noc-review-search',
@@ -30,8 +32,12 @@ import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 export class ReviewSearchComponent implements OnInit, OnDestroy {
   searchCriteria: any = {};
   searchForm: FormGroup;
+  organisms: any;
+  selectedOrganism = {};
   searchFormData: any = []
   cams: any[] = [];
+
+  filteredOrganisms: Observable<any[]>;
 
   private unsubscribeAll: Subject<any>;
 
@@ -41,12 +47,14 @@ export class ReviewSearchComponent implements OnInit, OnDestroy {
     private noctuaLookupService: NoctuaLookupService,
     private reviewService: ReviewService,
     private sparqlService: SparqlService,
+    private noctuaDataService: NoctuaDataService,
     private noctuaTranslationLoader: NoctuaTranslationLoaderService) {
     this.searchForm = this.createAnswerForm();
 
     this.unsubscribeAll = new Subject();
 
     this.searchFormData = this.noctuaFormConfigService.createReviewSearchFormData();
+    this.organisms = this.noctuaDataService.organisms;
     this.onValueChanges();
   }
 
@@ -76,8 +84,14 @@ export class ReviewSearchComponent implements OnInit, OnDestroy {
       pmid: new FormControl(this.searchCriteria.pmid),
       curator: new FormControl(this.searchCriteria.curator),
       providedBy: new FormControl(this.searchCriteria.providedBy),
-      species: new FormControl(this.searchCriteria.species),
+      organism: new FormControl(this.searchCriteria.organism),
     });
+  }
+
+  private _filterOrganisms(value: string): any[] {
+    const filterValue = value.toLowerCase();
+
+    return this.organisms.filter(organism => organism.short_name.toLowerCase().indexOf(filterValue) === 0);
   }
 
   onValueChanges() {
@@ -110,6 +124,18 @@ export class ReviewSearchComponent implements OnInit, OnDestroy {
         //    startWith(''),
         //  map(value => this._filter(value))
       )
+
+    this.filteredOrganisms = this.searchForm.controls.organism.valueChanges
+      .pipe(
+        startWith(''),
+
+        map(value => typeof value === 'string' ? value : value.short_name),
+        map(organism => organism ? this._filterOrganisms(organism) : this.organisms.slice())
+      )
+  }
+
+  organismDisplayFn(organism): string | undefined {
+    return organism ? organism.short_name : undefined;
   }
 
   close() {

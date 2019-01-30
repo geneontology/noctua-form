@@ -102,16 +102,13 @@
       <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
         <div class="ph-15 noc-annoton-group-row" fxLayout="column">
           <mat-form-field class="">
-            <input type="text" matInput formControlName="species" placeholder="Species" [matAutocomplete]="speciesAuto" />
-            <mat-autocomplete #speciesAuto="matAutocomplete">
-              <mat-option *ngFor="let item of searchFormData['species']?.searchResults" [value]="item.id">
-                <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
-                  <div>
-                    {{ item.id }}
-                  </div>
-                  <span fxFlex></span>
-                  {{ item.label }}
-                </div>
+            <mat-label>Organisms</mat-label>
+            <input matInput formControlName="organism" placeholder="Species" [matAutocomplete]="speciesAuto" />
+            <mat-autocomplete #speciesAuto="matAutocomplete" [displayWith]="organismDisplayFn">
+              <mat-option *ngFor="let organism of filteredOrganisms | async" [value]="organism">
+                <span>{{organism.long_name}}</span>
+                <span fxFlex=""></span>
+                <span>{{organism.taxon_id}}</span>
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
