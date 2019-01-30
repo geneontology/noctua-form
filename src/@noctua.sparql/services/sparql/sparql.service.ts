@@ -557,12 +557,13 @@ export class SparqlService {
           PREFIX enabled_by: <http://purl.obolibrary.org/obo/RO_0002333>
           PREFIX in_taxon: <http://purl.obolibrary.org/obo/RO_0002162>
   
-          SELECT distinct ?gocam
+          SELECT distinct ?model ?modelTitle
   
           WHERE 
           {
-              GRAPH ?gocam {
-                  ?gocam metago:graphType metago:noctuaCam .
+              GRAPH ?model {
+                  ?model metago:graphType metago:noctuaCam;
+                      dc:title ?modelTitle .
                   ?s enabled_by: ?gpnode .    
                   ?gpnode rdf:type ?identifier .
                   FILTER(?identifier != owl:NamedIndividual) .         

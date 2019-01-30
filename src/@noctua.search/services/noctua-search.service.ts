@@ -56,6 +56,13 @@ export class NoctuaSearchService {
                 this.sparqlService.onCamsChanged.next(this.cams);
             });
         }
+
+        if (searchCriteria.organism) {
+            this.sparqlService.getCamsBySpecies(searchCriteria.organism).subscribe((response: any) => {
+                this.cams = this.sparqlService.cams = response;
+                this.sparqlService.onCamsChanged.next(this.cams);
+            });
+        }
     }
 
     searchByCurator(searchCriteria) {
