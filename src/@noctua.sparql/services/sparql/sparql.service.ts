@@ -49,6 +49,7 @@ export class SparqlService {
     const self = this;
 
     self.loading = true;
+    self.searchSummary = {}
     return this.httpClient
       .get(this.baseUrl + this.buildCamsByGoTermQuery(term))
       .pipe(
@@ -57,6 +58,12 @@ export class SparqlService {
         tap(val => console.dir(val)),
         map(res => this.addCam(res)),
         tap(val => console.dir(val)),
+        tap(res => {
+          self.searchSummary =
+            {
+              term: term
+            }
+        }),
         finalize(() => {
           self.loading = false;
         })
@@ -68,6 +75,7 @@ export class SparqlService {
     const self = this;
 
     self.loading = true;
+    self.searchSummary = {}
     return this.httpClient
       .get(this.baseUrl + this.buildCamsPMIDQuery(pmid))
       .pipe(
@@ -75,7 +83,13 @@ export class SparqlService {
         map(res => res['bindings']),
         tap(val => console.dir(val)),
         map(res => this.addCam(res)),
-        tap(val => console.dir(val)),
+        tap(val => console.dir(val)), tap(res => {
+          self.searchSummary =
+            {
+              PMID: pmid
+            }
+        }),
+
         finalize(() => {
           self.loading = false;
         })
@@ -87,6 +101,7 @@ export class SparqlService {
     const self = this;
 
     self.loading = true;
+    self.searchSummary = {}
     return this.httpClient
       .get(this.baseUrl + this.buildCamsByGP(gp))
       .pipe(
@@ -95,6 +110,12 @@ export class SparqlService {
         tap(val => console.dir(val)),
         map(res => this.addCam(res)),
         tap(val => console.dir(val)),
+        tap(res => {
+          self.searchSummary =
+            {
+              'Gene Product': gp
+            }
+        }),
         finalize(() => {
           self.loading = false;
         })
@@ -105,6 +126,7 @@ export class SparqlService {
     const self = this;
 
     self.loading = true;
+    self.searchSummary = {}
     return this.httpClient
       .get(this.baseUrl + this.buildCamsByCuratorQuery(orcid))
       .pipe(
@@ -129,6 +151,7 @@ export class SparqlService {
     const self = this;
 
     self.loading = true;
+    self.searchSummary = {}
     return this.httpClient
       .get(this.baseUrl + this.buildCamsBySpeciesQuery(species.taxon_id))
       .pipe(
@@ -347,7 +370,7 @@ export class SparqlService {
         }
      
         ORDER BY DESC(?model)
-        LIMIT 20`;
+        LIMIT 100`;
 
     return '?query=' + encodeURIComponent(query);
   }
@@ -534,7 +557,8 @@ export class SparqlService {
             	BIND(REPLACE(?source, " ", "") AS ?source) .
 	            FILTER((CONTAINS(?source, "` + pmid + `")))
     	    }           
-        }`
+        }
+        LIMIT 100`
 
     return '?query=' + encodeURIComponent(query);
   }
@@ -565,7 +589,8 @@ export class SparqlService {
         FILTER(?identifier = <` + id + `>) .         
       }
       
-    }`
+    }
+    LIMIT 100`
 
     return '?query=' + encodeURIComponent(query);
   }
@@ -601,7 +626,8 @@ export class SparqlService {
               
               ?v0 owl:onProperty in_taxon: . 
               ?v0 owl:someValuesFrom ` + taxonUrl + `
-          }`
+          }
+          LIMIT 100`
     return '?query=' + encodeURIComponent(query);
   }
 
