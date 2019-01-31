@@ -146,6 +146,30 @@ export class CamRowComponent implements OnInit, OnDestroy {
     this.reviewService.closeRightDrawer();
   }
 
+  addEvidence() {
+    const self = this;
+
+    let evidenceFormGroup: FormArray = this.camForm.get('evidenceFormArray') as FormArray;
+
+    evidenceFormGroup.push(this.formBuilder.group({
+      evidence: new FormControl(),
+      reference: new FormControl(),
+      with: new FormControl(),
+    }));
+  }
+
+  removeEvidence(index) {
+    const self = this;
+
+    let evidenceFormGroup: FormArray = <FormArray>this.camForm.get('evidenceFormArray');
+
+    evidenceFormGroup.removeAt(index);
+  }
+
+  termDisplayFn(term): string | undefined {
+    return term ? term.label : undefined;
+  }
+
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
     this._unsubscribeAll.next();

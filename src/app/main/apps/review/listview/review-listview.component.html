@@ -100,17 +100,18 @@
               <button mat-icon-button [matMenuTriggerFor]="changeView" class="noc-bl">
                 <mat-icon>apps</mat-icon>
               </button>
-              <button mat-icon-button (click)="refresh(cam)" class="noc-bl">
-                <mat-icon class="">
-                  refresh
-                </mat-icon>
-              </button>
               <mat-menu #changeView="matMenu">
                 <a *ngFor="let workbench of cam.model?.modelInfo.workbenches" href="{{workbench.url}}" target="_blank"
                   mat-menu-item>
                   {{workbench.label}}
                 </a>
               </mat-menu>
+              <button mat-icon-button (click)="refresh(cam)" class="noc-bl">
+                <mat-icon class="">
+                  refresh
+                </mat-icon>
+              </button>
+
               <button mat-icon-button (click)="toggleExpand(cam)" class="noc-bl">
                 <mat-icon *ngIf="!cam.expanded" class="">
                   keyboard_arrow_down

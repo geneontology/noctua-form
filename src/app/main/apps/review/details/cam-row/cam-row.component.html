@@ -20,7 +20,7 @@
         </mat-form-field>-->
         <mat-form-field class="">
           <input type="text" matInput formControlName="term" placeholder="Go Term" [matAutocomplete]="termAuto" />
-          <mat-autocomplete #termAuto="matAutocomplete">
+          <mat-autocomplete #termAuto="matAutocomplete" [displayWith]="termDisplayFn">
             <mat-option *ngFor="let item of camFormData['goTerm']?.searchResults" [value]="item.id">
               <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
                 <div>
@@ -32,20 +32,34 @@
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
+        <div fxFlex="60px" class="m-0" fxLayout="row" fxLayoutAlign="space-between center">
+          <strong>Evidence</strong>
+          <span fxFlex></span>
+          <button (click)='addEvidence()' type="button" mat-button color="" class="mr-8">Add</button>
+        </div>
         <div formArrayName="evidenceFormArray" *ngFor="let item of camForm.get('evidenceFormArray').controls; let i = index;">
           <div [formGroupName]="i" fxLayout="row" fxLayoutAlign="start center" class="w-100-p">
             <mat-form-field appearance="standard" class="" fxFlex="50">
               <mat-label>Evidence</mat-label>
               <input matInput formControlName="evidence" placeholder="Evidence" />
             </mat-form-field>
-            <mat-form-field appearance="standard" class="ml-8" fxFlex="25">
+            <mat-form-field appearance="standard" class="ml-12" fxFlex="20">
               <mat-label>Reference</mat-label>
               <input matInput formControlName="reference" placeholder="Reference" />
             </mat-form-field>
-            <mat-form-field appearance="standard" class="ml-8" fxFlex="25">
+            <mat-form-field appearance="standard" class="ml-12" fxFlex="20">
               <mat-label>With</mat-label>
               <input matInput formControlName="with" placeholder="With" />
             </mat-form-field>
+            <span fxFlex=""></span>
+            <button mat-icon-button [matMenuTriggerFor]="evidenceOptions" class="noc-bl">
+              <mat-icon>menu</mat-icon>
+            </button>
+            <mat-menu #evidenceOptions="matMenu">
+              <a (click)="removeEvidence(i)" mat-menu-item>
+                Remove Evidence
+              </a>
+            </mat-menu>
           </div>
         </div>
       </form>
