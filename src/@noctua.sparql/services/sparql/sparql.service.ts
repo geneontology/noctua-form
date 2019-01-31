@@ -2,7 +2,7 @@ import { environment } from 'environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subscriber } from 'rxjs';
-import { map, filter, reduce, catchError, retry, tap } from 'rxjs/operators';
+import { map, finalize, filter, reduce, catchError, retry, tap } from 'rxjs/operators';
 
 import { NoctuaUtils } from '@noctua/utils/noctua-utils';
 import { CurieService } from '@noctua.curie/services/curie.service';
@@ -28,6 +28,7 @@ export class SparqlService {
   baseUrl = environment.spaqrlApiUrl;
   curieUtil: any;
   cams: any[] = [];
+  loading: boolean = false;
   onCamsChanged: BehaviorSubject<any>;
   onCamChanged: BehaviorSubject<any>;
 
@@ -45,6 +46,9 @@ export class SparqlService {
 
   //GO:0099160
   getCamsByGoTerm(term): Observable<any> {
+    const self = this;
+
+    self.loading = true;
     return this.httpClient
       .get(this.baseUrl + this.buildCamsByGoTermQuery(term))
       .pipe(
@@ -52,12 +56,18 @@ export class SparqlService {
         map(res => res['bindings']),
         tap(val => console.dir(val)),
         map(res => this.addCam(res)),
-        tap(val => console.dir(val))
+        tap(val => console.dir(val)),
+        finalize(() => {
+          self.loading = false;
+        })
       );
   }
 
   //PMID:25869803
   getCamsByPMID(pmid): Observable<any> {
+    const self = this;
+
+    self.loading = true;
     return this.httpClient
       .get(this.baseUrl + this.buildCamsPMIDQuery(pmid))
       .pipe(
@@ -65,12 +75,18 @@ export class SparqlService {
         map(res => res['bindings']),
         tap(val => console.dir(val)),
         map(res => this.addCam(res)),
-        tap(val => console.dir(val))
+        tap(val => console.dir(val)),
+        finalize(() => {
+          self.loading = false;
+        })
       );
   }
 
   //Ina Rnor (RGD:2911)
   getCamsByGP(gp): Observable<any> {
+    const self = this;
+
+    self.loading = true;
     return this.httpClient
       .get(this.baseUrl + this.buildCamsByGP(gp))
       .pipe(
@@ -78,13 +94,17 @@ export class SparqlService {
         map(res => res['bindings']),
         tap(val => console.dir(val)),
         map(res => this.addCam(res)),
-        tap(val => console.dir(val))
+        tap(val => console.dir(val)),
+        finalize(() => {
+          self.loading = false;
+        })
       );
   }
 
   getCamsByCurator(orcid): Observable<any> {
     const self = this;
 
+    self.loading = true;
     return this.httpClient
       .get(this.baseUrl + this.buildCamsByCuratorQuery(orcid))
       .pipe(
@@ -98,13 +118,17 @@ export class SparqlService {
         }),
         tap(val => console.dir(val)),
         map(res => this.addCam(res)),
-        tap(val => console.dir(val))
+        tap(val => console.dir(val)),
+        finalize(() => {
+          self.loading = false;
+        })
       );
   }
 
   getCamsBySpecies(species): Observable<any> {
     const self = this;
 
+    self.loading = true;
     return this.httpClient
       .get(this.baseUrl + this.buildCamsBySpeciesQuery(species.taxon_id))
       .pipe(
@@ -118,7 +142,10 @@ export class SparqlService {
         }),
         tap(val => console.dir(val)),
         map(res => this.addCam(res)),
-        tap(val => console.dir(val))
+        tap(val => console.dir(val)),
+        finalize(() => {
+          self.loading = false;
+        })
       );
   }
 

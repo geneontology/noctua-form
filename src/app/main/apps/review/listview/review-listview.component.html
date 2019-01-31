@@ -22,7 +22,11 @@
       </div>
     </mat-drawer>
     <mat-drawer-content class="cams-table" noctuaPerfectScrollbar>
-      <div class="mat-elevation-z2 mb-8">
+      <div *ngIf="sparqlService.loading" class="w-100-p h-100-p" fxLayout="column" fxLayoutAlign="center center">
+        <mat-progress-spinner class="example-margin" [color]="loadingSpinner.color" [mode]="loadingSpinner.mode">
+        </mat-progress-spinner>
+      </div>
+      <div *ngIf="!sparqlService.loading" class="mat-elevation-z2 mb-8">
         <div class="noc-cams-table-header w-100-p" fxLayout="row" fxLayoutAlign="start center">
           <div fxFlex="50px" (click)="$event.stopPropagation()">
             <button mat-icon-button (click)="toggleSummaryExpand()" class="noc-br">
@@ -56,7 +60,7 @@
           </div>
         </div>
         <div *ngIf="summary.expanded" class="noc-cam-table-body p-8 w-100-p" fxLayout="column" fxLayoutAlign="start">
-          <h2> 
+          <h2>
             Search Summary
           </h2>
           <div class="pt-16 pb-16" *ngFor="let summaryDetail of summary.detail | keyvalue" fxLayout="row" fxLayoutAlign="start center">

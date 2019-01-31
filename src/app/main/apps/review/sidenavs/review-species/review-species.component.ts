@@ -20,6 +20,7 @@ import { NoctuaLookupService } from '@noctua.form/services/lookup.service';
 import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
 
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
+import { NoctuaDataService } from '@noctua.common/services/noctua-data.service';
 
 @Component({
   selector: 'noc-review-species',
@@ -31,6 +32,7 @@ export class ReviewSpeciesComponent implements OnInit, OnDestroy {
   searchCriteria: any = {};
   searchForm: FormGroup;
   searchFormData: any = []
+  organisms: any;
   cams: any[] = [];
 
   private unsubscribeAll: Subject<any>;
@@ -41,82 +43,48 @@ export class ReviewSpeciesComponent implements OnInit, OnDestroy {
     private noctuaLookupService: NoctuaLookupService,
     private reviewService: ReviewService,
     private sparqlService: SparqlService,
+    private noctuaDataService: NoctuaDataService,
     private noctuaTranslationLoader: NoctuaTranslationLoaderService) {
-    this.searchForm = this.createAnswerForm();
+    this.searchForm = this.createSearchForm();
 
     this.unsubscribeAll = new Subject();
 
     this.searchFormData = this.noctuaFormConfigService.createReviewSearchFormData();
-    this.onValueChanges();
+    this.organisms = this.noctuaDataService.organisms;
+
   }
 
   ngOnInit(): void {
 
-    this.sparqlService.getAllCurators().subscribe((response: any) => {
-      this.searchFormData['curator'].searchResults = response;
-    });
-
-    this.sparqlService.getAllGroups().subscribe((response: any) => {
-      this.searchFormData['providedBy'].searchResults = response;
-    });
   }
 
-  search() {
-    let searchCriteria = this.searchForm.value;
+  selectOrganism(organism) {
+    let searchCriteria = {
+      organism: organism
+    }
+
+    this.search(searchCriteria)
+  }
+
+  search(searchCriteria) {
 
     console.dir(searchCriteria)
     this.noctuaSearchService.search(searchCriteria);
-  }
-
-  createAnswerForm() {
-    return new FormGroup({
-      gp: new FormControl(this.searchCriteria.gp),
-      goTerm: new FormControl(this.searchCriteria.goTerm),
-      pmid: new FormControl(this.searchCriteria.pmid),
-      curator: new FormControl(this.searchCriteria.curator),
-      providedBy: new FormControl(this.searchCriteria.providedBy),
-      species: new FormControl(this.searchCriteria.species),
-    });
-  }
-
-  onValueChanges() {
-    const self = this;
-
-    this.searchForm.get('goTerm').valueChanges
-      .distinctUntilChanged()
-      .debounceTime(400)
-      .subscribe(data => {
-        let searchData = self.searchFormData['goTerm'];
-        this.noctuaLookupService.golrTermLookup(data, searchData.id).subscribe(response => {
-          self.searchFormData['goTerm'].searchResults = response
-        });
-      });
-
-    this.searchForm.get('gp').valueChanges
-      .distinctUntilChanged()
-      .debounceTime(400)
-      .subscribe(data => {
-        let searchData = self.searchFormData['gp'];
-        this.noctuaLookupService.golrTermLookup(data, searchData.id).subscribe(response => {
-          self.searchFormData['gp'].searchResults = response
-        })
-      })
-
-    self.searchFormData['curator'].filteredResult = this.searchForm.get('curator').valueChanges
-      .distinctUntilChanged()
-      .debounceTime(400)
-      .pipe(
-        //    startWith(''),
-        //  map(value => this._filter(value))
-      )
   }
 
   close() {
     this.reviewService.closeLeftDrawer();
   }
 
+  createSearchForm() {
+    return new FormGroup({
+      term: new FormControl(),
+    });
+  }
+
   ngOnDestroy(): void {
     this.unsubscribeAll.next();
     this.unsubscribeAll.complete();
   }
+
 }

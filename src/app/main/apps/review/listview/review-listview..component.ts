@@ -54,6 +54,11 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
   searchCriteria: any = {};
   searchFormData: any = []
   searchForm: FormGroup;
+  loadingSpinner: any = {
+    color: 'primary',
+    mode: 'indeterminate'
+  }
+
   summary: any = {
     expanded: false,
     detail: {}
@@ -88,7 +93,7 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
     private noctuaLookupService: NoctuaLookupService,
     private noctuaGraphService: NoctuaGraphService,
     private summaryGridService: SummaryGridService,
-    private sparqlService: SparqlService,
+    public sparqlService: SparqlService,
     private noctuaTranslationLoader: NoctuaTranslationLoaderService) {
 
     this.noctuaTranslationLoader.loadTranslations(english);
@@ -103,8 +108,6 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
     this.sparqlService.getCamsByCurator('http://orcid.org/0000-0002-1706-4196').subscribe((response: any) => {
       this.cams = this.sparqlService.cams = response;
       this.sparqlService.onCamsChanged.next(this.cams);
-
-
     });
 
     this.sparqlService.getAllCurators().subscribe((response: any) => {
