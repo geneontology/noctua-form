@@ -402,6 +402,25 @@ export class NoctuaFormConfigService {
         },
         'searchResults': []
       },
+      'evidence': {
+        'id': 'evidence',
+        "label": 'Evidence',
+        'aspect': '',
+        "lookupGroup": 'ECO:0000352',
+        'treeLevel': 1,
+        "term": {
+          "ontologyClass": ['go'],
+          "lookup": {
+            "requestParams": Object.assign({}, JSON.parse(JSON.stringify(this.baseRequestParams)), {
+              fq: [
+                'document_category:"ontology_class"',
+                'isa_closure:"ECO:0000352"'
+              ],
+            }),
+          }
+        },
+        'searchResults': []
+      },
       'curator': {
         "label": 'Curator',
         'aspect': 'F',

@@ -275,6 +275,8 @@ export class NoctuaGraphService {
       let annotationId = evidenceAnnotation.value();
       let annotationNode = graph.get_node(annotationId);
       let evidence = new Evidence();
+
+      evidence.individualId = annotationNode.id()
       if (annotationNode) {
         evidence.setEvidence({
           id: self.getNodeId(annotationNode),
@@ -700,12 +702,15 @@ export class NoctuaGraphService {
 
   edit(graphInfo, srcNode, destNode) {
     const self = this;
-    this.noctuaConfigService.baristaToken
+
     let reqs = new minerva_requests.request_set(this.noctuaConfigService.baristaToken, graphInfo.modelId);
 
     if (srcNode.hasValue() && destNode.hasValue()) {
       self.editIndividual(reqs, graphInfo, srcNode, destNode);
     }
+
+    graphInfo.manager.user_token(this.noctuaConfigService.baristaToken);
+    graphInfo.manager.request_with(reqs);
   }
 
   editIndividual(reqs, graphInfo, srcNode, destNode) {

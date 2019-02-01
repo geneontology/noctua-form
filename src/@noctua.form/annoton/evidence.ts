@@ -9,6 +9,7 @@ export class Evidence {
   reference;
   with;
   assignedBy;
+  individualId;
 
   constructor() {
     this.evidence = {

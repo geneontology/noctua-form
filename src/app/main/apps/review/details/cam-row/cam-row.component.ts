@@ -5,7 +5,11 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatMenuTrigger } from '@angul
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil, startWith } from 'rxjs/internal/operators';
+
+declare const require: any;
 import * as _ from 'lodash';
+
+const each = require('lodash/forEach');
 
 import { AnnotonNode } from '@noctua.form/annoton/annoton-node';
 import { Evidence } from '@noctua.form/annoton/evidence';
@@ -80,27 +84,24 @@ export class CamRowComponent implements OnInit, OnDestroy {
   save() {
     let destCam = this.camForm.value;
     console.log(destCam)
-    this.cam.destNode.setTerm({ id: destCam.term })
+    this.cam.destNode.setTerm({ id: destCam.term.id })
 
     let evidenceArray: Evidence[] = destCam.evidenceFormArray.map((evidence) => {
       let result = new Evidence()
+      result.individualId = evidence.individualId;
       result.setEvidence({ id: evidence.evidence })
       result.setReference(evidence.reference)
       result.setWith(evidence.with)
       return result;
     })
-    this.cam.destNode.addEvidences(evidenceArray);
-
-
-
-
-    //  this.noctuaGraphService.edit(this.cam.graph, this.cam.srcNode, this.cam.destNode);
+    //  this.cam.destNode.addEvidences(evidenceArray);
+    this.noctuaGraphService.edit(this.cam.graph, this.cam.srcNode, this.cam.destNode);
   }
 
   createCamForm() {
     return new FormGroup({
       annotatedEntity: new FormControl(this.cam.annotatedEntity ? this.cam.annotatedEntity.id : ''),
-      term: new FormControl(this.cam.destNode ? this.cam.destNode.term.control.value.label : ''),
+      term: new FormControl(this.cam.destNode ? this.cam.destNode.term.control.value : ''),
       evidenceFormArray: this.formBuilder.array(this.createFormEvidence())
     });
   }
@@ -111,11 +112,14 @@ export class CamRowComponent implements OnInit, OnDestroy {
 
     if (self.cam.destNode) {
       _.each(self.cam.destNode.evidence, function (evidence) {
-        evidenceGroup.push(self.formBuilder.group({
-          evidence: new FormControl(evidence.evidence.control.value.label),
+        let srcEvidence: FormGroup = new FormGroup({
+          evidence: new FormControl(evidence.evidence.control.value),
           reference: new FormControl(evidence.reference.control.value),
           with: new FormControl(evidence.with.control.value),
-        }));
+        })
+        evidenceGroup.push(srcEvidence);
+
+        self.addOnEvidenceValueChanges(srcEvidence)
       });
     } else {
       evidenceGroup.push(this.formBuilder.group({
@@ -138,6 +142,20 @@ export class CamRowComponent implements OnInit, OnDestroy {
         let searchData = self.camFormData['goTerm'];
         this.noctuaLookupService.golrTermLookup(data, searchData.id).subscribe(response => {
           self.camFormData['goTerm'].searchResults = response
+        });
+      });
+  }
+
+  addOnEvidenceValueChanges(evidence) {
+    const self = this;
+
+    evidence.get('evidence').valueChanges
+      .distinctUntilChanged()
+      .debounceTime(400)
+      .subscribe(data => {
+        let searchData = self.camFormData['evidence'];
+        this.noctuaLookupService.golrTermLookup(data, searchData.id).subscribe(response => {
+          self.camFormData['evidence'].searchResults = response
         });
       });
   }
@@ -168,6 +186,10 @@ export class CamRowComponent implements OnInit, OnDestroy {
 
   termDisplayFn(term): string | undefined {
     return term ? term.label : undefined;
+  }
+
+  evidenceDisplayFn(evidence): string | undefined {
+    return evidence ? evidence.label : undefined;
   }
 
   ngOnDestroy(): void {
