@@ -129,7 +129,7 @@ export class ReviewSearchComponent implements OnInit, OnDestroy {
       .pipe(
         startWith(''),
 
-        map(value => typeof value === 'string' ? value : value.short_name),
+        map(value => typeof value === 'string' ? value : value['short_name']),
         map(organism => organism ? this._filterOrganisms(organism) : this.organisms.slice())
       )
   }

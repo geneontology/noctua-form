@@ -9,34 +9,34 @@
       </button>
     </mat-toolbar-row>
   </mat-toolbar>
-  <div mat-dialog-content class="noc-dialog-body" noctuaPerfectScrollbar>
+  <div mat-dialog-content class="noc-dialog-body p-8" noctuaPerfectScrollbar>
     <div fxLayout="column" fxLayoutAlign="start center" class="w-100-p">
       <div fxLayout="column" fxLayoutAlign="start center" class="noc-body w-100-p noc-search-form">
-        <div>
+        <div class="p-12">
           {{cam.relationship}}
         </div>
       </div>
       <div fxLayout="row" fxLayoutAlign="start start" class="w-100-p">
         <div fxFlex="50" fxLayout="column" fxLayoutAlign="start start" class="">
           <h2>Then</h2>
-          <div>
+          <div class="p-12">
             {{cam.srcNode.getTerm().label}}<br>
             <small> {{cam.srcNode.getTerm().id}}</small>
           </div>
-          <strong>Evidence</strong>
-          <div *ngFor="let evidence of cam.srcNode.evidence">
+          <strong class="mb-12">Evidence</strong>
+          <div class="p-12" *ngFor="let evidence of cam.srcNode.evidence">
             {{evidence.getEvidence().label}}<br>
             <small>{{evidence.getEvidence().id}}</small>
           </div>
         </div>
         <div fxFlex="50" fxLayout="column" fxLayoutAlign="start start" class="">
           <h2>Now</h2>
-          <div>
+          <div class="p-12">
             {{cam.destNode.getTerm().label}}<br>
             <small> {{cam.destNode.getTerm().id}}</small>
           </div>
-          <strong>Evidence</strong>
-          <div *ngFor="let evidence of cam.destNode.evidence">
+          <strong class="mb-12">Evidence</strong>
+          <div class="p-12" *ngFor="let evidence of cam.destNode.evidence">
             {{evidence.getEvidence().label}}<br>
             <small>{{evidence.getEvidence().id}}</small>
           </div>
