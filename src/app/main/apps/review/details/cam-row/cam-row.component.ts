@@ -84,17 +84,19 @@ export class CamRowComponent implements OnInit, OnDestroy {
   save() {
     let destCam = this.camForm.value;
     console.log(destCam)
-    this.cam.destNode.setTerm({ id: destCam.term.id })
+    this.cam.destNode.setTerm(destCam.term)
 
     let evidenceArray: Evidence[] = destCam.evidenceFormArray.map((evidence) => {
       let result = new Evidence()
+
       result.individualId = evidence.individualId;
-      result.setEvidence({ id: evidence.evidence })
-      result.setReference(evidence.reference)
-      result.setWith(evidence.with)
+      result.setEvidence(evidence.evidence);
+      result.setReference(evidence.reference);
+      result.setWith(evidence.with);
+
       return result;
-    })
-    //  this.cam.destNode.addEvidences(evidenceArray);
+    });
+    this.cam.destNode.setEvidence(evidenceArray);
     this.noctuaGraphService.edit(this.cam.graph, this.cam.srcNode, this.cam.destNode);
   }
 
@@ -111,11 +113,12 @@ export class CamRowComponent implements OnInit, OnDestroy {
     let evidenceGroup: FormGroup[] = [];
 
     if (self.cam.destNode) {
-      _.each(self.cam.destNode.evidence, function (evidence) {
+      _.each(self.cam.destNode.evidence, function (evidence: Evidence) {
         let srcEvidence: FormGroup = new FormGroup({
-          evidence: new FormControl(evidence.evidence.control.value),
-          reference: new FormControl(evidence.reference.control.value),
-          with: new FormControl(evidence.with.control.value),
+          evidence: new FormControl(evidence.getEvidence()),
+          reference: new FormControl(evidence.getReference()),
+          with: new FormControl(evidence.getWith()),
+          individualId: new FormControl(evidence.individualId),
         })
         evidenceGroup.push(srcEvidence);
 

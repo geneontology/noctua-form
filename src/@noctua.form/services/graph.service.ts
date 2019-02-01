@@ -706,14 +706,37 @@ export class NoctuaGraphService {
     let reqs = new minerva_requests.request_set(this.noctuaConfigService.baristaToken, graphInfo.modelId);
 
     if (srcNode.hasValue() && destNode.hasValue()) {
-      self.editIndividual(reqs, graphInfo, srcNode, destNode);
+      self.editIndividual(reqs, graphInfo.modelId, srcNode.modelId, srcNode.getTerm().id, destNode.getTerm().id);
     }
+
+    each(destNode.evidence, (evidence: Evidence, key) => {
+      if (evidence.hasValue()) {
+        let srcEvidence: Evidence = <Evidence>_.find(srcNode.evidence, { individualId: evidence.individualId })
+        if (srcEvidence) {
+          self.editIndividual(reqs, graphInfo.modelId, srcEvidence.individualId, srcEvidence.getEvidence().id, evidence.getEvidence().id);
+        }
+      }
+    });
 
     graphInfo.manager.user_token(this.noctuaConfigService.baristaToken);
     graphInfo.manager.request_with(reqs);
   }
 
-  editIndividual(reqs, graphInfo, srcNode, destNode) {
+  editIndividual(reqs, modelId, individualId, oldClassId, classId) {
+    reqs.remove_type_from_individual(
+      class_expression.cls(oldClassId),
+      individualId,
+      modelId,
+    );
+
+    reqs.add_type_to_individual(
+      class_expression.cls(classId),
+      individualId,
+      modelId,
+    );
+  }
+
+  editIndividual2(reqs, graphInfo, srcNode, destNode) {
     if (srcNode.hasValue() && destNode.hasValue()) {
       reqs.remove_type_from_individual(
         class_expression.cls(srcNode.getTerm().id),
