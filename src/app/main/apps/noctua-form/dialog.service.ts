@@ -28,4 +28,17 @@ export class NoctuaFormDialogService {
 
             });
     }
+
+    openSummaryDialog(cam): void {
+        this.dialogRef = this._matDialog.open(CamRowEditDialogComponent, {
+            panelClass: 'cam-row-edit-dialog',
+            data: {
+                cam: cam
+            }
+        });
+        this.dialogRef.afterClosed()
+            .subscribe(response => {
+
+            });
+    }
 }

@@ -18,7 +18,7 @@ import { CamTableComponent } from './listview/cam-table/cam-table.component';
 import { CamRowComponent } from './details/cam-row/cam-row.component';
 
 import { CamRowEditDialogComponent } from './dialogs/cam-row-edit/cam-row-edit.component';
-
+import { CamEditSummaryDialogComponent } from './dialogs/cam-edit-summary/cam-edit-summary-dialog.component';
 
 const routes = [
   {
@@ -50,10 +50,11 @@ const routes = [
     CamTableComponent,
     CamRowComponent,
     CamRowEditDialogComponent,
+    CamEditSummaryDialogComponent,
     ReviewListviewComponent,
     ReviewTreeviewComponent
   ],
-  entryComponents: [ReviewComponent, CamRowEditDialogComponent]
+  entryComponents: [ReviewComponent, CamEditSummaryDialogComponent, CamRowEditDialogComponent]
 })
 
 export class ReviewModule {
