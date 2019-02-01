@@ -2,6 +2,10 @@
   min-width: 20px !important;
 }
 
+.mat-dialog-container {
+  padding: 0 !important;
+}
+
 .mat-icon-button {
   .mat-button-ripple {
     border-radius: 50%;
@@ -34,15 +38,18 @@
     .mat-form-field-infix {
       display: inline-flex;
       width: auto;
+
       .mat-select-trigger {
         display: inline-flex;
         align-items: center;
         width: 100%;
+
         .mat-select-value {
           display: flex;
           max-width: none;
           margin-right: 8px;
         }
+
         .mat-select-arrow-wrapper {
           display: inline-flex;
         }

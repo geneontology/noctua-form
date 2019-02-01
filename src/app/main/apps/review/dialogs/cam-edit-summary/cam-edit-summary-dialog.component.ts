@@ -45,10 +45,7 @@ export class CamEditSummaryDialogComponent implements OnInit, OnDestroy {
   ) {
     this._unsubscribeAll = new Subject();
 
-    this.searchFormData = this.noctuaFormConfigService.createReviewSearchFormData();
     this.cam = this._data.cam
-    this.searchForm = this.createAnswerForm();
-    this.onValueChanges();
   }
 
   ngOnInit() {
@@ -57,30 +54,6 @@ export class CamEditSummaryDialogComponent implements OnInit, OnDestroy {
 
   close() {
     this._matDialogRef.close();
-  }
-
-  createAnswerForm() {
-    return new FormGroup({
-      annotatedEntity: new FormControl(this.cam.annotatedEntity.id),
-      term: new FormControl(this.cam.term.id),
-      evidence: new FormControl(this.cam.evidence.id),
-      reference: new FormControl(this.cam.reference.label),
-      with: new FormControl(this.cam.with),
-    });
-  }
-
-  onValueChanges() {
-    const self = this;
-
-    this.searchForm.get('term').valueChanges
-      .distinctUntilChanged()
-      .debounceTime(400)
-      .subscribe(data => {
-        let searchData = self.searchFormData['goTerm'];
-        this.noctuaLookupService.golrTermLookup(data, searchData.id).subscribe(response => {
-          self.searchFormData['goTerm'].searchResults = response
-        });
-      });
   }
 
   ngOnDestroy(): void {

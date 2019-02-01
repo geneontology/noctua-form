@@ -97,7 +97,28 @@ export class CamRowComponent implements OnInit, OnDestroy {
       return result;
     });
     this.cam.destNode.setEvidence(evidenceArray);
+
+    // this.openSummary()
     this.noctuaGraphService.edit(this.cam.graph, this.cam.srcNode, this.cam.destNode);
+  }
+
+  openSummary() {
+    let destCam = this.camForm.value;
+    this.cam.destNode.setTerm(destCam.term)
+
+    let evidenceArray: Evidence[] = destCam.evidenceFormArray.map((evidence) => {
+      let result = new Evidence()
+
+      result.individualId = evidence.individualId;
+      result.setEvidence(evidence.evidence);
+      result.setReference(evidence.reference);
+      result.setWith(evidence.with);
+
+      return result;
+    });
+    this.cam.destNode.setEvidence(evidenceArray);
+
+    this.reviewDialogService.openCamEditSummary(this.cam);
   }
 
   createCamForm() {
