@@ -6,7 +6,7 @@
     </button>
   </div>
   <mat-drawer-container class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
-    <mat-drawer #leftDrawer class="noc-left-drawer" fxFlex="800px" mode="side" position="start">
+    <mat-drawer #leftDrawer class="noc-left-drawer" fxFlex="1100px" mode="side" position="start">
       <div [ngSwitch]="noctuaFormService.selectedLeftPanel.id" class="h-100-p">
         <noc-cam-form *ngSwitchCase="noctuaFormService.leftPanel.search.id"></noc-cam-form>
       </div>

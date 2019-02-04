@@ -14,8 +14,19 @@
           Model Information
         </div>
         <span fxFlex></span>
+        <button mat-button [matMenuTriggerFor]="modalOptions" class="noc-bl">
+          MODEL OPTIONS <b class="caret"></b>
+        </button>
+        <mat-menu #modalOptions="matMenu">
+          <a mat-menu-item>
+            Start New Model
+          </a>
+          <a mat-menu-item>
+            Create From an Existing Activity
+          </a>
+        </mat-menu>
       </div>
-      <div class="noc- section-body" fxLayout="column" fxLayoutAlign="start stretch">
+      <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
         <div class="noc-annoton-group-row" fxLayout="row">
           <mat-form-field class="mr-8" fxFlex="50">
             <mat-label>Title</mat-label>
@@ -23,7 +34,11 @@
           </mat-form-field>
           <mat-form-field class="mr-8" fxFlex="25">
             <mat-label>State</mat-label>
-            <input matInput formControlName="state" placeholder="State" />
+            <mat-select placeholder="" formControlName="state" required>
+              <mat-option *ngFor="let modelState of noctuaFormConfigService.modelState.options" [value]="modelState">
+                {{modelState.label}}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
           <mat-form-field class="" fxFlex="25">
             <mat-label>Group</mat-label>
@@ -38,6 +53,14 @@
           Gene Product
         </div>
         <span fxFlex></span>
+        <button mat-button [matMenuTriggerFor]="annotonTypeOptions" class="noc-bl">
+          Annoton Type <b class="caret"></b>
+        </button>
+        <mat-menu #annotonTypeOptions="matMenu">
+          <a mat-menu-item *ngFor="let annotonType of noctuaFormConfigService.annotonType.options">
+            {{annotonType.label}}
+          </a>
+        </mat-menu>
       </div>
       <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
         <div class="ph-15 noc-annoton-group-row" fxLayout="column">
@@ -64,6 +87,14 @@
           Function Description
         </div>
         <span fxFlex></span>
+        <button mat-button [matMenuTriggerFor]="annotonModelTypeOptions" class="noc-bl">
+          Annoton Model Type <b class="caret"></b>
+        </button>
+        <mat-menu #annotonModelTypeOptions="matMenu">
+          <a mat-menu-item *ngFor="let annotonModelType of noctuaFormConfigService.annotonModelType.options">
+            {{annotonModelType.label}}
+          </a>
+        </mat-menu>
       </div>
       <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
         <div [formGroupName]="'fd'" *ngFor="let nodeGroup of camForm.get('fd').controls| keyvalue" class="mat-elevation-z4 mb-4">

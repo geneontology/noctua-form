@@ -11,6 +11,7 @@ const uuid = require('uuid/v1');
 import { AnnotonNode } from './../../annoton/annoton-node';
 import { Annoton } from './../../annoton/annoton';
 import { rootRenderNodes } from '@angular/core/src/view';
+import { noctuaConfig } from 'app/noctua-config';
 
 
 @Injectable({
@@ -95,7 +96,6 @@ export class NoctuaFormConfigService {
       packet: 3,
       callback_type: 'search',
     }
-
 
     this.requestParams = {
       "evidence": Object.assign({}, JSON.parse(JSON.stringify(this.baseRequestParams)), {
@@ -459,7 +459,6 @@ export class NoctuaFormConfigService {
       },
     }
 
-
     this._modelRelationship = {
       default: {
         nodes: [
@@ -724,7 +723,7 @@ export class NoctuaFormConfigService {
       }, {
         subject: noctuaFormConfig.closures.mf
       }]
-    }
+    };
 
     this.closureCheck[noctuaFormConfig.edge.upstreamOfOrWithin.id] = {
       edge: noctuaFormConfig.edge.upstreamOfOrWithin,
@@ -733,7 +732,7 @@ export class NoctuaFormConfigService {
       }, {
         subject: noctuaFormConfig.closures.mf
       }]
-    }
+    };
 
     this.closureCheck[noctuaFormConfig.edge.partOf.id] = {
       edge: noctuaFormConfig.edge.partOf,
@@ -775,7 +774,7 @@ export class NoctuaFormConfigService {
       }, {
         subject: noctuaFormConfig.closures.mf
       }]
-    }
+    };
 
     this.closureCheck[noctuaFormConfig.edge.hasInput.id] = {
       edge: noctuaFormConfig.edge.hasInput,
@@ -797,7 +796,7 @@ export class NoctuaFormConfigService {
       }, {
         object: noctuaFormConfig.closures.tp
       }]
-    }
+    };
 
     this.closureCheck[noctuaFormConfig.edge.hasPart.id] = {
       edge: noctuaFormConfig.edge.hasPart,
@@ -806,6 +805,44 @@ export class NoctuaFormConfigService {
       }, {
         object: noctuaFormConfig.closures.gp
       }]
+    };
+  }
+
+  get modelState() {
+    let options = [
+      noctuaFormConfig.modelState.options.development,
+      noctuaFormConfig.modelState.options.production,
+    ]
+
+    return {
+      options: options,
+      selected: options[0]
+    }
+  }
+
+  get annotonType() {
+    let options = [
+      noctuaFormConfig.annotonType.options.simple,
+      noctuaFormConfig.annotonType.options.complex,
+    ]
+
+    return {
+      options: options,
+      selected: options[0]
+    }
+  }
+
+
+  get annotonModelType() {
+    let options = [
+      noctuaFormConfig.annotonModelType.options.default,
+      noctuaFormConfig.annotonModelType.options.bpOnly,
+      noctuaFormConfig.annotonModelType.options.ccOnly,
+    ]
+
+    return {
+      options: options,
+      selected: options[0]
     }
   }
 
@@ -818,7 +855,6 @@ export class NoctuaFormConfigService {
   }
 
   getModelUrls(modelId) {
-
     let modelInfo: any = {};
     let baristaParams = {
       'barista_token': this.baristaToken

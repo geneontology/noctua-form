@@ -49,7 +49,7 @@ export class CamFormComponent implements OnInit, OnDestroy {
     private noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaFormGridService: NoctuaFormGridService,
     private noctuaLookupService: NoctuaLookupService,
-    private noctuaFormService: NoctuaFormService,
+    public noctuaFormService: NoctuaFormService,
     private sparqlService: SparqlService,
     private noctuaTranslationLoader: NoctuaTranslationLoaderService) {
     this.unsubscribeAll = new Subject();
@@ -65,7 +65,6 @@ export class CamFormComponent implements OnInit, OnDestroy {
 
     console.log("FD Form", this.camForm);
     console.log("FD", this.noctuaFormGridService.annotonPresentation);
-
 
   }
 
