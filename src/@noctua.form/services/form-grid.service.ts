@@ -36,8 +36,6 @@ export class NoctuaFormGridService {
   }
 
   setAnnotonModelType(annoton, annotonModelType) {
-
-
     this.annoton = this.noctuaFormConfigService.createAnnotonModel(
       annoton.annotonType,
       annotonModelType,
@@ -112,8 +110,7 @@ export class NoctuaFormGridService {
 
   initalizeFormData() {
     this.annoton = this.noctuaFormConfigService.createAnnotonModelFakeData();
-    this.initalizeForm()
-
+    this.initalizeForm();
   }
 
   linkFormNode(entity, srcNode) {

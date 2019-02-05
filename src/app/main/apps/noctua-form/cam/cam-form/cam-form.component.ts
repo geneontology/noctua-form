@@ -40,6 +40,7 @@ export class CamFormComponent implements OnInit, OnDestroy {
   evidenceFormArray: FormArray;
   camFormData: any = []
   cams: any[] = [];
+  annoton: any;
 
   private unsubscribeAll: Subject<any>;
 
@@ -55,13 +56,8 @@ export class CamFormComponent implements OnInit, OnDestroy {
     this.unsubscribeAll = new Subject();
 
     this.noctuaFormGridService.initalizeForm();
-    this.camFormPresentation = this.noctuaFormGridService.annotonPresentation;
-    this.camForm = this.createAnswerForm();
 
-    this.addFdForm(this.camForm.controls['fd'] as FormGroup);
-
-    this.camFormData = this.noctuaFormConfigService.createReviewSearchFormData();
-    this.onValueChanges();
+    this.createNoctuaForm();
 
     console.log("FD Form", this.camForm);
     console.log("FD", this.noctuaFormGridService.annotonPresentation);
@@ -78,6 +74,8 @@ export class CamFormComponent implements OnInit, OnDestroy {
     });
   }
 
+
+
   search() {
     let searchCriteria = this.camForm.value;
 
@@ -85,14 +83,21 @@ export class CamFormComponent implements OnInit, OnDestroy {
     this.noctuaSearchService.search(searchCriteria);
   }
 
-  createAnswerForm() {
-    return new FormGroup({
+  createNoctuaForm() {
+    const self = this;
+
+    self.camForm = new FormGroup({
       title: new FormControl(),
       state: new FormControl(),
       group: new FormControl(),
       gp: new FormControl(),
       fd: this.formBuilder.group({})
     });
+
+    self.camFormPresentation = self.noctuaFormGridService.annotonPresentation;
+    self.addFdForm(self.camForm.controls['fd'] as FormGroup);
+    self.camFormData = self.noctuaFormConfigService.createReviewSearchFormData();
+    self.onValueChanges();
   }
 
   addFdForm(camFdFormGroup: FormGroup) {
@@ -107,18 +112,20 @@ export class CamFormComponent implements OnInit, OnDestroy {
         nodeFormGroup.addControl(entity.id, new FormGroup({}))
       });
     });
+  }
 
-    /*
-    each(nodeGroup.nodes, (entity, entityKey) => {
-      nodeFormGroup.addControl(entity.id, new FormGroup({
-        term: new FormControl(),
-        evidence: new FormControl(),
-        reference: new FormControl(),
-        with: new FormControl(),
-      }));
-    });
-  
-  })  */
+  changeAnnotonTypeForm(annotonType) {
+    const self = this;
+
+    self.noctuaFormGridService.setAnnotonType(this.noctuaFormGridService.annoton, annotonType.name);
+    self.createNoctuaForm();
+  }
+
+  changeAnnotonModelTypeForm(annotonModelType) {
+    const self = this;
+
+    self.noctuaFormGridService.setAnnotonModelType(this.noctuaFormGridService.annoton, annotonModelType.name);
+    self.createNoctuaForm();
   }
 
   onValueChanges() {
@@ -133,6 +140,10 @@ export class CamFormComponent implements OnInit, OnDestroy {
           self.camFormData['gp'].searchResults = response
         })
       })
+  }
+
+  termDisplayFn(term): string | undefined {
+    return term ? term.label : undefined;
   }
 
   close() {

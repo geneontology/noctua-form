@@ -57,7 +57,7 @@
           Annoton Type <b class="caret"></b>
         </button>
         <mat-menu #annotonTypeOptions="matMenu">
-          <a mat-menu-item *ngFor="let annotonType of noctuaFormConfigService.annotonType.options">
+          <a mat-menu-item *ngFor="let annotonType of noctuaFormConfigService.annotonType.options" (click)="changeAnnotonTypeForm(annotonType)">
             {{annotonType.label}}
           </a>
         </mat-menu>
@@ -66,8 +66,8 @@
         <div class="ph-15 noc-annoton-group-row" fxLayout="column">
           <mat-form-field class="">
             <input type="text" matInput formControlName="gp" placeholder="Gene Product" [matAutocomplete]="gpAuto" />
-            <mat-autocomplete #gpAuto="matAutocomplete">
-              <mat-option *ngFor="let item of camFormData['gp']?.searchResults" [value]="item.id">
+            <mat-autocomplete #gpAuto="matAutocomplete" [displayWith]="termDisplayFn">
+              <mat-option *ngFor="let item of camFormData['gp']?.searchResults" [value]="item">
                 <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
                   <div>
                     {{ item.id }}
@@ -91,7 +91,7 @@
           Annoton Model Type <b class="caret"></b>
         </button>
         <mat-menu #annotonModelTypeOptions="matMenu">
-          <a mat-menu-item *ngFor="let annotonModelType of noctuaFormConfigService.annotonModelType.options">
+          <a mat-menu-item *ngFor="let annotonModelType of noctuaFormConfigService.annotonModelType.options" (click)="changeAnnotonModelTypeForm(annotonModelType)">
             {{annotonModelType.label}}
           </a>
         </mat-menu>

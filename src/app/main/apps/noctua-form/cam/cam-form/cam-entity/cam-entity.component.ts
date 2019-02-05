@@ -121,6 +121,14 @@ export class CamFormEntityComponent implements OnInit, OnDestroy {
       });
   }
 
+  termDisplayFn(term): string | undefined {
+    return term ? term.label : undefined;
+  }
+
+  evidenceDisplayFn(evidence): string | undefined {
+    return evidence ? evidence.label : undefined;
+  }
+
   close() {
     this.noctuaFormService.closeLeftDrawer();
   }

@@ -240,7 +240,6 @@ export class AnnotonNode {
     const self = this;
     let result = true;
 
-
     if (self.termRequiredList.includes(self.id) && !self.term.control.value.id) {
       self.term.control.required = true;
       let meta = {
