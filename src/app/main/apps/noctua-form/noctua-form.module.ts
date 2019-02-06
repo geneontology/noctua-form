@@ -7,6 +7,8 @@ import { TreeTableModule } from 'primeng/treetable';
 import { TreeNode } from 'primeng/api';
 import { NoctuaFormDialogService } from './dialog.service';
 
+import { CamService } from '@noctua.form/services/cam.service';
+
 import { CamFormComponent } from './cam/cam-form/cam-form.component';
 import { CamFormEntityComponent } from './cam/cam-form/cam-entity/cam-entity.component';
 
@@ -30,7 +32,7 @@ const routes = [
     TreeTableModule,
     RouterModule.forChild(routes),
   ],
-  providers: [NoctuaFormDialogService],
+  providers: [NoctuaFormDialogService, CamService],
   declarations: [
     NoctuaFormComponent,
     CamFormComponent,

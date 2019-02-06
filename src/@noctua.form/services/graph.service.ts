@@ -78,7 +78,7 @@ export class NoctuaGraphService {
     let graphInfo = {
       error: false,
       engine: new jquery_engine(barista_response),
-      onGraphChanged: new BehaviorSubject({}),
+      onGraphChanged: new BehaviorSubject(null),
       manager: null,
       graph: null,
       modelId: modelId,
