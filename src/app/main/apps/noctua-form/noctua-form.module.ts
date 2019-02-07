@@ -16,7 +16,13 @@ import { CamTableComponent } from './cam/cam-table/cam-table.component';
 import { CamRowComponent } from './cam/cam-row/cam-row.component';
 
 import { CamRowEditDialogComponent } from './dialogs/cam-row-edit/cam-row-edit.component';
-
+import { AddEvidenceDialogComponent } from './dialogs/add-evidence/add-evidence.component';
+import { AnnotonErrorsDialogComponent } from './dialogs/annoton-errors/annoton-errors.component';
+import { BeforeSaveDialogComponent } from './dialogs/before-save/before-save.component';
+import { CreateFromExistingDialogComponent } from './dialogs/create-from-existing/create-from-existing.component';
+import { LinkToExistingDialogComponent } from './dialogs/link-to-existing/link-to-existing.component';
+import { SelectEvidenceDialogComponent } from './dialogs/select-evidence/select-evidence.component';
+import { SearchDatabaseDialogComponent } from './dialogs/search-database/search-database.component';
 
 const routes = [
   {
@@ -40,8 +46,24 @@ const routes = [
     CamTableComponent,
     CamRowComponent,
     CamRowEditDialogComponent,
+    AddEvidenceDialogComponent,
+    AnnotonErrorsDialogComponent,
+    BeforeSaveDialogComponent,
+    CreateFromExistingDialogComponent,
+    LinkToExistingDialogComponent,
+    SelectEvidenceDialogComponent,
+    SearchDatabaseDialogComponent,
   ],
-  entryComponents: [NoctuaFormComponent, CamRowEditDialogComponent]
+  entryComponents: [
+    NoctuaFormComponent,
+    CamRowEditDialogComponent,
+    AddEvidenceDialogComponent,
+    AnnotonErrorsDialogComponent,
+    BeforeSaveDialogComponent,
+    CreateFromExistingDialogComponent,
+    LinkToExistingDialogComponent,
+    SelectEvidenceDialogComponent,
+    SearchDatabaseDialogComponent,]
 })
 
 export class NoctuaFormModule {
