@@ -38,7 +38,7 @@ import { Evidence } from '@noctua.form/annoton/evidence';
 
 export class CamFormEntityComponent implements OnInit, OnDestroy {
   searchCriteria: any = {};
-  camForm: FormGroup;
+  // camForm: FormGroup;
   camFormPresentation: any;
   evidenceFormArray: FormArray;
   autcompleteResults = {
@@ -80,12 +80,6 @@ export class CamFormEntityComponent implements OnInit, OnDestroy {
     this.nodeGroup = this.camFormPresentation['fd'][this.nodeGroupName];
     this.entity = <AnnotonNode>_.find(this.nodeGroup.nodes, { id: this.entityName });
     this.entityFormGroup = this.createEntityGroup();
-    console.log("FD Form Group", this.entityFormGroup);
-    console.log("entityName", this.entityName, this.nodeGroupName);
-
-
-
-    console.log("entity", this.entity, this.nodeGroup);
     this.onValueChanges();
   }
 
@@ -131,7 +125,7 @@ export class CamFormEntityComponent implements OnInit, OnDestroy {
   addEvidence() {
     const self = this;
 
-    let evidenceFormGroup: FormArray = this.camForm.get('evidenceFormArray') as FormArray;
+    let evidenceFormGroup: FormArray = this.entityFormGroup.get('evidenceFormArray') as FormArray;
 
     evidenceFormGroup.push(this.formBuilder.group({
       evidence: new FormControl(),
@@ -143,7 +137,7 @@ export class CamFormEntityComponent implements OnInit, OnDestroy {
   removeEvidence(index) {
     const self = this;
 
-    let evidenceFormGroup: FormArray = <FormArray>this.camForm.get('evidenceFormArray');
+    let evidenceFormGroup: FormArray = <FormArray>self.entityFormGroup.get('evidenceFormArray');
 
     evidenceFormGroup.removeAt(index);
   }
@@ -157,15 +151,6 @@ export class CamFormEntityComponent implements OnInit, OnDestroy {
       .subscribe(data => {
         this.noctuaLookupService.golrLookup(data, this.entity.term.lookup.requestParams).subscribe(response => {
           self.autcompleteResults.term = response;
-        });
-      });
-
-    this.entityFormGroup.get('evidence').valueChanges
-      .distinctUntilChanged()
-      .debounceTime(400)
-      .subscribe(data => {
-        this.noctuaLookupService.golrLookup(data, this.entity.evidence[0].evidence.lookup.requestParams).subscribe(response => {
-          self.autcompleteResults.evidence = response;
         });
       });
   }
