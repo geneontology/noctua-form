@@ -114,6 +114,13 @@ export class CamFormComponent implements OnInit, OnDestroy {
     });
   }
 
+  createExample() {
+    const self = this;
+
+    self.noctuaFormGridService.initalizeFormData();
+    self.createNoctuaForm();
+  }
+
   changeAnnotonTypeForm(annotonType) {
     const self = this;
 
