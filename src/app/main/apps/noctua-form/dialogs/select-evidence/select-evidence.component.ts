@@ -68,6 +68,16 @@ export class SelectEvidenceDialogComponent implements OnInit, OnDestroy {
     });
   }
 
+  /*
+  buildDataColumnsForm() {
+    const arr = this.pantherTypes.dataColumns.map(dataColumn => {
+      return new FormControl(dataColumn.selected);
+    });
+
+    return new FormArray(arr);
+  }
+  */
+
   onValueChanges() {
     const self = this;
 

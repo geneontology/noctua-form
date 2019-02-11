@@ -20,7 +20,7 @@
     </mat-autocomplete>
   </mat-form-field>
   <div fxFlex="" fxLayout="column" fxLayoutAlign="start stretch">
-    <div formArrayName="evidenceFormArray" *ngFor="let item of entityFormGroup.get('evidenceFormArray').controls; let i = index;">
+    <div formArrayName="evidenceFormArray" *ngFor="let evidence of entityFormGroup.get('evidenceFormArray').controls; let i = index;">
       <div [formGroupName]="i" fxLayout="row" fxLayoutAlign="start center" class="w-100-p">
         <mat-form-field class="" appearance="standard" class="" fxFlex="50">
           <mat-label>Evidence</mat-label>
@@ -54,10 +54,10 @@
             Remove GP
           </button>
           <h6 class="noc-menu-heading"> Evidence</h6>
-          <button mat-menu-item class="" (click)="openSelectEvidenceDialog($event, entity)">
+          <button mat-menu-item class="" (click)="openSelectEvidenceDialog(evidence)">
             Clone Evidence
           </button>
-          <button mat-menu-item class="" (click)="openAddEvidenceDialog($event, entity)">
+          <button mat-menu-item class="" (click)="openAddEvidenceDialog()">
             More Evidence
           </button>
           <button mat-menu-item class="" (click)="addEvidence()">

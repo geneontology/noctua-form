@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subscriber } from 'rxjs';
 import { map, filter, reduce, catchError, retry, tap } from 'rxjs/operators';
 
+import { Cam } from './../annoton/cam';
 import { Annoton } from './../annoton/annoton';
 import { AnnotonParser } from './../annoton/parser/annoton-parser';
 import { AnnotonError } from "./../annoton/parser/annoton-error";
@@ -84,7 +85,7 @@ export class NoctuaGraphService {
       modelId: modelId,
       modelTitle: null,
       modelState: null,
-      annotons: null,
+      cam: new Cam(),
     }
 
     graphInfo.engine.method('POST');
@@ -158,9 +159,9 @@ export class NoctuaGraphService {
       }
 
       self.graphPreParse(graphInfo.graph).subscribe((data) => {
-        let annotons = self.graphToAnnotons(graphInfo.graph);
-        graphInfo.annotons = [...self.annotonsToTable(graphInfo.graph, annotons), ...self.ccComponentsToTable(graphInfo.graph, data)]
-        graphInfo.onGraphChanged.next(graphInfo.annotons);
+        let cam: Cam = <Cam>self.graphToAnnotons(graphInfo.graph);
+        graphInfo.cam.annotons = [...self.annotonsToTable(graphInfo.graph, cam.annotons), ...self.ccComponentsToTable(graphInfo.graph, data)]
+        graphInfo.onGraphChanged.next(graphInfo.cam.annotons);
       })
 
       //  title = graph.get_annotations_by_key('title');
@@ -401,7 +402,7 @@ export class NoctuaGraphService {
 
   graphToAnnotons(graph) {
     const self = this;
-    var annotons = [];
+    let cam: Cam = new Cam();
 
     each(graph.all_edges(), function (e) {
       if (e.predicate_id() === noctuaFormConfig.edge.enabledBy.id) {
@@ -443,18 +444,18 @@ export class NoctuaGraphService {
 
         self.graphToAnnatonDFS(graph, annoton, mfEdgesIn, annotonNode, isDoomed);
 
-        annotons.push(annoton);
+        cam.annotons.push(annoton);
       }
     });
 
     // self.parseNodeClosure(annotons);
 
-    return annotons;
+    return cam;
   }
 
   graphToCCOnly(graph) {
     const self = this;
-    var annotons = [];
+    let cam: Cam = new Cam();
 
     each(graph.all_edges(), function (e) {
       if (e.predicate_id() === noctuaFormConfig.edge.partOf.id) {
@@ -499,7 +500,7 @@ export class NoctuaGraphService {
             //annoton.populateComplexData();
           }
 
-          annotons.push(annoton);
+          cam.annotons.push(annoton);
         } else {
           annoton.parser.setCardinalityError(annotonNode, ccObjectNode.term, predicateId);
           //  self.graphToAnnatonDFS(graph, annoton, ccEdgesIn, annotonNode, true);
@@ -509,7 +510,7 @@ export class NoctuaGraphService {
 
     //  self.parseNodeClosure(annotons);
 
-    return annotons;
+    return cam;
   }
 
   graphToAnnatonDFS(graph, annoton, mfEdgesIn, annotonNode, isDoomed) {

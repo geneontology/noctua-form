@@ -5,7 +5,7 @@ const each = require('lodash/forEach');
 const uuid = require('uuid/v1');
 import { Evidence } from "../annoton/evidence.js";
 
-export class Util {
+export class NoctuaFormUtil {
 
     static getMFNodes(annotons, except) {
         let result = [];
@@ -40,7 +40,7 @@ export class Util {
             each(annotonData.annoton.nodes, function (node) {
                 each(node.evidence, function (evidence) {
                     if (evidence.hasValue()) {
-                        if (!Util.evidenceExists(result, evidence)) {
+                        if (!NoctuaFormUtil.evidenceExists(result, evidence)) {
                             result.push(evidence);
                         }
                     }
@@ -65,7 +65,7 @@ export class Util {
             each(annotation.annotations, function (node) {
                 each(node.evidence, function (evidence) {
                     if (evidence.hasValue()) {
-                        if (!Util.evidenceExists(result, evidence)) {
+                        if (!NoctuaFormUtil.evidenceExists(result, evidence)) {
                             result.push(evidence);
                         }
                     }
@@ -82,7 +82,7 @@ export class Util {
         each(annoton.nodes, function (node) {
             each(node.evidence, function (evidence) {
                 if (evidence.hasValue()) {
-                    if (!Util.evidenceExists(result, evidence)) {
+                    if (!NoctuaFormUtil.evidenceExists(result, evidence)) {
                         result.push(evidence);
                     }
                 }

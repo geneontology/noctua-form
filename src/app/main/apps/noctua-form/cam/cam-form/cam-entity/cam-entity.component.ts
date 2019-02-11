@@ -24,6 +24,7 @@ import { NoctuaFormGridService } from '@noctua.form/services/form-grid.service';
 import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
 import { NoctuaLookupService } from '@noctua.form/services/lookup.service';
 import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
+import { NoctuaFormDialogService } from './../../../dialog.service';
 
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 
@@ -63,6 +64,7 @@ export class CamFormEntityComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
     private formBuilder: FormBuilder,
+    private noctuaFormDialogService: NoctuaFormDialogService,
     private noctuaSearchService: NoctuaSearchService,
     private noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaFormGridService: NoctuaFormGridService,
@@ -153,6 +155,35 @@ export class CamFormEntityComponent implements OnInit, OnDestroy {
           self.autcompleteResults.term = response;
         });
       });
+  }
+
+  openSelectEvidenceDialog(evidence) {
+    const self = this;
+
+    /*
+
+    let evidences = Util.addUniqueEvidencesFromAnnoton(self.formGrid.annoton);
+    Util.getUniqueEvidences(self.summaryData.annotons, evidences);
+
+    let gpNode = self.formGrid.annotonPresentation.geneProduct;
+
+    let data = {
+      readonly: false,
+      gpNode: gpNode,
+      aspect: entity.aspect,
+      node: entity,
+      evidences: evidences,
+      params: {
+        term: entity.term.control.value.id,
+      }
+    }
+
+    let success = function (selected) {
+      entity.addEvidences(selected.evidences, ['assignedBy']);
+    }
+    */
+
+    self.noctuaFormDialogService.openSelectEvidenceDialog(evidence);
   }
 
   termDisplayFn(term): string | undefined {

@@ -9,13 +9,17 @@ import { Annoton } from './annoton'
 
 export class Cam {
 
-  _annotons: Annoton;
+  _annotons: Annoton[] = [];
 
   constructor() {
   }
 
   get annotons() {
     return this._annotons;
+  }
+
+  set annotons(annoton) {
+    this._annotons = annoton;
   }
 
   getMFNodes() {
