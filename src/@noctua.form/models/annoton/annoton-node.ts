@@ -99,7 +99,6 @@ export class AnnotonNode {
     }
   }
 
-
   addEdgeOption(edgeOption) {
     const self = this;
 

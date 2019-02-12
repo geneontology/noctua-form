@@ -16,14 +16,14 @@ export class CamForm {
   constructor() {
   }
 
-  addFdForm(fdData) {
+  createFunctionDescriptionForm(fdData) {
     const self = this;
 
     each(fdData, (nodeGroup, nodeKey) => {
       let entityFormGroup = new EntityGroupForm();
 
       entityFormGroup.name = nodeKey;
-      entityFormGroup.addEntityForms(nodeGroup.nodes);
+      entityFormGroup.createEntityForms(nodeGroup.nodes);
       self.fd.push(self._fb.group(entityFormGroup));
     });
   }

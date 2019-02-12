@@ -40,7 +40,7 @@ export class NoctuaFormGridService {
 
     let camForm: CamForm = new CamForm();
 
-    camForm.addFdForm(self.annotonPresentation.fd);
+    camForm.createFunctionDescriptionForm(self.annotonPresentation.fd);
 
     //self.camFormData = self.noctuaFormConfigService.createReviewSearchFormData();
 

@@ -14,7 +14,7 @@ export class EntityForm {
     constructor() {
     }
 
-    createFormEvidence(entity) {
+    createEvidenceForms(entity) {
         const self = this;
 
         _.each(entity.evidence, function (evidence: Evidence) {

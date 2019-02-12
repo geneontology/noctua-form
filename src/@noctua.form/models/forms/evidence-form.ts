@@ -13,22 +13,5 @@ export class EvidenceForm {
     constructor() {
     }
 
-    createFormEvidence(entity): FormGroup[] {
-        const self = this;
-        let evidenceGroup: FormGroup[] = [];
-
-        _.each(entity.evidence, function (evidence: Evidence) {
-            let srcEvidence: FormGroup = new FormGroup({
-                evidence: new FormControl(evidence.getEvidence()),
-                reference: new FormControl(evidence.getReference()),
-                with: new FormControl(evidence.getWith()),
-            })
-            evidenceGroup.push(srcEvidence);
-
-            //    self.addOnEvidenceValueChanges(srcEvidence)
-        });
-
-        return evidenceGroup;
-    }
 }
 

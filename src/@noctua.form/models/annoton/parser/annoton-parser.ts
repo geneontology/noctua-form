@@ -70,9 +70,6 @@ export class AnnotonParser {
     return predicate ? predicate.label : id;
   }
 
-
-
-
   parseNodeOntology(node) {
     const self = this;
     let result = true;

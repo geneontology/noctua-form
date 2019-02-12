@@ -72,20 +72,6 @@ export class Annoton extends SaeGraph {
     }
   }
 
-  print() {
-    let result = []
-    each(this.nodes, function (node) {
-      result.push({
-        id: node.id,
-        term: node.term.control.value,
-        evidence: node.evidence.control.value,
-        reference: node.reference.control.value,
-        with: node.with.control.value
-      })
-    });
-    return result;
-  };
-
   setAnnotonType(type) {
     this.annotonType = type;
   }
@@ -127,4 +113,17 @@ export class Annoton extends SaeGraph {
     return result;
   }
 
+  print() {
+    let result = []
+    each(this.nodes, function (node) {
+      result.push({
+        id: node.id,
+        term: node.term.control.value,
+        evidence: node.evidence.control.value,
+        reference: node.reference.control.value,
+        with: node.with.control.value
+      })
+    });
+    return result;
+  };
 }

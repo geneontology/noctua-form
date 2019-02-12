@@ -16,12 +16,12 @@ export class EntityGroupForm {
     constructor() {
     }
 
-    addEntityForms(entities) {
+    createEntityForms(entities) {
         const self = this;
 
         each(entities, (entity) => {
             let entityForm = new EntityForm();
-            entityForm.createFormEvidence(entity);
+            entityForm.createEvidenceForms(entity);
 
             self.entityGroup.addControl(entity.id, self._fb.group(entityForm));
         });
