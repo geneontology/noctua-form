@@ -81,7 +81,7 @@ export class CamFormEntityComponent implements OnInit, OnDestroy {
 
     this.nodeGroup = this.camFormPresentation['fd'][this.nodeGroupName];
     this.entity = <AnnotonNode>_.find(this.nodeGroup.nodes, { id: this.entityName });
-    this.entityFormGroup = this.createEntityGroup();
+    // this.entityFormGroup = this.createEntityGroup();
     this.onValueChanges();
   }
 

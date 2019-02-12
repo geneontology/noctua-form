@@ -10,7 +10,7 @@ export class CamForm {
   state = new FormControl();
   group = new FormControl();
   gp = new FormControl();
-  fd = new FormGroup({});
+  fd = new FormArray([]);
   private _fb = new FormBuilder();
 
   constructor() {
@@ -21,10 +21,10 @@ export class CamForm {
 
     each(fdData, (nodeGroup, nodeKey) => {
       let entityFormGroup = new EntityGroupForm();
+
+      entityFormGroup.name = nodeKey;
       entityFormGroup.addEntityForms(nodeGroup.nodes);
-
-      self.fd.addControl(nodeKey, self._fb.group(entityFormGroup));
-
+      self.fd.push(self._fb.group(entityFormGroup));
     });
   }
 
