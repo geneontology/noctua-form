@@ -3,7 +3,6 @@ declare const require: any;
 
 const each = require('lodash/forEach');
 const uuid = require('uuid/v1');
-import { Evidence } from "../annoton/evidence.js";
 
 export class NoctuaFormUtil {
 

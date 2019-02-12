@@ -1,8 +1,8 @@
 import * as _ from 'lodash';
 declare const require: any;
 const each = require('lodash/forEach');
-
-import { noctuaFormConfig } from './../../noctua-form-config';
+//
+import { noctuaFormConfig } from './../../../noctua-form-config';
 
 import { AnnotonError } from './annoton-error.js';
 

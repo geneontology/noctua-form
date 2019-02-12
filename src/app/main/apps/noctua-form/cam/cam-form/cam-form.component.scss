@@ -7,14 +7,14 @@
   @include mat-elevation(4);
 
   .noc-header {
-    @include deep-height(30px);
+    @include deep-height(40px);
     background-color: #EEE;
     border-bottom: #CCC solid 1px;
 
     mat-icon-button {
-      @include deep-height(30px);
-      @include deep-width(30px);
-      line-height: 30px;
+      @include deep-height(40px);
+      @include deep-width(40px);
+      line-height: 40px;
     }
 
     .noc-title {
@@ -33,7 +33,7 @@
       background-color: #FFF;
 
       .noc-section-header {
-        height: 30px;
+        height: 40px;
         background-color: $noc-primary-color-light;
 
         .noc-section-heading {

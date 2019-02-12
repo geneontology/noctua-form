@@ -11,8 +11,8 @@ import * as _ from 'lodash';
 
 const each = require('lodash/forEach');
 
-import { AnnotonNode } from '@noctua.form/annoton/annoton-node';
-import { Evidence } from '@noctua.form/annoton/evidence';
+import { AnnotonNode } from '@noctua.form/models/annoton/annoton-node';
+import { Evidence } from '@noctua.form/models/annoton/evidence';
 
 import { Cam } from '@noctua.sparql/models/cam';
 import { CamRow } from '@noctua.sparql/models/cam-row';

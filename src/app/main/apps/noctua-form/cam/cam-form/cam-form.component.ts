@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@ang
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator, MatSort } from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
-import { merge, Observable, BehaviorSubject, fromEvent, Subject } from 'rxjs';
+import { merge, Observable, Subscription, BehaviorSubject, fromEvent, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
 
@@ -27,6 +27,11 @@ import { NoctuaSearchService } from '@noctua.search/services/noctua-search.servi
 
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 
+import { Cam } from '@noctua.form/models/annoton/cam';
+import { Annoton } from '@noctua.form/models/annoton/annoton';
+import { AnnotonNode } from '@noctua.form/models/annoton/annoton-node';
+import { Evidence } from '@noctua.form/models/annoton/evidence';
+
 @Component({
   selector: 'noc-cam-form',
   templateUrl: './cam-form.component.html',
@@ -34,13 +39,16 @@ import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 })
 
 export class CamFormComponent implements OnInit, OnDestroy {
+  camForm: FormGroup;
+  camFormSub: Subscription;
+
+
   searchCriteria: any = {};
   camFormPresentation: any;
-  camForm: FormGroup;
+  //camForm: FormGroup;
   evidenceFormArray: FormArray;
   camFormData: any = []
-  cams: any[] = [];
-  annoton: any;
+  annoton: Annoton = new Annoton();
 
   private unsubscribeAll: Subject<any>;
 
@@ -55,9 +63,9 @@ export class CamFormComponent implements OnInit, OnDestroy {
     private noctuaTranslationLoader: NoctuaTranslationLoaderService) {
     this.unsubscribeAll = new Subject();
 
-    this.noctuaFormGridService.initalizeForm();
+    //this.noctuaFormGridService.initalizeForm();
 
-    this.createNoctuaForm();
+    // this.createNoctuaForm();
 
     console.log("FD Form", this.camForm);
     console.log("FD", this.noctuaFormGridService.annotonPresentation);
@@ -65,6 +73,13 @@ export class CamFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+    this.camFormSub = this.noctuaFormGridService.camForm$
+      .subscribe(cam => {
+        this.camForm = cam;
+
+        console.log('pppp', this.camForm)
+      })
     this.sparqlService.getAllCurators().subscribe((response: any) => {
       this.camFormData['curator'].searchResults = response;
     });
@@ -72,15 +87,19 @@ export class CamFormComponent implements OnInit, OnDestroy {
     this.sparqlService.getAllGroups().subscribe((response: any) => {
       this.camFormData['providedBy'].searchResults = response;
     });
+
+
   }
 
+  save() {
+    let destForm = this.camForm.value;
 
+    console.dir(destForm)
+    //  this.noctuaSearchService.search(destForm);
+  }
 
-  search() {
-    let searchCriteria = this.camForm.value;
+  clear() {
 
-    console.dir(searchCriteria)
-    this.noctuaSearchService.search(searchCriteria);
   }
 
   createNoctuaForm() {
@@ -94,6 +113,7 @@ export class CamFormComponent implements OnInit, OnDestroy {
       fd: this.formBuilder.group({})
     });
 
+    self.annoton = self.noctuaFormGridService.annoton;
     self.camFormPresentation = self.noctuaFormGridService.annotonPresentation;
     self.addFdForm(self.camForm.controls['fd'] as FormGroup);
     self.camFormData = self.noctuaFormConfigService.createReviewSearchFormData();

@@ -8,8 +8,8 @@ declare const require: any;
 
 const each = require('lodash/forEach');
 const uuid = require('uuid/v1');
-import { AnnotonNode } from './../../annoton/annoton-node';
-import { Annoton } from './../../annoton/annoton';
+import { AnnotonNode } from './../../models/annoton/annoton-node';
+import { Annoton } from './../../models/annoton/annoton';
 import { rootRenderNodes } from '@angular/core/src/view';
 import { noctuaConfig } from 'app/noctua-config';
 

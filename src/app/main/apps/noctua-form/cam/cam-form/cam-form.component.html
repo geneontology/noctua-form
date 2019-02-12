@@ -57,7 +57,7 @@
         </div>
         <span fxFlex></span>
         <button mat-button [matMenuTriggerFor]="annotonTypeOptions" class="noc-bl">
-          Annoton Type <b class="caret"></b>
+          {{annoton.annotonType}} <b class="caret"></b>
         </button>
         <mat-menu #annotonTypeOptions="matMenu">
           <a mat-menu-item *ngFor="let annotonType of noctuaFormConfigService.annotonType.options" (click)="changeAnnotonTypeForm(annotonType)">
@@ -91,7 +91,7 @@
         </div>
         <span fxFlex></span>
         <button mat-button [matMenuTriggerFor]="annotonModelTypeOptions" class="noc-bl">
-          Annoton Model Type <b class="caret"></b>
+          {{annoton.annotonModelType}} <b class="caret"></b>
         </button>
         <mat-menu #annotonModelTypeOptions="matMenu">
           <a mat-menu-item *ngFor="let annotonModelType of noctuaFormConfigService.annotonModelType.options" (click)="changeAnnotonModelTypeForm(annotonModelType)">
@@ -114,8 +114,8 @@
         Why is the "Search" button disabled?
       </button>
       <span fxFlex></span>
-      <button (click)='cancel()' type="button" mat-raised-button color="" class="mr-8">Clear</button>
-      <button (click)="search()" type="button" mat-raised-button color="primary">Save</button>
+      <button (click)='clear()' type="button" mat-raised-button color="" class="mr-8">Clear</button>
+      <button (click)="save()" type="button" mat-raised-button color="primary">Save</button>
     </div>
   </form>
 </div>

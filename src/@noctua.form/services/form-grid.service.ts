@@ -1,5 +1,8 @@
 import { Injector, Injectable } from '@angular/core';
 
+import { Observable, BehaviorSubject } from 'rxjs'
+import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms'
+
 //Config
 import { noctuaFormConfig } from './../noctua-form-config';
 import { NoctuaFormConfigService } from './config/noctua-form-config.service';
@@ -9,20 +12,41 @@ import * as _ from 'lodash';
 declare const require: any;
 const each = require('lodash/forEach');
 
+import { CamForm } from './../models/forms/cam-form';
+
 @Injectable({
   providedIn: 'root'
 })
 export class NoctuaFormGridService {
   public annoton;
   public annotonPresentation;
+  private camForm: BehaviorSubject<FormGroup | undefined>;
 
-  constructor(private noctuaFormConfigService: NoctuaFormConfigService,
+  camForm$: Observable<FormGroup>;
+  constructor(private fb: FormBuilder, private noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaLookupService: NoctuaLookupService) {
     this.annoton = this.noctuaFormConfigService.createAnnotonModel(
       noctuaFormConfig.annotonType.options.simple.name,
       noctuaFormConfig.annotonModelType.options.default.name
     );
+
+    this.initalizeForm();
+    this.camForm = this.createCamForm();
+    this.camForm$ = this.camForm.asObservable()
   }
+
+  createCamForm() {
+    const self = this;
+
+    let camForm: CamForm = new CamForm();
+
+    camForm.addFdForm(self.annotonPresentation.fd);
+
+    //self.camFormData = self.noctuaFormConfigService.createReviewSearchFormData();
+
+    return new BehaviorSubject(self.fb.group(camForm));
+  }
+
 
   setAnnotonType(annoton, annotonType) {
     annoton.setAnnotonType(annotonType.name);
@@ -151,3 +175,4 @@ export class NoctuaFormGridService {
     this.initalizeForm();
   }
 }
+

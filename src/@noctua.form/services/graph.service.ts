@@ -7,11 +7,11 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subscriber } from 'rxjs';
 import { map, filter, reduce, catchError, retry, tap } from 'rxjs/operators';
 
-import { Cam } from './../annoton/cam';
-import { Annoton } from './../annoton/annoton';
-import { AnnotonParser } from './../annoton/parser/annoton-parser';
-import { AnnotonError } from "./../annoton/parser/annoton-error";
-import { Evidence } from './../annoton/evidence';
+import { Cam } from './../models/annoton/cam';
+import { Annoton } from './../models/annoton/annoton';
+import { AnnotonParser } from './../models/annoton/parser/annoton-parser';
+import { AnnotonError } from "./../models/annoton/parser/annoton-error";
+import { Evidence } from './../models/annoton/evidence';
 
 //Config
 import { noctuaFormConfig } from './../noctua-form-config';

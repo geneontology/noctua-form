@@ -28,8 +28,8 @@ import { NoctuaFormDialogService } from './../../../dialog.service';
 
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 
-import { AnnotonNode } from '@noctua.form/annoton/annoton-node';
-import { Evidence } from '@noctua.form/annoton/evidence';
+import { AnnotonNode } from '@noctua.form/models/annoton/annoton-node';
+import { Evidence } from '@noctua.form/models/annoton/evidence';
 
 @Component({
   selector: 'noc-cam-entity',

@@ -8,7 +8,7 @@ import { NoctuaUtils } from '@noctua/utils/noctua-utils';
 import { CurieService } from '@noctua.curie/services/curie.service';
 import { NoctuaGraphService } from '@noctua.form/services/graph.service';
 
-import { AnnotonNode } from '@noctua.form/annoton/annoton-node';
+import { AnnotonNode } from '@noctua.form/models/annoton/annoton-node';
 import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
 import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
 import { Cam } from '../models/cam';
