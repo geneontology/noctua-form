@@ -76,16 +76,6 @@ export class AnnotonNode {
     return this.term.control.value;
   }
 
-  setTermLookup(value) {
-    this.term.lookup.requestParams = value;
-  }
-
-  setEvidenceMeta(ontologyClass, lookupBase) {
-    this._evidenceMeta.lookupBase = lookupBase;
-    this._evidenceMeta.ontologyClass = ontologyClass;
-    this.addEvidence();
-  }
-
   setTerm(value) {
     if (value) {
       this.term.control.value = value;
@@ -220,6 +210,16 @@ export class AnnotonNode {
 
   selectEdge(edge) {
     console.log("I am selected ", edge);
+  }
+
+  setTermLookup(value) {
+    this.term.lookup.requestParams = value;
+  }
+
+  setEvidenceMeta(ontologyClass, lookupBase) {
+    this._evidenceMeta.lookupBase = lookupBase;
+    this._evidenceMeta.ontologyClass = ontologyClass;
+    this.addEvidence();
   }
 
   enableRow() {

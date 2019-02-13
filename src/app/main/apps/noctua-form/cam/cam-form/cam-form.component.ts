@@ -42,7 +42,6 @@ export class CamFormComponent implements OnInit, OnDestroy {
   camForm: FormGroup;
   camFormSub: Subscription;
 
-
   searchCriteria: any = {};
   camFormPresentation: any;
   //camForm: FormGroup;
@@ -67,8 +66,9 @@ export class CamFormComponent implements OnInit, OnDestroy {
 
     // this.createNoctuaForm();
 
-    console.log("FD Form", this.camForm);
-    console.log("FD", this.noctuaFormGridService.annotonPresentation);
+
+    this.annoton = this.noctuaFormGridService.annoton;
+    this.camFormPresentation = this.noctuaFormGridService.annotonPresentation;
 
   }
 
@@ -80,15 +80,6 @@ export class CamFormComponent implements OnInit, OnDestroy {
 
         console.log('pppp', this.camForm)
       })
-    this.sparqlService.getAllCurators().subscribe((response: any) => {
-      this.camFormData['curator'].searchResults = response;
-    });
-
-    this.sparqlService.getAllGroups().subscribe((response: any) => {
-      this.camFormData['providedBy'].searchResults = response;
-    });
-
-
   }
 
   save() {

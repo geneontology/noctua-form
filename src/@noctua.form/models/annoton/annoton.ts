@@ -41,23 +41,14 @@ export class Annoton extends SaeGraph {
     }
   }
 
-  copyStructure(srcAnnoton) {
+  getMFNode() {
     const self = this;
 
-    self.annotonType = srcAnnoton.annotonType;
-    self.annotonModelType = srcAnnoton.annotonModelType;
-    self.complexAnnotonData = srcAnnoton.complexAnnotonData;
-  }
-
-  copyValues(srcAnnoton) {
-    const self = this;
-
-    each(self.nodes, function (destNode) {
-      let srcNode = srcAnnoton.getNode(destNode.id);
-      if (srcNode) {
-        destNode.copyValues(srcNode);
-      }
-    });
+    if (self.annotonModelType === 'bpOnly') {
+      return null;
+    } else {
+      return self.getNode('mf');
+    }
   }
 
   insertTermNode(annotonModel, id, value) {
@@ -111,6 +102,25 @@ export class Annoton extends SaeGraph {
     }
 
     return result;
+  }
+
+  copyStructure(srcAnnoton) {
+    const self = this;
+
+    self.annotonType = srcAnnoton.annotonType;
+    self.annotonModelType = srcAnnoton.annotonModelType;
+    self.complexAnnotonData = srcAnnoton.complexAnnotonData;
+  }
+
+  copyValues(srcAnnoton) {
+    const self = this;
+
+    each(self.nodes, function (destNode) {
+      let srcNode = srcAnnoton.getNode(destNode.id);
+      if (srcNode) {
+        destNode.copyValues(srcNode);
+      }
+    });
   }
 
   print() {

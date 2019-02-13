@@ -20,7 +20,6 @@ export class AnnotonParser {
     this.clean = true;
   }
 
-
   parseCardinality(graph, node, sourceEdges, objectEdges) {
     const self = this;
 

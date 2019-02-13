@@ -123,7 +123,6 @@ export class Evidence {
 
   }
 
-
   clearValues() {
     const self = this;
 
@@ -154,7 +153,6 @@ export class Evidence {
     // console.log(result, '-', self.getEvidence(), evidence.getEvidence())
     return result;
   }
-
 
   enableSubmit(errors, node, position) {
     const self = this;

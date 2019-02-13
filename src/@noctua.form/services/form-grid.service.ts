@@ -13,6 +13,7 @@ declare const require: any;
 const each = require('lodash/forEach');
 
 import { CamForm } from './../models/forms/cam-form';
+import { CamFormMetadata } from './../models/forms/cam-form-metadata';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class NoctuaFormGridService {
   private camForm: BehaviorSubject<FormGroup | undefined>;
 
   camForm$: Observable<FormGroup>;
-  constructor(private fb: FormBuilder, private noctuaFormConfigService: NoctuaFormConfigService,
+  constructor(private _fb: FormBuilder, private noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaLookupService: NoctuaLookupService) {
     this.annoton = this.noctuaFormConfigService.createAnnotonModel(
       noctuaFormConfig.annotonType.options.simple.name,
@@ -38,15 +39,16 @@ export class NoctuaFormGridService {
   createCamForm() {
     const self = this;
 
-    let camForm: CamForm = new CamForm();
+    let camFormMetadata = new CamFormMetadata(self.noctuaLookupService.golrLookup.bind(self.noctuaLookupService));
+    let camForm = new CamForm(camFormMetadata);
 
     camForm.createFunctionDescriptionForm(self.annotonPresentation.fd);
+    camForm.onValueChanges(self.annotonPresentation.geneProduct.term.lookup);
 
     //self.camFormData = self.noctuaFormConfigService.createReviewSearchFormData();
 
-    return new BehaviorSubject(self.fb.group(camForm));
+    return new BehaviorSubject(self._fb.group(camForm));
   }
-
 
   setAnnotonType(annoton, annotonType) {
     annoton.setAnnotonType(annotonType.name);
