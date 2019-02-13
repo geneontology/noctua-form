@@ -8,7 +8,7 @@
   <mat-form-field class="mr-8" fxFlex>
     <input type="text" matInput formControlName="term" placeholder="{{entity.label}}" [matAutocomplete]="termAuto" />
     <mat-autocomplete #termAuto="matAutocomplete" [displayWith]="termDisplayFn">
-      <mat-option *ngFor="let item of autcompleteResults.term" [value]="item">
+      <mat-option *ngFor="let item of entity?.term.lookup.results" [value]="item">
         <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
           <div>
             {{ item.id }}
@@ -26,7 +26,7 @@
           <mat-label>Evidence</mat-label>
           <input type="text" matInput formControlName="evidence" placeholder="Evidence" [matAutocomplete]="evidenceAuto" />
           <mat-autocomplete #evidenceAuto="matAutocomplete" [displayWith]="evidenceDisplayFn">
-            <mat-option *ngFor="let item of autcompleteResults.evidence" [value]="item">
+            <mat-option *ngFor="let item of entity?.evidence[i]?.evidence.lookup.results" [value]="item">
               <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
                 <div>
                   {{ item.id }}

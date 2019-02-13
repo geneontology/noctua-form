@@ -17,9 +17,6 @@ export class CamForm {
   fd = new FormArray([]);
 
   _metadata: CamFormMetadata;
-  autcompleteResults = {
-    term: [],
-  };
 
   private _fb = new FormBuilder();
 
@@ -31,7 +28,7 @@ export class CamForm {
     const self = this;
 
     each(fdData, (nodeGroup, nodeKey) => {
-      let entityFormGroup = new EntityGroupForm();
+      let entityFormGroup = new EntityGroupForm(this._metadata);
 
       entityFormGroup.name = nodeKey;
       entityFormGroup.createEntityForms(nodeGroup.nodes);

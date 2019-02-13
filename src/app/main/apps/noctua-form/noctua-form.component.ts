@@ -94,7 +94,7 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
     this.route
       .queryParams
       .subscribe(params => {
-        this.modelId = params['model_id'] || '5c59506b00000026';
+        this.modelId = params['model_id'] || '5c621f1600000025';
         this.loadCam(this.modelId);
       });
 
