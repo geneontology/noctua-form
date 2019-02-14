@@ -75,8 +75,9 @@ export class CamFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.camFormSub = this.noctuaFormGridService.camForm$
-      .subscribe(cam => {
-        this.camForm = cam;
+      .subscribe(camForm => {
+        if (!camForm) return;
+        this.camForm = camForm;
 
         console.log('pppp', this.camForm)
       })
@@ -129,21 +130,21 @@ export class CamFormComponent implements OnInit, OnDestroy {
     const self = this;
 
     self.noctuaFormGridService.initalizeFormData();
-    self.createNoctuaForm();
+    // self.createNoctuaForm();
   }
 
   changeAnnotonTypeForm(annotonType) {
     const self = this;
 
     self.noctuaFormGridService.setAnnotonType(this.noctuaFormGridService.annoton, annotonType.name);
-    self.createNoctuaForm();
+    // self.createNoctuaForm();
   }
 
   changeAnnotonModelTypeForm(annotonModelType) {
     const self = this;
 
     self.noctuaFormGridService.setAnnotonModelType(this.noctuaFormGridService.annoton, annotonModelType.name);
-    self.createNoctuaForm();
+    //  self.createNoctuaForm();
   }
 
   onValueChanges() {

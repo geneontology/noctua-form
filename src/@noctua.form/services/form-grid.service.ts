@@ -31,9 +31,20 @@ export class NoctuaFormGridService {
       noctuaFormConfig.annotonModelType.options.default.name
     );
 
-    this.initalizeForm();
-    this.camForm = this.createCamForm();
+    this.camForm = new BehaviorSubject(null);
     this.camForm$ = this.camForm.asObservable()
+
+    this.initalizeForm();
+  }
+
+  initalizeForm() {
+    this.annotonPresentation = this.getAnnotonPresentation(this.annoton);
+    let camForm = this.createCamForm();
+
+    // const currentTeam = this.camForm.getValue();
+    // 
+    this.camForm.next(this._fb.group(camForm));
+
   }
 
   createCamForm() {
@@ -47,7 +58,7 @@ export class NoctuaFormGridService {
 
     //self.camFormData = self.noctuaFormConfigService.createReviewSearchFormData();
 
-    return new BehaviorSubject(self._fb.group(camForm));
+    return camForm;
   }
 
   setAnnotonType(annoton, annotonType) {
@@ -124,9 +135,7 @@ export class NoctuaFormGridService {
     return result[displaySectionId];
   }
 
-  initalizeForm() {
-    this.annotonPresentation = this.getAnnotonPresentation(this.annoton);
-  }
+
 
   addGPNode(annoton) {
     let id = 'gp-' + annoton.nodes.length;
