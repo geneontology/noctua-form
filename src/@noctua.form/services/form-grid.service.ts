@@ -39,19 +39,14 @@ export class NoctuaFormGridService {
 
   initalizeForm() {
     this.annotonPresentation = this.getAnnotonPresentation(this.annoton);
-    let camForm = this.createCamForm();
-
-    // const currentTeam = this.camForm.getValue();
-    // 
-    this.camForm.next(this._fb.group(camForm));
-
+    this.camForm.next(this._fb.group(this.createCamForm()));
   }
 
   createCamForm() {
     const self = this;
 
     let camFormMetadata = new CamFormMetadata(self.noctuaLookupService.golrLookup.bind(self.noctuaLookupService));
-    let camForm = new CamForm(camFormMetadata);
+    let camForm = new CamForm(camFormMetadata, self.annotonPresentation.geneProduct);
 
     camForm.createFunctionDescriptionForm(self.annotonPresentation.fd);
     camForm.onValueChanges(self.annotonPresentation.geneProduct.term.lookup);

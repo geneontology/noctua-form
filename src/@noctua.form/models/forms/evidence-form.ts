@@ -14,8 +14,14 @@ export class EvidenceForm {
 
     _metadata: CamFormMetadata;
 
-    constructor(metadata) {
+    constructor(metadata, evidence?: Evidence) {
         this._metadata = metadata;
+
+        if (evidence) {
+            this.evidence.setValue(evidence.getEvidence());
+            this.reference.setValue(evidence.getReference());
+            this.with.setValue(evidence.getWith());
+        }
     }
 
     onValueChanges(lookup) {

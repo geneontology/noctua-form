@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 declare const require: any;
 const each = require('lodash/forEach');
 
+import { AnnotonNode } from './../annoton/annoton-node';
 import { CamFormMetadata } from './../forms/cam-form-metadata';
 import { EntityGroupForm } from './entity-group-form'
 
@@ -20,8 +21,12 @@ export class CamForm {
 
   private _fb = new FormBuilder();
 
-  constructor(metadata) {
+  constructor(metadata, geneProduct?: AnnotonNode) {
     this._metadata = metadata;
+
+    if (geneProduct) {
+      this.gp.setValue(geneProduct.getTerm());
+    }
   }
 
   createFunctionDescriptionForm(fdData) {

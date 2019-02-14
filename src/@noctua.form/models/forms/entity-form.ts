@@ -1,6 +1,7 @@
 import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms'
 
 import { Evidence } from './../annoton/evidence'
+import { AnnotonNode } from './../annoton/annoton-node';
 import { EvidenceForm } from './evidence-form';
 import * as _ from 'lodash';
 declare const require: any;
@@ -18,11 +19,13 @@ export class EntityForm {
         this._metadata = metadata;
     }
 
-    createEvidenceForms(entity) {
+    createEvidenceForms(entity: AnnotonNode) {
         const self = this;
 
+        this.term.setValue(entity.getTerm());
+
         _.each(entity.evidence, function (evidence: Evidence) {
-            let evidenceForm = new EvidenceForm(self._metadata);
+            let evidenceForm = new EvidenceForm(self._metadata, evidence);
 
             evidenceForm.onValueChanges(evidence.evidence.lookup)
             self.evidenceFormArray.push(self._fb.group(evidenceForm));
