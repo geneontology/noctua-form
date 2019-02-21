@@ -30,7 +30,7 @@ import { CamService } from '@noctua.form/services/cam.service'
 
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 
-import { Cam } from '@noctua.form/models/cam';
+import { Cam } from '@noctua.form/models/annoton/cam';
 
 @Component({
   selector: 'app-noctua-form',
@@ -94,7 +94,7 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
     this.route
       .queryParams
       .subscribe(params => {
-        this.modelId = params['model_id'] || '5c621f1600000025';
+        this.modelId = params['model_id'] || '5c6c266a00000032';
         this.loadCam(this.modelId);
       });
 
@@ -135,7 +135,7 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
 
   toggleExpand(cam) {
     cam.expanded = true;
-    cam.graph = this.noctuaGraphService.getGraphInfo(cam.model.id)
+    this.noctuaGraphService.getGraphInfo(cam, cam.model.id)
     cam.graph.onGraphChanged.subscribe((annotons) => {
       let data = this.summaryGridService.getGrid(annotons);
       this.sparqlService.addCamChildren(cam, data);

@@ -11,13 +11,14 @@ import { NoctuaGraphService } from '@noctua.form/services/graph.service';
 import { AnnotonNode } from '@noctua.form/models/annoton/annoton-node';
 import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
 import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
-import { Cam } from '../models/cam';
+//import { Cam } from '../models/cam';
 import { CamRow } from '../models/cam-row';
 import { Curator } from '../models/curator';
 import { Group } from '../models/group';
 
 import * as _ from 'lodash';
 import { v4 as uuid } from 'uuid';
+import { Cam } from '@noctua.form/models/annoton/cam';
 declare const require: any;
 const each = require('lodash/forEach');
 
@@ -44,22 +45,20 @@ export class CamService {
     this.curieUtil = this.curieService.getCurieUtil();
   }
 
-  //GO:0099160
   getCam(modelId): Cam {
     const self = this;
 
-    let cam: Cam = {
-      id: uuid(),
-      graph: null,
-      model: Object.assign({}, {
-        id: modelId,
-        title: '',
-        modelInfo: this.noctuaFormConfigService.getModelUrls(modelId)
-      }),
-    }
+    let cam: Cam = new Cam();
 
+    cam.id = uuid();
+    cam.graph = null;
+    cam.model = Object.assign({}, {
+      id: modelId,
+      title: '',
+      modelInfo: this.noctuaFormConfigService.getModelUrls(modelId)
+    });
     cam.expanded = true;
-    cam.graph = this.noctuaGraphService.getGraphInfo(modelId)
+    this.noctuaGraphService.getGraphInfo(cam, modelId);
 
     return cam;
   }

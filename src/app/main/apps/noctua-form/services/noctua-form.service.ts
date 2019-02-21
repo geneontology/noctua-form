@@ -13,8 +13,8 @@ import { NoctuaGraphService } from '@noctua.form/services/graph.service';
 import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
 import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
 
-import { Curator } from '@noctua.sparql/models/curator';
-import { Group } from '@noctua.sparql//models/group';
+import { Curator } from '@noctua.form/models/curator';
+import { Group } from '@noctua.form//models/group';
 
 import * as _ from 'lodash';
 import { v4 as uuid } from 'uuid';

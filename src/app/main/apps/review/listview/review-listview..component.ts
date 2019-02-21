@@ -157,7 +157,7 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
       cam.expanded = false;
     } else {
       cam.expanded = true;
-      cam.graph = this.noctuaGraphService.getGraphInfo(cam.model.id)
+      this.noctuaGraphService.getGraphInfo(cam, cam.model.id)
       cam.graph.onGraphChanged.subscribe((annotons) => {
         let data = this.summaryGridService.getGrid(annotons);
         this.sparqlService.addCamChildren(cam, data);

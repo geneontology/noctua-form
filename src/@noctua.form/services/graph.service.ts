@@ -73,29 +73,22 @@ export class NoctuaGraphService {
     this.localClosures = [];
   }
 
-  getGraphInfo(modelId) {
+  getGraphInfo(cam: Cam, modelId) {
     const self = this;
 
-    let graphInfo = {
-      error: false,
-      engine: new jquery_engine(barista_response),
-      onGraphChanged: new BehaviorSubject(null),
-      manager: null,
-      graph: null,
-      modelId: modelId,
-      modelTitle: null,
-      modelState: null,
-      cam: new Cam(),
-    }
+    cam.engine = new jquery_engine(barista_response);
+    cam.onGraphChanged = new BehaviorSubject(null);
+    cam.modelId = modelId;
+    // cam: new Cam(),
 
-    graphInfo.engine.method('POST');
+    cam.engine.method('POST');
     let manager = new minerva_manager(
       this.baristaLocation,
       this.minervaDefinitionName,
       this.barista_token,
-      graphInfo.engine, 'async');
+      cam.engine, 'async');
 
-    graphInfo.manager = manager;
+    cam.manager = manager;
 
     function _shields_up() { }
     function _shields_down() { }
@@ -128,7 +121,7 @@ export class NoctuaGraphService {
         console.log('error:', resp, resp.message_type(), resp.message());
 
         if (resp.message().includes('UnknownIdentifierException')) {
-          graphInfo.error = true
+          cam.error = true
         }
       }
     }, 10);
@@ -140,15 +133,14 @@ export class NoctuaGraphService {
     function rebuild(resp) {
       let noctua_graph = model.graph;
 
-      graphInfo.graph = new noctua_graph();
-      graphInfo.modelId = resp.data().id;
-      graphInfo.graph.load_data_basic(resp.data());
-      graphInfo.modelTitle = null;
-      graphInfo.modelState = null;
-
+      cam.graph = new noctua_graph();
+      cam.modelId = resp.data().id;
+      cam.graph.load_data_basic(resp.data());
+      cam.modelTitle = null;
+      cam.modelState = null;
       // self.createGraphUrls(self.model_id);
-      let annotations = graphInfo.graph.get_annotations_by_key(annotationTitleKey);
-      let stateAnnotations = graphInfo.graph.get_annotations_by_key('state');
+      let annotations = cam.graph.get_annotations_by_key(annotationTitleKey);
+      let stateAnnotations = cam.graph.get_annotations_by_key('state');
 
       if (annotations.length > 0) {
         // modelTitle = annotations[0].value();
@@ -158,25 +150,23 @@ export class NoctuaGraphService {
         // modelState = stateAnnotations[0].value();
       }
 
-      self.graphPreParse(graphInfo.graph).subscribe((data) => {
-        let cam: Cam = <Cam>self.graphToAnnotons(graphInfo.graph);
-        graphInfo.cam.annotons = [...self.annotonsToTable(graphInfo.graph, cam.annotons), ...self.ccComponentsToTable(graphInfo.graph, data)]
-        graphInfo.onGraphChanged.next(graphInfo.cam.annotons);
+      self.graphPreParse(cam.graph).subscribe((data) => {
+        cam.annotons = self.graphToAnnotons(cam.graph);
+        cam.annotons = [...self.annotonsToTable(cam.graph, cam.annotons), ...self.ccComponentsToTable(cam.graph, data)]
+        cam.onGraphChanged.next(cam.annotons);
       })
 
       //  title = graph.get_annotations_by_key('title');
     }
 
     manager.register('merge', function ( /* resp */) {
-      manager.get_model(graphInfo.modelId);
+      manager.get_model(cam.modelId);
     });
     manager.register('rebuild', function (resp) {
       rebuild(resp);
     }, 10);
 
     manager.get_model('gomodel:' + modelId);
-
-    return graphInfo;
   }
 
 
@@ -185,7 +175,7 @@ export class NoctuaGraphService {
   getUserInfo() {
     const self = this;
     let url = self.barista_location + "/user_info_by_token/" + self.barista_token;
-
+  
     return this.$http.get(url)
       .then(function (response) {
         if (response.data && response.data.groups && response.data.groups.length > 0) {
@@ -351,7 +341,7 @@ export class NoctuaGraphService {
   isaNodeClosure(a, b, node, annoton) {
     const self = this;
     let deferred = self.$q.defer();
-
+  
     self.noctuaLookupService.isaClosure(a, b).then(function (data) {
       if (data) {
         node.closures.push(a);
@@ -364,10 +354,10 @@ export class NoctuaGraphService {
         result: data
       });
     });
-
+  
     return deferred.promise;
   }
-*/
+  */
 
   determineAnnotonType(gpObjectNode) {
     const self = this;
@@ -402,7 +392,7 @@ export class NoctuaGraphService {
 
   graphToAnnotons(graph) {
     const self = this;
-    let cam: Cam = new Cam();
+    let annotons: Annoton[] = [];
 
     each(graph.all_edges(), function (e) {
       if (e.predicate_id() === noctuaFormConfig.edge.enabledBy.id) {
@@ -444,18 +434,18 @@ export class NoctuaGraphService {
 
         self.graphToAnnatonDFS(graph, annoton, mfEdgesIn, annotonNode, isDoomed);
 
-        cam.annotons.push(annoton);
+        annotons.push(annoton);
       }
     });
 
     // self.parseNodeClosure(annotons);
 
-    return cam;
+    return annotons;
   }
 
   graphToCCOnly(graph) {
     const self = this;
-    let cam: Cam = new Cam();
+    let annotons: Annoton[] = [];
 
     each(graph.all_edges(), function (e) {
       if (e.predicate_id() === noctuaFormConfig.edge.partOf.id) {
@@ -500,7 +490,7 @@ export class NoctuaGraphService {
             //annoton.populateComplexData();
           }
 
-          cam.annotons.push(annoton);
+          annotons.push(annoton);
         } else {
           annoton.parser.setCardinalityError(annotonNode, ccObjectNode.term, predicateId);
           //  self.graphToAnnatonDFS(graph, annoton, ccEdgesIn, annotonNode, true);
@@ -510,7 +500,7 @@ export class NoctuaGraphService {
 
     //  self.parseNodeClosure(annotons);
 
-    return cam;
+    return annotons;
   }
 
   graphToAnnatonDFS(graph, annoton, mfEdgesIn, annotonNode, isDoomed) {
@@ -579,13 +569,13 @@ export class NoctuaGraphService {
   parseNodeClosure(annotons) {
     const self = this;
     let promises = [];
-  
+   
     each(annotons, function (annoton) {
       each(annoton.nodes, function (node) {
         let term = node.getTerm();
         if (term) {
           promises.push(self.isaNodeClosure(node.noctuaLookupServiceGroup, term.id, node, annoton));
-  
+   
           forOwn(annoton.edges, function (srcEdge, key) {
             each(srcEdge.nodes, function (srcNode) {
               //  let nodeExist = destAnnoton.getNode(key);
@@ -597,10 +587,10 @@ export class NoctuaGraphService {
         }
       });
     });
-  
+   
     self.$q.all(promises).then(function (data) {
       console.log('done node clodure', data)
-  
+   
       each(data, function (entity) {
         //entity.annoton.parser.parseNodeOntology(entity.node);
       });
@@ -661,14 +651,14 @@ export class NoctuaGraphService {
   }
 
   /*
-  
+   
   ccComponentsToTableRows(graph, annoton) {
     const self = this;
     let result = [];
-  
+   
     let gpNode = annoton.getGPNode();
     let ccNode = annoton.getNode('cc');
-  
+   
     let row = {
       gp: gpNode.term.control.value.label,
       cc: ccNode.term.control.value.label,
@@ -676,9 +666,9 @@ export class NoctuaGraphService {
       annoton: annoton,
       annotonPresentation: self.formGrid.getAnnotonPresentation(annoton),
     }
-  
+   
     row.evidence = gpNode.evidence
-  
+   
     return row;
   }
   */
@@ -701,26 +691,26 @@ export class NoctuaGraphService {
     }
   }
 
-  edit(graphInfo, srcNode, destNode) {
+  edit(cam, srcNode, destNode) {
     const self = this;
 
-    let reqs = new minerva_requests.request_set(this.noctuaConfigService.baristaToken, graphInfo.modelId);
+    let reqs = new minerva_requests.request_set(this.noctuaConfigService.baristaToken, cam.modelId);
 
     if (srcNode.hasValue() && destNode.hasValue()) {
-      self.editIndividual(reqs, graphInfo.modelId, srcNode.modelId, srcNode.getTerm().id, destNode.getTerm().id);
+      self.editIndividual(reqs, cam.modelId, srcNode.modelId, srcNode.getTerm().id, destNode.getTerm().id);
     }
 
     each(destNode.evidence, (evidence: Evidence, key) => {
       if (evidence.hasValue()) {
         let srcEvidence: Evidence = <Evidence>_.find(srcNode.evidence, { individualId: evidence.individualId })
         if (srcEvidence) {
-          self.editIndividual(reqs, graphInfo.modelId, srcEvidence.individualId, srcEvidence.getEvidence().id, evidence.getEvidence().id);
+          self.editIndividual(reqs, cam.modelId, srcEvidence.individualId, srcEvidence.getEvidence().id, evidence.getEvidence().id);
         }
       }
     });
 
-    graphInfo.manager.user_token(this.noctuaConfigService.baristaToken);
-    graphInfo.manager.request_with(reqs);
+    cam.manager.user_token(this.noctuaConfigService.baristaToken);
+    cam.manager.request_with(reqs);
   }
 
   editIndividual(reqs, modelId, individualId, oldClassId, classId) {
@@ -737,18 +727,18 @@ export class NoctuaGraphService {
     );
   }
 
-  editIndividual2(reqs, graphInfo, srcNode, destNode) {
+  editIndividual2(reqs, cam, srcNode, destNode) {
     if (srcNode.hasValue() && destNode.hasValue()) {
       reqs.remove_type_from_individual(
         class_expression.cls(srcNode.getTerm().id),
         srcNode.modelId,
-        graphInfo.modelId,
+        cam.modelId,
       );
 
       reqs.add_type_to_individual(
         class_expression.cls(destNode.getTerm().id),
         srcNode.modelId,
-        graphInfo.modelId,
+        cam.modelId,
       );
     }
   }
@@ -759,26 +749,26 @@ export class NoctuaGraphService {
     }
   }
 
-  addEvidence(graphInfo, srcNode, destNode) {
+  addEvidence(cam, srcNode, destNode) {
     this.noctuaConfigService.baristaToken
-    let reqs = new minerva_requests.request_set(this.noctuaConfigService.baristaToken, graphInfo.modelId);
+    let reqs = new minerva_requests.request_set(this.noctuaConfigService.baristaToken, cam.modelId);
 
     if (srcNode.hasValue() && destNode.hasValue()) {
       // let ce = new class_expression(destNode.term.control.value.id);
       reqs.remove_type_from_individual(
         class_expression.cls(srcNode.getTerm().id),
         srcNode.modelId,
-        graphInfo.modelId,
+        cam.modelId,
       );
 
       reqs.add_type_to_individual(
         class_expression.cls(destNode.getTerm().id),
         srcNode.modelId,
-        graphInfo.modelId,
+        cam.modelId,
       );
 
-      graphInfo.manager.user_token(this.noctuaConfigService.baristaToken);
-      graphInfo.manager.request_with(reqs);
+      cam.manager.user_token(this.noctuaConfigService.baristaToken);
+      cam.manager.request_with(reqs);
     }
   }
 

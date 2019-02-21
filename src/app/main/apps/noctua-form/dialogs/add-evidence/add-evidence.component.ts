@@ -6,7 +6,7 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatMenuTrigger } from '@angul
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import * as _ from 'lodash';
-import { Cam } from '@noctua.sparql/models/cam';
+import { Cam } from '@noctua.form/models/annoton/cam';
 import { MatTableDataSource, MatSort } from '@angular/material';
 
 import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loader.service';

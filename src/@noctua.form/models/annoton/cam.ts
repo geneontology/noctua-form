@@ -8,8 +8,21 @@ import { AnnotonError } from "./parser/annoton-error.js";
 import { Annoton } from './annoton'
 
 export class Cam {
-
+  id: string;
+  expanded?: boolean;
+  model?: {};
+  annotatedEntity?: {};
+  camRow?: any;
   _annotons: Annoton[] = [];
+
+  error = false;
+  engine;
+  onGraphChanged;
+  manager;
+  graph;
+  modelId;
+  modelTitle;
+  modelState;
 
   constructor() {
   }
@@ -21,6 +34,7 @@ export class Cam {
   set annotons(annoton) {
     this._annotons = annoton;
   }
+
 
   getMFNodes() {
     const self = this;

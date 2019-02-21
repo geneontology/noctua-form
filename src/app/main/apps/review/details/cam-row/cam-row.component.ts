@@ -14,8 +14,8 @@ const each = require('lodash/forEach');
 import { AnnotonNode } from '@noctua.form/models/annoton/annoton-node';
 import { Evidence } from '@noctua.form/models/annoton/evidence';
 
-import { Cam } from '@noctua.sparql/models/cam';
-import { CamRow } from '@noctua.sparql/models/cam-row';
+import { Cam } from '@noctua.form/models/annoton/cam';
+import { CamRow } from '@noctua.form/models/cam-row';
 import { MatTableDataSource, MatSort } from '@angular/material';
 
 import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loader.service';

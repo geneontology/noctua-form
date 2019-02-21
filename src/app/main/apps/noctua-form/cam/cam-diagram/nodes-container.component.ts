@@ -4,7 +4,7 @@ import { NodeService } from './node.service';
 @Component({
   selector: 'noc-nodes-container',
   templateUrl: './nodes-container.component.html',
-  styleUrls: ['./nodes-container.component.css'],
+  styleUrls: ['./nodes-container.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NodesContainerComponent implements OnChanges {

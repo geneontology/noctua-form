@@ -11,10 +11,10 @@ import { NoctuaGraphService } from '@noctua.form/services/graph.service';
 import { AnnotonNode } from '@noctua.form/models/annoton/annoton-node';
 import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
 import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
-import { Cam } from '../../models/cam';
-import { CamRow } from '../../models/cam-row';
-import { Curator } from '../../models/curator';
-import { Group } from '../../models/group';
+import { Cam } from '@noctua.form/models/annoton/cam';
+import { CamRow } from '@noctua.form/models/cam-row';
+import { Curator } from '@noctua.form/models/curator';
+import { Group } from '@noctua.form/models/group';
 
 import * as _ from 'lodash';
 import { v4 as uuid } from 'uuid';
@@ -199,24 +199,26 @@ export class SparqlService {
   addCam(res) {
     let result: Array<Cam> = [];
 
-    res.forEach((cam) => {
-      let modelId = this.noctuaFormConfigService.getModelId(cam.model.value);
-      result.push({
-        id: uuid(),
-        graph: null,
-        model: Object.assign({}, {
-          id: modelId,
-          title: cam.modelTitle.value,
-          modelInfo: this.noctuaFormConfigService.getModelUrls(modelId)
-        }),
-        annotatedEntity: {},
-        // aspect: this.noctuaFormConfigService.getAspect(this.curieUtil.getCurie(cam.aspect.value)),
-        // term: Object.assign({}, {
-        //    id: this.curieUtil.getCurie(cam.term.value),
-        //  label: cam.termLabel.value
-        //   }),
-      });
+    res.forEach((response) => {
+      let modelId = this.noctuaFormConfigService.getModelId(response.model.value);
+      let cam = new Cam();
+
+      cam.id = uuid();
+      cam.graph = null;
+      cam.model = Object.assign({}, {
+        id: modelId,
+        title: response.modelTitle.value,
+        modelInfo: this.noctuaFormConfigService.getModelUrls(modelId)
+      }),
+        cam.annotatedEntity = {};
+      // aspect: this.noctuaFormConfigService.getAspect(this.curieUtil.getCurie(cam.aspect.value)),
+      // term: Object.assign({}, {
+      //    id: this.curieUtil.getCurie(cam.term.value),
+      //  label: cam.termLabel.value
+      //   }),;
+      result.push(cam);
     });
+
     return result;
   }
 
