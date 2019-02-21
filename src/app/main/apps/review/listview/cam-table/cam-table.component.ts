@@ -98,7 +98,7 @@ export class CamTableComponent implements OnInit, OnDestroy {
   toggleExpand(cam) {
     cam.expanded = true;
     this.noctuaGraphService.getGraphInfo(cam, cam.model.id)
-    cam.graph.onGraphChanged.subscribe((annotons) => {
+    cam.onGraphChanged.subscribe((annotons) => {
       let data = this.summaryGridService.getGrid(cam.graph.annotons);
       this.sparqlService.addCamChildren(cam, data);
     });
