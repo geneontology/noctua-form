@@ -1,0 +1,13 @@
+@import "src/@noctua/scss/noctua";
+@import "src/@noctua.common/scss/noctua.common";
+
+
+
+.node {
+  position: absolute;
+  width: 100px;
+  height: 30px;
+  padding: 4px;
+  box-shadow: 0 10px 40px 0 #B0C1D9;
+  text-align: center;
+}

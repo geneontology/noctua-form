@@ -23,6 +23,11 @@ import { CreateFromExistingDialogComponent } from './dialogs/create-from-existin
 import { LinkToExistingDialogComponent } from './dialogs/link-to-existing/link-to-existing.component';
 import { SelectEvidenceDialogComponent } from './dialogs/select-evidence/select-evidence.component';
 import { SearchDatabaseDialogComponent } from './dialogs/search-database/search-database.component';
+import { CamDiagramComponent } from './cam/cam-diagram/cam-diagram.component';
+import { NodeComponent } from './cam/cam-diagram/node/node.component';
+import { NodesContainerComponent } from './cam/cam-diagram/nodes-container.component';
+
+import { NodeService } from './cam/cam-diagram/node.service';
 
 const routes = [
   {
@@ -38,7 +43,7 @@ const routes = [
     TreeTableModule,
     RouterModule.forChild(routes),
   ],
-  providers: [NoctuaFormDialogService, CamService],
+  providers: [NoctuaFormDialogService, CamService, NodeService],
   declarations: [
     NoctuaFormComponent,
     CamFormComponent,
@@ -53,6 +58,9 @@ const routes = [
     LinkToExistingDialogComponent,
     SelectEvidenceDialogComponent,
     SearchDatabaseDialogComponent,
+    CamDiagramComponent,
+    NodeComponent,
+    NodesContainerComponent
   ],
   entryComponents: [
     NoctuaFormComponent,
@@ -63,7 +71,10 @@ const routes = [
     CreateFromExistingDialogComponent,
     LinkToExistingDialogComponent,
     SelectEvidenceDialogComponent,
-    SearchDatabaseDialogComponent,]
+    SearchDatabaseDialogComponent,
+    NodeComponent,
+    NodesContainerComponent
+  ]
 })
 
 export class NoctuaFormModule {

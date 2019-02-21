@@ -66,6 +66,7 @@
     "http-proxy": "^1.17.0",
     "jquery": "^3.3.1",
     "jsonformatter": "^0.7.0",
+    "jsplumb": "^2.9.0",
     "lodash": "^4.17.4",
     "material-steppers": "^2.0.0",
     "minerva-requests": "0.0.17",
