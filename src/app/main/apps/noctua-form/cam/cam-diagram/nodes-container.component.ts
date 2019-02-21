@@ -1,5 +1,6 @@
 import { Component, OnChanges, AfterViewInit, Input, ViewEncapsulation, ChangeDetectionStrategy, ViewContainerRef, ViewChild } from '@angular/core';
 import { NodeService } from './node.service';
+import { Footer } from 'primeng/components/common/shared';
 
 @Component({
   selector: 'noc-nodes-container',
@@ -22,11 +23,31 @@ export class NodesContainerComponent implements OnChanges, AfterViewInit {
       this.nodes.forEach(node => {
         this.nodeService.addDynamicNode(node);
       })
+      this.foo()
     }
   }
 
 
   ngAfterViewInit() {
     this.nodeService.initJsPlumbInstance();
+    this.foo()
+  }
+
+  foo() {
+    const self = this;
+
+    self.nodeService.jsPlumbInstance.batch(function () {
+      self.nodes.forEach(node => {
+        let connections = node.annoton.annotonConnections;
+
+        connections.forEach(connection => {
+          self.nodeService.jsPlumbInstance.connect({
+            source: node.annoton.connectionId,
+            target: connection.object.modelId,
+            type: "basic"
+          });
+        });
+      });
+    })
   }
 }

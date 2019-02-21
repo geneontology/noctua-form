@@ -1,4 +1,4 @@
-import { Component, Input, AfterViewInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { jsPlumb } from 'jsplumb';
 import { NodeService } from './../node.service';
 
@@ -10,14 +10,24 @@ import { Annoton } from '@noctua.form/models/annoton/annoton';
   styleUrls: ['./node.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class NodeComponent implements AfterViewInit {
+export class NodeComponent implements OnInit, AfterViewInit {
 
   @Input() annoton: Annoton;
 
+  connectionId
+
 
   constructor(private nodeService: NodeService) { }
+
+  ngOnInit() {
+    const self = this;
+    self.connectionId = self.annoton.connectionId
+  }
+
   ngAfterViewInit() {
     const self = this;
+
+
 
     console.log(this.annoton);
 
@@ -27,7 +37,7 @@ export class NodeComponent implements AfterViewInit {
 
     self.nodeService.jsPlumbInstance.registerConnectionType("basic", { anchor: "Continuous", connector: "StateMachine" });
 
-    self.initNode(self.annoton.id);
+    self.initNode(self.connectionId);
 
     var canvas = document.getElementById("canvas");
     // var windows = jsPlumb.getSelector(".statemachine-demo .w");

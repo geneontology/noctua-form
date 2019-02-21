@@ -6,6 +6,13 @@
   .node {
     padding: 16px;
     position: absolute;
+    position: absolute;
+    width: 200px;
+    height: 80px;
+    padding: 4px;
+    //box-shadow: 0 1px 40px 0 #B0C1D9;
+    text-align: center;
+    overflow: hidden;
     z-index: 4;
     border: 1px solid #2e6f9a;
     border-radius: 8px;

@@ -1,9 +1,12 @@
 import * as _ from 'lodash';
 declare const require: any;
 const each = require('lodash/forEach');
+const map = require('lodash/map');
 const uuid = require('uuid/v1');
 import { SaeGraph } from './sae-graph.js';
 import { AnnotonError } from "./parser/annoton-error.js";
+
+import { AnnotonNode } from './annoton-node'
 
 export class Annoton extends SaeGraph {
   nodes;
@@ -29,6 +32,25 @@ export class Annoton extends SaeGraph {
     this.errors = [];
     this.submitErrors = [];
     this.id = uuid();
+  }
+
+  get annotonConnections() {
+    let result = [];
+    let edges = this.getEdges('mf')
+
+    if (edges && edges.nodes) {
+      result = edges.nodes.map((node) => {
+        return node
+      })
+    }
+
+    return result ? result : []
+  }
+
+  get connectionId() {
+    let mfNode: AnnotonNode = this.getMFNode();
+
+    return mfNode ? mfNode.modelId : null
   }
 
   getGPNode() {

@@ -432,9 +432,13 @@ export class NoctuaGraphService {
           annoton.parser.setCardinalityError(annotonNode, gpObjectNode.term, noctuaFormConfig.edge.enabledBy.id);
         }
 
+        self.connectAnnatons(graph, annoton, mfEdgesIn, annotonNode, isDoomed);
+
         self.graphToAnnatonDFS(graph, annoton, mfEdgesIn, annotonNode, isDoomed);
 
         annotons.push(annoton);
+
+
       }
     });
 
@@ -482,6 +486,12 @@ export class NoctuaGraphService {
 
           if (isDoomed) {
             annoton.parser.setCardinalityError(annotonNode, ccObjectNode.term, predicateId);
+          }
+
+          if (annoton.annotonModelType === noctuaFormConfig.annotonModelType.options.bpOnly.name) {
+            let causalEdge = _.find(noctuaFormConfig.causalEdges, {
+              id: predicateId
+            })
           }
 
           self.graphToAnnatonDFS(graph, annoton, gpEdgesIn, annotonNode, isDoomed);
@@ -563,6 +573,27 @@ export class NoctuaGraphService {
 
     return annoton;
 
+  }
+
+  connectAnnatons(graph, annoton, mfEdgesIn, annotonNode, isDoomed) {
+    const self = this;
+    let edge = annoton.getEdges(annotonNode.id);
+
+    each(mfEdgesIn, function (toMFEdge) {
+      let predicateId = toMFEdge.predicate_id();
+      let evidence = self.edgeToEvidence(graph, toMFEdge);
+      let toMFObject = toMFEdge.object_id();
+
+      let causalEdge = _.find(noctuaFormConfig.causalEdges, {
+        id: predicateId
+      })
+
+      if (annotonNode.id === "mf" && causalEdge && predicateId === causalEdge['id']) {
+        let destNode = self.noctuaFormConfigService.generateNode('mf', { id: toMFObject });
+        annoton.addNode(destNode);
+        annoton.addEdgeById('mf', 'mf' + toMFObject, causalEdge);
+      }
+    });
   }
 
   /*
