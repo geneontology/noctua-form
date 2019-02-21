@@ -5,9 +5,10 @@
 
 .node {
   position: absolute;
-  width: 100px;
-  height: 30px;
+  width: 200px;
+  height: 80px;
   padding: 4px;
-  box-shadow: 0 10px 40px 0 #B0C1D9;
+  //box-shadow: 0 1px 40px 0 #B0C1D9;
   text-align: center;
+  overflow: hidden;
 }

@@ -28,7 +28,6 @@ const each = require('lodash/forEach');
 export class CamService {
   baseUrl = environment.spaqrlApiUrl;
   curieUtil: any;
-  cams: any[] = [];
   loading: boolean = false;
   onCamsChanged: BehaviorSubject<any>;
   onCamChanged: BehaviorSubject<any>;
@@ -59,7 +58,7 @@ export class CamService {
     });
     cam.expanded = true;
     this.noctuaGraphService.getGraphInfo(cam, modelId);
-
+    this.onCamChanged.next(cam);
     return cam;
   }
 

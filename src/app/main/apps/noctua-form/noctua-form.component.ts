@@ -122,7 +122,7 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
     // this.cams = this.sparqlService.cams;
     this.cam = this.camService.getCam(modelId)
 
-    this.cam.graph['onGraphChanged'].subscribe((annotons) => {
+    this.cam.onGraphChanged.subscribe((annotons) => {
       if (annotons) {
         let data = this.summaryGridService.getGrid(annotons);
 

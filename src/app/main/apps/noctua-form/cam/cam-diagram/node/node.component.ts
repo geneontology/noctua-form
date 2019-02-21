@@ -1,178 +1,106 @@
-import { Component, Input, AfterViewInit } from '@angular/core';
+import { Component, Input, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { jsPlumb } from 'jsplumb';
+import { NodeService } from './../node.service';
+
+import { Annoton } from '@noctua.form/models/annoton/annoton';
+
 @Component({
   selector: 'noc-node',
   templateUrl: './node.component.html',
-  styleUrls: ['./node.component.scss']
+  styleUrls: ['./node.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class NodeComponent implements AfterViewInit {
 
-  @Input() id: string;
-  jsPlumbInstance;
+  @Input() annoton: Annoton;
 
+
+  constructor(private nodeService: NodeService) { }
   ngAfterViewInit() {
     const self = this;
-    self.jsPlumbInstance = jsPlumb.getInstance({
-      // default drag options
-      DragOptions: { cursor: 'pointer', zIndex: 2000 },
-      // the overlays to decorate each connection with.  note that the label overlay uses a function to generate the label text; in self
-      // case it returns the 'labelText' member that we set on each connection in the 'init' method below.
-      ConnectionOverlays: [
-        ["Arrow", {
-          location: 1,
-          visible: true,
-          width: 11,
-          length: 11,
-          id: "ARROW",
-          events: {
-            click: function () { alert("you clicked on the arrow overlay") }
-          }
-        }],
-        ["Label", {
-          location: 0.1,
-          id: "label",
-          cssClass: "aLabel",
-          events: {
-            tap: function () { alert("hey"); }
-          }
-        }]
-      ],
-      Container: "cam-canvas"
+
+    console.log(this.annoton);
+
+
+
+
+
+    self.nodeService.jsPlumbInstance.registerConnectionType("basic", { anchor: "Continuous", connector: "StateMachine" });
+
+    self.initNode(self.annoton.id);
+
+    var canvas = document.getElementById("canvas");
+    // var windows = jsPlumb.getSelector(".statemachine-demo .w");
+
+    // bind a click listener to each connection; the connection is deleted. you could of course
+    // just do this: self.nodeService.jsPlumbInstance.bind("click", self.nodeService.jsPlumbInstance.deleteConnection), but I wanted to make it clear what was
+    // happening.
+    self.nodeService.jsPlumbInstance.bind("click", function (c) {
+      self.nodeService.jsPlumbInstance.deleteConnection(c);
     });
 
-
-    self.jsPlumbInstance.draggable(self.id, {
-      containment: true
+    // bind a connection listener. note that the parameter passed to this function contains more than
+    // just the new connection - see the documentation for a full list of what is included in 'info'.
+    // this listener sets the connection's internal
+    // id as the label overlay's text.
+    self.nodeService.jsPlumbInstance.bind("connection", function (info) {
+      info.connection.getOverlay("label").setLabel(info.connection.id);
     });
-    var endpointOptions = { isSource: true, isTarget: true };
 
-    var basicType = {
-      connector: "StateMachine",
-      paintStyle: { stroke: "red", strokeWidth: 4 },
-      hoverPaintStyle: { stroke: "blue" },
-      overlays: [
-        "Arrow"
-      ]
-    };
-    self.jsPlumbInstance.registerConnectionType("basic", basicType);
+    // bind a double click listener to "canvas"; add new node when this occurs.
 
-    // self is the paint style for the connecting lines..
-    var connectorPaintStyle = {
-      strokeWidth: 2,
-      stroke: "#61B7CF",
-      joinstyle: "round",
-      outlineStroke: "white",
-      outlineWidth: 2
-    },
-      // .. and self is the hover style.
-      connectorHoverStyle = {
-        strokeWidth: 3,
-        stroke: "#216477",
-        outlineWidth: 5,
-        outlineStroke: "white"
-      },
-      endpointHoverStyle = {
-        fill: "#216477",
-        stroke: "#216477"
-      },
-      // the definition of source endpoints (the small blue ones)
-      sourceEndpoint = {
-        endpoint: "Dot",
-        paintStyle: {
-          stroke: "#7AB02C",
-          fill: "transparent",
-          radius: 7,
-          strokeWidth: 1
-        },
-        isSource: true,
-        connector: ["Flowchart", { stub: [40, 60], gap: 10, cornerRadius: 5, alwaysRespectStubs: true }],
-        connectorStyle: connectorPaintStyle,
-        hoverPaintStyle: endpointHoverStyle,
-        connectorHoverStyle: connectorHoverStyle,
-        dragOptions: {},
-        overlays: [
-          ["Label", {
-            location: [0.5, 1.5],
-            label: "Drag",
-            cssClass: "endpointSourceLabel",
-            visible: false
-          }]
-        ]
-      },
-      // the definition of target endpoints (will appear when the user drags a connection)
-      targetEndpoint = {
-        endpoint: "Dot",
-        paintStyle: { fill: "#7AB02C", radius: 7 },
-        hoverPaintStyle: endpointHoverStyle,
-        maxConnections: -1,
-        dropOptions: { hoverClass: "hover", activeClass: "active" },
-        isTarget: true,
-        overlays: [
-          ["Label", { location: [0.5, -0.5], label: "Drop", cssClass: "endpointTargetLabel", visible: false }]
-        ]
-      },
-      init = function (connection) {
-        connection.getOverlay("label").setLabel(connection.sourceId.substring(15) + "-" + connection.targetId.substring(15));
-      };
 
-    var _addEndpoints = function (toId, sourceAnchors, targetAnchors) {
-      for (var i = 0; i < sourceAnchors.length; i++) {
-        var sourceUUID = toId + sourceAnchors[i];
-        self.jsPlumbInstance.addEndpoint(toId, sourceEndpoint, {
-          anchor: sourceAnchors[i], uuid: sourceUUID
-        });
-      }
-      for (var j = 0; j < targetAnchors.length; j++) {
-        var targetUUID = toId + targetAnchors[j];
-        self.jsPlumbInstance.addEndpoint(toId, targetEndpoint, { anchor: targetAnchors[j], uuid: targetUUID });
-      }
-    };
+    //
+    // initialise element as connection targets and source.
+    //
+
 
     // suspend drawing and initialise.
-    self.jsPlumbInstance.batch(function () {
+    self.nodeService.jsPlumbInstance.batch(function () {
+      //   for (var i = 0; i < windows.length; i++) {
+      //        initNode(windows[i], true);
+      //    }
+      // and finally, make a few connections
+      //  self.nodeService.jsPlumbInstance.connect({ source: "opened", target: "phone1", type:"basic" });
+      // self.nodeService.jsPlumbInstance.connect({ source: "phone1", target: "phone1", type:"basic" });
+      // self.nodeService.jsPlumbInstance.connect({ source: "phone1", target: "inperson", type:"basic" });
 
-      _addEndpoints(self.id, ["TopCenter", "BottomCenter"], ["LeftMiddle", "RightMiddle"]);
+      // self.nodeService.jsPlumbInstance.connect({
+      //     source:"phone2",
+      //     target:"rejected",
+      //      type:"basic"
+      //   });
+    });
+  }
 
-      // listen for new connections; initialise them the same way we initialise the connections at startup.
-      self.jsPlumbInstance.bind("connection", function (connInfo, originalEvent) {
-        init(connInfo.connection);
-      });
+  initNode(el) {
+    const self = this;
+    // initialise draggable elements.
+    self.nodeService.jsPlumbInstance.draggable(el);
 
-      // make all the window divs draggable
-      // self.jsPlumbInstance.draggable(jsPlumb.getSelector(".flowchart-demo .window"), { grid: [20, 20] });
-      // THIS DEMO ONLY USES getSelector FOR CONVENIENCE. Use your library's appropriate selector
-      // method, or document.querySelectorAll:
-      //jsPlumb.draggable(document.querySelectorAll(".window"), { grid: [20, 20] });
-
-      // connect a few up
-      // self.jsPlumbInstance.connect({ uuids: ["Window2BottomCenter", "Window3TopCenter"] });
-      //
-
-      //
-      // listen for clicks on connections, and offer to delete connections on click.
-      //
-      self.jsPlumbInstance.bind("click", function (conn, originalEvent) {
-        // if (confirm("Delete connection from " + conn.sourceId + " to " + conn.targetId + "?"))
-        //   self.jsPlumbInstance.detach(conn);
-        conn.toggleType("basic");
-      });
-
-      self.jsPlumbInstance.bind("connectionDrag", function (connection) {
-        console.log("connection " + connection.id + " is being dragged. suspendedElement is ", connection.suspendedElement, " of type ", connection.suspendedElementType);
-      });
-
-      self.jsPlumbInstance.bind("connectionDragStop", function (connection) {
-        console.log("connection " + connection.id + " was dragged");
-      });
-
-      self.jsPlumbInstance.bind("connectionMoved", function (params) {
-        console.log("connection " + params.connection.id + " was moved");
-      });
+    self.nodeService.jsPlumbInstance.makeSource(el, {
+      filter: ".ep",
+      anchor: "Continuous",
+      connectorStyle: { stroke: "#5c96bc", strokeWidth: 2, outlineStroke: "transparent", outlineWidth: 4 },
+      connectionType: "basic",
+      extract: {
+        "action": "the-action"
+      },
+      maxConnections: 2,
+      onMaxConnections: function (info, e) {
+        alert("Maximum connections (" + info.maxConnections + ") reached");
+      }
     });
 
+    self.nodeService.jsPlumbInstance.makeTarget(el, {
+      dropOptions: { hoverClass: "dragHover" },
+      anchor: "Continuous",
+      allowLoopback: true
+    });
 
-
-
-    console.log(self.id)
-  }
+    // this is not part of the core demo functionality; it is a means for the Toolkit edition's wrapped
+    // version of this demo to find out about new nodes being added.
+    //
+    // self.nodeService.jsPlumbInstance.fire("jsPlumbDemoNodeAdded", el);
+  };
 }

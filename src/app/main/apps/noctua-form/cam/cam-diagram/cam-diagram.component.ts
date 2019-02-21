@@ -74,7 +74,7 @@ export class CamDiagramComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit() {
-    this.cam.graph['onGraphChanged'].subscribe((annotons) => {
+    this.cam.onGraphChanged.subscribe((annotons) => {
       if (annotons) {
         let data = this.summaryGridService.getGrid(annotons);
 

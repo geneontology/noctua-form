@@ -1,119 +1,105 @@
 #cam-canvas {
   position: relative;
   height: 500px;
+  background-color: #F2D4FE;
 
   .node {
-    border: 1px solid #346789;
-    box-shadow: 2px 2px 19px #aaa;
-    -o-box-shadow: 2px 2px 19px #aaa;
-    -webkit-box-shadow: 2px 2px 19px #aaa;
-    -moz-box-shadow: 2px 2px 19px #aaa;
-    -moz-border-radius: 0.5em;
-    border-radius: 0.5em;
-    opacity: 0.8;
-    width: 80px;
-    height: 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    text-align: center;
-    z-index: 20;
+    padding: 16px;
     position: absolute;
-    background-color: #eeeeef;
-    color: black;
-    font-family: helvetica, sans-serif;
-    padding: 0.5em;
-    font-size: 0.9em;
-    -webkit-transition: -webkit-box-shadow 0.15s ease-in;
-    -moz-transition: -moz-box-shadow 0.15s ease-in;
-    -o-transition: -o-box-shadow 0.15s ease-in;
-    transition: box-shadow 0.15s ease-in;
-  }
-
-  .demo {
-    /* for IE10+ touch devices */
-    touch-action: none;
+    z-index: 4;
+    border: 1px solid #2e6f9a;
+    border-radius: 8px;
+    opacity: 0.8;
+    cursor: move;
+    background-color: white;
+    font-size: 11px;
+    -webkit-transition: background-color 0.25s ease-in;
+    -moz-transition: background-color 0.25s ease-in;
+    transition: background-color 0.25s ease-in;
   }
 
   .node:hover {
-    box-shadow: 2px 2px 19px #444;
-    -o-box-shadow: 2px 2px 19px #444;
-    -webkit-box-shadow: 2px 2px 19px #444;
-    -moz-box-shadow: 2px 2px 19px #444;
-    opacity: 0.6;
-  }
-
-  .active {
-    border: 1px dotted green;
-  }
-
-  .hover {
-    border: 1px dotted red;
-  }
-
-  #flowchartWindow1 {
-    top: 34em;
-    left: 5em;
-  }
-
-  #flowchartWindow2 {
-    top: 7em;
-    left: 36em;
-  }
-
-  #flowchartWindow3 {
-    top: 27em;
-    left: 48em;
-  }
-
-  #flowchartWindow4 {
-    top: 23em;
-    left: 22em;
-  }
-
-  .flowchart-demo .jtk-connector {
-    z-index: 4;
-  }
-
-  .flowchart-demo .jtk-endpoint,
-  .endpointTargetLabel,
-  .endpointSourceLabel {
-    z-index: 21;
-    cursor: pointer;
-  }
-
-  .flowchart-demo .aLabel {
-    background-color: white;
-    padding: 0.4em;
-    font: 12px sans-serif;
-    color: #444;
-    z-index: 21;
-    border: 1px dotted gray;
-    opacity: 0.8;
-    cursor: pointer;
-  }
-
-  .aLabel.jtk-hover {
-    background-color: #5C96BC;
+    background-color: #5c96bc;
     color: white;
-    border: 1px solid white;
+
   }
 
-  .node.jtk-connected {
-    border: 1px solid green;
+  .aLabel {
+    -webkit-transition: background-color 0.25s ease-in;
+    -moz-transition: background-color 0.25s ease-in;
+    transition: background-color 0.25s ease-in;
   }
 
-  .jtk-drag {
-    outline: 4px solid pink !important;
+  .aLabel.jtk-hover,
+  .jtk-source-hover,
+  .jtk-target-hover {
+    background-color: #1e8151;
+    color: white;
+  }
+
+  .aLabel {
+    background-color: white;
+    opacity: 0.8;
+    padding: 0.3em;
+    border-radius: 0.5em;
+    border: 1px solid #346789;
+    cursor: pointer;
+  }
+
+  .ep {
+    position: absolute;
+    bottom: 37%;
+    right: 5px;
+    width: 1em;
+    height: 1em;
+    background-color: orange;
+    cursor: pointer;
+    box-shadow: 0 0 2px black;
+    -webkit-transition: -webkit-box-shadow 0.25s ease-in;
+    -moz-transition: -moz-box-shadow 0.25s ease-in;
+    transition: box-shadow 0.25s ease-in;
+  }
+
+  .ep:hover {
+    box-shadow: 0 0 6px black;
+  }
+
+  .statemachine-demo .jtk-endpoint {
+    z-index: 3;
+  }
+
+  #opened {
+    left: 10em;
+    top: 5em;
+  }
+
+  #phone1 {
+    left: 35em;
+    top: 12em;
+    width: 7em;
+  }
+
+  #inperson {
+    left: 12em;
+    top: 23em;
+  }
+
+  #phone2 {
+    left: 28em;
+    top: 24em;
+  }
+
+  #rejected {
+    left: 10em;
+    top: 35em;
+  }
+
+  .dragHover {
+    border: 2px solid orange;
   }
 
   path,
   .jtk-endpoint {
     cursor: pointer;
-  }
-
-  .jtk-overlay {
-    background-color: transparent;
   }
 }
