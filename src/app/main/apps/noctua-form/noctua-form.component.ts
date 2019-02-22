@@ -39,39 +39,6 @@ import { Cam } from '@noctua.form/models/annoton/cam';
   animations: noctuaAnimations
 })
 export class NoctuaFormComponent implements OnInit, OnDestroy {
-  dataSource: CamsDataSource | null;
-  displayedColumns = [
-    'expand',
-    'annotatedEntity',
-    'relationship',
-    'aspect',
-    'term',
-    'relationshipExt',
-    'extension',
-    'evidence',
-    'reference',
-    'with',
-    'assignedBy'];
-
-  searchCriteria: any = {};
-  searchFormData: any = []
-  searchForm: FormGroup;
-
-
-  @ViewChild('leftDrawer')
-  leftDrawer: MatDrawer;
-
-  @ViewChild('rightDrawer')
-  rightDrawer: MatDrawer;
-
-  @ViewChild(MatPaginator)
-  paginator: MatPaginator;
-
-  @ViewChild('filter')
-  filter: ElementRef;
-
-  @ViewChild(MatSort)
-  sort: MatSort;
 
   cam: Cam;
   searchResults = [];
@@ -91,6 +58,7 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
     private sparqlService: SparqlService,
     private noctuaTranslationLoader: NoctuaTranslationLoaderService) {
 
+    this.unsubscribeAll = new Subject();
     this.route
       .queryParams
       .subscribe(params => {
@@ -98,28 +66,15 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
         this.loadCam(this.modelId);
       });
 
-    this.noctuaTranslationLoader.loadTranslations(english);
-    this.searchFormData = this.noctuaFormConfigService.createReviewSearchFormData();
-    this.unsubscribeAll = new Subject();
+    console.log("PPPP")
+    //this.searchFormData = this.noctuaFormConfigService.createReviewSearchFormData();
+
   }
 
   ngOnInit(): void {
-    this.noctuaFormService.setLeftDrawer(this.leftDrawer);
-    this.noctuaFormService.setRightDrawer(this.rightDrawer);
-  }
-
-  toggleLeftDrawer(panel) {
-    this.noctuaFormService.toggleLeftDrawer(panel);
-  }
-
-  search() {
-    let searchCriteria = this.searchForm.value;
-    console.dir(searchCriteria)
-    this.noctuaSearchService.search(searchCriteria);
   }
 
   loadCam(modelId) {
-    // this.cams = this.sparqlService.cams;
     this.cam = this.camService.getCam(modelId)
 
     this.cam.onGraphChanged.subscribe((annotons) => {
@@ -127,113 +82,13 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
         let data = this.summaryGridService.getGrid(annotons);
 
         this.camService.addCamChildren(this.cam, data);
-        console.log('poo', this.cam)
-        this.dataSource = new CamsDataSource(this.sparqlService, this.paginator, this.sort);
       }
     });
-  }
-
-  toggleExpand(cam) {
-    cam.expanded = true;
-    this.noctuaGraphService.getGraphInfo(cam, cam.model.id)
-    cam.onGraphChanged.subscribe((annotons) => {
-      let data = this.summaryGridService.getGrid(annotons);
-      this.sparqlService.addCamChildren(cam, data);
-      //  this.dataSource = new CamsDataSource(this.sparqlService, this.paginator, this.sort);
-    });
-  }
-
-  openCamEdit(cam) {
-    this.noctuaFormDialogService.openCamRowEdit(cam);
-  }
-
-  selectCam(cam) {
-    this.sparqlService.onCamChanged.next(cam);
   }
 
   ngOnDestroy(): void {
     this.unsubscribeAll.next();
-    this.unsubscribeAll.complete(); ``
+    this.unsubscribeAll.complete();
   }
 }
 
-export class CamsDataSource extends DataSource<any> {
-  private filterChange = new BehaviorSubject('');
-  private filteredDataChange = new BehaviorSubject('');
-
-  constructor(
-    private sparqlService: SparqlService,
-    private matPaginator: MatPaginator,
-    private matSort: MatSort
-  ) {
-    super();
-    this.filteredData = this.sparqlService.cams;
-  }
-
-  get filteredData(): any {
-    return this.filteredDataChange.value;
-  }
-
-  set filteredData(value: any) {
-    this.filteredDataChange.next(value);
-  }
-
-  get filter(): string {
-    return this.filterChange.value;
-  }
-
-  set filter(filter: string) {
-    this.filterChange.next(filter);
-  }
-
-  connect(): Observable<any[]> {
-    const displayDataChanges = [
-      this.sparqlService.onCamsChanged,
-      this.matPaginator.page,
-      this.filterChange,
-      this.matSort.sortChange
-    ];
-
-    return merge(...displayDataChanges).pipe(map(() => {
-      let data = this.sparqlService.cams.slice();
-      data = this.filterData(data);
-      this.filteredData = [...data];
-      data = this.sortData(data);
-      const startIndex = this.matPaginator.pageIndex * this.matPaginator.pageSize;
-      return data.splice(startIndex, this.matPaginator.pageSize);
-    })
-    );
-  }
-
-  filterData(data): any {
-    if (!this.filter) {
-      return data;
-    }
-    return NoctuaUtils.filterArrayByString(data, this.filter);
-  }
-
-  sortData(data): any[] {
-    if (!this.matSort.active || this.matSort.direction === '') {
-      return data;
-    }
-
-    return data.sort((a, b) => {
-      let propertyA: number | string = '';
-      let propertyB: number | string = '';
-
-      switch (this.matSort.active) {
-        case 'goname':
-          [propertyA, propertyB] = [a.goname, b.goname];
-          break;
-      }
-
-      const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
-      const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
-
-      return (valueA < valueB ? -1 : 1) * (this.matSort.direction === 'asc' ? 1 : -1);
-    });
-  }
-
-  disconnect(): void {
-  }
-}
