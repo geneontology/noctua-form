@@ -7,6 +7,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { NoctuaDirectivesModule } from './directives/directives';
 import { NoctuaPipesModule } from './pipes/pipes.module';
+import { DragDropModule } from '@angular/cdk/drag-drop'
 
 @NgModule({
     imports: [
@@ -16,7 +17,8 @@ import { NoctuaPipesModule } from './pipes/pipes.module';
         ReactiveFormsModule,
         FlexLayoutModule,
         NoctuaDirectivesModule,
-        NoctuaPipesModule
+        NoctuaPipesModule,
+        DragDropModule
     ],
     exports: [
         CommonModule,
@@ -25,7 +27,8 @@ import { NoctuaPipesModule } from './pipes/pipes.module';
         ReactiveFormsModule,
         FlexLayoutModule,
         NoctuaDirectivesModule,
-        NoctuaPipesModule
+        NoctuaPipesModule,
+        DragDropModule
     ]
 })
 

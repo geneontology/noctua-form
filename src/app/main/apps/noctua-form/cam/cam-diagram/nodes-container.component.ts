@@ -1,6 +1,6 @@
 import { Component, OnChanges, AfterViewInit, Input, ViewEncapsulation, ChangeDetectionStrategy, ViewContainerRef, ViewChild } from '@angular/core';
 import { NodeService } from './node.service';
-import { Footer } from 'primeng/components/common/shared';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'noc-nodes-container',
@@ -30,6 +30,7 @@ export class NodesContainerComponent implements OnChanges, AfterViewInit {
 
   ngAfterViewInit() {
     this.nodeService.initJsPlumbInstance();
+    //  this.nodeService.jsPlumbInstance.setZoom(0.25);
     this.foo()
   }
 

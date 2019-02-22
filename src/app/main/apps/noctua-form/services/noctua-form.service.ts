@@ -27,13 +27,11 @@ const each = require('lodash/forEach');
 export class NoctuaFormService {
 
   leftPanel = {
-    search: {
+    form: {
       id: 1
     },
-    curator: {
+    diagramMenu: {
       id: 2
-    }, species: {
-      id: 3
     }
   }
 
@@ -52,7 +50,7 @@ export class NoctuaFormService {
     this.onCuratorsChanged = new BehaviorSubject([]);
     this.onGroupsChanged = new BehaviorSubject([]);
 
-    this.selectedLeftPanel = this.leftPanel.search;
+    this.selectedLeftPanel = this.leftPanel.form;
     console.log(this.selectedLeftPanel)
 
   }

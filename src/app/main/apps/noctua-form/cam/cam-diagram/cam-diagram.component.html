@@ -1,1 +1,14 @@
-<noc-nodes-container [nodes]="cam?.annotons"></noc-nodes-container>
+<div class="noc-section-body" fxLayout="row" fxLayoutAlign="start">
+
+
+  <div fxFlex="100px" cdkDropList #doneList="cdkDropList" [cdkDropListData]="done" [cdkDropListConnectedTo]="[todoList]"
+    class="example-list">
+    <div class="example-box" cdkDrag>
+      Activity
+    </div>
+  </div>
+  <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo" [cdkDropListConnectedTo]="[doneList]" class="example-list w-100-p h-100-p"
+    (cdkDropListDropped)="drop($event)">
+    <noc-nodes-container [nodes]="cam?.annotons" class="w-100-p h-100-p"></noc-nodes-container>
+  </div>
+</div>

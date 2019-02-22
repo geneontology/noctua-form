@@ -1,84 +1,100 @@
 <div class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
   <div class="noc-sidemenu" fxLayout="column" fxLayoutAlign="start center">
-    <button mat-icon-button (click)="toggleLeftDrawer(noctuaFormService.leftPanel.search)" matTooltip="Search"
+    <button mat-icon-button (click)="toggleLeftDrawer(noctuaFormService.leftPanel.diagramMenu)" matTooltip="Search"
       [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
       <mat-icon> assignment </mat-icon>
     </button>
   </div>
   <mat-drawer-container class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
-    <mat-drawer #leftDrawer class="noc-left-drawer" fxFlex="1100px" mode="side" position="start">
+    <mat-drawer #leftDrawer class="noc-left-drawer" fxFlex="200px" mode="side" position="start">
       <div [ngSwitch]="noctuaFormService.selectedLeftPanel.id" class="h-100-p">
-        <noc-cam-form *ngSwitchCase="noctuaFormService.leftPanel.search.id"></noc-cam-form>
+        <noc-cam-form *ngSwitchCase="noctuaFormService.leftPanel.form.id"></noc-cam-form>
+        <noc-diagram-menu *ngSwitchCase="noctuaFormService.leftPanel.diagramMenu.id"></noc-diagram-menu>
       </div>
     </mat-drawer>
-
     <mat-drawer-content class="cams-table" noctuaPerfectScrollbar>
-      <noc-cam-diagram [cam]="cam"></noc-cam-diagram>
-      <div class="noc-cams-table-header w-100-p">
-        <div fxFlex="80px">
+      <mat-tab-group>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+            Activity Flow
+          </ng-template>
+          <noc-cam-diagram [cam]="cam"></noc-cam-diagram>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+            Table
+          </ng-template>
+          <div class="noc-cams-table-header w-100-p">
+            <div fxFlex="80px">
 
-        </div>
-        <div fxFlex="150px">
-          <p> Annotated Entity</p>
-        </div>
-        <div fxFlex="120px">
-          <p>Relationship</p>
-        </div>
-        <div fxFlex="50px">
-          <p>Asp</p>
-        </div>
-        <div fxFlex="150px">
-          <p>Term</p>
-        </div>
-        <div fxFlex="120px">
-          <p>Relationship Ext</p>
-        </div>
-        <div fxFlex="150px">
-          <p>Extension</p>
-        </div>
-        <div fxFlex="150px">
-          <p>Evidence</p>
-        </div>
-        <div fxFlex="120px">
-          <p>Reference</p>
-        </div>
-        <div fxFlex="120px">
-          <p>Evidence</p>
-        </div>
-        <div fxFlex="120px">
-          <p>With</p>
-        </div>
-        <div fxFlex="120px">
-          <p>Assigned By</p>
-        </div>
-      </div>
-      <div>
-        <div class="noc-cam-table-heading" fxLayout="row" fxLayoutAlign="start center">
-          <div fxFlex="80px" (click)="$event.stopPropagation()">
-            <button mat-icon-button (click)="toggleExpand(cam)" ckass="noc-button-small">
-              <mat-icon *ngIf="!cam.expanded" class="s-16 fa fa-caret-right">
-              </mat-icon>
-              <mat-icon *ngIf="cam.expanded" class="s-12 mat-icon-rtl-mirror">
-                signal_cellular_4_bar
-              </mat-icon>
-            </button>
-            <button mat-icon-button [matMenuTriggerFor]="changeView">
-              <mat-icon>
-                apps
-              </mat-icon>
-            </button>
-            <mat-menu #changeView="matMenu">
-              <a *ngFor="let workbench of cam.model?.modelInfo.workbenches" href="{{workbench.url}}" target="_blank"
-                mat-menu-item>
-                {{workbench.label}}
-              </a>
-            </mat-menu>
+            </div>
+            <div fxFlex="150px">
+              <p> Annotated Entity</p>
+            </div>
+            <div fxFlex="120px">
+              <p>Relationship</p>
+            </div>
+            <div fxFlex="50px">
+              <p>Asp</p>
+            </div>
+            <div fxFlex="150px">
+              <p>Term</p>
+            </div>
+            <div fxFlex="120px">
+              <p>Relationship Ext</p>
+            </div>
+            <div fxFlex="150px">
+              <p>Extension</p>
+            </div>
+            <div fxFlex="150px">
+              <p>Evidence</p>
+            </div>
+            <div fxFlex="120px">
+              <p>Reference</p>
+            </div>
+            <div fxFlex="120px">
+              <p>Evidence</p>
+            </div>
+            <div fxFlex="120px">
+              <p>With</p>
+            </div>
+            <div fxFlex="120px">
+              <p>Assigned By</p>
+            </div>
           </div>
-          <span class="grey-500-fg">Model: </span> {{cam.model?.title }}
-        </div>
-        <app-cam-table [camRow]="cam.camRow" class="noc-cam-table-body" fxLayout="row" fxLayoutAlign="start center">
-        </app-cam-table>
-      </div>
+          <div>
+            <div class="noc-cam-table-heading" fxLayout="row" fxLayoutAlign="start center">
+              <div fxFlex="80px" (click)="$event.stopPropagation()">
+                <button mat-icon-button (click)="toggleExpand(cam)" ckass="noc-button-small">
+                  <mat-icon *ngIf="!cam.expanded" class="s-16 fa fa-caret-right">
+                  </mat-icon>
+                  <mat-icon *ngIf="cam.expanded" class="s-12 mat-icon-rtl-mirror">
+                    signal_cellular_4_bar
+                  </mat-icon>
+                </button>
+                <button mat-icon-button [matMenuTriggerFor]="changeView">
+                  <mat-icon>
+                    apps
+                  </mat-icon>
+                </button>
+                <mat-menu #changeView="matMenu">
+                  <a *ngFor="let workbench of cam.model?.modelInfo.workbenches" href="{{workbench.url}}" target="_blank"
+                    mat-menu-item>
+                    {{workbench.label}}
+                  </a>
+                </mat-menu>
+              </div>
+              <span class="grey-500-fg">Model: </span> {{cam.model?.title }}
+            </div>
+            <app-cam-table [camRow]="cam.camRow" class="noc-cam-table-body" fxLayout="row" fxLayoutAlign="start center">
+            </app-cam-table>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+
+
     </mat-drawer-content>
     <mat-drawer #rightDrawer class="noc-right-drawer" fxFlex="500px" noctuaPerfectScrollbar mode="side" position="end">
       <noc-cam-row>

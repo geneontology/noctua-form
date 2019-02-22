@@ -2,6 +2,13 @@
   position: relative;
   height: 500px;
   background-color: #F2D4FE;
+  overflow: auto;
+
+  // -webkit-transform: scale(0.75);
+  // -moz-transform: scale(0.75);
+  // -ms-transform: scale(0.75);
+  // -o-transform: scale(0.75);
+  // transform: scale(0.75);
 
   .node {
     padding: 16px;

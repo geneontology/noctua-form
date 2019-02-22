@@ -230,7 +230,7 @@ export class NoctuaGraphService {
     return result;
   }
 
-  getNodePosition(node) {
+  getNodeLocation(node) {
     let result = {
       x: 0,
       y: 0
@@ -271,7 +271,7 @@ export class NoctuaGraphService {
         id: self.getNodeId(node),
         label: self.getNodeLabel(node),
       },
-      location: self.getNodePosition(node),
+      location: self.getNodeLocation(node),
       isComplement: self.getNodeIsComplement(node)
     }
 
