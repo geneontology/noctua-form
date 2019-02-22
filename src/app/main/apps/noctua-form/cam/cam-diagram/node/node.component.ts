@@ -1,8 +1,9 @@
-import { Component, Input, OnInit, AfterViewInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ElementRef, Renderer2, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { jsPlumb } from 'jsplumb';
 import { NodeService } from './../node.service';
 
 import { Annoton } from '@noctua.form/models/annoton/annoton';
+import { AnnotonNode } from '@noctua.form/models/annoton/annoton-node';
 
 @Component({
   selector: 'noc-node',
@@ -15,25 +16,28 @@ export class NodeComponent implements OnInit, AfterViewInit {
   @Input() annoton: Annoton;
 
   connectionId
+  connector = new AnnotonNode();
 
 
-  constructor(private nodeService: NodeService) { }
+  constructor(private nodeService: NodeService,
+    private elRef: ElementRef,
+    private renderer: Renderer2) { }
 
   ngOnInit() {
     const self = this;
     self.connectionId = self.annoton.connectionId
+
+    self.connector = self.annoton.getMFNode();
   }
 
   ngAfterViewInit() {
     const self = this;
 
-
-
     console.log(this.annoton);
-
-
-
-
+    console.log(this.elRef.nativeElement);
+    let nodeEl = this.elRef.nativeElement.children[0]
+    this.renderer.setStyle(nodeEl, 'left', this.connector.location.x + 'px');
+    this.renderer.setStyle(nodeEl, 'top', this.connector.location.y + 'px');
 
     self.nodeService.jsPlumbInstance.registerConnectionType("basic", { anchor: "Continuous", connector: "StateMachine" });
 
@@ -64,23 +68,6 @@ export class NodeComponent implements OnInit, AfterViewInit {
     // initialise element as connection targets and source.
     //
 
-
-    // suspend drawing and initialise.
-    self.nodeService.jsPlumbInstance.batch(function () {
-      //   for (var i = 0; i < windows.length; i++) {
-      //        initNode(windows[i], true);
-      //    }
-      // and finally, make a few connections
-      //  self.nodeService.jsPlumbInstance.connect({ source: "opened", target: "phone1", type:"basic" });
-      // self.nodeService.jsPlumbInstance.connect({ source: "phone1", target: "phone1", type:"basic" });
-      // self.nodeService.jsPlumbInstance.connect({ source: "phone1", target: "inperson", type:"basic" });
-
-      // self.nodeService.jsPlumbInstance.connect({
-      //     source:"phone2",
-      //     target:"rejected",
-      //      type:"basic"
-      //   });
-    });
   }
 
   initNode(el) {

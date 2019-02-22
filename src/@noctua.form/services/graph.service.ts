@@ -230,6 +230,26 @@ export class NoctuaGraphService {
     return result;
   }
 
+  getNodePosition(node) {
+    let result = {
+      x: 0,
+      y: 0
+    };
+
+    let x_annotations = node.get_annotations_by_key('hint-layout-x');
+    let y_annotations = node.get_annotations_by_key('hint-layout-y');
+
+    if (x_annotations.length === 1) {
+      result.x = parseInt(x_annotations[0].value());
+    }
+
+    if (y_annotations.length === 1) {
+      result.y = parseInt(y_annotations[0].value());
+    }
+
+    return result;
+  }
+
   getNodeIsComplement(node) {
     var result = true;
     if (node) {
@@ -251,6 +271,7 @@ export class NoctuaGraphService {
         id: self.getNodeId(node),
         label: self.getNodeLabel(node),
       },
+      location: self.getNodePosition(node),
       isComplement: self.getNodeIsComplement(node)
     }
 
@@ -413,6 +434,7 @@ export class NoctuaGraphService {
         );
 
         let annotonNode = annoton.getNode('mf');
+        annotonNode.location = mfSubjectNode.location;
         annotonNode.setTerm(mfSubjectNode.term);
         annotonNode.setEvidence(evidence);
         annotonNode.setIsComplement(mfSubjectNode.isComplement);
@@ -547,6 +569,7 @@ export class NoctuaGraphService {
               node.object.modelId = toMFObject;
               node.object.setEvidence(evidence);
               node.object.setTerm(subjectNode.term);
+              node.object.location = subjectNode.location;
               node.object.setIsComplement(subjectNode.isComplement)
 
               //self.check

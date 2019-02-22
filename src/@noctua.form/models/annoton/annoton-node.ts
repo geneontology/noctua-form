@@ -33,6 +33,12 @@ export class AnnotonNode {
   warnings
   status
 
+  //UI
+  _location = {
+    x: 0,
+    y: 0
+  }
+
   constructor() {
     this.id;
     this.nodeGroup = {}
@@ -70,6 +76,15 @@ export class AnnotonNode {
     this.warnings = [];
     this.status = '0';
 
+
+  }
+
+  get location() {
+    return this._location;
+  }
+
+  set location(location) {
+    this._location = location
   }
 
   getTerm() {
