@@ -3,10 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { ReviewComponent } from './review.component';
 import { ReviewListviewComponent } from './listview/review-listview..component';
-import { ReviewTreeviewComponent } from './treeview/review-treeview.component';
 import { NoctuaSharedModule } from '@noctua/shared.module';
-import { TreeTableModule } from 'primeng/treetable';
-import { TreeNode } from 'primeng/api';
 import { ReviewDialogService } from './dialog.service';
 import { NoctuaDataService } from '@noctua.common/services/noctua-data.service';
 
@@ -24,9 +21,6 @@ const routes = [
   {
     path: '',
     component: ReviewListviewComponent
-  }, {
-    path: 'tree',
-    component: ReviewTreeviewComponent
   }
 ];
 
@@ -34,7 +28,6 @@ const routes = [
   imports: [
     NoctuaSharedModule,
     CommonModule,
-    TreeTableModule,
     RouterModule.forChild(routes),
   ],
   providers: [
@@ -51,8 +44,7 @@ const routes = [
     CamRowComponent,
     CamRowEditDialogComponent,
     CamEditSummaryDialogComponent,
-    ReviewListviewComponent,
-    ReviewTreeviewComponent
+    ReviewListviewComponent
   ],
   entryComponents: [ReviewComponent, CamEditSummaryDialogComponent, CamRowEditDialogComponent]
 })
