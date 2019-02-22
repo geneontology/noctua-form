@@ -29,7 +29,6 @@ import { NodesContainerComponent } from './cam/cam-diagram/nodes-container.compo
 
 import { NodeService } from './cam/cam-diagram/node.service';
 import { DiagramMenuComponent } from './cam/cam-diagram/diagram-menu/diagram-menu.component';
-import { NoctuaFormTableComponent } from './noctua-form-table/noctua-form-table.component';
 
 const routes = [
   {
@@ -63,8 +62,7 @@ const routes = [
     CamDiagramComponent,
     NodeComponent,
     NodesContainerComponent,
-    DiagramMenuComponent,
-    NoctuaFormTableComponent
+    DiagramMenuComponent
   ],
   entryComponents: [
     NoctuaFormComponent,
