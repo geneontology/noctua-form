@@ -1,15 +1,15 @@
 <div class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
   <div class="noc-sidemenu" fxLayout="column" fxLayoutAlign="start center">
-    <button mat-icon-button (click)="toggleLeftDrawer(noctuaFormService.leftPanel.diagramMenu)" matTooltip="Search"
+    <button mat-icon-button (click)="toggleLeftDrawer(camTableService.leftPanel.diagramMenu)" matTooltip="Search"
       [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
       <mat-icon> assignment </mat-icon>
     </button>
   </div>
   <mat-drawer-container class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
     <mat-drawer #leftDrawer class="noc-left-drawer" fxFlex="200px" mode="side" position="start">
-      <div [ngSwitch]="noctuaFormService.selectedLeftPanel.id" class="h-100-p">
-        <noc-cam-form *ngSwitchCase="noctuaFormService.leftPanel.form.id"></noc-cam-form>
-        <noc-diagram-menu *ngSwitchCase="noctuaFormService.leftPanel.diagramMenu.id"></noc-diagram-menu>
+      <div [ngSwitch]="camTableService.selectedLeftPanel.id" class="h-100-p">
+        <noc-cam-form *ngSwitchCase="camTableService.panel.form.id"></noc-cam-form>
+        <noc-diagram-menu *ngSwitchCase="camTableService.panel.diagramMenu.id"></noc-diagram-menu>
       </div>
     </mat-drawer>
     <mat-drawer-content class="cams-table" noctuaPerfectScrollbar>
@@ -75,11 +75,6 @@
           </div>
           <span class="grey-500-fg">Model: </span> {{cam.model?.title }}
         </div>
-
-
-
-
-
         <div class="noc-cam-table-body w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
           <div class="cams-table" fxFlex="">
             <mat-table class="w-100-p" #table [dataSource]="cam.camRow" matSort [@animateStagger]="{value:'50'}"

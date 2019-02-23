@@ -1,3 +1,4 @@
+
 import { environment } from 'environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -24,7 +25,7 @@ const each = require('lodash/forEach');
 @Injectable({
   providedIn: 'root'
 })
-export class NoctuaFormService {
+export class CamDiagramService {
 
   panel = {
     form: {

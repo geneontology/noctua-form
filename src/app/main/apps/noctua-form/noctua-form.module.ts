@@ -27,7 +27,9 @@ import { CamDiagramComponent } from './cam/cam-diagram/cam-diagram.component';
 import { NodeComponent } from './cam/cam-diagram/node/node.component';
 import { NodesContainerComponent } from './cam/cam-diagram/nodes-container.component';
 
-import { NodeService } from './cam/cam-diagram/node.service';
+import { CamDiagramService } from './cam/cam-diagram/services/cam-diagram.service';
+import { CamTableService } from './cam/cam-table/services/cam-table.service';
+import { NodeService } from './cam/cam-diagram/services/node.service';
 import { DiagramMenuComponent } from './cam/cam-diagram/diagram-menu/diagram-menu.component';
 
 const routes = [
@@ -44,7 +46,7 @@ const routes = [
     TreeTableModule,
     RouterModule.forChild(routes),
   ],
-  providers: [NoctuaFormDialogService, CamService, NodeService],
+  providers: [NoctuaFormDialogService, CamService, NodeService, CamDiagramService, CamTableService],
   declarations: [
     NoctuaFormComponent,
     CamFormComponent,

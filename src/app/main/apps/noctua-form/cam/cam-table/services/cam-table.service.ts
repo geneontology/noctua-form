@@ -24,7 +24,7 @@ const each = require('lodash/forEach');
 @Injectable({
   providedIn: 'root'
 })
-export class NoctuaFormService {
+export class CamTableService {
 
   panel = {
     form: {

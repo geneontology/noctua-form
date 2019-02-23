@@ -2,6 +2,21 @@
   min-width: 20px !important;
 }
 
+.mat-tab-body-wrapper {
+  flex-grow: 1;
+}
+
+.mat-tab-body {
+  display: flex !important;
+  flex-direction: column;
+}
+
+.mat-tab-body-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
 .mat-dialog-container {
   padding: 0 !important;
 }

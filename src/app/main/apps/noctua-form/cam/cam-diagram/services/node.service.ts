@@ -6,7 +6,7 @@ import {
   ReflectiveInjector
 } from '@angular/core';
 
-import { NodeComponent } from './node/node.component';
+import { NodeComponent } from './../node/node.component';
 import { jsPlumb } from 'jsplumb';
 
 @Injectable()

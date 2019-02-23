@@ -1,10 +1,10 @@
 
-import { AfterViewInit, Component, OnInit, Input } from '@angular/core';
+import { AfterViewInit, ViewChild, Component, OnInit, Input } from '@angular/core';
 import { jsPlumb } from 'jsplumb';
 
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { MatPaginator, MatSort } from '@angular/material';
+import { MatDrawer } from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
 import { merge, Observable, Subscription, BehaviorSubject, fromEvent, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
@@ -31,6 +31,7 @@ import { NoctuaLookupService } from '@noctua.form/services/lookup.service';
 import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
 
 import { NoctuaFormService } from './../../services/noctua-form.service';
+import { CamDiagramService } from './services/cam-diagram.service';
 import { NoctuaFormDialogService } from './../../dialog.service';
 import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
 import { CamService } from '@noctua.form/services/cam.service'
@@ -52,6 +53,12 @@ export class CamDiagramComponent implements AfterViewInit, OnInit {
   @Input('cam')
   public cam: Cam = new Cam();
 
+  @ViewChild('leftDrawer')
+  leftDrawer: MatDrawer;
+
+  @ViewChild('rightDrawer')
+  rightDrawer: MatDrawer;
+
   jsPlumbInstance;
   showConnectionToggle = false;
   buttonName = 'Connect';
@@ -65,7 +72,8 @@ export class CamDiagramComponent implements AfterViewInit, OnInit {
     private camService: CamService,
     private noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaSearchService: NoctuaSearchService,
-    public noctuaFormService: NoctuaFormService,
+    //   public noctuaFormService: NoctuaFormService,
+    public camDiagramService: CamDiagramService,
     private noctuaFormDialogService: NoctuaFormDialogService,
     private noctuaLookupService: NoctuaLookupService,
     private noctuaGraphService: NoctuaGraphService,
@@ -126,6 +134,9 @@ export class CamDiagramComponent implements AfterViewInit, OnInit {
         console.log('poo', this.cam)
       }
     });
+
+    this.camDiagramService.setLeftDrawer(this.leftDrawer);
+    this.camDiagramService.setRightDrawer(this.rightDrawer);
   }
 
   ngAfterViewInit() {
@@ -166,6 +177,4 @@ export class CamDiagramComponent implements AfterViewInit, OnInit {
       ],
     });
   }
-
-
 }

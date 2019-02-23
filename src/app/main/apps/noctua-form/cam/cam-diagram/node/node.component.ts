@@ -1,6 +1,10 @@
 import { Component, Input, OnInit, ElementRef, Renderer2, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { jsPlumb } from 'jsplumb';
-import { NodeService } from './../node.service';
+import { NodeService } from './../services/node.service';
+import { NoctuaFormDialogService } from './../../../dialog.service';
+import { CamDiagramService } from './../services/cam-diagram.service';
+import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
+import { CamService } from '@noctua.form/services/cam.service'
 
 import { Annoton } from '@noctua.form/models/annoton/annoton';
 import { AnnotonNode } from '@noctua.form/models/annoton/annoton-node';
@@ -20,6 +24,10 @@ export class NodeComponent implements OnInit, AfterViewInit {
 
 
   constructor(private nodeService: NodeService,
+    private noctuaFormDialogService: NoctuaFormDialogService,
+    private camService: CamService,
+    private noctuaSearchService: NoctuaSearchService,
+    public camDiagramService: CamDiagramService,
     private elRef: ElementRef,
     private renderer: Renderer2) { }
 
@@ -99,5 +107,9 @@ export class NodeComponent implements OnInit, AfterViewInit {
     // version of this demo to find out about new nodes being added.
     //
     // self.nodeService.jsPlumbInstance.fire("jsPlumbDemoNodeAdded", el);
-  };
+  }
+
+  openForm() {
+    this.camDiagramService.openRightDrawer(this.camDiagramService.panel.form.id)
+  }
 }

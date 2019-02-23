@@ -24,6 +24,7 @@ import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
 
 
 import { NoctuaFormService } from './../../services/noctua-form.service';
+import { CamTableService } from './services/cam-table.service';
 import { NoctuaFormDialogService } from './../../dialog.service';
 import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
 import { CamService } from '@noctua.form/services/cam.service'
@@ -85,7 +86,8 @@ export class CamTableComponent implements OnInit, OnDestroy {
     private camService: CamService,
     private noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaSearchService: NoctuaSearchService,
-    public noctuaFormService: NoctuaFormService,
+    //  public noctuaFormService: NoctuaFormService,
+    public camTableService: CamTableService,
     private noctuaFormDialogService: NoctuaFormDialogService,
     private noctuaLookupService: NoctuaLookupService,
     private noctuaGraphService: NoctuaGraphService,
@@ -98,12 +100,12 @@ export class CamTableComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadCam();
-    this.noctuaFormService.setLeftDrawer(this.leftDrawer);
-    this.noctuaFormService.setRightDrawer(this.rightDrawer);
+    this.camTableService.setLeftDrawer(this.leftDrawer);
+    this.camTableService.setRightDrawer(this.rightDrawer);
   }
 
   toggleLeftDrawer(panel) {
-    this.noctuaFormService.toggleLeftDrawer(panel);
+    this.camTableService.toggleLeftDrawer(panel);
   }
 
   search() {

@@ -1,14 +1,36 @@
-<div class="noc-section-body" fxLayout="row" fxLayoutAlign="start">
+<div class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
 
-
-  <div fxFlex="100px" cdkDropList #doneList="cdkDropList" [cdkDropListData]="done" [cdkDropListConnectedTo]="[todoList]"
-    class="example-list">
-    <div class="example-box" cdkDrag>
-      Activity
-    </div>
-  </div>
-  <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo" [cdkDropListConnectedTo]="[doneList]" class="example-list w-100-p h-100-p"
-    (cdkDropListDropped)="drop($event)">
-    <noc-nodes-container [nodes]="cam?.annotons" class="w-100-p h-100-p"></noc-nodes-container>
-  </div>
+  <mat-drawer-container class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
+    <mat-drawer #leftDrawer class="noc-left-drawer" fxFlex="200px" mode="side" position="start">
+      <div [ngSwitch]="camDiagramService.selectedLeftPanel.id" class="h-100-p">
+        <noc-diagram-menu *ngSwitchCase="camDiagramService.panel.diagramMenu.id"></noc-diagram-menu>
+      </div>
+    </mat-drawer>
+    <mat-drawer-content class="noc-section-body w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start">
+      <div fxFlex="100px" fxLayout="column" fxLayoutAlign="start center" cdkDropList #doneList="cdkDropList"
+        [cdkDropListData]="done" [cdkDropListConnectedTo]="[todoList]" class="example-list">
+        <div class="">
+          Drag To Canvas
+        </div>
+        <div class="noc-diagram-component" cdkDrag>
+          <mat-icon>close</mat-icon>
+          Activity
+        </div>
+        <div class="noc-diagram-component" cdkDrag>
+          <mat-icon>close</mat-icon>
+          Activity
+        </div>
+      </div>
+      <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo" [cdkDropListConnectedTo]="[doneList]" class="example-list w-100-p h-100-p"
+        (cdkDropListDropped)="drop($event)">
+        <noc-nodes-container [nodes]="cam?.annotons" class="w-100-p h-100-p"></noc-nodes-container>
+      </div>
+    </mat-drawer-content>
+    <mat-drawer #rightDrawer class="noc-right-drawer" fxFlex="1000px" noctuaPerfectScrollbar mode="side" position="end">
+      <div [ngSwitch]="camDiagramService.selectedRightPanel.id" class="h-100-p">
+        <noc-cam-row *ngSwitchCase="camDiagramService.panel.camRow.id"> </noc-cam-row>
+        <noc-cam-form *ngSwitchCase="camDiagramService.panel.form.id"></noc-cam-form>
+      </div>
+    </mat-drawer>
+  </mat-drawer-container>
 </div>
