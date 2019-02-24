@@ -1,7 +1,7 @@
-import { Component, Inject, OnInit, ElementRef, OnDestroy, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Inject, Input, OnInit, ElementRef, OnDestroy, ViewEncapsulation, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator, MatSort, MatDrawer } from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
 import { merge, Observable, Subscription, BehaviorSubject, fromEvent, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
@@ -24,6 +24,8 @@ import { NoctuaFormGridService } from '@noctua.form/services/form-grid.service';
 import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
 import { NoctuaLookupService } from '@noctua.form/services/lookup.service';
 import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
+import { CamDiagramService } from './../cam-diagram/services/cam-diagram.service';
+import { CamTableService } from './../cam-table/services/cam-table.service';
 
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 
@@ -39,6 +41,10 @@ import { Evidence } from '@noctua.form/models/annoton/evidence';
 })
 
 export class CamFormComponent implements OnInit, OnDestroy {
+
+  @Input('panelDrawer')
+  panelDrawer: MatDrawer;
+
   camForm: FormGroup;
   camFormSub: Subscription;
 
@@ -54,6 +60,8 @@ export class CamFormComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private noctuaSearchService: NoctuaSearchService,
+    private camDiagramService: CamDiagramService,
+    private camTableService: CamTableService,
     private noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaFormGridService: NoctuaFormGridService,
     private noctuaLookupService: NoctuaLookupService,
@@ -162,7 +170,8 @@ export class CamFormComponent implements OnInit, OnDestroy {
   }
 
   close() {
-    this.noctuaFormService.closeLeftDrawer();
+    //this.camervice.closeLeftDrawer();
+    this.panelDrawer.close()
   }
 
   ngOnDestroy(): void {

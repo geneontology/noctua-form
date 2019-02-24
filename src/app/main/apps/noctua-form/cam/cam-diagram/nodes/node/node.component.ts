@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, ElementRef, Renderer2, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { jsPlumb } from 'jsplumb';
 import { NodeService } from './../services/node.service';
-import { NoctuaFormDialogService } from './../../../dialog.service';
-import { CamDiagramService } from './../services/cam-diagram.service';
+import { NoctuaFormDialogService } from './../../../../dialog.service';
+import { CamDiagramService } from './../../services/cam-diagram.service';
 import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
 import { NoctuaFormGridService } from '@noctua.form/services/form-grid.service';
 import { CamService } from '@noctua.form/services/cam.service'

@@ -195,9 +195,7 @@ export class CamFormEntityComponent implements OnInit, OnDestroy {
     return evidence ? evidence.label : undefined;
   }
 
-  close() {
-    this.noctuaFormService.closeLeftDrawer();
-  }
+
 
   ngOnDestroy(): void {
     this.unsubscribeAll.next();

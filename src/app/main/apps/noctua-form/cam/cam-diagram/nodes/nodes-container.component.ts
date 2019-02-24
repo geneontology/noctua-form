@@ -1,6 +1,6 @@
 import { Component, OnChanges, AfterViewInit, Input, ViewEncapsulation, ChangeDetectionStrategy, ViewContainerRef, ViewChild } from '@angular/core';
 import { NodeService } from './services/node.service';
-import { CamDiagramService } from './services/cam-diagram.service';
+import { CamDiagramService } from './../services/cam-diagram.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({

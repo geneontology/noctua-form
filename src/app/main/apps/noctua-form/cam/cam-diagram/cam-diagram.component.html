@@ -29,7 +29,7 @@
     <mat-drawer #rightDrawer class="noc-right-drawer" fxFlex="1000px" noctuaPerfectScrollbar mode="side" position="end">
       <div [ngSwitch]="camDiagramService.selectedRightPanel.id" class="h-100-p">
         <noc-cam-row *ngSwitchCase="camDiagramService.panel.camRow.id"> </noc-cam-row>
-        <noc-cam-form *ngSwitchCase="camDiagramService.panel.form.id"></noc-cam-form>
+        <noc-cam-form [panelDrawer]='rightDrawer' *ngSwitchCase="camDiagramService.panel.form.id"></noc-cam-form>
       </div>
     </mat-drawer>
   </mat-drawer-container>

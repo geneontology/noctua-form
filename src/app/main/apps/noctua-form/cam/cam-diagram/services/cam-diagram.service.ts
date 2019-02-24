@@ -7,6 +7,8 @@ import { MatDrawer } from '@angular/material';
 import { BehaviorSubject, Observable, Subscriber } from 'rxjs';
 import { map, filter, reduce, catchError, retry, tap } from 'rxjs/operators';
 
+import { jsPlumb } from 'jsplumb';
+
 import { NoctuaUtils } from '@noctua/utils/noctua-utils';
 import { CurieService } from '@noctua.curie/services/curie.service';
 import { NoctuaGraphService } from '@noctua.form/services/graph.service';
@@ -126,6 +128,5 @@ export class CamDiagramService {
   public closeRightDrawer() {
     return this.rightDrawer.close();
   }
-
 
 }

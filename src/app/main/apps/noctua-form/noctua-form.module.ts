@@ -24,12 +24,12 @@ import { LinkToExistingDialogComponent } from './dialogs/link-to-existing/link-t
 import { SelectEvidenceDialogComponent } from './dialogs/select-evidence/select-evidence.component';
 import { SearchDatabaseDialogComponent } from './dialogs/search-database/search-database.component';
 import { CamDiagramComponent } from './cam/cam-diagram/cam-diagram.component';
-import { NodeComponent } from './cam/cam-diagram/node/node.component';
-import { NodesContainerComponent } from './cam/cam-diagram/nodes-container.component';
+import { NodeComponent } from './cam/cam-diagram/nodes/node/node.component';
+import { NodesContainerComponent } from './cam/cam-diagram/nodes/nodes-container.component';
 
 import { CamDiagramService } from './cam/cam-diagram/services/cam-diagram.service';
 import { CamTableService } from './cam/cam-table/services/cam-table.service';
-import { NodeService } from './cam/cam-diagram/services/node.service';
+import { NodeService } from './cam/cam-diagram/nodes/services/node.service';
 import { DiagramMenuComponent } from './cam/cam-diagram/diagram-menu/diagram-menu.component';
 
 const routes = [
