@@ -69,17 +69,13 @@ export class CamFormComponent implements OnInit, OnDestroy {
 
     this.annoton = this.noctuaFormGridService.annoton;
     this.camFormPresentation = this.noctuaFormGridService.annotonPresentation;
-
   }
 
   ngOnInit(): void {
-
     this.camFormSub = this.noctuaFormGridService.camForm$
       .subscribe(camForm => {
         if (!camForm) return;
         this.camForm = camForm;
-
-        console.log('pppp', this.camForm)
       })
   }
 

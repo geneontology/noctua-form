@@ -1,5 +1,6 @@
 import { Component, OnChanges, AfterViewInit, Input, ViewEncapsulation, ChangeDetectionStrategy, ViewContainerRef, ViewChild } from '@angular/core';
 import { NodeService } from './services/node.service';
+import { CamDiagramService } from './services/cam-diagram.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
@@ -14,7 +15,9 @@ export class NodesContainerComponent implements OnChanges, AfterViewInit {
   @Input() nodes: any[];
 
 
-  constructor(private nodeService: NodeService) { }
+  constructor(
+    public camDiagramService: CamDiagramService,
+    private nodeService: NodeService) { }
 
   ngOnChanges() {
     this.nodeService.setRootViewContainerRef(this.viewContainerRef);
@@ -29,7 +32,7 @@ export class NodesContainerComponent implements OnChanges, AfterViewInit {
 
 
   ngAfterViewInit() {
-    this.nodeService.initJsPlumbInstance();
+    this.camDiagramService.initJsPlumbInstance();
     //  this.nodeService.jsPlumbInstance.setZoom(0.25);
     this.foo()
   }
@@ -37,12 +40,12 @@ export class NodesContainerComponent implements OnChanges, AfterViewInit {
   foo() {
     const self = this;
 
-    self.nodeService.jsPlumbInstance.batch(function () {
+    self.camDiagramService.jsPlumbInstance.batch(function () {
       self.nodes.forEach(node => {
         let connections = node.annoton.annotonConnections;
 
         connections.forEach(connection => {
-          self.nodeService.jsPlumbInstance.connect({
+          self.camDiagramService.jsPlumbInstance.connect({
             source: node.annoton.connectionId,
             target: connection.object.modelId,
             type: "basic"

@@ -12,6 +12,8 @@ import * as _ from 'lodash';
 declare const require: any;
 const each = require('lodash/forEach');
 
+import { Annoton } from '@noctua.form/models/annoton/annoton';
+
 import { CamForm } from './../models/forms/cam-form';
 import { CamFormMetadata } from './../models/forms/cam-form-metadata';
 
@@ -37,7 +39,10 @@ export class NoctuaFormGridService {
     this.initalizeForm();
   }
 
-  initalizeForm() {
+  initalizeForm(annoton?: Annoton) {
+    if (annoton) {
+      this.annoton = annoton;
+    }
     this.annotonPresentation = this.getAnnotonPresentation(this.annoton);
     this.camForm.next(this._fb.group(this.createCamForm()));
   }

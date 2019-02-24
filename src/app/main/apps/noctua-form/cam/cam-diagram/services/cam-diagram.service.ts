@@ -27,6 +27,9 @@ const each = require('lodash/forEach');
 })
 export class CamDiagramService {
 
+
+  _jsPlumbInstance
+
   panel = {
     form: {
       id: 1
@@ -51,6 +54,35 @@ export class CamDiagramService {
     this.selectedRightPanel = this.panel.form;
     console.log(this.selectedLeftPanel)
 
+  }
+
+  initJsPlumbInstance() {
+    const self = this;
+
+    self._jsPlumbInstance = jsPlumb.getInstance({
+      Endpoint: ["Dot", <any>{ radius: 2 }],
+      Connector: "StateMachine",
+      HoverPaintStyle: { stroke: "#1e8151", strokeWidth: 2 },
+      ConnectionOverlays: [
+        ["Arrow", {
+          location: 1,
+          id: "arrow",
+          length: 14,
+          foldback: 0.8
+        }],
+        ["Label", { label: "FOO", id: "label", cssClass: "aLabel" }]
+      ],
+      Container: "canvas"
+    });
+  }
+
+  get jsPlumbInstance() {
+    const self = this;
+
+    if (!this._jsPlumbInstance) {
+      self.initJsPlumbInstance()
+    }
+    return this._jsPlumbInstance;
   }
 
   selectLeftPanel(panel) {
