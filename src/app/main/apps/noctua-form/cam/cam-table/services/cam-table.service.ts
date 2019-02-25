@@ -27,14 +27,17 @@ const each = require('lodash/forEach');
 export class CamTableService {
 
   panel = {
-    form: {
+    camForm: {
       id: 1
     },
-    camRow: {
+    connectorForm: {
       id: 2
     },
-    diagramMenu: {
+    camRow: {
       id: 3
+    },
+    diagramMenu: {
+      id: 4
     }
   }
 
@@ -46,8 +49,8 @@ export class CamTableService {
 
   constructor() {
 
-    this.selectedLeftPanel = this.panel.form;
-    this.selectedRightPanel = this.panel.form;
+    this.selectedLeftPanel = this.panel.camForm;
+    this.selectedRightPanel = this.panel.camForm;
     console.log(this.selectedLeftPanel)
 
   }

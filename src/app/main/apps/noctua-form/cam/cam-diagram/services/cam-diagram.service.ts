@@ -33,14 +33,17 @@ export class CamDiagramService {
   _jsPlumbInstance
 
   panel = {
-    form: {
+    camForm: {
       id: 1
     },
-    camRow: {
+    connectorForm: {
       id: 2
     },
-    diagramMenu: {
+    camRow: {
       id: 3
+    },
+    diagramMenu: {
+      id: 4
     }
   }
 
@@ -52,8 +55,8 @@ export class CamDiagramService {
 
   constructor() {
 
-    this.selectedLeftPanel = this.panel.form;
-    this.selectedRightPanel = this.panel.form;
+    this.selectedLeftPanel = this.panel.camForm;
+    this.selectedRightPanel = this.panel.camForm;
     console.log(this.selectedLeftPanel)
 
   }
@@ -121,7 +124,7 @@ export class CamDiagramService {
   }
 
   public openRightDrawer(panel) {
-    this.selectLeftPanel(panel)
+    this.selectRightPanel(panel)
     return this.rightDrawer.open();
   }
 

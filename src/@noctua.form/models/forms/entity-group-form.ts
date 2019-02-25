@@ -28,9 +28,8 @@ export class EntityGroupForm {
 
         this.entityForms = [];
         entities.forEach((entity) => {
-            let entityForm = new EntityForm(self._metadata);
+            let entityForm = new EntityForm(self._metadata, entity.id);
 
-            entityForm.id = entity.id;
             this.entityForms.push(entityForm);
             entityForm.createEvidenceForms(entity);
             entityForm.onValueChanges(entity.term.lookup)

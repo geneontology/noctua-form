@@ -1,3 +1,5 @@
+
+
 import { Component, Inject, Input, OnInit, ElementRef, OnDestroy, ViewEncapsulation, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -19,6 +21,7 @@ import { forEach } from '@angular/router/src/utils/collection';
 
 import { NoctuaFormService } from '../../services/noctua-form.service';
 
+import { NoctuaAnnotonConnectorService } from '@noctua.form/services/annoton-connector.service';
 import { NoctuaGraphService } from '@noctua.form/services/graph.service';
 import { NoctuaFormGridService } from '@noctua.form/services/form-grid.service';
 import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
@@ -36,24 +39,20 @@ import { AnnotonNode } from '@noctua.form/models/annoton/annoton-node';
 import { Evidence } from '@noctua.form/models/annoton/evidence';
 
 @Component({
-  selector: 'noc-cam-form',
-  templateUrl: './cam-form.component.html',
-  styleUrls: ['./cam-form.component.scss'],
+  selector: 'noc-cam-connector',
+  templateUrl: './cam-connector.component.html',
+  styleUrls: ['./cam-connector.component.scss']
 })
-
-export class CamFormComponent implements OnInit, OnDestroy {
+export class CamConnectorComponent implements OnInit, OnDestroy {
 
   @Input('panelDrawer')
   panelDrawer: MatDrawer;
   cam: Cam;
-  camFormGroup: FormGroup;
-  camFormSub: Subscription;
+  connectorFormGroup: FormGroup;
+  connectorFormSub: Subscription;
 
   searchCriteria: any = {};
-  camFormPresentation: any;
-  //camForm: FormGroup;
   evidenceFormArray: FormArray;
-  camFormData: any = []
   // annoton: Annoton = new Annoton();
 
   private unsubscribeAll: Subject<any>;
@@ -61,6 +60,7 @@ export class CamFormComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute,
     private camService: CamService,
     private formBuilder: FormBuilder,
+    private noctuaAnnotonConnectorService: NoctuaAnnotonConnectorService,
     private noctuaSearchService: NoctuaSearchService,
     private camDiagramService: CamDiagramService,
     private camTableService: CamTableService,
@@ -73,16 +73,22 @@ export class CamFormComponent implements OnInit, OnDestroy {
   ) {
     this.unsubscribeAll = new Subject();
     // this.annoton = self.noctuaFormGridService.annoton;
-    this.camFormPresentation = this.noctuaFormGridService.annotonPresentation;
   }
 
   ngOnInit(): void {
-    this.camFormSub = this.noctuaFormGridService.camFormGroup$
-      .subscribe(camFormGroup => {
-        if (!camFormGroup) return;
-        this.camFormGroup = camFormGroup;
+    this.connectorFormSub = this.noctuaAnnotonConnectorService.connectorFormGroup$
+      .subscribe(connectorFormGroup => {
+        if (!connectorFormGroup) return;
+        this.connectorFormGroup = connectorFormGroup;
 
-        console.log(this.camFormGroup)
+        //   this.evidenceFormArray = this.evidenceFormArray = this.connectorFormGroup.get('mf')['controls']['evidenceFormArray']
+
+        //    = this.connectorFormGroup.get('mf')['controls'].get('evidenceFormArray')['controls']
+
+        console.log(this.connectorFormGroup);
+
+
+        console.log(this.evidenceFormArray)
       });
 
     this.camService.onCamChanged.subscribe((cam) => {
@@ -95,11 +101,20 @@ export class CamFormComponent implements OnInit, OnDestroy {
     });
   }
 
+
+
+
+
+  evidenceDisplayFn(evidence): string | undefined {
+    return evidence ? evidence.label : undefined;
+  }
+
+
   save() {
     const self = this;
     let infos;
 
-    self.noctuaFormGridService.camFormToAnnoton(self.noctuaFormGridService.annoton, this.camFormGroup)
+    //  self.noctuaFormGridService.camFormToAnnoton(self.noctuaFormGridService.annoton, this.camFormGroup)
 
     let saveAnnoton = function () {
       //self.formGrid.linkFormNode(entity, selected.node);
@@ -126,31 +141,31 @@ export class CamFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  addEvidence() {
+    const self = this;
+
+    //  let evidenceFormGroup: FormArray = this.entityFormGroup.get('evidenceFormArray') as FormArray;
+
+    //  evidenceFormGroup.push(this.formBuilder.group({
+    //    evidence: new FormControl(),
+    //    reference: new FormControl(),
+    //    with: new FormControl(),
+    //  }));
+  }
+
+  removeEvidence(index) {
+    const self = this;
+
+    //  let evidenceFormGroup: FormArray = <FormArray>self.entityFormGroup.get('evidenceFormArray');
+
+    //   evidenceFormGroup.removeAt(index);
+  }
+
   clear() {
     this.noctuaFormGridService.clearForm();
   }
 
-  createExample() {
-    const self = this;
 
-    self.noctuaFormGridService.initalizeFormData();
-  }
-
-  changeAnnotonTypeForm(annotonType) {
-    const self = this;
-
-    self.noctuaFormGridService.setAnnotonType(self.noctuaFormGridService.annoton, annotonType.name);
-  }
-
-  changeAnnotonModelTypeForm(annotonModelType) {
-    const self = this;
-
-    self.noctuaFormGridService.setAnnotonModelType(self.noctuaFormGridService.annoton, annotonModelType.name);
-  }
-
-  termDisplayFn(term): string | undefined {
-    return term ? term.label : undefined;
-  }
 
   close() {
     this.panelDrawer.close()

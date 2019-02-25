@@ -18,8 +18,9 @@ export class EntityForm {
     _metadata: CamFormMetadata;
     private _fb = new FormBuilder();
 
-    constructor(metadata) {
+    constructor(metadata, id) {
         this._metadata = metadata;
+        this.id = id;
     }
 
     createEvidenceForms(entity: AnnotonNode) {

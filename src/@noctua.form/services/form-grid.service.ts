@@ -36,7 +36,7 @@ export class NoctuaFormGridService {
     );
 
     this.camFormGroup = new BehaviorSubject(null);
-    this.camFormGroup$ = this.camFormGroup.asObservable()
+    this.camFormGroup$ = this.camFormGroup.asObservable();
 
     this.initalizeForm();
   }

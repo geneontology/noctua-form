@@ -46,8 +46,8 @@ export class NoctuaFormService {
 
   constructor() {
 
-    this.selectedLeftPanel = this.panel.form;
-    this.selectedRightPanel = this.panel.form;
+    // this.selectedLeftPanel = this.panel.camForm;
+    //  this.selectedRightPanel = this.panel.camForm;
     console.log(this.selectedLeftPanel)
 
   }

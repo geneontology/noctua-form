@@ -923,6 +923,8 @@ export class NoctuaFormConfigService {
     const self = this;
     let annoton = new Annoton();
     let modelIds = _.cloneDeep(self._modelRelationship);
+    let subjectMFNode = self.generateNode('mf');
+    let objectMFNode = self.generateNode('mf', { id: '-1' });
     let edgeOption = {
       selected: noctuaFormConfig.edge.upstreamOfOrWithin,
       options: [
@@ -933,12 +935,12 @@ export class NoctuaFormConfigService {
         noctuaFormConfig.edge.upstreamOfOrWithinPositiveEffect,
         noctuaFormConfig.edge.upstreamOfOrWithinNegativeEffect,
       ]
-    }
+    };
 
-    let srcMFNode = annoton.addNode(self.generateNode('mf'));
-    let objectMFNode = annoton.addNode(self.generateNode('mf'));
-    annoton.addEdgeOptionById(objectMFNode, edgeOption);
-    annoton.addEdge(srcMFNode, objectMFNode, annoton.edgeOption.selected);
+    annoton.addNode(subjectMFNode);
+    annoton.addNode(objectMFNode);
+    subjectMFNode.addEdgeOption(edgeOption);
+    // annoton.addEdge(subjectMFNode, objectMFNode, annoton.edgeOption.selected);
 
     return annoton;
   }
@@ -983,6 +985,7 @@ export class NoctuaFormConfigService {
 
     return annoton;
   }
+
 
   generateAnnotonSection(annoton, modelType, connector) {
     const self = this;

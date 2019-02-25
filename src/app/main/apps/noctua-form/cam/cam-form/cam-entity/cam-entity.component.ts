@@ -86,44 +86,7 @@ export class CamFormEntityComponent implements OnInit, OnDestroy {
 
   }
 
-  createEntityGroup() {
-    return new FormGroup({
-      term: new FormControl(this.entity.getTerm()),
-      evidenceFormArray: this.formBuilder.array(this.createFormEvidence())
-    });
-  }
 
-  createFormEvidence(): FormGroup[] {
-    const self = this;
-    let evidenceGroup: FormGroup[] = [];
-
-    _.each(self.entity.evidence, function (evidence: Evidence) {
-      let srcEvidence: FormGroup = new FormGroup({
-        evidence: new FormControl(evidence.getEvidence()),
-        reference: new FormControl(evidence.getReference()),
-        with: new FormControl(evidence.getWith()),
-      })
-      evidenceGroup.push(srcEvidence);
-
-      self.addOnEvidenceValueChanges(srcEvidence)
-    });
-
-    return evidenceGroup;
-  }
-
-
-  addOnEvidenceValueChanges(evidence) {
-    const self = this;
-
-    evidence.get('evidence').valueChanges
-      .distinctUntilChanged()
-      .debounceTime(400)
-      .subscribe(data => {
-        this.noctuaLookupService.golrLookup(data, evidence.lookup.requestParams).subscribe(response => {
-          self.autcompleteResults.evidence = response;
-        });
-      });
-  }
 
   addEvidence() {
     const self = this;
@@ -145,18 +108,7 @@ export class CamFormEntityComponent implements OnInit, OnDestroy {
     evidenceFormGroup.removeAt(index);
   }
 
-  onValueChanges() {
-    const self = this;
 
-    this.entityFormGroup.get('term').valueChanges
-      .distinctUntilChanged()
-      .debounceTime(400)
-      .subscribe(data => {
-        this.noctuaLookupService.golrLookup(data, this.entity.term.lookup.requestParams).subscribe(response => {
-          self.autcompleteResults.term = response;
-        });
-      });
-  }
 
   openSelectEvidenceDialog(evidence) {
     const self = this;
@@ -194,8 +146,6 @@ export class CamFormEntityComponent implements OnInit, OnDestroy {
   evidenceDisplayFn(evidence): string | undefined {
     return evidence ? evidence.label : undefined;
   }
-
-
 
   ngOnDestroy(): void {
     this.unsubscribeAll.next();
