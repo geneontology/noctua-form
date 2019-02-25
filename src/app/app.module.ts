@@ -4,6 +4,7 @@ import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { ContextMenuModule } from 'ngx-contextmenu';
 import 'hammerjs';
 import { MatSidenavModule } from '@angular/material';
 import { NoctuaModule } from '@noctua/noctua.module';
@@ -38,6 +39,7 @@ const appRoutes: Routes = [
 
         // Noctua Main and Shared modules
         NoctuaModule.forRoot(noctuaConfig),
+        ContextMenuModule.forRoot(),
         NoctuaSharedModule,
         LayoutModule,
         RouterModule,

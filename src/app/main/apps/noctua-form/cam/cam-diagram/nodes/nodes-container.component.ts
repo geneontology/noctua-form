@@ -1,4 +1,6 @@
 import { Component, OnChanges, AfterViewInit, Input, ViewEncapsulation, ChangeDetectionStrategy, ViewContainerRef, ViewChild } from '@angular/core';
+import { MatDrawer, MatMenuTrigger } from '@angular/material';
+import { ContextMenuComponent } from 'ngx-contextmenu';
 import { NodeService } from './services/node.service';
 import { CamDiagramService } from './../services/cam-diagram.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
@@ -13,11 +15,17 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 export class NodesContainerComponent implements OnChanges, AfterViewInit {
   @ViewChild('nodes', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
   @Input() nodes: any[];
-
+  @ViewChild(ContextMenuComponent) public basicMenu: ContextMenuComponent;
 
   constructor(
     public camDiagramService: CamDiagramService,
     private nodeService: NodeService) { }
+
+  addActivity(event) {
+    console.log(event.clientX + 'px');
+    console.log(event.clientY + 'px');
+  }
+
 
   ngOnChanges() {
     this.nodeService.setRootViewContainerRef(this.viewContainerRef);

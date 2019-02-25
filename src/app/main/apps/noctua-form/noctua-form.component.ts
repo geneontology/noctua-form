@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator, MatSort, MatDrawer } from '@angular/material';
@@ -36,6 +36,7 @@ import { Cam } from '@noctua.form/models/annoton/cam';
   selector: 'app-noctua-form',
   templateUrl: './noctua-form.component.html',
   styleUrls: ['./noctua-form.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   animations: noctuaAnimations
 })
 export class NoctuaFormComponent implements OnInit, OnDestroy {

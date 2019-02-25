@@ -6,6 +6,7 @@ import { NoctuaSharedModule } from '@noctua/shared.module';
 import { TreeTableModule } from 'primeng/treetable';
 import { TreeNode } from 'primeng/api';
 import { NoctuaFormDialogService } from './dialog.service';
+import { ContextMenuModule } from 'ngx-contextmenu';
 
 import { CamService } from '@noctua.form/services/cam.service';
 
@@ -45,6 +46,7 @@ const routes = [
     CommonModule,
     TreeTableModule,
     RouterModule.forChild(routes),
+    ContextMenuModule.forRoot(),
   ],
   providers: [NoctuaFormDialogService, CamService, NodeService, CamDiagramService, CamTableService],
   declarations: [

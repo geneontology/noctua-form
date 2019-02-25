@@ -1,3 +1,8 @@
-<div id="cam-canvas">
+<div id="cam-canvas" [contextMenu]="basicMenu">
+  <context-menu>
+    <ng-template contextMenuItem (execute)="addActivity($event.event)">
+      Add Activity
+    </ng-template>
+  </context-menu>
   <ng-template #nodes></ng-template>
 </div>

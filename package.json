@@ -74,6 +74,7 @@
     "ng2-charts": "1.6.0",
     "ngrx-store-freeze": "0.2.4",
     "ngx-color-picker": "7.0.1",
+    "ngx-contextmenu": "^5.1.1",
     "ngx-cookie-service": "1.0.10",
     "node-bourbon": "^4.2.8",
     "perfect-scrollbar": "1.4.0",

@@ -1,6 +1,34 @@
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
 
+#noc-form-tab {
+  .mat-tab-labels {
+    background-color: $noc-primary-color-light;
+    justify-content: center;
+    @include deep-height(35px);
+  }
+
+  .mat-tab-label {
+    background-color: darken($noc-primary-color-light, 5%);
+    @include deep-height(35px);
+  }
+
+  /* focus style */
+  .mat-primary .mat-tab-label:not(.mat-tab-disabled):focus,
+  .mat-primary .mat-tab-link:not(.mat-tab-disabled):focus,
+  .mat-tab-nav-bar.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus,
+  .mat-tab-nav-bar.mat-primary .mat-tab-link:not(.mat-tab-disabled):focus {
+    background: red;
+  }
+
+  /* ink bar style */
+  .mat-primary .mat-ink-bar,
+  .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background: yellow;
+    height: 10px;
+  }
+}
+
 :host {
   padding: 0px;
   width: 100%;
@@ -9,6 +37,10 @@
   .mat-drawer-content {
     width: 100%;
   }
+
+
+
+
 
   .noc-sidemenu {
     padding: 10px 0;

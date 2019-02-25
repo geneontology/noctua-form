@@ -1,16 +1,16 @@
 <div class="w-100-p h-100-p">
-  <mat-tab-group class="w-100-p h-100-p" dynamicHeight>
+  <mat-tab-group id="noc-form-tab" class="w-100-p h-100-p" dynamicHeight>
     <mat-tab class="w-100-p h-100-p">
       <ng-template mat-tab-label>
-        <mat-icon class="example-tab-icon">thumb_up</mat-icon>
-        Activity Flow
+        <mat-icon class="example-tab-icon">scatter_plot</mat-icon>
+        ACTIVITY FLOW VIEW
       </ng-template>
       <noc-cam-diagram [cam]="cam"></noc-cam-diagram>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <mat-icon class="example-tab-icon">thumb_up</mat-icon>
-        Table View
+        <mat-icon class="example-tab-icon">table_chart</mat-icon>
+        TABLE VIEW
       </ng-template>
       <noc-cam-table [cam]="cam"></noc-cam-table>
     </mat-tab>

@@ -31,6 +31,4 @@ export class NodeService {
   public clear() {
     this.rootViewContainer.clear();
   }
-
-
 }
