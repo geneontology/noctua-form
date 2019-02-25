@@ -100,7 +100,7 @@
       <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *cdkRowDef="let cam; columns: displayedColumns;" class="cam" matRipple (click)="selectCam(cam)"></mat-row>
     </mat-table>
-    <div *ngIf="cam.graph.error" class="noc-no-info">
+    <div *ngIf="cam.graph?.error" class="noc-no-info">
       no results yet.
     </div>
   </div>

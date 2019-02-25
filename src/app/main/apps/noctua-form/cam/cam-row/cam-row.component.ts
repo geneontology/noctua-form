@@ -34,7 +34,7 @@ import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 
 export class CamRowComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any>;
-  camForm: FormGroup;
+  camFormGroup: FormGroup;
   evidenceFormArray: FormArray;
   camFormData: any = {};
   cam: any = {};
@@ -77,13 +77,13 @@ export class CamRowComponent implements OnInit, OnDestroy {
   }
 
   loadCam() {
-    this.camForm = this.createCamForm();
+    this.camFormGroup = this.createCamForm();
     this.onValueChanges();
   }
 
   save() {
 
-    let destCam = this.camForm.value;
+    let destCam = this.camFormGroup.value;
     console.log(destCam)
     this.cam.destNode.setTerm({ id: destCam.term })
     this.noctuaGraphService.edit(this.cam.graph, this.cam.srcNode, this.cam.destNode);
@@ -123,7 +123,7 @@ export class CamRowComponent implements OnInit, OnDestroy {
   onValueChanges() {
     const self = this;
 
-    this.camForm.get('term').valueChanges
+    this.camFormGroup.get('term').valueChanges
       .distinctUntilChanged()
       .debounceTime(400)
       .subscribe(data => {

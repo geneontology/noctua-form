@@ -13,6 +13,7 @@ declare const require: any;
 const each = require('lodash/forEach');
 
 import { Annoton } from '@noctua.form/models/annoton/annoton';
+import { AnnotonNode } from '@noctua.form/models/annoton/annoton-node';
 
 import { CamForm } from './../models/forms/cam-form';
 import { CamFormMetadata } from './../models/forms/cam-form-metadata';
@@ -21,11 +22,12 @@ import { CamFormMetadata } from './../models/forms/cam-form-metadata';
   providedIn: 'root'
 })
 export class NoctuaFormGridService {
-  public annoton;
+  public annoton: Annoton;
   public annotonPresentation;
-  private camForm: BehaviorSubject<FormGroup | undefined>;
+  private camForm: CamForm;
+  private camFormGroup: BehaviorSubject<FormGroup | undefined>;
+  public camFormGroup$: Observable<FormGroup>;
 
-  camForm$: Observable<FormGroup>;
   constructor(private _fb: FormBuilder, private noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaLookupService: NoctuaLookupService) {
     this.annoton = this.noctuaFormConfigService.createAnnotonModel(
@@ -33,8 +35,8 @@ export class NoctuaFormGridService {
       noctuaFormConfig.annotonModelType.options.default.name
     );
 
-    this.camForm = new BehaviorSubject(null);
-    this.camForm$ = this.camForm.asObservable()
+    this.camFormGroup = new BehaviorSubject(null);
+    this.camFormGroup$ = this.camFormGroup.asObservable()
 
     this.initalizeForm();
   }
@@ -44,7 +46,8 @@ export class NoctuaFormGridService {
       this.annoton = annoton;
     }
     this.annotonPresentation = this.getAnnotonPresentation(this.annoton);
-    this.camForm.next(this._fb.group(this.createCamForm()));
+    this.camForm = this.createCamForm()
+    this.camFormGroup.next(this._fb.group(this.camForm));
   }
 
   createCamForm() {
@@ -59,6 +62,31 @@ export class NoctuaFormGridService {
     //self.camFormData = self.noctuaFormConfigService.createReviewSearchFormData();
 
     return camForm;
+  }
+
+  camFormToAnnoton(annoton: Annoton, camForm) {
+    const self = this;
+
+    self.camForm.populateAnnoton(annoton);
+    // let destForm = camForm.value;
+
+    // camForm.
+    // let destForm = <CamForm>this.camFormGroup.getValue()
+    //   destForm.
+    /*   annoton.getGPNode().setTerm(destForm.gp);
+
+    destForm.fd.forEach((group) => {
+      group.entityGroup.forEach((node, key) => {
+        let destNode: AnnotonNode = annoton.getNode(key);
+
+        if (destNode) {
+          //des
+        }
+      });
+    });
+    */
+
+    console.dir(annoton)
   }
 
   setAnnotonType(annoton, annotonType) {

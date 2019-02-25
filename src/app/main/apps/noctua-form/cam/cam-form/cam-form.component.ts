@@ -19,11 +19,12 @@ import { forEach } from '@angular/router/src/utils/collection';
 
 import { NoctuaFormService } from '../../services/noctua-form.service';
 
-import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loader.service';
+import { NoctuaGraphService } from '@noctua.form/services/graph.service';
 import { NoctuaFormGridService } from '@noctua.form/services/form-grid.service';
 import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
 import { NoctuaLookupService } from '@noctua.form/services/lookup.service';
 import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
+import { CamService } from '@noctua.form/services/cam.service';
 import { CamDiagramService } from './../cam-diagram/services/cam-diagram.service';
 import { CamTableService } from './../cam-table/services/cam-table.service';
 
@@ -44,8 +45,8 @@ export class CamFormComponent implements OnInit, OnDestroy {
 
   @Input('panelDrawer')
   panelDrawer: MatDrawer;
-
-  camForm: FormGroup;
+  cam: Cam;
+  camFormGroup: FormGroup;
   camFormSub: Subscription;
 
   searchCriteria: any = {};
@@ -58,63 +59,75 @@ export class CamFormComponent implements OnInit, OnDestroy {
   private unsubscribeAll: Subject<any>;
 
   constructor(private route: ActivatedRoute,
+    private camService: CamService,
     private formBuilder: FormBuilder,
     private noctuaSearchService: NoctuaSearchService,
     private camDiagramService: CamDiagramService,
     private camTableService: CamTableService,
+    private noctuaGraphService: NoctuaGraphService,
     private noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaFormGridService: NoctuaFormGridService,
     private noctuaLookupService: NoctuaLookupService,
     public noctuaFormService: NoctuaFormService,
-    private sparqlService: SparqlService,
-    private noctuaTranslationLoader: NoctuaTranslationLoaderService) {
+    private sparqlService: SparqlService
+  ) {
     this.unsubscribeAll = new Subject();
-
-    //this.noctuaFormGridService.initalizeForm();
-
-    // this.createNoctuaForm();
-
-
     this.annoton = this.noctuaFormGridService.annoton;
     this.camFormPresentation = this.noctuaFormGridService.annotonPresentation;
   }
 
   ngOnInit(): void {
-    this.camFormSub = this.noctuaFormGridService.camForm$
-      .subscribe(camForm => {
-        if (!camForm) return;
-        this.camForm = camForm;
-      })
+    this.camFormSub = this.noctuaFormGridService.camFormGroup$
+      .subscribe(camFormGroup => {
+        if (!camFormGroup) return;
+        this.camFormGroup = camFormGroup;
+      });
+
+    this.camService.onCamChanged.subscribe((cam) => {
+      this.cam = cam
+      this.cam.onGraphChanged.subscribe((annotons) => {
+        //  let data = this.summaryGridService.getGrid(annotons);
+        //  this.sparqlService.addCamChildren(cam, data);
+        //  this.dataSource = new CamsDataSource(this.sparqlService, this.paginator, this.sort);
+      });
+    });
   }
 
   save() {
-    let destForm = this.camForm.value;
+    const self = this;
+    let infos;
 
-    console.dir(destForm)
-    //  this.noctuaSearchService.search(destForm);
+    this.noctuaFormGridService.camFormToAnnoton(self.annoton, this.camFormGroup)
+
+    let saveAnnoton = function () {
+      //self.formGrid.linkFormNode(entity, selected.node);
+      let annoton = self.noctuaGraphService.adjustAnnoton(self.annoton)
+      self.noctuaGraphService.saveAnnoton(self.cam, annoton).then(function (data) {
+        self.noctuaFormGridService.clearForm();
+        // self.dialogService.openSuccessfulSaveToast();
+      });
+    }
+
+    infos = self.noctuaGraphService.annotonAdjustments(self.annoton);
+    // self.graph.createSave(self.formGrid.annoton);
+    //temporarily off
+    if (infos.length > 0) {
+      let data = {
+        annoton: self.annoton,
+        infos: infos
+      };
+
+      // self.dialogService.openBeforeSaveDialog(null, data, saveAnnoton);
+      /// saveAnnoton();
+    } else {
+      saveAnnoton();
+    }
   }
 
   clear() {
 
   }
 
-  createNoctuaForm() {
-    const self = this;
-
-    self.camForm = new FormGroup({
-      title: new FormControl(),
-      state: new FormControl(),
-      group: new FormControl(),
-      gp: new FormControl(),
-      fd: this.formBuilder.group({})
-    });
-
-    self.annoton = self.noctuaFormGridService.annoton;
-    self.camFormPresentation = self.noctuaFormGridService.annotonPresentation;
-    self.addFdForm(self.camForm.controls['fd'] as FormGroup);
-    self.camFormData = self.noctuaFormConfigService.createReviewSearchFormData();
-    self.onValueChanges();
-  }
 
   addFdForm(camFdFormGroup: FormGroup) {
     const self = this;
@@ -134,27 +147,24 @@ export class CamFormComponent implements OnInit, OnDestroy {
     const self = this;
 
     self.noctuaFormGridService.initalizeFormData();
-    // self.createNoctuaForm();
   }
 
   changeAnnotonTypeForm(annotonType) {
     const self = this;
 
     self.noctuaFormGridService.setAnnotonType(this.noctuaFormGridService.annoton, annotonType.name);
-    // self.createNoctuaForm();
   }
 
   changeAnnotonModelTypeForm(annotonModelType) {
     const self = this;
 
     self.noctuaFormGridService.setAnnotonModelType(this.noctuaFormGridService.annoton, annotonModelType.name);
-    //  self.createNoctuaForm();
   }
 
   onValueChanges() {
     const self = this;
 
-    this.camForm.get('gp').valueChanges
+    this.camFormGroup.get('gp').valueChanges
       .distinctUntilChanged()
       .debounceTime(400)
       .subscribe(data => {
@@ -170,7 +180,6 @@ export class CamFormComponent implements OnInit, OnDestroy {
   }
 
   close() {
-    //this.camervice.closeLeftDrawer();
     this.panelDrawer.close()
   }
 

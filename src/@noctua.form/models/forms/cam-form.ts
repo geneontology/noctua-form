@@ -6,11 +6,13 @@ import * as _ from 'lodash';
 declare const require: any;
 const each = require('lodash/forEach');
 
+import { Annoton } from './../annoton/annoton';
 import { AnnotonNode } from './../annoton/annoton-node';
 import { CamFormMetadata } from './../forms/cam-form-metadata';
 import { EntityGroupForm } from './entity-group-form'
 
 export class CamForm {
+  entityGroupForms: EntityGroupForm[] = []
   title = new FormControl();
   state = new FormControl();
   group = new FormControl();
@@ -33,11 +35,20 @@ export class CamForm {
     const self = this;
 
     each(fdData, (nodeGroup, nodeKey) => {
-      let entityFormGroup = new EntityGroupForm(this._metadata);
+      let entityGroupForm = new EntityGroupForm(this._metadata);
 
-      entityFormGroup.name = nodeKey;
-      entityFormGroup.createEntityForms(nodeGroup.nodes);
-      self.fd.push(self._fb.group(entityFormGroup));
+      this.entityGroupForms.push(entityGroupForm);
+      entityGroupForm.name = nodeKey;
+      entityGroupForm.createEntityForms(nodeGroup.nodes);
+      self.fd.push(self._fb.group(entityGroupForm));
+    });
+  }
+
+  populateAnnoton(annoton: Annoton) {
+    annoton.getGPNode().setTerm(this.gp.value);
+
+    this.entityGroupForms.forEach((entityGroupForm: EntityGroupForm) => {
+      entityGroupForm.populateAnnotonNodes(annoton);
     });
   }
 

@@ -24,6 +24,12 @@ export class EvidenceForm {
         }
     }
 
+    populateEvidence(evidence: Evidence) {
+        evidence.setEvidence(this.evidence.value);
+        evidence.setReference(this.reference.value)
+        evidence.setWith(this.with.value)
+    }
+
     onValueChanges(lookup) {
         const self = this;
 

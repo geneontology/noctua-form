@@ -867,7 +867,7 @@ export class NoctuaGraphService {
       }
     });
   }
-  /*
+
 
   evidenceUseGroups(reqs, evidence) {
     const self = this;
@@ -897,26 +897,27 @@ export class NoctuaGraphService {
     }
   }
 
-  saveModelGroup() {
+  saveModelGroup(cam: Cam) {
     const self = this
 
-    self.manager.use_groups([self.userInfo.selectedGroup.id]);
+    cam.manager.use_groups([self.userInfo.selectedGroup.id]);
   }
 
-  saveModelAnnotation(key, value) {
+  saveModelAnnotation(cam, key, value) {
     const self = this;
 
-    let annotations = self.graph.get_annotations_by_key(key);
-    let reqs = new minerva_requests.request_set(self.manager.user_token(), local_id);
+    let annotations = cam.graph.get_annotations_by_key(key);
+    let reqs = new minerva_requests.request_set(cam.manager.user_token(), cam.model.id);
 
     each(annotations, function (annotation) {
       reqs.remove_annotation_from_model(key, annotation.value())
     });
 
     reqs.add_annotation_to_model(key, value);
-    self.manager.request_with(reqs);
+    cam.manager.request_with(reqs);
   }
 
+  /*
   checkIfNodeExist(srcAnnoton) {
     const self = this;
     let infos = [];
@@ -958,8 +959,8 @@ export class NoctuaGraphService {
 
     return infos;
   }
-
-  annotonAdjustments(annoton) {
+*/
+  annotonAdjustments(annoton: Annoton) {
     const self = this;
     let infos = []; //self.checkIfNodeExist(annoton);
 
@@ -1004,7 +1005,7 @@ export class NoctuaGraphService {
     return infos;
   }
 
-  createSave(srcAnnoton) {
+  createSave(srcAnnoton: Annoton) {
     const self = this;
     let destAnnoton = new Annoton();
     destAnnoton.copyStructure(srcAnnoton);
@@ -1057,7 +1058,7 @@ export class NoctuaGraphService {
     return destAnnoton;
   }
 
-  adjustAnnoton(annoton) {
+  adjustAnnoton(annoton: Annoton) {
     const self = this;
 
     switch (annoton.annotonModelType) {
@@ -1100,14 +1101,14 @@ export class NoctuaGraphService {
     return self.createSave(annoton);
   }
 
-  saveGP(gp, success) {
+  saveGP(cam, gp, success) {
     const self = this;
 
     let manager = new minerva_manager(
-      self.barista_location,
-      self.minerva_definition_name,
-      self.barista_token,
-      self.engine, 'async');
+      cam.barista_location,
+      cam.minerva_definition_name,
+      cam.barista_token,
+      cam.engine, 'async');
 
     manager.register('manager_error',
       function (resp) {
@@ -1115,7 +1116,7 @@ export class NoctuaGraphService {
           resp.message_type() + '): ' + resp.message());
       }, 10);
 
-    manager.register('warning', function (resp ) {
+    manager.register('warning', function (resp) {
       alert('Warning: ' + resp.message() + '; ' +
         'your operation was likely not performed');
     }, 10);
@@ -1145,12 +1146,12 @@ export class NoctuaGraphService {
       }
     }, 10);
 
-    let reqs = new minerva_requests.request_set(manager.user_token(), local_id);
+    let reqs = new minerva_requests.request_set(manager.user_token(), cam.model.id);
     reqs.add_individual(gp.getTerm().id);
     return manager.request_with(reqs);
   }
 
-  saveAnnoton(annoton) {
+  saveAnnoton(cam, annoton) {
     const self = this;
     let geneProduct;
 
@@ -1160,11 +1161,11 @@ export class NoctuaGraphService {
       geneProduct = annoton.getNode('gp');
     }
 
-    function success(gpIndividual) {
-      const manager = self.manager;
-      let reqs = new minerva_requests.request_set(manager.user_token(), local_id);
+    function success() {
+      const manager = cam.manager;
+      let reqs = new minerva_requests.request_set(manager.user_token(), cam.model.id);
 
-      if (!self.modelTitle) {
+      if (!cam.modelTitle) {
         const defaultTitle = 'Model involving ' + geneProduct.term.control.value.label;
         reqs.add_annotation_to_model(annotationTitleKey, defaultTitle);
       }
@@ -1177,7 +1178,7 @@ export class NoctuaGraphService {
         self.addFact(reqs, annoton, node);
       });
 
-      reqs.store_model(local_id);
+      reqs.store_model(cam.model.id);
 
       if (self.userInfo.groups.length > 0) {
         reqs.use_groups([self.userInfo.selectedGroup.id]);
@@ -1194,26 +1195,7 @@ export class NoctuaGraphService {
 
   deleteAnnoton(annoton, ev) {
     const self = this;
-
-    let confirm = self.$mdDialog.confirm()
-      .title('Delete Annoton')
-      .textContent('All of the nodes associated with this annoton model will be deleted')
-      .ariaLabel('Delete Annoton')
-      .targetEvent(ev)
-      .ok('OK')
-      .cancel('Cancel');
-
-    self.$mdDialog.show(confirm).then(function () {
-      let reqs = new minerva_requests.request_set(self.manager.user_token(), local_id);
-
-      each(annoton.nodes, function (node) {
-        self.deleteIndividual(reqs, node);
-      });
-      self.manager.request_with(reqs);
-    }, function () {
-
-    });
   }
-  */
+
 
 }

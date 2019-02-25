@@ -7,7 +7,7 @@
       <mat-icon>close</mat-icon>
     </button>
   </div>
-  <form fxLayout="column" fxLayoutAlign="start stretch" name="camForm" [formGroup]="camForm" class="noc-container noc-cam-form">
+  <form fxLayout="column" fxLayoutAlign="start stretch" name="camFormGroup" [formGroup]="camFormGroup" class="noc-container noc-cam-form">
     <div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
       <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
         <div class="noc-section-heading">
@@ -100,7 +100,7 @@
         </mat-menu>
       </div>
       <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
-        <div [formArrayName]="'fd'" *ngFor="let nodeGroup of camForm.get('fd').controls; let i = index;" class="mat-elevation-z4 mb-4">
+        <div [formArrayName]="'fd'" *ngFor="let nodeGroup of camFormGroup.get('fd').controls; let i = index;" class="mat-elevation-z4 mb-4">
           <div [formGroupName]="i" *ngFor="let entity of nodeGroup.get('entityGroup').controls| keyvalue" class="">
             <noc-cam-entity [entityFormGroup]="entity.value" [nodeGroupName]="nodeGroup.get('name').value" [entityName]="entity.key"
               fxLayout="row" fxLayoutAlign="start center" class="ph-15 w-100-p">

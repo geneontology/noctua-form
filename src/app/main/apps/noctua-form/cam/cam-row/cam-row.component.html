@@ -9,7 +9,7 @@
   </div>
   <div class="p-12" fxFlex="100%" noctuaPerfectScrollbar>
     <div fxLayout="column" fxLayoutAlign="start center" class="w-100-p">
-      <form fxLayout="column" fxLayoutAlign="start stretch" name="camForm" [formGroup]="camForm" class="noc-body w-100-p noc-search-form">
+      <form fxLayout="column" fxLayoutAlign="start stretch" name="camFormGroup" [formGroup]="camFormGroup" class="noc-body w-100-p noc-search-form">
         <div class="cam-relationship">
           {{cam.srcNode.label}}
         </div>
@@ -33,7 +33,7 @@
           </mat-autocomplete>
         </mat-form-field>
 
-        <div formArrayName="evidenceFormArray" *ngFor="let item of camForm.get('evidenceFormArray').controls; let i = index;">
+        <div formArrayName="evidenceFormArray" *ngFor="let item of camFormGroup.get('evidenceFormArray').controls; let i = index;">
           <div [formGroupName]="i" fxLayout="row" fxLayoutAlign="start center" class="w-100-p">
             <mat-form-field appearance="standard" class="" fxFlex="50">
               <mat-label>Evidence</mat-label>

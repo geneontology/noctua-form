@@ -38,7 +38,6 @@ export class NodesContainerComponent implements OnChanges, AfterViewInit {
     }
   }
 
-
   ngAfterViewInit() {
     this.camDiagramService.initJsPlumbInstance();
     //  this.nodeService.jsPlumbInstance.setZoom(0.25);
