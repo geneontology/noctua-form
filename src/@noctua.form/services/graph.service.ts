@@ -49,7 +49,7 @@ export class NoctuaGraphService {
   golrServer = environment.globalGolrServer;
   baristaLocation = environment.globalBaristaLocation;
   minervaDefinitionName = environment.globalMinervaDefinitionName;
-  barista_token;
+  baristaToken;
   linker;
   loggedIn;
   userInfo;
@@ -85,7 +85,7 @@ export class NoctuaGraphService {
     let manager = new minerva_manager(
       this.baristaLocation,
       this.minervaDefinitionName,
-      this.barista_token,
+      this.baristaToken,
       cam.engine, 'async');
 
     cam.manager = manager;
@@ -166,7 +166,7 @@ export class NoctuaGraphService {
       rebuild(resp);
     }, 10);
 
-    manager.get_model('gomodel:' + modelId);
+    manager.get_model(modelId);
   }
 
 

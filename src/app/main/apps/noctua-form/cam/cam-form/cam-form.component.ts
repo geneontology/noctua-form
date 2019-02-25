@@ -54,7 +54,7 @@ export class CamFormComponent implements OnInit, OnDestroy {
   //camForm: FormGroup;
   evidenceFormArray: FormArray;
   camFormData: any = []
-  annoton: Annoton = new Annoton();
+  // annoton: Annoton = new Annoton();
 
   private unsubscribeAll: Subject<any>;
 
@@ -72,7 +72,7 @@ export class CamFormComponent implements OnInit, OnDestroy {
     private sparqlService: SparqlService
   ) {
     this.unsubscribeAll = new Subject();
-    this.annoton = this.noctuaFormGridService.annoton;
+    // this.annoton = self.noctuaFormGridService.annoton;
     this.camFormPresentation = this.noctuaFormGridService.annotonPresentation;
   }
 
@@ -97,23 +97,23 @@ export class CamFormComponent implements OnInit, OnDestroy {
     const self = this;
     let infos;
 
-    this.noctuaFormGridService.camFormToAnnoton(self.annoton, this.camFormGroup)
+    self.noctuaFormGridService.camFormToAnnoton(self.noctuaFormGridService.annoton, this.camFormGroup)
 
     let saveAnnoton = function () {
       //self.formGrid.linkFormNode(entity, selected.node);
-      let annoton = self.noctuaGraphService.adjustAnnoton(self.annoton)
+      let annoton = self.noctuaGraphService.adjustAnnoton(self.noctuaFormGridService.annoton)
       self.noctuaGraphService.saveAnnoton(self.cam, annoton).then(function (data) {
         self.noctuaFormGridService.clearForm();
         // self.dialogService.openSuccessfulSaveToast();
       });
     }
 
-    infos = self.noctuaGraphService.annotonAdjustments(self.annoton);
+    infos = self.noctuaGraphService.annotonAdjustments(self.noctuaFormGridService.annoton);
     // self.graph.createSave(self.formGrid.annoton);
     //temporarily off
     if (infos.length > 0) {
       let data = {
-        annoton: self.annoton,
+        annoton: self.noctuaFormGridService.annoton,
         infos: infos
       };
 
@@ -125,9 +125,8 @@ export class CamFormComponent implements OnInit, OnDestroy {
   }
 
   clear() {
-
+    this.noctuaFormGridService.clearForm();
   }
-
 
   addFdForm(camFdFormGroup: FormGroup) {
     const self = this;
@@ -152,13 +151,13 @@ export class CamFormComponent implements OnInit, OnDestroy {
   changeAnnotonTypeForm(annotonType) {
     const self = this;
 
-    self.noctuaFormGridService.setAnnotonType(this.noctuaFormGridService.annoton, annotonType.name);
+    self.noctuaFormGridService.setAnnotonType(self.noctuaFormGridService.annoton, annotonType.name);
   }
 
   changeAnnotonModelTypeForm(annotonModelType) {
     const self = this;
 
-    self.noctuaFormGridService.setAnnotonModelType(this.noctuaFormGridService.annoton, annotonModelType.name);
+    self.noctuaFormGridService.setAnnotonModelType(self.noctuaFormGridService.annoton, annotonModelType.name);
   }
 
   onValueChanges() {

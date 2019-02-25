@@ -68,23 +68,6 @@ export class NoctuaFormGridService {
     const self = this;
 
     self.camForm.populateAnnoton(annoton);
-    // let destForm = camForm.value;
-
-    // camForm.
-    // let destForm = <CamForm>this.camFormGroup.getValue()
-    //   destForm.
-    /*   annoton.getGPNode().setTerm(destForm.gp);
-
-    destForm.fd.forEach((group) => {
-      group.entityGroup.forEach((node, key) => {
-        let destNode: AnnotonNode = annoton.getNode(key);
-
-        if (destNode) {
-          //des
-        }
-      });
-    });
-    */
 
     console.dir(annoton)
   }

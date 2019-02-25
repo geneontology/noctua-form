@@ -860,7 +860,7 @@ export class NoctuaFormConfigService {
       'barista_token': this.baristaToken
     }
     let modelIdParams = {
-      'model_id': 'gomodel:' + modelId
+      'model_id': modelId
     }
 
     function parameterize(params) {
@@ -871,7 +871,7 @@ export class NoctuaFormConfigService {
     modelInfo.noctuaUrl = environment.noctuaUrl + "?" + (this.loggedIn ? parameterize(baristaParams) : '');
     modelInfo.owlUrl = environment.noctuaUrl + "/download/" + modelId + "/owl";
     modelInfo.gpadUrl = environment.noctuaUrl + "/download/" + modelId + "/gpad";
-    modelInfo.graphEditorUrl = environment.noctuaUrl + "/editor/graph/gomodel:" + modelId + "?" + (this.loggedIn ? parameterize(baristaParams) : '');
+    modelInfo.graphEditorUrl = environment.noctuaUrl + "/editor/graph/" + modelId + "?" + (this.loggedIn ? parameterize(baristaParams) : '');
     modelInfo.saeUrl = environment.workbenchUrl + 'simple-annoton-editor?' + (this.loggedIn ? parameterize(Object.assign({}, modelIdParams, baristaParams)) : '');
     // modelInfo.logoutUrl = self.baristaLocation + '/logout?' + parameterize(baristaParams) + '&amp;return=' + environment.workbenchUrl+'simple-annoton-editor?' + parameterize(baristaParams)
     // modelInfo.loginUrl = self.baristaLocation + '/login?return=' + environment.workbenchUrl+'simple-annoton-editor';
@@ -1285,6 +1285,6 @@ export class NoctuaFormConfigService {
   }
 
   getModelId(url: string) {
-    return url.substr(url.lastIndexOf('/') + 1)
+    return 'gomodel:' + url.substr(url.lastIndexOf('/') + 1)
   }
 }

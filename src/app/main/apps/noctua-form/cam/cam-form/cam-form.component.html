@@ -57,7 +57,7 @@
         </div>
         <span fxFlex></span>
         <button mat-button [matMenuTriggerFor]="annotonTypeOptions" class="noc-bl">
-          {{annoton.annotonType}} <b class="caret"></b>
+          {{noctuaFormGridService.annoton.annotonType}} <b class="caret"></b>
         </button>
         <mat-menu #annotonTypeOptions="matMenu">
           <a mat-menu-item *ngFor="let annotonType of noctuaFormConfigService.annotonType.options" (click)="changeAnnotonTypeForm(annotonType)">
@@ -70,7 +70,8 @@
           <mat-form-field class="">
             <input type="text" matInput formControlName="gp" placeholder="Gene Product" [matAutocomplete]="gpAuto" />
             <mat-autocomplete #gpAuto="matAutocomplete" [displayWith]="termDisplayFn">
-              <mat-option *ngFor="let item of camFormPresentation?.geneProduct.term.lookup.results" [value]="item">
+              <mat-option *ngFor="let item of noctuaFormGridService.annotonPresentation?.geneProduct.term.lookup.results"
+                [value]="item">
                 <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
                   <div>
                     {{ item.id }}
@@ -91,7 +92,7 @@
         </div>
         <span fxFlex></span>
         <button mat-button [matMenuTriggerFor]="annotonModelTypeOptions" class="noc-bl">
-          {{annoton.annotonModelType}} <b class="caret"></b>
+          {{noctuaFormGridService.annoton.annotonModelType}} <b class="caret"></b>
         </button>
         <mat-menu #annotonModelTypeOptions="matMenu">
           <a mat-menu-item *ngFor="let annotonModelType of noctuaFormConfigService.annotonModelType.options" (click)="changeAnnotonModelTypeForm(annotonModelType)">

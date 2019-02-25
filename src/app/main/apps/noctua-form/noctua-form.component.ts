@@ -44,6 +44,7 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
   cam: Cam;
   searchResults = [];
   modelId: string = '';
+  baristaToken: string = '';
 
   private unsubscribeAll: Subject<any>;
 
@@ -63,7 +64,10 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
     this.route
       .queryParams
       .subscribe(params => {
-        this.modelId = params['model_id'] || '5c6c266a00000032';
+        this.modelId = params['model_id'] || 'gomodel:' + '5c6c266a00000032';
+        this.baristaToken = params['barista_token'] || null;
+
+        this.noctuaGraphService.baristaToken = this.baristaToken;
         this.loadCam(this.modelId);
       });
 
