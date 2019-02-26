@@ -13,6 +13,7 @@ import { NoctuaUtils } from '@noctua/utils/noctua-utils';
 import { CurieService } from '@noctua.curie/services/curie.service';
 import { NoctuaGraphService } from '@noctua.form/services/graph.service';
 
+import { NoctuaAnnotonConnectorService } from '@noctua.form/services/annoton-connector.service';
 import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
 import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
 
@@ -53,7 +54,7 @@ export class CamDiagramService {
   private leftDrawer: MatDrawer;
   private rightDrawer: MatDrawer;
 
-  constructor() {
+  constructor(private noctuaAnnotonConnectorService: NoctuaAnnotonConnectorService) {
 
     this.selectedLeftPanel = this.panel.camForm;
     this.selectedRightPanel = this.panel.camForm;
@@ -78,6 +79,18 @@ export class CamDiagramService {
         ["Label", { label: "FOO", id: "label", cssClass: "aLabel" }]
       ],
       Container: "canvas"
+    });
+
+    this.registeJSPlumbrEvents();
+  }
+
+  registeJSPlumbrEvents() {
+    const self = this;
+
+    self._jsPlumbInstance.bind("connection", function (c) {
+      //  info.connection.getOverlay("label").setLabel(info.connection.id);
+      console.log(c)
+      self.noctuaAnnotonConnectorService.createConnection(c.sourceId, c.targetId);
     });
   }
 

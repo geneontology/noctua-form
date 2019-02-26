@@ -6,6 +6,7 @@ import {
   ReflectiveInjector
 } from '@angular/core';
 
+import { Annoton } from '@noctua.form/models/annoton/annoton';
 import { NodeComponent } from './../node/node.component';
 import { jsPlumb } from 'jsplumb';
 
@@ -19,11 +20,11 @@ export class NodeService {
     this.rootViewContainer = viewContainerRef;
   }
 
-  public addDynamicNode(annotonContainer) {
+  public addDynamicNode(annoton: Annoton) {
     const factory = this.factoryResolver.resolveComponentFactory(NodeComponent);
     const component = factory.create(this.rootViewContainer.parentInjector);
-    (<any>component.instance).gp = annotonContainer.gp;
-    (<any>component.instance).annoton = annotonContainer.annoton;
+    //(<any>component.instance).gp = annoton.gp;
+    (<any>component.instance).annoton = annoton;
 
     this.rootViewContainer.insert(component.hostView);
   }

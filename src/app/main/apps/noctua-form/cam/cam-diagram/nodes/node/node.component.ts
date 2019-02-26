@@ -19,6 +19,7 @@ export class NodeComponent implements OnInit, AfterViewInit {
 
   @Input() annoton: Annoton;
 
+  gpTerm;
   connectionId
   connector = new AnnotonNode();
 
@@ -35,7 +36,7 @@ export class NodeComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     const self = this;
     self.connectionId = self.annoton.connectionId
-
+    self.gpTerm = self.annoton.getGPNode().getTerm();
     self.connector = self.annoton.getMFNode();
   }
 
@@ -60,24 +61,10 @@ export class NodeComponent implements OnInit, AfterViewInit {
     // happening.
     self.camDiagramService.jsPlumbInstance.bind("click", (c) => {
       // self.camDiagramService.jsPlumbInstance.deleteConnection(c);
-      self.openConnectorForm();
+      //  self.openConnectorForm();
       console.log(c)
     });
 
-    // bind a connection listener. note that the parameter passed to this function contains more than
-    // just the new connection - see the documentation for a full list of what is included in 'info'.
-    // this listener sets the connection's internal
-    // id as the label overlay's text.
-    self.camDiagramService.jsPlumbInstance.bind("connection", function (info) {
-      info.connection.getOverlay("label").setLabel(info.connection.id);
-    });
-
-    // bind a double click listener to "canvas"; add new node when this occurs.
-
-
-    //
-    // initialise element as connection targets and source.
-    //
 
   }
 
@@ -87,7 +74,7 @@ export class NodeComponent implements OnInit, AfterViewInit {
     self.camDiagramService.jsPlumbInstance.draggable(el);
 
     self.camDiagramService.jsPlumbInstance.makeSource(el, {
-      filter: ".ep",
+      filter: ".noc-connector",
       anchor: "Continuous",
       connectorStyle: { stroke: "#5c96bc", strokeWidth: 2, outlineStroke: "transparent", outlineWidth: 4 },
       connectionType: "basic",
@@ -117,7 +104,7 @@ export class NodeComponent implements OnInit, AfterViewInit {
     this.camDiagramService.openRightDrawer(this.camDiagramService.panel.camForm)
   }
 
-  openConnectorForm() {
+  openConnectorForm(sourceId, targetId) {
     //  this.noctuaFormGridService.initalizeForm(this.annoton);
     this.camDiagramService.openRightDrawer(this.camDiagramService.panel.connectorForm)
   }

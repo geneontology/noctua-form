@@ -9,6 +9,9 @@ import { AnnotonError } from "./parser/annoton-error.js";
 import { AnnotonNode } from './annoton-node'
 
 export class Annoton extends SaeGraph {
+  gp;
+  annotonPresentation;
+  annotonRows;
   nodes;
   annotonType;
   annotonModelType;

@@ -46,6 +46,8 @@ import { Evidence } from '@noctua.form/models/annoton/evidence';
 export class CamConnectorComponent implements OnInit, OnDestroy {
 
   @Input('panelDrawer')
+  annoton: Annoton;
+  mfNode: AnnotonNode;
   panelDrawer: MatDrawer;
   cam: Cam;
   connectorFormGroup: FormGroup;
@@ -81,14 +83,6 @@ export class CamConnectorComponent implements OnInit, OnDestroy {
         if (!connectorFormGroup) return;
         this.connectorFormGroup = connectorFormGroup;
 
-        //   this.evidenceFormArray = this.evidenceFormArray = this.connectorFormGroup.get('mf')['controls']['evidenceFormArray']
-
-        //    = this.connectorFormGroup.get('mf')['controls'].get('evidenceFormArray')['controls']
-
-        console.log(this.connectorFormGroup);
-
-
-        console.log(this.evidenceFormArray)
       });
 
     this.camService.onCamChanged.subscribe((cam) => {

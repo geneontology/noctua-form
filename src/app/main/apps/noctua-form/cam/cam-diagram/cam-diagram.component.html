@@ -7,26 +7,9 @@
       </div>
     </mat-drawer>
     <mat-drawer-content class="noc-section-body w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start">
-      <div class="noc-action-list" fxFlex="100px" fxLayout="column" fxLayoutAlign="start center" cdkDropList #doneList="cdkDropList"
-        [cdkDropListData]="done" [cdkDropListConnectedTo]="[todoList]">
-        <div class="noc-heading">
-          Drag To Canvas
-        </div>
-        <div class="noc-diagram-component" cdkDrag>
-          <mat-icon>close</mat-icon>
-          Activity
-        </div>
-        <div class="noc-diagram-component" cdkDrag>
-          <mat-icon>arrow_right_alt</mat-icon>
-          Connect
-        </div>
-      </div>
 
+      <noc-nodes-container [nodes]="cam?.annotons" class="w-100-p h-100-p"> </noc-nodes-container>
 
-      <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo" [cdkDropListConnectedTo]="[doneList]" class="example-list w-100-p h-100-p"
-        (cdkDropListDropped)="drop($event)">
-        <noc-nodes-container [nodes]="cam?.annotons" class="w-100-p h-100-p"> </noc-nodes-container>
-      </div>
     </mat-drawer-content>
     <mat-drawer #rightDrawer class="noc-right-drawer" fxFlex="1000px" noctuaPerfectScrollbar mode="side" position="end">
       <div [ngSwitch]="camDiagramService.selectedRightPanel.id" class="h-100-p">

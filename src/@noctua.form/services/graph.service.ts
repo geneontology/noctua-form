@@ -152,7 +152,7 @@ export class NoctuaGraphService {
 
       self.graphPreParse(cam.graph).subscribe((data) => {
         cam.annotons = self.graphToAnnotons(cam.graph);
-        cam.annotons = [...self.annotonsToTable(cam.graph, cam.annotons), ...self.ccComponentsToTable(cam.graph, data)]
+        self.annotonsToTable(cam.graph, cam.annotons)
         cam.onGraphChanged.next(cam.annotons);
       })
 
@@ -662,33 +662,25 @@ export class NoctuaGraphService {
     });
   }
 
-  annotonsToTable(graph, annotons) {
+  annotonsToTable(graph, annotons: Annoton[]) {
     const self = this;
-    let result = [];
+    //  let result = [];
 
     each(annotons, function (annoton) {
-      let annotonRows = self.annotonToTableRows(graph, annoton);
+      annoton.annotonRows = self.annotonToTableRows(graph, annoton);
 
-      result = result.concat(annotonRows);
+      //  result = result.concat(annotonRows);
     });
 
-    return result;
+    // return result;
   }
 
-  annotonToTableRows(graph, annoton) {
+  annotonToTableRows(graph, annoton: Annoton) {
     const self = this;
-    let result = [];
 
     let gpNode = annoton.getGPNode();
-
-    let row = {
-      gp: gpNode.term.control.value.label,
-      original: JSON.parse(JSON.stringify(annoton)),
-      annoton: annoton,
-      annotonPresentation: self.formGridService.getAnnotonPresentation(annoton),
-    }
-
-    return row;
+    //annoton.gpTerm = gpNode.term.control.value.label;
+    annoton.annotonPresentation = self.formGridService.getAnnotonPresentation(annoton);
   }
 
   ccComponentsToTable(graph, annotons) {

@@ -919,12 +919,12 @@ export class NoctuaFormConfigService {
 
   }
 
-  createAnnotonConnectorModel() {
+  createAnnotonConnectorModel(srcSubjectMFNode?: AnnotonNode, srcObjectMFNode?: AnnotonNode, edge?: any) {
     const self = this;
     let annoton = new Annoton();
     let modelIds = _.cloneDeep(self._modelRelationship);
-    let subjectMFNode = self.generateNode('mf');
-    let objectMFNode = self.generateNode('mf', { id: '-1' });
+    let subjectMFNode: AnnotonNode;
+    let objectMFNode: AnnotonNode;
     let edgeOption = {
       selected: noctuaFormConfig.edge.upstreamOfOrWithin,
       options: [
@@ -937,10 +937,27 @@ export class NoctuaFormConfigService {
       ]
     };
 
+    if (srcSubjectMFNode) {
+      subjectMFNode = srcSubjectMFNode;
+    } else {
+      subjectMFNode = self.generateNode('mf');
+    }
+
+    if (srcObjectMFNode) {
+      objectMFNode = srcObjectMFNode;
+    } else {
+      objectMFNode = self.generateNode('mf', { id: '-1' });
+    }
+
     annoton.addNode(subjectMFNode);
     annoton.addNode(objectMFNode);
     subjectMFNode.addEdgeOption(edgeOption);
     // annoton.addEdge(subjectMFNode, objectMFNode, annoton.edgeOption.selected);
+
+    if (edge) {
+      edgeOption.selected = edge;
+      annoton.addEdge(subjectMFNode, objectMFNode, edgeOption.selected);
+    }
 
     return annoton;
   }

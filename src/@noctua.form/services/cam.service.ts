@@ -29,6 +29,7 @@ export class CamService {
   baseUrl = environment.spaqrlApiUrl;
   curieUtil: any;
   loading: boolean = false;
+  cam: Cam;
   onCamsChanged: BehaviorSubject<any>;
   onCamChanged: BehaviorSubject<any>;
 
@@ -58,7 +59,9 @@ export class CamService {
     });
     cam.expanded = true;
     this.noctuaGraphService.getGraphInfo(cam, modelId);
+    this.cam = cam;
     this.onCamChanged.next(cam);
+
     return cam;
   }
 

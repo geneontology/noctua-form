@@ -60,12 +60,12 @@ export class NodesContainerComponent implements OnChanges, AfterViewInit {
     const self = this;
 
     self.camDiagramService.jsPlumbInstance.batch(function () {
-      self.nodes.forEach(node => {
-        let connections = node.annoton.annotonConnections;
+      self.nodes.forEach((annoton: Annoton) => {
+        let connections = annoton.annotonConnections;
 
         connections.forEach(connection => {
           self.camDiagramService.jsPlumbInstance.connect({
-            source: node.annoton.connectionId,
+            source: annoton.connectionId,
             target: connection.object.modelId,
             type: "basic"
           });

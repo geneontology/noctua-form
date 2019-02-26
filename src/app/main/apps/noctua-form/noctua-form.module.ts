@@ -3,9 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { NoctuaFormComponent } from './noctua-form.component';
 import { NoctuaSharedModule } from '@noctua/shared.module';
-import { TreeTableModule } from 'primeng/treetable';
-import { TreeNode } from 'primeng/api';
 import { NoctuaFormDialogService } from './dialog.service';
+import { NoctuaAnnotonConnectorService } from '@noctua.form/services/annoton-connector.service';
 import { ContextMenuModule } from 'ngx-contextmenu';
 
 import { CamService } from '@noctua.form/services/cam.service';
@@ -15,6 +14,7 @@ import { CamFormEntityComponent } from './cam/cam-form/cam-entity/cam-entity.com
 
 import { CamTableComponent } from './cam/cam-table/cam-table.component';
 import { CamRowComponent } from './cam/cam-row/cam-row.component';
+
 
 import { CamRowEditDialogComponent } from './dialogs/cam-row-edit/cam-row-edit.component';
 import { AddEvidenceDialogComponent } from './dialogs/add-evidence/add-evidence.component';
@@ -45,11 +45,10 @@ const routes = [
   imports: [
     NoctuaSharedModule,
     CommonModule,
-    TreeTableModule,
     RouterModule.forChild(routes),
     ContextMenuModule.forRoot(),
   ],
-  providers: [NoctuaFormDialogService, CamService, NodeService, CamDiagramService, CamTableService],
+  providers: [NoctuaFormDialogService, CamService, NodeService, CamDiagramService, CamTableService, NoctuaAnnotonConnectorService],
   declarations: [
     NoctuaFormComponent,
     CamFormComponent,

@@ -1,11 +1,17 @@
 <div class="node" id="{{connectionId}}">
-  {{gp}}<br>
-  {{connectionId}}
-  <div class="ep" action="phone2"></div>
-  <div class="" fxLayout="column" fxLayoutAlign="start center">
-    <button mat-icon-button (click)="openCamForm()" matTooltip="Details" [matTooltipPosition]="'after'"
-      [matTooltipShowDelay]="1500">
-      <mat-icon> assignment </mat-icon>
-    </button>
+  <div class="noc-node-conntent w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start center">
+    <div fxFlex="100%">
+      {{gpTerm?.label}}
+    </div>
+    <div class="noc-node-actions" fxFlex="40px" fxLayout="column" fxLayoutAlign="start center">
+      <button mat-button (click)="openCamForm()" matTooltip="Details" [matTooltipPosition]="'after'"
+        [matTooltipShowDelay]="1500">
+        <mat-icon>edit </mat-icon>
+      </button>
+      <div mat-button class="noc-connector" action="p" matTooltip="Details" [matTooltipPosition]="'after'"
+        [matTooltipShowDelay]="1500" fxLayout="column" fxLayoutAlign="center center">
+        <mat-icon class="s-24"> arrow_right_alt </mat-icon>
+      </div>
+    </div>
   </div>
 </div>
