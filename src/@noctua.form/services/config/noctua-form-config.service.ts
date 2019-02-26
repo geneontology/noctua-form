@@ -946,6 +946,7 @@ export class NoctuaFormConfigService {
 
     if (srcObjectMFNode) {
       objectMFNode = srcObjectMFNode;
+      objectMFNode.id = 'mf-1';
     } else {
       objectMFNode = self.generateNode('mf', { id: '-1' });
     }
@@ -953,7 +954,7 @@ export class NoctuaFormConfigService {
     annoton.addNode(subjectMFNode);
     annoton.addNode(objectMFNode);
     subjectMFNode.addEdgeOption(edgeOption);
-    // annoton.addEdge(subjectMFNode, objectMFNode, annoton.edgeOption.selected);
+    annoton.addEdge(subjectMFNode, objectMFNode, edgeOption.selected);
 
     if (edge) {
       edgeOption.selected = edge;

@@ -84,12 +84,12 @@ export class NoctuaAnnotonConnectorService {
     this.initalizeForm(annoton);
   }
 
-  connectorFormToAnnoton(annoton: Annoton, connectorForm) {
+  connectorFormToAnnoton() {
     const self = this;
 
-    //self.connectorForm.populateAnnoton(annoton);
+    self.connectorForm.populateConnectorForm(self.annoton, self.subjectMFNode);
 
-    console.dir(annoton)
+    console.dir(self.annoton)
   }
 
   clearForm() {

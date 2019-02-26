@@ -99,7 +99,7 @@ export class CamFormComponent implements OnInit, OnDestroy {
     const self = this;
     let infos;
 
-    self.noctuaFormGridService.camFormToAnnoton(self.noctuaFormGridService.annoton, this.camFormGroup)
+    self.noctuaFormGridService.camFormToAnnoton(self.noctuaFormGridService.annoton)
 
     let saveAnnoton = function () {
       //self.formGrid.linkFormNode(entity, selected.node);

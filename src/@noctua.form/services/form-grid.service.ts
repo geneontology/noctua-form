@@ -64,7 +64,7 @@ export class NoctuaFormGridService {
     return camForm;
   }
 
-  camFormToAnnoton(annoton: Annoton, camForm) {
+  camFormToAnnoton(annoton: Annoton) {
     const self = this;
 
     self.camForm.populateAnnoton(annoton);

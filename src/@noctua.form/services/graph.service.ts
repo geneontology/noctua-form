@@ -9,6 +9,7 @@ import { map, filter, reduce, catchError, retry, tap } from 'rxjs/operators';
 
 import { Cam } from './../models/annoton/cam';
 import { Annoton } from './../models/annoton/annoton';
+import { AnnotonNode } from './../models/annoton/annoton-node';
 import { AnnotonParser } from './../models/annoton/parser/annoton-parser';
 import { AnnotonError } from "./../models/annoton/parser/annoton-error";
 import { Evidence } from './../models/annoton/evidence';
@@ -1169,6 +1170,32 @@ export class NoctuaGraphService {
       each(annoton.nodes, function (node) {
         self.addFact(reqs, annoton, node);
       });
+
+      reqs.store_model(cam.model.id);
+
+      if (self.userInfo.groups.length > 0) {
+        reqs.use_groups([self.userInfo.selectedGroup.id]);
+      }
+
+      return manager.request_with(reqs);
+    }
+
+    //return self.saveGP(geneProduct, success);
+
+    return success();
+
+  }
+
+  saveConnection(cam, annoton: Annoton, subjectNode: AnnotonNode, objectNode: AnnotonNode) {
+    const self = this;
+
+    function success() {
+      const manager = cam.manager;
+      let reqs = new minerva_requests.request_set(manager.user_token(), cam.model.id);
+
+      self.addIndividual(reqs, subjectNode);
+      self.addIndividual(reqs, objectNode);
+      self.addFact(reqs, annoton, subjectNode);
 
       reqs.store_model(cam.model.id);
 

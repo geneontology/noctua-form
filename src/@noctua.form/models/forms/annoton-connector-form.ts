@@ -42,11 +42,12 @@ export class AnnotonConnectorForm {
     });
   }
 
-  populateTerm(annotonNode: AnnotonNode) {
+  populateConnectorForm(annoton: Annoton, annotonNode: AnnotonNode) {
     const self = this;
 
     let evidences: Evidence[] = []
     annotonNode.setTerm(this.term.value);
+    annoton.editEdge('mf', 'mf-1', self.edge.value);
 
     self.evidenceForms.forEach((evidenceForm: EvidenceForm) => {
       let evidence = new Evidence()

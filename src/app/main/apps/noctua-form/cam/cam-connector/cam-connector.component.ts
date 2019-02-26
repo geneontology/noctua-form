@@ -113,31 +113,14 @@ export class CamConnectorComponent implements OnInit, OnDestroy {
     const self = this;
     let infos;
 
-    //  self.noctuaFormGridService.camFormToAnnoton(self.noctuaFormGridService.annoton, this.camFormGroup)
-
-    let saveAnnoton = function () {
-      //self.formGrid.linkFormNode(entity, selected.node);
-      let annoton = self.noctuaGraphService.adjustAnnoton(self.noctuaFormGridService.annoton)
-      self.noctuaGraphService.saveAnnoton(self.cam, annoton).then(function (data) {
-        self.noctuaFormGridService.clearForm();
+    self.noctuaAnnotonConnectorService.connectorFormToAnnoton();
+    self.noctuaGraphService.saveConnection(self.cam,
+      this.noctuaAnnotonConnectorService.annoton,
+      this.noctuaAnnotonConnectorService.subjectMFNode,
+      this.noctuaAnnotonConnectorService.objectMFNode).then(function (data) {
+        // self.noctuaFormGridService.clearForm();
         // self.dialogService.openSuccessfulSaveToast();
       });
-    }
-
-    infos = self.noctuaGraphService.annotonAdjustments(self.noctuaFormGridService.annoton);
-    // self.graph.createSave(self.formGrid.annoton);
-    //temporarily off
-    if (infos.length > 0) {
-      let data = {
-        annoton: self.noctuaFormGridService.annoton,
-        infos: infos
-      };
-
-      // self.dialogService.openBeforeSaveDialog(null, data, saveAnnoton);
-      /// saveAnnoton();
-    } else {
-      saveAnnoton();
-    }
   }
 
   addEvidence() {
