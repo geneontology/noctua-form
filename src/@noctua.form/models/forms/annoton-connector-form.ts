@@ -29,7 +29,7 @@ export class AnnotonConnectorForm {
     this._metadata = metadata;
   }
 
-  createEntityForms(entity) {
+  createEntityForms(entity: AnnotonNode) {
     const self = this;
 
     this.term.setValue(entity.getTerm());
@@ -56,16 +56,4 @@ export class AnnotonConnectorForm {
     });
   }
 
-  onValueChanges(lookup) {
-    const self = this;
-
-    self.term.valueChanges
-      .distinctUntilChanged()
-      .debounceTime(400)
-      .subscribe(data => {
-        self._metadata.lookupFunc(data, lookup.requestParams).subscribe(response => {
-          lookup.results = response;
-        });
-      });
-  }
 }

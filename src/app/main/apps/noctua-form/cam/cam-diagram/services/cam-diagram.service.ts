@@ -13,6 +13,7 @@ import { NoctuaUtils } from '@noctua/utils/noctua-utils';
 import { CurieService } from '@noctua.curie/services/curie.service';
 import { NoctuaGraphService } from '@noctua.form/services/graph.service';
 
+import { NoctuaFormGridService } from '@noctua.form/services/form-grid.service';
 import { NoctuaAnnotonConnectorService } from '@noctua.form/services/annoton-connector.service';
 import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
 import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
@@ -54,7 +55,8 @@ export class CamDiagramService {
   private leftDrawer: MatDrawer;
   private rightDrawer: MatDrawer;
 
-  constructor(private noctuaAnnotonConnectorService: NoctuaAnnotonConnectorService) {
+  constructor(private noctuaAnnotonConnectorService: NoctuaAnnotonConnectorService,
+    private noctuaFormGridService: NoctuaFormGridService, ) {
 
     this.selectedLeftPanel = this.panel.camForm;
     this.selectedRightPanel = this.panel.camForm;
@@ -89,8 +91,13 @@ export class CamDiagramService {
 
     self._jsPlumbInstance.bind("connection", function (c) {
       //  info.connection.getOverlay("label").setLabel(info.connection.id);
+      self.openConnectorForm(c.sourceId, c.targetId);
+    });
+
+    self._jsPlumbInstance.bind("click", (c) => {
+      // self.camDiagramService.jsPlumbInstance.deleteConnection(c);
+      self.openConnectorForm(c.sourceId, c.targetId);
       console.log(c)
-      self.noctuaAnnotonConnectorService.createConnection(c.sourceId, c.targetId);
     });
   }
 
@@ -143,6 +150,20 @@ export class CamDiagramService {
 
   public closeRightDrawer() {
     return this.rightDrawer.close();
+  }
+
+  openCamForm() {
+    const self = this;
+
+    self.noctuaFormGridService.initalizeForm();
+    self.openRightDrawer(self.panel.camForm)
+  }
+
+  openConnectorForm(sourceId, targetId) {
+    const self = this;
+
+    self.noctuaAnnotonConnectorService.createConnection(sourceId, targetId);
+    self.openRightDrawer(self.panel.connectorForm)
   }
 
 }

@@ -30,6 +30,8 @@ export class NoctuaAnnotonConnectorService {
   public annoton: Annoton;
   public subjectMFNode: AnnotonNode;
   public objectMFNode: AnnotonNode;
+  public subjectAnnoton: Annoton;
+  public objectAnnoton: Annoton;
   public annotonPresentation;
   private connectorForm: AnnotonConnectorForm;
   private connectorFormGroup: BehaviorSubject<FormGroup | undefined>;
@@ -55,8 +57,8 @@ export class NoctuaAnnotonConnectorService {
       this.annoton = annoton;
     }
 
-    this.subjectMFNode = this.annoton.getNode('mf');
-    this.objectMFNode = this.annoton.getNode('mf-1');
+    // this.subjectMFNode = this.annoton.getNode('mf');
+    // this.objectMFNode = this.annoton.getNode('mf-1');
     this.connectorForm = this.createConnectorForm()
     this.connectorFormGroup.next(this._fb.group(this.connectorForm));
   }
@@ -72,12 +74,12 @@ export class NoctuaAnnotonConnectorService {
   }
 
   createConnection(subjectId, objectId, edge?) {
-    let subjectAnnoton: Annoton = this.cam.getAnnotonByConnectionId(subjectId);
-    let objectAnnoton: Annoton = this.cam.getAnnotonByConnectionId(objectId);
+    this.subjectAnnoton = this.cam.getAnnotonByConnectionId(subjectId);
+    this.objectAnnoton = this.cam.getAnnotonByConnectionId(objectId);
 
-    let subjectMFNode = subjectAnnoton.getMFNode();
-    let objectMFNode = objectAnnoton.getMFNode();
-    let annoton = this.noctuaFormConfigService.createAnnotonConnectorModel(subjectMFNode, objectMFNode, edge);
+    this.subjectMFNode = this.subjectAnnoton.getMFNode();
+    this.objectMFNode = this.objectAnnoton.getMFNode();
+    let annoton = this.noctuaFormConfigService.createAnnotonConnectorModel(this.subjectMFNode, this.objectMFNode, edge);
 
     this.initalizeForm(annoton);
   }

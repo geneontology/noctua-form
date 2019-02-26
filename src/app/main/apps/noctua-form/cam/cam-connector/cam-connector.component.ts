@@ -57,6 +57,9 @@ export class CamConnectorComponent implements OnInit, OnDestroy {
   evidenceFormArray: FormArray;
   // annoton: Annoton = new Annoton();
 
+  subjectGPNode: AnnotonNode;
+  objectGPNode: AnnotonNode;
+
   private unsubscribeAll: Subject<any>;
 
   constructor(private route: ActivatedRoute,
@@ -83,6 +86,8 @@ export class CamConnectorComponent implements OnInit, OnDestroy {
         if (!connectorFormGroup) return;
         this.connectorFormGroup = connectorFormGroup;
 
+        this.subjectGPNode = this.noctuaAnnotonConnectorService.subjectAnnoton.getGPNode()
+        this.objectGPNode = this.noctuaAnnotonConnectorService.objectAnnoton.getGPNode()
       });
 
     this.camService.onCamChanged.subscribe((cam) => {

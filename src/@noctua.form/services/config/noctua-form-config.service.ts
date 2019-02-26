@@ -820,6 +820,7 @@ export class NoctuaFormConfigService {
     }
   }
 
+
   get annotonType() {
     let options = [
       noctuaFormConfig.annotonType.options.simple,

@@ -59,11 +59,7 @@ export class NodeComponent implements OnInit, AfterViewInit {
     // bind a click listener to each connection; the connection is deleted. you could of course
     // just do this: self.nodeService.jsPlumbInstance.bind("click", self.nodeService.jsPlumbInstance.deleteConnection), but I wanted to make it clear what was
     // happening.
-    self.camDiagramService.jsPlumbInstance.bind("click", (c) => {
-      // self.camDiagramService.jsPlumbInstance.deleteConnection(c);
-      //  self.openConnectorForm();
-      console.log(c)
-    });
+
 
 
   }
@@ -104,8 +100,5 @@ export class NodeComponent implements OnInit, AfterViewInit {
     this.camDiagramService.openRightDrawer(this.camDiagramService.panel.camForm)
   }
 
-  openConnectorForm(sourceId, targetId) {
-    //  this.noctuaFormGridService.initalizeForm(this.annoton);
-    this.camDiagramService.openRightDrawer(this.camDiagramService.panel.connectorForm)
-  }
+
 }
