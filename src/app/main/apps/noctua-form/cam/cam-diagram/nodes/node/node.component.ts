@@ -1,5 +1,7 @@
 import { Component, Input, OnInit, ElementRef, Renderer2, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { jsPlumb } from 'jsplumb';
+
+import { BehaviorSubject, Subject, Observable, Subscriber } from 'rxjs';
 import { NodeService } from './../services/node.service';
 import { NoctuaFormDialogService } from './../../../../dialog.service';
 import { CamDiagramService } from './../../services/cam-diagram.service';
@@ -19,6 +21,7 @@ export class NodeComponent implements OnInit, AfterViewInit {
 
   @Input() annoton: Annoton;
 
+  onNodeReady: Subject<any> = new Subject();// = new BehaviorSubject({});
   gpTerm;
   connectionId
   connector = new AnnotonNode();
@@ -35,6 +38,9 @@ export class NodeComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     const self = this;
+
+    //  self.onNodeReady = new BehaviorSubject({});
+    //  self.camDiagramService.onNodesReady.push(this.onNodeReady)
     self.connectionId = self.annoton.connectionId
     self.gpTerm = self.annoton.getGPNode().getTerm();
     self.connector = self.annoton.getMFNode();
@@ -43,17 +49,21 @@ export class NodeComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     const self = this;
 
-    console.log(this.annoton);
-    console.log(this.elRef.nativeElement);
     let nodeEl = this.elRef.nativeElement.children[0]
-    this.renderer.setStyle(nodeEl, 'left', this.connector.location.x + 'px');
-    this.renderer.setStyle(nodeEl, 'top', this.connector.location.y + 'px');
+    let locationX = self.connector.location.x * self.camDiagramService.scale.x + 'px';
+    let locationY = self.connector.location.y * self.camDiagramService.scale.y + 'px'
+
+    self.renderer.setStyle(nodeEl, 'left', locationX);
+    self.renderer.setStyle(nodeEl, 'top', locationY);
 
     self.camDiagramService.jsPlumbInstance.registerConnectionType("basic", { anchor: "Continuous", connector: "StateMachine" });
 
     self.initNode(self.connectionId);
 
-    var canvas = document.getElementById("canvas");
+    // self.onNodeReady = new BehaviorSubject(self.connectionId)
+    self.onNodeReady.next(self.connectionId)
+
+    //var canvas = document.getElementById("canvas");
     // var windows = jsPlumb.getSelector(".statemachine-demo .w");
 
     // bind a click listener to each connection; the connection is deleted. you could of course

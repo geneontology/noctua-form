@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { MatDrawer } from '@angular/material';
-import { BehaviorSubject, Observable, Subscriber } from 'rxjs';
+import { BehaviorSubject, Subject, Observable, Subscriber } from 'rxjs';
 import { map, filter, reduce, catchError, retry, tap } from 'rxjs/operators';
 
 import { jsPlumb } from 'jsplumb';
@@ -31,8 +31,12 @@ const each = require('lodash/forEach');
 })
 export class CamDiagramService {
 
-
-  _jsPlumbInstance
+  onNodesReady: Subject<any>[] = [];
+  private _jsPlumbInstance
+  private _scale = {
+    x: 0.4,
+    y: 0.5
+  }
 
   panel = {
     camForm: {
@@ -80,7 +84,7 @@ export class CamDiagramService {
         }],
         //  ["Label", { label: "FOO", id: "label", cssClass: "aLabel" }]
       ],
-      Container: "canvas"
+      Container: "cam-canvas"
     });
 
     this.registeJSPlumbrEvents();
@@ -108,6 +112,10 @@ export class CamDiagramService {
       self.initJsPlumbInstance()
     }
     return this._jsPlumbInstance;
+  }
+
+  get scale() {
+    return this._scale;
   }
 
   selectLeftPanel(panel) {
