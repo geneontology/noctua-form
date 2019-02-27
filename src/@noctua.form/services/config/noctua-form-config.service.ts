@@ -860,6 +860,38 @@ export class NoctuaFormConfigService {
     }
   }
 
+  getCausalAnnotonConnectorEdge(causalEffect, annotonsConsecutive) {
+    let result;
+
+    if (annotonsConsecutive) {
+      switch (causalEffect.name) {
+        case noctuaFormConfig.causalEffect.options.positive.name:
+          result = noctuaFormConfig.edge.causallyUpstreamOfPositiveEffect;
+          break;
+        case noctuaFormConfig.causalEffect.options.negative.name:
+          result = noctuaFormConfig.edge.causallyUpstreamOfNegativeEffect;
+          break;
+        case noctuaFormConfig.causalEffect.options.neutral.name:
+          result = noctuaFormConfig.edge.causallyUpstreamOf;
+          break;
+      }
+    } else {
+      switch (causalEffect.name) {
+        case noctuaFormConfig.causalEffect.options.positive.name:
+          result = noctuaFormConfig.edge.directlyPositivelyRegulates;
+          break;
+        case noctuaFormConfig.causalEffect.options.negative.name:
+          result = noctuaFormConfig.edge.directlyNegativelyRegulates;
+          break;
+        case noctuaFormConfig.causalEffect.options.neutral.name:
+          result = noctuaFormConfig.edge.directlyRegulates;
+          break;
+      }
+    }
+
+    return result;
+  }
+
   getRequestParams(id) {
     const self = this;
 
@@ -933,51 +965,20 @@ export class NoctuaFormConfigService {
 
   }
 
-  createAnnotonConnectorModel(srcSubjectMFNode?: AnnotonNode, srcObjectMFNode?: AnnotonNode, edge?: any) {
+  createAnnotonConnectorModel(subjectMFNode: AnnotonNode, objectMFNode: AnnotonNode, edge: any) {
     const self = this;
     let annoton = new Annoton();
-    let modelIds = _.cloneDeep(self._modelRelationship);
-    let subjectMFNode: AnnotonNode;
-    let objectMFNode: AnnotonNode;
-    let edgeOption = {
-      selected: noctuaFormConfig.edge.causallyUpstreamOfOrWithin,
-      options: [
-        noctuaFormConfig.edge.causallyUpstreamOfOrWithin,
-        noctuaFormConfig.edge.causallyUpstreamOf,
-        noctuaFormConfig.edge.causallyUpstreamOfPositiveEffect,
-        noctuaFormConfig.edge.causallyUpstreamOfNegativeEffect,
-        noctuaFormConfig.edge.causallyUpstreamOfOrWithinPositiveEffect,
-        noctuaFormConfig.edge.causallyUpstreamOfOrWithinNegativeEffect,
-      ]
-    };
 
-    if (srcSubjectMFNode) {
-      subjectMFNode = new AnnotonNode();
-      subjectMFNode = srcSubjectMFNode;
-      //  subjectMFNode.id = 'mf';
-    } else {
-      subjectMFNode = self.generateNode('mf');
-      subjectMFNode.id = 'mf';
-    }
-
-    if (srcObjectMFNode) {
-      objectMFNode = new AnnotonNode();
-      objectMFNode.copyValues(srcObjectMFNode);
-      subjectMFNode = srcSubjectMFNode;
-      objectMFNode.id = 'mf-1';
-    } else {
-      objectMFNode = self.generateNode('mf', { id: '-1' });
-      objectMFNode.id = 'mf-1';
-    }
-
+    subjectMFNode.id = 'mf';
+    objectMFNode.id = 'mf-1';
     annoton.addNode(subjectMFNode);
     annoton.addNode(objectMFNode);
-    subjectMFNode.addEdgeOption(edgeOption);
-    annoton.addEdge(subjectMFNode, objectMFNode, edgeOption.selected);
 
     if (edge) {
-      edgeOption.selected = edge;
-      annoton.addEdge(subjectMFNode, objectMFNode, edgeOption.selected);
+      annoton.addEdge(subjectMFNode, objectMFNode, edge);
+    } else {
+      //A placeholder
+      annoton.addEdge(subjectMFNode, objectMFNode, noctuaFormConfig.edge.causallyUpstreamOf);
     }
 
     return annoton;

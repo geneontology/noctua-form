@@ -41,7 +41,7 @@ export class NoctuaAnnotonConnectorService {
     private camService: CamService,
     private noctuaLookupService: NoctuaLookupService) {
 
-    this.annoton = this.noctuaFormConfigService.createAnnotonConnectorModel();
+    // this.annoton = this.noctuaFormConfigService.createAnnotonConnectorModel();
     this.connectorFormGroup = new BehaviorSubject(null);
     this.connectorFormGroup$ = this.connectorFormGroup.asObservable()
 
@@ -49,7 +49,7 @@ export class NoctuaAnnotonConnectorService {
       this.cam = cam;
     });
 
-    this.initalizeForm();
+    // this.initalizeForm();
   }
 
   initalizeForm(annoton?: Annoton) {
@@ -77,8 +77,8 @@ export class NoctuaAnnotonConnectorService {
     this.subjectAnnoton = this.cam.getAnnotonByConnectionId(subjectId);
     this.objectAnnoton = this.cam.getAnnotonByConnectionId(objectId);
 
-    this.subjectMFNode = this.subjectAnnoton.getMFNode();
-    this.objectMFNode = this.objectAnnoton.getMFNode();
+    this.subjectMFNode = <AnnotonNode>_.cloneDeep(this.subjectAnnoton.getMFNode());
+    this.objectMFNode = <AnnotonNode>_.cloneDeep(this.objectAnnoton.getMFNode());
     let annoton = this.noctuaFormConfigService.createAnnotonConnectorModel(this.subjectMFNode, this.objectMFNode, edge);
 
     this.initalizeForm(annoton);
@@ -86,16 +86,14 @@ export class NoctuaAnnotonConnectorService {
 
   connectorFormToAnnoton() {
     const self = this;
+    let annotonsConsecutive = self.connectorForm.annotonsConsecutive.value;
+    let causalEffect = self.connectorForm.causalEffect.value;
+    let edge = self.noctuaFormConfigService.getCausalAnnotonConnectorEdge(causalEffect, annotonsConsecutive);
 
-    self.foobar(self.connectorForm.annotonsConsecutive.value, self.connectorForm.causalEffect.value);
-
+    self.annoton.editEdge('mf', 'mf-1', edge);
     self.connectorForm.populateConnectorForm(self.annoton, self.subjectMFNode);
 
     console.dir(self.annoton)
-  }
-
-  foobar(causalEffect, annotonsConsecutive) {
-
   }
 
   clearForm() {
