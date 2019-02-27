@@ -640,14 +640,14 @@ export class NoctuaFormConfigService {
         }, {
           subject: 'mf',
           object: 'bp',
-          edge: noctuaFormConfig.edge.upstreamOfOrWithin,
+          edge: noctuaFormConfig.edge.causallyUpstreamOfOrWithin,
           edgeOption: {
-            selected: noctuaFormConfig.edge.upstreamOfOrWithin,
+            selected: noctuaFormConfig.edge.causallyUpstreamOfOrWithin,
             options: [
-              noctuaFormConfig.edge.upstreamOfOrWithin,
-              noctuaFormConfig.edge.upstreamOf,
-              noctuaFormConfig.edge.upstreamOfPositiveEffect,
-              noctuaFormConfig.edge.upstreamOfNegativeEffect,
+              noctuaFormConfig.edge.causallyUpstreamOfOrWithin,
+              noctuaFormConfig.edge.causallyUpstreamOf,
+              noctuaFormConfig.edge.causallyUpstreamOfPositiveEffect,
+              noctuaFormConfig.edge.causallyUpstreamOfNegativeEffect,
               // noctuaFormConfig.edge.upstreamOfOrWithinPositiveEffect,
               //noctuaFormConfig.edge.upstreamOfOrWithinNegativeEffect,
             ]
@@ -687,16 +687,16 @@ export class NoctuaFormConfigService {
         triples: [{
           subject: 'mf',
           object: 'mf',
-          edge: noctuaFormConfig.edge.upstreamOfOrWithin,
+          edge: noctuaFormConfig.edge.causallyUpstreamOfOrWithin,
           edgeOption: {
-            selected: noctuaFormConfig.edge.upstreamOfOrWithin,
+            selected: noctuaFormConfig.edge.causallyUpstreamOfOrWithin,
             options: [
-              noctuaFormConfig.edge.upstreamOfOrWithin,
-              noctuaFormConfig.edge.upstreamOf,
-              noctuaFormConfig.edge.upstreamOfPositiveEffect,
-              noctuaFormConfig.edge.upstreamOfNegativeEffect,
-              noctuaFormConfig.edge.upstreamOfOrWithinPositiveEffect,
-              noctuaFormConfig.edge.upstreamOfOrWithinNegativeEffect,
+              noctuaFormConfig.edge.causallyUpstreamOfOrWithin,
+              noctuaFormConfig.edge.causallyUpstreamOf,
+              noctuaFormConfig.edge.causallyUpstreamOfPositiveEffect,
+              noctuaFormConfig.edge.causallyUpstreamOfNegativeEffect,
+              noctuaFormConfig.edge.causallyUpstreamOfOrWithinPositiveEffect,
+              noctuaFormConfig.edge.causallyUpstreamOfOrWithinNegativeEffect,
             ]
           }
         }],
@@ -716,8 +716,8 @@ export class NoctuaFormConfigService {
       }]
     };
 
-    this.closureCheck[noctuaFormConfig.edge.upstreamOf.id] = {
-      edge: noctuaFormConfig.edge.upstreamOf,
+    this.closureCheck[noctuaFormConfig.edge.causallyUpstreamOf.id] = {
+      edge: noctuaFormConfig.edge.causallyUpstreamOf,
       closures: [{
         object: noctuaFormConfig.closures.bp
       }, {
@@ -725,8 +725,8 @@ export class NoctuaFormConfigService {
       }]
     };
 
-    this.closureCheck[noctuaFormConfig.edge.upstreamOfOrWithin.id] = {
-      edge: noctuaFormConfig.edge.upstreamOfOrWithin,
+    this.closureCheck[noctuaFormConfig.edge.causallyUpstreamOfOrWithin.id] = {
+      edge: noctuaFormConfig.edge.causallyUpstreamOfOrWithin,
       closures: [{
         object: noctuaFormConfig.closures.bp
       }, {
@@ -847,6 +847,19 @@ export class NoctuaFormConfigService {
     }
   }
 
+  get causalEffect() {
+    let options = [
+      noctuaFormConfig.causalEffect.options.positive,
+      noctuaFormConfig.causalEffect.options.negative,
+      noctuaFormConfig.causalEffect.options.neutral
+    ]
+
+    return {
+      options: options,
+      selected: options[0]
+    }
+  }
+
   getRequestParams(id) {
     const self = this;
 
@@ -927,28 +940,34 @@ export class NoctuaFormConfigService {
     let subjectMFNode: AnnotonNode;
     let objectMFNode: AnnotonNode;
     let edgeOption = {
-      selected: noctuaFormConfig.edge.upstreamOfOrWithin,
+      selected: noctuaFormConfig.edge.causallyUpstreamOfOrWithin,
       options: [
-        noctuaFormConfig.edge.upstreamOfOrWithin,
-        noctuaFormConfig.edge.upstreamOf,
-        noctuaFormConfig.edge.upstreamOfPositiveEffect,
-        noctuaFormConfig.edge.upstreamOfNegativeEffect,
-        noctuaFormConfig.edge.upstreamOfOrWithinPositiveEffect,
-        noctuaFormConfig.edge.upstreamOfOrWithinNegativeEffect,
+        noctuaFormConfig.edge.causallyUpstreamOfOrWithin,
+        noctuaFormConfig.edge.causallyUpstreamOf,
+        noctuaFormConfig.edge.causallyUpstreamOfPositiveEffect,
+        noctuaFormConfig.edge.causallyUpstreamOfNegativeEffect,
+        noctuaFormConfig.edge.causallyUpstreamOfOrWithinPositiveEffect,
+        noctuaFormConfig.edge.causallyUpstreamOfOrWithinNegativeEffect,
       ]
     };
 
     if (srcSubjectMFNode) {
+      subjectMFNode = new AnnotonNode();
       subjectMFNode = srcSubjectMFNode;
+      //  subjectMFNode.id = 'mf';
     } else {
       subjectMFNode = self.generateNode('mf');
+      subjectMFNode.id = 'mf';
     }
 
     if (srcObjectMFNode) {
-      objectMFNode = srcObjectMFNode;
+      objectMFNode = new AnnotonNode();
+      objectMFNode.copyValues(srcObjectMFNode);
+      subjectMFNode = srcSubjectMFNode;
       objectMFNode.id = 'mf-1';
     } else {
       objectMFNode = self.generateNode('mf', { id: '-1' });
+      objectMFNode.id = 'mf-1';
     }
 
     annoton.addNode(subjectMFNode);

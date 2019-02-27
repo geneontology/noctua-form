@@ -87,9 +87,15 @@ export class NoctuaAnnotonConnectorService {
   connectorFormToAnnoton() {
     const self = this;
 
+    self.foobar(self.connectorForm.annotonsConsecutive.value, self.connectorForm.causalEffect.value);
+
     self.connectorForm.populateConnectorForm(self.annoton, self.subjectMFNode);
 
     console.dir(self.annoton)
+  }
+
+  foobar(causalEffect, annotonsConsecutive) {
+
   }
 
   clearForm() {

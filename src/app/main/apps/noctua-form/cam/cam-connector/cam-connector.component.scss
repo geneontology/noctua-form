@@ -7,8 +7,8 @@
   @include mat-elevation(4);
 
   .noc-annoton-box {
-    width: 200px;
-    height: 80px;
+    width: 250px;
+    height: 100px;
     padding: 12px;
     //box-shadow: 0 1px 40px 0 #B0C1D9;
     @include mat-elevation(2);
@@ -41,6 +41,12 @@
 
   .noc-body {
     padding: 0 14px 14px 14px;
+  }
+
+  .noc-summary-row {
+    @include deep-height(150px);
+    background-color: #F5F5F5;
+    @include mat-elevation(2);
   }
 
   .noc-connector-form {

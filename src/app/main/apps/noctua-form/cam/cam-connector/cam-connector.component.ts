@@ -46,9 +46,11 @@ import { Evidence } from '@noctua.form/models/annoton/evidence';
 export class CamConnectorComponent implements OnInit, OnDestroy {
 
   @Input('panelDrawer')
+  panelDrawer: MatDrawer;
+
   annoton: Annoton;
   mfNode: AnnotonNode;
-  panelDrawer: MatDrawer;
+
   cam: Cam;
   connectorFormGroup: FormGroup;
   connectorFormSub: Subscription;
@@ -100,18 +102,12 @@ export class CamConnectorComponent implements OnInit, OnDestroy {
     });
   }
 
-
-
-
-
   evidenceDisplayFn(evidence): string | undefined {
     return evidence ? evidence.label : undefined;
   }
 
-
   save() {
     const self = this;
-    let infos;
 
     self.noctuaAnnotonConnectorService.connectorFormToAnnoton();
     self.noctuaGraphService.saveConnection(self.cam,
@@ -126,21 +122,21 @@ export class CamConnectorComponent implements OnInit, OnDestroy {
   addEvidence() {
     const self = this;
 
-    //  let evidenceFormGroup: FormArray = this.entityFormGroup.get('evidenceFormArray') as FormArray;
+    let evidenceFormGroup: FormArray = <FormArray>self.connectorFormGroup.get('evidenceFormArray');
 
-    //  evidenceFormGroup.push(this.formBuilder.group({
-    //    evidence: new FormControl(),
-    //    reference: new FormControl(),
-    //    with: new FormControl(),
-    //  }));
+    evidenceFormGroup.push(this.formBuilder.group({
+      evidence: new FormControl(),
+      reference: new FormControl(),
+      with: new FormControl(),
+    }));
   }
 
   removeEvidence(index) {
     const self = this;
 
-    //  let evidenceFormGroup: FormArray = <FormArray>self.entityFormGroup.get('evidenceFormArray');
+    let evidenceFormGroup: FormArray = <FormArray>self.connectorFormGroup.get('evidenceFormArray');
 
-    //   evidenceFormGroup.removeAt(index);
+    evidenceFormGroup.removeAt(index);
   }
 
   clear() {

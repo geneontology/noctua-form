@@ -78,7 +78,7 @@ export class CamDiagramService {
           length: 14,
           foldback: 0.8
         }],
-        ["Label", { label: "FOO", id: "label", cssClass: "aLabel" }]
+        //  ["Label", { label: "FOO", id: "label", cssClass: "aLabel" }]
       ],
       Container: "canvas"
     });

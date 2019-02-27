@@ -1,7 +1,7 @@
 <div fxLayout="column" fxLayoutAlign="start stretch" class="w-100-p h-100-p">
   <div class="noc-drawer-header" fxLayout="row" fxLayoutAlign="start center">
     <span class="noc-drawer-header-title">
-      Causal Relation</span>
+      Causal Relation Form</span>
     <span fxFlex></span>
     <button mat-icon-button (click)="close()" aria-label="Close dialog">
       <mat-icon>close</mat-icon>
@@ -9,37 +9,46 @@
   </div>
   <form *ngIf="connectorFormGroup" name="connectorFormGroup" [formGroup]="connectorFormGroup" fxLayout="column"
     fxLayoutAlign="start stretch" class="noc-connector-form w-100-p">
-    <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
-      <div class="ph-15 pv-15 noc-annoton-group-row" fxLayout="column" fxLayoutAlign="center center">
-        <div fxLayout="row" fxLayoutAlign="start center">
-          <div class="noc-annoton-box">
-            {{subjectGPNode.getTerm().label}}
-            {{noctuaAnnotonConnectorService.subjectMFNode.getTerm().label}}
-          </div>
-          <div>
-            <mat-icon class="s-32">arrow_right_alt</mat-icon>
-          </div>
-          <div class="noc-annoton-box">
-            {{objectGPNode.getTerm().label}}
-            {{noctuaAnnotonConnectorService.objectMFNode.getTerm().label}}
-          </div>
+    <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start center">
+      <div fxLayout="row" fxLayoutAlign="start center" class="noc-summary-row">
+        <div class="noc-annoton-box">
+          {{subjectGPNode.getTerm().label}}
+          {{noctuaAnnotonConnectorService.subjectMFNode.getTerm().label}}
+        </div>
+        <div>
+          <mat-icon class="s-32">arrow_right_alt</mat-icon>
+        </div>
+        <div class="noc-annoton-box">
+          {{objectGPNode.getTerm().label}}
+          {{noctuaAnnotonConnectorService.objectMFNode.getTerm().label}}
         </div>
       </div>
     </div>
     <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
       <div class="noc-section-heading">
-        Choose Relation
+        Causal Relation
       </div>
     </div>
     <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
       <div class="ph-15 noc-annoton-group-row" fxLayout="column">
-        <mat-form-field appearance="standard" class="">
-          <mat-select formControlName="edge" placeholder="Edge">
-            <mat-option *ngFor="let edge of noctuaAnnotonConnectorService.subjectMFNode.edgeOption?.options" [value]="edge">
-              {{edge.label}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        <mat-radio-group formControlName="causalEffect" fxLayout="column" fxLayoutAlign="start stretch">
+          <mat-radio-button *ngFor="let causalEffect of noctuaFormConfigService.causalEffect.options" class="mt-8 mb-4"
+            value="{{causalEffect}}" fxFlex="30">
+            {{causalEffect.label}}</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+    <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
+      <div class="noc-section-heading">
+        Are the activities consecutive?
+      </div>
+    </div>
+    <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
+      <div class="ph-15 noc-annoton-group-row" fxLayout="column">
+        <mat-radio-group formControlName="annotonsConsecutive" fxLayout="column" fxLayoutAlign="start stretch">
+          <mat-radio-button class="mt-8 mb-4" value="no" fxFlex="30"> No</mat-radio-button>
+          <mat-radio-button class="mt-8 mb-4" value="no" fxFlex="30"> Yes</mat-radio-button>
+        </mat-radio-group>
       </div>
     </div>
     <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">

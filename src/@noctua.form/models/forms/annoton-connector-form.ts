@@ -19,6 +19,8 @@ import { EntityForm } from './entity-form';
 export class AnnotonConnectorForm {
   edge = new FormControl();
   term = new FormControl();
+  annotonsConsecutive = new FormControl();
+  causalEffect = new FormControl();
   evidenceForms: EvidenceForm[] = []
   evidenceFormArray = new FormArray([])
   _metadata: CamFormMetadata;
@@ -46,7 +48,7 @@ export class AnnotonConnectorForm {
     const self = this;
 
     let evidences: Evidence[] = []
-    annotonNode.setTerm(this.term.value);
+    //annotonNode.setTerm(this.term.value);
     annoton.editEdge('mf', 'mf-1', self.edge.value);
 
     self.evidenceForms.forEach((evidenceForm: EvidenceForm) => {

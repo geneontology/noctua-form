@@ -23,35 +23,53 @@ const edge = {
     id: 'BFO:0000051',
     label: 'has part'
   },
-  upstreamOf: {
+  causallyUpstreamOf: {
     id: 'RO:0002411',
     actsId: 'RO:0002263',
-    label: 'acts upstream of'
+    label: 'causally upstream of',
+    actsLabel: 'acts upstream of'
   },
-  upstreamOfOrWithin: {
+  causallyUpstreamOfOrWithin: {
     id: 'RO:0002418',
     actsId: 'RO:0002264',
-    label: 'acts upstream of or within'
+    label: 'causally upstream of or within',
+    actsLabel: 'acts upstream of or within'
   },
-  upstreamOfPositiveEffect: {
+  causallyUpstreamOfPositiveEffect: {
     id: 'RO:0002304',
     actsId: 'RO:0004034',
-    label: 'acts upstream of, positive effect'
+    label: 'causally upstream of, positive effect',
+    actsLabel: 'acts upstream of, positive effect'
   },
-  upstreamOfNegativeEffect: {
+  causallyUpstreamOfNegativeEffect: {
     id: 'RO:0002305',
     actsId: 'RO:0004035',
-    label: 'acts upstream of, negative effect'
+    label: 'causally upstream of, negative effect',
+    actsLabel: 'acts upstream of, negative effect'
   },
-  upstreamOfOrWithinPositiveEffect: {
+  causallyUpstreamOfOrWithinPositiveEffect: {
     id: 'RO:0002629',
     actsId: 'RO:0004032',
-    label: 'acts upstream of or within, positive effect'
+    label: 'causally upstream of or within, positive effect',
+    actsLabel: 'acts upstream of or within, positive effect'
   },
-  upstreamOfOrWithinNegativeEffect: {
+  causallyUpstreamOfOrWithinNegativeEffect: {
     id: 'RO:0002630',
     actsId: 'RO:0004033',
-    label: 'acts upstream of or within, negative effect'
+    label: 'causally upstream of or within, negative effect',
+    actsLabel: 'acts upstream of or within, negative effect'
+  },
+  directlyRegulates: {
+    id: 'RO:0002211',
+    label: 'directly regulates'
+  },
+  directlyPositivelyRegulates: {
+    id: 'RO:0002578',
+    label: 'directly positively regulates'
+  },
+  directlyNegativelyRegulates: {
+    id: 'RO:0002578',
+    label: 'directly negatively regulates'
   },
 }
 
@@ -93,6 +111,22 @@ export const noctuaFormConfig = {
       'production': {
         "name": 'production',
         "label": 'Production'
+      }
+    }
+  },
+  "causalEffect": {
+    "options": {
+      'positive': {
+        "name": 'positive',
+        "label": 'Positive'
+      },
+      'negative': {
+        "name": 'negative',
+        "label": 'Negative'
+      },
+      'neutral': {
+        "name": 'neutral',
+        "label": 'Unknown/neutral'
       }
     }
   },
