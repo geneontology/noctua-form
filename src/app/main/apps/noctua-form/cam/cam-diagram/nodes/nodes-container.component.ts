@@ -27,7 +27,7 @@ export class NodesContainerComponent implements OnChanges, AfterViewInit {
 
   constructor(
     public camDiagramService: CamDiagramService,
-    private noctuaFormGridService: NoctuaFormGridService,
+    public noctuaFormGridService: NoctuaFormGridService,
     private nodeService: NodeService) { }
 
   addActivity(event) {
@@ -42,8 +42,6 @@ export class NodesContainerComponent implements OnChanges, AfterViewInit {
     this.camDiagramService.openRightDrawer(this.camDiagramService.panel.camForm)
   }
 
-
-
   ngOnChanges() {
     const self = this;
 
@@ -56,24 +54,17 @@ export class NodesContainerComponent implements OnChanges, AfterViewInit {
 
       Observable.combineLatest(self.camDiagramService.onNodesReady).subscribe((nodes) => {
         //   console.log('Nodes ready', nodes)
-        self.foo()
+        self.connectNodes()
       })
-
     }
-
-
-
-
-    console.dir(this.viewContainerRef)
   }
 
   ngAfterViewInit() {
     this.camDiagramService.initJsPlumbInstance();
     //  this.nodeService.jsPlumbInstance.setZoom(0.25);
-    //  this.foo()
   }
 
-  foo() {
+  connectNodes() {
     const self = this;
     self.camDiagramService.jsPlumbInstance.batch(function () {
       self.nodes.forEach((annoton: Annoton) => {
@@ -87,6 +78,12 @@ export class NodesContainerComponent implements OnChanges, AfterViewInit {
           });
         });
       });
+
+      self.camDiagramService.registeJSPlumbrEvents()
     })
   }
+
+  // refresh() {
+
+  //  }
 }

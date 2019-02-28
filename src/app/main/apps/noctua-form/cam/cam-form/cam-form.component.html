@@ -24,8 +24,8 @@
           <a mat-menu-item>
             Create From an Existing Activity
           </a>
-          <a mat-menu-item (click)="createExample()">
-            Example
+          <a *ngFor="let noctuaFormExample of noctuaFormConfigService.noctuaFormExample.basic" mat-menu-item (click)="createExample(noctuaFormExample.annoton)">
+            {{noctuaFormExample.name}}
           </a>
         </mat-menu>
       </div>

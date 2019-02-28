@@ -70,10 +70,10 @@ export class CamConnectorComponent implements OnInit, OnDestroy {
     private noctuaAnnotonConnectorService: NoctuaAnnotonConnectorService,
     private noctuaSearchService: NoctuaSearchService,
     private camDiagramService: CamDiagramService,
-    private camTableService: CamTableService,
+    public camTableService: CamTableService,
     private noctuaGraphService: NoctuaGraphService,
-    private noctuaFormConfigService: NoctuaFormConfigService,
-    private noctuaFormGridService: NoctuaFormGridService,
+    public noctuaFormConfigService: NoctuaFormConfigService,
+    public noctuaFormGridService: NoctuaFormGridService,
     private noctuaLookupService: NoctuaLookupService,
     public noctuaFormService: NoctuaFormService,
     private sparqlService: SparqlService

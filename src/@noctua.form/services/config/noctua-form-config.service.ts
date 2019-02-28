@@ -1,6 +1,7 @@
 import { environment } from 'environments/environment';
 import { Injectable } from '@angular/core';
 import { noctuaFormConfig } from './../../noctua-form-config';
+import { noctuaFormExample } from '@noctua.form/noctua-form-examples';
 
 import * as _ from 'lodash';
 
@@ -12,6 +13,7 @@ import { AnnotonNode } from './../../models/annoton/annoton-node';
 import { Annoton } from './../../models/annoton/annoton';
 import { rootRenderNodes } from '@angular/core/src/view';
 import { noctuaConfig } from 'app/noctua-config';
+import { Evidence } from '@noctua.form/models/annoton/evidence';
 
 
 @Injectable({
@@ -860,6 +862,10 @@ export class NoctuaFormConfigService {
     }
   }
 
+  get noctuaFormExample() {
+    return noctuaFormExample;
+  }
+
   getCausalAnnotonConnectorEdge(causalEffect, annotonsConsecutive) {
     let result;
 
@@ -1109,164 +1115,33 @@ export class NoctuaFormConfigService {
     return annotonNode;
   }
 
-  createAnnotonModelFakeData() {
+  createAnnotonModelFakeData(nodes) {
     const self = this;
 
     let annoton = self.createAnnotonModel(
       noctuaFormConfig.annotonType.options.simple.name,
       noctuaFormConfig.annotonModelType.options.default.name
     );
-    let nodes = [{
-      "id": "gp",
-      "term": {
-        "id": "UniProtKB:O95477",
-        "label": "ABCA1 Hsap (UniProtKB:O95477)"
-      },
-      "evidence": {},
-      "reference": "",
-      "with": ""
-    }, {
-      "id": "mf",
-      "term": {
-        "id": "GO:0017127",
-        "label": "cholesterol transporter activity (GO:0017127)"
-      },
-      "evidence": {
-        "id": "ECO:0000314",
-        "label": "direct assay evidence used in manual assertion (ECO:0000314)"
-      },
-      "reference": "PMID:1234",
-      "with": "PMID:123445"
-    }, {
-      "id": "mf-1",
-      "term": {
-        "id": "UniProtKB:P02649",
-        "label": "APOE Hsap (UniProtKB:P02649)"
-      },
-      "evidence": {
-        "id": "ECO:0000314",
-        "label": "direct assay evidence used in manual assertion (ECO:0000314)"
-      },
-      "reference": "PMID:1234",
-      "with": "PMID:12"
-    }, {
-      "id": "mf-2",
-      "term": {
-        "id": "GO:0000279",
-        "label": "M phase (GO:0000279)"
-      },
-      "evidence": {
-        "id": "ECO:0000314",
-        "label": "direct assay evidence used in manual assertion (ECO:0000314)"
-      },
-      "reference": "PMID:1234",
-      "with": "PMID:1234"
-    }, {
-      "id": "bp",
-      "term": {
-        "id": "GO:0006869",
-        "label": "lipid transport (GO:0006869)"
-      },
-      "evidence": {
-        "id": "ECO:0000314",
-        "label": "direct assay evidence used in manual assertion (ECO:0000314)"
-      },
-      "reference": "PMID:12345",
-      "with": ""
-    }, {
-      "id": "bp-1",
-      "term": {
-        "id": "GO:0042632",
-        "label": "cholesterol homeostasis (GO:0042632)"
-      },
-      "evidence": {
-        "id": "ECO:0000314",
-        "label": "direct assay evidence used in manual assertion (ECO:0000314)"
-      },
-      "reference": "PMID:123456",
-      "with": "PMID:1234|PMID:1444"
-    }, {
-      "id": "bp-1-1",
-      "term": {
-        "id": "GO:0003013",
-        "label": "circulatory system process (GO:0003013)"
-      },
-      "evidence": {
-        "id": "ECO:0000314",
-        "label": "direct assay evidence used in manual assertion (ECO:0000314)"
-      },
-      "reference": "PMID:1234567",
-      "with": "PMID:12,PMID:444"
-    }, {
-      "id": "cc",
-      "term": {
-        "id": "GO:0005886",
-        "label": "plasma membrane (GO:0005886)"
-      },
-      "evidence": {
-        "id": "ECO:0000314",
-        "label": "direct assay evidence used in manual assertion (ECO:0000314)"
-      },
-      "reference": "PMID:1234",
-      "with": ""
-    }, {
-      "id": "cc",
-      "term": {
-        "id": "GO:0005886",
-        "label": "plasma membrane (GO:0005886)"
-      },
-      "evidence": {
-        "id": "ECO:0000314",
-        "label": "direct assay evidence used in manual assertion (ECO:0000314)"
-      },
-      "reference": "PMID:1234",
-      "with": "PMID:1234"
-    }, {
-      "id": "cc-1",
-      "term": {
-        "id": "GO:0005886",
-        "label": "plasma membrane (GO:0005886)"
-      },
-      "evidence": {
-        "id": "ECO:0000314",
-        "label": "direct assay evidence used in manual assertion (ECO:0000314)"
-      },
-      "reference": "PMID:1234",
-      "with": ""
-    }, {
-      "id": "cc-1-1",
-      "term": {
-        "id": "CL:2000054",
-        "label": "hepatic pit cell (CL:2000054)"
-      },
-      "evidence": {
-        "id": "ECO:0000314",
-        "label": "direct assay evidence used in manual assertion (ECO:0000314)"
-      },
-      "reference": "PMID:1234",
-      "with": "PMID:12344444"
-    }, {
-      "id": "cc-1-1-1",
-      "term": {
-        "id": "UBERON:0002107",
-        "label": "liver (UBERON:0002107)"
-      },
-      "evidence": {
-        "id": "ECO:0000314",
-        "label": "direct assay evidence used in manual assertion (ECO:0000314)"
-      },
-      "reference": "PMID:1234",
-      "with": "PMID:12344777"
-    }]
 
-    each(nodes, function (node) {
+    nodes.forEach((node) => {
       let annotonNode = annoton.getNode(node.id);
+      let destEvidences: Evidence[] = []
 
       annotonNode.setTerm(node.term);
-      annotonNode.evidence[0].setEvidence(node.evidence);
-      annotonNode.evidence[0].setReference(node.reference);
-      annotonNode.evidence[0].setWith(node.with);
+
+      each(node.evidence, (evidence) => {
+        let destEvidence: Evidence = new Evidence();
+
+        destEvidence.setEvidence(evidence.evidence);
+        destEvidence.setReference(evidence.reference);
+        destEvidence.setWith(evidence.with);
+
+        destEvidences.push(destEvidence)
+      });
+
+      annotonNode.setEvidence(destEvidences);
     });
+
     return annoton;
   }
 

@@ -59,7 +59,7 @@ export class NoctuaGraphService {
 
   constructor(
     private noctuaConfigService: NoctuaConfigService,
-    private noctuaFormConfigService: NoctuaFormConfigService,
+    public noctuaFormConfigService: NoctuaFormConfigService,
     private formGridService: NoctuaFormGridService,
     private httpClient: HttpClient,
     private noctuaLookupService: NoctuaLookupService) {
@@ -155,7 +155,7 @@ export class NoctuaGraphService {
         cam.annotons = self.graphToAnnotons(cam.graph);
         self.annotonsToTable(cam.graph, cam.annotons)
         cam.onGraphChanged.next(cam.annotons);
-      })
+      });
 
       //  title = graph.get_annotations_by_key('title');
     }
@@ -459,6 +459,7 @@ export class NoctuaGraphService {
 
         self.graphToAnnatonDFS(graph, annoton, mfEdgesIn, annotonNode, isDoomed);
 
+        annoton.print();
         annotons.push(annoton);
 
 

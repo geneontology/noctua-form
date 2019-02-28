@@ -6,7 +6,8 @@ const uuid = require('uuid/v1');
 import { SaeGraph } from './sae-graph.js';
 import { AnnotonError } from "./parser/annoton-error.js";
 
-import { AnnotonNode } from './annoton-node'
+import { AnnotonNode } from './annoton-node';
+import { Evidence } from './evidence';
 
 export class Annoton extends SaeGraph {
   gp;
@@ -150,15 +151,25 @@ export class Annoton extends SaeGraph {
 
   print() {
     let result = []
-    each(this.nodes, function (node) {
+    this.nodes.forEach((node) => {
+      let a = [];
+
+      node.evidence.forEach((evidence: Evidence) => {
+        a.push({
+          evidence: evidence.getEvidence(),
+          reference: evidence.getReference(),
+          with: evidence.getWith()
+        });
+      });
+
       result.push({
         id: node.id,
         term: node.term.control.value,
-        evidence: node.evidence.control.value,
-        reference: node.reference.control.value,
-        with: node.with.control.value
+        evidence: a
       })
     });
+
+    console.log(result, JSON.stringify(result))
     return result;
   };
 }

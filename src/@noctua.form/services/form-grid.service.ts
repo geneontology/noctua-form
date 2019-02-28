@@ -28,7 +28,7 @@ export class NoctuaFormGridService {
   private camFormGroup: BehaviorSubject<FormGroup | undefined>;
   public camFormGroup$: Observable<FormGroup>;
 
-  constructor(private _fb: FormBuilder, private noctuaFormConfigService: NoctuaFormConfigService,
+  constructor(private _fb: FormBuilder, public noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaLookupService: NoctuaLookupService) {
     this.annoton = this.noctuaFormConfigService.createAnnotonModel(
       noctuaFormConfig.annotonType.options.simple.name,
@@ -154,8 +154,8 @@ export class NoctuaFormGridService {
     this.noctuaFormConfigService.addGPAnnotonData(annoton, id);
   }
 
-  initalizeFormData() {
-    this.annoton = this.noctuaFormConfigService.createAnnotonModelFakeData();
+  initalizeFormData(nodes) {
+    this.annoton = this.noctuaFormConfigService.createAnnotonModelFakeData(nodes);
     this.initalizeForm();
   }
 

@@ -31,7 +31,7 @@ export class NodeComponent implements OnInit, AfterViewInit {
     private noctuaFormDialogService: NoctuaFormDialogService,
     private camService: CamService,
     private noctuaSearchService: NoctuaSearchService,
-    private noctuaFormGridService: NoctuaFormGridService,
+    public noctuaFormGridService: NoctuaFormGridService,
     public camDiagramService: CamDiagramService,
     private elRef: ElementRef,
     private renderer: Renderer2) { }

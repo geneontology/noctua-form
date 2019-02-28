@@ -86,7 +86,7 @@ export class ReviewListviewComponent implements OnInit, OnDestroy {
   private unsubscribeAll: Subject<any>;
 
   constructor(private route: ActivatedRoute,
-    private noctuaFormConfigService: NoctuaFormConfigService,
+    public noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaSearchService: NoctuaSearchService,
     public reviewService: ReviewService,
     private reviewDialogService: ReviewDialogService,

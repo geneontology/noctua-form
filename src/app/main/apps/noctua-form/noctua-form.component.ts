@@ -50,7 +50,7 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
     private camService: CamService,
-    private noctuaFormConfigService: NoctuaFormConfigService,
+    public noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaSearchService: NoctuaSearchService,
     public noctuaFormService: NoctuaFormService,
     private noctuaFormDialogService: NoctuaFormDialogService,
@@ -64,7 +64,7 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
     this.route
       .queryParams
       .subscribe(params => {
-        this.modelId = params['model_id'] || 'gomodel:' + '5c6c266a00000032';
+        this.modelId = params['model_id'] || null;
         this.baristaToken = params['barista_token'] || null;
 
         this.noctuaGraphService.baristaToken = this.baristaToken;
@@ -80,7 +80,7 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
   }
 
   loadCam(modelId) {
-    this.cam = this.camService.getCam(modelId)
+    this.cam = this.camService.getCam(modelId);
 
     this.cam.onGraphChanged.subscribe((annotons) => {
       if (annotons) {

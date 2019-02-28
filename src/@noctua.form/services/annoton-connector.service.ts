@@ -37,7 +37,7 @@ export class NoctuaAnnotonConnectorService {
   private connectorFormGroup: BehaviorSubject<FormGroup | undefined>;
   public connectorFormGroup$: Observable<FormGroup>;
 
-  constructor(private _fb: FormBuilder, private noctuaFormConfigService: NoctuaFormConfigService,
+  constructor(private _fb: FormBuilder, public noctuaFormConfigService: NoctuaFormConfigService,
     private camService: CamService,
     private noctuaLookupService: NoctuaLookupService) {
 

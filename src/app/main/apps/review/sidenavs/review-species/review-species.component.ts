@@ -39,7 +39,7 @@ export class ReviewSpeciesComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
     private noctuaSearchService: NoctuaSearchService,
-    private noctuaFormConfigService: NoctuaFormConfigService,
+    public noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaLookupService: NoctuaLookupService,
     private reviewService: ReviewService,
     private sparqlService: SparqlService,

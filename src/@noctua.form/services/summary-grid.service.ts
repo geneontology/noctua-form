@@ -17,7 +17,7 @@ import { AnnotonNode } from '@noctua.form/models/annoton/annoton-node';
 })
 export class SummaryGridService {
 
-  constructor(private noctuaFormConfigService: NoctuaFormConfigService,
+  constructor(public noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaLookupService: NoctuaLookupService) {
 
   }

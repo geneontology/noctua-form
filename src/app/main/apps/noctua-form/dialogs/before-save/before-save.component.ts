@@ -34,7 +34,7 @@ export class BeforeSaveDialogComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) private _data: any,
     private _matDialog: MatDialog,
     private route: ActivatedRoute,
-    private noctuaFormConfigService: NoctuaFormConfigService,
+    public noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaSearchService: NoctuaSearchService,
     private noctuaLookupService: NoctuaLookupService,
     private noctuaGraphService: NoctuaGraphService,

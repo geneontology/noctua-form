@@ -42,7 +42,7 @@ export class NoctuaAdvancedSearchComponent implements OnInit, OnDestroy {
     public dialogRef: AdvancedSearchOverlayRef,
     @Inject(advancedSearchData) public data: any,
     private noctuaSearchService: NoctuaSearchService,
-    private noctuaFormConfigService: NoctuaFormConfigService,
+    public noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaLookupService: NoctuaLookupService,
     private sparqlService: SparqlService,
     private noctuaTranslationLoader: NoctuaTranslationLoaderService) {

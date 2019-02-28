@@ -37,7 +37,7 @@ export class NoctuaLookupService {
   localClosures;
 
   constructor(private httpClient: HttpClient,
-    private noctuaFormConfigService: NoctuaFormConfigService) {
+    public noctuaFormConfigService: NoctuaFormConfigService) {
     this.name = 'DefaultLookupName';
     this.linker = new amigo.linker();
     this.golrURLBase = environment.globalGolrServer + `/select?`;

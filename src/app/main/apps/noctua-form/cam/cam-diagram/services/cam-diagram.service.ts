@@ -60,7 +60,7 @@ export class CamDiagramService {
   private rightDrawer: MatDrawer;
 
   constructor(private noctuaAnnotonConnectorService: NoctuaAnnotonConnectorService,
-    private noctuaFormGridService: NoctuaFormGridService, ) {
+    public noctuaFormGridService: NoctuaFormGridService, ) {
 
     this.selectedLeftPanel = this.panel.camForm;
     this.selectedRightPanel = this.panel.camForm;
@@ -87,7 +87,6 @@ export class CamDiagramService {
       Container: "cam-canvas"
     });
 
-    this.registeJSPlumbrEvents();
   }
 
   registeJSPlumbrEvents() {

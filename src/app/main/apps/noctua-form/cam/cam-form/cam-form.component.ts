@@ -63,10 +63,10 @@ export class CamFormComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private noctuaSearchService: NoctuaSearchService,
     private camDiagramService: CamDiagramService,
-    private camTableService: CamTableService,
+    public camTableService: CamTableService,
     private noctuaGraphService: NoctuaGraphService,
-    private noctuaFormConfigService: NoctuaFormConfigService,
-    private noctuaFormGridService: NoctuaFormGridService,
+    public noctuaFormConfigService: NoctuaFormConfigService,
+    public noctuaFormGridService: NoctuaFormGridService,
     private noctuaLookupService: NoctuaLookupService,
     public noctuaFormService: NoctuaFormService,
     private sparqlService: SparqlService
@@ -130,10 +130,10 @@ export class CamFormComponent implements OnInit, OnDestroy {
     this.noctuaFormGridService.clearForm();
   }
 
-  createExample() {
+  createExample(example) {
     const self = this;
 
-    self.noctuaFormGridService.initalizeFormData();
+    self.noctuaFormGridService.initalizeFormData(example);
   }
 
   changeAnnotonTypeForm(annotonType) {

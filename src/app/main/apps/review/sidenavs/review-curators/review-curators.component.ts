@@ -40,7 +40,7 @@ export class ReviewCuratorsComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute,
     private noctuaSearchService: NoctuaSearchService,
     private formBuilder: FormBuilder,
-    private noctuaFormConfigService: NoctuaFormConfigService,
+    public noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaLookupService: NoctuaLookupService,
     private reviewService: ReviewService,
     private sparqlService: SparqlService,

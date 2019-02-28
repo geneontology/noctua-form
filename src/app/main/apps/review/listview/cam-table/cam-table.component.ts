@@ -59,7 +59,7 @@ export class CamTableComponent implements OnInit, OnDestroy {
   private unsubscribeAll: Subject<any>;
 
   constructor(private route: ActivatedRoute,
-    private noctuaFormConfigService: NoctuaFormConfigService,
+    public noctuaFormConfigService: NoctuaFormConfigService,
     private reviewService: ReviewService,
     private noctuaSearchService: NoctuaSearchService,
     private reviewDialogService: ReviewDialogService,

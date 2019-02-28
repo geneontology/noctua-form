@@ -66,8 +66,8 @@ export class CamFormEntityComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private noctuaFormDialogService: NoctuaFormDialogService,
     private noctuaSearchService: NoctuaSearchService,
-    private noctuaFormConfigService: NoctuaFormConfigService,
-    private noctuaFormGridService: NoctuaFormGridService,
+    public noctuaFormConfigService: NoctuaFormConfigService,
+    public noctuaFormGridService: NoctuaFormGridService,
     private noctuaLookupService: NoctuaLookupService,
     private noctuaFormService: NoctuaFormService,
     private sparqlService: SparqlService, ) {

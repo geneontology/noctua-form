@@ -84,7 +84,7 @@ export class CamTableComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
     private camService: CamService,
-    private noctuaFormConfigService: NoctuaFormConfigService,
+    public noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaSearchService: NoctuaSearchService,
     //  public noctuaFormService: NoctuaFormService,
     public camTableService: CamTableService,

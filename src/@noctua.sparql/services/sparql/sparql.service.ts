@@ -34,7 +34,7 @@ export class SparqlService {
 
   searchSummary: any = {}
 
-  constructor(private noctuaFormConfigService: NoctuaFormConfigService,
+  constructor(public noctuaFormConfigService: NoctuaFormConfigService,
     private summaryGridService: SummaryGridService,
     private httpClient: HttpClient,
     private noctuaGraphService: NoctuaGraphService,
