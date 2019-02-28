@@ -32,6 +32,7 @@ const uuid = require('uuid/v1');
 const annotationTitleKey = 'title';
 const model = require('bbop-graph-noctua');
 const amigo = require('amigo2');
+const bbopx = require('bbopx');
 const golr_response = require('bbop-response-golr');
 const golr_manager = require('bbop-manager-golr');
 const golr_conf = require("golr-conf");
@@ -50,6 +51,7 @@ export class NoctuaGraphService {
   golrServer = environment.globalGolrServer;
   baristaLocation = environment.globalBaristaLocation;
   minervaDefinitionName = environment.globalMinervaDefinitionName;
+  locationStore = new bbopx.noctua.location_store();
   baristaToken;
   linker;
   loggedIn;
@@ -72,6 +74,7 @@ export class NoctuaGraphService {
       graphEditorUrl: ""
     }
     this.localClosures = [];
+
   }
 
   getGraphInfo(cam: Cam, modelId) {
@@ -153,6 +156,7 @@ export class NoctuaGraphService {
 
       self.graphPreParse(cam.graph).subscribe((data) => {
         cam.annotons = self.graphToAnnotons(cam.graph);
+        self.saveMFLocation(cam)
         self.annotonsToTable(cam.graph, cam.annotons)
         cam.onGraphChanged.next(cam.annotons);
       });
@@ -459,7 +463,7 @@ export class NoctuaGraphService {
 
         self.graphToAnnatonDFS(graph, annoton, mfEdgesIn, annotonNode, isDoomed);
 
-        annoton.print();
+        // annoton.print();
         annotons.push(annoton);
 
 
@@ -739,6 +743,37 @@ export class NoctuaGraphService {
     }
   }
 
+  saveMFLocation(cam) {
+    const self = this;
+
+    let reqs = new minerva_requests.request_set(this.noctuaConfigService.baristaToken, cam.modelId);
+
+    cam.manager.user_token(this.noctuaConfigService.baristaToken);
+    cam.manager.request_with(reqs);
+
+
+    // Update all of the nodes with their current local (should be
+    // most recent) positions before saving.
+    each(cam.graph.all_nodes(), function (node) {
+      var nid = node.id();
+
+      // Extract the current local coord.
+      var pos = self.locationStore.get(nid);
+      var new_x = pos['x'];
+      var new_y = pos['y'];
+
+      console.log('node pos', pos)
+
+      //  reqs.update_annotations(node, 'hint-layout-x', new_x);
+      reqs.update_annotations(node, 'hint-layout-y', new_y);
+
+    });
+
+    // And add the actual storage.
+    reqs.store_model();
+    //   manager.request_with(reqs);
+  }
+
   edit(cam, srcNode, destNode) {
     const self = this;
 
@@ -890,6 +925,8 @@ export class NoctuaGraphService {
       bpNode.relationship = annoton.getEdge('mf', 'bp').edge;
     }
   }
+
+
 
   saveModelGroup(cam: Cam) {
     const self = this
