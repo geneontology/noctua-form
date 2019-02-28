@@ -22,6 +22,7 @@ import { CamFormMetadata } from './../models/forms/cam-form-metadata';
   providedIn: 'root'
 })
 export class NoctuaFormGridService {
+  public mfLocation;
   public annoton: Annoton;
   public annotonPresentation;
   private camForm: CamForm;
@@ -42,12 +43,27 @@ export class NoctuaFormGridService {
   }
 
   initalizeForm(annoton?: Annoton) {
+    const self = this;
+
     if (annoton) {
       this.annoton = annoton;
+    }
+
+    if (self.mfLocation) {
+      let mfNode = self.annoton.getNode('mf');
+
+      if (mfNode) {
+        mfNode.location = self.mfLocation;
+      }
     }
     this.annotonPresentation = this.getAnnotonPresentation(this.annoton);
     this.camForm = this.createCamForm()
     this.camFormGroup.next(this._fb.group(this.camForm));
+  }
+
+  initalizeFormData(nodes) {
+    this.annoton = this.noctuaFormConfigService.createAnnotonModelFakeData(nodes);
+    this.initalizeForm()
   }
 
   createCamForm() {
@@ -152,11 +168,6 @@ export class NoctuaFormGridService {
     let id = 'gp-' + annoton.nodes.length;
 
     this.noctuaFormConfigService.addGPAnnotonData(annoton, id);
-  }
-
-  initalizeFormData(nodes) {
-    this.annoton = this.noctuaFormConfigService.createAnnotonModelFakeData(nodes);
-    this.initalizeForm();
   }
 
   linkFormNode(entity, srcNode) {

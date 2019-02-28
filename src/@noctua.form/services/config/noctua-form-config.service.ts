@@ -862,6 +862,27 @@ export class NoctuaFormConfigService {
     }
   }
 
+  getCausalEffectByEdge(edge) {
+    let result = noctuaFormConfig.causalEffect.options.positive.name;
+
+    switch (edge.id) {
+      case noctuaFormConfig.edge.causallyUpstreamOfPositiveEffect:
+      case noctuaFormConfig.edge.directlyPositivelyRegulates:
+        result = noctuaFormConfig.causalEffect.options.positive.name;
+        break;
+      case noctuaFormConfig.edge.causallyUpstreamOfNegativeEffect:
+      case noctuaFormConfig.edge.directlyNegativelyRegulates:
+        result = noctuaFormConfig.causalEffect.options.negative.name;
+        break;
+      case noctuaFormConfig.edge.causallyUpstreamOf:
+      case noctuaFormConfig.edge.directlyRegulates:
+        result = noctuaFormConfig.causalEffect.options.neutral.name;
+        break;
+    }
+
+    return result;
+  }
+
   get noctuaFormExample() {
     return noctuaFormExample;
   }

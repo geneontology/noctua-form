@@ -740,6 +740,11 @@ export class NoctuaGraphService {
       }
 
       node.modelId = node.saveMeta.term;
+
+      if (node.location && node.location.x > 0 && node.id === 'mf') {
+        //  reqs.update_annotations(node.saveMeta.term, 'hint-layout-x', node.location.x);
+        // reqs.update_annotations(node.saveMeta.term, 'hint-layout-y', node.location.y);
+      }
     }
   }
 
@@ -748,9 +753,6 @@ export class NoctuaGraphService {
 
     let reqs = new minerva_requests.request_set(this.noctuaConfigService.baristaToken, cam.modelId);
 
-    cam.manager.user_token(this.noctuaConfigService.baristaToken);
-    cam.manager.request_with(reqs);
-
 
     // Update all of the nodes with their current local (should be
     // most recent) positions before saving.
@@ -758,20 +760,21 @@ export class NoctuaGraphService {
       var nid = node.id();
 
       // Extract the current local coord.
-      var pos = self.locationStore.get(nid);
-      var new_x = pos['x'];
-      var new_y = pos['y'];
+      //   var pos = self.locationStore.get(nid);
+      //var new_x = pos['x'];
+      //  var new_y = pos['y'];
 
-      console.log('node pos', pos)
+      // console.log('node pos', pos)
 
       //  reqs.update_annotations(node, 'hint-layout-x', new_x);
-      reqs.update_annotations(node, 'hint-layout-y', new_y);
+      //  reqs.update_annotations(node, 'hint-layout-y', new_y);
 
     });
 
     // And add the actual storage.
     reqs.store_model();
-    //   manager.request_with(reqs);
+    // cam.manager.user_token(this.noctuaConfigService.baristaToken);
+    //  cam.manager.request_with(reqs);
   }
 
   edit(cam, srcNode, destNode) {

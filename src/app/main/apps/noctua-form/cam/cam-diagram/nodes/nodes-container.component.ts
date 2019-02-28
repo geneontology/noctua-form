@@ -30,14 +30,19 @@ export class NodesContainerComponent implements OnChanges, AfterViewInit {
     public noctuaFormGridService: NoctuaFormGridService,
     private nodeService: NodeService) { }
 
-  addActivity(event) {
+  addAnnoton(event) {
+    let location = {
+      x: event.clientX,
+      y: event.clientY
+    }
     console.log(event.clientX + 'px');
     console.log(event.clientY + 'px');
 
-    this.openForm();
+    this.openForm(location);
   }
 
-  openForm() {
+  openForm(location?) {
+    this.noctuaFormGridService.mfLocation = location;
     this.noctuaFormGridService.initalizeForm();
     this.camDiagramService.openRightDrawer(this.camDiagramService.panel.camForm)
   }
@@ -74,7 +79,9 @@ export class NodesContainerComponent implements OnChanges, AfterViewInit {
           self.camDiagramService.jsPlumbInstance.connect({
             source: annoton.connectionId,
             target: connection.object.modelId,
-            type: "basic"
+            type: "basic",
+            paintStyle: { strokeWidth: 15, stroke: 'rgb(243,230,18)' },
+            endpointStyle: { fill: 'rgb(243,229,0)' }
           });
         });
       });

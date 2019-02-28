@@ -33,6 +33,7 @@ export class CamDiagramService {
 
   onNodesReady: Subject<any>[] = [];
   private _jsPlumbInstance
+  private _jsPlumbInstance2
   private _scale = {
     x: 0.4,
     y: 0.5
@@ -87,6 +88,22 @@ export class CamDiagramService {
       Container: "cam-canvas"
     });
 
+    self._jsPlumbInstance2 = jsPlumb.getInstance({
+      Endpoint: ["Dot", <any>{ radius: 2 }],
+      Connector: "StateMachine",
+      HoverPaintStyle: { stroke: "#000000", strokeWidth: 2 },
+      ConnectionOverlays: [
+        ["Arrow", {
+          location: 1,
+          id: "arrow",
+          length: 14,
+          foldback: 0.8
+        }],
+        //  ["Label", { label: "FOO", id: "label", cssClass: "aLabel" }]
+      ],
+      Container: "cam-canvas"
+    });
+
   }
 
   registeJSPlumbrEvents() {
@@ -107,10 +124,13 @@ export class CamDiagramService {
   get jsPlumbInstance() {
     const self = this;
 
-    if (!this._jsPlumbInstance) {
-      self.initJsPlumbInstance()
-    }
     return this._jsPlumbInstance;
+  }
+
+  get jsPlumbInstance2() {
+    const self = this;
+
+    return this._jsPlumbInstance2;
   }
 
   get scale() {

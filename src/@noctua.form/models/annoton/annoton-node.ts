@@ -181,7 +181,7 @@ export class AnnotonNode {
 
     self.term.control.value = node.term.control.value;
     self.evidence = node.evidence;
-
+    self.location = node.location;
     self.modelId = node.modelId;
     self.annoton = node.annoton;
     self.ontologyClass = node.ontologyClass;
@@ -200,6 +200,7 @@ export class AnnotonNode {
   copyValues(node) {
     const self = this;
 
+    self.location = node.location;
     self.term.control.value = node.term.control.value;
     self.evidence = node.evidence;
     self.assignedBy = node.assignedBy;

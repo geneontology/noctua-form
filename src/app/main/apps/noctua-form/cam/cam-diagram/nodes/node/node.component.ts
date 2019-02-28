@@ -50,6 +50,8 @@ export class NodeComponent implements OnInit, AfterViewInit {
     const self = this;
 
     let nodeEl = this.elRef.nativeElement.children[0]
+
+    // if()
     let locationX = self.connector.location.x * self.camDiagramService.scale.x + 'px';
     let locationY = self.connector.location.y * self.camDiagramService.scale.y + 'px'
 
@@ -87,7 +89,7 @@ export class NodeComponent implements OnInit, AfterViewInit {
       extract: {
         "action": "the-action"
       },
-      maxConnections: 2,
+      // maxConnections: 2,
       onMaxConnections: function (info, e) {
         alert("Maximum connections (" + info.maxConnections + ") reached");
       }
