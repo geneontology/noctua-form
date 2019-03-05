@@ -1,7 +1,9 @@
 $noc-toolbar-color: #e7ecf4;
 $noc-primary-color: #3b5998;
 $noc-primary-color-accent: #8b9dc3;
-$noc-primary-color-light: #dfe3ee;
+$noc-primary-color-lighter: #dfe3ee;
+$noc-primary-color-light: rgba(#798fb8, 0.5);
+$noc-primary-color-text: #4a8bfc;
 
 .mat-expansion-panel-body {
   padding: 0 !important;

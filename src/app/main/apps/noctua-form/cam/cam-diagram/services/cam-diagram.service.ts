@@ -17,7 +17,7 @@ import { NoctuaFormService } from './../../../services/noctua-form.service';
 import { NoctuaFormGridService } from '@noctua.form/services/form-grid.service';
 import { NoctuaAnnotonConnectorService } from '@noctua.form/services/annoton-connector.service';
 import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
-import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
+
 
 import { Curator } from '@noctua.form/models/curator';
 import { Group } from '@noctua.form//models/group';

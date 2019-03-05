@@ -70,7 +70,7 @@
           <mat-form-field class="">
             <input type="text" matInput formControlName="gp" placeholder="Gene Product" [matAutocomplete]="gpAuto" />
             <mat-autocomplete #gpAuto="matAutocomplete" [displayWith]="termDisplayFn">
-              <mat-option *ngFor="let item of noctuaFormGridService.annotonPresentation?.geneProduct.term.lookup.results"
+              <mat-option *ngFor="let item of noctuaFormGridService.annoton.presentation?.geneProduct.term.lookup.results"
                 [value]="item">
                 <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
                   <div>

@@ -19,7 +19,7 @@ import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loa
 import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
 import { NoctuaGraphService } from '@noctua.form/services/graph.service';
 import { NoctuaLookupService } from '@noctua.form/services/lookup.service';
-import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
+
 
 import { ReviewDialogService } from './../../dialog.service';
 import { ReviewService } from '../../services/review.service';
@@ -65,7 +65,6 @@ export class CamTableComponent implements OnInit, OnDestroy {
     private reviewDialogService: ReviewDialogService,
     private noctuaLookupService: NoctuaLookupService,
     private noctuaGraphService: NoctuaGraphService,
-    private summaryGridService: SummaryGridService,
     private sparqlService: SparqlService,
     private noctuaTranslationLoader: NoctuaTranslationLoaderService) {
 
@@ -99,8 +98,8 @@ export class CamTableComponent implements OnInit, OnDestroy {
     cam.expanded = true;
     this.noctuaGraphService.getGraphInfo(cam, cam.model.id)
     cam.onGraphChanged.subscribe((annotons) => {
-      let data = this.summaryGridService.getGrid(cam.graph.annotons);
-      this.sparqlService.addCamChildren(cam, data);
+      //  let data = this.summaryGridService.getGrid(cam.graph.annotons);
+      //  this.sparqlService.addCamChildren(cam, data);
     });
   }
 

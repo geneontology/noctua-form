@@ -684,9 +684,9 @@ export class NoctuaGraphService {
   annotonToTableRows(graph, annoton: Annoton) {
     const self = this;
 
-    let gpNode = annoton.getGPNode();
+    // let gpNode = annoton.getGPNode();
     //annoton.gpTerm = gpNode.term.control.value.label;
-    annoton.annotonPresentation = self.formGridService.getAnnotonPresentation(annoton);
+    // annoton._presentation = self.formGridService.getAnnotonPresentation(annoton);
   }
 
   ccComponentsToTable(graph, annotons) {

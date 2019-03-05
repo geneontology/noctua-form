@@ -129,7 +129,7 @@
         width: 35px;
         height: 35px;
 
-        md-icon {
+        mat-icon {
           @include noc-icon-size(14px);
           color: #AAA;
           line-height: 18px;
@@ -138,7 +138,7 @@
         &:hover {
           background-color: #999;
 
-          md-icon {
+          mat-icon {
             color: #222;
           }
         }

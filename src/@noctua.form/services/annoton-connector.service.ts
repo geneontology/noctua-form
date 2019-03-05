@@ -32,7 +32,6 @@ export class NoctuaAnnotonConnectorService {
   public objectMFNode: AnnotonNode;
   public subjectAnnoton: Annoton;
   public objectAnnoton: Annoton;
-  public annotonPresentation;
   private connectorForm: AnnotonConnectorForm;
   private connectorFormGroup: BehaviorSubject<FormGroup | undefined>;
   public connectorFormGroup$: Observable<FormGroup>;

@@ -24,7 +24,7 @@ import { CamFormMetadata } from './../models/forms/cam-form-metadata';
 export class NoctuaFormGridService {
   public mfLocation;
   public annoton: Annoton;
-  public annotonPresentation;
+  // public annotonPresentation;
   private camForm: CamForm;
   private camFormGroup: BehaviorSubject<FormGroup | undefined>;
   public camFormGroup$: Observable<FormGroup>;
@@ -56,7 +56,6 @@ export class NoctuaFormGridService {
         mfNode.location = self.mfLocation;
       }
     }
-    this.annotonPresentation = this.getAnnotonPresentation(this.annoton);
     this.camForm = this.createCamForm()
     this.camFormGroup.next(this._fb.group(this.camForm));
   }
@@ -70,10 +69,10 @@ export class NoctuaFormGridService {
     const self = this;
 
     let camFormMetadata = new CamFormMetadata(self.noctuaLookupService.golrLookup.bind(self.noctuaLookupService));
-    let camForm = new CamForm(camFormMetadata, self.annotonPresentation.geneProduct);
+    let camForm = new CamForm(camFormMetadata, self.annoton.presentation.geneProduct);
 
-    camForm.createFunctionDescriptionForm(self.annotonPresentation.fd);
-    camForm.onValueChanges(self.annotonPresentation.geneProduct.term.lookup);
+    camForm.createFunctionDescriptionForm(self.annoton.presentation.fd);
+    camForm.onValueChanges(self.annoton.presentation.geneProduct.term.lookup);
 
     //self.camFormData = self.noctuaFormConfigService.createReviewSearchFormData();
 
@@ -107,60 +106,7 @@ export class NoctuaFormGridService {
     this.initalizeForm();
   }
 
-  getAnnotonPresentation(annoton) {
-    let result = {
-      geneProduct: annoton.getNode('gp'),
-      mcNode: annoton.getNode('mc'),
-      gp: {},
-      fd: {},
-      extra: []
-    }
 
-    each(annoton.nodes, function (node) {
-      if (node.displaySection && node.displayGroup) {
-        if (!result[node.displaySection.id][node.displayGroup.id]) {
-          result[node.displaySection.id][node.displayGroup.id] = {
-            shorthand: node.displayGroup.shorthand,
-            label: node.displayGroup.label,
-            nodes: []
-          };
-        }
-        result[node.displaySection.id][node.displayGroup.id].nodes.push(node);
-        node.nodeGroup = result[node.displaySection.id][node.displayGroup.id];
-        if (node.isComplement) {
-          node.nodeGroup.isComplement = true;
-        }
-      }
-    });
-
-    return result;
-  }
-
-  addAnnotonPresentation(annoton, displaySectionId) {
-    let result = {};
-    result[displaySectionId] = {};
-
-    each(annoton.nodes, function (node) {
-      if (node.displaySection === displaySectionId && node.displayGroup) {
-        if (!result[displaySectionId][node.displayGroup.id]) {
-          result[displaySectionId][node.displayGroup.id] = {
-            shorthand: node.displayGroup.shorthand,
-            label: node.displayGroup.label,
-            nodes: []
-          };
-        }
-        result[displaySectionId][node.displayGroup.id].nodes.push(node);
-        node.nodeGroup = result[displaySectionId][node.displayGroup.id];
-        if (node.isComplement) {
-          node.nodeGroup.isComplement = true;
-        }
-      }
-    });
-
-    this.annotonPresentation.extra.push(result);
-
-    return result[displaySectionId];
-  }
 
 
 

@@ -19,7 +19,7 @@ import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loa
 import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
 import { NoctuaGraphService } from '@noctua.form/services/graph.service';
 import { NoctuaLookupService } from '@noctua.form/services/lookup.service';
-import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
+
 
 import { locale as english } from './i18n/en';
 
@@ -36,10 +36,16 @@ import { Cam } from '@noctua.form/models/annoton/cam';
   selector: 'app-noctua-form',
   templateUrl: './noctua-form.component.html',
   styleUrls: ['./noctua-form.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  //encapsulation: ViewEncapsulation.None,
   animations: noctuaAnimations
 })
 export class NoctuaFormComponent implements OnInit, OnDestroy {
+
+  @ViewChild('leftDrawer')
+  leftDrawer: MatDrawer;
+
+  @ViewChild('rightDrawer')
+  rightDrawer: MatDrawer;
 
   cam: Cam;
   searchResults = [];
@@ -56,11 +62,11 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
     private noctuaFormDialogService: NoctuaFormDialogService,
     private noctuaLookupService: NoctuaLookupService,
     private noctuaGraphService: NoctuaGraphService,
-    private summaryGridService: SummaryGridService,
     private sparqlService: SparqlService,
     private noctuaTranslationLoader: NoctuaTranslationLoaderService) {
 
     this.unsubscribeAll = new Subject();
+
     this.route
       .queryParams
       .subscribe(params => {
@@ -73,6 +79,8 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.noctuaFormService.setLeftDrawer(this.leftDrawer);
+    this.noctuaFormService.setRightDrawer(this.rightDrawer);
   }
 
   loadCam(modelId) {

@@ -28,7 +28,7 @@ import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loa
 import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
 import { NoctuaGraphService } from '@noctua.form/services/graph.service';
 import { NoctuaLookupService } from '@noctua.form/services/lookup.service';
-import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
+
 
 import { NoctuaFormService } from './../../services/noctua-form.service';
 import { CamDiagramService } from './services/cam-diagram.service';
@@ -70,8 +70,7 @@ export class CamDiagramComponent implements AfterViewInit, OnInit {
     public camDiagramService: CamDiagramService,
     private noctuaFormDialogService: NoctuaFormDialogService,
     private noctuaLookupService: NoctuaLookupService,
-    private noctuaGraphService: NoctuaGraphService,
-    private summaryGridService: SummaryGridService, ) {
+    private noctuaGraphService: NoctuaGraphService) {
     this.unsubscribeAll = new Subject();
 
   }

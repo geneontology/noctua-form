@@ -1,34 +1,6 @@
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
 
-#noc-form-tab {
-  .mat-tab-labels {
-    background-color: $noc-primary-color-light;
-    justify-content: center;
-    @include deep-height(35px);
-  }
-
-  .mat-tab-label {
-    background-color: darken($noc-primary-color-light, 5%);
-    @include deep-height(35px);
-  }
-
-  /* focus style */
-  .mat-primary .mat-tab-label:not(.mat-tab-disabled):focus,
-  .mat-primary .mat-tab-link:not(.mat-tab-disabled):focus,
-  .mat-tab-nav-bar.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus,
-  .mat-tab-nav-bar.mat-primary .mat-tab-link:not(.mat-tab-disabled):focus {
-    background: red;
-  }
-
-  /* ink bar style */
-  .mat-primary .mat-ink-bar,
-  .mat-tab-nav-bar.mat-primary .mat-ink-bar {
-    background: yellow;
-    height: 10px;
-  }
-}
-
 :host {
   padding: 0px;
   width: 100%;
@@ -39,16 +11,28 @@
   }
 
 
-
-
-
   .noc-sidemenu {
-    padding: 10px 0;
+    padding: 0;
     margin-right: 5px;
     @include deep-height(100%);
-    @include deep-width(50px);
-    @include mat-elevation(4);
+    @include deep-width(60px);
+    @include mat-elevation(2);
     border-right: #999 solid 1px;
+
+    button {
+      @include deep-width(60px);
+      @include deep-height(60px);
+
+      mat-icon {
+        @include noc-icon-size(28px);
+      }
+
+      &.noc-active {
+        mat-icon {
+          color: $noc-primary-color-light;
+        }
+      }
+    }
   }
 
   .noc-cam-table-heading {

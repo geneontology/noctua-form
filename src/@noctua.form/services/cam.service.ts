@@ -10,7 +10,7 @@ import { NoctuaGraphService } from '@noctua.form/services/graph.service';
 
 import { AnnotonNode } from '@noctua.form/models/annoton/annoton-node';
 import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
-import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
+
 //import { Cam } from '../models/cam';
 import { CamRow } from '../models/cam-row';
 import { Curator } from '../models/curator';
@@ -36,7 +36,6 @@ export class CamService {
   searchSummary: any = {}
 
   constructor(public noctuaFormConfigService: NoctuaFormConfigService,
-    private summaryGridService: SummaryGridService,
     private httpClient: HttpClient,
     private noctuaGraphService: NoctuaGraphService,
     private curieService: CurieService) {

@@ -20,7 +20,7 @@ import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loa
 import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
 import { NoctuaGraphService } from '@noctua.form/services/graph.service';
 import { NoctuaLookupService } from '@noctua.form/services/lookup.service';
-import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
+
 import { NoctuaFormGridService } from '@noctua.form/services/form-grid.service';
 
 import { NoctuaFormService } from './../../services/noctua-form.service';
@@ -61,7 +61,6 @@ export class CamTableComponent implements OnInit, OnDestroy {
 
   searchResults = [];
   modelId: string = '';
-  mfs: any[] = [];
 
   private unsubscribeAll: Subject<any>;
 
@@ -77,7 +76,7 @@ export class CamTableComponent implements OnInit, OnDestroy {
     private noctuaFormDialogService: NoctuaFormDialogService,
     private noctuaLookupService: NoctuaLookupService,
     private noctuaGraphService: NoctuaGraphService,
-    private summaryGridService: SummaryGridService) {
+  ) {
 
     this.searchFormData = this.noctuaFormConfigService.createReviewSearchFormData();
     this.unsubscribeAll = new Subject();

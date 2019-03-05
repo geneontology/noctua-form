@@ -1,12 +1,13 @@
 <div class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
   <div class="noc-sidemenu" fxLayout="column" fxLayoutAlign="start center">
-    <button mat-icon-button (click)="noctuaFormService.openMiddleDrawer(cnoctuaFormService.panel.camDiagram)"
-      matTooltip="Search" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
-      <mat-icon> assignment </mat-icon>
+    <button mat-button class="noc-bb" (click)="noctuaFormService.openMiddlePanel(noctuaFormService.panel.camDiagram)"
+      matTooltip="Search" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500" [ngClass]="{'noc-active':noctuaFormService.selectedMiddlePanel.id===noctuaFormService.panel.camDiagram.id}">
+
+      <mat-icon> scatter_plot </mat-icon>
     </button>
-    <button mat-icon-button (click)="noctuaFormService.openMiddlePanel(noctuaFormService.panel.camTable)" matTooltip="Search"
-      [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
-      <mat-icon> assignment </mat-icon>
+    <button mat-button class="noc-bb" (click)="noctuaFormService.openMiddlePanel(noctuaFormService.panel.camTable)"
+      matTooltip="Search" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500" [ngClass]="{'noc-active':noctuaFormService.selectedMiddlePanel.id===noctuaFormService.panel.camTable.id}">
+      <mat-icon> table_chart </mat-icon>
     </button>
   </div>
   <mat-drawer-container class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">

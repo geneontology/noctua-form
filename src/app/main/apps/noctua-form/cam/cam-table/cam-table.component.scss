@@ -14,15 +14,6 @@
     width: 100%;
   }
 
-  .noc-sidemenu {
-    padding: 10px 0;
-    margin-right: 5px;
-    @include deep-height(100%);
-    @include deep-width(50px);
-    @include mat-elevation(4);
-    background-color: #CCC;
-    border-right: #999 solid 1px;
-  }
 
   .noc-cam-table-heading {
     margin-bottom: 4px;

@@ -13,7 +13,7 @@ import { Evidence } from './evidence';
 
 export class Annoton extends SaeGraph {
   gp;
-  annotonPresentation;
+  _presentation;
   annotonRows;
   nodes;
   annotonType;
@@ -26,8 +26,7 @@ export class Annoton extends SaeGraph {
   edgeOption;
   parser;
   expanded = false;
-  private _grid: any[] = []
-  private _summary: any = {}
+  private _grid: any[] = [];
 
   constructor() {
     super();
@@ -69,16 +68,6 @@ export class Annoton extends SaeGraph {
       this.generateGrid();
     }
     return this._grid;
-  }
-
-  get summary() {
-    const self = this;
-
-    if (self._grid.length === 0) {
-      this.generateGrid();
-    }
-    return this._grid;
-
   }
 
   getGPNode() {
@@ -173,11 +162,75 @@ export class Annoton extends SaeGraph {
     });
   }
 
+  get presentation() {
+    const self = this;
+
+    if (this._presentation) {
+      return this._presentation;
+    }
+
+    let result = {
+      geneProduct: self.getNode('gp'),
+      mcNode: self.getNode('mc'),
+      gp: {},
+      fd: {},
+      extra: []
+    }
+
+    each(self.nodes, function (node: AnnotonNode) {
+      if (node.displaySection && node.displayGroup) {
+        if (!result[node.displaySection.id][node.displayGroup.id]) {
+          result[node.displaySection.id][node.displayGroup.id] = {
+            shorthand: node.displayGroup.shorthand,
+            label: node.displayGroup.label,
+            nodes: []
+          };
+        }
+        result[node.displaySection.id][node.displayGroup.id].nodes.push(node);
+        node.nodeGroup = result[node.displaySection.id][node.displayGroup.id];
+        if (node.isComplement) {
+          node.nodeGroup.isComplement = true;
+        }
+      }
+    });
+
+    this._presentation = result;
+
+    return this._presentation
+  }
+
+  addAnnotonPresentation(displaySectionId) {
+    const self = this;
+    let result = {};
+    result[displaySectionId] = {};
+
+    each(self.nodes, function (node: AnnotonNode) {
+      if (node.displaySection === displaySectionId && node.displayGroup) {
+        if (!result[displaySectionId][node.displayGroup.id]) {
+          result[displaySectionId][node.displayGroup.id] = {
+            shorthand: node.displayGroup.shorthand,
+            label: node.displayGroup.label,
+            nodes: []
+          };
+        }
+        result[displaySectionId][node.displayGroup.id].nodes.push(node);
+        node.nodeGroup = result[displaySectionId][node.displayGroup.id];
+        if (node.isComplement) {
+          node.nodeGroup.isComplement = true;
+        }
+      }
+    });
+
+    this._presentation.extra.push(result);
+
+    return result[displaySectionId];
+  }
+
   generateGrid() {
     const self = this;
     self._grid = [];
 
-    each(self.annotonPresentation.fd, function (nodeGroup) {
+    each(self._presentation.fd, function (nodeGroup) {
       each(nodeGroup.nodes, function (node: AnnotonNode) {
         let term = node.getTerm();
 

@@ -1,23 +1,29 @@
 @import 'src/@noctua/scss/noctua';
+
 :host {
   position: relative;
   display: flex;
   flex: 0 0 auto;
   z-index: 4;
+
   .noc-logo-filler {
     @include deep-width(50px);
+
     img {
       height: 30px;
     }
   }
+
   .mat-toolbar {
-    padding-right: 10px;
+    padding: 0 10px 0 5px;
     background-color: #FFF;
     @include deep-height(50px);
     color: inherit;
     position: relative;
+
     mat-toolbar-row {
       @include deep-height(40px);
+
       &.noc-subtoolbar {
         button {
           margin-right: 8px;
@@ -29,6 +35,7 @@
         }
       }
     }
+
     .loading-bar {
       position: absolute;
       top: 0;
@@ -37,7 +44,9 @@
       width: 100%;
     }
   }
+
   .noc-logo {
+
     //@include deep-width(130px);
     .noc-main-logo,
     .noc-sub-logo {
@@ -46,18 +55,22 @@
       text-decoration: none !important;
       text-align: left;
       color: #555;
+
       &:hover {
         color: #000000;
       }
     }
+
     .noc-main-logo {
       margin-right: 4px;
       font-weight: bold;
     }
+
     .noc-sub-logo {
       font-weight: normal;
     }
   }
+
   .noc-search-bar {
     max-width: 600px !important;
   }

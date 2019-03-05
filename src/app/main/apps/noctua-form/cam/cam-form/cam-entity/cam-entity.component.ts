@@ -73,13 +73,11 @@ export class CamFormEntityComponent implements OnInit, OnDestroy {
     private sparqlService: SparqlService, ) {
     this.unsubscribeAll = new Subject();
 
-    this.camFormPresentation = this.noctuaFormGridService.annotonPresentation;
-
   }
 
   ngOnInit(): void {
 
-    this.nodeGroup = this.camFormPresentation['fd'][this.nodeGroupName];
+    this.nodeGroup = this.noctuaFormGridService.annoton.presentation['fd'][this.nodeGroupName];
     this.entity = <AnnotonNode>_.find(this.nodeGroup.nodes, { id: this.entityName });
     // this.entityFormGroup = this.createEntityGroup();
 

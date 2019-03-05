@@ -22,7 +22,7 @@ import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loa
 import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
 import { NoctuaGraphService } from '@noctua.form/services/graph.service';
 import { NoctuaLookupService } from '@noctua.form/services/lookup.service';
-import { SummaryGridService } from '@noctua.form/services/summary-grid.service';
+
 import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
 
 import { ReviewDialogService } from './../../dialog.service';
@@ -54,7 +54,6 @@ export class CamRowComponent implements OnInit, OnDestroy {
     private reviewDialogService: ReviewDialogService,
     private noctuaLookupService: NoctuaLookupService,
     private noctuaGraphService: NoctuaGraphService,
-    private summaryGridService: SummaryGridService,
     private sparqlService: SparqlService,
 
     private noctuaTranslationLoader: NoctuaTranslationLoaderService
