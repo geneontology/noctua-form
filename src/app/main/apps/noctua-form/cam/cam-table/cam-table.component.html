@@ -17,10 +17,10 @@
         <div *ngFor="let annoton of cam.annotons" class="mat-elevation-z2 mb-16 w-100-p">
           <div class="noc-cam-table-heading" fxLayout="row" fxLayoutAlign="start center">
             <div fxFlex="50px" (click)="$event.stopPropagation()">
-              <button mat-icon-button (click)="toggleExpand(cam)" class="noc-br">
-                <mat-icon *ngIf="!cam.expanded" class="s-16 fa fa-caret-right">
+              <button mat-icon-button (click)="toggleExpand(annoton)" class="noc-br">
+                <mat-icon *ngIf="!annoton.expanded" class="s-16 fa fa-caret-right">
                 </mat-icon>
-                <mat-icon *ngIf="cam.expanded" class="s-12 mat-icon-rtl-mirror">
+                <mat-icon *ngIf="annoton.expanded" class="s-12 mat-icon-rtl-mirror">
                   signal_cellular_4_bar
                 </mat-icon>
               </button>
@@ -32,9 +32,9 @@
             </div>
             <span fxFlex=""></span>
           </div>
-          <!--    <noc-annoton-table [annoton]="annoton" *ngIf="annoton.expanded" class="noc-cam-table-body" fxLayout="row"
+          <noc-annoton-table [annoton]="annoton" *ngIf="annoton.expanded" class="noc-cam-table-body" fxLayout="row"
             fxLayoutAlign="start center">
-          </noc-annoton-table> -->
+          </noc-annoton-table>
         </div>
       </div>
     </mat-drawer-content>

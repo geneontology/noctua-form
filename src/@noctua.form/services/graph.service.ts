@@ -158,7 +158,7 @@ export class NoctuaGraphService {
         cam.annotons = self.graphToAnnotons(cam.graph);
         self.saveMFLocation(cam)
         self.annotonsToTable(cam.graph, cam.annotons)
-        cam.onGraphChanged.next(cam.annotons);
+        cam.onGraphChanged.next(cam);
       });
 
       //  title = graph.get_annotations_by_key('title');

@@ -30,6 +30,7 @@ import { CamService } from '@noctua.form/services/cam.service'
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 
 import { Cam } from '@noctua.form/models/annoton/cam';
+import { Annoton } from '@noctua.form/models/annoton/annoton';
 
 
 @Component({
@@ -56,15 +57,13 @@ export class AnnotonTableComponent implements OnInit, OnDestroy {
   searchCriteria: any = {};
   searchFormData: any = []
   searchForm: FormGroup;
+  grid: any[] = [];
 
   @Input('cam')
   public cam: Cam
 
-  @ViewChild('leftDrawer')
-  leftDrawer: MatDrawer;
-
-  @ViewChild('rightDrawer')
-  rightDrawer: MatDrawer;
+  @Input('annoton')
+  public annoton: Annoton
 
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
@@ -74,9 +73,6 @@ export class AnnotonTableComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatSort)
   sort: MatSort;
-
-  searchResults = [];
-  modelId: string = '';
 
   private unsubscribeAll: Subject<any>;
 
@@ -98,8 +94,6 @@ export class AnnotonTableComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadCam();
-    this.camTableService.setLeftDrawer(this.leftDrawer);
-    this.camTableService.setRightDrawer(this.rightDrawer);
   }
 
   toggleLeftDrawer(panel) {
@@ -113,25 +107,7 @@ export class AnnotonTableComponent implements OnInit, OnDestroy {
   }
 
   loadCam() {
-    this.cam.onGraphChanged.subscribe((annotons) => {
-      if (annotons) {
-        let data = this.summaryGridService.getGrid(annotons);
-
-        this.camService.addCamChildren(this.cam, data);
-        console.log('poo', this.cam)
-        this.dataSource = new CamsDataSource(this.sparqlService, this.paginator, this.sort);
-      }
-    });
-  }
-
-  toggleExpand(cam) {
-    cam.expanded = true;
-    this.noctuaGraphService.getGraphInfo(cam, cam.model.id)
-    cam.onGraphChanged.subscribe((annotons) => {
-      let data = this.summaryGridService.getGrid(annotons);
-      this.sparqlService.addCamChildren(cam, data);
-      //  this.dataSource = new CamsDataSource(this.sparqlService, this.paginator, this.sort);
-    });
+    this.grid = this.annoton.grid;
   }
 
   openCamEdit(cam) {

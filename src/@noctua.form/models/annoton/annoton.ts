@@ -25,6 +25,7 @@ export class Annoton extends SaeGraph {
   label;
   edgeOption;
   parser;
+  expanded = false;
   private _grid: any[] = []
 
   constructor() {

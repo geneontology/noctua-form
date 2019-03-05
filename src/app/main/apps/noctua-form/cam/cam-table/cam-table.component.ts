@@ -32,6 +32,7 @@ import { CamService } from '@noctua.form/services/cam.service'
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 
 import { Cam } from '@noctua.form/models/annoton/cam';
+import { Annoton } from '@noctua.form/models/annoton/annoton';
 
 
 @Component({
@@ -104,21 +105,15 @@ export class CamTableComponent implements OnInit, OnDestroy {
   loadCam() {
     this.cam.onGraphChanged.subscribe((annotons) => {
       if (annotons) {
-        let data = this.summaryGridService.getGrid(annotons);
+        //   let data = this.summaryGridService.getGrid(annotons);
         console.log(0)
-        this.camService.addCamChildren(this.cam, data);
+        //     this.camService.addCamChildren(this.cam, data);
       }
     });
   }
 
-  toggleExpand(cam) {
-    cam.expanded = true;
-    this.noctuaGraphService.getGraphInfo(cam, cam.model.id)
-    cam.onGraphChanged.subscribe((annotons) => {
-      let data = this.summaryGridService.getGrid(annotons);
-      this.sparqlService.addCamChildren(cam, data);
-      //  this.dataSource = new CamsDataSource(this.sparqlService, this.paginator, this.sort);
-    });
+  toggleExpand(annoton: Annoton) {
+    annoton.expanded = !annoton.expanded;
   }
 
   openCamEdit(cam) {

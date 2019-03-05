@@ -33,7 +33,7 @@
     }
   }
 
-  .cams-table {
+  .annotons-table {
     // position: relative;
     //  flex: 1 1 auto;
     //    border-bottom: 1px solid rgba(0, 0, 0, .12);
@@ -73,7 +73,7 @@
       @include deep-height(0);
     }
 
-    .cam {
+    .annoton {
       position: relative;
       cursor: pointer;
       min-height: 40px;
