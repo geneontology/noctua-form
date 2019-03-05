@@ -190,7 +190,13 @@ export class CamDiagramService {
     const self = this;
 
     self.noctuaAnnotonConnectorService.createConnection(sourceId, targetId);
-    self.openRightDrawer(self.panel.connectorForm)
+    self.openRightDrawer(self.panel.connectorForm);
+  }
+
+  getCausalEffect(sourceId, targetId) {
+    const self = this;
+
+    //  self.noctuaAnnotonConnectorService.getCausalEffect(sourceId, targetId);
   }
 
 }

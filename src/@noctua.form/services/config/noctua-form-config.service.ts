@@ -810,6 +810,10 @@ export class NoctuaFormConfigService {
     };
   }
 
+  get edges() {
+    return noctuaFormConfig.edge;
+  }
+
   get modelState() {
     let options = [
       noctuaFormConfig.modelState.options.development,
@@ -863,20 +867,20 @@ export class NoctuaFormConfigService {
   }
 
   getCausalEffectByEdge(edge) {
-    let result = noctuaFormConfig.causalEffect.options.positive.name;
+    let result = noctuaFormConfig.causalEffect.options.positive;
 
     switch (edge.id) {
       case noctuaFormConfig.edge.causallyUpstreamOfPositiveEffect:
       case noctuaFormConfig.edge.directlyPositivelyRegulates:
-        result = noctuaFormConfig.causalEffect.options.positive.name;
+        result = noctuaFormConfig.causalEffect.options.positive;
         break;
       case noctuaFormConfig.edge.causallyUpstreamOfNegativeEffect:
       case noctuaFormConfig.edge.directlyNegativelyRegulates:
-        result = noctuaFormConfig.causalEffect.options.negative.name;
+        result = noctuaFormConfig.causalEffect.options.negative;
         break;
       case noctuaFormConfig.edge.causallyUpstreamOf:
       case noctuaFormConfig.edge.directlyRegulates:
-        result = noctuaFormConfig.causalEffect.options.neutral.name;
+        result = noctuaFormConfig.causalEffect.options.neutral;
         break;
     }
 

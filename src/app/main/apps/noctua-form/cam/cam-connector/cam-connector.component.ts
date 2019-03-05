@@ -61,6 +61,7 @@ export class CamConnectorComponent implements OnInit, OnDestroy {
 
   subjectGPNode: AnnotonNode;
   objectGPNode: AnnotonNode;
+  selectedCausalEffect;
 
   private unsubscribeAll: Subject<any>;
 
@@ -90,6 +91,8 @@ export class CamConnectorComponent implements OnInit, OnDestroy {
 
         this.subjectGPNode = this.noctuaAnnotonConnectorService.subjectAnnoton.getGPNode()
         this.objectGPNode = this.noctuaAnnotonConnectorService.objectAnnoton.getGPNode()
+
+        this.selectedCausalEffect = this.connectorFormGroup.get('causalEffect').value
       });
 
     this.camService.onCamChanged.subscribe((cam) => {

@@ -52,14 +52,16 @@ export class NoctuaAnnotonConnectorService {
     // this.initalizeForm();
   }
 
-  initalizeForm(annoton?: Annoton) {
+  initalizeForm(annoton?: Annoton, effect?) {
     if (annoton) {
       this.annoton = annoton;
     }
 
-    // this.subjectMFNode = this.annoton.getNode('mf');
-    // this.objectMFNode = this.annoton.getNode('mf-1');
-    this.connectorForm = this.createConnectorForm()
+    this.connectorForm = this.createConnectorForm();
+
+    if (effect) {
+      this.connectorForm.causalEffect.setValue(effect.causalEffect);
+    }
     this.connectorFormGroup.next(this._fb.group(this.connectorForm));
   }
 
@@ -74,15 +76,39 @@ export class NoctuaAnnotonConnectorService {
   }
 
   createConnection(subjectId, objectId, edge?) {
+    //  let effect = this.getCausalEffect(subjectId, objectId);
+
     this.subjectAnnoton = this.cam.getAnnotonByConnectionId(subjectId);
     this.objectAnnoton = this.cam.getAnnotonByConnectionId(objectId);
-
     this.subjectMFNode = <AnnotonNode>_.cloneDeep(this.subjectAnnoton.getMFNode());
     this.objectMFNode = <AnnotonNode>_.cloneDeep(this.objectAnnoton.getMFNode());
     let annoton = this.noctuaFormConfigService.createAnnotonConnectorModel(this.subjectMFNode, this.objectMFNode, edge);
 
     this.initalizeForm(annoton);
   }
+
+  getCausalEffect(subjectId, objectId) {
+    let result = {
+      causalEffect: this.noctuaFormConfigService.causalEffect.selected,
+      edge: this.noctuaFormConfigService.edges.causallyUpstreamOfPositiveEffect
+    };
+    this.subjectAnnoton = this.cam.getAnnotonByConnectionId(subjectId);
+    this.objectAnnoton = this.cam.getAnnotonByConnectionId(objectId);
+    this.subjectMFNode = this.subjectAnnoton.getMFNode();
+    this.objectMFNode = this.objectAnnoton.getMFNode();
+
+    let edge = this.subjectAnnoton.getEdge(this.subjectMFNode.id, 'mf' + objectId);
+
+    if (edge) {
+      result = {
+        causalEffect: this.noctuaFormConfigService.getCausalEffectByEdge(edge.edge),
+        edge: edge.edge
+      }
+    }
+
+    return result;
+  }
+
 
   connectorFormToAnnoton() {
     const self = this;

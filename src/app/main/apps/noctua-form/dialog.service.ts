@@ -11,6 +11,7 @@ import { CreateFromExistingDialogComponent } from './dialogs/create-from-existin
 import { LinkToExistingDialogComponent } from './dialogs/link-to-existing/link-to-existing.component';
 import { SelectEvidenceDialogComponent } from './dialogs/select-evidence/select-evidence.component';
 import { SearchDatabaseDialogComponent } from './dialogs/search-database/search-database.component';
+import { CamConnectorDialogComponent } from './dialogs/cam-connector/cam-connector.component';
 
 import 'rxjs/add/operator/map';
 
@@ -52,6 +53,19 @@ export class NoctuaFormDialogService {
     openBeforeSaveDialog(cam): void {
         this.dialogRef = this._matDialog.open(BeforeSaveDialogComponent, {
             panelClass: 'before-save-dialog',
+            data: {
+                cam: cam
+            }
+        });
+        this.dialogRef.afterClosed()
+            .subscribe(response => {
+
+            });
+    }
+
+    openCamConnector(cam): void {
+        this.dialogRef = this._matDialog.open(CamConnectorDialogComponent, {
+            panelClass: 'cam-connector-dialog',
             data: {
                 cam: cam
             }

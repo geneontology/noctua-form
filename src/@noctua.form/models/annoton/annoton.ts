@@ -3,6 +3,8 @@ declare const require: any;
 const each = require('lodash/forEach');
 const map = require('lodash/map');
 const uuid = require('uuid/v1');
+import { noctuaFormConfig } from './../../noctua-form-config';
+
 import { SaeGraph } from './sae-graph.js';
 import { AnnotonError } from "./parser/annoton-error.js";
 
@@ -23,6 +25,7 @@ export class Annoton extends SaeGraph {
   label;
   edgeOption;
   parser;
+  private _grid: any[] = []
 
   constructor() {
     super();
@@ -55,6 +58,16 @@ export class Annoton extends SaeGraph {
     let mfNode: AnnotonNode = this.getMFNode();
 
     return mfNode ? mfNode.modelId : null
+  }
+
+  get grid() {
+    const self = this;
+
+    if (self._grid.length === 0) {
+      this.generateGrid();
+    }
+    return this._grid;
+
   }
 
   getGPNode() {
@@ -147,6 +160,90 @@ export class Annoton extends SaeGraph {
         destNode.copyValues(srcNode);
       }
     });
+  }
+
+  generateGrid() {
+    const self = this;
+    self._grid = [];
+
+    each(self.annotonPresentation.fd, function (nodeGroup) {
+      each(nodeGroup.nodes, function (node: AnnotonNode) {
+        let term = node.getTerm();
+
+        if (node.id !== 'mc' && node.id !== 'gp' && term.id) {
+          self.generateGridRow(node);
+        }
+      });
+    });
+  }
+
+  generateGridRow(node: AnnotonNode) {
+    const self = this;
+
+    let extension = node.treeLevel > 1;
+    let term = node.getTerm();
+
+    self._grid.push({
+      displayEnabledBy: self.tableCanDisplayEnabledBy(node),
+      treeLevel: node.treeLevel,
+      gp: self.tableDisplayGp(node),
+      relationship: extension ? '' : self.tableDisplayExtension(node),
+      relationshipExt: extension ? node.relationship.label : '',
+      term: extension ? {} : term,
+      extension: extension ? term : {},
+      aspect: node.aspect,
+      evidence: node.evidence[0].evidence.control.value,
+      reference: node.evidence[0].reference.control.link,
+      with: node.evidence[0].with.control.value,
+      assignedBy: node.evidence[0].assignedBy.control,
+      node: node
+    })
+
+    for (let i = 1; i < node.evidence.length; i++) {
+      self._grid.push({
+        treeLevel: node.treeLevel,
+        evidence: node.evidence[i].evidence.control.value,
+        reference: node.evidence[i].reference.control.link,
+        with: node.evidence[i].with.control.value,
+        assignedBy: node.evidence[i].assignedBy.control,
+        node: node,
+      })
+    }
+  }
+
+  tableDisplayGp(node: AnnotonNode) {
+    const self = this;
+
+    let display = false;
+
+    switch (self.annotonModelType) {
+      case noctuaFormConfig.annotonModelType.options.default.name:
+      case noctuaFormConfig.annotonModelType.options.bpOnly.name:
+        display = node.id === 'mf';
+        break;
+      case noctuaFormConfig.annotonModelType.options.ccOnly.name:
+        display = node.id === 'cc';
+        break;
+    }
+    return display ? self.gp : '';
+  }
+
+  tableCanDisplayEnabledBy(node: AnnotonNode) {
+    const self = this;
+
+    return node.relationship.id === noctuaFormConfig.edge.enabledBy.id
+  }
+
+  tableDisplayExtension(node: AnnotonNode) {
+    const self = this;
+
+    if (node.id === 'mf') {
+      return '';
+    } else if (node.isComplement) {
+      return 'NOT ' + node.relationship.label;
+    } else {
+      return node.relationship.label;
+    }
   }
 
   print() {

@@ -34,6 +34,8 @@ import { CamTableService } from './cam/cam-table/services/cam-table.service';
 import { NodeService } from './cam/cam-diagram/nodes/services/node.service';
 import { DiagramMenuComponent } from './cam/cam-diagram/diagram-menu/diagram-menu.component';
 import { CamConnectorComponent } from './cam/cam-connector/cam-connector.component';
+import { CamConnectorDialogComponent } from './dialogs/cam-connector/cam-connector.component';
+import { AnnotonTableComponent } from './cam/cam-table/annoton-table/annoton-table.component';
 
 const routes = [
   {
@@ -60,6 +62,7 @@ const routes = [
   ],
   declarations: [
     NoctuaFormComponent,
+    CamConnectorDialogComponent,
     CamFormComponent,
     CamFormEntityComponent,
     CamTableComponent,
@@ -76,7 +79,8 @@ const routes = [
     NodeComponent,
     NodesContainerComponent,
     DiagramMenuComponent,
-    CamConnectorComponent
+    CamConnectorComponent,
+    AnnotonTableComponent,
   ],
   entryComponents: [
     NoctuaFormComponent,
@@ -84,6 +88,7 @@ const routes = [
     AddEvidenceDialogComponent,
     AnnotonErrorsDialogComponent,
     BeforeSaveDialogComponent,
+    CamConnectorDialogComponent,
     CreateFromExistingDialogComponent,
     LinkToExistingDialogComponent,
     SelectEvidenceDialogComponent,
