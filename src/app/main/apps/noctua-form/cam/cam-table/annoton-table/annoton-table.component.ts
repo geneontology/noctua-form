@@ -78,6 +78,7 @@ export class AnnotonTableComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
     private camService: CamService,
+    public noctuaFormService: NoctuaFormService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaSearchService: NoctuaSearchService,
     //  public noctuaFormService: NoctuaFormService,
@@ -96,10 +97,6 @@ export class AnnotonTableComponent implements OnInit, OnDestroy {
     this.loadCam();
   }
 
-  toggleLeftDrawer(panel) {
-    this.camTableService.toggleLeftDrawer(panel);
-  }
-
   search() {
     let searchCriteria = this.searchForm.value;
     console.dir(searchCriteria)
@@ -108,6 +105,8 @@ export class AnnotonTableComponent implements OnInit, OnDestroy {
 
   loadCam() {
     this.grid = this.annoton.grid;
+
+    console.log(this.annoton)
   }
 
   openCamEdit(cam) {
@@ -116,8 +115,10 @@ export class AnnotonTableComponent implements OnInit, OnDestroy {
 
   selectCam(cam) {
     this.sparqlService.onCamChanged.next(cam);
-    this.camTableService.openRightDrawer(this.camTableService.panel.camRow.id);
+    this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.camRow.id);
   }
+
+
 
   ngOnDestroy(): void {
     this.unsubscribeAll.next();

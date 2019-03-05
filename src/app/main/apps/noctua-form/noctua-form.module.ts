@@ -32,7 +32,6 @@ import { NodesContainerComponent } from './cam/cam-diagram/nodes/nodes-container
 import { CamDiagramService } from './cam/cam-diagram/services/cam-diagram.service';
 import { CamTableService } from './cam/cam-table/services/cam-table.service';
 import { NodeService } from './cam/cam-diagram/nodes/services/node.service';
-import { DiagramMenuComponent } from './cam/cam-diagram/diagram-menu/diagram-menu.component';
 import { CamConnectorComponent } from './cam/cam-connector/cam-connector.component';
 import { CamConnectorDialogComponent } from './dialogs/cam-connector/cam-connector.component';
 import { AnnotonTableComponent } from './cam/cam-table/annoton-table/annoton-table.component';
@@ -78,7 +77,6 @@ const routes = [
     CamDiagramComponent,
     NodeComponent,
     NodesContainerComponent,
-    DiagramMenuComponent,
     CamConnectorComponent,
     AnnotonTableComponent,
   ],

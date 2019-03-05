@@ -1,46 +1,51 @@
-<div class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
-  <div class="noc-sidemenu" fxLayout="column" fxLayoutAlign="start center">
-    <button mat-icon-button (click)="toggleLeftDrawer(camTableService.leftPanel.diagramMenu)" matTooltip="Search"
-      [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
-      <mat-icon> assignment </mat-icon>
-    </button>
-  </div>
-  <mat-drawer-container class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
-    <mat-drawer #leftDrawer class="noc-left-drawer" fxFlex="200px" mode="side" position="start">
-      <div [ngSwitch]="camTableService.selectedLeftPanel.id" class="h-100-p">
-        <noc-cam-form *ngSwitchCase="camTableService.panel.camForm.id"></noc-cam-form>
-        <noc-diagram-menu *ngSwitchCase="camTableService.panel.diagramMenu.id"></noc-diagram-menu>
+<div class="w-100-p p-8 cams-table" noctuaPerfectScrollbar>
+  <div *ngFor="let annoton of cam.annotons" class="mat-elevation-z2 mb-16 w-100-p">
+    <div class="noc-cam-table-heading" fxLayout="row" fxLayoutAlign="start center">
+      <div fxFlex="50px" (click)="$event.stopPropagation()">
+        <button mat-icon-button (click)="toggleExpand(annoton)" class="noc-br">
+          <mat-icon *ngIf="!annoton.expanded" class="s-16 fa fa-caret-right">
+          </mat-icon>
+          <mat-icon *ngIf="annoton.expanded" class="s-12 mat-icon-rtl-mirror">
+            signal_cellular_4_bar
+          </mat-icon>
+        </button>
       </div>
-    </mat-drawer>
-    <mat-drawer-content class="cams-table" noctuaPerfectScrollbar>
-      <div class="w-100-p p-8">
-        <div *ngFor="let annoton of cam.annotons" class="mat-elevation-z2 mb-16 w-100-p">
-          <div class="noc-cam-table-heading" fxLayout="row" fxLayoutAlign="start center">
-            <div fxFlex="50px" (click)="$event.stopPropagation()">
-              <button mat-icon-button (click)="toggleExpand(annoton)" class="noc-br">
-                <mat-icon *ngIf="!annoton.expanded" class="s-16 fa fa-caret-right">
-                </mat-icon>
-                <mat-icon *ngIf="annoton.expanded" class="s-12 mat-icon-rtl-mirror">
-                  signal_cellular_4_bar
-                </mat-icon>
-              </button>
-            </div>
-            <div class="" fxFlex="200px">
-              <div class="text-truncate">
-                <small>GP: </small> {{annoton.id}}
-              </div>
-            </div>
-            <span fxFlex=""></span>
-          </div>
-          <noc-annoton-table [annoton]="annoton" *ngIf="annoton.expanded" class="noc-cam-table-body" fxLayout="row"
-            fxLayoutAlign="start center">
-          </noc-annoton-table>
+      <div class="" fxFlex="200px">
+        <div class="text-truncate">
+          <small>GP: </small> {{annoton?.summary.gp}}
         </div>
       </div>
-    </mat-drawer-content>
-    <mat-drawer #rightDrawer class="noc-right-drawer" fxFlex="500px" noctuaPerfectScrollbar mode="side" position="end">
-      <noc-cam-row>
-      </noc-cam-row>
-    </mat-drawer>
-  </mat-drawer-container>
+      <div class="" fxFlex="200px">
+        <div class="text-truncate">
+          <small>MF: </small> {{annoton.summary.mf}}
+        </div>
+      </div>
+      <span fxFlex=""></span>
+      <div class="" fxFlex="150px" fxLayout="row" fxLayoutAlign="end center">
+        <button mat-icon-button (click)="openCamEdit(cam)" class="noc-bl">
+          <mat-icon class=""> edit </mat-icon>
+        </button>
+        <button mat-icon-button [matMenuTriggerFor]="connectorMenu" class="noc-bl" matTooltip="connect"
+          [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
+          <mat-icon>arrow_right_alt</mat-icon>
+        </button>
+        <mat-menu #connectorMenu="matMenu">
+          <button mat-menu-item *ngFor="let connector of cam?.annotons" (click)="openCamConnector(annoton, connector)">
+            {{connector.id}}
+          </button>
+        </mat-menu>
+        <button mat-icon-button (click)="toggleExpand(annoton)" class="noc-bl">
+          <mat-icon *ngIf="!annoton.expanded" class="">
+            keyboard_arrow_down
+          </mat-icon>
+          <mat-icon *ngIf="annoton.expanded" class="">
+            keyboard_arrow_up
+          </mat-icon>
+        </button>
+      </div>
+    </div>
+    <noc-annoton-table [annoton]="annoton" *ngIf="annoton.expanded" class="noc-cam-table-body" fxLayout="row"
+      fxLayoutAlign="start center">
+    </noc-annoton-table>
+  </div>
 </div>

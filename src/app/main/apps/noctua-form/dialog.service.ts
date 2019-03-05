@@ -13,6 +13,11 @@ import { SelectEvidenceDialogComponent } from './dialogs/select-evidence/select-
 import { SearchDatabaseDialogComponent } from './dialogs/search-database/search-database.component';
 import { CamConnectorDialogComponent } from './dialogs/cam-connector/cam-connector.component';
 
+import { Cam } from '@noctua.form/models/annoton/cam';
+import { Annoton } from '@noctua.form/models/annoton/annoton';
+import { AnnotonNode } from '@noctua.form/models/annoton/annoton-node';
+import { Evidence } from '@noctua.form/models/annoton/evidence';
+
 import 'rxjs/add/operator/map';
 
 
@@ -63,11 +68,11 @@ export class NoctuaFormDialogService {
             });
     }
 
-    openCamConnector(cam): void {
+    openCamConnector(annoton: Annoton): void {
         this.dialogRef = this._matDialog.open(CamConnectorDialogComponent, {
             panelClass: 'cam-connector-dialog',
             data: {
-                cam: cam
+                annoton: annoton
             }
         });
         this.dialogRef.afterClosed()

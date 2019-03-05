@@ -27,6 +27,7 @@ export class Annoton extends SaeGraph {
   parser;
   expanded = false;
   private _grid: any[] = []
+  private _summary: any = {}
 
   constructor() {
     super();
@@ -62,6 +63,15 @@ export class Annoton extends SaeGraph {
   }
 
   get grid() {
+    const self = this;
+
+    if (self._grid.length === 0) {
+      this.generateGrid();
+    }
+    return this._grid;
+  }
+
+  get summary() {
     const self = this;
 
     if (self._grid.length === 0) {

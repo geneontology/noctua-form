@@ -35,6 +35,10 @@ export class Cam {
     this._annotons = annoton;
   }
 
+  getAnnotonFooy() {
+    return this._annotons;
+  }
+
   getAnnotonByConnectionId(connectionId) {
     const self = this;
     let result = _.find(self._annotons, (annoton: Annoton) => {

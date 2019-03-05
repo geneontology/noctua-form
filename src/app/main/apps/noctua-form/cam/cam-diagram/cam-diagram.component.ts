@@ -53,12 +53,6 @@ export class CamDiagramComponent implements AfterViewInit, OnInit {
   @Input('cam')
   public cam: Cam = new Cam();
 
-  @ViewChild('leftDrawer')
-  leftDrawer: MatDrawer;
-
-  @ViewChild('rightDrawer')
-  rightDrawer: MatDrawer;
-
   jsPlumbInstance;
   showConnectionToggle = false;
   buttonName = 'Connect';
@@ -119,8 +113,6 @@ export class CamDiagramComponent implements AfterViewInit, OnInit {
       }
     });
 
-    this.camDiagramService.setLeftDrawer(this.leftDrawer);
-    this.camDiagramService.setRightDrawer(this.rightDrawer);
   }
 
   ngAfterViewInit() {

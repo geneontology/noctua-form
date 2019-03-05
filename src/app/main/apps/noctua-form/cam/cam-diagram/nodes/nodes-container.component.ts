@@ -3,6 +3,7 @@ import { MatDrawer, MatMenuTrigger } from '@angular/material';
 import { map, filter, delay, combineLatest, reduce, catchError, retry, tap } from 'rxjs/operators';
 import { BehaviorSubject, of, forkJoin, Observable, Subscriber } from 'rxjs';
 import 'rxjs/add/observable/combineLatest';
+import { NoctuaFormService } from '../../../services/noctua-form.service';
 import { ContextMenuComponent } from 'ngx-contextmenu';
 import { NodeService } from './services/node.service';
 import { CamDiagramService } from './../services/cam-diagram.service';
@@ -26,6 +27,7 @@ export class NodesContainerComponent implements OnChanges, AfterViewInit {
   @ViewChild(ContextMenuComponent) public basicMenu: ContextMenuComponent;
 
   constructor(
+    public noctuaFormService: NoctuaFormService,
     public camDiagramService: CamDiagramService,
     public noctuaFormGridService: NoctuaFormGridService,
     private nodeService: NodeService) { }
@@ -44,7 +46,7 @@ export class NodesContainerComponent implements OnChanges, AfterViewInit {
   openForm(location?) {
     this.noctuaFormGridService.mfLocation = location;
     this.noctuaFormGridService.initalizeForm();
-    this.camDiagramService.openRightDrawer(this.camDiagramService.panel.camForm)
+    this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.camForm)
   }
 
   ngOnChanges() {

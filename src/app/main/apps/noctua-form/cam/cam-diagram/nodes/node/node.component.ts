@@ -3,6 +3,7 @@ import { jsPlumb } from 'jsplumb';
 
 import { BehaviorSubject, Subject, Observable, Subscriber } from 'rxjs';
 import { NodeService } from './../services/node.service';
+import { NoctuaFormService } from '../../../../services/noctua-form.service';
 import { NoctuaFormDialogService } from './../../../../dialog.service';
 import { CamDiagramService } from './../../services/cam-diagram.service';
 import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
@@ -31,6 +32,7 @@ export class NodeComponent implements OnInit, AfterViewInit {
     private noctuaFormDialogService: NoctuaFormDialogService,
     private camService: CamService,
     private noctuaSearchService: NoctuaSearchService,
+    public noctuaFormService: NoctuaFormService,
     public noctuaFormGridService: NoctuaFormGridService,
     public camDiagramService: CamDiagramService,
     private elRef: ElementRef,
@@ -109,7 +111,7 @@ export class NodeComponent implements OnInit, AfterViewInit {
 
   openCamForm() {
     this.noctuaFormGridService.initalizeForm(this.annoton);
-    this.camDiagramService.openRightDrawer(this.camDiagramService.panel.camForm)
+    this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.camForm)
   }
 
 

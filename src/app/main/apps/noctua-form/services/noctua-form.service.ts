@@ -27,18 +27,25 @@ const each = require('lodash/forEach');
 export class NoctuaFormService {
 
   panel = {
-    form: {
+    camForm: {
       id: 1
     },
-    camRow: {
+    connectorForm: {
       id: 2
     },
-    diagramMenu: {
+    camRow: {
       id: 3
+    },
+    camDiagram: {
+      id: 4
+    },
+    camTable: {
+      id: 5
     }
   }
 
   selectedLeftPanel;
+  selectedMiddlePanel;
   selectedRightPanel;
 
   private leftDrawer: MatDrawer;
@@ -46,14 +53,19 @@ export class NoctuaFormService {
 
   constructor() {
 
-    // this.selectedLeftPanel = this.panel.camForm;
-    //  this.selectedRightPanel = this.panel.camForm;
+    this.selectedLeftPanel = this.panel.camForm;
+    this.selectedMiddlePanel = this.panel.camDiagram;
+    this.selectedRightPanel = this.panel.camForm;
     console.log(this.selectedLeftPanel)
 
   }
 
   selectLeftPanel(panel) {
     this.selectedLeftPanel = panel;
+  }
+
+  selectMiddlePanel(panel) {
+    this.selectedMiddlePanel = panel;
   }
 
   selectRightPanel(panel) {
@@ -85,6 +97,10 @@ export class NoctuaFormService {
     this.rightDrawer = rightDrawer;
   }
 
+  public openMiddlePanel(panel) {
+    this.selectMiddlePanel(panel)
+  }
+
   public openRightDrawer(panel) {
     this.selectLeftPanel(panel)
     return this.rightDrawer.open();
@@ -93,6 +109,4 @@ export class NoctuaFormService {
   public closeRightDrawer() {
     return this.rightDrawer.close();
   }
-
-
 }

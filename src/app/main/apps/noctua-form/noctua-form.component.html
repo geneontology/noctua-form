@@ -1,18 +1,31 @@
-<div class="w-100-p h-100-p">
-  <mat-tab-group id="noc-form-tab" class="w-100-p h-100-p" dynamicHeight>
-    <mat-tab class="w-100-p h-100-p">
-      <ng-template mat-tab-label>
-        <mat-icon class="example-tab-icon">scatter_plot</mat-icon>
-        ACTIVITY FLOW VIEW
-      </ng-template>
-      <noc-cam-diagram [cam]="cam"></noc-cam-diagram>
-    </mat-tab>
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon class="example-tab-icon">table_chart</mat-icon>
-        TABLE VIEW
-      </ng-template>
-      <noc-cam-table [cam]="cam"></noc-cam-table>
-    </mat-tab>
-  </mat-tab-group>
+<div class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
+  <div class="noc-sidemenu" fxLayout="column" fxLayoutAlign="start center">
+    <button mat-icon-button (click)="noctuaFormService.openMiddleDrawer(cnoctuaFormService.panel.camDiagram)"
+      matTooltip="Search" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
+      <mat-icon> assignment </mat-icon>
+    </button>
+    <button mat-icon-button (click)="noctuaFormService.openMiddlePanel(noctuaFormService.panel.camTable)" matTooltip="Search"
+      [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
+      <mat-icon> assignment </mat-icon>
+    </button>
+  </div>
+  <mat-drawer-container class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
+    <mat-drawer #leftDrawer class="noc-left-drawer" fxFlex="200px" mode="side" position="start">
+      <div [ngSwitch]="noctuaFormService.selectedLeftPanel.id" class="h-100-p">
+      </div>
+    </mat-drawer>
+    <mat-drawer-content class="noc-section-body w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start">
+      <div [ngSwitch]="noctuaFormService.selectedMiddlePanel.id" class="h-100-p w-100-p">
+        <noc-cam-diagram *ngSwitchCase="noctuaFormService.panel.camDiagram.id" [cam]="cam"></noc-cam-diagram>
+        <noc-cam-table *ngSwitchCase="noctuaFormService.panel.camTable.id" [cam]="cam"></noc-cam-table>
+      </div>
+    </mat-drawer-content>
+    <mat-drawer #rightDrawer class="noc-right-drawer" fxFlex="1000px" noctuaPerfectScrollbar mode="side" position="end">
+      <div [ngSwitch]="noctuaFormService.selectedRightPanel.id" class="h-100-p">
+        <noc-cam-row *ngSwitchCase="noctuaFormService.panel.camRow.id"> </noc-cam-row>
+        <noc-cam-form [panelDrawer]='rightDrawer' *ngSwitchCase="noctuaFormService.panel.camForm.id"></noc-cam-form>
+        <noc-cam-connector [panelDrawer]='rightDrawer' *ngSwitchCase="noctuaFormService.panel.connectorForm.id"></noc-cam-connector>
+      </div>
+    </mat-drawer>
+  </mat-drawer-container>
 </div>

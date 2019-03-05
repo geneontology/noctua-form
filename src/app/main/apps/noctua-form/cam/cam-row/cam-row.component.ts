@@ -43,6 +43,7 @@ export class CamRowComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
+    public noctuaFormService: NoctuaFormService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaSearchService: NoctuaSearchService,
     public camTableService: CamTableService,
@@ -55,11 +56,7 @@ export class CamRowComponent implements OnInit, OnDestroy {
     private noctuaTranslationLoader: NoctuaTranslationLoaderService
   ) {
     this._unsubscribeAll = new Subject();
-
     this.camFormData = this.noctuaFormConfigService.createReviewSearchFormData();
-
-
-
   }
 
   ngOnInit() {
@@ -135,7 +132,7 @@ export class CamRowComponent implements OnInit, OnDestroy {
   }
 
   close() {
-    this.camTableService.closeRightDrawer();
+    this.noctuaFormService.closeRightDrawer();
   }
 
   ngOnDestroy(): void {

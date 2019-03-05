@@ -13,6 +13,7 @@ import { NoctuaUtils } from '@noctua/utils/noctua-utils';
 import { CurieService } from '@noctua.curie/services/curie.service';
 import { NoctuaGraphService } from '@noctua.form/services/graph.service';
 
+import { NoctuaFormService } from './../../../services/noctua-form.service';
 import { NoctuaFormGridService } from '@noctua.form/services/form-grid.service';
 import { NoctuaAnnotonConnectorService } from '@noctua.form/services/annoton-connector.service';
 import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
@@ -39,33 +40,11 @@ export class CamDiagramService {
     y: 0.5
   }
 
-  panel = {
-    camForm: {
-      id: 1
-    },
-    connectorForm: {
-      id: 2
-    },
-    camRow: {
-      id: 3
-    },
-    diagramMenu: {
-      id: 4
-    }
-  }
 
-  selectedLeftPanel;
-  selectedRightPanel;
-
-  private leftDrawer: MatDrawer;
-  private rightDrawer: MatDrawer;
 
   constructor(private noctuaAnnotonConnectorService: NoctuaAnnotonConnectorService,
-    public noctuaFormGridService: NoctuaFormGridService, ) {
+    public noctuaFormGridService: NoctuaFormGridService, public noctuaFormService: NoctuaFormService) {
 
-    this.selectedLeftPanel = this.panel.camForm;
-    this.selectedRightPanel = this.panel.camForm;
-    console.log(this.selectedLeftPanel)
 
   }
 
@@ -137,60 +116,18 @@ export class CamDiagramService {
     return this._scale;
   }
 
-  selectLeftPanel(panel) {
-    this.selectedLeftPanel = panel;
-  }
-
-  selectRightPanel(panel) {
-    this.selectedRightPanel = panel;
-  }
-
-  public setLeftDrawer(leftDrawer: MatDrawer) {
-    this.leftDrawer = leftDrawer;
-  }
-
-  public openLeftDrawer() {
-    return this.leftDrawer.open();
-  }
-
-  public closeLeftDrawer() {
-    return this.leftDrawer.close();
-  }
-
-  public toggleLeftDrawer(panel) {
-    if (this.selectedLeftPanel.id === panel.id) {
-      this.leftDrawer.toggle();
-    } else {
-      this.selectLeftPanel(panel)
-      return this.openLeftDrawer();
-    }
-  }
-
-  public setRightDrawer(rightDrawer: MatDrawer) {
-    this.rightDrawer = rightDrawer;
-  }
-
-  public openRightDrawer(panel) {
-    this.selectRightPanel(panel)
-    return this.rightDrawer.open();
-  }
-
-  public closeRightDrawer() {
-    return this.rightDrawer.close();
-  }
-
   openCamForm() {
     const self = this;
 
     self.noctuaFormGridService.initalizeForm();
-    self.openRightDrawer(self.panel.camForm)
+    self.noctuaFormService.openRightDrawer(self.noctuaFormService.panel.camForm)
   }
 
   openConnectorForm(sourceId, targetId) {
     const self = this;
 
     self.noctuaAnnotonConnectorService.createConnection(sourceId, targetId);
-    self.openRightDrawer(self.panel.connectorForm);
+    self.noctuaFormService.openRightDrawer(self.noctuaFormService.panel.connectorForm);
   }
 
   getCausalEffect(sourceId, targetId) {
