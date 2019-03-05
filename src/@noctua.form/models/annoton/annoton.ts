@@ -26,6 +26,10 @@ export class Annoton extends SaeGraph {
   edgeOption;
   parser;
   expanded = false;
+  _location = {
+    x: 0,
+    y: 0
+  }
   private _grid: any[] = [];
 
   constructor() {
@@ -40,6 +44,14 @@ export class Annoton extends SaeGraph {
     this.errors = [];
     this.submitErrors = [];
     this.id = uuid();
+  }
+
+  get location() {
+    return this._location;
+  }
+
+  set location(location) {
+    this._location = location
   }
 
   get annotonConnections() {
@@ -169,8 +181,13 @@ export class Annoton extends SaeGraph {
       return this._presentation;
     }
 
+    let gp = self.getNode('gp');
+    let mf = self.getNode('mf');
+
     let result = {
-      geneProduct: self.getNode('gp'),
+      gpText: gp ? gp.getTerm().label : '',
+      mfText: mf ? mf.getTerm().label : '',
+      geneProduct: gp,
       mcNode: self.getNode('mc'),
       gp: {},
       fd: {},

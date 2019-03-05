@@ -87,7 +87,9 @@ export class CamFormComponent implements OnInit, OnDestroy {
 
     this.camService.onCamChanged.subscribe((cam) => {
       this.cam = cam
+
       this.cam.onGraphChanged.subscribe((annotons) => {
+        //console.log("cam changed")
         //  let data = this.summaryGridService.getGrid(annotons);
         //  this.sparqlService.addCamChildren(cam, data);
         //  this.dataSource = new CamsDataSource(this.sparqlService, this.paginator, this.sort);
@@ -104,7 +106,8 @@ export class CamFormComponent implements OnInit, OnDestroy {
     let saveAnnoton = function () {
       //self.formGrid.linkFormNode(entity, selected.node);
       let annoton = self.noctuaGraphService.adjustAnnoton(self.noctuaFormGridService.annoton)
-      self.noctuaGraphService.saveAnnoton(self.cam, annoton).then(function (data) {
+      self.noctuaGraphService.saveAnnoton(self.cam, annoton).then((data) => {
+        //  localStorage.setItem('barista_token', value);
         self.noctuaFormGridService.clearForm();
         // self.dialogService.openSuccessfulSaveToast();
       });

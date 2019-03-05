@@ -10,19 +10,19 @@
           </mat-icon>
         </button>
       </div>
-      <div class="" fxFlex="200px">
+      <div class="" fxFlex="30%">
         <div class="text-truncate">
-          <small>GP: </small> {{annoton?.presentation.gp}}
+          <small>GP: </small> {{annoton?.presentation.gpText}}
         </div>
       </div>
-      <div class="" fxFlex="200px">
+      <div class="" fxFlex="20%">
         <div class="text-truncate">
-          <small>MF: </small> {{annoton?.presentation.mf}}
+          <small>MF: </small> {{annoton?.presentation.mfText}}
         </div>
       </div>
       <span fxFlex=""></span>
       <div class="" fxFlex="150px" fxLayout="row" fxLayoutAlign="end center">
-        <button mat-icon-button (click)="openCamEdit(cam)" class="noc-bl">
+        <button mat-icon-button (click)="openCamForm(annoton)" class="noc-bl">
           <mat-icon class=""> edit </mat-icon>
         </button>
         <button mat-icon-button [matMenuTriggerFor]="connectorMenu" class="noc-bl" matTooltip="connect"
@@ -31,7 +31,7 @@
         </button>
         <mat-menu #connectorMenu="matMenu">
           <button mat-menu-item *ngFor="let connector of cam?.annotons" (click)="openCamConnector(annoton, connector)">
-            {{connector.id}}
+            {{connector.presentation.gpText}}
           </button>
         </mat-menu>
         <button mat-icon-button (click)="toggleExpand(annoton)" class="noc-bl">

@@ -102,7 +102,7 @@ export class NoctuaFormService {
   }
 
   public openRightDrawer(panel) {
-    this.selectLeftPanel(panel)
+    this.selectRightPanel(panel)
     return this.rightDrawer.open();
   }
 

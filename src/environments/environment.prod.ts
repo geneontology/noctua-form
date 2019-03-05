@@ -9,5 +9,6 @@ export const environment = {
   globalBaristaLocation: 'http://barista-dev.berkeleybop.org',
   //Workbench
   noctuaUrl: 'http://noctua.geneontology.org',
-  workbenchUrl: 'http://noctua.geneontology.org/workbench/'
+  workbenchUrl: 'http://noctua.geneontology.org/workbench/',
+  locationStoreApi: 'https://6xq2j25tah.execute-api.us-east-1.amazonaws.com/dev'
 };

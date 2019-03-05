@@ -1,6 +1,6 @@
 import { environment } from 'environments/environment';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subscriber } from 'rxjs';
 import { map, finalize, filter, reduce, catchError, retry, tap } from 'rxjs/operators';
 
@@ -62,6 +62,42 @@ export class CamService {
     this.onCamChanged.next(cam);
 
     return cam;
+  }
+
+
+  getAnnotonLocation(id): Observable<any> {
+    const self = this;
+
+    return this.httpClient
+      .get(`${environment.locationStoreApi}?activity_id${id}`)
+      .pipe(
+        tap(res => {
+          console.log(res)
+        }),
+        finalize(() => {
+          //self.loading = false;
+        })
+      );
+  }
+
+  setAnnotonLocation(id, x, y): Observable<any> {
+    const self = this;
+
+    const params = new HttpParams()
+      .set('activity_id', id)
+      .set('x', x)
+      .set('y', y);
+
+    return this.httpClient
+      .post(environment.locationStoreApi + params.toString(), {})
+      .pipe(
+        tap(res => {
+          console.log(res)
+        }),
+        finalize(() => {
+          //self.loading = false;
+        })
+      );
   }
 
   addCamChildren(srcCam, annotons) {

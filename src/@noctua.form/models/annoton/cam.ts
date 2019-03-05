@@ -35,6 +35,18 @@ export class Cam {
     this._annotons = annoton;
   }
 
+  annotonsWithoutLocation() {
+    let result = [];
+
+    this.annotons.forEach((annoton: Annoton) => {
+      if (annoton.location.x === 0 && annoton.location.y === 0) {
+        result.push(annoton);
+      }
+    });
+
+    return result;
+  }
+
   getAnnotonFooy() {
     return this._annotons;
   }

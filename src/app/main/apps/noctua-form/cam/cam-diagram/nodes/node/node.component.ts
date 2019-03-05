@@ -54,16 +54,23 @@ export class NodeComponent implements OnInit, AfterViewInit {
     let nodeEl = this.elRef.nativeElement.children[0]
 
     // if()
-    let locationX = self.connector.location.x * self.camDiagramService.scale.x + 'px';
-    let locationY = self.connector.location.y * self.camDiagramService.scale.y + 'px'
 
-    self.renderer.setStyle(nodeEl, 'left', locationX);
-    self.renderer.setStyle(nodeEl, 'top', locationY);
+
+    let location = JSON.parse(localStorage.getItem(self.annoton.connectionId));
+    if (location) {
+      let locationX = location.x + 'px';
+      let locationY = location.y + 'px'
+      self.renderer.setStyle(nodeEl, 'left', locationX);
+      self.renderer.setStyle(nodeEl, 'top', locationY);
+    }
+
+
 
     self.camDiagramService.jsPlumbInstance.registerConnectionType("basic", { anchor: "Continuous", connector: "StateMachine" });
 
     self.initNode(self.connectionId);
 
+    //  console.log(locationX)
     // self.onNodeReady = new BehaviorSubject(self.connectionId)
     self.onNodeReady.next(self.connectionId)
 
@@ -113,6 +120,5 @@ export class NodeComponent implements OnInit, AfterViewInit {
     this.noctuaFormGridService.initalizeForm(this.annoton);
     this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.camForm)
   }
-
 
 }

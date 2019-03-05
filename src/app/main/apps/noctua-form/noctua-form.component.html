@@ -10,7 +10,7 @@
       <mat-icon> table_chart </mat-icon>
     </button>
   </div>
-  <mat-drawer-container class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
+  <mat-drawer-container class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start" autosize>
     <mat-drawer #leftDrawer class="noc-left-drawer" fxFlex="200px" mode="side" position="start">
       <div [ngSwitch]="noctuaFormService.selectedLeftPanel.id" class="h-100-p">
       </div>
@@ -21,7 +21,7 @@
         <noc-cam-table *ngSwitchCase="noctuaFormService.panel.camTable.id" [cam]="cam"></noc-cam-table>
       </div>
     </mat-drawer-content>
-    <mat-drawer #rightDrawer class="noc-right-drawer" fxFlex="1000px" noctuaPerfectScrollbar mode="side" position="end">
+    <mat-drawer #rightDrawer class="noc-right-drawer" noctuaPerfectScrollbar mode="side" position="end">
       <div [ngSwitch]="noctuaFormService.selectedRightPanel.id" class="h-100-p">
         <noc-cam-row *ngSwitchCase="noctuaFormService.panel.camRow.id"> </noc-cam-row>
         <noc-cam-form [panelDrawer]='rightDrawer' *ngSwitchCase="noctuaFormService.panel.camForm.id"></noc-cam-form>

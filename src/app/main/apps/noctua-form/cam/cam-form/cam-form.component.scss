@@ -2,7 +2,8 @@
 @import "src/@noctua.common/scss/noctua.common";
 
 :host {
-  width: 100%; // display: block;
+  //width: 100%; // display: block;
+  @include deep-width(40px);
   background-color: white;
   @include mat-elevation(4);
 

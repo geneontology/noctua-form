@@ -76,6 +76,10 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
         this.noctuaGraphService.baristaToken = this.baristaToken;
         this.loadCam(this.modelId);
       });
+
+    //  this.camService.setAnnotonLocation('aaa', 4, 5).subscribe((res) => {
+    //  console.log(res)
+    //   });
   }
 
   ngOnInit(): void {

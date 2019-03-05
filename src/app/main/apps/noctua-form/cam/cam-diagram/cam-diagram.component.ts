@@ -31,6 +31,7 @@ import { NoctuaLookupService } from '@noctua.form/services/lookup.service';
 
 
 import { NoctuaFormService } from './../../services/noctua-form.service';
+import { NoctuaFormGridService } from '@noctua.form/services/form-grid.service';
 import { CamDiagramService } from './services/cam-diagram.service';
 import { NoctuaFormDialogService } from './../../dialog.service';
 import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
@@ -66,6 +67,7 @@ export class CamDiagramComponent implements AfterViewInit, OnInit {
     private camService: CamService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaSearchService: NoctuaSearchService,
+    public noctuaFormGridService: NoctuaFormGridService,
     //   public noctuaFormService: NoctuaFormService,
     public camDiagramService: CamDiagramService,
     private noctuaFormDialogService: NoctuaFormDialogService,
@@ -105,6 +107,22 @@ export class CamDiagramComponent implements AfterViewInit, OnInit {
   ngOnInit() {
     this.cam.onGraphChanged.subscribe((annotons) => {
       if (annotons) {
+        let newAnnotons = this.cam.annotonsWithoutLocation();
+        let destAnnotons = this.cam.annotons;
+
+        destAnnotons.forEach((destAnnoton: Annoton) => {
+          let location = JSON.parse(localStorage.getItem(destAnnoton.connectionId));
+          if (location) {
+            destAnnoton.location = location;
+          }
+        });
+        newAnnotons.forEach((destAnnoton: Annoton) => {
+          destAnnoton.location = this.noctuaFormGridService.mfLocation;
+
+          if (this.noctuaFormGridService.mfLocation) {
+            localStorage.setItem(destAnnoton.connectionId, JSON.stringify(destAnnoton.location));
+          }
+        });
         //   let data = this.summaryGridService.getGrid(annotons);
 
         //    this.camService.addCamChildren(this.cam, data);
