@@ -45,8 +45,6 @@ export class NoctuaToolbarComponent {
             .queryParams
             .subscribe(params => {
                 // Defaults to 0 if no query param provided.
-                let baristaToken = params['barista_token'] || 0;
-                noctuaConfig.baristaToken = baristaToken;
             });
 
         this.router.events.subscribe(

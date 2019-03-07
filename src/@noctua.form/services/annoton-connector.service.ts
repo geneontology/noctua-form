@@ -7,15 +7,15 @@ import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@ang
 import { noctuaFormConfig } from './../noctua-form-config';
 import { NoctuaFormConfigService } from './config/noctua-form-config.service';
 import { NoctuaLookupService } from './lookup.service';
-import { CamService } from '@noctua.form/services/cam.service';
+import { CamService } from './../services/cam.service';
 
 import * as _ from 'lodash';
 declare const require: any;
 const each = require('lodash/forEach');
 
-import { Cam } from '@noctua.form/models/annoton/cam';
-import { Annoton } from '@noctua.form/models/annoton/annoton';
-import { AnnotonNode } from '@noctua.form/models/annoton/annoton-node';
+import { Cam } from './..//models/annoton/cam';
+import { Annoton } from './..//models/annoton/annoton';
+import { AnnotonNode } from './..//models/annoton/annoton-node';
 
 import { AnnotonConnectorForm } from './../models/forms/annoton-connector-form';
 

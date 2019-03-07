@@ -1,4 +1,5 @@
 import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms'
+import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 
 import { Evidence } from './../annoton/evidence'
 import * as _ from 'lodash';
@@ -33,14 +34,14 @@ export class EvidenceForm {
     onValueChanges(lookup) {
         const self = this;
 
-        self.evidence.valueChanges
-            .distinctUntilChanged()
-            .debounceTime(400)
-            .subscribe(data => {
-                self._metadata.lookupFunc(data, lookup.requestParams).subscribe(response => {
-                    lookup.results = response;
-                });
+        self.evidence.valueChanges.pipe(
+            distinctUntilChanged(),
+            debounceTime(400)
+        ).subscribe(data => {
+            self._metadata.lookupFunc(data, lookup.requestParams).subscribe(response => {
+                lookup.results = response;
             });
+        });
     }
 
 }

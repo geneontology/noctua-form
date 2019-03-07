@@ -1,7 +1,7 @@
-import { environment } from 'environments/environment';
+import { environment } from '../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { noctuaFormConfig } from './../../noctua-form-config';
-import { noctuaFormExample } from '@noctua.form/noctua-form-examples';
+import { noctuaFormExample } from './../..//noctua-form-examples';
 
 import * as _ from 'lodash';
 
@@ -11,9 +11,7 @@ const each = require('lodash/forEach');
 const uuid = require('uuid/v1');
 import { AnnotonNode } from './../../models/annoton/annoton-node';
 import { Annoton } from './../../models/annoton/annoton';
-import { rootRenderNodes } from '@angular/core/src/view';
-import { noctuaConfig } from 'app/noctua-config';
-import { Evidence } from '@noctua.form/models/annoton/evidence';
+import { Evidence } from './../../models/annoton/evidence';
 
 
 @Injectable({
@@ -27,8 +25,9 @@ export class NoctuaFormConfigService {
   _reviewSearchData
   _modelRelationship
   closureCheck;
-  baristaToken;
   loggedIn: boolean = false;
+
+  private _baristaToken;
 
   constructor() {
 
@@ -808,6 +807,15 @@ export class NoctuaFormConfigService {
         object: noctuaFormConfig.closures.gp
       }]
     };
+  }
+
+  set baristaToken(value) {
+    this._baristaToken = value;
+    localStorage.setItem('barista_token', value);
+  }
+
+  get baristaToken() {
+    return this._baristaToken;
   }
 
   get edges() {

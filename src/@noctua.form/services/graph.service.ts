@@ -1,4 +1,4 @@
-import { environment } from 'environments/environment';
+import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 
 
@@ -16,7 +16,6 @@ import { Evidence } from './../models/annoton/evidence';
 
 //Config
 import { noctuaFormConfig } from './../noctua-form-config';
-import { NoctuaConfigService } from '@noctua/services/config.service';
 import { NoctuaFormConfigService } from './config/noctua-form-config.service';
 import { NoctuaLookupService } from './lookup.service';
 import { NoctuaFormGridService } from '../services/form-grid.service';
@@ -60,7 +59,6 @@ export class NoctuaGraphService {
   localClosures;
 
   constructor(
-    private noctuaConfigService: NoctuaConfigService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     private formGridService: NoctuaFormGridService,
     private httpClient: HttpClient,
@@ -751,7 +749,7 @@ export class NoctuaGraphService {
   saveMFLocation(cam) {
     const self = this;
 
-    let reqs = new minerva_requests.request_set(this.noctuaConfigService.baristaToken, cam.modelId);
+    let reqs = new minerva_requests.request_set(this.noctuaFormConfigService.baristaToken, cam.modelId);
 
 
     // Update all of the nodes with their current local (should be
@@ -773,14 +771,14 @@ export class NoctuaGraphService {
 
     // And add the actual storage.
     reqs.store_model();
-    // cam.manager.user_token(this.noctuaConfigService.baristaToken);
+    // cam.manager.user_token(this.noctuaFormConfigService.baristaToken);
     //  cam.manager.request_with(reqs);
   }
 
   edit(cam, srcNode, destNode) {
     const self = this;
 
-    let reqs = new minerva_requests.request_set(this.noctuaConfigService.baristaToken, cam.modelId);
+    let reqs = new minerva_requests.request_set(this.noctuaFormConfigService.baristaToken, cam.modelId);
 
     if (srcNode.hasValue() && destNode.hasValue()) {
       self.editIndividual(reqs, cam.modelId, srcNode.modelId, srcNode.getTerm().id, destNode.getTerm().id);
@@ -795,7 +793,7 @@ export class NoctuaGraphService {
       }
     });
 
-    cam.manager.user_token(this.noctuaConfigService.baristaToken);
+    cam.manager.user_token(this.noctuaFormConfigService.baristaToken);
     cam.manager.request_with(reqs);
   }
 
@@ -836,8 +834,7 @@ export class NoctuaGraphService {
   }
 
   addEvidence(cam, srcNode, destNode) {
-    this.noctuaConfigService.baristaToken
-    let reqs = new minerva_requests.request_set(this.noctuaConfigService.baristaToken, cam.modelId);
+    let reqs = new minerva_requests.request_set(this.noctuaFormConfigService.baristaToken, cam.modelId);
 
     if (srcNode.hasValue() && destNode.hasValue()) {
       // let ce = new class_expression(destNode.term.control.value.id);
@@ -853,7 +850,7 @@ export class NoctuaGraphService {
         cam.modelId,
       );
 
-      cam.manager.user_token(this.noctuaConfigService.baristaToken);
+      cam.manager.user_token(this.noctuaFormConfigService.baristaToken);
       cam.manager.request_with(reqs);
     }
   }

@@ -1,5 +1,5 @@
 
-import { AnnotonNode } from '@noctua.form/models/annoton/annoton-node';
+import { AnnotonNode } from './..//models/annoton/annoton-node';
 
 export interface CamRow {
     treeLevel: number;

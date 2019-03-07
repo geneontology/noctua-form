@@ -12,8 +12,8 @@ import * as _ from 'lodash';
 declare const require: any;
 const each = require('lodash/forEach');
 
-import { Annoton } from '@noctua.form/models/annoton/annoton';
-import { AnnotonNode } from '@noctua.form/models/annoton/annoton-node';
+import { Annoton } from './..//models/annoton/annoton';
+import { AnnotonNode } from './..//models/annoton/annoton-node';
 
 import { CamForm } from './../models/forms/cam-form';
 import { CamFormMetadata } from './../models/forms/cam-form-metadata';

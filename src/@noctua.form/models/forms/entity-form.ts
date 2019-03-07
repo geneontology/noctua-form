@@ -1,5 +1,5 @@
 import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms'
-
+import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { Annoton } from './../annoton/annoton';
 import { Evidence } from './../annoton/evidence'
 import { AnnotonNode } from './../annoton/annoton-node';
@@ -54,14 +54,14 @@ export class EntityForm {
     onValueChanges(lookup) {
         const self = this;
 
-        self.term.valueChanges
-            .distinctUntilChanged()
-            .debounceTime(400)
-            .subscribe(data => {
-                self._metadata.lookupFunc(data, lookup.requestParams).subscribe(response => {
-                    lookup.results = response;
-                });
+        self.term.valueChanges.pipe(
+            distinctUntilChanged(),
+            debounceTime(400)
+        ).subscribe(data => {
+            self._metadata.lookupFunc(data, lookup.requestParams).subscribe(response => {
+                lookup.results = response;
             });
+        });
     }
 }
 

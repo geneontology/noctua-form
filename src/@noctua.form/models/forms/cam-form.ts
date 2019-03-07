@@ -55,14 +55,14 @@ export class CamForm {
   onValueChanges(lookup) {
     const self = this;
 
-    self.gp.valueChanges
-      .distinctUntilChanged()
-      .debounceTime(400)
-      .subscribe(data => {
-        self._metadata.lookupFunc(data, lookup.requestParams).subscribe(response => {
-          lookup.results = response;
-          console.log(lookup)
-        });
+    self.gp.valueChanges.pipe(
+      distinctUntilChanged(),
+      debounceTime(400)
+    ).subscribe(data => {
+      self._metadata.lookupFunc(data, lookup.requestParams).subscribe(response => {
+        lookup.results = response;
+        console.log(lookup)
       });
+    });
   }
 }

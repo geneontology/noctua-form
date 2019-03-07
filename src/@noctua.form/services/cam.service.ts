@@ -1,15 +1,14 @@
-import { environment } from 'environments/environment';
+import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subscriber } from 'rxjs';
 import { map, finalize, filter, reduce, catchError, retry, tap } from 'rxjs/operators';
 
-import { NoctuaUtils } from '@noctua/utils/noctua-utils';
-import { CurieService } from '@noctua.curie/services/curie.service';
-import { NoctuaGraphService } from '@noctua.form/services/graph.service';
+import { CurieService } from './../../@noctua.curie/services/curie.service';
+import { NoctuaGraphService } from './..//services/graph.service';
 
-import { AnnotonNode } from '@noctua.form/models/annoton/annoton-node';
-import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
+import { AnnotonNode } from './..//models/annoton/annoton-node';
+import { NoctuaFormConfigService } from './..//services/config/noctua-form-config.service';
 
 //import { Cam } from '../models/cam';
 import { CamRow } from '../models/cam-row';
@@ -18,7 +17,7 @@ import { Group } from '../models/group';
 
 import * as _ from 'lodash';
 import { v4 as uuid } from 'uuid';
-import { Cam } from '@noctua.form/models/annoton/cam';
+import { Cam } from './..//models/annoton/cam';
 declare const require: any;
 const each = require('lodash/forEach');
 
