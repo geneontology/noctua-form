@@ -4,7 +4,7 @@
   "license": "",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 4201  --extra-webpack-config webpack.extra.js",
+    "start": "ng serve --port 4203  --extra-webpack-config webpack.extra.js",
     "start-hmr": "ng serve --configuration hmr -sm=false",
     "start-hmr-sourcemaps": "ng serve --hmr -e=hmr",
     "build": "node --max_old_space_size=6144 ./node_modules/@angular/cli/bin/ng build --dev",

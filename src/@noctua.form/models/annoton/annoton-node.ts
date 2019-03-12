@@ -110,12 +110,26 @@ export class AnnotonNode {
     self.edgeOption = edgeOption;
   }
 
-  setEvidence(evidence) {
-    const self = this;
 
-    if (evidence && evidence.length > 0) {
-      self.evidence = evidence;
-    }
+  getEvidence(): Evidence[] {
+    return this.evidence;
+  }
+
+  setEvidence(evidences: Evidence[], except?) {
+    const self = this;
+    let evidenceCount = self.evidence.length;
+
+    each(evidences, function (srcEvidence, i) {
+      let destEvidence;
+
+      if (!self.evidence[0].hasValue()) {
+        destEvidence = self.evidence[0];
+      } else {
+        destEvidence = self.addEvidence()
+      }
+
+      destEvidence.copyValues(srcEvidence, except);
+    });
   }
 
   addEvidence() {
@@ -207,22 +221,6 @@ export class AnnotonNode {
     self.isComplement = node.isComplement;
   }
 
-  addEvidences(evidences, except) {
-    const self = this;
-    let evidenceCount = self.evidence.length;
-
-    each(evidences, function (srcEvidence, i) {
-      let destEvidence;
-
-      if (!self.evidence[0].hasValue()) {
-        destEvidence = self.evidence[0];
-      } else {
-        destEvidence = self.addEvidence()
-      }
-
-      destEvidence.copyValues(srcEvidence, except);
-    });
-  }
 
   selectEdge(edge) {
     console.log("I am selected ", edge);

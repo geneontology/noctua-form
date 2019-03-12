@@ -1010,6 +1010,7 @@ export class NoctuaFormConfigService {
 
     subjectMFNode.id = 'mf';
     objectMFNode.id = 'mf-1';
+
     annoton.addNode(subjectMFNode);
     annoton.addNode(objectMFNode);
 
