@@ -45,7 +45,7 @@ export class NodesContainerComponent implements OnChanges, AfterViewInit {
 
   openForm(location?) {
     this.noctuaFormGridService.mfLocation = location;
-    this.noctuaFormGridService.initalizeForm();
+    this.noctuaFormGridService.initializeForm();
     this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.camForm)
   }
 

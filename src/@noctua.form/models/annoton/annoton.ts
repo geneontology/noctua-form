@@ -26,7 +26,9 @@ export class Annoton extends SaeGraph {
   edgeOption;
   parser;
   expanded = false;
-  _location = {
+  private _connectionId;
+  private _connections;
+  private _location = {
     x: 0,
     y: 0
   }
@@ -68,9 +70,28 @@ export class Annoton extends SaeGraph {
   }
 
   get connectionId() {
+    if (this._connectionId) {
+      return this._connectionId;
+    }
+
     let mfNode: AnnotonNode = this.getMFNode();
 
     return mfNode ? mfNode.modelId : null
+  }
+
+  getConnection(modelId) {
+    const self = this;
+
+    let edges: any = self.getEdges('mf');
+    let edge: any;
+
+    if (edges) {
+      edge = _.find(edges.nodes, (srcEdge) => {
+        return srcEdge.object.modelId === modelId;
+      });
+    }
+
+    return edge;
   }
 
   get grid() {

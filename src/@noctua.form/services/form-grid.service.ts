@@ -39,10 +39,10 @@ export class NoctuaFormGridService {
     this.camFormGroup = new BehaviorSubject(null);
     this.camFormGroup$ = this.camFormGroup.asObservable();
 
-    this.initalizeForm();
+    this.initializeForm();
   }
 
-  initalizeForm(annoton?: Annoton) {
+  initializeForm(annoton?: Annoton) {
     const self = this;
 
     if (annoton) {
@@ -60,9 +60,9 @@ export class NoctuaFormGridService {
     this.camFormGroup.next(this._fb.group(this.camForm));
   }
 
-  initalizeFormData(nodes) {
+  initializeFormData(nodes) {
     this.annoton = this.noctuaFormConfigService.createAnnotonModelFakeData(nodes);
-    this.initalizeForm()
+    this.initializeForm()
   }
 
   createCamForm() {
@@ -95,7 +95,7 @@ export class NoctuaFormGridService {
       annoton.annotonModelType,
       annoton
     )
-    this.initalizeForm();
+    this.initializeForm();
   }
 
   setAnnotonModelType(annoton, annotonModelType) {
@@ -103,7 +103,7 @@ export class NoctuaFormGridService {
       annoton.annotonType,
       annotonModelType,
       annoton)
-    this.initalizeForm();
+    this.initializeForm();
   }
 
 
@@ -142,7 +142,7 @@ export class NoctuaFormGridService {
       this.annoton.copyValues(srcAnnoton);
     }
 
-    this.initalizeForm();
+    this.initializeForm();
   }
 
 
@@ -151,7 +151,7 @@ export class NoctuaFormGridService {
       this.annoton.annotonType,
       this.annoton.annotonModelType
     )
-    this.initalizeForm();
+    this.initializeForm();
   }
 }
 

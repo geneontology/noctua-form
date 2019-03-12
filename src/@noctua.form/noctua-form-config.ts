@@ -60,15 +60,15 @@ const edge = {
     actsLabel: 'acts upstream of or within, negative effect'
   },
   directlyRegulates: {
-    id: 'RO:0002211',
+    id: 'RO:0002578',
     label: 'directly regulates'
   },
   directlyPositivelyRegulates: {
-    id: 'RO:0002578',
+    id: 'RO:0002629',
     label: 'directly positively regulates'
   },
   directlyNegativelyRegulates: {
-    id: 'RO:0002578',
+    id: 'RO:0002630',
     label: 'directly negatively regulates'
   },
 }
@@ -241,38 +241,5 @@ export const noctuaFormConfig = {
     edge.directlyRegulates,
     edge.directlyPositivelyRegulates,
     edge.directlyNegativelyRegulates,
-    {
-      label: 'regulates',
-      id: 'RO:0002211'
-    }, {
-      label: 'causally upstream of or within',
-      id: 'RO:0002418'
-    }, {
-      label: 'causally upstream of',
-      id: 'RO:0002411'
-    }, {
-      label: 'causally upstream of, positive effect',
-      id: 'RO:0002304'
-    }, {
-      label: 'causally upstream of, negative effect',
-      id: 'RO:0002305'
-    }, {
-      label: 'immediately causally upstream of',
-      id: 'RO:0002412'
-    }, {
-      label: 'directly provides input for',
-      id: 'RO:0002413'
-    }, {
-      label: 'negatively regulates',
-      id: 'RO:0002212'
-    }, {
-      label: 'directly negatively regulates',
-      id: 'RO:0002630'
-    }, {
-      label: 'positively regulates',
-      id: 'RO:0002213'
-    }, {
-      name: 'directly positively regulates',
-      id: 'RO:0002629'
-    }]
+  ]
 };

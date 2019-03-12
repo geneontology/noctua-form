@@ -119,7 +119,7 @@ export class CamDiagramService {
   openCamForm() {
     const self = this;
 
-    self.noctuaFormGridService.initalizeForm();
+    self.noctuaFormGridService.initializeForm();
     self.noctuaFormService.openRightDrawer(self.noctuaFormService.panel.camForm)
   }
 

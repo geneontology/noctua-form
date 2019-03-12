@@ -107,7 +107,7 @@ export class CamTableComponent implements OnInit, OnDestroy {
   }
 
   openCamForm(annoton: Annoton) {
-    this.noctuaFormGridService.initalizeForm(annoton);
+    this.noctuaFormGridService.initializeForm(annoton);
     this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.camForm)
   }
 

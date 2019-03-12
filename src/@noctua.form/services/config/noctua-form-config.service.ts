@@ -875,24 +875,31 @@ export class NoctuaFormConfigService {
   }
 
   getCausalEffectByEdge(edge) {
-    let result = noctuaFormConfig.causalEffect.options.positive;
+    let causalEffect = noctuaFormConfig.causalEffect.options.positive;
+    let annotonsConsecutive = false;
 
     switch (edge.id) {
-      case noctuaFormConfig.edge.causallyUpstreamOfPositiveEffect:
-      case noctuaFormConfig.edge.directlyPositivelyRegulates:
-        result = noctuaFormConfig.causalEffect.options.positive;
+      case noctuaFormConfig.edge.causallyUpstreamOfPositiveEffect.id:
+        annotonsConsecutive = true
+      case noctuaFormConfig.edge.directlyPositivelyRegulates.id:
+        causalEffect = noctuaFormConfig.causalEffect.options.positive;
         break;
-      case noctuaFormConfig.edge.causallyUpstreamOfNegativeEffect:
-      case noctuaFormConfig.edge.directlyNegativelyRegulates:
-        result = noctuaFormConfig.causalEffect.options.negative;
+      case noctuaFormConfig.edge.causallyUpstreamOfNegativeEffect.id:
+        annotonsConsecutive = true
+      case noctuaFormConfig.edge.directlyNegativelyRegulates.id:
+        causalEffect = noctuaFormConfig.causalEffect.options.negative;
         break;
-      case noctuaFormConfig.edge.causallyUpstreamOf:
-      case noctuaFormConfig.edge.directlyRegulates:
-        result = noctuaFormConfig.causalEffect.options.neutral;
+      case noctuaFormConfig.edge.causallyUpstreamOf.id:
+        annotonsConsecutive = true
+      case noctuaFormConfig.edge.directlyRegulates.id:
+        causalEffect = noctuaFormConfig.causalEffect.options.neutral;
         break;
     }
 
-    return result;
+    return {
+      causalEffect: causalEffect,
+      annotonsConsecutive: annotonsConsecutive
+    }
   }
 
   get noctuaFormExample() {
@@ -1015,9 +1022,8 @@ export class NoctuaFormConfigService {
     annoton.addNode(objectMFNode);
 
     if (edge) {
-      annoton.addEdge(subjectMFNode, objectMFNode, edge);
+      annoton.addEdge(subjectMFNode, objectMFNode, edge.edge);
     } else {
-      //A placeholder
       annoton.addEdge(subjectMFNode, objectMFNode, noctuaFormConfig.edge.causallyUpstreamOf);
     }
 

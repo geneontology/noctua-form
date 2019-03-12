@@ -618,6 +618,7 @@ export class NoctuaGraphService {
       if (annotonNode.id === "mf" && causalEdge && predicateId === causalEdge['id']) {
         let destNode = self.noctuaFormConfigService.generateNode('mf', { id: toMFObject });
         annoton.addNode(destNode);
+        console.log(0)
         annoton.addEdgeById('mf', 'mf' + toMFObject, causalEdge);
       }
     });

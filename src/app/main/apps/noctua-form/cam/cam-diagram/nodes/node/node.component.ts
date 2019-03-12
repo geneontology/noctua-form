@@ -117,7 +117,7 @@ export class NodeComponent implements OnInit, AfterViewInit {
   }
 
   openCamForm() {
-    this.noctuaFormGridService.initalizeForm(this.annoton);
+    this.noctuaFormGridService.initializeForm(this.annoton);
     this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.camForm)
   }
 

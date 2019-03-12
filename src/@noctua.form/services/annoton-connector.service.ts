@@ -48,19 +48,17 @@ export class NoctuaAnnotonConnectorService {
       this.cam = cam;
     });
 
-    // this.initalizeForm();
+    // this.initializeForm();
   }
 
-  initalizeForm(annoton?: Annoton, effect?) {
+  initializeForm(annoton?: Annoton, edge?) {
     if (annoton) {
       this.annoton = annoton;
     }
+    let effect = this.getCausalEffect(edge);
 
     this.connectorForm = this.createConnectorForm();
-
-    if (effect) {
-      this.connectorForm.causalEffect.setValue(effect.causalEffect);
-    }
+    this.connectorForm.causalEffect.setValue(effect.causalEffect);
     this.connectorFormGroup.next(this._fb.group(this.connectorForm));
   }
 
@@ -74,40 +72,32 @@ export class NoctuaAnnotonConnectorService {
     return connectorForm;
   }
 
-  createConnection(subjectId, objectId, edge?) {
-    //  let effect = this.getCausalEffect(subjectId, objectId);
-
+  createConnection(subjectId, objectId) {
     this.subjectAnnoton = this.cam.getAnnotonByConnectionId(subjectId);
     this.objectAnnoton = this.cam.getAnnotonByConnectionId(objectId);
     this.subjectMFNode = <AnnotonNode>_.cloneDeep(this.subjectAnnoton.getMFNode());
     this.objectMFNode = <AnnotonNode>_.cloneDeep(this.objectAnnoton.getMFNode());
+
+    let edge = this.subjectAnnoton.getConnection(this.objectMFNode.modelId);
     let annoton = this.noctuaFormConfigService.createAnnotonConnectorModel(this.subjectMFNode, this.objectMFNode, edge);
 
-    this.initalizeForm(annoton);
+    this.initializeForm(annoton, edge);
   }
 
-  getCausalEffect(subjectId, objectId) {
+  getCausalEffect(edge) {
     let result = {
       causalEffect: this.noctuaFormConfigService.causalEffect.selected,
       edge: this.noctuaFormConfigService.edges.causallyUpstreamOfPositiveEffect
     };
-    this.subjectAnnoton = this.cam.getAnnotonByConnectionId(subjectId);
-    this.objectAnnoton = this.cam.getAnnotonByConnectionId(objectId);
-    this.subjectMFNode = this.subjectAnnoton.getMFNode();
-    this.objectMFNode = this.objectAnnoton.getMFNode();
-
-    let edge = this.subjectAnnoton.getEdge(this.subjectMFNode.id, 'mf' + objectId);
 
     if (edge) {
-      result = {
-        causalEffect: this.noctuaFormConfigService.getCausalEffectByEdge(edge.edge),
+      result = Object.assign({
         edge: edge.edge
-      }
+      }, this.noctuaFormConfigService.getCausalEffectByEdge(edge.edge))
     }
 
     return result;
   }
-
 
   connectorFormToAnnoton() {
     const self = this;
@@ -126,7 +116,7 @@ export class NoctuaAnnotonConnectorService {
       this.annoton.annotonType,
       this.annoton.annotonModelType
     )
-    this.initalizeForm();
+    this.initializeForm();
   }
 }
 
