@@ -32,8 +32,7 @@
       </div>
       <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
         <div class="ph-15 noc-annoton-group-row" fxLayout="column">
-          <mat-radio-group [(ngModel)]="selectedCausalEffect" formControlName="causalEffect" fxLayout="column"
-            fxLayoutAlign="start stretch">
+          <mat-radio-group formControlName="causalEffect" fxLayout="column" fxLayoutAlign="start stretch">
             <mat-radio-button *ngFor="let causalEffect of noctuaFormConfigService.causalEffect.options" class="mt-8 mb-4"
               [value]="causalEffect" fxFlex="30">
               {{causalEffect.label}}</mat-radio-button>

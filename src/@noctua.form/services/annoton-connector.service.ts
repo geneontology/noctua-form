@@ -59,6 +59,7 @@ export class NoctuaAnnotonConnectorService {
 
     this.connectorForm = this.createConnectorForm();
     this.connectorForm.causalEffect.setValue(effect.causalEffect);
+    this.connectorForm.annotonsConsecutive.setValue(effect.annotonsConsecutive);
     this.connectorFormGroup.next(this._fb.group(this.connectorForm));
   }
 
@@ -87,7 +88,8 @@ export class NoctuaAnnotonConnectorService {
   getCausalEffect(edge) {
     let result = {
       causalEffect: this.noctuaFormConfigService.causalEffect.selected,
-      edge: this.noctuaFormConfigService.edges.causallyUpstreamOfPositiveEffect
+      edge: this.noctuaFormConfigService.edges.causallyUpstreamOfPositiveEffect,
+      annotonsConsecutive: true
     };
 
     if (edge) {
@@ -107,16 +109,9 @@ export class NoctuaAnnotonConnectorService {
 
     self.annoton.editEdge('mf', 'mf-1', edge);
     self.connectorForm.populateConnectorForm(self.annoton, self.subjectMFNode);
-
-    console.dir(self.annoton)
   }
 
   clearForm() {
-    this.annoton = this.noctuaFormConfigService.createAnnotonModel(
-      this.annoton.annotonType,
-      this.annoton.annotonModelType
-    )
-    this.initializeForm();
   }
 }
 
