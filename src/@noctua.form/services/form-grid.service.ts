@@ -15,8 +15,8 @@ const each = require('lodash/forEach');
 import { Annoton } from './..//models/annoton/annoton';
 import { AnnotonNode } from './..//models/annoton/annoton-node';
 
-import { CamForm } from './../models/forms/cam-form';
-import { CamFormMetadata } from './../models/forms/cam-form-metadata';
+import { AnnotonForm } from './../models/forms/annoton-form';
+import { AnnotonFormMetadata } from './../models/forms/annoton-form-metadata';
 
 @Injectable({
   providedIn: 'root'
@@ -25,9 +25,9 @@ export class NoctuaFormGridService {
   public mfLocation;
   public annoton: Annoton;
   // public annotonPresentation;
-  private camForm: CamForm;
-  private camFormGroup: BehaviorSubject<FormGroup | undefined>;
-  public camFormGroup$: Observable<FormGroup>;
+  private annotonForm: AnnotonForm;
+  private annotonFormGroup: BehaviorSubject<FormGroup | undefined>;
+  public annotonFormGroup$: Observable<FormGroup>;
 
   constructor(private _fb: FormBuilder, public noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaLookupService: NoctuaLookupService) {
@@ -36,8 +36,8 @@ export class NoctuaFormGridService {
       noctuaFormConfig.annotonModelType.options.default.name
     );
 
-    this.camFormGroup = new BehaviorSubject(null);
-    this.camFormGroup$ = this.camFormGroup.asObservable();
+    this.annotonFormGroup = new BehaviorSubject(null);
+    this.annotonFormGroup$ = this.annotonFormGroup.asObservable();
 
     this.initializeForm();
   }
@@ -56,8 +56,8 @@ export class NoctuaFormGridService {
         mfNode.location = self.mfLocation;
       }
     }
-    this.camForm = this.createCamForm()
-    this.camFormGroup.next(this._fb.group(this.camForm));
+    this.annotonForm = this.createAnnotonForm()
+    this.annotonFormGroup.next(this._fb.group(this.annotonForm));
   }
 
   initializeFormData(nodes) {
@@ -65,24 +65,24 @@ export class NoctuaFormGridService {
     this.initializeForm()
   }
 
-  createCamForm() {
+  createAnnotonForm() {
     const self = this;
 
-    let camFormMetadata = new CamFormMetadata(self.noctuaLookupService.golrLookup.bind(self.noctuaLookupService));
-    let camForm = new CamForm(camFormMetadata, self.annoton.presentation.geneProduct);
+    let annotonFormMetadata = new AnnotonFormMetadata(self.noctuaLookupService.golrLookup.bind(self.noctuaLookupService));
+    let annotonForm = new AnnotonForm(annotonFormMetadata, self.annoton.presentation.geneProduct);
 
-    camForm.createFunctionDescriptionForm(self.annoton.presentation.fd);
-    camForm.onValueChanges(self.annoton.presentation.geneProduct.term.lookup);
+    annotonForm.createFunctionDescriptionForm(self.annoton.presentation.fd);
+    annotonForm.onValueChanges(self.annoton.presentation.geneProduct.term.lookup);
 
-    //self.camFormData = self.noctuaFormConfigService.createReviewSearchFormData();
+    //self.annotonFormData = self.noctuaFormConfigService.createReviewSearchFormData();
 
-    return camForm;
+    return annotonForm;
   }
 
-  camFormToAnnoton(annoton: Annoton) {
+  annotonFormToAnnoton(annoton: Annoton) {
     const self = this;
 
-    self.camForm.populateAnnoton(annoton);
+    self.annotonForm.populateAnnoton(annoton);
 
     console.dir(annoton)
   }

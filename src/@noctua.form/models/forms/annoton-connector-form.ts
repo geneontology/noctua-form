@@ -8,7 +8,7 @@ const each = require('lodash/forEach');
 
 import { Annoton } from './../annoton/annoton';
 import { AnnotonNode } from './../annoton/annoton-node';
-import { CamFormMetadata } from './../forms/cam-form-metadata';
+import { AnnotonFormMetadata } from './../forms/annoton-form-metadata';
 import { EntityGroupForm } from './entity-group-form'
 
 import { EvidenceForm } from './evidence-form';
@@ -23,7 +23,7 @@ export class AnnotonConnectorForm {
   causalEffect = new FormControl();
   evidenceForms: EvidenceForm[] = []
   evidenceFormArray = new FormArray([])
-  _metadata: CamFormMetadata;
+  _metadata: AnnotonFormMetadata;
 
   private _fb = new FormBuilder();
 

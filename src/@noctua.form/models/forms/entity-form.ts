@@ -8,14 +8,14 @@ import * as _ from 'lodash';
 declare const require: any;
 const each = require('lodash/forEach');
 
-import { CamFormMetadata } from './cam-form-metadata'
+import { AnnotonFormMetadata } from './annoton-form-metadata'
 
 export class EntityForm {
     id
     term = new FormControl();
     evidenceForms: EvidenceForm[] = []
     evidenceFormArray = new FormArray([])
-    _metadata: CamFormMetadata;
+    _metadata: AnnotonFormMetadata;
     private _fb = new FormBuilder();
 
     constructor(metadata, id) {

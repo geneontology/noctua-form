@@ -20,7 +20,7 @@ import { AnnotonNode } from './..//models/annoton/annoton-node';
 import { AnnotonConnectorForm } from './../models/forms/annoton-connector-form';
 
 import { EntityForm } from './../models/forms/entity-form';
-import { CamFormMetadata } from './../models/forms/cam-form-metadata';
+import { AnnotonFormMetadata } from './../models/forms/annoton-form-metadata';
 
 @Injectable({
   providedIn: 'root'
@@ -65,7 +65,7 @@ export class NoctuaAnnotonConnectorService {
 
   createConnectorForm() {
     const self = this;
-    let connectorFormMetadata = new CamFormMetadata(self.noctuaLookupService.golrLookup.bind(self.noctuaLookupService));
+    let connectorFormMetadata = new AnnotonFormMetadata(self.noctuaLookupService.golrLookup.bind(self.noctuaLookupService));
     let connectorForm = new AnnotonConnectorForm(connectorFormMetadata);
 
     connectorForm.createEntityForms(self.annoton.getNode('mf'));

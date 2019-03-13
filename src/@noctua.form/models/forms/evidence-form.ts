@@ -6,14 +6,14 @@ import * as _ from 'lodash';
 declare const require: any;
 const each = require('lodash/forEach');
 
-import { CamFormMetadata } from './../forms/cam-form-metadata';
+import { AnnotonFormMetadata } from './../forms/annoton-form-metadata';
 
 export class EvidenceForm {
     evidence = new FormControl();
     reference = new FormControl();
     with = new FormControl();
 
-    _metadata: CamFormMetadata;
+    _metadata: AnnotonFormMetadata;
 
     constructor(metadata, evidence?: Evidence) {
         this._metadata = metadata;

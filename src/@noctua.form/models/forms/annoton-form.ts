@@ -8,10 +8,10 @@ const each = require('lodash/forEach');
 
 import { Annoton } from './../annoton/annoton';
 import { AnnotonNode } from './../annoton/annoton-node';
-import { CamFormMetadata } from './../forms/cam-form-metadata';
+import { AnnotonFormMetadata } from './../forms/annoton-form-metadata';
 import { EntityGroupForm } from './entity-group-form'
 
-export class CamForm {
+export class AnnotonForm {
   entityGroupForms: EntityGroupForm[] = []
   title = new FormControl();
   state = new FormControl();
@@ -19,7 +19,7 @@ export class CamForm {
   gp = new FormControl();
   fd = new FormArray([]);
 
-  _metadata: CamFormMetadata;
+  _metadata: AnnotonFormMetadata;
 
   private _fb = new FormBuilder();
 

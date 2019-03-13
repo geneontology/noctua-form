@@ -9,14 +9,14 @@ const each = require('lodash/forEach');
 
 import { Annoton } from './../annoton/annoton';
 
-import { CamFormMetadata } from './../forms/cam-form-metadata';
+import { AnnotonFormMetadata } from './../forms/annoton-form-metadata';
 
 export class EntityGroupForm {
     name: string = '';
     entityForms: EntityForm[] = []
     entityGroup = new FormGroup({});
 
-    _metadata: CamFormMetadata;
+    _metadata: AnnotonFormMetadata;
     private _fb = new FormBuilder();
 
     constructor(metadata) {

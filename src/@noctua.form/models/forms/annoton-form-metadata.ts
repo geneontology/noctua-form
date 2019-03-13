@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 declare const require: any;
 const each = require('lodash/forEach');
 
-export class CamFormMetadata {
+export class AnnotonFormMetadata {
   private _lookupFunc
 
   constructor(lookupFunc) {
