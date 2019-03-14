@@ -8,7 +8,7 @@ import {
 
 import { CamDiagramService } from './../../services/cam-diagram.service';
 
-import { Annoton } from '@noctua.form/models/annoton/annoton';
+import { Annoton } from 'noctua-form-base';
 import { NodeComponent } from './../node/node.component';
 import { jsPlumb } from 'jsplumb';
 

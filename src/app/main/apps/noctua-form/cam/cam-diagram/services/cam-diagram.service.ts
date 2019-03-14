@@ -11,16 +11,16 @@ import { jsPlumb } from 'jsplumb';
 
 import { NoctuaUtils } from '@noctua/utils/noctua-utils';
 import { CurieService } from '@noctua.curie/services/curie.service';
-import { NoctuaGraphService } from '@noctua.form/services/graph.service';
+import { NoctuaGraphService } from 'noctua-form-base';
 
 import { NoctuaFormService } from './../../../services/noctua-form.service';
-import { NoctuaFormGridService } from '@noctua.form/services/form-grid.service';
-import { NoctuaAnnotonConnectorService } from '@noctua.form/services/annoton-connector.service';
-import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
+import { NoctuaFormGridService } from 'noctua-form-base';
+import { NoctuaAnnotonConnectorService } from 'noctua-form-base';
+import { NoctuaFormConfigService } from 'noctua-form-base';
 
 
-import { Curator } from '@noctua.form/models/curator';
-import { Group } from '@noctua.form//models/group';
+import { Curator } from 'noctua-form-base';
+import { Group } from 'noctua-form-base';
 
 import * as _ from 'lodash';
 import { v4 as uuid } from 'uuid';
@@ -116,11 +116,11 @@ export class CamDiagramService {
     return this._scale;
   }
 
-  openCamForm() {
+  openAnnotonForm() {
     const self = this;
 
     self.noctuaFormGridService.initializeForm();
-    self.noctuaFormService.openRightDrawer(self.noctuaFormService.panel.camForm)
+    self.noctuaFormService.openRightDrawer(self.noctuaFormService.panel.annotonForm)
   }
 
   openConnectorForm(sourceId, targetId) {

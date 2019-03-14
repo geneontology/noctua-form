@@ -1,4 +1,5 @@
 export { NoctuaAnnotonConnectorService } from './annoton-connector.service';
+export { NoctuaAnnotonEntityService } from './annoton-entity.service';
 export { NoctuaFormGridService } from './form-grid.service';
 export { CamService } from './cam.service';
 export { NoctuaGraphService } from './graph.service';

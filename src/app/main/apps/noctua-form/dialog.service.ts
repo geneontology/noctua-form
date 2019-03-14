@@ -11,12 +11,11 @@ import { CreateFromExistingDialogComponent } from './dialogs/create-from-existin
 import { LinkToExistingDialogComponent } from './dialogs/link-to-existing/link-to-existing.component';
 import { SelectEvidenceDialogComponent } from './dialogs/select-evidence/select-evidence.component';
 import { SearchDatabaseDialogComponent } from './dialogs/search-database/search-database.component';
-import { CamConnectorDialogComponent } from './dialogs/cam-connector/cam-connector.component';
 
-import { Cam } from '@noctua.form/models/annoton/cam';
-import { Annoton } from '@noctua.form/models/annoton/annoton';
-import { AnnotonNode } from '@noctua.form/models/annoton/annoton-node';
-import { Evidence } from '@noctua.form/models/annoton/evidence';
+import { Cam } from 'noctua-form-base';
+import { Annoton } from 'noctua-form-base';
+import { AnnotonNode } from 'noctua-form-base';
+import { Evidence } from 'noctua-form-base';
 
 import 'rxjs/add/operator/map';
 
@@ -60,19 +59,6 @@ export class NoctuaFormDialogService {
             panelClass: 'before-save-dialog',
             data: {
                 cam: cam
-            }
-        });
-        this.dialogRef.afterClosed()
-            .subscribe(response => {
-
-            });
-    }
-
-    openCamConnector(annoton: Annoton): void {
-        this.dialogRef = this._matDialog.open(CamConnectorDialogComponent, {
-            panelClass: 'cam-connector-dialog',
-            data: {
-                annoton: annoton
             }
         });
         this.dialogRef.afterClosed()

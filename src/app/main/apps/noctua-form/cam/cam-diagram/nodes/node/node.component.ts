@@ -7,10 +7,12 @@ import { NoctuaFormService } from '../../../../services/noctua-form.service';
 import { NoctuaFormDialogService } from './../../../../dialog.service';
 import { CamDiagramService } from './../../services/cam-diagram.service';
 import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
-import { NoctuaFormGridService } from '@noctua.form/services/form-grid.service';
-import { CamService } from '@noctua.form/services/cam.service'
-import { Annoton } from '@noctua.form/models/annoton/annoton';
-import { AnnotonNode } from '@noctua.form/models/annoton/annoton-node';
+import { NoctuaFormGridService } from 'noctua-form-base';
+import { CamService } from 'noctua-form-base'
+import { Annoton } from 'noctua-form-base';
+import { AnnotonNode } from 'noctua-form-base';
+
+
 
 @Component({
   selector: 'noc-node',
@@ -116,9 +118,9 @@ export class NodeComponent implements OnInit, AfterViewInit {
     // self.nodeService.jsPlumbInstance.fire("jsPlumbDemoNodeAdded", el);
   }
 
-  openCamForm() {
+  openAnnotonForm() {
     this.noctuaFormGridService.initializeForm(this.annoton);
-    this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.camForm)
+    this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.annotonForm)
   }
 
 }

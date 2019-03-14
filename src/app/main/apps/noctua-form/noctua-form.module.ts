@@ -4,17 +4,22 @@ import { RouterModule, Routes } from '@angular/router';
 import { NoctuaFormComponent } from './noctua-form.component';
 import { NoctuaSharedModule } from '@noctua/shared.module';
 import { NoctuaFormDialogService } from './dialog.service';
-import { NoctuaAnnotonConnectorService } from '@noctua.form/services/annoton-connector.service';
-import { NoctuaFormGridService } from '@noctua.form/services/form-grid.service';
+import {
+  NoctuaAnnotonConnectorService,
+  NoctuaGraphService,
+  NoctuaFormConfigService,
+  NoctuaFormGridService,
+  NoctuaLookupService,
+  NoctuaAnnotonEntityService,
+  CamService
+} from 'noctua-form-base';
 import { ContextMenuModule } from 'ngx-contextmenu';
 
-import { CamService } from '@noctua.form/services/cam.service';
-
-import { CamFormComponent } from './cam/cam-form/cam-form.component';
-import { CamFormEntityComponent } from './cam/cam-form/cam-entity/cam-entity.component';
+import { AnnotonFormComponent } from './cam/annoton/annoton-form/annoton-form.component';
+import { AnnotonEntityFormComponent } from './cam/annoton/annoton-entity-form/annoton-entity-form.component';
+import { EntityFormComponent } from './cam/annoton/annoton-form/entity-form/entity-form.component';
 
 import { CamTableComponent } from './cam/cam-table/cam-table.component';
-import { CamRowComponent } from './cam/cam-row/cam-row.component';
 
 
 import { CamRowEditDialogComponent } from './dialogs/cam-row-edit/cam-row-edit.component';
@@ -32,8 +37,7 @@ import { NodesContainerComponent } from './cam/cam-diagram/nodes/nodes-container
 import { CamDiagramService } from './cam/cam-diagram/services/cam-diagram.service';
 import { CamTableService } from './cam/cam-table/services/cam-table.service';
 import { NodeService } from './cam/cam-diagram/nodes/services/node.service';
-import { CamConnectorComponent } from './cam/cam-connector/cam-connector.component';
-import { CamConnectorDialogComponent } from './dialogs/cam-connector/cam-connector.component';
+import { AnnotonConnectorFormComponent } from './cam/annoton/annoton-connector-form/annoton-connector-form.component';
 import { AnnotonTableComponent } from './cam/cam-table/annoton-table/annoton-table.component';
 
 const routes = [
@@ -51,21 +55,24 @@ const routes = [
     ContextMenuModule.forRoot(),
   ],
   providers: [
-    NoctuaFormDialogService,
+    NoctuaAnnotonConnectorService,
+    NoctuaGraphService,
+    NoctuaFormConfigService,
     NoctuaFormGridService,
+    NoctuaLookupService,
+    NoctuaAnnotonEntityService,
     CamService,
+    NoctuaFormDialogService,
     NodeService,
     CamDiagramService,
     CamTableService,
-    NoctuaAnnotonConnectorService
   ],
   declarations: [
     NoctuaFormComponent,
-    CamConnectorDialogComponent,
-    CamFormComponent,
-    CamFormEntityComponent,
+    AnnotonFormComponent,
+    AnnotonEntityFormComponent,
+    EntityFormComponent,
     CamTableComponent,
-    CamRowComponent,
     CamRowEditDialogComponent,
     AddEvidenceDialogComponent,
     AnnotonErrorsDialogComponent,
@@ -77,7 +84,7 @@ const routes = [
     CamDiagramComponent,
     NodeComponent,
     NodesContainerComponent,
-    CamConnectorComponent,
+    AnnotonConnectorFormComponent,
     AnnotonTableComponent,
   ],
   entryComponents: [
@@ -86,7 +93,6 @@ const routes = [
     AddEvidenceDialogComponent,
     AnnotonErrorsDialogComponent,
     BeforeSaveDialogComponent,
-    CamConnectorDialogComponent,
     CreateFromExistingDialogComponent,
     LinkToExistingDialogComponent,
     SelectEvidenceDialogComponent,

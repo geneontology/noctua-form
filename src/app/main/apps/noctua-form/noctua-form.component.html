@@ -23,9 +23,9 @@
     </mat-drawer-content>
     <mat-drawer #rightDrawer class="noc-right-drawer" noctuaPerfectScrollbar mode="side" position="end">
       <div [ngSwitch]="noctuaFormService.selectedRightPanel.id" class="h-100-p">
-        <noc-cam-row *ngSwitchCase="noctuaFormService.panel.camRow.id"> </noc-cam-row>
-        <noc-cam-form [panelDrawer]='rightDrawer' *ngSwitchCase="noctuaFormService.panel.camForm.id"></noc-cam-form>
-        <noc-cam-connector [panelDrawer]='rightDrawer' *ngSwitchCase="noctuaFormService.panel.connectorForm.id"></noc-cam-connector>
+        <noc-annoton-form [panelDrawer]="rightDrawer" *ngSwitchCase="noctuaFormService.panel.annotonForm.id"></noc-annoton-form>
+        <noc-annoton-entity-form [panelDrawer]="rightDrawer" *ngSwitchCase="noctuaFormService.panel.annotonEntityForm.id"></noc-annoton-entity-form>
+        <noc-annoton-connector [panelDrawer]="rightDrawer" *ngSwitchCase="noctuaFormService.panel.connectorForm.id"></noc-annoton-connector>
       </div>
     </mat-drawer>
   </mat-drawer-container>

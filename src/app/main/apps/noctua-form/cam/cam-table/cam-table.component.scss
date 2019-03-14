@@ -17,12 +17,22 @@
 
   .noc-cam-table-heading {
     margin-bottom: 4px;
-    // @include deep-height(80px);
-    min-height: 50px;
+    @include deep-height(50px);
+    //min-height: 35px;
     background-color: #f2f2f2;
     font-size: 16px;
 
     //  @include mat-elevation(1);
+    .noc-title {
+      strong {
+        font-size: 10px;
+      }
+    }
+
+    .noc-title-truncate {
+      max-width: 200px
+    }
+
     button {
       border-radius: 0 !important;
     }

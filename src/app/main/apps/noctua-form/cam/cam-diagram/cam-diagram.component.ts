@@ -25,22 +25,22 @@ import "rxjs/add/operator/distinctUntilChanged";
 import { forEach } from '@angular/router/src/utils/collection';
 
 import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loader.service';
-import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
-import { NoctuaGraphService } from '@noctua.form/services/graph.service';
-import { NoctuaLookupService } from '@noctua.form/services/lookup.service';
+import { NoctuaFormConfigService } from 'noctua-form-base';
+import { NoctuaGraphService } from 'noctua-form-base';
+import { NoctuaLookupService } from 'noctua-form-base';
 
 
 import { NoctuaFormService } from './../../services/noctua-form.service';
-import { NoctuaFormGridService } from '@noctua.form/services/form-grid.service';
+import { NoctuaFormGridService } from 'noctua-form-base';
 import { CamDiagramService } from './services/cam-diagram.service';
 import { NoctuaFormDialogService } from './../../dialog.service';
 import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
-import { CamService } from '@noctua.form/services/cam.service'
+import { CamService } from 'noctua-form-base'
 
-import { Cam } from '@noctua.form/models/annoton/cam';
-import { Annoton } from '@noctua.form/models/annoton/annoton';
-import { AnnotonNode } from '@noctua.form/models/annoton/annoton-node';
-import { Evidence } from '@noctua.form/models/annoton/evidence';
+import { Cam } from 'noctua-form-base';
+import { Annoton } from 'noctua-form-base';
+import { AnnotonNode } from 'noctua-form-base';
+import { Evidence } from 'noctua-form-base';
 
 
 @Component({

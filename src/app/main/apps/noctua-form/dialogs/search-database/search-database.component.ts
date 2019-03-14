@@ -6,13 +6,13 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatMenuTrigger } from '@angul
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import * as _ from 'lodash';
-import { Cam } from '@noctua.form/models/annoton/cam';
+import { Cam } from 'noctua-form-base';
 import { MatTableDataSource, MatSort } from '@angular/material';
 
 import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loader.service';
-import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
-import { NoctuaGraphService } from '@noctua.form/services/graph.service';
-import { NoctuaLookupService } from '@noctua.form/services/lookup.service';
+import { NoctuaFormConfigService } from 'noctua-form-base';
+import { NoctuaGraphService } from 'noctua-form-base';
+import { NoctuaLookupService } from 'noctua-form-base';
 
 import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
 

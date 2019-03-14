@@ -25,21 +25,15 @@
 
       mat-icon {
         @include noc-icon-size(28px);
+        color: $noc-primary-color-light;
       }
 
       &.noc-active {
         mat-icon {
-          color: $noc-primary-color-light;
+          color: #555;
         }
       }
     }
-  }
-
-  .noc-cam-table-heading {
-    @include deep-height(50px);
-    background-color: #FFF;
-    // @include mat-elevation(2);
-    border-bottom: #EEE solid 1px;
   }
 
   .noc-form-container {
@@ -62,55 +56,7 @@
     }
   }
 
-  .cams-table {
-    width: 100%;
-    @include deep-height(100%);
-    padding-bottom: 300px;
-    // position: relative;
-    //  flex: 1 1 auto;
-    //    border-bottom: 1px solid rgba(0, 0, 0, .12);
-    //  overflow: auto;
 
-    .noc-cams-table-header {
-      padding: 0;
-      margin-bottom: 5px;
-      @include deep-height(50px);
-      position: sticky;
-      position: -webkit-sticky;
-      top: 0;
-      z-index: 1000;
-      background-color: #FFF;
-      @include mat-elevation(1);
-      //  background-color: $noc-primary-color-light;
-      // font-size: 3px !important;
-    }
-
-    .cam {
-      position: relative;
-      cursor: pointer;
-      min-height: 40px;
-      font-size: 12px;
-    }
-
-    .mat-cell {
-      min-width: 0;
-      display: flex;
-      align-items: center;
-    }
-
-    .mat-column-id {
-      flex: 0 1 84px;
-    }
-
-    .mat-column-buttons {
-      flex: 0 1 80px;
-    }
-
-    /* .mat-header-cell {
-      display:flex;
-      justify-content:flex-end;
-     } */
-  }
 
   .noc-left-drawer {
     @include deep-height(100%);

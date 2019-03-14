@@ -8,13 +8,13 @@ import { map, filter, reduce, catchError, retry, tap } from 'rxjs/operators';
 
 import { NoctuaUtils } from '@noctua/utils/noctua-utils';
 import { CurieService } from '@noctua.curie/services/curie.service';
-import { NoctuaGraphService } from '@noctua.form/services/graph.service';
+import { NoctuaGraphService } from 'noctua-form-base';
 
-import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
+import { NoctuaFormConfigService } from 'noctua-form-base';
 
 
-import { Curator } from '@noctua.form/models/curator';
-import { Group } from '@noctua.form//models/group';
+import { Curator } from 'noctua-form-base';
+import { Group } from 'noctua-form-base';
 
 import * as _ from 'lodash';
 import { v4 as uuid } from 'uuid';
@@ -27,13 +27,13 @@ const each = require('lodash/forEach');
 export class NoctuaFormService {
 
   panel = {
-    camForm: {
+    annotonForm: {
       id: 1
     },
     connectorForm: {
       id: 2
     },
-    camRow: {
+    annotonEntityForm: {
       id: 3
     },
     camDiagram: {
@@ -53,9 +53,9 @@ export class NoctuaFormService {
 
   constructor() {
 
-    this.selectedLeftPanel = this.panel.camForm;
+    this.selectedLeftPanel = this.panel.annotonForm;
     this.selectedMiddlePanel = this.panel.camDiagram;
-    this.selectedRightPanel = this.panel.camForm;
+    this.selectedRightPanel = this.panel.annotonForm;
     console.log(this.selectedLeftPanel)
 
   }

@@ -15,23 +15,29 @@ import "rxjs/add/operator/debounceTime";
 import "rxjs/add/operator/distinctUntilChanged";
 import { forEach } from '@angular/router/src/utils/collection';
 
-import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
-import { NoctuaGraphService } from '@noctua.form/services/graph.service';
-import { NoctuaLookupService } from '@noctua.form/services/lookup.service';
-
-
 
 import { NoctuaFormService } from './../../../services/noctua-form.service';
 import { CamTableService } from './../services/cam-table.service';
 import { NoctuaFormDialogService } from './../../../dialog.service';
 import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
-import { CamService } from '@noctua.form/services/cam.service'
+
+import {
+  NoctuaAnnotonConnectorService,
+  NoctuaGraphService,
+  NoctuaFormConfigService,
+  NoctuaFormGridService,
+  NoctuaLookupService,
+  NoctuaAnnotonEntityService,
+  CamService
+} from 'noctua-form-base';
+
+import {
+  Cam,
+  Annoton,
+  AnnotonNode
+} from 'noctua-form-base';
 
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
-
-import { Cam } from '@noctua.form/models/annoton/cam';
-import { Annoton } from '@noctua.form/models/annoton/annoton';
-
 
 @Component({
   selector: 'noc-annoton-table',
@@ -85,6 +91,7 @@ export class AnnotonTableComponent implements OnInit, OnDestroy {
     private noctuaFormDialogService: NoctuaFormDialogService,
     private noctuaLookupService: NoctuaLookupService,
     private noctuaGraphService: NoctuaGraphService,
+    private noctuaAnnotonEntityService: NoctuaAnnotonEntityService,
     private sparqlService: SparqlService) {
 
     this.searchFormData = this.noctuaFormConfigService.createReviewSearchFormData();
@@ -103,17 +110,14 @@ export class AnnotonTableComponent implements OnInit, OnDestroy {
 
   loadCam() {
     this.grid = this.annoton.grid;
+  }
 
+
+  selectEntity(entity: AnnotonNode) {
     console.log("00", this.annoton)
-  }
-
-  openCamEdit(cam) {
-    this.noctuaFormDialogService.openCamRowEdit(cam);
-  }
-
-  selectCam(cam) {
-    this.sparqlService.onCamChanged.next(cam);
-    this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.camRow.id);
+    this.sparqlService.onCamChanged.next(entity);
+    this.noctuaAnnotonEntityService.initializeForm(this.annoton, entity);
+    this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.annotonEntityForm);
   }
 
 

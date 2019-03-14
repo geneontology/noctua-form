@@ -11,6 +11,9 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "paths": {
+      "noctua-form-base": [
+        "@noctua.form/"
+      ],
       "@noctua": [
         "@noctua/"
       ],

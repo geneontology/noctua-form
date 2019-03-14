@@ -5,9 +5,6 @@ import { NoctuaSharedModule } from '@noctua/shared.module';
 
 const routes = [{
   path: '',
-  loadChildren: './review/review.module#ReviewModule'
-}, {
-  path: 'form',
   loadChildren: './noctua-form/noctua-form.module#NoctuaFormModule'
 }];
 

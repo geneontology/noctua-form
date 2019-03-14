@@ -1,5 +1,5 @@
 <div class="w-100-p">
-  <div class="noc-annotons-table-header w-100-p">
+  <div class="noc-annoton-table-header w-100-p">
     <div fxFlex="80px">
 
     </div>
@@ -38,79 +38,79 @@
     </div>
   </div>
   <div class="noc-annoton-table-body w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
-    <div class="annotons-table" fxFlex="">
+    <div class="annoton-table" fxFlex="">
       <mat-table class="w-100-p" #table [dataSource]="grid" matSort [@animateStagger]="{value:'50'}"
         noctuaPerfectScrollbar>
         <ng-container cdkColumnDef="expand">
           <mat-header-cell *cdkHeaderCellDef fxFlex="80px"></mat-header-cell>
-          <mat-cell *cdkCellDef="let annoton" fxFlex="80px" [style.padding-left]="annoton.treeLevel * 20+'px'" (click)="$event.stopPropagation()">
+          <mat-cell *cdkCellDef="let entity" fxFlex="80px" [style.padding-left]="entity.treeLevel * 20+'px'" (click)="$event.stopPropagation()">
 
           </mat-cell>
         </ng-container>
         <ng-container cdkColumnDef="annotatedEntity">
           <mat-header-cell *cdkHeaderCellDef fxFlex="150px">Annotated Entity</mat-header-cell>
-          <mat-cell *cdkCellDef="let annoton" fxFlex="150px">
-            <p class="text-truncate">{{annoton.annotatedEntity?.label}}</p>
+          <mat-cell *cdkCellDef="let entity" fxFlex="150px">
+            <p class="text-truncate">{{entity.annotatedEntity?.label}}</p>
           </mat-cell>
         </ng-container>
         <ng-container cdkColumnDef="relationship">
           <mat-header-cell *cdkHeaderCellDef fxFlex="120px">Relationship</mat-header-cell>
-          <mat-cell *cdkCellDef="let annoton" fxFlex="120px">
-            <p class="text-truncate">{{annoton.relationship}}</p>
+          <mat-cell *cdkCellDef="let entity" fxFlex="120px">
+            <p class="text-truncate">{{entity.relationship}}</p>
           </mat-cell>
         </ng-container>
         <ng-container cdkColumnDef="aspect">
           <mat-header-cell *cdkHeaderCellDef fxFlex="50px">Asp</mat-header-cell>
-          <mat-cell *cdkCellDef="let annoton" fxFlex="50px">
-            <p class="text-truncate">{{annoton.aspect}}</p>
+          <mat-cell *cdkCellDef="let entity" fxFlex="50px">
+            <p class="text-truncate">{{entity.aspect}}</p>
           </mat-cell>
         </ng-container>
         <ng-container cdkColumnDef="term">
           <mat-header-cell *cdkHeaderCellDef fxFlex="150px">Term</mat-header-cell>
-          <mat-cell *cdkCellDef="let annoton" fxFlex="150px">
-            <p class="text-truncate">{{annoton.term?.label}}</p>
+          <mat-cell *cdkCellDef="let entity" fxFlex="150px">
+            <p class="text-truncate">{{entity.term?.label}}</p>
           </mat-cell>
         </ng-container>
         <ng-container cdkColumnDef="relationshipExt">
           <mat-header-cell *cdkHeaderCellDef fxFlex="120px">Relationship (ext)</mat-header-cell>
-          <mat-cell *cdkCellDef="let annoton" fxFlex="120px">
-            <p class="text-truncate">{{annoton.relationshipExt}}</p>
+          <mat-cell *cdkCellDef="let entity" fxFlex="120px">
+            <p class="text-truncate">{{entity.relationshipExt}}</p>
           </mat-cell>
         </ng-container>
         <ng-container cdkColumnDef="extension">
           <mat-header-cell *cdkHeaderCellDef fxFlex="150px">Extension</mat-header-cell>
-          <mat-cell *cdkCellDef="let annoton" fxFlex="150px">
-            <p class="text-truncate">{{annoton.extension?.label}}</p>
+          <mat-cell *cdkCellDef="let entity" fxFlex="150px">
+            <p class="text-truncate">{{entity.extension?.label}}</p>
           </mat-cell>
         </ng-container>
         <ng-container cdkColumnDef="evidence">
           <mat-header-cell *cdkHeaderCellDef fxFlex="150px">Evidence</mat-header-cell>
-          <mat-cell *cdkCellDef="let annoton" fxFlex="150px">
-            <p class="text-truncate">{{annoton.evidence?.label}}</p>
+          <mat-cell *cdkCellDef="let entity" fxFlex="150px">
+            <p class="text-truncate">{{entity.evidence?.label}}</p>
           </mat-cell>
         </ng-container>
         <ng-container cdkColumnDef="reference">
           <mat-header-cell *cdkHeaderCellDef fxFlex="150px">Reference</mat-header-cell>
-          <mat-cell *cdkCellDef="let annoton" fxFlex="150px">
-            <a href="{{annoton.reference?.url}}" class="text-truncate" target="_blank">{{annoton.reference?.label}}</a>
+          <mat-cell *cdkCellDef="let entity" fxFlex="150px">
+            <a href="{{entity.reference?.url}}" class="text-truncate" target="_blank">{{entity.reference?.label}}</a>
           </mat-cell>
         </ng-container>
         <ng-container cdkColumnDef="with">
           <mat-header-cell *cdkHeaderCellDef fxFlex="120px">With</mat-header-cell>
-          <mat-cell *cdkCellDef="let annoton" fxFlex="150px">
-            <p class="text-truncate">{{annoton.with}}</p>
+          <mat-cell *cdkCellDef="let entity" fxFlex="150px">
+            <p class="text-truncate">{{entity.with}}</p>
           </mat-cell>
         </ng-container>
         <ng-container cdkColumnDef="assignedBy">
           <mat-header-cell *cdkHeaderCellDef fxFlex="150px">Assigned By</mat-header-cell>
-          <mat-cell *cdkCellDef="let annoton" fxFlex="150px">
-            <a href="{{annoton.assignedBy?.link?.url}}" class="text-truncate" target="_blank">{{annoton.assignedBy?.link?.value}}</a>
+          <mat-cell *cdkCellDef="let entity" fxFlex="150px">
+            <a href="{{entity.assignedBy?.link?.url}}" class="text-truncate" target="_blank">{{entity.assignedBy?.link?.value}}</a>
           </mat-cell>
         </ng-container>
         <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *cdkRowDef="let annoton; columns: displayedColumns;" class="annoton" matRipple (click)="selectCam(annoton)"></mat-row>
+        <mat-row *cdkRowDef="let entity; columns: displayedColumns;" class="entity" matRipple (click)="selectEntity(entity.node)"></mat-row>
       </mat-table>
-      <div *ngIf="annotons?.length===0" class="noc-no-info">
+      <div *ngIf="grid?.length===0" class="noc-no-info">
         no results yet.
       </div>
     </div>
