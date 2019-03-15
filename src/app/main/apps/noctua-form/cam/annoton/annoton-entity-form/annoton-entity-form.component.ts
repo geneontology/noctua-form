@@ -88,6 +88,8 @@ export class AnnotonEntityFormComponent implements OnInit, OnDestroy {
         if (!annotonEntityFormGroup) return;
         this.annotonEntityFormGroup = annotonEntityFormGroup;
         this.termNode = this.noctuaAnnotonEntityService.termNode;
+
+        console.log(this.termNode)
       });
 
     this.camService.onCamChanged.subscribe((cam) => {
@@ -98,6 +100,10 @@ export class AnnotonEntityFormComponent implements OnInit, OnDestroy {
         //  this.dataSource = new CamsDataSource(this.sparqlService, this.paginator, this.sort);
       });
     });
+  }
+
+  termDisplayFn(evidence): string | undefined {
+    return evidence ? evidence.label : undefined;
   }
 
   evidenceDisplayFn(evidence): string | undefined {

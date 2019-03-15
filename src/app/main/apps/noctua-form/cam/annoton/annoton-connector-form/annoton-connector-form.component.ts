@@ -68,7 +68,7 @@ export class AnnotonConnectorFormComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute,
     private camService: CamService,
     private formBuilder: FormBuilder,
-    private noctuaAnnotonConnectorService: NoctuaAnnotonConnectorService,
+    public noctuaAnnotonConnectorService: NoctuaAnnotonConnectorService,
     private noctuaSearchService: NoctuaSearchService,
     private camDiagramService: CamDiagramService,
     public camTableService: CamTableService,
@@ -88,7 +88,6 @@ export class AnnotonConnectorFormComponent implements OnInit, OnDestroy {
       .subscribe(connectorFormGroup => {
         if (!connectorFormGroup) return;
         this.connectorFormGroup = connectorFormGroup;
-
         this.subjectGPNode = this.noctuaAnnotonConnectorService.subjectAnnoton.getGPNode()
         this.objectGPNode = this.noctuaAnnotonConnectorService.objectAnnoton.getGPNode()
 

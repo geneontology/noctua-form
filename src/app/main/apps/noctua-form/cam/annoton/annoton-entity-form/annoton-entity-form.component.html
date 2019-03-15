@@ -1,7 +1,7 @@
 <div fxLayout="column" fxLayoutAlign="start stretch" class="w-100-p h-100-p">
   <div class="noc-drawer-header" fxLayout="row" fxLayoutAlign="start center">
     <span class="noc-drawer-header-title">
-      Causal Relation Form</span>
+      Edit</span>
     <span fxFlex></span>
     <button mat-icon-button (click)="close()" aria-label="Close dialog">
       <mat-icon>close</mat-icon>
@@ -12,9 +12,33 @@
       fxLayoutAlign="start stretch" class="noc-annoton-entity-form w-100-p" noctuaPerfectScrollbar>
       <div class="noc-section-body w-100-p" fxLayout="column" fxLayoutAlign="start center">
         <div fxLayout="row" fxLayoutAlign="center center" class="noc-summary-row w-100-p">
-          <div class="noc-annoton-box">
-            {{termNode.getTerm().label}}
+          <div class="noc-annoton-box" fxLayout="row" fxLayoutAlign="center center">
+            <strong>GP: </strong> {{annoton?.presentation.gpText}}<br>
+            <strong>MF: </strong> {{annoton?.presentation.mfText}}
           </div>
+        </div>
+      </div>
+      <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
+        <div class="noc-section-heading">
+          Term
+        </div>
+      </div>
+      <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
+        <div class="ph-15" fxLayout="column">
+          <mat-form-field class="">
+            <input type="text" matInput formControlName="term" placeholder="{{termNode.label}}" [matAutocomplete]="termAuto" />
+            <mat-autocomplete #termAuto="matAutocomplete" [displayWith]="termDisplayFn">
+              <mat-option *ngFor="let item of termNode?.term.lookup.results" [value]="item">
+                <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
+                  <div>
+                    {{ item.id }}
+                  </div>
+                  <span fxFlex></span>
+                  {{ item.label }}
+                </div>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
         </div>
       </div>
       <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
