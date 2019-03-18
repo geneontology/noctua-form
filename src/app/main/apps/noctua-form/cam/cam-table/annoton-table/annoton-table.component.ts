@@ -47,8 +47,6 @@ import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 })
 export class AnnotonTableComponent implements OnInit, OnDestroy {
   displayedColumns = [
-    'expand',
-    'annotatedEntity',
     'relationship',
     'aspect',
     'term',

@@ -11,6 +11,15 @@
     padding: 20px 10px;
   }
 
+  .noc-annoton-table-header {
+    @include deep-height(30px);
+    border-bottom: $noc-primary-color-light solid 1px;
+
+    .noc-header-cell {
+      padding: 0 10px;
+    }
+  }
+
   .mat-tab-group,
   .mat-tab-body-wrapper,
   .tab-content {

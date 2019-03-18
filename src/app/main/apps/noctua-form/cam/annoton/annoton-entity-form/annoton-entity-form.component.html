@@ -12,9 +12,11 @@
       fxLayoutAlign="start stretch" class="noc-annoton-entity-form w-100-p" noctuaPerfectScrollbar>
       <div class="noc-section-body w-100-p" fxLayout="column" fxLayoutAlign="start center">
         <div fxLayout="row" fxLayoutAlign="center center" class="noc-summary-row w-100-p">
-          <div class="noc-annoton-box" fxLayout="row" fxLayoutAlign="center center">
-            <strong>GP: </strong> {{annoton?.presentation.gpText}}<br>
-            <strong>MF: </strong> {{annoton?.presentation.mfText}}
+          <div class="noc-annoton-box" fxLayout="column" fxLayoutAlign="center center">
+            <span>
+              <strong>GP: </strong> {{annoton?.presentation.gpText}}<br>
+              <strong>MF: </strong> {{annoton?.presentation.mfText}}
+            </span>
           </div>
         </div>
       </div>

@@ -12,7 +12,7 @@
       fxLayoutAlign="start stretch" class="noc-connector-form w-100-p" noctuaPerfectScrollbar>
       <div class="noc-section-body w-100-p" fxLayout="column" fxLayoutAlign="start center">
         <div fxLayout="row" fxLayoutAlign="center center" class="noc-summary-row w-100-p">
-          <div class="noc-annoton-box" fxLayout="row" fxLayoutAlign="center center">
+          <div class="noc-annoton-box" fxLayout="column" fxLayoutAlign="center center">
             <span>
               <strong>GP: </strong> {{ noctuaAnnotonConnectorService.subjectAnnoton?.presentation.gpText}}<br>
               <strong>MF: </strong> {{ noctuaAnnotonConnectorService.subjectAnnoton?.presentation.mfText}}
@@ -21,7 +21,7 @@
           <div>
             <mat-icon class="s-32">arrow_right_alt</mat-icon>
           </div>
-          <div class="noc-annoton-box" fxLayout="row" fxLayoutAlign="center center">
+          <div class="noc-annoton-box" fxLayout="column" fxLayoutAlign="start center">
             <span>
               <strong>GP: </strong> {{ noctuaAnnotonConnectorService.objectAnnoton?.presentation.gpText}}<br>
               <strong>MF: </strong> {{ noctuaAnnotonConnectorService.objectAnnoton?.presentation.mfText}}
