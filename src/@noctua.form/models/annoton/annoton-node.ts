@@ -98,7 +98,7 @@ export class AnnotonNode {
     }
 
     if (classExpression) {
-      this.term.classExpression = classExpression;
+      this.classExpression = classExpression;
     }
   }
 
@@ -120,8 +120,20 @@ export class AnnotonNode {
     return this.evidence;
   }
 
+  getEvidenceById(id) {
+    const self = this;
+
+    return _.find(self.evidence, (evidence: Evidence) => {
+      return evidence.individualId === id;
+    })
+  }
+
   get classExpression() {
     return this.term.classExpression;
+  }
+
+  set classExpression(classExpression) {
+    this.term.classExpression = classExpression;
   }
 
   setEvidence(evidences: Evidence[], except?) {
@@ -129,14 +141,14 @@ export class AnnotonNode {
     self.evidence = [];
 
     each(evidences, function (srcEvidence, i) {
-      let destEvidence = self.addEvidence();
-      destEvidence.copyValues(srcEvidence, except);
+      self.addEvidence(srcEvidence);
+      //  destEvidence.copyValues(srcEvidence, except);
     });
   }
 
-  addEvidence() {
+  addEvidence(srcEvidence?) {
     const self = this;
-    let evidence = new Evidence();
+    let evidence = srcEvidence ? srcEvidence : new Evidence();
 
     evidence.setEvidenceLookup(JSON.parse(JSON.stringify(self._evidenceMeta.lookupBase)));
     evidence.setEvidenceOntologyClass(self._evidenceMeta.ontologyClass);

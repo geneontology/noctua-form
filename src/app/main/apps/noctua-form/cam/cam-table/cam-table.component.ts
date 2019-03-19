@@ -111,11 +111,6 @@ export class CamTableComponent implements OnInit, OnDestroy {
     this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.annotonForm)
   }
 
-  selectCam(cam) {
-    // this.sparqlService.onCamChanged.next(cam);
-    this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.annotonEntityForm);
-  }
-
   ngOnDestroy(): void {
     this.unsubscribeAll.next();
     this.unsubscribeAll.complete();

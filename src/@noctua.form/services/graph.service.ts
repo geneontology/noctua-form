@@ -156,7 +156,7 @@ export class NoctuaGraphService {
         cam.annotons = self.graphToAnnotons(cam.graph);
         self.saveMFLocation(cam)
         self.annotonsToTable(cam.graph, cam.annotons)
-        cam.onGraphChanged.next(cam);
+        cam.onGraphChanged.next(cam.annotons);
       });
 
       //  title = graph.get_annotations_by_key('title');
@@ -276,7 +276,7 @@ export class NoctuaGraphService {
         evidence.setEvidence({
           id: nodeInfo.id,
           label: nodeInfo.label
-        });
+        }, nodeInfo.classExpression);
 
         let sources = annotationNode.get_annotations_by_key('source');
         let withs = annotationNode.get_annotations_by_key('with');
@@ -771,10 +771,11 @@ export class NoctuaGraphService {
 
     each(annotonNode.evidence, (evidence: Evidence, key) => {
       if (evidence.hasValue()) {
-        // let srcEvidence: Evidence = <Evidence>_.find(srcNode.evidence, { individualId: evidence.individualId })
-        //  if (srcEvidence) {
-        //   self.editIndividual(reqs, cam.modelId, srcEvidence.individualId, srcEvidence.getEvidence().id, evidence.getEvidence().id);
-        //   }
+        self.editIndividual(reqs,
+          cam.modelId,
+          evidence.individualId,
+          evidence.classExpression,
+          evidence.getEvidence().id);
       }
     });
 

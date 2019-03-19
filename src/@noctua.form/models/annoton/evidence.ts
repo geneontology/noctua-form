@@ -23,7 +23,8 @@ export class Evidence {
       },
       "lookup": {
         "requestParams": null
-      }
+      },
+      classExpression: null
     };
     this.reference = {
       "validation": {
@@ -78,6 +79,14 @@ export class Evidence {
     return this.with.control.value;
   }
 
+  get classExpression() {
+    return this.evidence.classExpression;
+  }
+
+  set classExpression(classExpression) {
+    this.evidence.classExpression = classExpression;
+  }
+
   hasValue() {
     const self = this;
 
@@ -100,8 +109,12 @@ export class Evidence {
     this.evidence.ontologyClass = value;
   }
 
-  setEvidence(value) {
+  setEvidence(value, classExpression?) {
     this.evidence.control.value = value;
+
+    if (classExpression) {
+      this.classExpression = classExpression;
+    }
   }
 
   setReference(value, link?) {

@@ -92,6 +92,7 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
 
     this.cam.onGraphChanged.subscribe((annotons) => {
       if (annotons) {
+        console.log(annotons)
         //    let data = this.summaryGridService.getGrid(annotons);
 
         //    this.camService.addCamChildren(this.cam, data);

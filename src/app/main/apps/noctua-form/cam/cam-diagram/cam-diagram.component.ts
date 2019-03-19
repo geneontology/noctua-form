@@ -52,14 +52,14 @@ export class CamDiagramComponent implements AfterViewInit, OnInit {
   title = 'Angular JsPlumb Integration';
 
   @Input('cam')
-  public cam: Cam = new Cam();
+  public cam: Cam
 
   jsPlumbInstance;
   showConnectionToggle = false;
   buttonName = 'Connect';
   nodes = [];
 
-  annoton: Annoton = new Annoton();
+  // annoton: Annoton = new Annoton();
 
   private unsubscribeAll: Subject<any>;
 
@@ -77,21 +77,6 @@ export class CamDiagramComponent implements AfterViewInit, OnInit {
 
   }
 
-  drop(event: CdkDragDrop<string[]>) {
-    console.log(event)
-    let element = event.item.getRootElement();
-    let boundingClientRect = element.getBoundingClientRect();
-    let parentPosition = this.getPosition(element);
-    console.log('x: ' + (boundingClientRect.left - parentPosition.left), 'y: ' + (boundingClientRect.top - parentPosition.top));
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex);
-    }
-  }
 
   getPosition(el) {
     let x = 0;
@@ -117,7 +102,7 @@ export class CamDiagramComponent implements AfterViewInit, OnInit {
           }
         });
         newAnnotons.forEach((destAnnoton: Annoton) => {
-          destAnnoton.location = this.noctuaFormGridService.mfLocation;
+          //     destAnnoton.location = this.noctuaFormGridService.mfLocation;
 
           if (this.noctuaFormGridService.mfLocation) {
             localStorage.setItem(destAnnoton.connectionId, JSON.stringify(destAnnoton.location));
@@ -133,8 +118,8 @@ export class CamDiagramComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit() {
-    this.jsPlumbInstance = jsPlumb.getInstance();
-    this.jsPlumbInstance.draggable('Source');
+    // this.jsPlumbInstance = jsPlumb.getInstance();
+    //this.jsPlumbInstance.draggable('Source');
 
     console.log("pppp")
 

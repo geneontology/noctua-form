@@ -9,6 +9,7 @@ const each = require('lodash/forEach');
 import { AnnotonFormMetadata } from './../forms/annoton-form-metadata';
 
 export class EvidenceForm {
+    individualId;
     evidence = new FormControl();
     reference = new FormControl();
     with = new FormControl();
@@ -19,6 +20,7 @@ export class EvidenceForm {
         this._metadata = metadata;
 
         if (evidence) {
+            this.individualId = evidence.individualId;
             this.evidence.setValue(evidence.getEvidence());
             this.reference.setValue(evidence.getReference());
             this.with.setValue(evidence.getWith());
