@@ -57,9 +57,7 @@ export class AnnotonEntityFormComponent implements OnInit, OnDestroy {
   cam: Cam;
   annotonEntityFormGroup: FormGroup;
   annotonEntityFormSub: Subscription;
-
   evidenceFormArray: FormArray;
-
   termNode: AnnotonNode;
 
   private unsubscribeAll: Subject<any>;
@@ -111,16 +109,45 @@ export class AnnotonEntityFormComponent implements OnInit, OnDestroy {
     return evidence ? evidence.label : undefined;
   }
 
-  save() {
+  save_temp() {
     const self = this;
 
-    self.noctuaAnnotonEntityService.annotonEntityFormToAnnoton();
+
     /// self.noctuaGraphService.saveEntity(self.cam,
     //   this.noctuaAnnotonEntityService.termNode).then(function (data) {
     // self.noctuaFormGridService.clearForm();
     // self.dialogService.openSuccessfulSaveToast();
     //   });
   }
+
+  save() {
+    const self = this;
+    self.noctuaAnnotonEntityService.annotonEntityFormToAnnoton();
+
+    console.log(self.noctuaAnnotonEntityService.termNode);
+
+    // this.openSummary()
+    this.noctuaGraphService.edit(this.cam, self.noctuaAnnotonEntityService.termNode);
+  }
+
+  /*   openSummary() {
+      let destCam = this.camForm.value;
+      this.cam.destNode.setTerm(destCam.term)
+  
+      let evidenceArray: Evidence[] = destCam.evidenceFormArray.map((evidence) => {
+        let result = new Evidence()
+  
+        result.individualId = evidence.individualId;
+        result.setEvidence(evidence.evidence);
+        result.setReference(evidence.reference);
+        result.setWith(evidence.with);
+  
+        return result;
+      });
+      this.cam.destNode.setEvidence(evidenceArray);
+  
+      this.reviewDialogService.openCamEditSummary(this.cam);
+    } */
 
   addEvidence() {
     const self = this;

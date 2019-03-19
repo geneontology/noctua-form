@@ -59,7 +59,8 @@ export class AnnotonNode {
       "lookup": {
         "category": "",
         "requestParams": null
-      }
+      },
+      "classExpression": null
     };
     this.closures = [];
     this.edgeOption;
@@ -91,9 +92,13 @@ export class AnnotonNode {
     return this.term.control.value;
   }
 
-  setTerm(value) {
+  setTerm(value, classExpression?) {
     if (value) {
       this.term.control.value = value;
+    }
+
+    if (classExpression) {
+      this.term.classExpression = classExpression;
     }
   }
 
@@ -115,19 +120,16 @@ export class AnnotonNode {
     return this.evidence;
   }
 
+  get classExpression() {
+    return this.term.classExpression;
+  }
+
   setEvidence(evidences: Evidence[], except?) {
     const self = this;
-    let evidenceCount = self.evidence.length;
+    self.evidence = [];
 
     each(evidences, function (srcEvidence, i) {
-      let destEvidence;
-
-      if (!self.evidence[0].hasValue()) {
-        destEvidence = self.evidence[0];
-      } else {
-        destEvidence = self.addEvidence()
-      }
-
+      let destEvidence = self.addEvidence();
       destEvidence.copyValues(srcEvidence, except);
     });
   }

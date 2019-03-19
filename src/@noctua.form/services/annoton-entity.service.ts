@@ -65,7 +65,7 @@ export class NoctuaAnnotonEntityService {
   annotonEntityFormToAnnoton() {
     const self = this;
 
-    //self.annotonEntityForm.populateConnectorForm(self.annoton, self.subjectMFNode);
+    self.annotonEntityForm.populateAnnotonEntityForm(this.termNode);
   }
 
   clearForm() {

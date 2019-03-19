@@ -32,6 +32,7 @@ export class AnnotonEntityForm {
     const self = this;
 
     this.term.setValue(entity.getTerm());
+    this.onValueChanges(entity.term.lookup);
     entity.evidence.forEach((evidence: Evidence) => {
       let evidenceForm = new EvidenceForm(self._metadata, evidence);
 
@@ -41,16 +42,32 @@ export class AnnotonEntityForm {
     });
   }
 
-  populateConnectorForm(annoton: Annoton, annotonNode: AnnotonNode) {
+  populateAnnotonEntityForm(annotonNode: AnnotonNode) {
     const self = this;
-
     let evidences: Evidence[] = [];
 
+    annotonNode.setTerm(this.term.value);
     self.evidenceForms.forEach((evidenceForm: EvidenceForm) => {
       let evidence = new Evidence()
 
       evidenceForm.populateEvidence(evidence);
       evidences.push(evidence)
+    });
+
+    annotonNode.setEvidence(evidences)
+  }
+
+  onValueChanges(lookup) {
+    const self = this;
+
+    self.term.valueChanges.pipe(
+      distinctUntilChanged(),
+      debounceTime(400)
+    ).subscribe(data => {
+      self._metadata.lookupFunc(data, lookup.requestParams).subscribe(response => {
+        lookup.results = response;
+        console.log(lookup)
+      });
     });
   }
 
