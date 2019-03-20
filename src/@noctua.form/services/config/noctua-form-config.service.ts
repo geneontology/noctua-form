@@ -346,6 +346,8 @@ export class NoctuaFormConfigService {
       },
     }
 
+
+
     this._reviewSearchData = {
       "species": {
         'id': 'species',
@@ -440,10 +442,10 @@ export class NoctuaFormConfigService {
         },
         'searchResults': []
       },
-      'providedBy': {
+      'catalyticActivity': {
         "label": 'Curator',
         'aspect': 'F',
-        "lookupGroup": 'GO:0003674',
+        "lookupGroup": 'GO:0140096',
         'treeLevel': 1,
         "term": {
           "ontologyClass": ['go'],
@@ -451,7 +453,7 @@ export class NoctuaFormConfigService {
             "requestParams": Object.assign({}, JSON.parse(JSON.stringify(this.baseRequestParams)), {
               fq: [
                 'document_category:"ontology_class"',
-                'isa_closure:"GO:0003674"'
+                'isa_closure:"GO:0140096"'
               ],
             }),
           }

@@ -75,43 +75,28 @@ export class NoctuaGraphService {
 
   }
 
-  getGraphInfo(cam: Cam, modelId) {
-    const self = this;
+  registerManager() {
+    let engine = new jquery_engine(barista_response);
+    engine.method('POST');
 
-    cam.engine = new jquery_engine(barista_response);
-    cam.onGraphChanged = new BehaviorSubject(null);
-    cam.modelId = modelId;
-    // cam: new Cam(),
-
-    cam.engine.method('POST');
     let manager = new minerva_manager(
       this.baristaLocation,
       this.minervaDefinitionName,
       this.baristaToken,
-      cam.engine, 'async');
+      engine, 'async');
 
-    cam.manager = manager;
 
-    function _shields_up() { }
-    function _shields_down() { }
+    let managerError = (resp) => {
+      console.log('There was a manager error (' +
+        resp.message_type() + '): ' + resp.message());
+    }
 
-    // Internal registrations.
-    manager.register('prerun', _shields_up);
-    manager.register('postrun', _shields_down, 9);
-    manager.register('manager_error',
-      function (resp) {
-        console.log('There was a manager error (' +
-          resp.message_type() + '): ' + resp.message());
-      }, 10);
-
-    // Likely the result of unhappiness on Minerva.
-    manager.register('warning', function (resp /*, man */) {
+    let warning = (resp) => {
       alert('Warning: ' + resp.message() + '; ' +
         'your operation was likely not performed');
-    }, 10);
+    }
 
-    // Likely the result of serious unhappiness on Minerva.
-    manager.register('error', function (resp /*, man */) {
+    let error = (resp) => {
       let perm_flag = 'InsufficientPermissionsException';
       let token_flag = 'token';
       if (resp.message() && resp.message().indexOf(perm_flag) !== -1) {
@@ -123,16 +108,33 @@ export class NoctuaGraphService {
         console.log('error:', resp, resp.message_type(), resp.message());
 
         if (resp.message().includes('UnknownIdentifierException')) {
-          cam.error = true
+          //  cam.error = true
         }
       }
-    }, 10);
+    }
 
-    manager.register('meta', function ( /* resp , man */) {
-      console.log('## a meta callback?');
-    });
+    let shieldsUp = () => { }
+    let shieldsDown = () => { }
 
-    function rebuild(resp) {
+    manager.register('prerun', shieldsUp);
+    manager.register('postrun', shieldsDown, 9);
+    manager.register('manager_error', managerError, 10);
+    manager.register('warning', warning, 10);
+    manager.register('error', error, 10);
+
+    return manager;
+  }
+
+  getGraphInfo(cam: Cam, modelId) {
+    const self = this;
+
+    cam.onGraphChanged = new BehaviorSubject(null);
+    cam.modelId = modelId;
+    cam.manager = this.registerManager();
+    cam.individualManager = this.registerManager();
+    cam.groupManager = this.registerManager();
+
+    let rebuild = (resp) => {
       let noctua_graph = model.graph;
 
       cam.graph = new noctua_graph();
@@ -140,7 +142,6 @@ export class NoctuaGraphService {
       cam.graph.load_data_basic(resp.data());
       cam.modelTitle = null;
       cam.modelState = null;
-      // self.createGraphUrls(self.model_id);
       let annotations = cam.graph.get_annotations_by_key(annotationTitleKey);
       let stateAnnotations = cam.graph.get_annotations_by_key('state');
 
@@ -162,14 +163,11 @@ export class NoctuaGraphService {
       //  title = graph.get_annotations_by_key('title');
     }
 
-    manager.register('merge', function ( /* resp */) {
-      manager.get_model(cam.modelId);
-    });
-    manager.register('rebuild', function (resp) {
+    cam.manager.register('rebuild', function (resp) {
       rebuild(resp);
     }, 10);
 
-    manager.get_model(modelId);
+    cam.manager.get_model(modelId);
   }
 
 
@@ -178,7 +176,7 @@ export class NoctuaGraphService {
   getUserInfo() {
     const self = this;
     let url = self.barista_location + "/user_info_by_token/" + self.barista_token;
-  
+   
     return this.$http.get(url)
       .then(function (response) {
         if (response.data && response.data.groups && response.data.groups.length > 0) {
@@ -345,7 +343,7 @@ export class NoctuaGraphService {
   isaNodeClosure(a, b, node, annoton) {
     const self = this;
     let deferred = self.$q.defer();
-  
+   
     self.noctuaLookupService.isaClosure(a, b).then(function (data) {
       if (data) {
         node.closures.push(a);
@@ -358,7 +356,7 @@ export class NoctuaGraphService {
         result: data
       });
     });
-  
+   
     return deferred.promise;
   }
   */
@@ -940,10 +938,10 @@ export class NoctuaGraphService {
   checkIfNodeExist(srcAnnoton) {
     const self = this;
     let infos = [];
-
+  
     each(srcAnnoton.nodes, function (srcNode) {
       let srcTerm = srcNode.getTerm();
-
+  
       if (srcTerm.id && !srcNode.modelId) {
         let meta = {
           aspect: srcNode.label,
@@ -953,10 +951,10 @@ export class NoctuaGraphService {
           },
           linkedNodes: []
         }
-
+  
         each(self.gridData.annotons, function (annotonData) {
           each(annotonData.annoton.nodes, function (node) {
-
+  
             if (srcTerm.id === node.getTerm().id) {
               if (!_.find(meta.linkedNodes, {
                 modelId: node.modelId
@@ -966,19 +964,19 @@ export class NoctuaGraphService {
             }
           });
         });
-
+  
         if (meta.linkedNodes.length > 0) {
           let info = new AnnotonError('error', 5, "Instance exists " + srcNode.term.control.value.label, meta);
-
+  
           infos.push(info);
         }
       }
-
+  
     });
-
+  
     return infos;
   }
-*/
+  */
   annotonAdjustments(annoton: Annoton) {
     const self = this;
     let infos = []; //self.checkIfNodeExist(annoton);
@@ -1120,59 +1118,32 @@ export class NoctuaGraphService {
     return self.createSave(annoton);
   }
 
-  saveGP(cam, gp, success) {
+  saveMF(cam, individual, success) {
     const self = this;
 
-    let manager = new minerva_manager(
-      cam.barista_location,
-      cam.minerva_definition_name,
-      cam.barista_token,
-      cam.engine, 'async');
-
-    manager.register('manager_error',
-      function (resp) {
-        console.log('There was a manager error (' +
-          resp.message_type() + '): ' + resp.message());
-      }, 10);
-
-    manager.register('warning', function (resp) {
-      alert('Warning: ' + resp.message() + '; ' +
-        'your operation was likely not performed');
-    }, 10);
-    manager.register('error', function (resp) {
-      let perm_flag = 'InsufficientPermissionsException';
-      let token_flag = 'token';
-      if (resp.message() && resp.message().indexOf(perm_flag) !== -1) {
-        alert('Error: it seems like you do not have permission to ' +
-          'perform that operation. Did you remember to login?');
-      } else if (resp.message() && resp.message().indexOf(token_flag) !== -1) {
-        alert('Error: it seems like you have a bad token...');
-      } else {
-        console.log('error:', resp, resp.message_type(), resp.message());
-      }
-    }, 10);
-    manager.register('meta', function () {
-      console.log('## a meta callback?');
-    });
-
-    manager.register('merge', function (resp) {
+    let merge = (resp) => {
       let individuals = resp.individuals();
       if (individuals.length > 0) {
-        let gpResponse = individuals[0];
+        let mfResponse = individuals[0];
 
-        gp.modelId = gpResponse.id;
-        success(gpResponse);
+        individual.modelId = mfResponse.id;
+
+        console.log("---", mfResponse)
+        success(mfResponse);
       }
-    }, 10);
+    }
 
-    let reqs = new minerva_requests.request_set(manager.user_token(), cam.model.id);
-    reqs.add_individual(gp.getTerm().id);
-    return manager.request_with(reqs);
+    cam.individualManager.register('merge', merge, 10);
+
+    let reqs = new minerva_requests.request_set(cam.individualManager.user_token(), cam.model.id);
+    reqs.add_individual(individual.getTerm().id);
+    return cam.individualManager.request_with(reqs);
   }
 
-  saveAnnoton(cam, annoton) {
+  saveAnnoton(cam, annoton: Annoton) {
     const self = this;
     let geneProduct;
+    let mfNode = annoton.getMFNode();
 
     if (annoton.annotonType === noctuaFormConfig.annotonType.options.complex.name) {
       geneProduct = annoton.getNode('mc');
@@ -1185,7 +1156,7 @@ export class NoctuaGraphService {
       let reqs = new minerva_requests.request_set(manager.user_token(), cam.model.id);
 
       if (!cam.modelTitle) {
-        const defaultTitle = 'Model involving ' + geneProduct.term.control.value.label;
+        const defaultTitle = 'enabled by ' + geneProduct.term.control.value.label;
         reqs.add_annotation_to_model(annotationTitleKey, defaultTitle);
       }
 
@@ -1206,9 +1177,9 @@ export class NoctuaGraphService {
       return manager.request_with(reqs);
     }
 
-    //return self.saveGP(geneProduct, success);
+    return self.saveMF(cam, mfNode, success);
 
-    return success();
+    // return success();
 
   }
 

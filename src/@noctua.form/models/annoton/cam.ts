@@ -19,6 +19,8 @@ export class Cam {
   engine;
   onGraphChanged;
   manager;
+  individualManager;
+  groupManager;
   graph;
   modelId;
   modelTitle;

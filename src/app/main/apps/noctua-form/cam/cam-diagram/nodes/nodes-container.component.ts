@@ -60,7 +60,7 @@ export class NodesContainerComponent implements OnChanges, AfterViewInit {
       })
 
       Observable.combineLatest(self.camDiagramService.onNodesReady).subscribe((nodes) => {
-        self.connectNodes()
+        self.connectNodes();
       })
     }
   }
@@ -79,15 +79,13 @@ export class NodesContainerComponent implements OnChanges, AfterViewInit {
         connections.forEach(connection => {
           //   let effect = self.camDiagramService.getCausalEffect(annoton.connectionId, connection.object.modelId);
 
-          self.camDiagramService.jsPlumbInstance.connect({
-            source: annoton.connectionId,
-            target: connection.object.modelId,
-            type: "basic",
-            // paintStyle: { strokeWidth: 1, stroke: '#000000' },
-            // endpointStyle: { fill: '#000000' }
-          });
-
-
+          //   self.camDiagramService.jsPlumbInstance.connect({
+          //      source: annoton.connectionId,
+          //     target: connection.object.modelId,
+          //     type: "basic",
+          // paintStyle: { strokeWidth: 1, stroke: '#000000' },
+          // endpointStyle: { fill: '#000000' }
+          //    });
         });
       });
 
@@ -95,7 +93,4 @@ export class NodesContainerComponent implements OnChanges, AfterViewInit {
     })
   }
 
-  // refresh() {
-
-  //  }
 }
