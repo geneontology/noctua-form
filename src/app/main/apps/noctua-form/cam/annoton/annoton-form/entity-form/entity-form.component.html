@@ -20,11 +20,13 @@
     </mat-autocomplete>
   </mat-form-field>
   <div fxFlex="" fxLayout="column" fxLayoutAlign="start stretch">
-    <div formArrayName="evidenceFormArray" *ngFor="let evidence of entityFormGroup.get('evidenceFormArray').controls; let i = index;">
+    <div formArrayName="evidenceFormArray"
+      *ngFor="let evidence of entityFormGroup.get('evidenceFormArray')?.controls; let i = index;">
       <div [formGroupName]="i" fxLayout="row" fxLayoutAlign="start center" class="w-100-p">
         <mat-form-field class="" appearance="standard" class="" fxFlex="50">
           <mat-label>Evidence</mat-label>
-          <input type="text" matInput formControlName="evidence" placeholder="Evidence" [matAutocomplete]="evidenceAuto" />
+          <input type="text" matInput formControlName="evidence" placeholder="Evidence"
+            [matAutocomplete]="evidenceAuto" />
           <mat-autocomplete #evidenceAuto="matAutocomplete" [displayWith]="evidenceDisplayFn">
             <mat-option *ngFor="let item of entity?.evidence[i]?.evidence.lookup.results" [value]="item">
               <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
@@ -50,14 +52,14 @@
           <mat-icon>menu</mat-icon>
         </button>
         <mat-menu #entityMenu="matMenu" class="noc-dropdown-menu">
-          <button class="" (click)="appCtrl.removeHasPartGP(appCtrl.formGrid.annoton, entity)">
+          <button class="">
             Remove GP
           </button>
           <h6 class="noc-menu-heading"> Evidence</h6>
           <button mat-menu-item class="" (click)="openSelectEvidenceDialog(evidence)">
             Clone Evidence
           </button>
-          <button mat-menu-item class="" (click)="openAddEvidenceDialog()">
+          <button mat-menu-item class="" (click)="openMoreEvidenceDialog()">
             More Evidence
           </button>
           <button mat-menu-item class="" (click)="addEvidence()">
@@ -77,7 +79,7 @@
             Clear
           </button>
           <h6 class="noc-menu-heading"> Search </h6>
-          <button mat-menu-item *ngIf="entity.aspect" class="" (click)="openPopulateDialog($event, entity)">
+          <button mat-menu-item *ngIf="entity.aspect" class="" (click)="openSearchDatabaseDialog(entity)">
             Search Database
           </button>
         </mat-menu>

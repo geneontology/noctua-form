@@ -3,21 +3,27 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subscriber } from 'rxjs';
 import { map, finalize, filter, reduce, catchError, retry, tap } from 'rxjs/operators';
+import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms'
 
 import { CurieService } from './../../@noctua.curie/services/curie.service';
-import { NoctuaGraphService } from './..//services/graph.service';
+import { NoctuaGraphService } from './../services/graph.service';
 
-import { AnnotonNode } from './..//models/annoton/annoton-node';
-import { NoctuaFormConfigService } from './..//services/config/noctua-form-config.service';
-
+import { NoctuaFormConfigService } from './../services/config/noctua-form-config.service';
+import { NoctuaLookupService } from './lookup.service';
 //import { Cam } from '../models/cam';
 import { CamRow } from '../models/cam-row';
 import { Curator } from '../models/curator';
 import { Group } from '../models/group';
 
+import { Annoton } from './../models/annoton/annoton';
+import { AnnotonNode } from './../models/annoton/annoton-node';
+
+import { CamForm } from './../models/forms/cam-form';
+import { AnnotonFormMetadata } from './../models/forms/annoton-form-metadata';
+
 import * as _ from 'lodash';
 import { v4 as uuid } from 'uuid';
-import { Cam } from './..//models/annoton/cam';
+import { Cam } from './../models/annoton/cam';
 declare const require: any;
 const each = require('lodash/forEach');
 
@@ -34,13 +40,49 @@ export class CamService {
 
   searchSummary: any = {}
 
+  public annoton: Annoton;
+  // public annotonPresentation;
+  private camForm: CamForm;
+  private camFormGroup: BehaviorSubject<FormGroup | undefined>;
+  public camFormGroup$: Observable<FormGroup>;
+
   constructor(public noctuaFormConfigService: NoctuaFormConfigService,
+    private _fb: FormBuilder,
     private httpClient: HttpClient,
     private noctuaGraphService: NoctuaGraphService,
+    private noctuaLookupService: NoctuaLookupService,
     private curieService: CurieService) {
     this.onCamsChanged = new BehaviorSubject({});
     this.onCamChanged = new BehaviorSubject({});
     this.curieUtil = this.curieService.getCurieUtil();
+
+    this.camFormGroup = new BehaviorSubject(null);
+    this.camFormGroup$ = this.camFormGroup.asObservable();
+
+  }
+
+  initializeForm(cam?: Cam) {
+    const self = this;
+
+    if (cam) {
+      this.cam = cam;
+    }
+
+    self.camForm = this.createCamForm()
+    self.camFormGroup.next(this._fb.group(this.camForm));
+  }
+
+  createCamForm() {
+    const self = this;
+
+    let camFormMetadata = new AnnotonFormMetadata(self.noctuaLookupService.golrLookup.bind(self.noctuaLookupService));
+    let camForm = new CamForm(camFormMetadata);
+
+    camForm.createCamForm(this.cam);
+
+    //self.camFormData = self.noctuaFormConfigService.createReviewSearchFormData();
+
+    return camForm;
   }
 
   getCam(modelId): Cam {

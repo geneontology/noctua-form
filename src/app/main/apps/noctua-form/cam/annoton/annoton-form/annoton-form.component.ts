@@ -11,24 +11,21 @@ import * as _ from 'lodash';
 declare const require: any;
 const each = require('lodash/forEach');
 
-import { noctuaAnimations } from '@noctua/animations';
-import { NoctuaUtils } from '@noctua/utils/noctua-utils';
+import { noctuaAnimations } from './../../../../../../../@noctua/animations';
 
-import { takeUntil } from 'rxjs/internal/operators';
-import { forEach } from '@angular/router/src/utils/collection';
 
 import { NoctuaFormService } from '../../../services/noctua-form.service';
 
 import { NoctuaGraphService } from 'noctua-form-base';
-import { NoctuaFormGridService } from 'noctua-form-base';
+import { NoctuaAnnotonFormService } from 'noctua-form-base';
 import { NoctuaFormConfigService } from 'noctua-form-base';
 import { NoctuaLookupService } from 'noctua-form-base';
-import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
+import { NoctuaSearchService } from './../../../../../../../@noctua.search/services/noctua-search.service';
 import { CamService } from 'noctua-form-base';
 import { CamDiagramService } from './../../cam-diagram/services/cam-diagram.service';
 import { CamTableService } from './../../cam-table/services/cam-table.service';
 
-import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
+import { SparqlService } from './../../../../../../../@noctua.sparql/services/sparql/sparql.service';
 
 import { Cam } from 'noctua-form-base';
 import { Annoton } from 'noctua-form-base';
@@ -66,18 +63,18 @@ export class AnnotonFormComponent implements OnInit, OnDestroy {
     public camTableService: CamTableService,
     private noctuaGraphService: NoctuaGraphService,
     public noctuaFormConfigService: NoctuaFormConfigService,
-    public noctuaFormGridService: NoctuaFormGridService,
+    public noctuaAnnotonFormService: NoctuaAnnotonFormService,
     private noctuaLookupService: NoctuaLookupService,
     public noctuaFormService: NoctuaFormService,
     private sparqlService: SparqlService
   ) {
     this.unsubscribeAll = new Subject();
-    // this.annoton = self.noctuaFormGridService.annoton;
-    //  this.annotonFormPresentation = this.noctuaFormGridService.annotonPresentation;
+    // this.annoton = self.noctuaAnnotonFormService.annoton;
+    //  this.annotonFormPresentation = this.noctuaAnnotonFormService.annotonPresentation;
   }
 
   ngOnInit(): void {
-    this.annotonFormSub = this.noctuaFormGridService.annotonFormGroup$
+    this.annotonFormSub = this.noctuaAnnotonFormService.annotonFormGroup$
       .subscribe(annotonFormGroup => {
         if (!annotonFormGroup) return;
         this.annotonFormGroup = annotonFormGroup;
@@ -101,24 +98,24 @@ export class AnnotonFormComponent implements OnInit, OnDestroy {
     const self = this;
     let infos;
 
-    self.noctuaFormGridService.annotonFormToAnnoton(self.noctuaFormGridService.annoton)
+    self.noctuaAnnotonFormService.annotonFormToAnnoton(self.noctuaAnnotonFormService.annoton)
 
     let saveAnnoton = function () {
-      //self.formGrid.linkFormNode(entity, selected.node);
-      let annoton = self.noctuaGraphService.adjustAnnoton(self.noctuaFormGridService.annoton)
+      //self.annotonForm.linkFormNode(entity, selected.node);
+      let annoton = self.noctuaGraphService.adjustAnnoton(self.noctuaAnnotonFormService.annoton)
       self.noctuaGraphService.saveAnnoton(self.cam, annoton).then((data) => {
         //  localStorage.setItem('barista_token', value);
-        self.noctuaFormGridService.clearForm();
+        self.noctuaAnnotonFormService.clearForm();
         // self.dialogService.openSuccessfulSaveToast();
       });
     }
 
-    infos = self.noctuaGraphService.annotonAdjustments(self.noctuaFormGridService.annoton);
-    // self.graph.createSave(self.formGrid.annoton);
+    infos = self.noctuaGraphService.annotonAdjustments(self.noctuaAnnotonFormService.annoton);
+    // self.graph.createSave(self.annotonForm.annoton);
     //temporarily off
     if (infos.length > 0) {
       let data = {
-        annoton: self.noctuaFormGridService.annoton,
+        annoton: self.noctuaAnnotonFormService.annoton,
         infos: infos
       };
 
@@ -130,25 +127,25 @@ export class AnnotonFormComponent implements OnInit, OnDestroy {
   }
 
   clear() {
-    this.noctuaFormGridService.clearForm();
+    this.noctuaAnnotonFormService.clearForm();
   }
 
   createExample(example) {
     const self = this;
 
-    self.noctuaFormGridService.initializeFormData(example);
+    self.noctuaAnnotonFormService.initializeFormData(example);
   }
 
   changeAnnotonTypeForm(annotonType) {
     const self = this;
 
-    self.noctuaFormGridService.setAnnotonType(self.noctuaFormGridService.annoton, annotonType.name);
+    self.noctuaAnnotonFormService.setAnnotonType(self.noctuaAnnotonFormService.annoton, annotonType.name);
   }
 
   changeAnnotonModelTypeForm(annotonModelType) {
     const self = this;
 
-    self.noctuaFormGridService.setAnnotonModelType(self.noctuaFormGridService.annoton, annotonModelType.name);
+    self.noctuaAnnotonFormService.setAnnotonModelType(self.noctuaAnnotonFormService.annoton, annotonModelType.name);
   }
 
   termDisplayFn(term): string | undefined {

@@ -8,6 +8,12 @@ import { AnnotonError } from "./parser/annoton-error.js";
 import { Annoton } from './annoton'
 
 export class Cam {
+  //Details
+  title: String;
+  state: string;
+  //User Info
+  group: string;
+
   id: string;
   expanded?: boolean;
   model?: {};
@@ -23,8 +29,7 @@ export class Cam {
   groupManager;
   graph;
   modelId;
-  modelTitle;
-  modelState;
+  summaryExpanded = false;
 
   constructor() {
   }
@@ -47,10 +52,6 @@ export class Cam {
     });
 
     return result;
-  }
-
-  getAnnotonFooy() {
-    return this._annotons;
   }
 
   getAnnotonByConnectionId(connectionId) {

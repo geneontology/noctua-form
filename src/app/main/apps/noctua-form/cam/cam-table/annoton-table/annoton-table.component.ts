@@ -6,8 +6,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { merge, Observable, BehaviorSubject, fromEvent, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
-import { noctuaAnimations } from '@noctua/animations';
-import { NoctuaUtils } from '@noctua/utils/noctua-utils';
+import { noctuaAnimations } from './../../../../../../../@noctua/animations';
 
 import { takeUntil, startWith } from 'rxjs/internal/operators';
 
@@ -18,14 +17,14 @@ import { forEach } from '@angular/router/src/utils/collection';
 
 import { NoctuaFormService } from './../../../services/noctua-form.service';
 import { CamTableService } from './../services/cam-table.service';
-import { NoctuaFormDialogService } from './../../../dialog.service';
-import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
+import { NoctuaFormDialogService } from './../../../services/dialog.service';
+import { NoctuaSearchService } from './../../../../../../../@noctua.search/services/noctua-search.service';
 
 import {
   NoctuaAnnotonConnectorService,
   NoctuaGraphService,
   NoctuaFormConfigService,
-  NoctuaFormGridService,
+  NoctuaAnnotonFormService,
   NoctuaLookupService,
   NoctuaAnnotonEntityService,
   CamService
@@ -37,7 +36,7 @@ import {
   AnnotonNode
 } from 'noctua-form-base';
 
-import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
+import { SparqlService } from './../../../../../../../@noctua.sparql/services/sparql/sparql.service';
 
 @Component({
   selector: 'noc-annoton-table',

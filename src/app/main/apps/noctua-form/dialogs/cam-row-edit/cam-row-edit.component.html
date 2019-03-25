@@ -11,7 +11,8 @@
   </mat-toolbar>
   <div mat-dialog-content class="noc-dialog-body" noctuaPerfectScrollbar>
     <div fxLayout="column" fxLayoutAlign="start center" class="w-100-p">
-      <form fxLayout="column" fxLayoutAlign="start stretch" name="searchForm" [formGroup]="searchForm" class="noc-body w-100-p noc-search-form">
+      <form fxLayout="column" fxLayoutAlign="start stretch" name="searchForm" [formGroup]="searchForm"
+        class="noc-body w-100-p noc-search-form">
         <div>
           {{cam.relationship}}
         </div>
@@ -57,6 +58,6 @@
   <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="space-between center">\
     <span fxFlex></span>
     <button (click)='close()' type="button" mat-raised-button color="" class="mr-8">Cancel</button>
-    <button (click)="search()" type="button" mat-raised-button color="primary">Save</button>
+    <button type="button" mat-raised-button color="primary">Save</button>
   </div>
 </div>

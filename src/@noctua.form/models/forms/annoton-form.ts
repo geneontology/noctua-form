@@ -13,9 +13,6 @@ import { EntityGroupForm } from './entity-group-form'
 
 export class AnnotonForm {
   entityGroupForms: EntityGroupForm[] = []
-  title = new FormControl();
-  state = new FormControl();
-  group = new FormControl();
   gp = new FormControl();
   fd = new FormArray([]);
 

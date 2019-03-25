@@ -2,25 +2,10 @@
 @import "src/@noctua.common/scss/noctua.common";
 
 :host {
-  width: 100%; // display: block;
+  //width: 100%; // display: block;
+  @include deep-width(40px);
   background-color: white;
   @include mat-elevation(4);
-
-  .noc-annoton-box {
-    width: 250px;
-    height: 100px;
-    padding: 12px;
-    //box-shadow: 0 1px 40px 0 #B0C1D9;
-    @include mat-elevation(2);
-    text-align: center;
-    z-index: 4;
-    border: 1px solid #2e6f9a;
-    border-radius: 8px;
-    opacity: 0.8;
-    cursor: move;
-    background-color: white;
-    font-size: 11px;
-  }
 
   .noc-header {
     @include deep-height(40px);
@@ -43,35 +28,31 @@
     padding: 0 14px 14px 14px;
   }
 
-  .noc-summary-row {
-    @include deep-height(150px);
-    background-color: #F5F5F5;
-    @include mat-elevation(2);
-  }
+  .noc-annoton-form {
+    .noc-form-section {
+      width: 100%;
+      background-color: #FFF;
 
-  .noc-annoton-entity-form {
-    width: 100%;
-    background-color: #FFF;
+      .noc-section-header {
+        height: 40px;
+        background-color: $noc-primary-color-light;
 
-    .noc-section-header {
-      height: 40px;
-      background-color: $noc-primary-color-light;
+        .noc-section-heading {
+          padding-left: 8px;
+          font-size: 12px;
+          line-height: 40px;
+          color: #555;
+        }
 
-      .noc-section-heading {
-        padding-left: 8px;
-        font-size: 12px;
-        line-height: 40px;
-        color: #555;
+        .noc-action-button {
+          margin: 0px;
+          height: 40px; // line-height: 36px;
+        }
       }
 
-      .noc-action-button {
-        margin: 0px;
-        height: 40px; // line-height: 36px;
+      .noc-section-body {
+        padding: 5px 5px;
       }
-    }
-
-    .noc-section-body {
-      padding: 5px 5px;
     }
 
     .noc-term-group {

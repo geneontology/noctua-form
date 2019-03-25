@@ -1,21 +1,21 @@
 import { Component, OnInit, OnDestroy, ViewChild, Inject, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormArray } from '@angular/forms';
 
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatMenuTrigger } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import * as _ from 'lodash';
 import { Cam } from 'noctua-form-base';
-import { MatTableDataSource, MatSort } from '@angular/material';
 
-import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loader.service';
+import { NoctuaTranslationLoaderService } from '../../../../../../@noctua/services/translation-loader.service';
 import { NoctuaFormConfigService } from 'noctua-form-base';
 import { NoctuaGraphService } from 'noctua-form-base';
 import { NoctuaLookupService } from 'noctua-form-base';
 
-import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
-
-import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
+import { NoctuaSearchService } from './../../../../../../@noctua.search/services/noctua-search.service';
+import { SparqlService } from './../../../../../../@noctua.sparql/services/sparql/sparql.service';
 
 @Component({
   selector: 'cam-row-edit-dialog',
@@ -47,7 +47,6 @@ export class CamRowEditDialogComponent implements OnInit, OnDestroy {
     this.searchFormData = this.noctuaFormConfigService.createReviewSearchFormData();
     this.cam = this._data.cam
     this.searchForm = this.createAnswerForm();
-    this.onValueChanges();
   }
 
   ngOnInit() {
@@ -66,20 +65,6 @@ export class CamRowEditDialogComponent implements OnInit, OnDestroy {
       reference: new FormControl(this.cam.reference.label),
       with: new FormControl(this.cam.with),
     });
-  }
-
-  onValueChanges() {
-    const self = this;
-
-    this.searchForm.get('term').valueChanges
-      .distinctUntilChanged()
-      .debounceTime(400)
-      .subscribe(data => {
-        let searchData = self.searchFormData['goTerm'];
-        this.noctuaLookupService.golrTermLookup(data, searchData.id).subscribe(response => {
-          self.searchFormData['goTerm'].searchResults = response
-        });
-      });
   }
 
   ngOnDestroy(): void {

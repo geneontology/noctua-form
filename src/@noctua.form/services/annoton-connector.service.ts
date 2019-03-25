@@ -13,9 +13,9 @@ import * as _ from 'lodash';
 declare const require: any;
 const each = require('lodash/forEach');
 
-import { Cam } from './..//models/annoton/cam';
-import { Annoton } from './..//models/annoton/annoton';
-import { AnnotonNode } from './..//models/annoton/annoton-node';
+import { Cam } from './../models/annoton/cam';
+import { Annoton } from './../models/annoton/annoton';
+import { AnnotonNode } from './../models/annoton/annoton-node';
 
 import { AnnotonConnectorForm } from './../models/forms/annoton-connector-form';
 

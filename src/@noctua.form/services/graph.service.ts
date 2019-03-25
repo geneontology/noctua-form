@@ -18,7 +18,7 @@ import { Evidence } from './../models/annoton/evidence';
 import { noctuaFormConfig } from './../noctua-form-config';
 import { NoctuaFormConfigService } from './config/noctua-form-config.service';
 import { NoctuaLookupService } from './lookup.service';
-import { NoctuaFormGridService } from '../services/form-grid.service';
+import { NoctuaAnnotonFormService } from '../services/annoton-form.service';
 
 import 'rxjs/add/observable/forkJoin';
 import * as _ from 'lodash';
@@ -60,7 +60,7 @@ export class NoctuaGraphService {
 
   constructor(
     public noctuaFormConfigService: NoctuaFormConfigService,
-    private formGridService: NoctuaFormGridService,
+    private annotonFormService: NoctuaAnnotonFormService,
     private httpClient: HttpClient,
     private noctuaLookupService: NoctuaLookupService) {
     this.linker = new amigo.linker();
@@ -140,8 +140,8 @@ export class NoctuaGraphService {
       cam.graph = new noctua_graph();
       cam.modelId = resp.data().id;
       cam.graph.load_data_basic(resp.data());
-      cam.modelTitle = null;
-      cam.modelState = null;
+      //   cam.modelTitle = null;
+      //    cam.modelState = null;
       let annotations = cam.graph.get_annotations_by_key(annotationTitleKey);
       let stateAnnotations = cam.graph.get_annotations_by_key('state');
 
@@ -663,7 +663,7 @@ export class NoctuaGraphService {
 
     // let gpNode = annoton.getGPNode();
     //annoton.gpTerm = gpNode.term.control.value.label;
-    // annoton._presentation = self.formGridService.getAnnotonPresentation(annoton);
+    // annoton._presentation = self.annotonFormService.getAnnotonPresentation(annoton);
   }
 
   ccComponentsToTable(graph, annotons) {
@@ -693,7 +693,7 @@ export class NoctuaGraphService {
       cc: ccNode.term.control.value.label,
       original: JSON.parse(JSON.stringify(annoton)),
       annoton: annoton,
-      annotonPresentation: self.formGrid.getAnnotonPresentation(annoton),
+      annotonPresentation: self.annotonForm.getAnnotonPresentation(annoton),
     }
    
     row.evidence = gpNode.evidence

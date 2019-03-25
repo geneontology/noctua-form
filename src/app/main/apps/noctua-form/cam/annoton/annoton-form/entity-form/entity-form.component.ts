@@ -11,22 +11,19 @@ import * as _ from 'lodash';
 declare const require: any;
 const each = require('lodash/forEach');
 
-import { noctuaAnimations } from '@noctua/animations';
-import { NoctuaUtils } from '@noctua/utils/noctua-utils';
+import { noctuaAnimations } from './../../../../../../../../@noctua/animations';
 
-import { takeUntil } from 'rxjs/internal/operators';
-import { forEach } from '@angular/router/src/utils/collection';
 
 import { NoctuaFormService } from '../../../../services/noctua-form.service';
 
-import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loader.service';
-import { NoctuaFormGridService } from 'noctua-form-base';
+import { NoctuaTranslationLoaderService } from './../../../../../../../../@noctua/services/translation-loader.service';
+import { NoctuaAnnotonFormService } from 'noctua-form-base';
 import { NoctuaFormConfigService } from 'noctua-form-base';
 import { NoctuaLookupService } from 'noctua-form-base';
-import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
-import { NoctuaFormDialogService } from './../../../../dialog.service';
+import { NoctuaSearchService } from './../../../../../../../../@noctua.search/services/noctua-search.service';
+import { NoctuaFormDialogService } from './../../../../services/dialog.service';
 
-import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
+import { SparqlService } from './../../../../../../../../@noctua.sparql/services/sparql/sparql.service';
 
 import { AnnotonNode } from 'noctua-form-base';
 import { Evidence } from 'noctua-form-base';
@@ -67,7 +64,7 @@ export class EntityFormComponent implements OnInit, OnDestroy {
     private noctuaFormDialogService: NoctuaFormDialogService,
     private noctuaSearchService: NoctuaSearchService,
     public noctuaFormConfigService: NoctuaFormConfigService,
-    public noctuaFormGridService: NoctuaFormGridService,
+    public noctuaAnnotonFormService: NoctuaAnnotonFormService,
     private noctuaLookupService: NoctuaLookupService,
     private noctuaFormService: NoctuaFormService,
     private sparqlService: SparqlService, ) {
@@ -77,7 +74,7 @@ export class EntityFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.nodeGroup = this.noctuaFormGridService.annoton.presentation['fd'][this.nodeGroupName];
+    this.nodeGroup = this.noctuaAnnotonFormService.annoton.presentation['fd'][this.nodeGroupName];
     this.entity = <AnnotonNode>_.find(this.nodeGroup.nodes, { id: this.entityName });
     // this.entityFormGroup = this.createEntityGroup();
 
@@ -106,17 +103,32 @@ export class EntityFormComponent implements OnInit, OnDestroy {
     evidenceFormGroup.removeAt(index);
   }
 
+  toggleIsComplement(entity: AnnotonNode) {
 
+  }
+
+  openSearchDatabaseDialog(entity: AnnotonNode) {
+
+  }
+
+  openMoreEvidenceDialog() {
+
+  }
+
+
+  addNDEvidence(evidence: Evidence) {
+
+  }
 
   openSelectEvidenceDialog(evidence) {
     const self = this;
 
     /*
 
-    let evidences = Util.addUniqueEvidencesFromAnnoton(self.formGrid.annoton);
+    let evidences = Util.addUniqueEvidencesFromAnnoton(self.annotonForm.annoton);
     Util.getUniqueEvidences(self.summaryData.annotons, evidences);
 
-    let gpNode = self.formGrid.annotonPresentation.geneProduct;
+    let gpNode = self.annotonForm.annotonPresentation.geneProduct;
 
     let data = {
       readonly: false,

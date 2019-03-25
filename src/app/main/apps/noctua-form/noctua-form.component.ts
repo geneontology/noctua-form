@@ -1,36 +1,19 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormArray } from '@angular/forms';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatPaginator, MatSort, MatDrawer } from '@angular/material';
-import { DataSource } from '@angular/cdk/collections';
-import { merge, Observable, BehaviorSubject, fromEvent, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { MatDrawer } from '@angular/material';
+import { Subject } from 'rxjs';
 
-import { noctuaAnimations } from '@noctua/animations';
-import { NoctuaUtils } from '@noctua/utils/noctua-utils';
+import { noctuaAnimations } from './../../../../@noctua/animations';
 
-import { takeUntil, startWith } from 'rxjs/internal/operators';
-
-import "rxjs/add/operator/debounceTime";
-import "rxjs/add/operator/distinctUntilChanged";
-import { forEach } from '@angular/router/src/utils/collection';
-
-import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loader.service';
-import { NoctuaFormConfigService } from 'noctua-form-base';
-import { NoctuaGraphService } from 'noctua-form-base';
-import { NoctuaLookupService } from 'noctua-form-base';
-
-
-import { locale as english } from './i18n/en';
+import {
+  Cam,
+  NoctuaFormConfigService,
+  NoctuaGraphService,
+  NoctuaAnnotonFormService,
+  CamService
+} from 'noctua-form-base';
 
 import { NoctuaFormService } from './services/noctua-form.service';
-import { NoctuaFormDialogService } from './dialog.service';
-import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
-import { CamService } from 'noctua-form-base'
-
-import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
-
-import { Cam } from 'noctua-form-base';
 
 @Component({
   selector: 'app-noctua-form',
@@ -47,7 +30,7 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
   @ViewChild('rightDrawer')
   rightDrawer: MatDrawer;
 
-  cam: Cam;
+  public cam: Cam;
   searchResults = [];
   modelId: string = '';
   baristaToken: string = '';
@@ -57,13 +40,9 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute,
     private camService: CamService,
     public noctuaFormConfigService: NoctuaFormConfigService,
-    private noctuaSearchService: NoctuaSearchService,
+    public noctuaAnnotonFormService: NoctuaAnnotonFormService,
     public noctuaFormService: NoctuaFormService,
-    private noctuaFormDialogService: NoctuaFormDialogService,
-    private noctuaLookupService: NoctuaLookupService,
-    private noctuaGraphService: NoctuaGraphService,
-    private sparqlService: SparqlService,
-    private noctuaTranslationLoader: NoctuaTranslationLoaderService) {
+    private noctuaGraphService: NoctuaGraphService, ) {
 
     this.unsubscribeAll = new Subject();
 
@@ -76,10 +55,6 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
         this.noctuaGraphService.baristaToken = this.baristaToken;
         this.loadCam(this.modelId);
       });
-
-    //  this.camService.setAnnotonLocation('aaa', 4, 5).subscribe((res) => {
-    //  console.log(res)
-    //   });
   }
 
   ngOnInit(): void {
@@ -89,15 +64,21 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
 
   loadCam(modelId) {
     this.cam = this.camService.getCam(modelId);
+  }
 
-    this.cam.onGraphChanged.subscribe((annotons) => {
-      if (annotons) {
-        console.log(annotons)
-        //    let data = this.summaryGridService.getGrid(annotons);
 
-        //    this.camService.addCamChildren(this.cam, data);
-      }
-    });
+  addAnnoton() {
+    this.openAnnotonForm(location);
+  }
+
+  openCamForm() {
+    //  this.noctuaFormService.initializeForm();
+    this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.camForm)
+  }
+
+  openAnnotonForm(location?) {
+    this.noctuaAnnotonFormService.initializeForm();
+    this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.annotonForm)
   }
 
   ngOnDestroy(): void {

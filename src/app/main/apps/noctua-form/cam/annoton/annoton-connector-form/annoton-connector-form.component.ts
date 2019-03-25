@@ -13,25 +13,22 @@ import * as _ from 'lodash';
 declare const require: any;
 const each = require('lodash/forEach');
 
-import { noctuaAnimations } from '@noctua/animations';
-import { NoctuaUtils } from '@noctua/utils/noctua-utils';
+import { noctuaAnimations } from './../../../../../../../@noctua/animations';
 
-import { takeUntil } from 'rxjs/internal/operators';
-import { forEach } from '@angular/router/src/utils/collection';
 
 import { NoctuaFormService } from '../../../services/noctua-form.service';
 
 import { NoctuaAnnotonConnectorService } from 'noctua-form-base';
 import { NoctuaGraphService } from 'noctua-form-base';
-import { NoctuaFormGridService } from 'noctua-form-base';
+import { NoctuaAnnotonFormService } from 'noctua-form-base';
 import { NoctuaFormConfigService } from 'noctua-form-base';
 import { NoctuaLookupService } from 'noctua-form-base';
-import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
+import { NoctuaSearchService } from './../../../../../../../@noctua.search/services/noctua-search.service';
 import { CamService } from 'noctua-form-base';
 import { CamDiagramService } from './../../cam-diagram/services/cam-diagram.service';
 import { CamTableService } from './../../cam-table/services/cam-table.service';
 
-import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
+import { SparqlService } from './../../../../../../../@noctua.sparql/services/sparql/sparql.service';
 
 import { Cam } from 'noctua-form-base';
 import { Annoton } from 'noctua-form-base';
@@ -74,13 +71,13 @@ export class AnnotonConnectorFormComponent implements OnInit, OnDestroy {
     public camTableService: CamTableService,
     private noctuaGraphService: NoctuaGraphService,
     public noctuaFormConfigService: NoctuaFormConfigService,
-    public noctuaFormGridService: NoctuaFormGridService,
+    public noctuaAnnotonFormService: NoctuaAnnotonFormService,
     private noctuaLookupService: NoctuaLookupService,
     public noctuaFormService: NoctuaFormService,
     private sparqlService: SparqlService
   ) {
     this.unsubscribeAll = new Subject();
-    // this.annoton = self.noctuaFormGridService.annoton;
+    // this.annoton = self.noctuaAnnotonFormService.annoton;
   }
 
   ngOnInit(): void {
@@ -118,7 +115,7 @@ export class AnnotonConnectorFormComponent implements OnInit, OnDestroy {
       this.noctuaAnnotonConnectorService.annoton,
       this.noctuaAnnotonConnectorService.subjectMFNode,
       this.noctuaAnnotonConnectorService.objectMFNode).then(function (data) {
-        // self.noctuaFormGridService.clearForm();
+        // self.noctuaAnnotonFormService.clearForm();
         // self.dialogService.openSuccessfulSaveToast();
       });
   }
@@ -144,7 +141,7 @@ export class AnnotonConnectorFormComponent implements OnInit, OnDestroy {
   }
 
   clear() {
-    this.noctuaFormGridService.clearForm();
+    this.noctuaAnnotonFormService.clearForm();
   }
 
 

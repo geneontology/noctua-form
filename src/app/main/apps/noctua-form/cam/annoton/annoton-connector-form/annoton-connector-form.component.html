@@ -37,8 +37,8 @@
       <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
         <div class="ph-15 noc-annoton-group-row" fxLayout="column">
           <mat-radio-group formControlName="causalEffect" fxLayout="column" fxLayoutAlign="start stretch">
-            <mat-radio-button *ngFor="let causalEffect of noctuaFormConfigService.causalEffect.options" class="mt-8 mb-4"
-              [value]="causalEffect" fxFlex="30">
+            <mat-radio-button *ngFor="let causalEffect of noctuaFormConfigService.causalEffect.options"
+              class="mt-8 mb-4" [value]="causalEffect" fxFlex="30">
               {{causalEffect.label}}
             </mat-radio-button>
           </mat-radio-group>
@@ -64,13 +64,16 @@
       </div>
       <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
         <div class="ph-15 noc-annoton-group-row" fxLayout="column">
-          <div formArrayName="evidenceFormArray" *ngFor="let evidence of connectorFormGroup.get('evidenceFormArray').controls; let i = index;">
+          <div formArrayName="evidenceFormArray"
+            *ngFor="let evidence of connectorFormGroup.get('evidenceFormArray')?.controls; let i = index;">
             <div [formGroupName]="i" fxLayout="row" fxLayoutAlign="start center" class="w-100-p">
               <mat-form-field class="" appearance="standard" class="" fxFlex="50">
                 <mat-label>Evidence</mat-label>
-                <input type="text" matInput formControlName="evidence" placeholder="Evidence" [matAutocomplete]="evidenceAuto" />
+                <input type="text" matInput formControlName="evidence" placeholder="Evidence"
+                  [matAutocomplete]="evidenceAuto" />
                 <mat-autocomplete #evidenceAuto="matAutocomplete" [displayWith]="evidenceDisplayFn">
-                  <mat-option *ngFor="let item of noctuaAnnotonConnectorService.subjectMFNode?.evidence[i]?.evidence.lookup.results"
+                  <mat-option
+                    *ngFor="let item of noctuaAnnotonConnectorService.subjectMFNode?.evidence[i]?.evidence.lookup.results"
                     [value]="item">
                     <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
                       <div>
@@ -91,37 +94,13 @@
                 <input matInput formControlName="with" placeholder="With" />
               </mat-form-field>
               <span fxFlex=""></span>
-              <button mat-icon-button class="noc-action-button" fxFlex="40px" [matMenuTriggerFor]="entityMenu">
-                <mat-icon>menu</mat-icon>
-              </button>
-              <mat-menu #entityMenu="matMenu" class="noc-dropdown-menu">
-                <button class="" (click)="appCtrl.removeHasPartGP(appCtrl.formGrid.annoton, entity)">
-                  Remove GP
-                </button>
-                <h6 class="noc-menu-heading"> Evidence</h6>
-                <button mat-menu-item class="" (click)="openSelectEvidenceDialog(evidence)">
-                  Clone Evidence
-                </button>
-                <button mat-menu-item class="" (click)="openAddEvidenceDialog()">
-                  More Evidence
-                </button>
-                <button mat-menu-item class="" (click)="addEvidence()">
-                  Add Evidence
-                </button>
-                <button (click)="removeEvidence(i)" mat-menu-item>
-                  Remove Evidence
-                </button>
-                <button mat-menu-item class="" (click)="addNDEvidence(entity.evidence[0])">
-                  Add ND Reference
-                </button>
-              </mat-menu>
             </div>
           </div>
         </div>
       </div>
     </form>
     <div layout="row" class="noc-submit-row">
-      <button *ngIf="false" (click)='cancel()' type="button" mat-raised-button color="" class="mr-8">
+      <button *ngIf="false" type="button" mat-raised-button color="" class="mr-8">
         Why is the "Save" button disabled?
       </button>
       <span fxFlex></span>

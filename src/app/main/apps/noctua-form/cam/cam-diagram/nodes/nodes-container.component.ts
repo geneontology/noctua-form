@@ -8,7 +8,7 @@ import { ContextMenuComponent } from 'ngx-contextmenu';
 import { NodeService } from './services/node.service';
 import { CamDiagramService } from './../services/cam-diagram.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { NoctuaFormGridService } from 'noctua-form-base';
+import { NoctuaAnnotonFormService } from 'noctua-form-base';
 import { CamService } from 'noctua-form-base'
 import { Annoton } from 'noctua-form-base';
 import { AnnotonNode } from 'noctua-form-base';
@@ -29,7 +29,7 @@ export class NodesContainerComponent implements OnChanges, AfterViewInit {
   constructor(
     public noctuaFormService: NoctuaFormService,
     public camDiagramService: CamDiagramService,
-    public noctuaFormGridService: NoctuaFormGridService,
+    public noctuaAnnotonFormService: NoctuaAnnotonFormService,
     private nodeService: NodeService) { }
 
   addAnnoton(event) {
@@ -44,8 +44,8 @@ export class NodesContainerComponent implements OnChanges, AfterViewInit {
   }
 
   openForm(location?) {
-    this.noctuaFormGridService.mfLocation = location;
-    this.noctuaFormGridService.initializeForm();
+    this.noctuaAnnotonFormService.mfLocation = location;
+    this.noctuaAnnotonFormService.initializeForm();
     this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.annotonForm)
   }
 

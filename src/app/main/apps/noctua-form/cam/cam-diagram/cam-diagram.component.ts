@@ -15,26 +15,24 @@ import * as _ from 'lodash';
 declare const require: any;
 const each = require('lodash/forEach');
 
-import { noctuaAnimations } from '@noctua/animations';
-import { NoctuaUtils } from '@noctua/utils/noctua-utils';
+import { noctuaAnimations } from './../../../../../../@noctua/animations';
 
-import { takeUntil, startWith } from 'rxjs/internal/operators';
 
 import "rxjs/add/operator/debounceTime";
 import "rxjs/add/operator/distinctUntilChanged";
 import { forEach } from '@angular/router/src/utils/collection';
 
-import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loader.service';
+import { NoctuaTranslationLoaderService } from './../../../../../../@noctua/services/translation-loader.service';
 import { NoctuaFormConfigService } from 'noctua-form-base';
 import { NoctuaGraphService } from 'noctua-form-base';
 import { NoctuaLookupService } from 'noctua-form-base';
 
 
 import { NoctuaFormService } from './../../services/noctua-form.service';
-import { NoctuaFormGridService } from 'noctua-form-base';
+import { NoctuaAnnotonFormService } from 'noctua-form-base';
 import { CamDiagramService } from './services/cam-diagram.service';
-import { NoctuaFormDialogService } from './../../dialog.service';
-import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
+import { NoctuaFormDialogService } from './../../services/dialog.service';
+import { NoctuaSearchService } from './../../../../../../@noctua.search/services/noctua-search.service';
 import { CamService } from 'noctua-form-base'
 
 import { Cam } from 'noctua-form-base';
@@ -67,7 +65,7 @@ export class CamDiagramComponent implements AfterViewInit, OnInit {
     private camService: CamService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaSearchService: NoctuaSearchService,
-    public noctuaFormGridService: NoctuaFormGridService,
+    public noctuaAnnotonFormService: NoctuaAnnotonFormService,
     //   public noctuaFormService: NoctuaFormService,
     public camDiagramService: CamDiagramService,
     private noctuaFormDialogService: NoctuaFormDialogService,
@@ -102,9 +100,9 @@ export class CamDiagramComponent implements AfterViewInit, OnInit {
           }
         });
         newAnnotons.forEach((destAnnoton: Annoton) => {
-          //     destAnnoton.location = this.noctuaFormGridService.mfLocation;
+          //     destAnnoton.location = this.noctuaAnnotonFormService.mfLocation;
 
-          if (this.noctuaFormGridService.mfLocation) {
+          if (this.noctuaAnnotonFormService.mfLocation) {
             localStorage.setItem(destAnnoton.connectionId, JSON.stringify(destAnnoton.location));
           }
         });

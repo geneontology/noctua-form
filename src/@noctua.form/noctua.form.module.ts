@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import {
   NoctuaAnnotonConnectorService,
-  NoctuaFormGridService,
+  NoctuaAnnotonFormService,
   CamService
 } from './services';
 
@@ -12,12 +12,12 @@ export * from './models'
   imports: [
   ],
   providers: [
-    //  NoctuaFormGridService,
+    //  NoctuaAnnotonFormService,
     //  CamService,
     // NoctuaAnnotonConnectorService
   ],
   exports: [
-    //  NoctuaFormGridService,
+    //  NoctuaAnnotonFormService,
     // CamService,
     //  NoctuaAnnotonConnectorService
   ],

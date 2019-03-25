@@ -7,8 +7,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { merge, Observable, BehaviorSubject, fromEvent, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
-import { noctuaAnimations } from '@noctua/animations';
-import { NoctuaUtils } from '@noctua/utils/noctua-utils';
+import { noctuaAnimations } from './../../../../../../@noctua/animations';
 
 import { takeUntil, startWith } from 'rxjs/internal/operators';
 
@@ -16,18 +15,18 @@ import "rxjs/add/operator/debounceTime";
 import "rxjs/add/operator/distinctUntilChanged";
 import { forEach } from '@angular/router/src/utils/collection';
 
-import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loader.service';
+import { NoctuaTranslationLoaderService } from './../../../../../../@noctua/services/translation-loader.service';
 import { NoctuaFormConfigService } from 'noctua-form-base';
 import { NoctuaGraphService } from 'noctua-form-base';
 import { NoctuaLookupService } from 'noctua-form-base';
 
-import { NoctuaFormGridService } from 'noctua-form-base';
+import { NoctuaAnnotonFormService } from 'noctua-form-base';
 
 import { NoctuaFormService } from './../../services/noctua-form.service';
 import { NoctuaAnnotonConnectorService } from 'noctua-form-base';
 import { CamTableService } from './services/cam-table.service';
-import { NoctuaFormDialogService } from './../../dialog.service';
-import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
+import { NoctuaFormDialogService } from './../../services/dialog.service';
+import { NoctuaSearchService } from './../../../../../../@noctua.search/services/noctua-search.service';
 import { CamService } from 'noctua-form-base'
 
 
@@ -71,7 +70,7 @@ export class CamTableComponent implements OnInit, OnDestroy {
     private noctuaSearchService: NoctuaSearchService,
     private noctuaAnnotonConnectorService: NoctuaAnnotonConnectorService,
     //  public noctuaFormService: NoctuaFormService,
-    public noctuaFormGridService: NoctuaFormGridService,
+    public noctuaAnnotonFormService: NoctuaAnnotonFormService,
     public camTableService: CamTableService,
     private noctuaFormDialogService: NoctuaFormDialogService,
     private noctuaLookupService: NoctuaLookupService,
@@ -84,6 +83,23 @@ export class CamTableComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // this.cam
+  }
+
+  addAnnoton() {
+    // let location = {
+    //   x: event.clientX,
+    //   y: event.clientY
+    //  }
+    // console.log(event.clientX + 'px');
+    // console.log(event.clientY + 'px');
+
+    this.openForm(location);
+  }
+
+  openForm(location?) {
+    this.noctuaAnnotonFormService.mfLocation = location;
+    this.noctuaAnnotonFormService.initializeForm();
+    this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.annotonForm)
   }
 
   search() {
@@ -107,7 +123,7 @@ export class CamTableComponent implements OnInit, OnDestroy {
   }
 
   openAnnotonForm(annoton: Annoton) {
-    this.noctuaFormGridService.initializeForm(annoton);
+    this.noctuaAnnotonFormService.initializeForm(annoton);
     this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.annotonForm)
   }
 

@@ -1,16 +1,16 @@
-import { environment } from 'environments/environment';
+import { environment } from '../../../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { MatDialog, MatDialogRef } from '@angular/material';
-import { CamRowEditDialogComponent } from './dialogs/cam-row-edit/cam-row-edit.component';
+import { CamRowEditDialogComponent } from './../dialogs/cam-row-edit/cam-row-edit.component';
 
-import { AnnotonErrorsDialogComponent } from './dialogs/annoton-errors/annoton-errors.component';
-import { BeforeSaveDialogComponent } from './dialogs/before-save/before-save.component';
-import { CreateFromExistingDialogComponent } from './dialogs/create-from-existing/create-from-existing.component';
-import { LinkToExistingDialogComponent } from './dialogs/link-to-existing/link-to-existing.component';
-import { SelectEvidenceDialogComponent } from './dialogs/select-evidence/select-evidence.component';
-import { SearchDatabaseDialogComponent } from './dialogs/search-database/search-database.component';
+import { AnnotonErrorsDialogComponent } from './../dialogs/annoton-errors/annoton-errors.component';
+import { BeforeSaveDialogComponent } from './../dialogs/before-save/before-save.component';
+import { CreateFromExistingDialogComponent } from './../dialogs/create-from-existing/create-from-existing.component';
+import { LinkToExistingDialogComponent } from './../dialogs/link-to-existing/link-to-existing.component';
+import { SelectEvidenceDialogComponent } from './../dialogs/select-evidence/select-evidence.component';
+import { SearchDatabaseDialogComponent } from './../dialogs/search-database/search-database.component';
 
 import { Cam } from 'noctua-form-base';
 import { Annoton } from 'noctua-form-base';

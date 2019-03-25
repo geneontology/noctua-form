@@ -7,7 +7,6 @@ import { map, filter, reduce, catchError, retry, tap } from 'rxjs/operators';
 import { parseContext, CurieUtil } from '@geneontology/curie-util-es5';
 
 declare function require(name: string);
-//const goContext = require('./../data/go-context.json');
 
 import { goContextConfig } from './../data/go-context';
 

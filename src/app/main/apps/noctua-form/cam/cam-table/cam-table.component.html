@@ -1,5 +1,5 @@
 <div class="w-100-p p-8 cams-table" noctuaPerfectScrollbar>
-  <div *ngFor="let annoton of cam.annotons" class="mat-elevation-z2 mb-16 w-100-p">
+  <div *ngFor="let annoton of cam.annotons" class="mb-16 w-100-p">
     <div class="noc-cam-table-heading" fxLayout="row" fxLayoutAlign="start center">
       <div fxFlex="50px" (click)="$event.stopPropagation()">
         <button mat-icon-button (click)="toggleExpand(annoton)" class="noc-br">
@@ -26,7 +26,8 @@
         </button>
         <mat-menu #connectorMenu="matMenu">
           <ng-container *ngFor="let connector of cam?.annotons">
-            <button mat-menu-item *ngIf="connector.id !== annoton.id" (click)="openAnnotonConnector(annoton, connector)">
+            <button mat-menu-item *ngIf="connector.id !== annoton.id"
+              (click)="openAnnotonConnector(annoton, connector)">
               {{connector.presentation.gpText}}
             </button>
           </ng-container>

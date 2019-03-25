@@ -1,5 +1,5 @@
 
-import { environment } from 'environments/environment';
+import { environment } from './../../../../../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
@@ -9,12 +9,11 @@ import { map, filter, reduce, catchError, retry, tap } from 'rxjs/operators';
 
 import { jsPlumb } from 'jsplumb';
 
-import { NoctuaUtils } from '@noctua/utils/noctua-utils';
-import { CurieService } from '@noctua.curie/services/curie.service';
+import { CurieService } from './../../../../../../../@noctua.curie/services/curie.service';
 import { NoctuaGraphService } from 'noctua-form-base';
 
 import { NoctuaFormService } from './../../../services/noctua-form.service';
-import { NoctuaFormGridService } from 'noctua-form-base';
+import { NoctuaAnnotonFormService } from 'noctua-form-base';
 import { NoctuaAnnotonConnectorService } from 'noctua-form-base';
 import { NoctuaFormConfigService } from 'noctua-form-base';
 
@@ -43,7 +42,7 @@ export class CamDiagramService {
 
 
   constructor(private noctuaAnnotonConnectorService: NoctuaAnnotonConnectorService,
-    public noctuaFormGridService: NoctuaFormGridService, public noctuaFormService: NoctuaFormService) {
+    public noctuaAnnotonFormService: NoctuaAnnotonFormService, public noctuaFormService: NoctuaFormService) {
 
 
   }
@@ -119,7 +118,7 @@ export class CamDiagramService {
   openAnnotonForm() {
     const self = this;
 
-    self.noctuaFormGridService.initializeForm();
+    self.noctuaAnnotonFormService.initializeForm();
     self.noctuaFormService.openRightDrawer(self.noctuaFormService.panel.annotonForm)
   }
 

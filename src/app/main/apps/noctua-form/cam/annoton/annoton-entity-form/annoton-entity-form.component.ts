@@ -1,5 +1,3 @@
-
-
 import { Component, Inject, Input, OnInit, ElementRef, OnDestroy, ViewEncapsulation, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -13,24 +11,21 @@ import * as _ from 'lodash';
 declare const require: any;
 const each = require('lodash/forEach');
 
-import { noctuaAnimations } from '@noctua/animations';
-import { NoctuaUtils } from '@noctua/utils/noctua-utils';
+import { noctuaAnimations } from './../../../../../../../@noctua/animations';
 
-import { takeUntil } from 'rxjs/internal/operators';
-import { forEach } from '@angular/router/src/utils/collection';
 
 import { NoctuaFormService } from '../../../services/noctua-form.service';
 
-import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
+import { NoctuaSearchService } from './../../../../../../../@noctua.search/services/noctua-search.service';
 import { CamDiagramService } from './../../cam-diagram/services/cam-diagram.service';
 import { CamTableService } from './../../cam-table/services/cam-table.service';
 
-import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
+import { SparqlService } from './../../../../../../../@noctua.sparql/services/sparql/sparql.service';
 
 import {
   NoctuaGraphService,
   NoctuaFormConfigService,
-  NoctuaFormGridService,
+  NoctuaAnnotonFormService,
   NoctuaLookupService,
   NoctuaAnnotonEntityService,
   CamService
@@ -71,13 +66,13 @@ export class AnnotonEntityFormComponent implements OnInit, OnDestroy {
     public camTableService: CamTableService,
     private noctuaGraphService: NoctuaGraphService,
     public noctuaFormConfigService: NoctuaFormConfigService,
-    public noctuaFormGridService: NoctuaFormGridService,
+    public noctuaAnnotonFormService: NoctuaAnnotonFormService,
     private noctuaLookupService: NoctuaLookupService,
     public noctuaFormService: NoctuaFormService,
     private sparqlService: SparqlService
   ) {
     this.unsubscribeAll = new Subject();
-    // this.annoton = self.noctuaFormGridService.annoton;
+    // this.annoton = self.noctuaAnnotonFormService.annoton;
   }
 
   ngOnInit(): void {
@@ -115,7 +110,7 @@ export class AnnotonEntityFormComponent implements OnInit, OnDestroy {
 
     /// self.noctuaGraphService.saveEntity(self.cam,
     //   this.noctuaAnnotonEntityService.termNode).then(function (data) {
-    // self.noctuaFormGridService.clearForm();
+    // self.noctuaAnnotonFormService.clearForm();
     // self.dialogService.openSuccessfulSaveToast();
     //   });
   }
@@ -148,7 +143,17 @@ export class AnnotonEntityFormComponent implements OnInit, OnDestroy {
   
       this.reviewDialogService.openCamEditSummary(this.cam);
     } */
+  openMoreEvidenceDialog() {
 
+  }
+
+  openSelectEvidenceDialog(evidence: Evidence) {
+
+  }
+
+  addNDEvidence(evidence: Evidence) {
+
+  }
   addEvidence() {
     const self = this;
 
@@ -170,7 +175,7 @@ export class AnnotonEntityFormComponent implements OnInit, OnDestroy {
   }
 
   clear() {
-    this.noctuaFormGridService.clearForm();
+    this.noctuaAnnotonFormService.clearForm();
   }
 
 

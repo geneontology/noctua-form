@@ -12,8 +12,8 @@ import * as _ from 'lodash';
 declare const require: any;
 const each = require('lodash/forEach');
 
-import { Annoton } from './..//models/annoton/annoton';
-import { AnnotonNode } from './..//models/annoton/annoton-node';
+import { Annoton } from './../models/annoton/annoton';
+import { AnnotonNode } from './../models/annoton/annoton-node';
 
 import { AnnotonForm } from './../models/forms/annoton-form';
 import { AnnotonFormMetadata } from './../models/forms/annoton-form-metadata';
@@ -21,7 +21,7 @@ import { AnnotonFormMetadata } from './../models/forms/annoton-form-metadata';
 @Injectable({
   providedIn: 'root'
 })
-export class NoctuaFormGridService {
+export class NoctuaAnnotonFormService {
   public mfLocation;
   public annoton: Annoton;
   // public annotonPresentation;
