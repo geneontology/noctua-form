@@ -80,8 +80,6 @@ export class CamService {
 
     camForm.createCamForm(this.cam);
 
-    //self.camFormData = self.noctuaFormConfigService.createReviewSearchFormData();
-
     return camForm;
   }
 

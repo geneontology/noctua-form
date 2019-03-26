@@ -31,6 +31,7 @@ export class NoctuaUserService {
   baristaToken;
   baristaUrl = environment.globalBaristaLocation;
   onUserChanged: BehaviorSubject<any>;
+  user: Curator;
 
   public annoton: Annoton;
   // public annotonPresentation;

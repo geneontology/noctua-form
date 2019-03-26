@@ -71,6 +71,7 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
         this.user.name = response.nickname;
         this.user.groups = response.groups;
         // user.manager.use_groups([self.userInfo.selectedGroup.id]);
+        this.noctuaUserService.user = this.user;
         this.noctuaUserService.onUserChanged.next(this.user);
       }
     });
