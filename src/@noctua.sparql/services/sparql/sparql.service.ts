@@ -225,14 +225,15 @@ export class SparqlService {
     let result: Array<Curator> = [];
 
     res.forEach((erg) => {
-      result.push({
-        orcid: erg.orcid.value,
-        name: erg.name.value,
-        cams: erg.cams.value,
-        group: {
-          url: erg.affiliations.value
-        }
-      });
+      let curator = new Curator()
+
+      curator.orcid = erg.orcid.value;
+      curator.name = erg.name.value;
+      curator.cams = erg.cams.value;
+      curator.group = {
+        url: erg.affiliations.value
+      }
+      result.push(curator);
     });
     return result;
   }

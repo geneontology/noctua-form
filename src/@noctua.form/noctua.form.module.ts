@@ -25,4 +25,4 @@ export * from './models'
 
 
 
-export class NoctuaCommonModule { }
+export class NoctuaFormModule { }

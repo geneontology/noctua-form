@@ -18,7 +18,9 @@ import { Evidence } from './../models/annoton/evidence';
 import { noctuaFormConfig } from './../noctua-form-config';
 import { NoctuaFormConfigService } from './config/noctua-form-config.service';
 import { NoctuaLookupService } from './lookup.service';
-import { NoctuaAnnotonFormService } from '../services/annoton-form.service';
+import { NoctuaAnnotonFormService } from './../services/annoton-form.service';
+//User
+import { NoctuaUserService } from './../services/user.service';
 
 import 'rxjs/add/observable/forkJoin';
 import * as _ from 'lodash';
@@ -28,7 +30,6 @@ declare const require: any;
 const each = require('lodash/forEach');
 const forOwn = require('lodash/forOwn');
 const uuid = require('uuid/v1');
-const annotationTitleKey = 'title';
 const model = require('bbop-graph-noctua');
 const amigo = require('amigo2');
 const bbopx = require('bbopx');
@@ -59,6 +60,7 @@ export class NoctuaGraphService {
   localClosures;
 
   constructor(
+    private noctuaUserService: NoctuaUserService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     private annotonFormService: NoctuaAnnotonFormService,
     private httpClient: HttpClient,
@@ -82,7 +84,7 @@ export class NoctuaGraphService {
     let manager = new minerva_manager(
       this.baristaLocation,
       this.minervaDefinitionName,
-      this.baristaToken,
+      this.noctuaUserService.baristaToken,
       engine, 'async');
 
 
@@ -140,17 +142,15 @@ export class NoctuaGraphService {
       cam.graph = new noctua_graph();
       cam.modelId = resp.data().id;
       cam.graph.load_data_basic(resp.data());
-      //   cam.modelTitle = null;
-      //    cam.modelState = null;
-      let annotations = cam.graph.get_annotations_by_key(annotationTitleKey);
+      let titleAnnotations = cam.graph.get_annotations_by_key('title');
       let stateAnnotations = cam.graph.get_annotations_by_key('state');
 
-      if (annotations.length > 0) {
-        // modelTitle = annotations[0].value();
+      if (titleAnnotations.length > 0) {
+        cam.title = titleAnnotations[0].value();
       }
 
       if (stateAnnotations.length > 0) {
-        // modelState = stateAnnotations[0].value();
+        cam.state = stateAnnotations[0].value();
       }
 
       self.graphPreParse(cam.graph).subscribe((data) => {
@@ -159,8 +159,6 @@ export class NoctuaGraphService {
         self.annotonsToTable(cam.graph, cam.annotons)
         cam.onGraphChanged.next(cam.annotons);
       });
-
-      //  title = graph.get_annotations_by_key('title');
     }
 
     cam.manager.register('rebuild', function (resp) {
@@ -172,22 +170,6 @@ export class NoctuaGraphService {
 
 
 
-  /*
-  getUserInfo() {
-    const self = this;
-    let url = self.barista_location + "/user_info_by_token/" + self.barista_token;
-   
-    return this.$http.get(url)
-      .then(function (response) {
-        if (response.data && response.data.groups && response.data.groups.length > 0) {
-          self.userInfo.name = response.data['nickname'];
-          self.userInfo.groups = response.data['groups'];
-          self.userInfo.selectedGroup = self.userInfo.groups[0];
-          self.manager.use_groups([self.userInfo.selectedGroup.id]);
-        }
-      });
-  }
-  */
 
   addModel(manager) {
     manager.add_model();
@@ -728,7 +710,7 @@ export class NoctuaGraphService {
   saveMFLocation(cam) {
     const self = this;
 
-    let reqs = new minerva_requests.request_set(this.noctuaFormConfigService.baristaToken, cam.modelId);
+    let reqs = new minerva_requests.request_set(this.noctuaUserService.baristaToken, cam.modelId);
 
 
     // Update all of the nodes with their current local (should be
@@ -750,7 +732,7 @@ export class NoctuaGraphService {
 
     // And add the actual storage.
     reqs.store_model();
-    // cam.manager.user_token(this.noctuaFormConfigService.baristaToken);
+    // cam.manager.user_token(this.noctuaUserService.baristaToken);
     //  cam.manager.request_with(reqs);
   }
 
@@ -777,7 +759,7 @@ export class NoctuaGraphService {
       }
     });
 
-    cam.manager.user_token(this.noctuaFormConfigService.baristaToken);
+    cam.manager.user_token(this.noctuaUserService.baristaToken);
     cam.manager.request_with(reqs);
   }
 
@@ -820,7 +802,7 @@ export class NoctuaGraphService {
   }
 
   addEvidence(cam, srcNode, destNode) {
-    let reqs = new minerva_requests.request_set(this.noctuaFormConfigService.baristaToken, cam.modelId);
+    let reqs = new minerva_requests.request_set(this.noctuaUserService.baristaToken, cam.modelId);
 
     if (srcNode.hasValue() && destNode.hasValue()) {
       // let ce = new class_expression(destNode.term.control.value.id);
@@ -1155,9 +1137,9 @@ export class NoctuaGraphService {
       const manager = cam.manager;
       let reqs = new minerva_requests.request_set(manager.user_token(), cam.model.id);
 
-      if (!cam.modelTitle) {
+      if (!cam.title) {
         const defaultTitle = 'enabled by ' + geneProduct.term.control.value.label;
-        reqs.add_annotation_to_model(annotationTitleKey, defaultTitle);
+        reqs.add_annotation_to_model('title', defaultTitle);
       }
 
       each(annoton.nodes, function (node) {

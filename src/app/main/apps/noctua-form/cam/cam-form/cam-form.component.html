@@ -8,31 +8,16 @@
     </button>
   </div>
   <form *ngIf="camFormGroup" fxLayout="column" fxLayoutAlign="start stretch" name="camFormGroup"
-    [formGroup]="camFormGroup" class="noc-container noc-annoton-form">
-    <div *ngIf="false" class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+    [formGroup]="camFormGroup" class="noc-cam-form">
+    <div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
       <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
         <div class="noc-section-heading">
           Model Information
         </div>
         <span fxFlex></span>
-        <button mat-button [matMenuTriggerFor]="modalOptions" class="noc-bl">
-          MODEL OPTIONS <b class="caret"></b>
-        </button>
-        <mat-menu #modalOptions="matMenu">
-          <a mat-menu-item>
-            Start New Model
-          </a>
-          <a mat-menu-item>
-            Create From an Existing Activity
-          </a>
-          <a *ngFor="let noctuaFormExample of noctuaFormConfigService.noctuaFormExample.basic" mat-menu-item
-            (click)="createExample(noctuaFormExample.annoton)">
-            {{noctuaFormExample.name}}
-          </a>
-        </mat-menu>
       </div>
       <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
-        <div class="noc-annoton-group-row" fxLayout="column" fxLayoutAlign="start stretch">
+        <div class="noc-cam-group-row" fxLayout="column" fxLayoutAlign="start stretch">
           <mat-form-field class="mb-8">
             <mat-label>Title</mat-label>
             <input matInput formControlName="title" placeholder="Title" />

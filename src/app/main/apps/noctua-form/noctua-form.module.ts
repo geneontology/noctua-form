@@ -9,6 +9,7 @@ import { NoctuaFormComponent } from './noctua-form.component';
 import { NoctuaSharedModule } from './../../../../@noctua/shared.module';
 import { NoctuaFormDialogService } from './services/dialog.service';
 import {
+  NoctuaUserService,
   NoctuaAnnotonConnectorService,
   NoctuaGraphService,
   NoctuaFormConfigService,
@@ -82,6 +83,7 @@ const routes = [
     AnnotonTableComponent,
   ],
   providers: [
+    NoctuaUserService,
     NoctuaAnnotonConnectorService,
     NoctuaGraphService,
     NoctuaFormConfigService,

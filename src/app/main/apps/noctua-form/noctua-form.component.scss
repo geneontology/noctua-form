@@ -12,7 +12,8 @@
 
   .noc-summary-bar {
     margin-bottom: 4px;
-    @include deep-height(50px);
+    padding: 0 10px;
+    @include deep-height(100px);
     //min-height: 35px;
     background-color: #f2f2f2;
     font-size: 16px;

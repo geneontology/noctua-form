@@ -28,7 +28,9 @@
     padding: 0 14px 14px 14px;
   }
 
-  .noc-annoton-form {
+  .noc-cam-form {
+    width: 500px;
+
     .noc-form-section {
       width: 100%;
       background-color: #FFF;
@@ -68,7 +70,7 @@
         font-size: 18px;
       }
 
-      .noc-annoton-group-row {
+      .noc-cam-group-row {
         &.noc-row-disabled {
           opacity: 0.2;
           pointer-events: none;

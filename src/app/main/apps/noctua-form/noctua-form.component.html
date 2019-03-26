@@ -12,10 +12,6 @@
     </button>
   </div>
   <mat-drawer-container class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start" autosize>
-    <mat-drawer #leftDrawer class="noc-left-drawer" fxFlex="200px" mode="side" position="start">
-      <div [ngSwitch]="noctuaFormService.selectedLeftPanel.id" class="h-100-p">
-      </div>
-    </mat-drawer>
     <mat-drawer-content class="noc-section-body w-100-p h-100-p" fxLayout="column" fxLayoutAlign="start stretch">
       <div class="noc-summary-bar" fxLayout="row" fxLayoutAlign="start center">
         <div fxFlex="50px" (click)="$event.stopPropagation()">
@@ -27,13 +23,19 @@
             </mat-icon>
           </button>
         </div>
-        <div class="noc-title">
+        <div class="noc-title" fxLayout="column" fxLayoutAlign="start stretch">
           <div class="text-truncate">
-            <strong>model title</strong>{{cam.title}}
+            <strong>Model Title: </strong>{{cam.title}}
+          </div>
+          <div class="text-truncate">
+            <strong>State: </strong>{{cam.state}}
+          </div>
+          <div class="text-truncate">
+            <strong>Group: </strong>{{user?.group?.label}}
           </div>
         </div>
         <span fxFlex=""></span>
-        <div class="" fxFlex="150px" fxLayout="row" fxLayoutAlign="end center">
+        <div class="" fxFlex="" fxLayout="row" fxLayoutAlign="end center">
           <button mat-icon-button (click)="openCamForm(annoton)" class="noc-bl">
             <mat-icon class=""> edit </mat-icon>
           </button>
@@ -50,7 +52,7 @@
           </button>
         </div>
       </div>
-      <div [ngSwitch]="noctuaFormService.selectedMiddlePanel.id" class="h-100-p w-100-p">
+      <div [ngSwitch]="noctuaFormService.selectedMiddlePanel.id" class="w-100-p">
         <noc-cam-diagram *ngSwitchCase="noctuaFormService.panel.camDiagram.id" [cam]="cam"></noc-cam-diagram>
         <noc-cam-table *ngSwitchCase="noctuaFormService.panel.camTable.id" [cam]="cam"></noc-cam-table>
       </div>

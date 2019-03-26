@@ -104,24 +104,10 @@ export class AnnotonEntityFormComponent implements OnInit, OnDestroy {
     return evidence ? evidence.label : undefined;
   }
 
-  save_temp() {
-    const self = this;
-
-
-    /// self.noctuaGraphService.saveEntity(self.cam,
-    //   this.noctuaAnnotonEntityService.termNode).then(function (data) {
-    // self.noctuaAnnotonFormService.clearForm();
-    // self.dialogService.openSuccessfulSaveToast();
-    //   });
-  }
-
   save() {
     const self = this;
     self.noctuaAnnotonEntityService.annotonEntityFormToAnnoton();
 
-    console.log(self.noctuaAnnotonEntityService.termNode);
-
-    // this.openSummary()
     this.noctuaGraphService.edit(this.cam, self.noctuaAnnotonEntityService.termNode);
   }
 

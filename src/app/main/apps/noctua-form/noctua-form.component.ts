@@ -7,6 +7,8 @@ import { noctuaAnimations } from './../../../../@noctua/animations';
 
 import {
   Cam,
+  Curator,
+  NoctuaUserService,
   NoctuaFormConfigService,
   NoctuaGraphService,
   NoctuaAnnotonFormService,
@@ -31,6 +33,7 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
   rightDrawer: MatDrawer;
 
   public cam: Cam;
+  public user: Curator;
   searchResults = [];
   modelId: string = '';
   baristaToken: string = '';
@@ -39,6 +42,7 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
     private camService: CamService,
+    public noctuaUserService: NoctuaUserService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     public noctuaAnnotonFormService: NoctuaAnnotonFormService,
     public noctuaFormService: NoctuaFormService,
@@ -52,9 +56,24 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
         this.modelId = params['model_id'] || null;
         this.baristaToken = params['barista_token'] || null;
 
-        this.noctuaGraphService.baristaToken = this.baristaToken;
+        this.noctuaUserService.baristaToken = this.baristaToken;
+        this.getUserInfo();
         this.loadCam(this.modelId);
       });
+  }
+
+  getUserInfo() {
+    const self = this;
+
+    this.noctuaUserService.getUser().subscribe((response) => {
+      if (response) {
+        this.user = new Curator()
+        this.user.name = response.nickname;
+        this.user.groups = response.groups;
+        // user.manager.use_groups([self.userInfo.selectedGroup.id]);
+        this.noctuaUserService.onUserChanged.next(this.user);
+      }
+    });
   }
 
   ngOnInit(): void {

@@ -78,8 +78,6 @@ export class AnnotonFormComponent implements OnInit, OnDestroy {
       .subscribe(annotonFormGroup => {
         if (!annotonFormGroup) return;
         this.annotonFormGroup = annotonFormGroup;
-
-        console.log(this.annotonFormGroup)
       });
 
     this.camService.onCamChanged.subscribe((cam) => {
