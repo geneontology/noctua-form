@@ -304,6 +304,25 @@ export class NoctuaFormConfigService {
           }
         }
       },
+      'bp-2': {
+        "label": 'Has Input (Gene Product/Chemical)',
+        "relationship": noctuaFormConfig.edge.hasInput,
+        "displaySection": noctuaFormConfig.displaySection.fd,
+        "displayGroup": noctuaFormConfig.displayGroup.bp,
+        "lookupGroup": 'CHEBI:33695',
+        'treeLevel': 2,
+        "term": {
+          "ontologyClass": [],
+          "lookup": {
+            "requestParams": Object.assign({}, JSON.parse(JSON.stringify(this.baseRequestParams)), {
+              fq: [
+                'document_category:"ontology_class"',
+                'isa_closure:"CHEBI:33695"'
+              ],
+            }),
+          }
+        }
+      },
       'bp-1': {
         "label": 'Part Of (BP)',
         'aspect': 'P',
@@ -324,6 +343,7 @@ export class NoctuaFormConfigService {
           }
         }
       },
+
       'bp-1-1': {
         "label": 'Part Of (BP)',
         'aspect': 'P',
@@ -465,7 +485,7 @@ export class NoctuaFormConfigService {
     this._modelRelationship = {
       default: {
         nodes: [
-          'gp', 'mc', 'mf', 'mf-1', 'mf-2', 'bp', 'bp-1', 'bp-1-1', 'cc', 'cc-1', 'cc-1-1', 'cc-1-1-1'
+          'gp', 'mc', 'mf', 'mf-1', 'mf-2', 'bp', 'bp-2', 'bp-1', 'bp-1-1', 'cc', 'cc-1', 'cc-1-1', 'cc-1-1-1'
         ],
         triples: [{
           subject: 'mf',
@@ -491,6 +511,10 @@ export class NoctuaFormConfigService {
           subject: 'mf',
           object: 'mf-2',
           edge: noctuaFormConfig.edge.happensDuring
+        }, {
+          subject: 'bp',
+          object: 'bp-2',
+          edge: noctuaFormConfig.edge.hasInput
         }, {
           subject: 'bp',
           object: 'bp-1',
@@ -1069,6 +1093,7 @@ export class NoctuaFormConfigService {
       overridesData.evidence ? node.evidence[0].setEvidence(overridesData.evidence) : null;
       overridesData.reference ? node.evidence[0].setReference(overridesData.reference) : null;
     });
+
 
     return annoton;
   }

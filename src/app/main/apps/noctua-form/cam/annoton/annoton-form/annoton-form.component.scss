@@ -29,6 +29,8 @@
   }
 
   .noc-annoton-form {
+    width: 900px;
+
     .noc-form-section {
       width: 100%;
       background-color: #FFF;
@@ -38,10 +40,11 @@
         background-color: $noc-primary-color-light;
 
         .noc-section-heading {
-          padding-left: 8px;
+          padding-left: 12px;
           font-size: 12px;
           line-height: 40px;
           color: #555;
+          font-weight: bold;
         }
 
         .noc-action-button {

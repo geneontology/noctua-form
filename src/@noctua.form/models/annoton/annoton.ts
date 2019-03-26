@@ -232,6 +232,7 @@ export class Annoton extends SaeGraph {
       }
     });
 
+
     this._presentation = result;
 
     return this._presentation
@@ -294,10 +295,10 @@ export class Annoton extends SaeGraph {
       term: extension ? {} : term,
       extension: extension ? term : {},
       aspect: node.aspect,
-      evidence: node.evidence[0].evidence.control.value,
-      reference: node.evidence[0].reference.control.link,
-      with: node.evidence[0].with.control.value,
-      assignedBy: node.evidence[0].assignedBy.control,
+      evidence: node.evidence.length > 0 ? node.evidence[0].evidence.control.value : {},
+      reference: node.evidence.length > 0 ? node.evidence[0].reference.control.link : '',
+      with: node.evidence.length > 0 ? node.evidence[0].with.control.value : '',
+      assignedBy: node.evidence.length > 0 ? node.evidence[0].assignedBy.control : '',
       node: node
     })
 

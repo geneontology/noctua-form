@@ -35,7 +35,7 @@
         </div>
       </div>
       <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
-        <div class="ph-15 noc-annoton-group-row" fxLayout="column">
+        <div class="px-12 noc-annoton-group-row" fxLayout="column">
           <mat-radio-group formControlName="causalEffect" fxLayout="column" fxLayoutAlign="start stretch">
             <mat-radio-button *ngFor="let causalEffect of noctuaFormConfigService.causalEffect.options"
               class="mt-8 mb-4" [value]="causalEffect" fxFlex="30">
@@ -50,7 +50,7 @@
         </div>
       </div>
       <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
-        <div class="ph-15 noc-annoton-group-row" fxLayout="column">
+        <div class="px-12 noc-annoton-group-row" fxLayout="column">
           <mat-radio-group formControlName="annotonsConsecutive" fxLayout="column" fxLayoutAlign="start stretch">
             <mat-radio-button class="mt-8 mb-4" [value]="true" fxFlex="30"> No</mat-radio-button>
             <mat-radio-button class="mt-8 mb-4" [value]="false" fxFlex="30"> Yes</mat-radio-button>
@@ -63,7 +63,7 @@
         </div>
       </div>
       <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
-        <div class="ph-15 noc-annoton-group-row" fxLayout="column">
+        <div class="px-12 noc-annoton-group-row" fxLayout="column">
           <div formArrayName="evidenceFormArray"
             *ngFor="let evidence of connectorFormGroup.get('evidenceFormArray')?.controls; let i = index;">
             <div [formGroupName]="i" fxLayout="row" fxLayoutAlign="start center" class="w-100-p">

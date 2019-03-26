@@ -1,11 +1,12 @@
 <div [formGroup]="entityFormGroup" fxLayout="row" fxLayoutAlign="start center" class="w-100-p">
-  <div *ngIf="entity.treeLevel>0" class="noc-tree-input noc-level-1">
+  <div *ngIf="entity.treeLevel>1" class="noc-tree-input noc-level-1">
   </div>
-  <div *ngIf="entity.treeLevel>1" class="noc-tree-input noc-level-2">
+  <div *ngIf="entity.treeLevel>2" class="noc-tree-input noc-level-2">
   </div>
-  <div *ngIf="entity.treeLevel>2" class="noc-tree-input noc-level-3">
+  <div *ngIf="entity.treeLevel>3" class="noc-tree-input noc-level-3">
   </div>
-  <mat-form-field class="mr-8" fxFlex>
+  <mat-form-field class="mr-8" appearance="legacy" fxFlex>
+    <mat-label>{{entity.label}}</mat-label>
     <input type="text" matInput formControlName="term" placeholder="{{entity.label}}" [matAutocomplete]="termAuto" />
     <mat-autocomplete #termAuto="matAutocomplete" [displayWith]="termDisplayFn">
       <mat-option *ngFor="let item of entity?.term.lookup.results" [value]="item">
@@ -23,7 +24,7 @@
     <div formArrayName="evidenceFormArray"
       *ngFor="let evidence of entityFormGroup.get('evidenceFormArray')?.controls; let i = index;">
       <div [formGroupName]="i" fxLayout="row" fxLayoutAlign="start center" class="w-100-p">
-        <mat-form-field class="" appearance="standard" class="" fxFlex="50">
+        <mat-form-field class="" appearance="legacy" class="" fxFlex="50">
           <mat-label>Evidence</mat-label>
           <input type="text" matInput formControlName="evidence" placeholder="Evidence"
             [matAutocomplete]="evidenceAuto" />
@@ -39,19 +40,23 @@
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
-        <mat-form-field appearance="standard" class="ml-12" fxFlex="20">
+        <mat-form-field appearance="legacy" class="ml-12" fxFlex="20">
           <mat-label>Reference</mat-label>
           <input matInput formControlName="reference" placeholder="Reference" />
         </mat-form-field>
-        <mat-form-field appearance="standard" class="ml-12" fxFlex="20">
+        <mat-form-field appearance="legacy" class="ml-12" fxFlex="20">
           <mat-label>With</mat-label>
           <input matInput formControlName="with" placeholder="With" />
         </mat-form-field>
         <span fxFlex=""></span>
         <button mat-icon-button class="noc-action-button" fxFlex="40px" [matMenuTriggerFor]="entityMenu">
-          <mat-icon>more</mat-icon>
+          <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #entityMenu="matMenu" class="noc-dropdown-menu">
+          <button class="">
+            Remove GP
+          </button>
+          <!--
           <button class="">
             Remove GP
           </button>
@@ -82,6 +87,7 @@
           <button mat-menu-item *ngIf="entity.aspect" class="" (click)="openSearchDatabaseDialog(entity)">
             Search Database
           </button>
+        -->
         </mat-menu>
       </div>
     </div>

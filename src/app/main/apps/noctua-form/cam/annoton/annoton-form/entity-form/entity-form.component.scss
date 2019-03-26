@@ -18,12 +18,13 @@
 
   .noc-action-button {
     margin: 8px 0 0 0;
-    background-color: #FAFAFA;
-    width: 35px;
-    height: 35px;
+    //   background-color: #FAFAFA;
+    //  width: 35px;
+    //  height: 35px;
+    @include mat-elevation(2);
 
     icon {
-      @include noc-icon-size(14px);
+      //    @include noc-icon-size(14px);
       color: #AAA;
       line-height: 18px;
     }

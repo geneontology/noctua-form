@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
-        <div class="ph-15" fxLayout="column">
+        <div class="px-12" fxLayout="column">
           <mat-form-field class="">
             <input type="text" matInput formControlName="term" placeholder="{{termNode.label}}"
               [matAutocomplete]="termAuto" />
@@ -49,7 +49,7 @@
         </div>
       </div>
       <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
-        <div class="ph-15 noc-annoton-group-row" fxLayout="column">
+        <div class="px-12 noc-annoton-group-row" fxLayout="column">
           <div formArrayName="evidenceFormArray"
             *ngFor="let evidence of annotonEntityFormGroup.get('evidenceFormArray')?.controls; let i = index;">
             <div [formGroupName]="i" fxLayout="row" fxLayoutAlign="start center" class="w-100-p">
