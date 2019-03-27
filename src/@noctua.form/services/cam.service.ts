@@ -187,6 +187,10 @@ export class CamService {
     return result;
   }
 
+  getUniqueEvidence() {
+    return this.cam.getUniqueEvidences();
+  }
+
   getOrcid(orcid) {
     return "\"" + orcid + "\"^^xsd:string";
   }

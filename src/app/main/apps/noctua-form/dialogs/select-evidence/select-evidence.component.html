@@ -10,6 +10,37 @@
     </mat-toolbar-row>
   </mat-toolbar>
   <div mat-dialog-content class="noc-dialog-body" noctuaPerfectScrollbar>
+    <table mat-table [dataSource]="dataSource" class="w-100-p">
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+            [checked]="selection.isSelected(row)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="evidence">
+        <th mat-header-cell *matHeaderCellDef> Evidence </th>
+        <td mat-cell *matCellDef="let evidence"> {{evidence.getEvidence().label}} </td>
+      </ng-container>
+      <ng-container matColumnDef="reference">
+        <th mat-header-cell *matHeaderCellDef> reference </th>
+        <td mat-cell *matCellDef="let evidence"> {{evidence.getReference()}} </td>
+      </ng-container>
+      <ng-container matColumnDef="with">
+        <th mat-header-cell *matHeaderCellDef> With </th>
+        <td mat-cell *matCellDef="let evidence"> {{evidence.getWith()}} </td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+      </tr>
+    </table>
     <!--
     <div fxLayout="column" fxLayoutAlign="start center" class="w-100-p">
 
@@ -144,12 +175,11 @@
       </md-dialog-content>
       </md-dialog>
     </div>
-  </div>
-  <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="space-between center">
-    <span fxFlex></span>
-    <button (click)='close()' type="button" mat-raised-button color="" class="mr-8">Cancel</button>
-    <button (click)="search()" type="button" mat-raised-button color="primary">Save</button>
-  </div>
--->
+  </div>-->
+    <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="space-between center">
+      <span fxFlex></span>
+      <button (click)='close()' type="button" mat-raised-button color="" class="mr-8">Cancel</button>
+      <button (click)="save()" type="button" mat-raised-button color="primary">Done</button>
+    </div>
   </div>
 </div>

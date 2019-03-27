@@ -6,6 +6,7 @@ import { SaeGraph } from './sae-graph.js';
 import { AnnotonError } from "./parser/annoton-error.js";
 
 import { Annoton } from './annoton'
+import { AnnotonNode } from './annoton-node'
 
 export class Cam {
   //Details
@@ -81,22 +82,15 @@ export class Cam {
     return result;
   }
 
-  getUniqueEvidences(result) {
+  getUniqueEvidences(result?) {
     const self = this;
 
     if (!result) {
       result = [];
     }
 
-    function find(data, evidence) {
-      return _.find(data, function (x) {
-        // console.log(x.isEvidenceEqual(evidence))
-        return x.isEvidenceEqual(evidence)
-      })
-    }
-
-    each(self._annotons, function (annotonData) {
-      each(annotonData.annoton.nodes, function (node) {
+    each(self.annotons, function (annoton: Annoton) {
+      each(annoton.nodes, function (node: AnnotonNode) {
         each(node.evidence, function (evidence) {
           if (evidence.hasValue()) {
             if (!self.evidenceExists(result, evidence)) {

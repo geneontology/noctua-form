@@ -12,10 +12,12 @@ import { LinkToExistingDialogComponent } from './../dialogs/link-to-existing/lin
 import { SelectEvidenceDialogComponent } from './../dialogs/select-evidence/select-evidence.component';
 import { SearchDatabaseDialogComponent } from './../dialogs/search-database/search-database.component';
 
-import { Cam } from 'noctua-form-base';
-import { Annoton } from 'noctua-form-base';
-import { AnnotonNode } from 'noctua-form-base';
-import { Evidence } from 'noctua-form-base';
+import {
+    Cam,
+    Annoton,
+    AnnotonNode,
+    Evidence
+} from 'noctua-form-base';
 
 import 'rxjs/add/operator/map';
 
@@ -91,18 +93,21 @@ export class NoctuaFormDialogService {
 
             });
     }
-    openSelectEvidenceDialog(cam): void {
+    openSelectEvidenceDialog(evidence: Evidence[], success): void {
         this.dialogRef = this._matDialog.open(SelectEvidenceDialogComponent, {
-            panelClass: 'select-evidence-dialog',
+            panelClass: 'noc-select-evidence-dialog',
             data: {
-                cam: cam
+                evidence: evidence
             }
         });
         this.dialogRef.afterClosed()
             .subscribe(response => {
-
+                if (response) {
+                    success(response);
+                }
             });
     }
+
     openSearchDatabaseDialog(cam): void {
         this.dialogRef = this._matDialog.open(SearchDatabaseDialogComponent, {
             panelClass: 'search-database-dialog',

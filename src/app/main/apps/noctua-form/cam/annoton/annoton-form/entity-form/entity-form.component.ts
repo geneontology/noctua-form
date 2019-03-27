@@ -17,16 +17,20 @@ import { noctuaAnimations } from './../../../../../../../../@noctua/animations';
 import { NoctuaFormService } from '../../../../services/noctua-form.service';
 
 import { NoctuaTranslationLoaderService } from './../../../../../../../../@noctua/services/translation-loader.service';
-import { NoctuaAnnotonFormService } from 'noctua-form-base';
-import { NoctuaFormConfigService } from 'noctua-form-base';
-import { NoctuaLookupService } from 'noctua-form-base';
+
 import { NoctuaSearchService } from './../../../../../../../../@noctua.search/services/noctua-search.service';
 import { NoctuaFormDialogService } from './../../../../services/dialog.service';
 
 import { SparqlService } from './../../../../../../../../@noctua.sparql/services/sparql/sparql.service';
 
-import { AnnotonNode } from 'noctua-form-base';
-import { Evidence } from 'noctua-form-base';
+import {
+  CamService,
+  NoctuaFormConfigService,
+  NoctuaAnnotonFormService,
+  NoctuaLookupService,
+  AnnotonNode,
+  Evidence
+} from 'noctua-form-base';
 
 @Component({
   selector: 'noc-entity-form',
@@ -62,6 +66,7 @@ export class EntityFormComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private noctuaFormDialogService: NoctuaFormDialogService,
+    private camService: CamService,
     private noctuaSearchService: NoctuaSearchService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     public noctuaAnnotonFormService: NoctuaAnnotonFormService,
@@ -116,7 +121,7 @@ export class EntityFormComponent implements OnInit, OnDestroy {
   }
 
 
-  addNDEvidence(evidence: Evidence) {
+  addNDEvidence(srcEvidence: Evidence) {
 
   }
 
@@ -146,7 +151,12 @@ export class EntityFormComponent implements OnInit, OnDestroy {
     }
     */
 
-    self.noctuaFormDialogService.openSelectEvidenceDialog(evidence);
+    let evidences: Evidence[] = this.camService.getUniqueEvidence();
+    let success = (evidence: Evidence[]) => {
+      console.log(evidence)
+    }
+
+    self.noctuaFormDialogService.openSelectEvidenceDialog(evidences, success);
   }
 
   termDisplayFn(term): string | undefined {

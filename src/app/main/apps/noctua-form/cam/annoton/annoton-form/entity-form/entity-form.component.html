@@ -53,12 +53,9 @@
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #entityMenu="matMenu" class="noc-dropdown-menu">
-          <button class="">
-            Remove GP
-          </button>
-          <!--
-          <button class="">
-            Remove GP
+          <h6 class="noc-menu-heading"> Search </h6>
+          <button mat-menu-item *ngIf="entity.aspect" class="" (click)="openSearchDatabaseDialog(entity)">
+            Search Database
           </button>
           <h6 class="noc-menu-heading"> Evidence</h6>
           <button mat-menu-item class="" (click)="openSelectEvidenceDialog(evidence)">
@@ -83,11 +80,7 @@
           <button mat-menu-item class="" (click)="entity.clearValues()">
             Clear
           </button>
-          <h6 class="noc-menu-heading"> Search </h6>
-          <button mat-menu-item *ngIf="entity.aspect" class="" (click)="openSearchDatabaseDialog(entity)">
-            Search Database
-          </button>
-        -->
+
         </mat-menu>
       </div>
     </div>

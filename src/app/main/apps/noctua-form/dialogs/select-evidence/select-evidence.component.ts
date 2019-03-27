@@ -3,19 +3,21 @@ import { Component, OnInit, OnDestroy, ViewChild, Inject, ViewEncapsulation } fr
 import { FormBuilder, FormControl, FormGroup, FormArray } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatMenuTrigger } from '@angular/material';
+import { SelectionModel } from '@angular/cdk/collections';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatMenuTrigger, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import * as _ from 'lodash';
-import { Cam } from 'noctua-form-base';
-
-import { NoctuaFormConfigService } from 'noctua-form-base';
-import { NoctuaGraphService } from 'noctua-form-base';
-import { NoctuaLookupService } from 'noctua-form-base';
+import {
+  Evidence,
+  NoctuaFormConfigService,
+  NoctuaGraphService,
+  NoctuaLookupService
+} from 'noctua-form-base';
 
 import { NoctuaSearchService } from './../../../../../../@noctua.search/services/noctua-search.service';
-
 import { SparqlService } from './../../../../../../@noctua.sparql/services/sparql/sparql.service';
+
 
 @Component({
   selector: 'app-select-evidence',
@@ -24,9 +26,10 @@ import { SparqlService } from './../../../../../../@noctua.sparql/services/sparq
 })
 export class SelectEvidenceDialogComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any>;
-  searchForm: FormGroup;
-  searchFormData: any = {};
-  cam: any = {};
+  evidence: Evidence[] = [];
+  displayedColumns: string[] = ['select', 'evidence', 'reference', 'with'];
+  dataSource;
+  selection = new SelectionModel<Evidence>(true, []);
 
   constructor(
     private _matDialogRef: MatDialogRef<SelectEvidenceDialogComponent>,
@@ -41,43 +44,40 @@ export class SelectEvidenceDialogComponent implements OnInit, OnDestroy {
   ) {
     this._unsubscribeAll = new Subject();
 
-    this.searchFormData = this.noctuaFormConfigService.createReviewSearchFormData();
-    this.cam = this._data.cam
-    this.searchForm = this.createAnswerForm();
+    this.evidence = this._data.evidence;
+    this.dataSource = new MatTableDataSource<Evidence>(this.evidence);
+
   }
 
   ngOnInit() {
-    console.log(this.cam)
+  }
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
+  save() {
+    this._matDialogRef.close(this.selection.selected);
   }
 
   close() {
     this._matDialogRef.close();
   }
 
-  createAnswerForm() {
-    return new FormGroup({
-      annotatedEntity: new FormControl(this.cam.annotatedEntity.id),
-      term: new FormControl(this.cam.term.id),
-      evidence: new FormControl(this.cam.evidence.id),
-      reference: new FormControl(this.cam.reference.label),
-      with: new FormControl(this.cam.with),
-    });
-  }
-
-  /*
-  buildDataColumnsForm() {
-    const arr = this.pantherTypes.dataColumns.map(dataColumn => {
-      return new FormControl(dataColumn.selected);
-    });
-
-    return new FormArray(arr);
-  }
-  */
-
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
   }
-
 }
+
+
