@@ -896,10 +896,10 @@ export class NoctuaGraphService {
 
 
 
-  saveModelGroup(cam: Cam) {
+  saveModelGroup(cam: Cam, groupId) {
     const self = this
 
-    cam.manager.use_groups([self.userInfo.selectedGroup.id]);
+    cam.manager.use_groups([groupId]);
   }
 
   saveCamAnnotations(cam: Cam, annotations) {

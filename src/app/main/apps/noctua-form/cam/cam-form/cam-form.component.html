@@ -31,7 +31,7 @@
         </mat-form-field>
         <mat-form-field class="">
           <mat-label>Group</mat-label>
-          <mat-select placeholder="" formControlName="state" required>
+          <mat-select placeholder="" formControlName="group" required>
             <mat-option *ngFor="let modelGroup of noctuaUserService.user?.groups" [value]="modelGroup">
               {{modelGroup.label}}
             </mat-option>

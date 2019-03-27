@@ -88,6 +88,7 @@ export class CamFormComponent implements OnInit, OnDestroy {
       state: value.state.name
     }
 
+    this.noctuaGraphService.saveModelGroup(this.cam, value.group.id);
     this.noctuaGraphService.saveCamAnnotations(this.cam, annotations);
   }
 
