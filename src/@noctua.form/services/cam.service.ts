@@ -10,6 +10,7 @@ import { NoctuaGraphService } from './../services/graph.service';
 
 import { NoctuaFormConfigService } from './../services/config/noctua-form-config.service';
 import { NoctuaLookupService } from './lookup.service';
+import { NoctuaUserService } from './user.service';
 //import { Cam } from '../models/cam';
 import { CamRow } from '../models/cam-row';
 import { Curator } from '../models/curator';
@@ -49,6 +50,7 @@ export class CamService {
   constructor(public noctuaFormConfigService: NoctuaFormConfigService,
     private _fb: FormBuilder,
     private httpClient: HttpClient,
+    private noctuaUserService: NoctuaUserService,
     private noctuaGraphService: NoctuaGraphService,
     private noctuaLookupService: NoctuaLookupService,
     private curieService: CurieService) {
@@ -78,7 +80,8 @@ export class CamService {
     let camFormMetadata = new AnnotonFormMetadata(self.noctuaLookupService.golrLookup.bind(self.noctuaLookupService));
     let camForm = new CamForm(camFormMetadata);
 
-    camForm.createCamForm(this.cam);
+    camForm.createCamForm(this.cam, this.noctuaUserService.user);
+    console.log(0)
 
     return camForm;
   }

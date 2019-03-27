@@ -79,7 +79,16 @@ export class CamFormComponent implements OnInit, OnDestroy {
     const self = this;
     //  self.camService.ann;
 
-    //  this.noctuaGraphService.saveCam(this.cam, self.noctuaAnnotonEntityService.termNode);
+    let value = this.camFormGroup.value;
+
+    console.log(value)
+
+    let annotations = {
+      title: value.title,
+      state: value.state.name
+    }
+
+    this.noctuaGraphService.saveCamAnnotations(this.cam, annotations);
   }
 
   termDisplayFn(term): string | undefined {

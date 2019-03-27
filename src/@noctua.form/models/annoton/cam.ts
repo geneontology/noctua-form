@@ -9,10 +9,10 @@ import { Annoton } from './annoton'
 
 export class Cam {
   //Details
-  title: String;
-  state: string;
+  title: string;
+  state: any;
   //User Info
-  group: string;
+  group: any;
 
   id: string;
   expanded?: boolean;

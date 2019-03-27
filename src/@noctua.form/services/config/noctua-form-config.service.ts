@@ -860,6 +860,14 @@ export class NoctuaFormConfigService {
     }
   }
 
+  findModelState(name) {
+    const self = this;
+
+    return _.find(self.modelState.options, (modelState) => {
+      return modelState.name === name;
+    });
+  }
+
 
   get annotonType() {
     let options = [

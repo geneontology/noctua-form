@@ -7,6 +7,7 @@ declare const require: any;
 const each = require('lodash/forEach');
 
 import { Cam } from './../annoton/cam'
+import { Curator } from './../curator';
 import { Annoton } from './../annoton/annoton';
 import { AnnotonNode } from './../annoton/annoton-node';
 import { AnnotonFormMetadata } from './../forms/annoton-form-metadata';
@@ -24,13 +25,20 @@ export class CamForm {
     this._metadata = metadata;
   }
 
-  createCamForm(cam: Cam) {
+  createCamForm(cam: Cam, user: Curator) {
     const self = this;
 
     if (cam) {
       self.title.setValue(cam.title);
       self.state.setValue(cam.state);
-      self.group.setValue(cam.group);
+      self.group.setValue(user.group);
     }
+  }
+
+  populateConnectorForm(cam: Cam) {
+    const self = this;
+
+    cam.title = self.title.value;
+    cam.state = self.state.value;
   }
 }

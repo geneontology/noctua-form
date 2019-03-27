@@ -150,7 +150,7 @@ export class NoctuaGraphService {
       }
 
       if (stateAnnotations.length > 0) {
-        cam.state = stateAnnotations[0].value();
+        cam.state = self.noctuaFormConfigService.findModelState(stateAnnotations[0].value());
       }
 
       self.graphPreParse(cam.graph).subscribe((data) => {
@@ -902,17 +902,24 @@ export class NoctuaGraphService {
     cam.manager.use_groups([self.userInfo.selectedGroup.id]);
   }
 
-  saveModelAnnotation(cam, key, value) {
+  saveCamAnnotations(cam: Cam, annotations) {
     const self = this;
 
-    let annotations = cam.graph.get_annotations_by_key(key);
-    let reqs = new minerva_requests.request_set(cam.manager.user_token(), cam.model.id);
+    let titleAnnotations = cam.graph.get_annotations_by_key('title');
+    let stateAnnotations = cam.graph.get_annotations_by_key('state');
+    let reqs = new minerva_requests.request_set(cam.manager.user_token(), cam.modelId);
 
-    each(annotations, function (annotation) {
-      reqs.remove_annotation_from_model(key, annotation.value())
+    each(titleAnnotations, function (annotation) {
+      reqs.remove_annotation_from_model('title', annotation.value())
     });
 
-    reqs.add_annotation_to_model(key, value);
+    each(stateAnnotations, function (annotation) {
+      reqs.remove_annotation_from_model('state', annotation.value())
+    });
+
+    reqs.add_annotation_to_model('title', annotations.title);
+    reqs.add_annotation_to_model('state', annotations.state);
+
     cam.manager.request_with(reqs);
   }
 
@@ -1121,6 +1128,8 @@ export class NoctuaGraphService {
     reqs.add_individual(individual.getTerm().id);
     return cam.individualManager.request_with(reqs);
   }
+
+
 
   saveAnnoton(cam, annoton: Annoton) {
     const self = this;
