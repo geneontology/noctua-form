@@ -1,0 +1,38 @@
+@import "src/@noctua/scss/noctua";
+@import "src/@noctua.common/scss/noctua.common";
+
+:host {
+
+
+  @include media-breakpoint('xs') {
+    width: 100%;
+  }
+
+  @include media-breakpoint-up('sm') {
+    width: 600px;
+  }
+
+  .noc-annoton-node-card {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .noc-dialog-body {
+    margin: 0;
+    padding: 15px 10px;
+    @include deep-width(100%);
+  }
+
+  .mat-dialog-container {
+    padding: 0;
+  }
+
+  .mat-dialog-content {}
+
+  .dialog-content-wrapper {
+    width: 900px;
+    min-height: 80%;
+    display: flex;
+    flex-direction: column;
+  }
+}

@@ -108,16 +108,18 @@ export class NoctuaFormDialogService {
             });
     }
 
-    openSearchDatabaseDialog(cam): void {
+    openSearchDatabaseDialog(searchCriteria, success): void {
         this.dialogRef = this._matDialog.open(SearchDatabaseDialogComponent, {
-            panelClass: 'search-database-dialog',
+            panelClass: 'noc-search-database-dialog',
             data: {
-                cam: cam
+                searchCriteria: searchCriteria
             }
         });
         this.dialogRef.afterClosed()
             .subscribe(response => {
-
+                if (response) {
+                    success(response);
+                }
             });
     }
 }

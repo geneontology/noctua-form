@@ -113,7 +113,48 @@ export class EntityFormComponent implements OnInit, OnDestroy {
   }
 
   openSearchDatabaseDialog(entity: AnnotonNode) {
+    const self = this;
+    let gpNode = this.noctuaAnnotonFormService.annotonForm.gp.value;
 
+    if (gpNode) {
+      let data = {
+        readonly: false,
+        gpNode: gpNode,
+        aspect: entity.aspect,
+        entity: entity,
+        params: {
+          term: entity.term.control.value.id,
+          evidence: entity.evidence[0].evidence.control.value.id
+        }
+      }
+
+      console.log(data)
+
+      let success = function (selected) {
+        entity.setTerm(selected.term);
+        entity.resetEvidence();
+        for (let i = 0; i < selected.annotations.length; i++) {
+          let evidence = entity.evidence[0];
+          if (i > 0) {
+            evidence = entity.addEvidence()
+          }
+
+          evidence.setEvidence(selected.annotations[i].evidence[0].getEvidence());
+          evidence.setReference(selected.annotations[i].evidence[0].getReference());
+          evidence.setWith(selected.annotations[i].evidence[0].getWith());
+          evidence.setAssignedBy(selected.annotations[i].evidence[0].getAssignedBy());
+        };
+      }
+      self.noctuaFormDialogService.openSearchDatabaseDialog(data, success)
+    } else {
+      let errors = [];
+      let meta = {
+        aspect: gpNode ? gpNode.label : 'Gene Product'
+      }
+      // let error = new AnnotonError('error', 1, "Please enter a gene product", meta)
+      //errors.push(error);
+      // self.dialogService.openAnnotonErrorsDialog(ev, entity, errors)
+    }
   }
 
   openMoreEvidenceDialog() {
@@ -129,12 +170,12 @@ export class EntityFormComponent implements OnInit, OnDestroy {
     const self = this;
 
     /*
-
+  
     let evidences = Util.addUniqueEvidencesFromAnnoton(self.annotonForm.annoton);
     Util.getUniqueEvidences(self.summaryData.annotons, evidences);
-
+  
     let gpNode = self.annotonForm.annotonPresentation.geneProduct;
-
+  
     let data = {
       readonly: false,
       gpNode: gpNode,
@@ -145,15 +186,16 @@ export class EntityFormComponent implements OnInit, OnDestroy {
         term: entity.term.control.value.id,
       }
     }
-
+  
     let success = function (selected) {
       entity.addEvidences(selected.evidences, ['assignedBy']);
     }
     */
 
     let evidences: Evidence[] = this.camService.getUniqueEvidence();
-    let success = (evidence: Evidence[]) => {
-      console.log(evidence)
+    let success = (evidences: Evidence[]) => {
+
+      self.entity.setEvidence(evidences, ['assignedBy']);
     }
 
     self.noctuaFormDialogService.openSelectEvidenceDialog(evidences, success);

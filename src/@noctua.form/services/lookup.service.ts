@@ -40,7 +40,7 @@ export class NoctuaLookupService {
     public noctuaFormConfigService: NoctuaFormConfigService) {
     this.name = 'DefaultLookupName';
     this.linker = new amigo.linker();
-    this.golrURLBase = environment.globalGolrServer + `/select?`;
+    this.golrURLBase = environment.globalGolrServer + `select?`;
     // this.trusted = this.$sce.trustAsResourceUrl(this.golrURLBase);
 
     this.localClosures = [];
@@ -134,10 +134,10 @@ export class NoctuaLookupService {
     });
   }
 
-  /*
-  companionLookup(gp, aspect, params) {
+
+  companionLookup(gp, aspect, extraParams) {
     const self = this;
-    let deferred = self.$q.defer();
+    const golrUrl = environment.globalGolrCompanionServer + `select?`;
 
     let requestParams = {
       defType: 'edismax',
@@ -145,14 +145,14 @@ export class NoctuaLookupService {
       indent: 'on',
       wt: 'json',
       sort: 'annotation_class_label asc',
-      rows: 100,
-      start: 0,
+      rows: '100',
+      start: '0',
       fl: "*,score",
-      facet: true,
-      'facet.mincount': 1,
+      facet: 'true',
+      'facet.mincount': '1',
       'facet.sort': 'count',
       'json.nl': 'arrarr',
-      "facet.limit": 100,
+      "facet.limit": '100',
       fq: [
         'document_category: "annotation"',
         'aspect: "' + aspect + '"',
@@ -171,34 +171,44 @@ export class NoctuaLookupService {
         // 'annotation_extension_class_closure_label'
       ],
       q: '*:*',
-      packet: '1',
-      callback_type: 'search',
-      _: Date.now()
+      //  packet: '1',
+      //  callback_type: 'search',
+      // _: Date.now()
     }
 
-    if (params.term) {
-      requestParams.fq.push('annotation_class:"' + params.term + '"')
+
+    if (extraParams.term) {
+      requestParams.fq.push('annotation_class:"' + extraParams.term + '"')
     }
 
-    if (params.evidence) {
-      requestParams.fq.push('evidence:"' + params.evidence + '"')
+    if (extraParams.evidence) {
+      requestParams.fq.push('evidence:"' + extraParams.evidence + '"')
     }
 
-    self.$http.jsonp(
-      self.$sce.trustAsResourceUrl('http://golr.berkeleybop.org/select'), {
-        // withCredentials: false,
-        jsonpCallbackParam: 'json.wrf',
-        params: requestParams
-      })
-      .then(function (response) {
-        var docs = response.data.response.docs;
-        let result = {};
-        let annoton
+    let params = new HttpParams({
+      fromObject: requestParams
+    })
+    // .set('callback', 'JSONP_CALLBACK')
+    //.set('jsonpCallbackParam', 'json.wrf')
+    // .set('params', requestParams);
+
+
+    const url = golrUrl + params.toString();
+
+    return this.httpClient.jsonp(url, 'json.wrf').pipe(
+      map(response => {
+        let docs = response["response"].docs;
+        let result = [];
         // console.log('poo', data);
 
         each(docs, function (doc) {
           let annotonNode = new AnnotonNode();
           let evidence = new Evidence();
+
+          annotonNode.setTerm({
+            id: doc.annotation_class,
+            label: doc.annotation_class_label
+          })
 
           evidence.setEvidence({
             id: doc.evidence,
@@ -215,34 +225,13 @@ export class NoctuaLookupService {
 
           evidence.setAssignedBy(doc.assigned_by);
 
-          annotonNode.setTerm({
-            id: doc.annotation_class,
-            label: doc.annotation_class_label
-          })
-          annotonNode.evidence[0] = evidence;
-
-          if (!result[doc.annotation_class]) {
-            result[doc.annotation_class] = {};
-            result[doc.annotation_class].term = annotonNode.getTerm();
-            result[doc.annotation_class].annotations = [];
-          }
-          result[doc.annotation_class].annotations.push(annotonNode);
-
+          annotonNode.addEvidence(evidence);
+          result.push(annotonNode);
         });
 
-        deferred.resolve(result);
-      },
-        function (error) {
-          console.log('Companion Lookup: ', error);
-          deferred.reject(error);
-        }
-      ).catch(function (response) {
-        deferred.reject(response);
-      });;
-
-    return deferred.promise;
+        return result;
+      }))
   }
-  */
 
   isaClosure(a, b) {
     const self = this;

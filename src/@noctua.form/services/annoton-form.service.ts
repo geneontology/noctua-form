@@ -25,8 +25,8 @@ export class NoctuaAnnotonFormService {
   public mfLocation;
   public annoton: Annoton;
   // public annotonPresentation;
-  private annotonForm: AnnotonForm;
-  private annotonFormGroup: BehaviorSubject<FormGroup | undefined>;
+  public annotonForm: AnnotonForm;
+  public annotonFormGroup: BehaviorSubject<FormGroup | undefined>;
   public annotonFormGroup$: Observable<FormGroup>;
 
   constructor(private _fb: FormBuilder, public noctuaFormConfigService: NoctuaFormConfigService,
