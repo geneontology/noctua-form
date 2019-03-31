@@ -10,6 +10,7 @@ import { Annoton } from './../annoton/annoton';
 import { AnnotonNode } from './../annoton/annoton-node';
 import { AnnotonFormMetadata } from './../forms/annoton-form-metadata';
 import { EntityGroupForm } from './entity-group-form'
+import { termValidator } from './validators/term-validator';
 
 export class AnnotonForm {
   entityGroupForms: EntityGroupForm[] = []
@@ -25,6 +26,7 @@ export class AnnotonForm {
 
     if (geneProduct) {
       this.gp.setValue(geneProduct.getTerm());
+      this.gp.setValidators(termValidator(geneProduct));
     }
   }
 
@@ -60,6 +62,16 @@ export class AnnotonForm {
         lookup.results = response;
         console.log(lookup)
       });
+    });
+  }
+
+  getErrors(error) {
+    if (this.gp.errors) {
+      error.push(this.gp.errors);
+    }
+
+    this.entityGroupForms.forEach((entityGroupForm: EntityGroupForm) => {
+      entityGroupForm.getErrors(error);
     });
   }
 }

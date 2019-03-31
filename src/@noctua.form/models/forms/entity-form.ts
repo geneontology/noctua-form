@@ -1,14 +1,14 @@
-import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms'
-import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
-import { Annoton } from './../annoton/annoton';
-import { Evidence } from './../annoton/evidence'
+import { FormArray, FormBuilder, FormControl } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { AnnotonNode } from './../annoton/annoton-node';
+import { Evidence } from './../annoton/evidence';
+import { AnnotonFormMetadata } from './annoton-form-metadata';
 import { EvidenceForm } from './evidence-form';
-import * as _ from 'lodash';
+import { termValidator } from './validators/term-validator';
+
 declare const require: any;
 const each = require('lodash/forEach');
 
-import { AnnotonFormMetadata } from './annoton-form-metadata'
 
 export class EntityForm {
     id
@@ -27,12 +27,14 @@ export class EntityForm {
         const self = this;
 
         this.term.setValue(entity.getTerm());
+        this.setTermValidator(entity);
 
         entity.evidence.forEach((evidence: Evidence) => {
             let evidenceForm = new EvidenceForm(self._metadata, evidence);
 
             self.evidenceForms.push(evidenceForm);
-            evidenceForm.onValueChanges(evidence.evidence.lookup)
+            evidenceForm.onValueChanges(evidence.evidence.lookup);
+            //  evidenceForm.setTermValidator(termValidator(this.term, entity));
             self.evidenceFormArray.push(self._fb.group(evidenceForm));
         });
     }
@@ -61,6 +63,23 @@ export class EntityForm {
             self._metadata.lookupFunc(data, lookup.requestParams).subscribe(response => {
                 lookup.results = response;
             });
+        });
+    }
+
+    setTermValidator(entity) {
+        this.term.setValidators(entity.id === 'mf' ? termValidator(entity) : null);
+        //  this.term.setValidators([validatorFn])
+    }
+
+    getErrors(error) {
+        const self = this;
+
+        if (this.term.errors) {
+            error.push(this.term.errors);
+        }
+
+        self.evidenceForms.forEach((evidenceForm: EvidenceForm) => {
+            evidenceForm.getErrors(error)
         });
     }
 }

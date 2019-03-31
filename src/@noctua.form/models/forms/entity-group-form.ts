@@ -1,15 +1,13 @@
-import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms'
-
-import { Evidence } from './../../models/annoton/evidence'
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Annoton } from './../annoton/annoton';
+import { AnnotonFormMetadata } from './../forms/annoton-form-metadata';
 import { EntityForm } from './entity-form';
 
-import * as _ from 'lodash';
+
 declare const require: any;
 const each = require('lodash/forEach');
 
-import { Annoton } from './../annoton/annoton';
 
-import { AnnotonFormMetadata } from './../forms/annoton-form-metadata';
 
 export class EntityGroupForm {
     name: string = '';
@@ -41,12 +39,20 @@ export class EntityGroupForm {
     populateAnnotonNodes(annoton: Annoton) {
         const self = this;
 
-        self.entityForms.forEach((entityForm) => {
+        self.entityForms.forEach((entityForm: EntityForm) => {
             let annotonNode = annoton.getNode(entityForm.id);
             if (annotonNode) {
                 entityForm.populateTerm(annotonNode);
             }
 
+        });
+    }
+
+    getErrors(error) {
+        const self = this;
+
+        self.entityForms.forEach((entityForm: EntityForm) => {
+            entityForm.getErrors(error);
         });
     }
 }

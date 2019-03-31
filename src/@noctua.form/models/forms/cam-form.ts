@@ -35,6 +35,10 @@ export class CamForm {
     }
   }
 
+  getError(error) {
+
+  }
+
   populateConnectorForm(cam: Cam) {
     const self = this;
 

@@ -75,15 +75,17 @@
             </noc-entity-form>
           </div>
         </div>
+        {{annotonFormGroup.errors}}
       </div>
     </div>
     <div layout="row" class="noc-submit-row">
-      <button *ngIf="false" (click)='close()' type="button" mat-raised-button color="" class="mr-8">
+      <button (click)='checkErrors()' type="button" mat-raised-button color="" class="mr-8">
         Why is the "Search" button disabled?
       </button>
       <span fxFlex></span>
-      <button (click)='clear()' type="button" mat-raised-button color="" class="mr-8">Clear</button>
-      <button (click)="save()" type="button" mat-raised-button color="primary">Save</button>
+      <button [disabled]="!annotonFormGroup.valid" (ngSubmit)='clear()' type="button" mat-raised-button color=""
+        class="mr-8">Clear</button>
+      <button (click)="save()" type="submit" mat-raised-button color="primary">Save</button>
     </div>
   </form>
 </div>

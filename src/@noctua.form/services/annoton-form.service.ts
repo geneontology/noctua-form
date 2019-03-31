@@ -87,6 +87,14 @@ export class NoctuaAnnotonFormService {
     console.dir(annoton)
   }
 
+  getAnnotonFormErrors() {
+    let errors = [];
+
+    this.annotonForm.getErrors(errors);
+
+    return errors;
+  }
+
   setAnnotonType(annoton, annotonType) {
     annoton.setAnnotonType(annotonType.name);
 

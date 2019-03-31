@@ -15,6 +15,7 @@ import { EvidenceForm } from './evidence-form';
 
 import { Evidence } from './../../models/annoton/evidence'
 import { EntityForm } from './entity-form';
+import { termValidator } from './validators/term-validator';
 
 export class AnnotonEntityForm {
   term = new FormControl();
@@ -32,6 +33,7 @@ export class AnnotonEntityForm {
     const self = this;
 
     this.term.setValue(entity.getTerm());
+    this.term.setValidators(entity.id === 'mf' ? termValidator(entity) : null);
     this.onValueChanges(entity.term.lookup);
     entity.evidence.forEach((evidence: Evidence) => {
       let evidenceForm = new EvidenceForm(self._metadata, evidence);

@@ -92,6 +92,12 @@ export class AnnotonFormComponent implements OnInit, OnDestroy {
     });
   }
 
+  checkErrors() {
+    let error = [];
+
+    console.log(this.noctuaAnnotonFormService.getAnnotonFormErrors())
+  }
+
   save() {
     const self = this;
     let infos;
@@ -123,6 +129,8 @@ export class AnnotonFormComponent implements OnInit, OnDestroy {
       saveAnnoton();
     }
   }
+
+
 
   clear() {
     this.noctuaAnnotonFormService.clearForm();

@@ -8,6 +8,8 @@ const each = require('lodash/forEach');
 
 import { AnnotonFormMetadata } from './../forms/annoton-form-metadata';
 
+import { termValidator } from './validators/term-validator';
+
 export class EvidenceForm {
     individualId;
     evidence = new FormControl();
@@ -47,5 +49,20 @@ export class EvidenceForm {
         });
     }
 
+    setTermValidator(validatorFn) {
+        this.evidence.setValidators([validatorFn])
+    }
+
+    getErrors(error) {
+        if (this.evidence.errors) {
+            error.push(this.evidence.errors);
+        }
+        if (this.reference.errors) {
+            error.push(this.reference.errors);
+        }
+        if (this.with.errors) {
+            error.push(this.with.errors);
+        }
+    }
 }
 
