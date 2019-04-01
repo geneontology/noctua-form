@@ -42,7 +42,7 @@ export class NoctuaUserService {
   constructor(public noctuaFormConfigService: NoctuaFormConfigService,
     private httpClient: HttpClient,
     private noctuaLookupService: NoctuaLookupService) {
-    this.onUserChanged = new BehaviorSubject({});
+    this.onUserChanged = new BehaviorSubject(null);
 
   }
 

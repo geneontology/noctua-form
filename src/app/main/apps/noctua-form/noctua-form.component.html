@@ -12,40 +12,30 @@
     </button>
   </div>
   <mat-drawer-container class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start" autosize>
-    <mat-drawer-content class="noc-section-body w-100-p h-100-p" fxLayout="column" fxLayoutAlign="start stretch">
+    <mat-drawer-content class="noc-section-body w-100-p h-100-p p-8" fxLayout="column" fxLayoutAlign="start stretch">
       <div class="noc-summary-bar" fxLayout="row" fxLayoutAlign="start center">
-        <div fxFlex="50px" (click)="$event.stopPropagation()">
-          <button mat-icon-button (click)="cam.summaryExpanded = !cam.summaryExpanded" class="noc-br">
-            <mat-icon *ngIf="!cam.summaryExpanded" class="s-16 fa fa-caret-right">
-            </mat-icon>
-            <mat-icon *ngIf="cam.summaryExpanded" class="s-12 mat-icon-rtl-mirror">
-              signal_cellular_4_bar
-            </mat-icon>
-          </button>
-        </div>
         <div class="noc-title" fxLayout="column" fxLayoutAlign="start stretch">
           <div class="text-truncate">
-            <strong>Model Title: </strong>{{cam.title}}
+            <div *ngIf="cam.title; else noCamTitle">{{cam.title}}</div>
+            <ng-template #noCamTitle>
+              <div class="noc-no-information" fxLayout="row" fxLayoutAlign="start center">
+                <div class="noc-description">
+                  <small>No Title Yet</small>
+                </div>
+                <button mat-stroked-button (click)="openCamForm(annoton)" color="primary" class="noc-action-button">
+                  Add Title
+                </button>
+              </div>
+            </ng-template>
           </div>
           <div class="text-truncate">
-            <strong>State: </strong>{{cam.state}}
-          </div>
-          <div class="text-truncate">
-            <strong>Group: </strong>{{user?.group?.label}}
+            <small>{{cam.state?.label}}</small>
           </div>
         </div>
         <span fxFlex=""></span>
         <div class="" fxFlex="" fxLayout="row" fxLayoutAlign="end center">
-          <button mat-icon-button (click)="openCamForm(annoton)" class="noc-bl">
-            <mat-icon class=""> edit </mat-icon>
-          </button>
-          <button mat-icon-button (click)="cam.summaryExpanded = !cam.summaryExpanded" class="noc-bl">
-            <mat-icon *ngIf="!cam.summaryExpanded" class="">
-              keyboard_arrow_down
-            </mat-icon>
-            <mat-icon *ngIf="cam.summaryExpanded" class="">
-              keyboard_arrow_up
-            </mat-icon>
+          <button mat-raised-button (click)="openCamForm(annoton)" class="noc-bl">
+            <mat-icon class=""> edit </mat-icon> Edit
           </button>
           <button mat-raised-button (click)="addAnnoton()" color="primary" class="">
             <mat-icon class=""> add </mat-icon> New Activity

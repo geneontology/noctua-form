@@ -11,7 +11,7 @@
         Noctua
       </a>
       <a class="noc-sub-logo" target="_blank">
-        Annotation Review
+        Noctua Form
       </a>
     </div>
   </div>
@@ -23,13 +23,19 @@
   </div>
   <div class="toolbar-separator"></div>
 -->
-  <div fxLayout="row" fxLayoutAlign="end center" fxFlex="250px">
-    <button mat-button class="" target="_blank">
-      <mat-icon class="s-20">map</mat-icon>
-      Take a Tour
-    </button>
+  <div *ngIf="!noctuaUserService.user" fxLayout="row" fxLayoutAlign="end center" fxFlex="250px">
     <a mat-button href="{{loginUrl}}">
       Login
+    </a>
+  </div>
+
+  <div *ngIf="noctuaUserService.user" fxLayout="row" fxLayoutAlign="end center" fxFlex="250px">
+    <button mat-button class="" target="_blank">
+      <mat-icon class="s-20">noctuaUserService.user</mat-icon>
+      {{noctuaUserService.user.name}}
+    </button>
+    <a mat-button>
+      {{noctuaUserService.user?.group?.label}}
     </a>
   </div>
 </mat-toolbar>

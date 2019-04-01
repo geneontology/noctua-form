@@ -5,6 +5,10 @@ import { NoctuaSharedModule } from '@noctua/shared.module';
 import { NoctuaToolbarComponent } from './toolbar.component';
 import { NoctuaSearchBarModule } from '@noctua.search';
 
+import {
+    NoctuaUserService
+} from 'noctua-form-base';
+
 @NgModule({
     declarations: [
         NoctuaToolbarComponent
@@ -18,6 +22,8 @@ import { NoctuaSearchBarModule } from '@noctua.search';
         MatToolbarModule,
         NoctuaSharedModule,
         NoctuaSearchBarModule
+    ],
+    providers: [
     ],
     exports: [
         NoctuaToolbarComponent

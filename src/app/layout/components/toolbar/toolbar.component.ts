@@ -1,6 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+
+import {
+    Cam,
+    Curator,
+    NoctuaUserService,
+    NoctuaFormConfigService,
+    NoctuaGraphService,
+    NoctuaAnnotonFormService,
+    CamService
+} from 'noctua-form-base';
 
 import { NoctuaConfigService } from '@noctua/services/config.service';
 
@@ -10,7 +20,8 @@ import { NoctuaConfigService } from '@noctua/services/config.service';
     styleUrls: ['./toolbar.component.scss']
 })
 
-export class NoctuaToolbarComponent {
+export class NoctuaToolbarComponent implements OnInit {
+    public user: Curator;
     userStatusOptions: any[];
     languages: any;
     selectedLanguage: any;
@@ -25,6 +36,7 @@ export class NoctuaToolbarComponent {
         private router: Router,
         private route: ActivatedRoute,
         private noctuaConfig: NoctuaConfigService,
+        public noctuaUserService: NoctuaUserService,
         private translate: TranslateService
     ) {
         console.log(window.location)
@@ -47,6 +59,7 @@ export class NoctuaToolbarComponent {
                 // Defaults to 0 if no query param provided.
             });
 
+        this.getUserInfo();
         this.router.events.subscribe(
             (event) => {
                 if (event instanceof NavigationStart) {
@@ -57,6 +70,22 @@ export class NoctuaToolbarComponent {
                 }
             });
 
+    }
+
+    ngOnInit(): void {
+
+    }
+
+    getUserInfo() {
+        const self = this;
+
+        this.noctuaUserService.onUserChanged.subscribe((response) => {
+            if (response) {
+                this.user = new Curator()
+                this.user.name = response.nickname;
+                this.user.groups = response.groups;
+            }
+        });
     }
 
     search(value): void {

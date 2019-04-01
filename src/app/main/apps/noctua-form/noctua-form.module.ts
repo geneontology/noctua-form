@@ -83,7 +83,6 @@ const routes = [
     AnnotonTableComponent,
   ],
   providers: [
-    NoctuaUserService,
     NoctuaAnnotonConnectorService,
     NoctuaGraphService,
     NoctuaFormConfigService,
