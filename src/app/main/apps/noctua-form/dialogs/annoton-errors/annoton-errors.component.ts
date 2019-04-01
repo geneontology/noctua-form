@@ -24,9 +24,7 @@ import { SparqlService } from './../../../../../../@noctua.sparql/services/sparq
 })
 export class AnnotonErrorsDialogComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any>;
-  searchForm: FormGroup;
-  searchFormData: any = {};
-  cam: any = {};
+  errors
 
   constructor(
     private _matDialogRef: MatDialogRef<AnnotonErrorsDialogComponent>,
@@ -41,28 +39,16 @@ export class AnnotonErrorsDialogComponent implements OnInit, OnDestroy {
   ) {
     this._unsubscribeAll = new Subject();
 
-    this.searchFormData = this.noctuaFormConfigService.createReviewSearchFormData();
-    this.cam = this._data.cam
-    this.searchForm = this.createAnswerForm();
+    this.errors = this._data.errors
   }
 
   ngOnInit() {
-    console.log(this.cam)
   }
 
   close() {
     this._matDialogRef.close();
   }
 
-  createAnswerForm() {
-    return new FormGroup({
-      annotatedEntity: new FormControl(this.cam.annotatedEntity.id),
-      term: new FormControl(this.cam.term.id),
-      evidence: new FormControl(this.cam.evidence.id),
-      reference: new FormControl(this.cam.reference.label),
-      with: new FormControl(this.cam.with),
-    });
-  }
 
 
   ngOnDestroy(): void {

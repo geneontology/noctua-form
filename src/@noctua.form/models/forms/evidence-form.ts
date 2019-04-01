@@ -1,7 +1,8 @@
 import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms'
 import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 
-import { Evidence } from './../annoton/evidence'
+import { Evidence } from './../annoton/evidence';
+import { AnnotonNode } from './../annoton/annoton-node';
 import * as _ from 'lodash';
 declare const require: any;
 const each = require('lodash/forEach');
@@ -9,6 +10,7 @@ const each = require('lodash/forEach');
 import { AnnotonFormMetadata } from './../forms/annoton-form-metadata';
 
 import { termValidator } from './validators/term-validator';
+import { evidenceValidator } from './validators/evidence-validator';
 
 export class EvidenceForm {
     individualId;
@@ -17,9 +19,12 @@ export class EvidenceForm {
     with = new FormControl();
 
     _metadata: AnnotonFormMetadata;
+    private _term
 
-    constructor(metadata, evidence?: Evidence) {
+    constructor(metadata, term: AnnotonNode, evidence: Evidence) {
         this._metadata = metadata;
+
+        this._term = term;
 
         if (evidence) {
             this.individualId = evidence.individualId;
@@ -27,6 +32,8 @@ export class EvidenceForm {
             this.reference.setValue(evidence.getReference());
             this.with.setValue(evidence.getWith());
         }
+
+        this.setEvidenceValidator();
     }
 
     populateEvidence(evidence: Evidence) {
@@ -49,8 +56,8 @@ export class EvidenceForm {
         });
     }
 
-    setTermValidator(validatorFn) {
-        this.evidence.setValidators([validatorFn])
+    setEvidenceValidator() {
+        this.evidence.setValidators(evidenceValidator(this._term))
     }
 
     getErrors(error) {

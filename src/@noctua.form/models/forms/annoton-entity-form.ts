@@ -36,7 +36,7 @@ export class AnnotonEntityForm {
     this.term.setValidators(entity.id === 'mf' ? termValidator(entity) : null);
     this.onValueChanges(entity.term.lookup);
     entity.evidence.forEach((evidence: Evidence) => {
-      let evidenceForm = new EvidenceForm(self._metadata, evidence);
+      let evidenceForm = new EvidenceForm(self._metadata, entity, evidence);
 
       self.evidenceForms.push(evidenceForm);
       evidenceForm.onValueChanges(evidence.evidence.lookup)
@@ -69,7 +69,6 @@ export class AnnotonEntityForm {
     ).subscribe(data => {
       self._metadata.lookupFunc(data, lookup.requestParams).subscribe(response => {
         lookup.results = response;
-        console.log(lookup)
       });
     });
   }

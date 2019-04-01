@@ -30,7 +30,7 @@ export class EntityForm {
         this.setTermValidator(entity);
 
         entity.evidence.forEach((evidence: Evidence) => {
-            let evidenceForm = new EvidenceForm(self._metadata, evidence);
+            let evidenceForm = new EvidenceForm(self._metadata, entity, evidence);
 
             self.evidenceForms.push(evidenceForm);
             evidenceForm.onValueChanges(evidence.evidence.lookup);

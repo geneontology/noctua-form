@@ -10,13 +10,39 @@
     </mat-toolbar-row>
   </mat-toolbar>
   <div mat-dialog-content class="noc-dialog-body" noctuaPerfectScrollbar>
-    <div fxLayout="column" fxLayoutAlign="start center" class="w-100-p">
-
+    <div class="" fxLayout="column" fxLayoutAlign="start stretch">
+      <div *ngFor="let error of errors; let i =index" class="noc-error-row" fxLayout="row">
+        <div class="noc-number">
+          {{i+1}}
+        </div>
+        <div flex class="noc-error-row-body">
+          <div class="noc-heading">
+            <strong>{{error.meta.aspect}}</strong>: {{error.message}}
+          </div>
+          <div *ngIf="error.type===2 || error.type===3" class="pb-10" fxLayout="row">
+            <div class="noc-node-card" fxLayout="column" fxLayoutAlign="center center">
+              <div> {{error.meta.subjectNode.label}}</div>
+            </div>
+            <div class="noc-edge-card" flex>
+              <div class="noc-line">
+                {{error.meta.edge.label}}
+              </div>
+            </div>
+            <div class="noc-node-card" fxLayout="column" fxLayoutAlign="center center">
+              <div>{{error.meta.objectNode.label}}</div>
+            </div>
+          </div>
+          <div *ngIf="error.type===4" class="pb-10" fxLayout="row" fxLayoutAlign="center center">
+            <div class="noc-node-card noc-lg" fxLayout="column" fxLayoutAlign="center center">
+              {{error.meta.subjectNode.label}}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="space-between center">
     <span fxFlex></span>
-    <button (click)='close()' type="button" mat-raised-button color="" class="mr-8">Cancel</button>
-    <button type="button" mat-raised-button color="primary">Save</button>
+    <button (click)='close()' type="button" mat-raised-button color="" class="mr-8">Close</button>
   </div>
 </div>

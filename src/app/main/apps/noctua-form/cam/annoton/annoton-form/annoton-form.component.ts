@@ -12,25 +12,25 @@ declare const require: any;
 const each = require('lodash/forEach');
 
 import { noctuaAnimations } from './../../../../../../../@noctua/animations';
-
-
 import { NoctuaFormService } from '../../../services/noctua-form.service';
 
-import { NoctuaGraphService } from 'noctua-form-base';
-import { NoctuaAnnotonFormService } from 'noctua-form-base';
-import { NoctuaFormConfigService } from 'noctua-form-base';
-import { NoctuaLookupService } from 'noctua-form-base';
 import { NoctuaSearchService } from './../../../../../../../@noctua.search/services/noctua-search.service';
-import { CamService } from 'noctua-form-base';
 import { CamDiagramService } from './../../cam-diagram/services/cam-diagram.service';
 import { CamTableService } from './../../cam-table/services/cam-table.service';
 
 import { SparqlService } from './../../../../../../../@noctua.sparql/services/sparql/sparql.service';
-
-import { Cam } from 'noctua-form-base';
-import { Annoton } from 'noctua-form-base';
-import { AnnotonNode } from 'noctua-form-base';
-import { Evidence } from 'noctua-form-base';
+import { NoctuaFormDialogService } from './../../../services/dialog.service';
+import {
+  Cam,
+  Annoton,
+  AnnotonNode,
+  Evidence,
+  CamService,
+  NoctuaGraphService,
+  NoctuaAnnotonFormService,
+  NoctuaFormConfigService,
+  NoctuaLookupService,
+} from 'noctua-form-base';
 
 @Component({
   selector: 'noc-annoton-form',
@@ -62,6 +62,7 @@ export class AnnotonFormComponent implements OnInit, OnDestroy {
     private camDiagramService: CamDiagramService,
     public camTableService: CamTableService,
     private noctuaGraphService: NoctuaGraphService,
+    private noctuaFormDialogService: NoctuaFormDialogService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     public noctuaAnnotonFormService: NoctuaAnnotonFormService,
     private noctuaLookupService: NoctuaLookupService,
@@ -93,10 +94,12 @@ export class AnnotonFormComponent implements OnInit, OnDestroy {
   }
 
   checkErrors() {
-    let error = [];
+    this.noctuaAnnotonFormService.annoton.enableSubmit();
 
-    console.log(this.noctuaAnnotonFormService.getAnnotonFormErrors())
+    let errors = this.noctuaAnnotonFormService.annoton.submitErrors;
+    this.noctuaFormDialogService.openAnnotonErrorsDialog(errors)
   }
+
 
   save() {
     const self = this;
@@ -129,8 +132,6 @@ export class AnnotonFormComponent implements OnInit, OnDestroy {
       saveAnnoton();
     }
   }
-
-
 
   clear() {
     this.noctuaAnnotonFormService.clearForm();

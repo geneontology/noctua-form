@@ -23,6 +23,7 @@ import { AnnotonFormMetadata } from './../models/forms/annoton-form-metadata';
 })
 export class NoctuaAnnotonFormService {
   public mfLocation;
+  public errors = [];
   public annoton: Annoton;
   // public annotonPresentation;
   public annotonForm: AnnotonForm;
@@ -45,6 +46,8 @@ export class NoctuaAnnotonFormService {
   initializeForm(annoton?: Annoton) {
     const self = this;
 
+    this.errors = [];
+
     if (annoton) {
       this.annoton = annoton;
     }
@@ -58,6 +61,7 @@ export class NoctuaAnnotonFormService {
     }
     this.annotonForm = this.createAnnotonForm()
     this.annotonFormGroup.next(this._fb.group(this.annotonForm));
+    this._onAnnotonFormChanges();
   }
 
   initializeFormData(nodes) {
@@ -74,8 +78,6 @@ export class NoctuaAnnotonFormService {
     annotonForm.createFunctionDescriptionForm(self.annoton.presentation.fd);
     annotonForm.onValueChanges(self.annoton.presentation.geneProduct.term.lookup);
 
-    //self.annotonFormData = self.noctuaFormConfigService.createReviewSearchFormData();
-
     return annotonForm;
   }
 
@@ -85,6 +87,15 @@ export class NoctuaAnnotonFormService {
     self.annotonForm.populateAnnoton(annoton);
 
     console.dir(annoton)
+  }
+
+  private _onAnnotonFormChanges(): void {
+    this.annotonFormGroup.getValue().valueChanges.subscribe(value => {
+      this.errors = this.getAnnotonFormErrors()
+      console.log(value,
+
+      )
+    })
   }
 
   getAnnotonFormErrors() {

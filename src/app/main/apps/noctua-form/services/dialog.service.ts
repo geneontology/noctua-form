@@ -43,11 +43,11 @@ export class NoctuaFormDialogService {
             });
     }
 
-    openAnnotonErrorsDialog(cam): void {
+    openAnnotonErrorsDialog(errors: any[]): void {
         this.dialogRef = this._matDialog.open(AnnotonErrorsDialogComponent, {
             panelClass: 'annoton-errors-dialog',
             data: {
-                cam: cam
+                errors: errors
             }
         });
         this.dialogRef.afterClosed()
