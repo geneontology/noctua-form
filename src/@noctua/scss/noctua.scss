@@ -3,6 +3,11 @@
 $noc-primary-color: #039be5;
 $noc-secondary-color: #995014;
 
+.navbar {
+  display: none !important;
+  visibility: hidden
+}
+
 @mixin deep-width($number) {
   width: $number;
   min-width: $number;

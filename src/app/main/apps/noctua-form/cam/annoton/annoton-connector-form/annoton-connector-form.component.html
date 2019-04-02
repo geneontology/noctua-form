@@ -4,13 +4,14 @@
     <span class="noc-drawer-header-title">
       Causal Relation Form</span>
     <span fxFlex></span>
-    <button mat-icon-button (click)="close()" aria-label="Close dialog">
-      <mat-icon>close</mat-icon>
+    <button mat-stroked-button (click)="close()" class="noc-rounded-button noc-sm" color="primary"
+      aria-label="Close dialog">
+      <mat-icon>close</mat-icon> Close
     </button>
   </div>
-  <div noctuaPerfectScrollbar>
-    <div fxLayout="column" fxLayoutAlign="start stretch" class="noc-connector-form noc-form-section w-100-p">
-      <div class="noc-section-body w-100-p" fxLayout="column" fxLayoutAlign="start center">
+  <div class="noc-drawer-body noc-connector-form " noctuaPerfectScrollbar>
+    <div fxLayout="column" fxLayoutAlign="start stretch" class="noc-form-section w-100-p">
+      <div class="noc-section-body w-100-p p-0" fxLayout="column" fxLayoutAlign="start center">
         <div fxLayout="row" fxLayoutAlign="center center" class="noc-summary-row w-100-p">
           <div class="noc-annoton-box" fxLayout="column" fxLayoutAlign="center center">
             <span>
@@ -97,14 +98,16 @@
         </div>
       </div>
     </div>
-    <div fxLayout="row" fxLayoutAlign="start center" class="noc-drawer-footer noc-submit-row">
-      <button (click)='checkErrors()' mat-button color="warn" class="noc-rounded-button noc-sm">
-        Why is the "Save" button disabled?
-      </button>
-      <span fxFlex></span>
-      <button (ngSubmit)='clear()' type="button" mat-raised-button color="" class="mr-8">Clear</button>
-      <button [disabled]="!connectorFormGroup.valid" (click)="save()" type="submit" class="noc-rounded-button"
-        mat-raised-button color="primary">Save</button>
-    </div>
   </div>
+  <div fxLayout="row" fxLayoutAlign="start center" class="noc-drawer-footer noc-submit-row">
+    <button *ngIf="!connectorFormGroup.valid" (click)='checkErrors()' mat-button color="warn"
+      class="noc-rounded-button noc-sm">
+      Why is the "Save" button disabled?
+    </button>
+    <span fxFlex></span>
+    <button (ngSubmit)='clear()' type="button" mat-raised-button color="" class="mr-8">Clear</button>
+    <button [disabled]="!connectorFormGroup.valid" (click)="save()" type="submit" class="noc-rounded-button"
+      mat-raised-button color="primary">Save</button>
+  </div>
+
 </form>

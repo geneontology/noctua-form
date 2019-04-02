@@ -17,7 +17,59 @@
         "build": {
           "builder": "ngx-build-plus:build",
           "options": {
-            "outputPath": "workbenches/annotation-review/public",
+            "outputPath": "workbenches/noctua-form/public",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "src/tsconfig.app.json",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.scss",
+              "node_modules/font-awesome/css/font-awesome.min.css",
+              "node_modules/jsplumb/dist/js/jsplumb.min.js",
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [{
+                "replace": "src/environments/environment.ts",
+                "with": "src/environments/environment.prod.ts"
+              }],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            },
+            "dev-temp": {
+              "fileReplacements": [{
+                "replace": "src/environments/environment.ts",
+                "with": "src/environments/environment.dev-temp.ts"
+              }],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+        },
+        "build-workbench": {
+          "builder": "ngx-build-plus:build",
+          "options": {
+            "outputPath": "workbenches/noctua-form/public",
             "index": "src/inject.tmpl",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",

@@ -74,6 +74,13 @@ export class CamFormComponent implements OnInit, OnDestroy {
     console.log(this.noctuaUserService.user)
   }
 
+  checkErrors() {
+    // this.noctuaAnnotonFormService.annoton.enableSubmit();
+
+    // let errors = this.noctuaAnnotonFormService.annoton.submitErrors;
+    //  this.noctuaFormDialogService.openAnnotonErrorsDialog(errors)
+  }
+
   save() {
 
     const self = this;

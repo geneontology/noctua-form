@@ -15,11 +15,22 @@
     autosize>
     <mat-drawer-content class="w-100-p h-100-p" fxLayout="column" fxLayoutAlign="start stretch">
       <div class="noc-summary-bar" fxLayout="row" fxLayoutAlign="start center">
-        <button mat-flat-button (click)="addAnnoton()" color="primary" class="noc-rounded-button noc-sm">
-          <mat-icon class=""> add </mat-icon> New Activity
-        </button>
+        <div class="noc-summary-bar-section mr-12">
+          <button mat-flat-button (click)="addAnnoton()" color="primary" class="noc-rounded-button noc-sm mr-8">
+            <mat-icon class=""> add </mat-icon> New Activity
+          </button>
+        </div>
+        <div class="noc-summary-bar-section noc-br">
+          <span class="noc-section-label">
+            State:
+          </span>
+          <button mat-stroked-button (click)="openCamForm(annoton)" color="primary"
+            class="noc-rounded-button noc-sm ml-4 mr-8">
+            {{cam?.state?.label}}
+          </button>
+        </div>
       </div>
-      <div [ngSwitch]="noctuaFormService.selectedMiddlePanel.id" class="w-100-p">
+      <div [ngSwitch]="noctuaFormService.selectedMiddlePanel.id" class="w-100-p" noctuaPerfectScrollbar>
         <noc-cam-diagram *ngSwitchCase="noctuaFormService.panel.camDiagram.id" [cam]="cam"></noc-cam-diagram>
         <noc-cam-table *ngSwitchCase="noctuaFormService.panel.camTable.id" [cam]="cam"></noc-cam-table>
       </div>

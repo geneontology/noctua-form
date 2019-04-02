@@ -25,13 +25,19 @@
     </div>
   </div>
   <div *ngIf="cam" class="noc-title" fxLayout="column" fxLayoutAlign="start stretch">
-    <div *ngIf="cam.title; else noCamTitle">{{cam.title}}</div>
+    <div class="h-100-p" *ngIf="cam.title; else noCamTitle" fxLayout="row" fxLayoutAlign="start center">
+      {{cam.title}}
+      <button mat-stroked-button (click)="openCamForm(annoton)" color="primary" class="ml-8 noc-rounded-button noc-xxs">
+        Edit Title
+      </button>
+    </div>
     <ng-template #noCamTitle>
-      <div class="noc-no-information h-100-p" fxLayout="row" fxLayoutAlign="start center">
+      <div class="h-100-p" fxLayout="row" fxLayoutAlign="start center">
         <div class="noc-description">
           <small>No Title Yet</small>
         </div>
-        <button mat-stroked-button (click)="openCamForm(annoton)" color="primary" class="noc-action-button">
+        <button mat-stroked-button (click)="openCamForm(annoton)" color="primary"
+          class="ml-8 noc-rounded-button noc-xxs">
           Add Title
         </button>
       </div>

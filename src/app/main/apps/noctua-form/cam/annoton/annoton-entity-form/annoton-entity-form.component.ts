@@ -104,6 +104,13 @@ export class AnnotonEntityFormComponent implements OnInit, OnDestroy {
     return evidence ? evidence.label : undefined;
   }
 
+  checkErrors() {
+    // this.noctuaAnnotonFormService.annoton.enableSubmit();
+
+    // let errors = this.noctuaAnnotonFormService.annoton.submitErrors;
+    //  this.noctuaFormDialogService.openAnnotonErrorsDialog(errors)
+  }
+
   save() {
     const self = this;
     self.noctuaAnnotonEntityService.annotonEntityFormToAnnoton();

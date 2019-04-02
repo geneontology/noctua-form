@@ -1,17 +1,17 @@
 <form name="camFormGroup" [formGroup]="camFormGroup" fxLayout="column" fxLayoutAlign="start stretch"
-  class="noc-drawer w-100-p">
+  class="noc-drawer w-100-p h-100-p">
   <div class="noc-drawer-header" fxLayout="row" fxLayoutAlign="start center">
     <span class="noc-drawer-header-title">
-      Model Details Form</span>
+      Model Details</span>
     <span fxFlex></span>
     <button mat-stroked-button (click)="close()" class="noc-rounded-button noc-sm" color="primary"
       aria-label="Close dialog">
       <mat-icon>close</mat-icon> Close
     </button>
   </div>
-  <div *ngIf="camFormGroup" fxLayout="column" fxLayoutAlign="start stretch" class="noc-cam-form">
+  <div *ngIf="camFormGroup" class="noc-drawer-body noc-cam-form">
     <div class="noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
-      <div class="noc-section-header px-12" fxLayout="row" fxLayoutAlign="start center">
+      <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
         <div class="noc-section-heading">
           Model Information
         </div>
@@ -42,7 +42,8 @@
     </div>
   </div>
   <div fxLayout="row" fxLayoutAlign="start center" class="noc-drawer-footer noc-submit-row">
-    <button (click)='checkErrors()' mat-button color="warn" class="noc-rounded-button noc-sm">
+    <button *ngIf="!camFormGroup.valid" (click)='checkErrors()' mat-button color="warn"
+      class="noc-rounded-button noc-sm">
       Why is the "Save" button disabled?
     </button>
     <span fxFlex></span>

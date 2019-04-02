@@ -45,8 +45,7 @@
 
   .noc-summary-row {
     @include deep-height(150px);
-    background-color: #F5F5F5;
-    @include mat-elevation(2);
+    background-color: #F2F2F2;
   }
 
   .noc-annoton-entity-form {

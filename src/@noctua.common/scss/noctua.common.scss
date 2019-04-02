@@ -23,18 +23,21 @@ $noc-primary-color-text: #4a8bfc;
     }
   }
 
+  .noc-drawer-body {
+    min-height: calc(100% - 90px);
+  }
+
   .noc-drawer-footer {
     padding: 0 12px;
     @include deep-height(50px);
-    background-color: #FFF;
+    background-color: #EEE;
 
     border-top: 1px solid #CCC;
     z-index: 1000;
 
-    .noc-drawer-header-title {
-      font-size: 14px;
-      font-weight: bold;
-    }
+    -webkit-box-shadow: 2px -5px 2px 0px rgba(0, 0, 0, 0.26);
+    -moz-box-shadow: 2px -5px 2px 0px rgba(0, 0, 0, 0.26);
+    box-shadow: 2px -5px 2px 0px rgba(0, 0, 0, 0.26);
   }
 }
 

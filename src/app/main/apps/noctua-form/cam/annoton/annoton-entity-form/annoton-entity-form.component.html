@@ -9,7 +9,7 @@
       <mat-icon>close</mat-icon> Close
     </button>
   </div>
-  <div class="w-100-p" noctuaPerfectScrollbar>
+  <div class="noc-drawer-body w-100-p" noctuaPerfectScrollbar>
     <div fxLayout="column" fxLayoutAlign="start stretch" class="noc-annoton-entity-form noc-form-section w-100-p">
       <div class="noc-section-body w-100-p" fxLayout="column" fxLayoutAlign="start center">
         <div fxLayout="row" fxLayoutAlign="center center" class="noc-summary-row w-100-p">
@@ -110,7 +110,8 @@
     </div>
   </div>
   <div fxLayout="row" fxLayoutAlign="start center" class="noc-drawer-footer noc-submit-row">
-    <button (click)='checkErrors()' mat-button color="warn" class="noc-rounded-button noc-sm">
+    <button *ngIf="!annotonEntityFormGroup.valid" (click)='checkErrors()' mat-button color="warn"
+      class="noc-rounded-button noc-sm">
       Why is the "Save" button disabled?
     </button>
     <span fxFlex></span>
