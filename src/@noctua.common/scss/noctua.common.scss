@@ -9,19 +9,61 @@ $noc-primary-color-text: #4a8bfc;
   padding: 0 !important;
 }
 
-.noc-drawer-header {
-  position: sticky;
-  position: -webkit-sticky;
-  padding: 0 12px;
-  @include deep-height(40px);
-  background-color: #F7F7F7;
-  @include mat-elevation(2);
+.noc-drawer {
+  .noc-drawer-header {
+    padding: 0 12px;
+    @include deep-height(40px);
+    background-color: #FFF;
+    @include mat-elevation(2);
+    z-index: 1000;
 
-  .noc-drawer-header-title {
-    font-size: 12px;
-    font-weight: bold;
+    .noc-drawer-header-title {
+      font-size: 14px;
+      font-weight: bold;
+    }
+  }
+
+  .noc-drawer-footer {
+    padding: 0 12px;
+    @include deep-height(50px);
+    background-color: #FFF;
+
+    border-top: 1px solid #CCC;
+    z-index: 1000;
+
+    .noc-drawer-header-title {
+      font-size: 14px;
+      font-weight: bold;
+    }
   }
 }
+
+.noc-form-section {
+  width: 100%;
+  background-color: #FFF;
+
+  .noc-section-header {
+    height: 30px;
+    background-color: $noc-primary-color-light;
+
+    .noc-section-heading {
+      padding-left: 12px;
+      font-size: 12px;
+      line-height: 30px;
+      color: #555;
+    }
+
+    .noc-action-button {
+      margin: 0px;
+      height: 30px; // line-height: 36px;
+    }
+  }
+
+  .noc-section-body {
+    padding: 5px 5px;
+  }
+}
+
 
 .noc-column-toolbar {
   padding: 5px;

@@ -1,15 +1,16 @@
-<div fxLayout="column" fxLayoutAlign="start stretch" class="w-100-p">
+<form name="camFormGroup" [formGroup]="camFormGroup" fxLayout="column" fxLayoutAlign="start stretch"
+  class="noc-drawer w-100-p">
   <div class="noc-drawer-header" fxLayout="row" fxLayoutAlign="start center">
     <span class="noc-drawer-header-title">
-      Form</span>
+      Model Details Form</span>
     <span fxFlex></span>
-    <button mat-icon-button (click)="close()" aria-label="Close dialog">
-      <mat-icon>close</mat-icon>
+    <button mat-stroked-button (click)="close()" class="noc-rounded-button noc-sm" color="primary"
+      aria-label="Close dialog">
+      <mat-icon>close</mat-icon> Close
     </button>
   </div>
-  <form *ngIf="camFormGroup" fxLayout="column" fxLayoutAlign="start stretch" name="camFormGroup"
-    [formGroup]="camFormGroup" class="noc-cam-form">
-    <div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+  <div *ngIf="camFormGroup" fxLayout="column" fxLayoutAlign="start stretch" class="noc-cam-form">
+    <div class="noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
       <div class="noc-section-header px-12" fxLayout="row" fxLayoutAlign="start center">
         <div class="noc-section-heading">
           Model Information
@@ -39,13 +40,14 @@
         </mat-form-field>
       </div>
     </div>
-    <div layout="row" class="noc-submit-row">
-      <button *ngIf="false" (click)='close()' type="button" mat-raised-button color="" class="mr-8">
-        Why is the "Search" button disabled?
-      </button>
-      <span fxFlex></span>
-      <button (click)='clear()' type="button" mat-raised-button color="" class="mr-8">Clear</button>
-      <button (click)="save()" type="button" mat-raised-button color="primary">Save</button>
-    </div>
-  </form>
-</div>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start center" class="noc-drawer-footer noc-submit-row">
+    <button (click)='checkErrors()' mat-button color="warn" class="noc-rounded-button noc-sm">
+      Why is the "Save" button disabled?
+    </button>
+    <span fxFlex></span>
+    <button (ngSubmit)='clear()' type="button" mat-raised-button color="" class="mr-8">Clear</button>
+    <button [disabled]="!camFormGroup.valid" (click)="save()" type="submit" class="noc-rounded-button" mat-raised-button
+      color="primary">Save</button>
+  </div>
+</form>

@@ -1,4 +1,5 @@
-<div fxLayout="column" fxLayoutAlign="start stretch" class="w-100-p h-100-p">
+<form *ngIf="connectorFormGroup" name="connectorFormGroup" [formGroup]="connectorFormGroup" fxLayout="column"
+  fxLayoutAlign="start stretch" class="noc-drawer w-100-p h-100-p">
   <div class="noc-drawer-header" fxLayout="row" fxLayoutAlign="start center">
     <span class="noc-drawer-header-title">
       Causal Relation Form</span>
@@ -7,24 +8,21 @@
       <mat-icon>close</mat-icon>
     </button>
   </div>
-  <div fxFlex="100%" class="w-100-p" noctuaPerfectScrollbar>
-    <form *ngIf="connectorFormGroup" name="connectorFormGroup" [formGroup]="connectorFormGroup" fxLayout="column"
-      fxLayoutAlign="start stretch" class="noc-connector-form w-100-p" noctuaPerfectScrollbar>
+  <div noctuaPerfectScrollbar>
+    <div fxLayout="column" fxLayoutAlign="start stretch" class="noc-connector-form noc-form-section w-100-p">
       <div class="noc-section-body w-100-p" fxLayout="column" fxLayoutAlign="start center">
         <div fxLayout="row" fxLayoutAlign="center center" class="noc-summary-row w-100-p">
           <div class="noc-annoton-box" fxLayout="column" fxLayoutAlign="center center">
             <span>
-              <strong>GP: </strong> {{ noctuaAnnotonConnectorService.subjectAnnoton?.presentation.gpText}}<br>
-              <strong>MF: </strong> {{ noctuaAnnotonConnectorService.subjectAnnoton?.presentation.mfText}}
+              <strong>enabled by: </strong> {{ noctuaAnnotonConnectorService.subjectAnnoton?.presentation.gpText}}<br>
             </span>
           </div>
           <div>
             <mat-icon class="s-32">arrow_right_alt</mat-icon>
           </div>
-          <div class="noc-annoton-box" fxLayout="column" fxLayoutAlign="start center">
+          <div class="noc-annoton-box" fxLayout="column" fxLayoutAlign="center center">
             <span>
-              <strong>GP: </strong> {{ noctuaAnnotonConnectorService.objectAnnoton?.presentation.gpText}}<br>
-              <strong>MF: </strong> {{ noctuaAnnotonConnectorService.objectAnnoton?.presentation.mfText}}
+              <strong>enabled by: </strong> {{ noctuaAnnotonConnectorService.objectAnnoton?.presentation.gpText}}<br>
             </span>
           </div>
         </div>
@@ -98,14 +96,15 @@
           </div>
         </div>
       </div>
-    </form>
-    <div layout="row" class="noc-submit-row">
-      <button *ngIf="false" type="button" mat-raised-button color="" class="mr-8">
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" class="noc-drawer-footer noc-submit-row">
+      <button (click)='checkErrors()' mat-button color="warn" class="noc-rounded-button noc-sm">
         Why is the "Save" button disabled?
       </button>
       <span fxFlex></span>
-      <button (click)='clear()' type="button" mat-raised-button color="" class="mr-8">Clear</button>
-      <button (click)="save()" type="button" mat-raised-button color="primary">Save</button>
+      <button (ngSubmit)='clear()' type="button" mat-raised-button color="" class="mr-8">Clear</button>
+      <button [disabled]="!connectorFormGroup.valid" (click)="save()" type="submit" class="noc-rounded-button"
+        mat-raised-button color="primary">Save</button>
     </div>
   </div>
-</div>
+</form>

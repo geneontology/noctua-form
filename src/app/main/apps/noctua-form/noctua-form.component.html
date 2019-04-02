@@ -24,7 +24,7 @@
         <noc-cam-table *ngSwitchCase="noctuaFormService.panel.camTable.id" [cam]="cam"></noc-cam-table>
       </div>
     </mat-drawer-content>
-    <mat-drawer #rightDrawer class="noc-right-drawer" noctuaPerfectScrollbar mode="side" position="end">
+    <mat-drawer #rightDrawer class="noc-right-drawer" mode="side" position="end">
       <div [ngSwitch]="noctuaFormService.selectedRightPanel.id" class="h-100-p">
         <noc-cam-form [panelDrawer]="rightDrawer" *ngSwitchCase="noctuaFormService.panel.camForm.id">
         </noc-cam-form>

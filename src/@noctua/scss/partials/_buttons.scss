@@ -7,6 +7,14 @@ $noc-border-color: #BBB;
   font-size: 14px;
   font-weight: normal;
 
+  &.noc-xs {
+    border-radius: 12px;
+    @include deep-height(24px);
+    line-height: 24px;
+    font-size: 12px;
+    font-weight: normal;
+  }
+
   &.noc-sm {
     border-radius: 15px;
     @include deep-height(30px);

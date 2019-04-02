@@ -8,8 +8,9 @@
       <mat-icon class="s-16 secondary-text">close</mat-icon>
     </button>
   </div>
-  <form fxLayout="column" fxLayoutAlign="start stretch" name="searchForm" [formGroup]="searchForm" class="noc-container noc-search-form">
-    <div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+  <form fxLayout="column" fxLayoutAlign="start stretch" name="searchForm" [formGroup]="searchForm"
+    class="noc-container noc-search-form">
+    <div class="noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
       <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start start">
         <div class="noc-section-heading">
           Required
@@ -53,7 +54,7 @@
         </div>
       </div>
     </div>
-    <div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+    <div class="noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
       <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start start">
         <div class="noc-section-heading">
           Curator (optional)
@@ -63,7 +64,8 @@
       <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
         <div class="px-12 noc-annoton-group-row" fxLayout="column">
           <mat-form-field class="">
-            <input type="text" matInput formControlName="curator" placeholder="Curator" [matAutocomplete]="curatorAuto" />
+            <input type="text" matInput formControlName="curator" placeholder="Curator"
+              [matAutocomplete]="curatorAuto" />
             <mat-autocomplete #curatorAuto="matAutocomplete">
               <mat-option *ngFor="let item of searchFormData['curator']?.searchResults" [value]="item.orcid">
                 <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
@@ -77,7 +79,8 @@
             </mat-autocomplete>
           </mat-form-field>
           <mat-form-field class="">
-            <input type="text" matInput formControlName="providedBy" placeholder="Group" [matAutocomplete]="providedByAuto" />
+            <input type="text" matInput formControlName="providedBy" placeholder="Group"
+              [matAutocomplete]="providedByAuto" />
             <mat-autocomplete #providedByAuto="matAutocomplete">
               <mat-option *ngFor="let item of searchFormData['providedBy']?.searchResults" [value]="item.url">
                 <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
@@ -93,7 +96,7 @@
         </div>
       </div>
     </div>
-    <div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+    <div class="noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
       <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start start">
         <div class="noc-section-heading">
           Species
@@ -103,7 +106,8 @@
       <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
         <div class="px-12 noc-annoton-group-row" fxLayout="column">
           <mat-form-field class="">
-            <input type="text" matInput formControlName="species" placeholder="Species" [matAutocomplete]="speciesAuto" />
+            <input type="text" matInput formControlName="species" placeholder="Species"
+              [matAutocomplete]="speciesAuto" />
             <mat-autocomplete #speciesAuto="matAutocomplete">
               <mat-option *ngFor="let item of searchFormData['species']?.searchResults" [value]="item.id">
                 <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
@@ -121,7 +125,7 @@
     </div>
     <div layout="row" class="noc-submit-row">
       <button *ngIf="false" (click)='cancel()' type="button" mat-raised-button color="" class="mr-8">
-        Why is the "Search" button disabled?
+        Why is the "Save" button disabled?
       </button>
       <span fxFlex></span>
       <button (click)='cancel()' type="button" mat-raised-button color="" class="mr-8">Clear</button>

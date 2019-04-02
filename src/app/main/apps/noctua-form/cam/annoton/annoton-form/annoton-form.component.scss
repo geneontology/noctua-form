@@ -31,33 +31,6 @@
   .noc-annoton-form {
     width: 900px;
 
-    .noc-form-section {
-      width: 100%;
-      background-color: #FFF;
-
-      .noc-section-header {
-        height: 40px;
-        background-color: $noc-primary-color-light;
-
-        .noc-section-heading {
-          padding-left: 12px;
-          font-size: 12px;
-          line-height: 40px;
-          color: #555;
-          font-weight: bold;
-        }
-
-        .noc-action-button {
-          margin: 0px;
-          height: 40px; // line-height: 36px;
-        }
-      }
-
-      .noc-section-body {
-        padding: 5px 5px;
-      }
-    }
-
     .noc-term-group {
       // padding-bottom: 20px;
       margin-bottom: 3px;

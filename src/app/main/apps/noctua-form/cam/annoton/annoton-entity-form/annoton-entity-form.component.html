@@ -1,15 +1,16 @@
-<div fxLayout="column" fxLayoutAlign="start stretch" class="w-100-p h-100-p">
+<form *ngIf="annotonEntityFormGroup" name="annotonEntityFormGroup" [formGroup]="annotonEntityFormGroup"
+  fxLayout="column" fxLayoutAlign="start stretch" class="noc-drawer w-100-p h-100-p">
   <div class="noc-drawer-header" fxLayout="row" fxLayoutAlign="start center">
     <span class="noc-drawer-header-title">
-      Edit</span>
+      Edit Term</span>
     <span fxFlex></span>
-    <button mat-icon-button (click)="close()" aria-label="Close dialog">
-      <mat-icon>close</mat-icon>
+    <button mat-stroked-button (click)="close()" class="noc-rounded-button noc-sm" color="primary"
+      aria-label="Close dialog">
+      <mat-icon>close</mat-icon> Close
     </button>
   </div>
-  <div fxFlex="100%" class="w-100-p" noctuaPerfectScrollbar>
-    <form *ngIf="annotonEntityFormGroup" name="annotonEntityFormGroup" [formGroup]="annotonEntityFormGroup"
-      fxLayout="column" fxLayoutAlign="start stretch" class="noc-annoton-entity-form w-100-p" noctuaPerfectScrollbar>
+  <div class="w-100-p" noctuaPerfectScrollbar>
+    <div fxLayout="column" fxLayoutAlign="start stretch" class="noc-annoton-entity-form noc-form-section w-100-p">
       <div class="noc-section-body w-100-p" fxLayout="column" fxLayoutAlign="start center">
         <div fxLayout="row" fxLayoutAlign="center center" class="noc-summary-row w-100-p">
           <div class="noc-annoton-box" fxLayout="column" fxLayoutAlign="center center">
@@ -106,14 +107,15 @@
           </div>
         </div>
       </div>
-    </form>
-    <div layout="row" class="noc-submit-row">
-      <button *ngIf="false" type="button" mat-raised-button color="" class="mr-8">
-        Why is the "Save" button disabled?
-      </button>
-      <span fxFlex></span>
-      <button (click)='clear()' type="button" mat-raised-button color="" class="mr-8">Clear</button>
-      <button (click)="save()" type="button" mat-raised-button color="primary">Save</button>
     </div>
   </div>
-</div>
+  <div fxLayout="row" fxLayoutAlign="start center" class="noc-drawer-footer noc-submit-row">
+    <button (click)='checkErrors()' mat-button color="warn" class="noc-rounded-button noc-sm">
+      Why is the "Save" button disabled?
+    </button>
+    <span fxFlex></span>
+    <button (ngSubmit)='clear()' type="button" mat-raised-button color="" class="mr-8">Clear</button>
+    <button [disabled]="!annotonEntityFormGroup.valid" (click)="save()" type="submit" class="noc-rounded-button"
+      mat-raised-button color="primary">Save</button>
+  </div>
+</form>
