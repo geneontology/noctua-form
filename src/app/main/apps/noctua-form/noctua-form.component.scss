@@ -4,10 +4,13 @@
 :host {
   padding: 0px;
   width: 100%;
-  background-color: #FFF;
 
   .mat-drawer-content {
     width: 100%;
+  }
+
+  .noc-drawer-container {
+    background-color: #E2E2E2;
   }
 
   .noc-no-information {
@@ -31,7 +34,7 @@
     //min-height: 35px;
     background-color: #FFF;
     font-size: 16px;
-    border: 1px solid rgba(#000, 0.1);
+    border: 1px solid rgba(#000, 0.2);
 
     //  @include mat-elevation(1);
     .noc-title {

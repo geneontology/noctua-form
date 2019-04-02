@@ -54,8 +54,8 @@ export class CamService {
     private noctuaGraphService: NoctuaGraphService,
     private noctuaLookupService: NoctuaLookupService,
     private curieService: CurieService) {
-    this.onCamsChanged = new BehaviorSubject({});
-    this.onCamChanged = new BehaviorSubject({});
+    this.onCamsChanged = new BehaviorSubject(null);
+    this.onCamChanged = new BehaviorSubject(null);
     this.curieUtil = this.curieService.getCurieUtil();
 
     this.camFormGroup = new BehaviorSubject(null);

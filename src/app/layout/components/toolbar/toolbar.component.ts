@@ -5,14 +5,15 @@ import { TranslateService } from '@ngx-translate/core';
 import {
     Cam,
     Curator,
+    CamService,
     NoctuaUserService,
     NoctuaFormConfigService,
     NoctuaGraphService,
     NoctuaAnnotonFormService,
-    CamService
 } from 'noctua-form-base';
 
 import { NoctuaConfigService } from '@noctua/services/config.service';
+import { NoctuaFormService } from 'app/main/apps/noctua-form/services/noctua-form.service';
 
 @Component({
     selector: 'noctua-toolbar',
@@ -22,6 +23,7 @@ import { NoctuaConfigService } from '@noctua/services/config.service';
 
 export class NoctuaToolbarComponent implements OnInit {
     public user: Curator;
+    public cam: Cam;
     userStatusOptions: any[];
     languages: any;
     selectedLanguage: any;
@@ -35,8 +37,11 @@ export class NoctuaToolbarComponent implements OnInit {
     constructor(
         private router: Router,
         private route: ActivatedRoute,
+        private camService: CamService,
         private noctuaConfig: NoctuaConfigService,
         public noctuaUserService: NoctuaUserService,
+        public noctuaAnnotonFormService: NoctuaAnnotonFormService,
+        public noctuaFormService: NoctuaFormService,
         private translate: TranslateService
     ) {
         console.log(window.location)
@@ -73,7 +78,13 @@ export class NoctuaToolbarComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.camService.onCamChanged.subscribe((cam) => {
+            if (!cam) return;
 
+            this.cam = cam
+            this.cam.onGraphChanged.subscribe((annotons) => {
+            });
+        });
     }
 
     getUserInfo() {
@@ -86,6 +97,20 @@ export class NoctuaToolbarComponent implements OnInit {
                 this.user.groups = response.groups;
             }
         });
+    }
+
+    addAnnoton() {
+        this.openAnnotonForm(location);
+    }
+
+    openCamForm() {
+        //  this.noctuaFormService.initializeForm();
+        this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.camForm)
+    }
+
+    openAnnotonForm(location?) {
+        this.noctuaAnnotonFormService.initializeForm();
+        this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.annotonForm)
     }
 
     search(value): void {
