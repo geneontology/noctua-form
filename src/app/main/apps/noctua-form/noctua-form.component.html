@@ -11,36 +11,13 @@
       <mat-icon> table_chart </mat-icon>
     </button>
   </div>
-  <mat-drawer-container class="noc-drawer-container w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start" autosize>
-    <mat-drawer-content class="w-100-p h-100-p p-8" fxLayout="column" fxLayoutAlign="start stretch">
+  <mat-drawer-container class="noc-drawer-container w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start"
+    autosize>
+    <mat-drawer-content class="w-100-p h-100-p" fxLayout="column" fxLayoutAlign="start stretch">
       <div class="noc-summary-bar" fxLayout="row" fxLayoutAlign="start center">
-        <div class="noc-title" fxLayout="column" fxLayoutAlign="start stretch">
-          <div class="text-truncate">
-            <div *ngIf="cam.title; else noCamTitle">{{cam.title}}</div>
-            <ng-template #noCamTitle>
-              <div class="noc-no-information" fxLayout="row" fxLayoutAlign="start center">
-                <div class="noc-description">
-                  <small>No Title Yet</small>
-                </div>
-                <button mat-stroked-button (click)="openCamForm(annoton)" color="primary" class="noc-action-button">
-                  Add Title
-                </button>
-              </div>
-            </ng-template>
-          </div>
-          <div class="text-truncate">
-            <small>{{cam.state?.label}}</small>
-          </div>
-        </div>
-        <span fxFlex=""></span>
-        <div class="" fxFlex="" fxLayout="row" fxLayoutAlign="end center">
-          <button mat-raised-button (click)="openCamForm(annoton)" class="noc-bl">
-            <mat-icon class=""> edit </mat-icon> Edit
-          </button>
-          <button mat-raised-button (click)="addAnnoton()" color="primary" class="">
-            <mat-icon class=""> add </mat-icon> New Activity
-          </button>
-        </div>
+        <button mat-flat-button (click)="addAnnoton()" color="primary" class="noc-rounded-button noc-sm">
+          <mat-icon class=""> add </mat-icon> New Activity
+        </button>
       </div>
       <div [ngSwitch]="noctuaFormService.selectedMiddlePanel.id" class="w-100-p">
         <noc-cam-diagram *ngSwitchCase="noctuaFormService.panel.camDiagram.id" [cam]="cam"></noc-cam-diagram>

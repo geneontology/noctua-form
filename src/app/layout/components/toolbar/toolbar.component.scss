@@ -1,10 +1,13 @@
-@import 'src/@noctua/scss/noctua';
+@import "src/@noctua/scss/noctua";
+@import "src/@noctua.common/scss/noctua.common";
 
 :host {
   position: relative;
   display: flex;
   flex: 0 0 auto;
   z-index: 4;
+
+  border-bottom: 2px solid $noc-primary-color;
 
   .noc-logo-filler {
     @include deep-width(50px);
@@ -45,28 +48,17 @@
     }
   }
 
-  .noc-summary-bar {
-    margin-bottom: 4px;
+
+  //  @include mat-elevation(1);
+  .noc-title {
     padding: 0 10px;
-    @include deep-height(60px);
+    @include deep-height(50px);
     //min-height: 35px;
     background-color: #FFF;
     font-size: 16px;
-    border: 1px solid rgba(#000, 0.2);
 
-    //  @include mat-elevation(1);
-    .noc-title {
-      strong {
-        font-size: 12px;
-      }
-    }
-
-    .noc-title-truncate {
-      max-width: 200px
-    }
-
-    mat-icon-button {
-      border-radius: 0 !important;
+    strong {
+      font-size: 12px;
     }
   }
 

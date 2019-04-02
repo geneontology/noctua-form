@@ -1,0 +1,17 @@
+$noc-border-color: #BBB;
+
+.noc-rounded-button {
+  border-radius: 20px;
+  @include deep-height(40px);
+  line-height: 40px;
+  font-size: 14px;
+  font-weight: normal;
+
+  &.noc-sm {
+    border-radius: 15px;
+    @include deep-height(30px);
+    line-height: 30px;
+    font-size: 12px;
+    font-weight: normal;
+  }
+}

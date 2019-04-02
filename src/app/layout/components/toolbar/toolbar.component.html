@@ -1,6 +1,6 @@
-<mat-toolbar class="mat-elevation-z1" fxLayout="row" fxLayoutAlign="start center">
+<mat-toolbar class="" fxLayout="row" fxLayoutAlign="start center">
   <mat-progress-bar *ngIf="showLoadingBar" class="loading-bar" color="accent" mode="indeterminate"></mat-progress-bar>
-  <div class="noc-br" fxLayout="row" fxLayoutAlign="start center" fxFlex="250px">
+  <div class="noc-br" fxLayout="row" fxLayoutAlign="start center" fxFlex="220px">
     <button mat-icon-button [matMenuTriggerFor]="changeView" class="">
       <mat-icon>apps</mat-icon>
     </button>
@@ -24,25 +24,18 @@
       </a>
     </div>
   </div>
-  <div class="noc-summary-bar" fxLayout="row" fxLayoutAlign="start center">
-    <div *ngIf="cam" class="noc-title" fxLayout="column" fxLayoutAlign="start stretch">
-      <div class="text-truncate">
-        <div *ngIf="cam.title; else noCamTitle">{{cam.title}}</div>
-        <ng-template #noCamTitle>
-          <div class="noc-no-information" fxLayout="row" fxLayoutAlign="start center">
-            <div class="noc-description">
-              <small>No Title Yet</small>
-            </div>
-            <button mat-stroked-button (click)="openCamForm(annoton)" color="primary" class="noc-action-button">
-              Add Title
-            </button>
-          </div>
-        </ng-template>
+  <div *ngIf="cam" class="noc-title" fxLayout="column" fxLayoutAlign="start stretch">
+    <div *ngIf="cam.title; else noCamTitle">{{cam.title}}</div>
+    <ng-template #noCamTitle>
+      <div class="noc-no-information h-100-p" fxLayout="row" fxLayoutAlign="start center">
+        <div class="noc-description">
+          <small>No Title Yet</small>
+        </div>
+        <button mat-stroked-button (click)="openCamForm(annoton)" color="primary" class="noc-action-button">
+          Add Title
+        </button>
       </div>
-      <div class="text-truncate">
-        <small>{{cam.state?.label}}</small>
-      </div>
-    </div>
+    </ng-template>
   </div>
   <span fxFlex=""></span>
   <!--
