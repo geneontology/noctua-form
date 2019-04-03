@@ -35,6 +35,7 @@ import { Cam } from 'noctua-form-base';
 import { Annoton } from 'noctua-form-base';
 import { AnnotonNode } from 'noctua-form-base';
 import { Evidence } from 'noctua-form-base';
+import { NoctuaFormDialogService } from '../../../services/dialog.service';
 
 
 @Component({
@@ -65,6 +66,7 @@ export class AnnotonEntityFormComponent implements OnInit, OnDestroy {
     private camDiagramService: CamDiagramService,
     public camTableService: CamTableService,
     private noctuaGraphService: NoctuaGraphService,
+    private noctuaFormDialogService: NoctuaFormDialogService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     public noctuaAnnotonFormService: NoctuaAnnotonFormService,
     private noctuaLookupService: NoctuaLookupService,
@@ -105,17 +107,17 @@ export class AnnotonEntityFormComponent implements OnInit, OnDestroy {
   }
 
   checkErrors() {
-    // this.noctuaAnnotonFormService.annoton.enableSubmit();
+    this.noctuaAnnotonEntityService.annoton.enableSubmit();
 
-    // let errors = this.noctuaAnnotonFormService.annoton.submitErrors;
-    //  this.noctuaFormDialogService.openAnnotonErrorsDialog(errors)
+    let errors = this.noctuaAnnotonFormService.annoton.submitErrors;
+    this.noctuaFormDialogService.openAnnotonErrorsDialog(errors)
   }
 
   save() {
     const self = this;
     self.noctuaAnnotonEntityService.annotonEntityFormToAnnoton();
 
-    this.noctuaGraphService.edit(this.cam, self.noctuaAnnotonEntityService.termNode);
+    this.noctuaGraphService.edit(this.camService.cam, self.noctuaAnnotonEntityService.termNode);
   }
 
   /*   openSummary() {

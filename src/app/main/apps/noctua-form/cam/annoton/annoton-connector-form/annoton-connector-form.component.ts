@@ -34,6 +34,7 @@ import { Cam } from 'noctua-form-base';
 import { Annoton } from 'noctua-form-base';
 import { AnnotonNode } from 'noctua-form-base';
 import { Evidence } from 'noctua-form-base';
+import { NoctuaFormDialogService } from '../../../services/dialog.service';
 
 @Component({
   selector: 'noc-annoton-connector',
@@ -70,6 +71,7 @@ export class AnnotonConnectorFormComponent implements OnInit, OnDestroy {
     private camDiagramService: CamDiagramService,
     public camTableService: CamTableService,
     private noctuaGraphService: NoctuaGraphService,
+    private noctuaFormDialogService: NoctuaFormDialogService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     public noctuaAnnotonFormService: NoctuaAnnotonFormService,
     private noctuaLookupService: NoctuaLookupService,

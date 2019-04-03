@@ -1102,7 +1102,7 @@ export class NoctuaFormConfigService {
       overridesData.reference ? node.evidence[0].setReference(overridesData.reference) : null;
     });
 
-
+    annoton.enableSubmit();
     return annoton;
   }
 

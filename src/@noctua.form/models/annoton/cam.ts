@@ -43,6 +43,14 @@ export class Cam {
     this._annotons = annoton;
   }
 
+  findAnnotonById(id) {
+    const self = this;
+
+    return _.find(self.annotons, (annoton) => {
+      return annoton.id === id;
+    })
+  }
+
   annotonsWithoutLocation() {
     let result = [];
 

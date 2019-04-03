@@ -56,9 +56,6 @@ export class AnnotonTableComponent implements OnInit, OnDestroy {
     'with',
     'assignedBy'];
 
-  searchCriteria: any = {};
-  searchFormData: any = []
-  searchForm: FormGroup;
   grid: any[] = [];
 
   @Input('cam')
@@ -88,10 +85,9 @@ export class AnnotonTableComponent implements OnInit, OnDestroy {
     private noctuaFormDialogService: NoctuaFormDialogService,
     private noctuaLookupService: NoctuaLookupService,
     private noctuaGraphService: NoctuaGraphService,
-    private noctuaAnnotonEntityService: NoctuaAnnotonEntityService,
+    public noctuaAnnotonEntityService: NoctuaAnnotonEntityService,
     private sparqlService: SparqlService) {
 
-    this.searchFormData = this.noctuaFormConfigService.createReviewSearchFormData();
     this.unsubscribeAll = new Subject();
   }
 
@@ -99,25 +95,16 @@ export class AnnotonTableComponent implements OnInit, OnDestroy {
     this.loadCam();
   }
 
-  search() {
-    let searchCriteria = this.searchForm.value;
-    console.dir(searchCriteria)
-    this.noctuaSearchService.search(searchCriteria);
-  }
-
   loadCam() {
     this.grid = this.annoton.grid;
   }
 
-
   selectEntity(entity: AnnotonNode) {
-    console.log("00", this.annoton)
-    this.sparqlService.onCamChanged.next(entity);
     this.noctuaAnnotonEntityService.initializeForm(this.annoton, entity);
     this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.annotonEntityForm);
+
+    console.log(this.noctuaAnnotonEntityService.termNode.id === entity.id)
   }
-
-
 
   ngOnDestroy(): void {
     this.unsubscribeAll.next();

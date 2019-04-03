@@ -50,6 +50,7 @@ export class NoctuaAnnotonEntityService {
     this.termNode = termNode;
     this.annotonEntityForm = this.createAnnotonEntityForm(termNode);
     this.annotonEntityFormGroup.next(this._fb.group(this.annotonEntityForm));
+    this._onAnnotonFormChanges();
   }
 
   createAnnotonEntityForm(termNode: AnnotonNode) {
@@ -66,6 +67,14 @@ export class NoctuaAnnotonEntityService {
     const self = this;
 
     self.annotonEntityForm.populateAnnotonEntityForm(this.termNode);
+  }
+
+  private _onAnnotonFormChanges(): void {
+    this.annotonEntityFormGroup.getValue().valueChanges.subscribe(value => {
+      // this.errors = this.getAnnotonFormErrors();
+      this.annotonEntityFormToAnnoton();
+      this.annoton.enableSubmit();
+    })
   }
 
   clearForm() {

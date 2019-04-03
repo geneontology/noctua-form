@@ -1,35 +1,15 @@
 <div class="w-100-p">
   <div class="noc-annoton-table-header w-100-p" fxLayout="row" fxLayoutAlign="start center">
-    <div fxFlex="120px" class="noc-header-cell">
-      Relationship
-    </div>
-    <div fxFlex="50px" class="noc-header-cell">
-      Asp
-    </div>
-    <div fxFlex="150px" class="noc-header-cell">
-      Term
-    </div>
-    <div fxFlex="120px" class="noc-header-cell">
-      Relationship Ext
-    </div>
-    <div fxFlex="150px" class="noc-header-cell">
-      Extension
-    </div>
-    <div fxFlex="150px" class="noc-header-cell">
-      Evidence
-    </div>
-    <div fxFlex="120px" class="noc-header-cell">
-      Reference
-    </div>
-    <div fxFlex="120px" class="noc-header-cell">
-      Evidence
-    </div>
-    <div fxFlex="120px" class="noc-header-cell">
-      With
-    </div>
-    <div fxFlex="120px" class="noc-header-cell">
-      Assigned By
-    </div>
+    <div fxFlex="120px" class="noc-header-cell"> Relationship </div>
+    <div fxFlex="50px" class="noc-header-cell"> Asp </div>
+    <div fxFlex="150px" class="noc-header-cell"> Term </div>
+    <div fxFlex="120px" class="noc-header-cell"> Relationship Ext </div>
+    <div fxFlex="150px" class="noc-header-cell"> Extension </div>
+    <div fxFlex="150px" class="noc-header-cell"> Evidence </div>
+    <div fxFlex="120px" class="noc-header-cell"> Reference </div>
+    <div fxFlex="120px" class="noc-header-cell"> Evidence </div>
+    <div fxFlex="120px" class="noc-header-cell"> With </div>
+    <div fxFlex="120px" class="noc-header-cell"> Assigned By </div>
   </div>
   <div class="noc-annoton-table-body w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
     <div class="annoton-table" fxFlex="">
@@ -90,7 +70,8 @@
           </mat-cell>
         </ng-container>
         <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *cdkRowDef="let entity; columns: displayedColumns;" class="entity" matRipple (click)="selectEntity(entity.node)"></mat-row>
+        <mat-row *cdkRowDef="let entity; columns: displayedColumns;" class="" matRipple
+          [ngClass]="{'noc-row-selected': 'mf-1' === entity.node.id}" (click)="selectEntity(entity.node)"></mat-row>
       </mat-table>
       <div *ngIf="grid?.length===0" class="noc-no-info">
         no results yet.

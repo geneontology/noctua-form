@@ -40,7 +40,16 @@ $noc-secondary-color: #995014;
   }
 }
 
+.mat-row {
+  &:hover {
+    @include mat-elevation(1);
+    background-color: #F5F5F5;
+  }
 
+  &.noc-row-selected {
+    background-color: aquamarine;
+  }
+}
 
 .noc-paginator {
   overflow: hidden;
