@@ -85,27 +85,20 @@ export class AnnotonFormComponent implements OnInit, OnDestroy {
       this.cam = cam
 
       this.cam.onGraphChanged.subscribe((annotons) => {
-        //console.log("cam changed")
-        //  let data = this.summaryGridService.getGrid(annotons);
-        //  this.sparqlService.addCamChildren(cam, data);
-        //  this.dataSource = new CamsDataSource(this.sparqlService, this.paginator, this.sort);
       });
     });
   }
 
   checkErrors() {
-    this.noctuaAnnotonFormService.annoton.enableSubmit();
-
     let errors = this.noctuaAnnotonFormService.annoton.submitErrors;
     this.noctuaFormDialogService.openAnnotonErrorsDialog(errors)
   }
-
 
   save() {
     const self = this;
     let infos;
 
-    self.noctuaAnnotonFormService.annotonFormToAnnoton(self.noctuaAnnotonFormService.annoton)
+    self.noctuaAnnotonFormService.annotonFormToAnnoton();
 
     let saveAnnoton = function () {
       //self.annotonForm.linkFormNode(entity, selected.node);

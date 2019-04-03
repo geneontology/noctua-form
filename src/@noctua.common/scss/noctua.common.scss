@@ -5,6 +5,24 @@ $noc-primary-color-lighter: #dfe3ee;
 $noc-primary-color-light: rgba(#798fb8, 0.5);
 $noc-primary-color-text: #4a8bfc;
 
+.mat-toolbar {
+  @include deep-height(40px);
+
+  mat-toolbar-row {
+    @include deep-height(40px);
+
+    button {
+      color: #EEE;
+      border: #CCC solid 1px;
+
+      &:hover {
+        color: #CCC;
+        border: #BBB solid 1px;
+      }
+    }
+  }
+}
+
 .mat-expansion-panel-body {
   padding: 0 !important;
 }
@@ -30,7 +48,7 @@ $noc-primary-color-text: #4a8bfc;
   .noc-drawer-footer {
     padding: 0 12px;
     @include deep-height(50px);
-    background-color: #EEE;
+    background-color: #F2F2F2;
 
     border-top: 1px solid #CCC;
     z-index: 1000;

@@ -81,20 +81,15 @@ export class NoctuaAnnotonFormService {
     return annotonForm;
   }
 
-  annotonFormToAnnoton(annoton: Annoton) {
-    const self = this;
-
-    self.annotonForm.populateAnnoton(annoton);
-
-    console.dir(annoton)
+  annotonFormToAnnoton() {
+    this.annotonForm.populateAnnoton(this.annoton);
   }
 
   private _onAnnotonFormChanges(): void {
     this.annotonFormGroup.getValue().valueChanges.subscribe(value => {
-      this.errors = this.getAnnotonFormErrors()
-      console.log(value,
-
-      )
+      // this.errors = this.getAnnotonFormErrors();
+      this.annotonFormToAnnoton();
+      this.annoton.enableSubmit();
     })
   }
 
@@ -126,14 +121,6 @@ export class NoctuaAnnotonFormService {
   }
 
 
-
-
-
-  addGPNode(annoton) {
-    let id = 'gp-' + annoton.nodes.length;
-
-    this.noctuaFormConfigService.addGPAnnotonData(annoton, id);
-  }
 
   linkFormNode(entity, srcNode) {
     entity.modelId = srcNode.modelId;
