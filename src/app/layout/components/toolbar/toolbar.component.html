@@ -5,7 +5,7 @@
       <mat-icon>apps</mat-icon>
     </button>
     <mat-menu #changeView="matMenu">
-      <a *ngFor="let workbench of cam?.model?.modelInfo.workbenches" href="{{workbench.url}}" target="_blank"
+      <a *ngFor="let workbench of cam?.model?.modelInfo?.workbenches" href="{{workbench.url}}" target="_blank"
         mat-menu-item>
         {{workbench.label}}
       </a>

@@ -17,7 +17,7 @@ export class Cam {
 
   id: string;
   expanded?: boolean;
-  model?: {};
+  model: any;
   annotatedEntity?: {};
   camRow?: any;
   _annotons: Annoton[] = [];
