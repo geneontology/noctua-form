@@ -116,6 +116,7 @@ export class NoctuaFormConfigService {
         "displayGroup": noctuaFormConfig.displayGroup.mc,
         "lookupGroup": 'GO:0032991',
         'treeLevel': 1,
+        'isExtension': false,
         "term": {
           "ontologyClass": [],
           "lookup": {
@@ -135,6 +136,7 @@ export class NoctuaFormConfigService {
         "displayGroup": noctuaFormConfig.displayGroup.gp,
         "lookupGroup": 'CHEBI:33695',
         'treeLevel': 1,
+        'isExtension': false,
         "term": {
           "ontologyClass": [],
           "lookup": {
@@ -156,6 +158,7 @@ export class NoctuaFormConfigService {
         "displayGroup": noctuaFormConfig.displayGroup.mf,
         "lookupGroup": 'GO:0003674',
         'treeLevel': 1,
+        'isExtension': false,
         "term": {
           "ontologyClass": ['go'],
           "lookup": {
@@ -175,6 +178,7 @@ export class NoctuaFormConfigService {
         "displayGroup": noctuaFormConfig.displayGroup.mf,
         "lookupGroup": 'CHEBI:23367',
         'treeLevel': 2,
+        'isExtension': true,
         "term": {
           "ontologyClass": [],
           "lookup": {
@@ -194,6 +198,7 @@ export class NoctuaFormConfigService {
         "displayGroup": noctuaFormConfig.displayGroup.mf,
         "lookupGroup": 'GO:0044848',
         'treeLevel': 2,
+        'isExtension': true,
         "term": {
           "ontologyClass": ['go'],
           "lookup": {
@@ -214,6 +219,7 @@ export class NoctuaFormConfigService {
         "displayGroup": noctuaFormConfig.displayGroup.cc,
         "lookupGroup": 'GO:0005575',
         'treeLevel': 2,
+        'isExtension': false,
         "term": {
           "ontologyClass": ['go'],
           "lookup": {
@@ -234,6 +240,7 @@ export class NoctuaFormConfigService {
         "displayGroup": noctuaFormConfig.displayGroup.cc,
         "lookupGroup": 'GO:0005575',
         'treeLevel': 3,
+        'isExtension': true,
         "term": {
           "ontologyClass": ['go'],
           "lookup": {
@@ -253,6 +260,7 @@ export class NoctuaFormConfigService {
         "displayGroup": noctuaFormConfig.displayGroup.cc,
         "lookupGroup": 'CL:0000003',
         'treeLevel': 4,
+        'isExtension': true,
         "term": {
           "ontologyClass": ['cl'],
           "lookup": {
@@ -272,6 +280,7 @@ export class NoctuaFormConfigService {
         "displayGroup": noctuaFormConfig.displayGroup.cc,
         "lookupGroup": 'UBERON:0000061',
         'treeLevel': 5,
+        'isExtension': true,
         "term": {
           "ontologyClass": ['uberon'],
           "lookup": {
@@ -292,6 +301,7 @@ export class NoctuaFormConfigService {
         "displayGroup": noctuaFormConfig.displayGroup.bp,
         "lookupGroup": 'GO:0008150',
         'treeLevel': 2,
+        'isExtension': false,
         "term": {
           "ontologyClass": ['go'],
           "lookup": {
@@ -311,6 +321,7 @@ export class NoctuaFormConfigService {
         "displayGroup": noctuaFormConfig.displayGroup.bp,
         "lookupGroup": 'CHEBI:33695',
         'treeLevel': 3,
+        'isExtension': true,
         "term": {
           "ontologyClass": [],
           "lookup": {
@@ -331,6 +342,7 @@ export class NoctuaFormConfigService {
         "displayGroup": noctuaFormConfig.displayGroup.bp,
         "lookupGroup": 'GO:0008150',
         'treeLevel': 3,
+        'isExtension': true,
         "term": {
           "ontologyClass": ['go'],
           "lookup": {
@@ -352,6 +364,7 @@ export class NoctuaFormConfigService {
         "displayGroup": noctuaFormConfig.displayGroup.bp,
         "lookupGroup": 'GO:0008150',
         'treeLevel': 4,
+        'isExtension': true,
         "term": {
           "ontologyClass": ['go'],
           "lookup": {
@@ -1092,6 +1105,7 @@ export class NoctuaFormConfigService {
     each(modelIds[modelType].overrides, function (overridesData) {
       let node: AnnotonNode = annoton.getNode(overridesData.id);
 
+      overridesData.isExtension ? node.isExtension = overridesData.isExtension : null;
       overridesData.treeLevel ? node.treeLevel = overridesData.treeLevel : null;
       overridesData.termRequiredList ? node.termRequiredList = overridesData.termRequiredList : null;
       overridesData.term ? node.setTerm(overridesData.term) : null;
@@ -1152,6 +1166,7 @@ export class NoctuaFormConfigService {
     annotonNode.displayGroup = nodeData.displayGroup;
     annotonNode.lookupGroup = nodeData.lookupGroup;
     annotonNode.treeLevel = nodeData.treeLevel;
+    annotonNode.isExtension = nodeData.isExtension;
     annotonNode.setTermLookup(nodeData.term.lookup.requestParams);
     annotonNode.setTermOntologyClass(nodeData.term.ontologyClass);
     annotonNode.setEvidenceMeta('eco', self.requestParams["evidence"]);
@@ -1178,6 +1193,7 @@ export class NoctuaFormConfigService {
     annotonNode.displayGroup = noctuaFormConfig.displayGroup.mc;
     annotonNode.lookupGroup = nodeData.lookupGroup;
     annotonNode.treeLevel = 1;
+    annotonNode.isExtension = false;
     annotonNode.setTermLookup(nodeData.term.lookup.requestParams);
     annotonNode.setTermOntologyClass(nodeData.term.ontologyClass);
     annotonNode.setEvidenceMeta('eco', self.requestParams["evidence"]);

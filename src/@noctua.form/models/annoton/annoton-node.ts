@@ -8,6 +8,7 @@ import { AnnotonError } from "./parser/annoton-error.js";
 
 export class AnnotonNode {
   id;
+  isExtension;
   aspect;
   label;
   lookupGroup;
@@ -45,6 +46,7 @@ export class AnnotonNode {
     this.annoton = null;
     this.ontologyClass = [];
     this.individualId;
+    this.isExtension = false;
     this.isComplement = false;
     this.term = {
       "validation": {

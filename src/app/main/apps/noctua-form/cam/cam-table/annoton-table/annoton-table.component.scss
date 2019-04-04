@@ -1,6 +1,9 @@
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
 
+$primary: map-get($theme, primary);
+$accent: map-get($theme, accent);
+
 :host {
   padding: 0px;
   width: 100%;
@@ -17,6 +20,10 @@
 
     .noc-header-cell {
       padding: 0 10px;
+      font-size: 10px;
+      color: map-get($primary, default);
+      text-transform: uppercase;
+      font-weight: bold;
     }
   }
 
@@ -50,15 +57,17 @@
 
 
 
-    .mat-header-cell,
+
     .mat-cell {
       padding: 0 10px;
-      font-size: 10px !important;
+      font-size: 12px !important;
       color: #000;
     }
 
     .mat-header-cell {
+      padding: 0 10px;
       font-size: 10px !important;
+      color: #0F0; // map-get($primary, default);
       font-weight: bold;
     }
 

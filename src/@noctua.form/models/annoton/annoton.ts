@@ -283,17 +283,16 @@ export class Annoton extends SaeGraph {
   generateGridRow(node: AnnotonNode) {
     const self = this;
 
-    let extension = node.treeLevel > 1;
     let term = node.getTerm();
 
     self._grid.push({
       displayEnabledBy: self.tableCanDisplayEnabledBy(node),
       treeLevel: node.treeLevel,
       gp: self.tableDisplayGp(node),
-      relationship: extension ? '' : self.tableDisplayExtension(node),
-      relationshipExt: extension ? node.relationship.label : '',
-      term: extension ? {} : term,
-      extension: extension ? term : {},
+      relationship: node.isExtension ? '' : self.tableDisplayExtension(node),
+      relationshipExt: node.isExtension ? node.relationship.label : '',
+      term: node.isExtension ? {} : term,
+      extension: node.isExtension ? term : {},
       aspect: node.aspect,
       evidence: node.evidence.length > 0 ? node.evidence[0].evidence.control.value : {},
       reference: node.evidence.length > 0 ? node.evidence[0].reference.control.link : '',
