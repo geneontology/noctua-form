@@ -1,18 +1,37 @@
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
 
+
 :host {
   width: 100%; // display: block;
   background-color: white;
 
   .noc-tree-input {
-    $border-color: rgba(#000, 0.12);
+    $border-color: rgba(#000, 0.20);
     @include deep-width(20px);
-    border-right: $border-color solid 1px;
 
-    &.noc-level-0 {
-      border: none;
+    &.noc-level-1 {
+      border-left: $border-color dotted 2px;
     }
+
+    .noc-tree-line {
+      //   
+      width: 100%;
+      border-left: $border-color dotted 2px;
+
+      &.line-t {
+        @include deep-height(2px);
+        border-left: $border-color dotted 2px;
+        border-bottom: $border-color dotted 2px;
+      }
+
+      &.line-m {
+        @include deep-height(2px);
+        border-bottom: $border-color dotted 2px;
+      }
+    }
+
+
   }
 
   textarea {
@@ -115,30 +134,6 @@
       }
 
 
-    }
-
-
-
-
-    md-input-container {
-      margin: 0; //border-bottom: #555 solid 1px; 
-      padding-top: 20px;
-      padding-bottom: 8px;
-
-      label {
-        top: 0px;
-        bottom: auto !important;
-        left: 5px;
-      }
-
-      .md-errors-spacer {
-        visibility: hidden;
-        display: none;
-      }
-
-      input {
-        padding-left: 5px;
-      }
     }
 
 

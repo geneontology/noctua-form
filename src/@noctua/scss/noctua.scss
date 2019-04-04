@@ -21,6 +21,12 @@ textarea {
   .mat-form-field-underline {
     bottom: 0;
   }
+
+  &.noc-sm {
+    .mat-form-field-wrapper {
+      font-size: 12px;
+    }
+  }
 }
 
 @mixin deep-width($number) {

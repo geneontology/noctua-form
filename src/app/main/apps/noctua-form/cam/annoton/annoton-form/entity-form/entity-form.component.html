@@ -1,15 +1,23 @@
 <div [formGroup]="entityFormGroup" fxLayout="row" fxLayoutAlign="start stretch" class="w-100-p">
-  <div class="noc-tree-input noc-level-1">
+  <div *ngIf="entity.treeLevel>1" class="noc-tree-input noc-level-1" fxLayout="column" fxLayoutAlign="center center">
+    <div *ngIf="entity.treeLevel===2" class="noc-tree-line line-m" fxFlex></div>
   </div>
-  <div class="noc-tree-input noc-level-2">
+  <div *ngIf="entity.treeLevel>2" class="noc-tree-input noc-level-2" fxLayout="column" fxLayoutAlign="start center">
+    <div *ngIf="entity.treeLevel===3" class="noc-tree-line line-t" fxFlex="50%"></div>
+    <div *ngIf="entity.treeLevel<3" class="noc-tree-line iine-b" fxFlex="50%"></div>
   </div>
-  <div class="noc-tree-input noc-level-3">
+  <div *ngIf="entity.treeLevel>3" class="noc-tree-input noc-level-3" fxLayout="column" fxLayoutAlign="start center">
+    <div *ngIf="entity.treeLevel===4" class="noc-tree-line line-t" fxFlex="50%"></div>
+    <div *ngIf="entity.treeLevel<4" class="noc-tree-line iine-b" fxFlex="50%"></div>
+  </div>
+  <div *ngIf="entity.treeLevel>4" class="noc-tree-input noc-level-3" fxLayout="column" fxLayoutAlign="start center">
+    <div *ngIf="entity.treeLevel===5" class="noc-tree-line line-t" fxFlex="50%"></div>
+    <div *ngIf="entity.treeLevel<5" class="noc-tree-line iine-b" fxFlex="50%"></div>
   </div>
   <div class="p-4" fxFlex fxLayout="row" fxLayoutAlign="start stretch">
-    <mat-form-field class="h-100-p w-100-p" appearance="outline">
+    <mat-form-field class="noc-sm w-100-p" appearance="outline">
       <mat-label>{{entity.label}}</mat-label>
       <textarea type="text" matInput formControlName="term" [matAutocomplete]="termAuto" row="2">
-
     </textarea>
       <mat-autocomplete #termAuto="matAutocomplete" [displayWith]="termDisplayFn">
         <mat-option *ngFor="let item of entity?.term.lookup.results" [value]="item">
@@ -28,8 +36,8 @@
     <div formArrayName="evidenceFormArray"
       *ngFor="let evidence of entityFormGroup.get('evidenceFormArray')?.controls; let i = index;">
       <div [formGroupName]="i" fxLayout="row" fxLayoutAlign="start stretch" class="w-100-p">
-        <div class="p-4" fxFlex="45">
-          <mat-form-field appearance="outline" class="w-100-p">
+        <div class="p-4" fxFlex="55">
+          <mat-form-field appearance="outline" class="noc-sm w-100-p">
             <mat-label>Evidence</mat-label>
             <textarea type="text" matInput formControlName="evidence" [matAutocomplete]="evidenceAuto"
               rows="2"></textarea>
@@ -46,14 +54,14 @@
             </mat-autocomplete>
           </mat-form-field>
         </div>
-        <div class="p-4" fxFlex="35">
-          <mat-form-field appearance="outline" class="w-100-p">
+        <div class="p-4" fxFlex="25">
+          <mat-form-field appearance="outline" class="noc-sm w-100-p">
             <mat-label>Reference</mat-label>
             <textarea matInput formControlName="reference" rows="2"></textarea>
           </mat-form-field>
         </div>
-        <div class="p-4" fxFlex fxFlex="25">
-          <mat-form-field appearance="outline" class="w-100-p">
+        <div class="p-4" fxFlex fxFlex="20">
+          <mat-form-field appearance="outline" class="noc-sm w-100-p">
             <mat-label>With</mat-label>
             <textarea matInput formControlName="with" rows="2"></textarea>
           </mat-form-field>

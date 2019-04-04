@@ -31,8 +31,8 @@
          </mat-menu>
        </div>
        <div class="noc-section-body p-0" fxLayout="column" fxLayoutAlign="start stretch">
-         <div class="p-8" fxLayout="column">
-           <mat-form-field appearance="outline" class="">
+         <div class="p-12" fxLayout="column">
+           <mat-form-field appearance="outline" class="noc-sm">
              <mat-label>Gene Product</mat-label>
              <textarea type="text" matInput formControlName="gp" [matAutocomplete]="gpAuto" rows="2"></textarea>
              <mat-autocomplete #gpAuto="matAutocomplete" [displayWith]="termDisplayFn">
@@ -70,7 +70,7 @@
        </div>
        <div class="noc-section-body p-0" fxLayout="column" fxLayoutAlign="start stretch">
          <div [formArrayName]="'fd'" *ngFor="let nodeGroup of annotonFormGroup.get('fd')?.controls; let i = index;"
-           class="mat-elevation-z1 mb-4 px-12 pt-4">
+           class="mat-elevation-z1 mb-4 px-8 pt-4">
            <div [formGroupName]="i" *ngFor="let entity of nodeGroup.get('entityGroup')?.controls| keyvalue" class="">
              <noc-entity-form [entityFormGroup]="entity.value" [nodeGroupName]="nodeGroup.get('name').value"
                [entityName]="entity.key" fxLayout="row" fxLayoutAlign="start center" class="w-100-p">
