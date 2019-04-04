@@ -25,11 +25,12 @@
           Term
         </div>
       </div>
-      <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
-        <div class="px-12" fxLayout="column">
-          <mat-form-field class="">
-            <input type="text" matInput formControlName="term" placeholder="{{termNode.label}}"
-              [matAutocomplete]="termAuto" />
+      <div class="noc-section-body p-0" fxLayout="column" fxLayoutAlign="start stretch">
+        <div class="p-12" fxFlex fxLayout="row" fxLayoutAlign="start stretch">
+          <mat-form-field class="noc-sm w-100-p" appearance="outline">
+            <mat-label>{{termNode.label}}</mat-label>
+            <textarea type="text" matInput formControlName="term" [matAutocomplete]="termAuto" row="2">
+          </textarea>
             <mat-autocomplete #termAuto="matAutocomplete" [displayWith]="termDisplayFn">
               <mat-option *ngFor="let item of termNode?.term.lookup.results" [value]="item">
                 <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
@@ -49,42 +50,49 @@
           Evidence
         </div>
       </div>
-      <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
-        <div class="px-12 noc-annoton-group-row" fxLayout="column">
+      <div class="noc-section-body p-0" fxLayout="column" fxLayoutAlign="start stretch">
+        <div class="px-8 noc-annoton-group-row" fxLayout="column">
           <div formArrayName="evidenceFormArray"
             *ngFor="let evidence of annotonEntityFormGroup.get('evidenceFormArray')?.controls; let i = index;">
             <div [formGroupName]="i" fxLayout="row" fxLayoutAlign="start center" class="w-100-p">
-              <mat-form-field class="" appearance="standard" class="" fxFlex="50">
-                <mat-label>Evidence</mat-label>
-                <input type="text" matInput formControlName="evidence" placeholder="Evidence"
-                  [matAutocomplete]="evidenceAuto" />
-                <mat-autocomplete #evidenceAuto="matAutocomplete" [displayWith]="evidenceDisplayFn">
-                  <mat-option *ngFor="let item of termNode?.evidence[i]?.evidence.lookup.results" [value]="item">
-                    <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
-                      <div>
-                        {{ item.id }}
+              <div class="p-4" fxFlex="55">
+                <mat-form-field appearance="outline" class="noc-sm w-100-p">
+                  <mat-label>Evidence</mat-label>
+                  <textarea type="text" matInput formControlName="evidence" [matAutocomplete]="evidenceAuto"
+                    rows="2"></textarea>
+                  <mat-autocomplete #evidenceAuto="matAutocomplete" [displayWith]="evidenceDisplayFn">
+                    <mat-option *ngFor="let item of termNode?.evidence[i]?.evidence.lookup.results" [value]="item">
+                      <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
+                        <div>
+                          {{ item.id }}
+                        </div>
+                        <span fxFlex></span>
+                        {{ item.label }}
                       </div>
-                      <span fxFlex></span>
-                      {{ item.label }}
-                    </div>
-                  </mat-option>
-                </mat-autocomplete>
-              </mat-form-field>
-              <mat-form-field appearance="standard" class="ml-12" fxFlex="20">
-                <mat-label>Reference</mat-label>
-                <input matInput formControlName="reference" placeholder="Reference" />
-              </mat-form-field>
-              <mat-form-field appearance="standard" class="ml-12" fxFlex="20">
-                <mat-label>With</mat-label>
-                <input matInput formControlName="with" placeholder="With" />
-              </mat-form-field>
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>
+              <div class="p-4" fxFlex="25">
+                <mat-form-field appearance="outline" class="noc-sm w-100-p">
+                  <mat-label>Reference</mat-label>
+                  <textarea matInput formControlName="reference" rows="2"></textarea>
+                </mat-form-field>
+              </div>
+              <div class="p-4" fxFlex fxFlex="20">
+                <mat-form-field appearance="outline" class="noc-sm w-100-p">
+                  <mat-label>With</mat-label>
+                  <textarea matInput formControlName="with" rows="2"></textarea>
+                </mat-form-field>
+              </div>
               <span fxFlex=""></span>
               <button mat-icon-button class="noc-action-button" fxFlex="40px" [matMenuTriggerFor]="entityMenu">
-                <mat-icon>menu</mat-icon>
+                <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #entityMenu="matMenu" class="noc-dropdown-menu">
-                <button class="">
-                  Remove GP
+                <h6 class="noc-menu-heading"> Search </h6>
+                <button mat-menu-item *ngIf="termNode.aspect" class="" (click)="openSearchDatabaseDialog(termNode)">
+                  Search Database
                 </button>
                 <h6 class="noc-menu-heading"> Evidence</h6>
                 <button mat-menu-item class="" (click)="openSelectEvidenceDialog(evidence)">
@@ -99,8 +107,12 @@
                 <button (click)="removeEvidence(i)" mat-menu-item>
                   Remove Evidence
                 </button>
-                <button mat-menu-item class="" (click)="addNDEvidence(evidence)">
+                <button mat-menu-item class="" (click)="addNDEvidence(termNode.evidence[0])">
                   Add ND Reference
+                </button>
+                <h6 class="noc-menu-heading"> Term </h6>
+                <button mat-menu-item class="" (click)="termNode.clearValues()">
+                  Clear
                 </button>
               </mat-menu>
             </div>

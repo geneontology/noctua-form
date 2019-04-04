@@ -17,27 +17,33 @@
         </div>
         <span fxFlex></span>
       </div>
-      <div class="noc-section-body px-12 pt-12" fxLayout="column" fxLayoutAlign="start stretch">
-        <mat-form-field class="">
-          <mat-label>Title</mat-label>
-          <input matInput formControlName="title" placeholder="Title" />
-        </mat-form-field>
-        <mat-form-field class="">
-          <mat-label>State</mat-label>
-          <mat-select placeholder="" formControlName="state" required>
-            <mat-option *ngFor="let modelState of noctuaFormConfigService.modelState.options" [value]="modelState">
-              {{modelState.label}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field class="">
-          <mat-label>Group</mat-label>
-          <mat-select placeholder="" formControlName="group" required>
-            <mat-option *ngFor="let modelGroup of noctuaUserService.user?.groups" [value]="modelGroup">
-              {{modelGroup.label}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+      <div class="noc-section-body p-8" fxLayout="column" fxLayoutAlign="start stretch">
+        <div class="p-4" fxLayout="column">
+          <mat-form-field appearance="outline" class="">
+            <mat-label>Title</mat-label>
+            <textarea type="text" matInput formControlName="title" rows="2"></textarea>
+          </mat-form-field>
+        </div>
+        <div class="p-4" fxLayout="column">
+          <mat-form-field appearance="outline" class="">
+            <mat-label>State</mat-label>
+            <mat-select placeholder="" formControlName="state" required>
+              <mat-option *ngFor="let modelState of noctuaFormConfigService.modelState.options" [value]="modelState">
+                {{modelState.label}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="p-4" fxLayout="column">
+          <mat-form-field appearance="outline" class="">
+            <mat-label>Group</mat-label>
+            <mat-select placeholder="" formControlName="group" required>
+              <mat-option *ngFor="let modelGroup of noctuaUserService.user?.groups" [value]="modelGroup">
+                {{modelGroup.label}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
       </div>
     </div>
   </div>
