@@ -2,8 +2,26 @@ $noc-toolbar-color: #e7ecf4;
 $noc-primary-color: #3b5998;
 $noc-primary-color-accent: #8b9dc3;
 $noc-primary-color-lighter: #dfe3ee;
-$noc-primary-color-light: rgba(#798fb8, 0.5);
+$noc-primary-color-light: rgba(#798fb8, 0.4);
 $noc-primary-color-text: #4a8bfc;
+
+
+.input-headline {
+  font-size: 28px;
+  line-height: 32px;
+  font-weight: 400;
+}
+
+.mat-row {
+  &:hover {
+    @include mat-elevation(1);
+    background-color: #F5F5F5;
+  }
+
+  &.noc-row-selected {
+    background-color: rgba($noc-primary-color-light, 0.15);
+  }
+}
 
 .mat-toolbar {
   @include deep-height(40px);

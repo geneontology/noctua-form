@@ -8,6 +8,21 @@ $noc-secondary-color: #995014;
   visibility: hidden
 }
 
+textarea {
+  resize: none;
+  overflow: hidden;
+}
+
+.mat-form-field {
+  .mat-form-field-wrapper {
+    padding-bottom: 0;
+  }
+
+  .mat-form-field-underline {
+    bottom: 0;
+  }
+}
+
 @mixin deep-width($number) {
   width: $number;
   min-width: $number;
@@ -37,17 +52,6 @@ $noc-secondary-color: #995014;
     @include deep-height(30px);
     margin: 0;
     padding: 10px 14px;
-  }
-}
-
-.mat-row {
-  &:hover {
-    @include mat-elevation(1);
-    background-color: #F5F5F5;
-  }
-
-  &.noc-row-selected {
-    background-color: aquamarine;
   }
 }
 

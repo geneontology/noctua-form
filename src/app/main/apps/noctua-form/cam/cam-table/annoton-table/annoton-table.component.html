@@ -71,7 +71,8 @@
         </ng-container>
         <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *cdkRowDef="let entity; columns: displayedColumns;" class="" matRipple
-          [ngClass]="{'noc-row-selected': 'mf-1' === entity.node.id}" (click)="selectEntity(entity.node)"></mat-row>
+          [ngClass]="{'noc-row-selected': entity.node.individualId === noctuaAnnotonEntityService.termNode?.individualId}"
+          (click)="selectEntity(entity.node)"></mat-row>
       </mat-table>
       <div *ngIf="grid?.length===0" class="noc-no-info">
         no results yet.

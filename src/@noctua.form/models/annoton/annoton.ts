@@ -76,10 +76,10 @@ export class Annoton extends SaeGraph {
 
     let mfNode: AnnotonNode = this.getMFNode();
 
-    return mfNode ? mfNode.modelId : null
+    return mfNode ? mfNode.individualId : null
   }
 
-  getConnection(modelId) {
+  getConnection(individualId) {
     const self = this;
 
     let edges: any = self.getEdges('mf');
@@ -87,7 +87,7 @@ export class Annoton extends SaeGraph {
 
     if (edges) {
       edge = _.find(edges.nodes, (srcEdge) => {
-        return srcEdge.object.modelId === modelId;
+        return srcEdge.object.individualId === individualId;
       });
     }
 
@@ -260,7 +260,7 @@ export class Annoton extends SaeGraph {
       }
     });
 
-    this._presentation.extra.push(result);
+    this.presentation.extra.push(result);
 
     return result[displaySectionId];
   }
@@ -269,7 +269,7 @@ export class Annoton extends SaeGraph {
     const self = this;
     self._grid = [];
 
-    each(self._presentation.fd, function (nodeGroup) {
+    each(self.presentation.fd, function (nodeGroup) {
       each(nodeGroup.nodes, function (node: AnnotonNode) {
         let term = node.getTerm();
 

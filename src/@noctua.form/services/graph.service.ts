@@ -401,7 +401,7 @@ export class NoctuaGraphService {
         annotonNode.setTerm(mfSubjectNode.term, mfSubjectNode.classExpression);
         annotonNode.setEvidence(evidence);
         annotonNode.setIsComplement(mfSubjectNode.isComplement);
-        annotonNode.modelId = mfId;
+        annotonNode.individualId = mfId;
 
         annoton.parser = new AnnotonParser();
 
@@ -461,7 +461,7 @@ export class NoctuaGraphService {
         annotonNode.setTerm(gpSubjectNode.term, gpSubjectNode.classExpression);
         annotonNode.setEvidence(evidence);
         annotonNode.setIsComplement(gpSubjectNode.isComplement);
-        annotonNode.modelId = gpId;
+        annotonNode.individualId = gpId;
 
         annoton.parser = new AnnotonParser();
 
@@ -532,7 +532,7 @@ export class NoctuaGraphService {
             } else {
               let subjectNode = self.subjectToTerm(graph, toMFObject);
 
-              node.object.modelId = toMFObject;
+              node.object.individualId = toMFObject;
               node.object.setEvidence(evidence);
               node.object.setTerm(subjectNode.term, subjectNode.classExpression);
               node.object.location = subjectNode.location;
@@ -669,8 +669,8 @@ export class NoctuaGraphService {
   addIndividual(reqs, node) {
     node.saveMeta = {};
     if (node.term.control.value && node.term.control.value.id) {
-      if (node.modelId) {
-        node.saveMeta.term = node.modelId;
+      if (node.individualId) {
+        node.saveMeta.term = node.individualId;
       } else if (node.isComplement) {
         let ce = new class_expression();
         ce.as_complement(node.term.control.value.id);
@@ -680,7 +680,7 @@ export class NoctuaGraphService {
         node.saveMeta.term = reqs.add_individual(node.term.control.value.id);
       }
 
-      node.modelId = node.saveMeta.term;
+      node.individualId = node.saveMeta.term;
 
       if (node.location && node.location.x > 0 && node.id === 'mf') {
         //  reqs.update_annotations(node.saveMeta.term, 'hint-layout-x', node.location.x);
@@ -727,7 +727,7 @@ export class NoctuaGraphService {
     if (annotonNode.hasValue()) {
       self.editIndividual(reqs,
         cam.modelId,
-        annotonNode.modelId,
+        annotonNode.individualId,
         annotonNode.classExpression,
         annotonNode.getTerm().id);
     }
@@ -784,21 +784,21 @@ export class NoctuaGraphService {
       reqs.remove_type_from_individual(
         //  class_expression.cls(srcNode.getTerm().id),
         srcNode.getNodeType(),
-        srcNode.modelId,
+        srcNode.individualId,
         cam.modelId,
       );
 
       reqs.add_type_to_individual(
         class_expression.cls(destNode.getTerm().id),
-        srcNode.modelId,
+        srcNode.individualId,
         cam.modelId,
       );
     }
   }
 
   deleteIndividual(reqs, node) {
-    if (node.modelId) {
-      reqs.remove_individual(node.modelId);
+    if (node.individualId) {
+      reqs.remove_individual(node.individualId);
     }
   }
 
@@ -809,13 +809,13 @@ export class NoctuaGraphService {
       // let ce = new class_expression(destNode.term.control.value.id);
       reqs.remove_type_from_individual(
         class_expression.cls(srcNode.getTerm().id),
-        srcNode.modelId,
+        srcNode.individualId,
         cam.modelId,
       );
 
       reqs.add_type_to_individual(
         class_expression.cls(destNode.getTerm().id),
-        srcNode.modelId,
+        srcNode.individualId,
         cam.modelId,
       );
 
@@ -855,8 +855,8 @@ export class NoctuaGraphService {
             let evidenceWith = evidence.with.control.value;
             // if (edgeNode.object.aspect === 'P') {
             //  let gpNode = annoton.getGPNode();
-            //  if (gpNode && gpNode.modelId) {
-            // evidenceWith.push(gpNode.modelId)
+            //  if (gpNode && gpNode.individualId) {
+            // evidenceWith.push(gpNode.individualId)
             //  }
             // }
             reqs.add_evidence(evidence.evidence.control.value.id, evidenceReference, evidenceWith, edgeNode.object.saveMeta.edge);
@@ -932,7 +932,7 @@ export class NoctuaGraphService {
     each(srcAnnoton.nodes, function (srcNode) {
       let srcTerm = srcNode.getTerm();
   
-      if (srcTerm.id && !srcNode.modelId) {
+      if (srcTerm.id && !srcNode.individualId) {
         let meta = {
           aspect: srcNode.label,
           subjectNode: {
@@ -947,7 +947,7 @@ export class NoctuaGraphService {
   
             if (srcTerm.id === node.getTerm().id) {
               if (!_.find(meta.linkedNodes, {
-                modelId: node.modelId
+                modelId: node.individualId
               })) {
                 meta.linkedNodes.push(node);
               }
@@ -1116,7 +1116,7 @@ export class NoctuaGraphService {
       if (individuals.length > 0) {
         let mfResponse = individuals[0];
 
-        individual.modelId = mfResponse.id;
+        individual.individualId = mfResponse.id;
         success(mfResponse);
       }
     }

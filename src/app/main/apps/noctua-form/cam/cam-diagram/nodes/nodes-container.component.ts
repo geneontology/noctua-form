@@ -77,11 +77,11 @@ export class NodesContainerComponent implements OnChanges, AfterViewInit {
         let connections = annoton.annotonConnections;
 
         connections.forEach(connection => {
-          //   let effect = self.camDiagramService.getCausalEffect(annoton.connectionId, connection.object.modelId);
+          //   let effect = self.camDiagramService.getCausalEffect(annoton.connectionId, connection.object.individualId);
 
           //   self.camDiagramService.jsPlumbInstance.connect({
           //      source: annoton.connectionId,
-          //     target: connection.object.modelId,
+          //     target: connection.object.individualId,
           //     type: "basic",
           // paintStyle: { strokeWidth: 1, stroke: '#000000' },
           // endpointStyle: { fill: '#000000' }

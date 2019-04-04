@@ -31,9 +31,10 @@
          </mat-menu>
        </div>
        <div class="noc-section-body p-0" fxLayout="column" fxLayoutAlign="start stretch">
-         <div class="px-12 pt-12 noc-annoton-group-row" fxLayout="column">
-           <mat-form-field class="">
-             <input type="text" matInput formControlName="gp" placeholder="Gene Product" [matAutocomplete]="gpAuto" />
+         <div class="p-8" fxLayout="column">
+           <mat-form-field appearance="outline" class="">
+             <mat-label>Gene Product</mat-label>
+             <textarea type="text" matInput formControlName="gp" [matAutocomplete]="gpAuto" rows="2"></textarea>
              <mat-autocomplete #gpAuto="matAutocomplete" [displayWith]="termDisplayFn">
                <mat-option
                  *ngFor="let item of noctuaAnnotonFormService.annoton.presentation?.geneProduct.term.lookup.results"

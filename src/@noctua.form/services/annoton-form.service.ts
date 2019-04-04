@@ -123,7 +123,7 @@ export class NoctuaAnnotonFormService {
 
 
   linkFormNode(entity, srcNode) {
-    entity.modelId = srcNode.modelId;
+    entity.individualId = srcNode.individualId;
     entity.setTerm(srcNode.getTerm());
   }
 

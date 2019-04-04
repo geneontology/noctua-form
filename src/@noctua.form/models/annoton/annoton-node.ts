@@ -18,7 +18,7 @@ export class AnnotonNode {
   treeLevel;
   annoton;
   ontologyClass;
-  modelId;
+  individualId;
   isComplement;
   term;
   closures;
@@ -44,7 +44,7 @@ export class AnnotonNode {
     this.nodeGroup = {}
     this.annoton = null;
     this.ontologyClass = [];
-    this.modelId;
+    this.individualId;
     this.isComplement = false;
     this.term = {
       "validation": {
@@ -204,13 +204,13 @@ export class AnnotonNode {
     self.addEvidence();
   }
 
-  deepCopyValues(node) {
+  deepCopyValues(node: AnnotonNode) {
     const self = this;
 
     self.term.control.value = node.term.control.value;
     self.evidence = node.evidence;
     self.location = node.location;
-    self.modelId = node.modelId;
+    self.individualId = node.individualId;
     self.annoton = node.annoton;
     self.ontologyClass = node.ontologyClass;
     self.assignedBy = node.assignedBy;

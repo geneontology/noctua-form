@@ -1,10 +1,11 @@
-import { Component, Input, Inject, OnInit, ElementRef, OnDestroy, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, Input, Inject, OnInit, ElementRef, OnDestroy, ViewEncapsulation, ViewChild, NgZone } from '@angular/core';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator, MatSort } from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
 import { merge, Observable, BehaviorSubject, fromEvent, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map, take } from 'rxjs/operators';
 
 
 import * as _ from 'lodash';
@@ -64,6 +65,7 @@ export class EntityFormComponent implements OnInit, OnDestroy {
   private unsubscribeAll: Subject<any>;
 
   constructor(private route: ActivatedRoute,
+    private ngZone: NgZone,
     private formBuilder: FormBuilder,
     private noctuaFormDialogService: NoctuaFormDialogService,
     private camService: CamService,
@@ -85,8 +87,6 @@ export class EntityFormComponent implements OnInit, OnDestroy {
 
 
   }
-
-
 
   addEvidence() {
     const self = this;

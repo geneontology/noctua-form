@@ -80,7 +80,7 @@ export class NoctuaAnnotonConnectorService {
     this.subjectMFNode = <AnnotonNode>_.cloneDeep(this.subjectAnnoton.getMFNode());
     this.objectMFNode = <AnnotonNode>_.cloneDeep(this.objectAnnoton.getMFNode());
 
-    let edge = this.subjectAnnoton.getConnection(this.objectMFNode.modelId);
+    let edge = this.subjectAnnoton.getConnection(this.objectMFNode.individualId);
     let annoton = this.noctuaFormConfigService.createAnnotonConnectorModel(this.subjectMFNode, this.objectMFNode, edge);
 
     this.initializeForm(annoton, edge);
