@@ -17,10 +17,10 @@
       </div>
       <span fxFlex=""></span>
       <div class="" fxFlex="150px" fxLayout="row" fxLayoutAlign="end center">
-        <button mat-icon-button (click)="openAnnotonForm(annoton)" class="noc-bl">
+        <button mat-icon-button (click)="openAnnotonForm(annoton)" color="primary" class="noc-bl">
           <mat-icon class=""> edit </mat-icon>
         </button>
-        <button mat-icon-button [matMenuTriggerFor]="connectorMenu" class="noc-bl" matTooltip="connect"
+        <button mat-icon-button [matMenuTriggerFor]="connectorMenu" color="primary" class="noc-bl" matTooltip="connect"
           [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
           <mat-icon>arrow_right_alt</mat-icon>
         </button>
@@ -32,7 +32,7 @@
             </button>
           </ng-container>
         </mat-menu>
-        <button mat-icon-button (click)="toggleExpand(annoton)" class="noc-bl">
+        <button mat-icon-button (click)="toggleExpand(annoton)" color="primary" class="noc-bl">
           <mat-icon *ngIf="!annoton.expanded" class="">
             keyboard_arrow_down
           </mat-icon>

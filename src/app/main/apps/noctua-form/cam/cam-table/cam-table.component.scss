@@ -27,7 +27,8 @@
     font-size: 16px;
     border: rgba(#000, 0.2) solid 1px;
 
-    //  @include mat-elevation(1);
+    @include mat-elevation(1);
+
     .noc-title {
       small {
         font-size: 12px;
