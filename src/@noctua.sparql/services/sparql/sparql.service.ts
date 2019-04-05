@@ -6,15 +6,15 @@ import { map, finalize, filter, reduce, catchError, retry, tap } from 'rxjs/oper
 
 import { NoctuaUtils } from '@noctua/utils/noctua-utils';
 import { CurieService } from '@noctua.curie/services/curie.service';
-import { NoctuaGraphService } from '@noctua.form/services/graph.service';
-
-import { AnnotonNode } from '@noctua.form/models/annoton/annoton-node';
-import { NoctuaFormConfigService } from '@noctua.form/services/config/noctua-form-config.service';
-
-import { Cam } from '@noctua.form/models/annoton/cam';
-import { CamRow } from '@noctua.form/models/cam-row';
-import { Curator } from '@noctua.form/models/curator';
-import { Group } from '@noctua.form/models/group';
+import {
+  NoctuaGraphService,
+  AnnotonNode,
+  NoctuaFormConfigService,
+  Cam,
+  CamRow,
+  Curator,
+  Group
+} from 'noctua-form-base'
 
 import * as _ from 'lodash';
 import { v4 as uuid } from 'uuid';

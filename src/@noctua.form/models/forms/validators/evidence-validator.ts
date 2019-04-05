@@ -1,5 +1,5 @@
 import { FormGroup, AbstractControl, ValidatorFn, FormControl } from '@angular/forms';
-import { AnnotonNode } from '@noctua.form/models/annoton';
+import { AnnotonNode } from './../../..//models/annoton';
 
 export function evidenceValidator(termNode: AnnotonNode): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
