@@ -1,0 +1,64 @@
+IF (activities are NOT consecutive)
+   THEN (give a choice of positive, negative, neutral)
+      IF ( [BP1 has_input (NOT_NULL)] ) // if the has_input field for the first activity’s BP is filled in
+               THEN    // you will connect from the BP of the first activity, to the MF of the second activity
+                   IF (positive)  THEN (use “BP1 causally upstream of, positive effect MF2”)
+                   IF (negative)  THEN (use “BP1 causally upstream of, negative effect MF2”)
+                   IF (positive)  THEN (use “BP1 causally upstream of MF2”)
+      ELSE   // you will connect from the MF of the first activity, to the MF of the second activity
+                  IF (positive)  THEN (use “MF1 causally upstream of, positive effect MF2”)
+                  IF (negative)  THEN (use “MF1 causally upstream of, negative effect MF2”)
+                  IF (neutral)  THEN (use “MF1 causally upstream of MF2”)
+ELSE
+   IF (MF1 is “catalytic activity” AND MF2 is “catalytic activity”)
+      THEN (give a choice of “does the product of reaction 1 REGULATE or become the SUBSTRATE for activity 2?”)
+         IF (SUBSTRATE) THEN (use “MF1 directly provides input for MF2”)
+         ELSE (use regulation rules)
+   ELSE (use regulation rules)
+ 
+
+regulation rules:
+            (give a choice of positive, negative, neutral)
+            IF ( [BP1 has_input (NOT_NULL)] ) // if the has_input field for the first activity’s BP is filled in
+
+               THEN // you will connect from the BP of the first activity, to the MF of the second activity
+                   IF (positive)  THEN (use “BP1 causally upstream of, positive effect MF2”)
+                   IF (negative)  THEN (use “BP1 causally upstream of, negative effect MF2”)
+                   IF (positive)  THEN (use “BP1 causally upstream of MF2”)
+            ELSE  // you will connect from the MF of the first activity, to the MF of the second activity
+                  IF (positive)  THEN (use “MF1 directly positively regulates MF2”)
+                  IF (negative)  THEN (use “MF1 directly negatively regulates MF2”)
+                  IF (neutral)  THEN (use “MF1 directly regulates MF2”) 
+				  
+				  
+				  
+				  Add new decision.  If NO, go to catalytic activity question, if YES, create model as described below.
+
+Question: "Does the causal effect depend on another process? (for example, transcription factor activity depends on transcription occurring)."
+
+No is selected by default. 
+
+If yes is selected show a drop-down menu with:
+- choose process [this is the default]
+- transcription, DNA templated (GO:0006351)
+- ubiquitin-dependent protein catabolic process (GO:0006511)
+- receptor internalization (GO:0031623)
+- nuclear import (GO:0051170)
+
+If YES is chosen, when the CREATE button is chosen, make the selected BP instance, and connect it to both the upstream MF and downstream MF:
+[upstream MF] - pos/neg regulates -> [BP] -pos/neg regulates [downstream MF]
+
+r1 r2
+if transcription / nuclear import 
+r2 = positively regulates
+else 
+r2 = negatively regulates
+
+
+
+This should not be a decision point, but replace with output:
+[upstream MF] -directly pos/neg regulates-> [downstream MF]
+
+
+
+

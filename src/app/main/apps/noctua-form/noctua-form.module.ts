@@ -8,16 +8,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { NoctuaFormComponent } from './noctua-form.component';
 import { NoctuaSharedModule } from './../../../../@noctua/shared.module';
 import { NoctuaFormDialogService } from './services/dialog.service';
-import {
-  NoctuaUserService,
-  NoctuaAnnotonConnectorService,
-  NoctuaGraphService,
-  NoctuaFormConfigService,
-  NoctuaAnnotonFormService,
-  NoctuaLookupService,
-  NoctuaAnnotonEntityService,
-  CamService
-} from 'noctua-form-base';
 
 import { ContextMenuModule } from 'ngx-contextmenu';
 import { AnnotonFormComponent } from './cam/annoton/annoton-form/annoton-form.component';
@@ -25,9 +15,7 @@ import { AnnotonEntityFormComponent } from './cam/annoton/annoton-entity-form/an
 import { EntityFormComponent } from './cam/annoton/annoton-form/entity-form/entity-form.component';
 
 import { CamTableComponent } from './cam/cam-table/cam-table.component';
-
 import { CamFormComponent } from './cam/cam-form/cam-form.component';
-
 
 import { CamRowEditDialogComponent } from './dialogs/cam-row-edit/cam-row-edit.component';
 import { AddEvidenceDialogComponent } from './dialogs/add-evidence/add-evidence.component';
@@ -45,7 +33,12 @@ import { CamDiagramService } from './cam/cam-diagram/services/cam-diagram.servic
 import { CamTableService } from './cam/cam-table/services/cam-table.service';
 import { NodeService } from './cam/cam-diagram/nodes/services/node.service';
 import { AnnotonConnectorFormComponent } from './cam/annoton/annoton-connector-form/annoton-connector-form.component';
+import { AnnotonEntityTableComponent } from './cam/cam-table/annoton-entity-table/annoton-entity-table.component';
 import { AnnotonTableComponent } from './cam/cam-table/annoton-table/annoton-table.component';
+import { TripleFormComponent } from './cam/annoton/triple-form/triple-form.component';
+import { TripleTableComponent } from './cam/cam-table/triple-table/triple-table.component';
+import { EvidenceTableComponent } from './cam/cam-table/triple-table/evidence-table/evidence-table.component';
+import { GraphPreviewComponent } from './cam/cam-diagram/graph-preview/graph-preview.component';
 
 const routes = [
   {
@@ -80,15 +73,12 @@ const routes = [
     NodeComponent,
     NodesContainerComponent,
     AnnotonConnectorFormComponent,
+    AnnotonEntityTableComponent,
     AnnotonTableComponent,
+    TripleTableComponent,
+    TripleFormComponent
   ],
   providers: [
-    // NoctuaAnnotonConnectorService,
-    // NoctuaGraphService,
-    // NoctuaFormConfigService,
-    // NoctuaAnnotonFormService,
-    // NoctuaLookupService,
-    // NoctuaAnnotonEntityService,
     NoctuaFormDialogService,
     NodeService,
     CamDiagramService,
@@ -113,7 +103,12 @@ const routes = [
     NodeComponent,
     NodesContainerComponent,
     AnnotonConnectorFormComponent,
+    AnnotonEntityTableComponent,
+    TripleTableComponent,
     AnnotonTableComponent,
+    EvidenceTableComponent,
+    TripleFormComponent,
+      GraphPreviewComponent
   ],
   entryComponents: [
     CamRowEditDialogComponent,

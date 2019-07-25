@@ -2,7 +2,7 @@ import { environment } from '../../../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef, MatSnackBar } from '@angular/material';
 import { CamRowEditDialogComponent } from './../dialogs/cam-row-edit/cam-row-edit.component';
 
 import { AnnotonErrorsDialogComponent } from './../dialogs/annoton-errors/annoton-errors.component';
@@ -24,10 +24,19 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class NoctuaFormDialogService {
+
     dialogRef: any;
 
     constructor(private httpClient: HttpClient,
+        private snackBar: MatSnackBar,
         private _matDialog: MatDialog) {
+    }
+
+    openSuccessfulSaveToast(message: string, action: string) {
+        this.snackBar.open(message, action, {
+            duration: 10000,
+            verticalPosition: 'top'
+        });
     }
 
     openCamRowEdit(cam): void {
@@ -113,7 +122,8 @@ export class NoctuaFormDialogService {
             panelClass: 'noc-search-database-dialog',
             data: {
                 searchCriteria: searchCriteria
-            }
+            },
+            width: '600px',
         });
         this.dialogRef.afterClosed()
             .subscribe(response => {

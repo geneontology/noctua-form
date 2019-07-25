@@ -1,6 +1,9 @@
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
 
+$primary: map-get($theme, primary);
+$accent: map-get($theme, accent);
+
 :host {
   //width: 100%; // display: block;
   @include deep-width(40px);

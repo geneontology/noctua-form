@@ -1,0 +1,95 @@
+@import "src/@noctua/scss/noctua";
+@import "src/@noctua.common/scss/noctua.common";
+
+:host {
+  width: 100%; // display: block;
+  background-color: white;
+  @include mat-elevation(4);
+
+  .noc-triple {
+    // @include deep-height(180px);
+
+    padding: 20px 0;
+    border-bottom: #CCC solid 1px;
+
+    .noc-annoton-box {
+      padding: 8px;
+      @include deep-width(180px);
+      @include deep-height(110px);
+      font-size: 12px;
+      @include mat-elevation(1);
+      text-align: center;
+      z-index: 4;
+      border: 1px solid #2e6f9a;
+      opacity: 1;
+      cursor: initial;
+      background-color: white;
+    }
+
+    .noc-line {
+
+      padding: 4px;
+      // @include deep-height(55px);
+      font-size: 10px;
+      text-align: center;
+      border-bottom: 2px solid #2e6f9a;
+    }
+
+    .noc-arrow {
+      color: #2e6f9a;
+      //margin-top: 40px;
+    }
+
+    &.noc-sm {
+      //  @include deep-height(120px);
+
+      .noc-annoton-box {
+        padding: 4px;
+        @include deep-width(150px);
+        @include deep-height(100px);
+        font-size: 10px;
+      }
+
+      .noc-line {
+        //  @include deep-height(50px);
+        border-bottom: 1px solid #2e6f9a;
+      }
+
+      .noc-arrow {
+        //margin-top: 35px;
+      }
+    }
+  }
+
+  .noc-header {
+    @include deep-height(40px);
+    background-color: #EEE;
+    border-bottom: #CCC solid 1px;
+
+    mat-icon-button {
+      @include deep-height(40px);
+      @include deep-width(40px);
+      line-height: 40px;
+    }
+
+    .noc-title {
+      font-size: 10px;
+      padding: 0 14px;
+    }
+  }
+
+  .noc-body {
+    padding: 0 14px 14px 14px;
+  }
+
+  .noc-summary-row {
+    @include deep-height(150px);
+    background-color: #F2F2F2;
+  }
+
+  .noc-annoton-entity-form {
+    width: 100%;
+    background-color: #FFF;
+
+  }
+}

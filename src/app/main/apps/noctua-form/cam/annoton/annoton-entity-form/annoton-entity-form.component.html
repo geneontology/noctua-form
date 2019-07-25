@@ -31,14 +31,16 @@
             <mat-label>{{termNode.label}}</mat-label>
             <textarea type="text" matInput formControlName="term" [matAutocomplete]="termAuto" row="2">
           </textarea>
-            <mat-autocomplete #termAuto="matAutocomplete" [displayWith]="termDisplayFn">
-              <mat-option *ngFor="let item of termNode?.term.lookup.results" [value]="item">
+            <mat-autocomplete #termAuto="matAutocomplete" [displayWith]="termDisplayFn" class="noc-term-autocomplete">
+              <mat-option *ngFor="let item of termNode?.termLookup.results" [value]="item">
                 <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
-                  <div>
-                    {{ item.id }}
+                  <div class="noc-term-label">
+                    {{ item.label }}
                   </div>
                   <span fxFlex></span>
-                  {{ item.label }}
+                  <div class="noc-term-id">
+                    {{ item.id }}
+                  </div>
                 </div>
               </mat-option>
             </mat-autocomplete>
@@ -60,14 +62,17 @@
                   <mat-label>Evidence</mat-label>
                   <textarea type="text" matInput formControlName="evidence" [matAutocomplete]="evidenceAuto"
                     rows="2"></textarea>
-                  <mat-autocomplete #evidenceAuto="matAutocomplete" [displayWith]="evidenceDisplayFn">
-                    <mat-option *ngFor="let item of termNode?.evidence[i]?.evidence.lookup.results" [value]="item">
+                  <mat-autocomplete #evidenceAuto="matAutocomplete" [displayWith]="evidenceDisplayFn"
+                    class="noc-term-autocomplete">
+                    <mat-option *ngFor="let item of termNode?.evidence[i]?.evidenceLookup.results" [value]="item">
                       <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
-                        <div>
-                          {{ item.id }}
+                        <div class="noc-term-label">
+                          {{ item.label }}
                         </div>
                         <span fxFlex></span>
-                        {{ item.label }}
+                        <div class="noc-term-id">
+                          {{ item.id }}
+                        </div>
                       </div>
                     </mat-option>
                   </mat-autocomplete>
@@ -90,7 +95,9 @@
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #entityMenu="matMenu" class="noc-dropdown-menu">
-                <h6 class="noc-menu-heading"> Search </h6>
+                <!--
+                    <h6 class="noc-menu-heading"> Search </h6>
+              
                 <button mat-menu-item *ngIf="termNode.aspect" class="" (click)="openSearchDatabaseDialog(termNode)">
                   Search Database
                 </button>
@@ -114,6 +121,7 @@
                 <button mat-menu-item class="" (click)="termNode.clearValues()">
                   Clear
                 </button>
+              -->
               </mat-menu>
             </div>
           </div>

@@ -1,5 +1,5 @@
 <div class="dialog-content-wrapper">
-  <mat-toolbar class="mat-accent m-0">
+  <mat-toolbar class="mat-primary m-0">
     <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="start center">
       <span class="title dialog-title">
         Edit {{cam?.model?.title}}</span>
@@ -25,15 +25,17 @@
         </mat-form-field>
 
         <mat-form-field class="">
-          <input type="text" matInput formControlName="term" placeholder="Go Term" [matAutocomplete]="termAuto" />
-          <mat-autocomplete #termAuto="matAutocomplete">
-            <mat-option *ngFor="let item of searchFormData['goTerm']?.searchResults" [value]="item.id">
+          <input type="text" matInput formControlName="term" placeholder="GO Term" [matAutocomplete]="termAuto" />
+          <mat-autocomplete #termAuto="matAutocomplete" class="noc-term-autocomplete">
+            <mat-option *ngFor="let item of searchFormData['goterm']?.searchResults" [value]="item.id">
               <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
-                <div>
-                  {{ item.id }}
+                <div class="noc-term-label">
+                  {{ item.label }}
                 </div>
                 <span fxFlex></span>
-                {{ item.label }}
+                <div class="noc-term-id">
+                  {{ item.id }}
+                </div>
               </div>
             </mat-option>
           </mat-autocomplete>

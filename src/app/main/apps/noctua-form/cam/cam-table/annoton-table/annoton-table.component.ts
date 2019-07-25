@@ -100,10 +100,11 @@ export class AnnotonTableComponent implements OnInit, OnDestroy {
   }
 
   selectEntity(entity: AnnotonNode) {
+    this.camService.onCamChanged.next(this.cam);
+
     this.noctuaAnnotonEntityService.initializeForm(this.annoton, entity);
     this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.annotonEntityForm);
 
-    console.log(this.noctuaAnnotonEntityService.termNode.id === entity.id)
   }
 
   ngOnDestroy(): void {

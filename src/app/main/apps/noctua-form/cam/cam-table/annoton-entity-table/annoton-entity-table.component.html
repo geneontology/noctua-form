@@ -1,0 +1,82 @@
+<div class="w-100-p">
+  <div class="noc-annoton-table-header w-100-p" fxLayout="row" fxLayoutAlign="start center">
+    <div fxFlex="120px" class="noc-header-cell"> Relationship </div>
+    <div fxFlex="50px" class="noc-header-cell"> Asp </div>
+    <div fxFlex="150px" class="noc-header-cell"> Term </div>
+    <div fxFlex="120px" class="noc-header-cell"> Relationship Ext </div>
+    <div fxFlex="150px" class="noc-header-cell"> Extension </div>
+    <div fxFlex="150px" class="noc-header-cell"> Evidence </div>
+    <div fxFlex="120px" class="noc-header-cell"> Reference </div>
+    <div fxFlex="120px" class="noc-header-cell"> Evidence </div>
+    <div fxFlex="120px" class="noc-header-cell"> With </div>
+    <div fxFlex="120px" class="noc-header-cell"> Assigned By </div>
+  </div>
+  <div class="noc-annoton-table-body w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
+    <div class="annoton-table" fxFlex="">
+      <mat-table class="w-100-p" #table [dataSource]="grid" matSort [@animateStagger]="{value:'50'}"
+        noctuaPerfectScrollbar>
+        <ng-container cdkColumnDef="relationship">
+          <mat-header-cell *cdkHeaderCellDef fxFlex="120px">Relationship</mat-header-cell>
+          <mat-cell *cdkCellDef="let entity" fxFlex="120px">
+            <p class="">{{entity.relationship}}</p>
+          </mat-cell>
+        </ng-container>
+        <ng-container cdkColumnDef="aspect">
+          <mat-header-cell *cdkHeaderCellDef fxFlex="50px">Asp</mat-header-cell>
+          <mat-cell *cdkCellDef="let entity" fxFlex="50px">
+            <p class="">{{entity.aspect}}</p>
+          </mat-cell>
+        </ng-container>
+        <ng-container cdkColumnDef="term">
+          <mat-header-cell *cdkHeaderCellDef fxFlex="150px">Term</mat-header-cell>
+          <mat-cell *cdkCellDef="let entity" fxFlex="150px">
+            <p class="">{{entity.term?.label}}</p>
+          </mat-cell>
+        </ng-container>
+        <ng-container cdkColumnDef="relationshipExt">
+          <mat-header-cell *cdkHeaderCellDef fxFlex="120px">Relationship (ext)</mat-header-cell>
+          <mat-cell *cdkCellDef="let entity" fxFlex="120px">
+            <p class="">{{entity.relationshipExt}}</p>
+          </mat-cell>
+        </ng-container>
+        <ng-container cdkColumnDef="extension">
+          <mat-header-cell *cdkHeaderCellDef fxFlex="150px">Extension</mat-header-cell>
+          <mat-cell *cdkCellDef="let entity" fxFlex="150px">
+            <p class="">{{entity.extension?.label}}</p>
+          </mat-cell>
+        </ng-container>
+        <ng-container cdkColumnDef="evidence">
+          <mat-header-cell *cdkHeaderCellDef fxFlex="150px">Evidence</mat-header-cell>
+          <mat-cell *cdkCellDef="let entity" fxFlex="150px">
+            <p class="">{{entity.evidence?.label}}</p>
+          </mat-cell>
+        </ng-container>
+        <ng-container cdkColumnDef="reference">
+          <mat-header-cell *cdkHeaderCellDef fxFlex="150px">Reference</mat-header-cell>
+          <mat-cell *cdkCellDef="let entity" fxFlex="150px">
+            <a href="{{entity.reference?.url}}" class="" target="_blank">{{entity.reference?.label}}</a>
+          </mat-cell>
+        </ng-container>
+        <ng-container cdkColumnDef="with">
+          <mat-header-cell *cdkHeaderCellDef fxFlex="120px">With</mat-header-cell>
+          <mat-cell *cdkCellDef="let entity" fxFlex="150px">
+            <p class="">{{entity.with}}</p>
+          </mat-cell>
+        </ng-container>
+        <ng-container cdkColumnDef="assignedBy">
+          <mat-header-cell *cdkHeaderCellDef fxFlex="150px">Assigned By</mat-header-cell>
+          <mat-cell *cdkCellDef="let entity" fxFlex="150px">
+            <a href="{{entity.assignedBy?.link?.url}}" class="" target="_blank">{{entity.assignedBy?.link?.value}}</a>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *cdkRowDef="let entity; columns: displayedColumns;" class="" matRipple
+          [ngClass]="{'noc-row-selected': entity.node.individualId === noctuaAnnotonEntityService.termNode?.individualId}"
+          (click)="selectEntity(entity.annoton, entity.node)"></mat-row>
+      </mat-table>
+      <div *ngIf="grid?.length===0" class="noc-no-info">
+        no results yet.
+      </div>
+    </div>
+  </div>
+</div>

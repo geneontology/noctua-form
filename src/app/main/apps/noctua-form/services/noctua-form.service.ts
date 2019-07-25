@@ -19,13 +19,15 @@ export class NoctuaFormService {
       id: 2
     }, annotonEntityForm: {
       id: 3
-    }, camDiagram: {
+    }, tripleForm: {
       id: 4
-    }, camTable: {
+    }, camDiagram: {
       id: 5
-    }, connectorForm: {
+    }, camTable: {
       id: 6
-    },
+    }, connectorForm: {
+      id: 7
+    }
   }
 
   selectedLeftPanel;
@@ -38,7 +40,7 @@ export class NoctuaFormService {
   constructor() {
     this.selectedLeftPanel = this.panel.annotonForm;
     this.selectedMiddlePanel = this.panel.camTable;
-    this.selectedRightPanel = this.panel.annotonForm;
+    this.selectedRightPanel = this.panel.tripleForm;
   }
 
   selectLeftPanel(panel) {

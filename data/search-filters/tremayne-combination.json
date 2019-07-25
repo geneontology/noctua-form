@@ -1,0 +1,91 @@
+{
+  "gps": [
+    {
+      "id": "UniProtKB:O95477",
+      "label": "ABCA1 Hsap"
+    }
+  ],
+  "goterms": [
+    {
+      "id": "GO:0042632",
+      "label": "cholesterol homeostasis"
+    }
+  ],
+  "pmids": [],
+  "contributors": [
+    {
+      "group": {
+        "url": "http://geneontology.org"
+      },
+      "_groups": [],
+      "orcid": "http://orcid.org/0000-0002-2874-6934",
+      "name": "Tremayne Mushayahama",
+      "cams": "7"
+    }
+  ],
+  "groups": [
+    {
+      "url": "http://geneontology.org",
+      "name": "GO Central",
+      "cams": "329",
+      "contributorsCount": "16",
+      "contributors": [
+        {
+          "orcid": "http://orcid.org/0000-0001-7476-6306"
+        },
+        {
+          "orcid": "http://orcid.org/0000-0003-1813-6857"
+        },
+        {
+          "orcid": "http://orcid.org/0000-0001-5501-853X"
+        },
+        {
+          "orcid": "http://orcid.org/0000-0003-2689-5511"
+        },
+        {
+          "orcid": "http://orcid.org/0000-0002-6601-2165"
+        },
+        {
+          "orcid": "http://orcid.org/0000-0002-7073-9172"
+        },
+        {
+          "orcid": "http://orcid.org/0000-0002-2874-6934"
+        },
+        {
+          "orcid": "http://orcid.org/0000-0002-7334-7852"
+        },
+        {
+          "orcid": "http://orcid.org/0000-0001-8244-1536"
+        },
+        {
+          "orcid": "http://orcid.org/0000-0002-8688-6599"
+        },
+        {
+          "orcid": "http://orcid.org/0000-0002-2825-0621"
+        },
+        {
+          "orcid": "http://orcid.org/0000-0002-6659-0416"
+        },
+        {
+          "orcid": "http://orcid.org/0000-0001-8721-202X"
+        },
+        {
+          "orcid": "http://orcid.org/0000-0001-5801-1974"
+        },
+        {
+          "orcid": "http://orcid.org/0000-0002-9074-3507"
+        },
+        {
+          "orcid": "http://orcid.org/0000-0001-6946-1807"
+        }
+      ]
+    }
+  ],
+  "organisms": [],
+  "states": [
+    {
+      "name": "development",
+      "label": "Development"
+    }
+  ]
+}

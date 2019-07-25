@@ -9,7 +9,7 @@
       <mat-icon>close</mat-icon> Close
     </button>
   </div>
-  <div *ngIf="camFormGroup" class="noc-drawer-body noc-cam-form">
+  <div *ngIf="camFormGroup" class="noc-drawer-body w-100-p" noctuaPerfectScrollbar>
     <div class="noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
       <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
         <div class="noc-section-heading">
@@ -46,8 +46,124 @@
         </div>
       </div>
     </div>
+    <div *ngIf="cam" class="noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+      <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
+        <div class="noc-section-heading">
+          Model Information
+        </div>
+        <span fxFlex></span>
+      </div>
+      <div class="noc-section-body p-8" fxLayout="column" fxLayoutAlign="start stretch">
+
+      </div>
+
+
+
+
+      <div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+        <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
+          <div class="noc-section-heading">
+            Contributors
+          </div>
+          <span fxFlex></span>
+        </div>
+        <div class="noc-section-body p-0" fxLayout="column" fxLayoutAlign="start stretch">
+          <mat-chip *ngFor="let contributor of cam.contributors" [selectable]="true">
+            {{contributor.name}}
+          </mat-chip>
+        </div>
+      </div>
+      <div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+        <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
+          <div class="noc-section-heading">
+            Filter By Group
+          </div>
+          <span fxFlex></span>
+        </div>
+        <div class="noc-section-body p-0" fxLayout="column" fxLayoutAlign="start stretch">
+          <mat-chip *ngFor="let group of cam.groups" [selectable]="true">
+            {{group.name}}
+          </mat-chip>
+        </div>
+      </div>
+      <div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+        <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
+          <div class="noc-section-heading">
+            Filter By Species
+          </div>
+          <span fxFlex></span>
+        </div>
+        <div class="noc-section-body p-0" fxLayout="column" fxLayoutAlign="start stretch">
+          <mat-chip-list #organismChipList>
+            <mat-chip *ngFor="let organism of cam.organisms" [selectable]="true">
+              {{organism.taxonName}}
+            </mat-chip>
+          </mat-chip-list>
+        </div>
+      </div>
+      <div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+        <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
+          <div class="noc-section-heading">
+            Filter By GO Term
+          </div>
+          <span fxFlex></span>
+        </div>
+        <div class="noc-section-body p-0" fxLayout="column" fxLayoutAlign="start stretch">
+          <mat-chip-list #gotermChipList>
+            <mat-chip *ngFor="let goterm of cam.goterms" [selectable]="true">
+              {{goterm.label}}
+            </mat-chip>
+          </mat-chip-list>
+        </div>
+      </div>
+      <div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+        <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
+          <div class="noc-section-heading">
+            Filter By Gene Product
+          </div>
+          <span fxFlex></span>
+        </div>
+        <div class="noc-section-body p-0" fxLayout="column" fxLayoutAlign="start stretch">
+          <mat-chip-list #gpChipList>
+            <mat-chip *ngFor="let gp of cam.gps" [selectable]="true">
+              {{gp.label}}
+            </mat-chip>
+          </mat-chip-list>
+        </div>
+      </div>
+      <div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+        <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
+          <div class="noc-section-heading">
+            Filter By PMID
+          </div>
+          <span fxFlex></span>
+        </div>
+        <div class="noc-section-body p-0" fxLayout="column" fxLayoutAlign="start stretch">
+          <mat-chip-list #pmidChipList>
+            <mat-chip *ngFor="let pmid of cam.pmids" [selectable]="true">
+              {{pmid}}
+            </mat-chip>
+          </mat-chip-list>
+        </div>
+      </div>
+      <div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+        <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
+          <div class="noc-section-heading">
+            Filter By State
+          </div>
+          <span fxFlex></span>
+        </div>
+        <div class="noc-section-body p-0" fxLayout="column" fxLayoutAlign="start stretch">
+          <mat-chip-list #stateChipList>
+            <mat-chip *ngFor="let state of cam.states" [selectable]="true">
+              {{state.name}}
+            </mat-chip>
+          </mat-chip-list>
+        </div>
+      </div>
+    </div>
   </div>
-  <div fxLayout="row" fxLayoutAlign="start center" class="noc-drawer-footer noc-submit-row">
+  <div *ngIf="camFormGroup" fxLayout="row" fxLayoutAlign="start center" class="noc-drawer-footer noc-submit-row">
     <button *ngIf="!camFormGroup.valid" (click)='checkErrors()' mat-button color="warn"
       class="noc-rounded-button noc-sm">
       Why is the "Save" button disabled?

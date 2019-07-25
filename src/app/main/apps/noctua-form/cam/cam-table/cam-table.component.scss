@@ -19,7 +19,7 @@
   }
 
 
-  .noc-cam-table-heading {
+  .noc-annoton-table-heading {
     margin-bottom: 4px;
     @include deep-height(50px);
     //min-height: 35px;
@@ -40,8 +40,12 @@
       max-width: 200px
     }
 
-    button {
-      border-radius: 0 !important;
+
+  }
+
+  .noc-annoton-selected {
+    .noc-annoton-table-heading {
+      background-color: rgba($noc-primary-color-light, 0.2);
     }
   }
 
@@ -69,7 +73,7 @@
     }
   }
 
-  .cams-table {
+  .cam-table {
     width: 100%;
     @include deep-height(100%);
     padding-bottom: 300px;

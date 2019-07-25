@@ -1,5 +1,5 @@
 <div class="w-100-p">
-  <div class="noc-annoton-table-header w-100-p" fxLayout="row" fxLayoutAlign="start center">
+  <div *ngIf="false" class="noc-annoton-table-header w-100-p" fxLayout="row" fxLayoutAlign="start center">
     <div fxFlex="120px" class="noc-header-cell"> Relationship </div>
     <div fxFlex="50px" class="noc-header-cell"> Asp </div>
     <div fxFlex="150px" class="noc-header-cell"> Term </div>
@@ -60,13 +60,13 @@
         <ng-container cdkColumnDef="with">
           <mat-header-cell *cdkHeaderCellDef fxFlex="120px">With</mat-header-cell>
           <mat-cell *cdkCellDef="let entity" fxFlex="150px">
-            <p class="">{{entity.with}}</p>
+            <p class="">{{entity.with?.label}}</p>
           </mat-cell>
         </ng-container>
         <ng-container cdkColumnDef="assignedBy">
           <mat-header-cell *cdkHeaderCellDef fxFlex="150px">Assigned By</mat-header-cell>
           <mat-cell *cdkCellDef="let entity" fxFlex="150px">
-            <a href="{{entity.assignedBy?.link?.url}}" class="" target="_blank">{{entity.assignedBy?.link?.value}}</a>
+            <a href="{{entity.assignedBy?.url}}" class="" target="_blank">{{entity.assignedBy?.label}}</a>
           </mat-cell>
         </ng-container>
         <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>

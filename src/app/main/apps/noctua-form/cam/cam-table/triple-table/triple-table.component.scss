@@ -1,0 +1,175 @@
+@import "src/@noctua/scss/noctua";
+@import "src/@noctua.common/scss/noctua.common";
+
+$primary: map-get($theme, primary);
+$accent: map-get($theme, accent);
+
+:host {
+  width: 100%;
+
+  .noc-form-container {
+    background-color: #EEE;
+    padding: 20px 10px;
+  }
+
+  .noc-annoton-table-header {
+    @include deep-height(30px);
+    border-bottom: $noc-primary-color-light solid 1px;
+
+    .noc-header-cell {
+      padding: 0 10px;
+      font-size: 10px;
+      color: map-get($primary, default);
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+  }
+
+  .noc-triple {
+    // @include deep-height(180px);
+
+    padding: 20px 10px;
+    border-bottom: #CCC solid 1px;
+
+    .noc-annoton-box {
+      padding: 8px;
+      @include deep-width(150px);
+      @include deep-height(110px);
+      font-size: 12px;
+      @include mat-elevation(1);
+      text-align: center;
+      z-index: 4;
+      border: 1px solid #2e6f9a;
+      opacity: 1;
+      cursor: initial;
+      background-color: white;
+    }
+
+    .noc-line {
+      padding: 4px;
+      // @include deep-height(55px);
+      font-size: 10px;
+      text-align: center;
+      border-bottom: 2px solid #2e6f9a;
+    }
+
+    .noc-arrow {
+      color: #2e6f9a;
+      //margin-top: 40px;
+    }
+
+    &:hover {
+      @include mat-elevation(2);
+      background-color: #E2E2E2;
+
+      .noc-annoton-box {
+        @include mat-elevation(6);
+        border: 1px solid darken(#2e6f9a, 10%);
+        background-color: #F2F2F2;
+      }
+
+      .noc-line {
+        border-bottom: 2px solid darken(#2e6f9a, 10%);
+      }
+
+      .noc-arrow {
+        color: darken(#2e6f9a, 10%);
+      }
+    }
+
+  }
+
+
+
+  .mat-tab-group,
+  .mat-tab-body-wrapper,
+  .tab-content {
+    flex: 1 1 auto;
+    max-width: 100%;
+  }
+
+  .noc-toolbar {
+    padding: 0px 20px;
+    height: 40px;
+    width: 100%;
+    background-color: #F2F2F2;
+    border-bottom: #BBB solid 1px;
+
+    .noc-title {
+      line-height: 38px;
+      color: #555;
+      font-size: 14px;
+      font-weight: bold;
+    }
+  }
+
+  .annoton-table {
+    // position: relative;
+    //  flex: 1 1 auto;
+    //    border-bottom: 1px solid rgba(0, 0, 0, .12);
+    //  overflow: auto;
+
+
+
+
+    .mat-cell {
+      padding: 0 10px;
+      font-size: 12px !important;
+      color: #000;
+    }
+
+    .mat-header-cell {
+      padding: 0 10px;
+      font-size: 10px !important;
+      //color: #0F0; // map-get($primary, default);
+      font-weight: bold;
+    }
+
+    .mat-header-cell,
+    .mat-header-row {
+      display: none;
+      @include deep-height(0);
+      /*
+      //padding: 0;
+      min-height: 40px;
+      position: sticky;
+      position: -webkit-sticky;
+      top: 0;
+      z-index: 1000;
+      //  background-color: $noc-primary-color-light;
+      // font-size: 3px !important;
+      */
+    }
+
+    .noc-paginator {
+      @include deep-height(0);
+    }
+
+    .annoton {
+      position: relative;
+      cursor: pointer;
+      min-height: 40px;
+      font-size: 12px;
+    }
+
+
+    .mat-cell {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .mat-column-id {
+      flex: 0 1 84px;
+    }
+
+    .mat-column-buttons {
+      flex: 0 1 80px;
+    }
+
+    /* .mat-header-cell {
+      display:flex;
+      justify-content:flex-end;
+     } */
+  }
+}

@@ -1,7 +1,10 @@
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
+$primary: map-get($theme, primary);
+$accent: map-get($theme, accent);
 
 :host {
+
 
 
   @include media-breakpoint('xs') {
@@ -12,9 +15,114 @@
     width: 600px;
   }
 
+  .noc-evidence-table {
+    .mat-cell {
+      padding: 0 10px;
+      font-size: 12px !important;
+      color: #000;
+    }
+
+    .mat-header-cell,
+    .mat-header-row {
+      // display: none;
+      @include deep-height(30px);
+    }
+
+    .mat-header-cell {
+      padding: 0 10px;
+      font-size: 10px !important;
+      //color: #0F0; // map-get($primary, default);
+      font-weight: bold;
+      @include deep-height(30px);
+      border-bottom: $noc-primary-color-light solid 1px;
+
+      padding: 0 10px;
+      font-size: 10px;
+      color: map-get($primary, default);
+      text-transform: uppercase;
+    }
+
+
+    .noc-paginator {
+      @include deep-height(0);
+    }
+
+    .annoton {
+      position: relative;
+      cursor: pointer;
+      min-height: 40px;
+      font-size: 12px;
+    }
+
+
+    .mat-cell {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .mat-column-id {
+      flex: 0 1 84px;
+    }
+
+    /* .mat-header-cell {
+      display:flex;
+      justify-content:flex-end;
+     } */
+  }
+
+  .noc-form-section {
+    background-color: transparent;
+
+    .noc-section-header {
+      @include deep-height(40px);
+      padding-left: 8px;
+
+      .noc-section-heading {
+        padding: 0;
+        font-size: 12px;
+        line-height: 15px;
+      }
+    }
+  }
+
+  .noc-left-panel {
+    // min-height: 800px;
+    // padding: 12px 8px;
+    background-color: #EEE;
+    border-right: rgba(map-get($primary, default), 0.6) solid 1px;
+
+
+    .noc-term-box {
+      font-size: 10px;
+      color: #555;
+      padding: 10px 0;
+      border-bottom: rgba(map-get($primary, default), 0.2) solid 1px;
+
+      mat-icon {
+        @include noc-icon-size(12px);
+        display: none;
+      }
+
+      &.noc-term-selected {
+        // background-color: 
+        color: #000;
+        font-weight: bold;
+
+        mat-icon {
+          display: initial;
+        }
+      }
+    }
+  }
+
+  .noc-right-panel {
+    // padding: 12px 8px 16px 12px;
+  }
+
   .noc-dialog-body {
     margin: 0;
-    padding: 15px 10px;
+    padding: 0;
     @include deep-width(100%);
   }
 
@@ -25,8 +133,8 @@
   .mat-dialog-content {}
 
   .dialog-content-wrapper {
-    width: 900px;
-    min-height: 80%;
+    width: 1100px;
+    min-height: 90%;
     display: flex;
     flex-direction: column;
   }

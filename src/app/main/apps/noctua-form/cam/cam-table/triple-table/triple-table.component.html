@@ -1,0 +1,101 @@
+<div class="w-100-p">
+  <div *ngFor="let triple of cam.triples" (click)="selectTriple(triple)" class="noc-triple noc-sm w-100-p"
+    fxLayout="row" fxLayoutAlign="start center">
+    <div class="noc-annoton-box" fxLayout="column" fxLayoutAlign="center center">
+      <span>
+        {{ triple.subject.getTerm().label}}
+      </span>
+    </div>
+    <div class="" fxFlex fxLayout="row" fxLayoutAlign="start center">
+      <div class="noc-line" fxFlex="" fxLayout="column" fxLayoutAlign="end stretch"></div>
+      <noc-evidence-table fxFlex="560px" [cam]="cam" [evidence]="triple.predicate"></noc-evidence-table>
+      <div class="noc-line" fxFlex="" fxLayout="column" fxLayoutAlign="end stretch"></div>
+      <mat-icon class="s-32 noc-arrow">chevron_right</mat-icon>
+    </div>
+    <div class="noc-annoton-box" fxLayout="column" fxLayoutAlign="center center">
+      <span>
+        {{ triple.object.getTerm().label}}
+      </span>
+    </div>
+  </div>
+  <!--   <div class="noc-annoton-table-header w-100-p" fxLayout="row" fxLayoutAlign="start center">
+    <div fxFlex="150px" class="noc-header-cell"> Subject </div>
+    <div fxFlex="50px" class="noc-header-cell"> Asp </div>
+    <div fxFlex="120px" class="noc-header-cell"> Relationship </div>
+    <div fxFlex="150px" class="noc-header-cell"> Object </div>
+    <div fxFlex="50px" class="noc-header-cell"> Asp </div>
+    <div fxFlex="150px" class="noc-header-cell"> Evidence </div>
+    <div fxFlex="120px" class="noc-header-cell"> Reference </div>
+    <div fxFlex="120px" class="noc-header-cell"> Evidence </div>
+    <div fxFlex="120px" class="noc-header-cell"> With </div>
+    <div fxFlex="120px" class="noc-header-cell"> Assigned By </div>
+  </div>
+  <div class="noc-annoton-table-body w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
+    <div class="annoton-table" fxFlex="">
+      <mat-table class="w-100-p" #table [dataSource]="grid" matSort [@animateStagger]="{value:'50'}"
+        noctuaPerfectScrollbar>
+        <ng-container cdkColumnDef="subject">
+          <mat-header-cell *cdkHeaderCellDef fxFlex="150px">Subject</mat-header-cell>
+          <mat-cell *cdkCellDef="let entity" fxFlex="150px">
+            <p class="">{{entity.subject?.label}}</p>
+          </mat-cell>
+        </ng-container>
+        <ng-container cdkColumnDef="aspectS">
+          <mat-header-cell *cdkHeaderCellDef fxFlex="50px">Asp</mat-header-cell>
+          <mat-cell *cdkCellDef="let entity" fxFlex="50px">
+            <p class="">{{entity.aspect}}</p>
+          </mat-cell>
+        </ng-container>
+        <ng-container cdkColumnDef="relationship">
+          <mat-header-cell *cdkHeaderCellDef fxFlex="120px">Relationship</mat-header-cell>
+          <mat-cell *cdkCellDef="let entity" fxFlex="120px">
+            <p class="">{{entity.relationship}}</p>
+          </mat-cell>
+        </ng-container>
+        <ng-container cdkColumnDef="object">
+          <mat-header-cell *cdkHeaderCellDef fxFlex="150px">Object</mat-header-cell>
+          <mat-cell *cdkCellDef="let entity" fxFlex="150px">
+            <p class="">{{entity.object?.label}}</p>
+          </mat-cell>
+        </ng-container>
+        <ng-container cdkColumnDef="aspectO">
+          <mat-header-cell *cdkHeaderCellDef fxFlex="50px">Asp</mat-header-cell>
+          <mat-cell *cdkCellDef="let entity" fxFlex="50px">
+            <p class="">{{entity.aspect}}</p>
+          </mat-cell>
+        </ng-container>
+        <ng-container cdkColumnDef="evidence">
+          <mat-header-cell *cdkHeaderCellDef fxFlex="150px">Evidence</mat-header-cell>
+          <mat-cell *cdkCellDef="let entity" fxFlex="150px">
+            <p class="">{{entity.evidence?.label}}</p>
+          </mat-cell>
+        </ng-container>
+        <ng-container cdkColumnDef="reference">
+          <mat-header-cell *cdkHeaderCellDef fxFlex="120px">Reference</mat-header-cell>
+          <mat-cell *cdkCellDef="let entity" fxFlex="120px">
+            <a href="{{entity.reference?.url}}" class="" target="_blank">{{entity.reference?.label}}</a>
+          </mat-cell>
+        </ng-container>
+        <ng-container cdkColumnDef="with">
+          <mat-header-cell *cdkHeaderCellDef fxFlex="120px">With</mat-header-cell>
+          <mat-cell *cdkCellDef="let entity" fxFlex="120px">
+            <p class="">{{entity.with}}</p>
+          </mat-cell>
+        </ng-container>
+        <ng-container cdkColumnDef="assignedBy">
+          <mat-header-cell *cdkHeaderCellDef fxFlex="120px">Assigned By</mat-header-cell>
+          <mat-cell *cdkCellDef="let entity" fxFlex="120px">
+            <a href="{{entity.assignedBy?.link?.url}}" class="" target="_blank">{{entity.assignedBy?.link?.value}}</a>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *cdkRowDef="let entity; columns: displayedColumns;" class="" matRipple
+          [ngClass]="{'noc-row-selected': entity.node?.individualId === noctuaAnnotonEntityService.termNode?.individualId}"
+          (click)="selectEntity(entity.annoton, entity.node)"></mat-row>
+      </mat-table>
+      <div *ngIf="grid?.length===0" class="noc-no-info">
+        no results yet.
+      </div>
+    </div>
+  </div> -->
+</div>

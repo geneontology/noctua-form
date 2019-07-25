@@ -18,7 +18,7 @@ import { NoctuaAnnotonConnectorService } from 'noctua-form-base';
 import { NoctuaFormConfigService } from 'noctua-form-base';
 
 
-import { Curator } from 'noctua-form-base';
+import { Contributor } from 'noctua-form-base';
 import { Group } from 'noctua-form-base';
 
 import * as _ from 'lodash';
@@ -125,7 +125,7 @@ export class CamDiagramService {
   openConnectorForm(sourceId, targetId) {
     const self = this;
 
-    self.noctuaAnnotonConnectorService.createConnection(sourceId, targetId);
+    self.noctuaAnnotonConnectorService.initializeForm(sourceId, targetId);
     self.noctuaFormService.openRightDrawer(self.noctuaFormService.panel.connectorForm);
   }
 

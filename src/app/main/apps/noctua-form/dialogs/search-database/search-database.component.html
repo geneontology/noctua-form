@@ -1,76 +1,87 @@
-<div class="dialog-content-wrapper">
-  <mat-toolbar class="mat-accent m-0">
-    <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="start center">
-      <span class="title dialog-title">
-        Search Database</span>
-      <span fxFlex></span>
-      <button mat-icon-button (click)="close()" aria-label="Close dialog">
-        <mat-icon>close</mat-icon>
-      </button>
-    </mat-toolbar-row>
-  </mat-toolbar>
-  <div mat-dialog-content fxLayout="row" fxLayoutAlign="start start" class="noc-dialog-body">
-    <div class="h-100-p" fxFlex="200px" fxLayout="column" fxLayoutAlign="start stretch">
-      <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
-        <div class="noc-section-heading">
+<div class="dialog-content-wrapper noc-dialog" fxLayout="column" fxLayoutAlign="start stretch">
+  <div class="m-0 noc-dialog-header" fxLayout="row" fxLayoutAlign="start center">
+    <span class="noc-dialog-header-title">
+      Search Database</span>
+    <span fxFlex></span>
+    <button mat-stroked-button (click)="close()" class="noc-rounded-button noc-sm" aria-label="Close dialog">
+      <mat-icon>close</mat-icon> Close
+    </button>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start start" class="noc-dialog-body">
+    <div class="h-100-p noc-left-panel noc-form-section" fxFlex="200px" fxLayout="column" fxLayoutAlign="start stretch">
+      <div class="noc-section-header w-100-p" fxLayout="row" fxLayoutAlign="start center">
+        <div class="noc-section-heading w-100-p">
           Select Term
+          <div class="text-truncate">
+            <small>Please select below</small>
+          </div>
         </div>
-        <span fxFlex></span>
       </div>
-      <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
-        <div class="noc-annoton-node-card" (click)="selectAnnotonNode(annotonNode)"
-          *ngFor="let annotonNode of annotonNodes">
+      <div class="noc-section-body w-100-p" noctuaPerfectScrollbar>
+        <div class="noc-term-box" *ngFor="let annotonNode of annotonNodes" (click)="selectAnnotonNode(annotonNode)"
+          [ngClass]="{'noc-term-selected': annotonNode.getTerm().id===selectedAnnotonNode?.getTerm().id}" fxLayout="row"
+          fxLayoutAlign="start center">
+          <mat-icon fkFlex="25px" class="green-300-fg mr-4">check_circle</mat-icon>
           {{annotonNode.getTerm().label}}
         </div>
       </div>
     </div>
-    <div class="h-100-p" fxFlex="100%" fxLayout="column" fxLayoutAlign="start stretch">
-      <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
+    <div class="h-100-p noc-right-panel noc-form-section" fxFlex="100%" fxLayout="column" fxLayoutAlign="start stretch">
+      <div class="noc-section-header  w-100-p" fxLayout="row" fxLayoutAlign="start center">
         <div class="noc-section-heading">
           Select Evidence <small>(optional)</small>
+          <div class="text-truncate">
+            <small>{{selectedAnnotonNode?.getTerm().label}}</small>
+          </div>
         </div>
-        <span fxFlex></span>
       </div>
-      <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
-        <table mat-table [dataSource]="dataSource" class="w-100-p">
-          <ng-container matColumnDef="select">
-            <th mat-header-cell *matHeaderCellDef>
+      <div class="noc-section-body w-100-p" noctuaPerfectScrollbar>
+        <mat-table class="noc-evidence-table w-100-p" #table [dataSource]="dataSource" matSort
+          [@animateStagger]="{value:'50'}" noctuaPerfectScrollbar>
+          <ng-container matColumnDef="select" class="">
+            <mat-header-cell *matHeaderCellDef fxFlex="30px">
               <mat-checkbox (change)="$event ? masterToggle() : null"
                 [checked]="selection.hasValue() && isAllSelected()"
                 [indeterminate]="selection.hasValue() && !isAllSelected()">
               </mat-checkbox>
-            </th>
-            <td mat-cell *matCellDef="let row">
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" fxFlex="30px">
               <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
                 [checked]="selection.isSelected(row)">
               </mat-checkbox>
-            </td>
+            </mat-cell>
           </ng-container>
-          <ng-container matColumnDef="evidence">
-            <th mat-header-cell *matHeaderCellDef> Evidence </th>
-            <td mat-cell *matCellDef="let evidence"> {{evidence.getEvidence().label}} </td>
+          <ng-container cdkColumnDef="evidence">
+            <mat-header-cell *cdkHeaderCellDef fxFlex="40%">Evidence</mat-header-cell>
+            <mat-cell *cdkCellDef="let evidence" fxFlex="40%">
+              <p class="">{{evidence.getEvidence()?.label}}</p>
+            </mat-cell>
           </ng-container>
-          <ng-container matColumnDef="reference">
-            <th mat-header-cell *matHeaderCellDef> Reference </th>
-            <td mat-cell *matCellDef="let evidence"> {{evidence.getReference()}} </td>
+          <ng-container cdkColumnDef="reference">
+            <mat-header-cell *cdkHeaderCellDef fxFlex="20%">Reference</mat-header-cell>
+            <mat-cell *cdkCellDef="let evidence" fxFlex="20%">
+              <p class="">{{evidence.getReference()}}</p>
+            </mat-cell>
           </ng-container>
-          <ng-container matColumnDef="with">
-            <th mat-header-cell *matHeaderCellDef> With </th>
-            <td mat-cell *matCellDef="let evidence"> {{evidence.getWith()}} </td>
+          <ng-container cdkColumnDef="with">
+            <mat-header-cell *cdkHeaderCellDef fxFlex="20%">With</mat-header-cell>
+            <mat-cell *cdkCellDef="let evidence" fxFlex="20%">
+              <p class="">{{evidence.getWith()}}</p>
+            </mat-cell>
           </ng-container>
-          <ng-container matColumnDef="assignedBy">
-            <th mat-header-cell *matHeaderCellDef> Assigned By </th>
-            <td mat-cell *matCellDef="let evidence"> {{evidence.getAssignedBy()}} </td>
+          <ng-container cdkColumnDef="assignedBy">
+            <mat-header-cell *cdkHeaderCellDef fxFlex="">Assigned By</mat-header-cell>
+            <mat-cell *cdkCellDef="let evidence" fxFlex="">
+              <p class="">{{evidence.getAssignedBy()}}</p>
+            </mat-cell>
           </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
-          </tr>
-        </table>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></mat-row>
+        </mat-table>
       </div>
     </div>
   </div>
-  <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="space-between center">
+  <div class="m-0 p-16 noc-dialog-footer" fxLayout="row" fxLayoutAlign="space-between center">
     <span fxFlex></span>
     <button (click)='close()' type="button" mat-raised-button color="" class="mr-8">Cancel</button>
     <button (click)="save()" type="button" mat-raised-button color="primary">Done</button>

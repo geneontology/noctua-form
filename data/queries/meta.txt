@@ -1,0 +1,61 @@
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX metago: <http://model.geneontology.org/>
+PREFIX gomodel: <http://model.geneontology.org/>
+PREFIX definition: <http://purl.obolibrary.org/obo/IAO_0000115>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX GO: <http://purl.obolibrary.org/obo/GO_>
+PREFIX BP: <http://purl.obolibrary.org/obo/GO_0008150>
+PREFIX MF: <http://purl.obolibrary.org/obo/GO_0003674>
+PREFIX CC: <http://purl.obolibrary.org/obo/GO_0005575>
+PREFIX modelState: <http://geneontology.org/lego/modelstate>
+PREFIX providedBy: <http://purl.org/pav/providedBy>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX has_affiliation: <http://purl.obolibrary.org/obo/ERO_0000066>
+PREFIX enabled_by: <http://purl.obolibrary.org/obo/RO_0002333>
+PREFIX evidence: <http://geneontology.org/lego/evidence>
+PREFIX in_taxon: <http://purl.obolibrary.org/obo/RO_0002162>
+PREFIX obo: <http://www.geneontology.org/formats/oboInOwl#>
+SELECT distinct ?model ?modelTitle ?modelState ?date ?gocam ?goclasses ?goids ?gonames ?definitions
+	(GROUP_CONCAT(distinct ?entity;separator="@@") as ?entities)
+	(GROUP_CONCAT(distinct ?orcid;separator="@@") as ?contributors)
+	(GROUP_CONCAT(distinct ?providedBy;separator="@@") as ?groups)
+  (GROUP_CONCAT(distinct ?identifier;separator="@@") as ?gpids)
+     (GROUP_CONCAT(distinct ?name;separator="@@") as ?gpnames)
+(GROUP_CONCAT(distinct ?source; separator="@@") as ?sources)  
+
+
+
+WHERE{
+  VALUES ?model { gomodel:5b91dbd100001639} .
+GRAPH ?model {
+?model dc:date ?date; dc:title ?modelTitle; modelState: ?modelState; providedBy: ?providedBy; dc:contributor ?orcid.
+  ?entity rdf:type owl:NamedIndividual .
+    			?entity rdf:type ?goids .
+    ?s enabled_by: ?gpnode .    
+                ?gpnode rdf:type ?identifier .
+                FILTER(?identifier != owl:NamedIndividual) .  
+  
+   ?k dc:source ?source .
+                BIND(REPLACE(?source, " ", "") AS ?source) .
+                FILTER((CONTAINS(?source, "PMID")))
+}
+                optional {
+                GRAPH <http://purl.obolibrary.org/obo/go/extensions/go-graphstore.owl> {
+            	    ?identifier rdfs:label ?name
+                }
+            }
+       VALUES ?goclasses { BP: MF: CC:  } . 
+  			?goids rdfs:subClassOf+ ?goclasses .
+    		?goids rdfs:label ?gonames .
+  		    ?goids definition: ?definitions .
+
+}
+
+GROUP BY ?model ?modelTitle ?modelState ?date ?gocam ?goclasses ?goids ?gonames ?definitions
+
+
+ 
+

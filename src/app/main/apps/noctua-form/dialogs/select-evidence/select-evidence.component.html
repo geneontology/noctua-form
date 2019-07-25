@@ -1,185 +1,70 @@
 <div class="dialog-content-wrapper">
-  <mat-toolbar class="mat-accent m-0">
+  <mat-toolbar class="mat-primary m-0">
     <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="start center">
       <span class="title dialog-title">
-        Add Evidence</span>
+        Clone Evidence</span>
       <span fxFlex></span>
       <button mat-icon-button (click)="close()" aria-label="Close dialog">
         <mat-icon>close</mat-icon>
       </button>
     </mat-toolbar-row>
   </mat-toolbar>
-  <div mat-dialog-content class="noc-dialog-body" noctuaPerfectScrollbar>
-    <table mat-table [dataSource]="dataSource" class="w-100-p">
-      <ng-container matColumnDef="select">
-        <th mat-header-cell *matHeaderCellDef>
-          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
-            [indeterminate]="selection.hasValue() && !isAllSelected()">
-          </mat-checkbox>
-        </th>
-        <td mat-cell *matCellDef="let row">
-          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
-            [checked]="selection.isSelected(row)">
-          </mat-checkbox>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="evidence">
-        <th mat-header-cell *matHeaderCellDef> Evidence </th>
-        <td mat-cell *matCellDef="let evidence"> {{evidence.getEvidence().label}} </td>
-      </ng-container>
-      <ng-container matColumnDef="reference">
-        <th mat-header-cell *matHeaderCellDef> reference </th>
-        <td mat-cell *matCellDef="let evidence"> {{evidence.getReference()}} </td>
-      </ng-container>
-      <ng-container matColumnDef="with">
-        <th mat-header-cell *matHeaderCellDef> With </th>
-        <td mat-cell *matCellDef="let evidence"> {{evidence.getWith()}} </td>
-      </ng-container>
-
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
-      </tr>
-    </table>
-    <!--
-    <div fxLayout="column" fxLayoutAlign="start center" class="w-100-p">
-
-      <div class="" layout="column" layout-align="start stretch">
-        <div>
-          <strong>Evidence For </strong> {{annotonCtrl.data.node.term.control.value.label}}
-        </div>
-        <br>
-        <div class="sae-populate-group md-whiteframe-1dp" layout="column">
-          <div class="sae-populate-group-header" layout="column" flex>
-            <md-checkbox class="sae-primary m-0" ng-checked="annotonCtrl.isNodeChecked()" md-indeterminate="annotonCtrl.isNodeIndeterminate()"
-              ng-click="annotonCtrl.toggleNode()" aria-label="Term Checkbox">
-              (Un)Select All
-            </md-checkbox>
-          </div>
-          <div class="sae-populate-group-body" layout="column" flex>
-            <div class="sae-populate-row-header" layout="row">
-              <div class="sae-checkbox-container">
-              </div>
-              <div flex="50">
-                Evidence
-              </div>
-              <div flex="30">
-                Reference
-              </div>
-              <div flex="20">
-                With
-              </div>
-            </div>
-            <div ng-repeat="evidence in annotonCtrl.data.evidences" class="sae-populate-row" layout="row">
-              <div class="sae-checkbox-container">
-                <md-checkbox class="sae-primary m-0" ng-checked="annotonCtrl.exists(evidence)" ng-click="annotonCtrl.toggleEvidence(evidence)"
-                  aria-label="Term Label">
-                </md-checkbox>
-              </div>
-              <div flex="50">
-                <div class="sae-ellipsis">
-                  {{evidence.evidence.control.value.label}}
-                </div>
-              </div>
-              <div flex="30">
-                <div class="sae-ellipsis">
-                  <a ng-if="evidence.reference.control.link.url" ng-href="{{evidence.reference.control.link.url}}"
-                    target="_blank">
-                    {{evidence.reference.control.link.label}}
-                  </a>
-                  <span ng-if="!evidence.reference.control.link.url">
-                    {{evidence.reference.control.value}}
-                  </span>
-                </div>
-              </div>
-              <div flex="20">
-                <div class="sae-ellipsis">
-                  <a ng-if="evidence.with.control.link.url" ng-href="{{evidence.with.control.link.url}}" target="_blank">
-                    {{evidence.with.control.link.label}}
-                  </a>
-                  <span ng-if="!evidence.with.control.link.url">
-                    {{evidence.with.control.value}}
-                  </span>
-                </div>
-              </div>
-              <div ng-if="false" flex>
-                <div class="sae-ellipsis">
-                  {{evidence.assignedBy.control.value}}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <md-button class="" ng-click="annotonCtrl.includeExternalNodes()">
-          Add From External
-        </md-button>
-
-        <div ng-if="annotonCtrl.externalNodesIncluded" class="sae-populate-group md-whiteframe-1dp p-15" layout="column">
-          <h3>
-            Filter Summary
-          </h3>
-          <div>
-            <strong>Gene Product </strong> {{annotonCtrl.data.gpNode.term.control.value.label}}
-          </div>
-          <div ng-if="annotonCtrl.data.params.term">
-            <strong>Term </strong> {{annotonCtrl.data.node.term.control.value.label}}
-          </div>
-          <br>
-          <h3>
-            Results
-          </h3>
-          <div class="sae-populate-group-body" layout="column" flex>
-            <div class="sae-populate-row-header" layout="row">
-              <div class="sae-checkbox-container">
-              </div>
-              <div flex="50">
-                Evidence
-              </div>
-              <div flex="20">
-                Reference
-              </div>
-              <div>
-                With
-              </div>
-            </div>
-            <div ng-repeat="evidence in annotonCtrl.data.externalEvidences" class="sae-populate-row" layout="row">
-              <div class="sae-checkbox-container">
-                <md-checkbox class="sae-primary m-0" ng-checked="annotonCtrl.exists(evidence)" ng-click="annotonCtrl.toggleEvidence(evidence)"
-                  aria-label="Term Label">
-                </md-checkbox>
-              </div>
-              <div flex="50">
-                <div class="sae-ellipsis">
-                  {{evidence.evidence.control.value.label}}
-                </div>
-              </div>
-              <div flex="20">
-                <div class="sae-ellipsis">
-                  <a ng-href="{{evidence.reference.control.link.url}}" target="_blank">
-                    {{evidence.reference.control.link.label}}
-                  </a>
-                </div>
-              </div>
-              <div>
-                <div class="sae-ellipsis">
-                  <a ng-href="{{evidence.with.control.link.url}}" target="_blank">
-                    {{evidence.with.control.link.label}}
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+  <div fxLayout="row" fxLayoutAlign="start start" class="noc-dialog-body">
+    <div class="h-100-p noc-right-panel noc-form-section" fxFlex="100%" fxLayout="column" fxLayoutAlign="start stretch">
+      <div class="noc-section-header  w-100-p" fxLayout="row" fxLayoutAlign="start center">
+        <div class="noc-section-heading">
+          Select Evidence
         </div>
       </div>
-      </md-dialog-content>
-      </md-dialog>
+      <div class="noc-section-body w-100-p" noctuaPerfectScrollbar>
+        <mat-table class="noc-evidence-table w-100-p" #table [dataSource]="dataSource" matSort
+          [@animateStagger]="{value:'50'}" noctuaPerfectScrollbar>
+          <ng-container matColumnDef="select" class="">
+            <mat-header-cell *matHeaderCellDef fxFlex="30px">
+              <mat-checkbox (change)="$event ? masterToggle() : null"
+                [checked]="selection.hasValue() && isAllSelected()"
+                [indeterminate]="selection.hasValue() && !isAllSelected()">
+              </mat-checkbox>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" fxFlex="30px">
+              <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+                [checked]="selection.isSelected(row)">
+              </mat-checkbox>
+            </mat-cell>
+          </ng-container>
+          <ng-container cdkColumnDef="evidence">
+            <mat-header-cell *cdkHeaderCellDef fxFlex="40%">Evidence</mat-header-cell>
+            <mat-cell *cdkCellDef="let evidence" fxFlex="40%">
+              <p class="">{{evidence.getEvidence()?.label}}</p>
+            </mat-cell>
+          </ng-container>
+          <ng-container cdkColumnDef="reference">
+            <mat-header-cell *cdkHeaderCellDef fxFlex="20%">Reference</mat-header-cell>
+            <mat-cell *cdkCellDef="let evidence" fxFlex="20%">
+              <p class="">{{evidence.getReference()}}</p>
+            </mat-cell>
+          </ng-container>
+          <ng-container cdkColumnDef="with">
+            <mat-header-cell *cdkHeaderCellDef fxFlex="20%">With</mat-header-cell>
+            <mat-cell *cdkCellDef="let evidence" fxFlex="20%">
+              <p class="">{{evidence.getWith()}}</p>
+            </mat-cell>
+          </ng-container>
+          <ng-container cdkColumnDef="assignedBy">
+            <mat-header-cell *cdkHeaderCellDef fxFlex="">Assigned By</mat-header-cell>
+            <mat-cell *cdkCellDef="let evidence" fxFlex="">
+              <p class="">{{evidence.getAssignedBy()}}</p>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></mat-row>
+        </mat-table>
+      </div>
     </div>
-  </div>-->
-    <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="space-between center">
-      <span fxFlex></span>
-      <button (click)='close()' type="button" mat-raised-button color="" class="mr-8">Cancel</button>
-      <button (click)="save()" type="button" mat-raised-button color="primary">Done</button>
-    </div>
+  </div>
+  <div class="m-0 p-16 noc-dialog-footer" fxLayout="row" fxLayoutAlign="space-between center">
+    <span fxFlex></span>
+    <button (click)='close()' type="button" mat-raised-button color="" class="mr-8">Cancel</button>
+    <button (click)="save()" type="button" mat-raised-button color="primary">Done</button>
   </div>
 </div>

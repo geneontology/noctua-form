@@ -17,12 +17,13 @@ import {
 
 import { NoctuaSearchService } from './../../../../../../@noctua.search/services/noctua-search.service';
 import { SparqlService } from './../../../../../../@noctua.sparql/services/sparql/sparql.service';
-
+import { noctuaAnimations } from '@noctua/animations';
 
 @Component({
   selector: 'app-select-evidence',
   templateUrl: './select-evidence.component.html',
-  styleUrls: ['./select-evidence.component.scss']
+  styleUrls: ['./select-evidence.component.scss'],
+  animations: noctuaAnimations
 })
 export class SelectEvidenceDialogComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any>;
@@ -66,7 +67,9 @@ export class SelectEvidenceDialogComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    this._matDialogRef.close(this.selection.selected);
+    this._matDialogRef.close({
+      evidences: <Evidence[]>this.selection.selected
+    });
   }
 
   close() {
@@ -79,5 +82,3 @@ export class SelectEvidenceDialogComponent implements OnInit, OnDestroy {
     this._unsubscribeAll.complete();
   }
 }
-
-

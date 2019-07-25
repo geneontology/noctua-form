@@ -16,13 +16,15 @@ import {
   NoctuaLookupService
 } from 'noctua-form-base';
 
+import { noctuaAnimations } from './../../../../../../@noctua/animations';
 import { NoctuaSearchService } from './../../../../../../@noctua.search/services/noctua-search.service';
 import { SparqlService } from './../../../../../../@noctua.sparql/services/sparql/sparql.service';
 
 @Component({
   selector: 'app-search-database',
   templateUrl: './search-database.component.html',
-  styleUrls: ['./search-database.component.scss']
+  styleUrls: ['./search-database.component.scss'],
+  animations: noctuaAnimations
 })
 export class SearchDatabaseDialogComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any>;
@@ -68,7 +70,7 @@ export class SearchDatabaseDialogComponent implements OnInit, OnDestroy {
   }
 
   selectAnnotonNode(annotonNode) {
-    this.selectAnnotonNode = annotonNode;
+    this.selectedAnnotonNode = annotonNode;
     this.dataSource = new MatTableDataSource<Evidence>(annotonNode.evidence);
   }
 
@@ -87,7 +89,10 @@ export class SearchDatabaseDialogComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    this._matDialogRef.close(this.selection.selected);
+    this._matDialogRef.close({
+      term: this.selectedAnnotonNode,
+      evidences: <Evidence[]>this.selection.selected
+    });
   }
 
   close() {

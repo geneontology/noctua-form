@@ -18,22 +18,31 @@ import { noctuaAnimations } from './../../../../../../../@noctua/animations';
 
 import { NoctuaFormService } from '../../../services/noctua-form.service';
 
-import { NoctuaAnnotonConnectorService } from 'noctua-form-base';
-import { NoctuaGraphService } from 'noctua-form-base';
-import { NoctuaAnnotonFormService } from 'noctua-form-base';
-import { NoctuaFormConfigService } from 'noctua-form-base';
-import { NoctuaLookupService } from 'noctua-form-base';
+
 import { NoctuaSearchService } from './../../../../../../../@noctua.search/services/noctua-search.service';
-import { CamService } from 'noctua-form-base';
 import { CamDiagramService } from './../../cam-diagram/services/cam-diagram.service';
 import { CamTableService } from './../../cam-table/services/cam-table.service';
 
 import { SparqlService } from './../../../../../../../@noctua.sparql/services/sparql/sparql.service';
 
-import { Cam } from 'noctua-form-base';
-import { Annoton } from 'noctua-form-base';
-import { AnnotonNode } from 'noctua-form-base';
-import { Evidence } from 'noctua-form-base';
+import {
+  Cam,
+  Annoton,
+  ConnectorAnnoton,
+  ConnectorState,
+  ConnectorType,
+  AnnotonNode,
+  Evidence,
+  NoctuaAnnotonConnectorService,
+
+  NoctuaGraphService,
+  NoctuaAnnotonFormService,
+  NoctuaFormConfigService,
+  NoctuaLookupService,
+  CamService,
+  noctuaFormConfig,
+  Entity
+} from 'noctua-form-base';
 import { NoctuaFormDialogService } from '../../../services/dialog.service';
 
 @Component({
@@ -46,7 +55,19 @@ export class AnnotonConnectorFormComponent implements OnInit, OnDestroy {
   @Input('panelDrawer')
   panelDrawer: MatDrawer;
 
+  connectorType = ConnectorType;
+  connectorState = ConnectorState;
+  panel = {
+    selectConnector: {
+      id: 1
+    }, annotonConnectorForm: {
+      id: 2
+    },
+  };
+  selectedPanel: any;
   annoton: Annoton;
+  currentConnectorAnnoton: ConnectorAnnoton;
+  connectorAnnoton: ConnectorAnnoton;
   mfNode: AnnotonNode;
 
   cam: Cam;
@@ -57,11 +78,10 @@ export class AnnotonConnectorFormComponent implements OnInit, OnDestroy {
   evidenceFormArray: FormArray;
   // annoton: Annoton = new Annoton();
 
-  subjectGPNode: AnnotonNode;
-  objectGPNode: AnnotonNode;
   selectedCausalEffect;
 
   private unsubscribeAll: Subject<any>;
+
 
   constructor(private route: ActivatedRoute,
     private camService: CamService,
@@ -79,7 +99,6 @@ export class AnnotonConnectorFormComponent implements OnInit, OnDestroy {
     private sparqlService: SparqlService
   ) {
     this.unsubscribeAll = new Subject();
-    // this.annoton = self.noctuaAnnotonFormService.annoton;
   }
 
   ngOnInit(): void {
@@ -87,8 +106,8 @@ export class AnnotonConnectorFormComponent implements OnInit, OnDestroy {
       .subscribe(connectorFormGroup => {
         if (!connectorFormGroup) return;
         this.connectorFormGroup = connectorFormGroup;
-        this.subjectGPNode = this.noctuaAnnotonConnectorService.subjectAnnoton.getGPNode()
-        this.objectGPNode = this.noctuaAnnotonConnectorService.objectAnnoton.getGPNode()
+        this.currentConnectorAnnoton = this.noctuaAnnotonConnectorService.currentConnectorAnnoton;
+        this.connectorAnnoton = this.noctuaAnnotonConnectorService.connectorAnnoton;
 
         this.selectedCausalEffect = this.connectorFormGroup.get('causalEffect').value
 
@@ -96,60 +115,100 @@ export class AnnotonConnectorFormComponent implements OnInit, OnDestroy {
       });
 
     this.camService.onCamChanged.subscribe((cam) => {
+      if (!cam) return;
+
       this.cam = cam
-      this.cam.onGraphChanged.subscribe((annotons) => {
-        //  let data = this.summaryGridService.getGrid(annotons);
-        //  this.sparqlService.addCamChildren(cam, data);
-        //  this.dataSource = new CamsDataSource(this.sparqlService, this.paginator, this.sort);
-      });
     });
+
+    this.noctuaAnnotonConnectorService.onAnnotonChanged.subscribe((annoton) => {
+      this.annoton = annoton;
+      this.selectPanel(this.panel.selectConnector);
+    });
+
+    this.selectPanel(this.panel.selectConnector);
   }
 
-  evidenceDisplayFn(evidence): string | undefined {
-    return evidence ? evidence.label : undefined;
+  selectPanel(panel) {
+    this.selectedPanel = panel;
   }
+
+  openAnnotonConnector(connector: Annoton) {
+    this.noctuaAnnotonConnectorService.initializeForm(this.noctuaAnnotonConnectorService.annoton.connectionId, connector.connectionId);
+    this.selectPanel(this.panel.annotonConnectorForm);
+  }
+
 
   save() {
     const self = this;
-
-    self.noctuaAnnotonConnectorService.connectorFormToAnnoton();
-    self.noctuaGraphService.saveConnection(self.cam,
-      this.noctuaAnnotonConnectorService.annoton,
-      this.noctuaAnnotonConnectorService.subjectMFNode,
-      this.noctuaAnnotonConnectorService.objectMFNode).then(function (data) {
-        // self.noctuaAnnotonFormService.clearForm();
-        // self.dialogService.openSuccessfulSaveToast();
-      });
+    this.noctuaAnnotonConnectorService.save().then(() => {
+      self.selectPanel(self.panel.selectConnector);
+      self.noctuaAnnotonConnectorService.getConnections();
+      self.noctuaFormDialogService.openSuccessfulSaveToast('Causal relation successfully created.', 'OK');
+    });
   }
 
   addEvidence() {
     const self = this;
 
-    let evidenceFormGroup: FormArray = <FormArray>self.connectorFormGroup.get('evidenceFormArray');
-
-    evidenceFormGroup.push(this.formBuilder.group({
-      evidence: new FormControl(),
-      reference: new FormControl(),
-      with: new FormControl(),
-    }));
+    self.connectorAnnoton.upstreamNode.addEvidence();
+    this.noctuaAnnotonConnectorService.updateEvidence(self.connectorAnnoton.upstreamNode);
   }
 
-  removeEvidence(index) {
+  removeEvidence(index: number) {
     const self = this;
 
-    let evidenceFormGroup: FormArray = <FormArray>self.connectorFormGroup.get('evidenceFormArray');
+    self.connectorAnnoton.upstreamNode.removeEvidence(index);
+    this.noctuaAnnotonConnectorService.updateEvidence(self.connectorAnnoton.upstreamNode);
+  }
 
-    evidenceFormGroup.removeAt(index);
+  addNDEvidence() {
+    const self = this;
+
+    let evidence = new Evidence();
+    evidence.setEvidence(new Entity(
+      noctuaFormConfig.evidenceAutoPopulate.nd.evidence.id,
+      noctuaFormConfig.evidenceAutoPopulate.nd.evidence.label));
+    evidence.setReference(new Entity(null, noctuaFormConfig.evidenceAutoPopulate.nd.reference));
+    self.connectorAnnoton.upstreamNode.setEvidence([evidence]);
+    this.noctuaAnnotonConnectorService.updateEvidence(self.connectorAnnoton.upstreamNode);
+  }
+
+  clearValues() {
+    const self = this;
+
+    self.connectorAnnoton.upstreamNode.clearValues();
+    this.noctuaAnnotonConnectorService.updateEvidence(self.connectorAnnoton.upstreamNode);
+  }
+
+  openSelectEvidenceDialog() {
+    const self = this;
+
+    let evidences: Evidence[] = this.camService.getUniqueEvidence();
+
+    let success = function (selected) {
+      if (selected.evidences && selected.evidences.length > 0) {
+        self.connectorAnnoton.upstreamNode.setEvidence(selected.evidences, ['assignedBy']);
+        this.noctuaAnnotonConnectorService.updateEvidence(self.connectorAnnoton.upstreamNode);
+      }
+    }
+
+    self.noctuaFormDialogService.openSelectEvidenceDialog(evidences, success);
   }
 
   clear() {
     this.noctuaAnnotonFormService.clearForm();
   }
 
-
-
   close() {
     this.panelDrawer.close()
+  }
+
+  termDisplayFn(term): string | undefined {
+    return term ? term.label : undefined;
+  }
+
+  evidenceDisplayFn(evidence): string | undefined {
+    return evidence ? evidence.label : undefined;
   }
 
   ngOnDestroy(): void {

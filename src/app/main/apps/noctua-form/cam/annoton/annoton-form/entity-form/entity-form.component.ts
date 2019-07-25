@@ -30,7 +30,9 @@ import {
   NoctuaAnnotonFormService,
   NoctuaLookupService,
   AnnotonNode,
-  Evidence
+  Evidence,
+  noctuaFormConfig,
+  Entity
 } from 'noctua-form-base';
 
 @Component({
@@ -91,21 +93,15 @@ export class EntityFormComponent implements OnInit, OnDestroy {
   addEvidence() {
     const self = this;
 
-    let evidenceFormGroup: FormArray = this.entityFormGroup.get('evidenceFormArray') as FormArray;
-
-    evidenceFormGroup.push(this.formBuilder.group({
-      evidence: new FormControl(),
-      reference: new FormControl(),
-      with: new FormControl(),
-    }));
+    self.entity.addEvidence();
+    self.noctuaAnnotonFormService.initializeForm();
   }
 
-  removeEvidence(index) {
+  removeEvidence(index: number) {
     const self = this;
 
-    let evidenceFormGroup: FormArray = <FormArray>self.entityFormGroup.get('evidenceFormArray');
-
-    evidenceFormGroup.removeAt(index);
+    self.entity.removeEvidence(index);
+    self.noctuaAnnotonFormService.initializeForm();
   }
 
   toggleIsComplement(entity: AnnotonNode) {
@@ -123,27 +119,20 @@ export class EntityFormComponent implements OnInit, OnDestroy {
         aspect: entity.aspect,
         entity: entity,
         params: {
-          term: entity.term.control.value.id,
-          evidence: entity.evidence[0].evidence.control.value.id
+          term: '',
+          evidence: ''
         }
       }
 
-      console.log(data)
-
       let success = function (selected) {
-        entity.setTerm(selected.term);
-        entity.resetEvidence();
-        for (let i = 0; i < selected.annotations.length; i++) {
-          let evidence = entity.evidence[0];
-          if (i > 0) {
-            evidence = entity.addEvidence()
-          }
+        if (selected.term) {
+          entity.setTerm(selected.term.getTerm());
 
-          evidence.setEvidence(selected.annotations[i].evidence[0].getEvidence());
-          evidence.setReference(selected.annotations[i].evidence[0].getReference());
-          evidence.setWith(selected.annotations[i].evidence[0].getWith());
-          evidence.setAssignedBy(selected.annotations[i].evidence[0].getAssignedBy());
-        };
+          if (selected.evidences && selected.evidences.length > 0) {
+            entity.setEvidence(selected.evidences);
+          }
+          self.noctuaAnnotonFormService.initializeForm();
+        }
       }
       self.noctuaFormDialogService.openSearchDatabaseDialog(data, success)
     } else {
@@ -161,41 +150,48 @@ export class EntityFormComponent implements OnInit, OnDestroy {
 
   }
 
-
-  addNDEvidence(srcEvidence: Evidence) {
-
-  }
-
-  openSelectEvidenceDialog(evidence) {
+  addNDEvidence() {
     const self = this;
 
-    /*
-  
-    let evidences = Util.addUniqueEvidencesFromAnnoton(self.annotonForm.annoton);
-    Util.getUniqueEvidences(self.summaryData.annotons, evidences);
-  
-    let gpNode = self.annotonForm.annotonPresentation.geneProduct;
-  
-    let data = {
-      readonly: false,
-      gpNode: gpNode,
-      aspect: entity.aspect,
-      node: entity,
-      evidences: evidences,
-      params: {
-        term: entity.term.control.value.id,
-      }
+    let evidence = new Evidence();
+    evidence.setEvidence(new Entity(
+      noctuaFormConfig.evidenceAutoPopulate.nd.evidence.id,
+      noctuaFormConfig.evidenceAutoPopulate.nd.evidence.label));
+    evidence.setReference(new Entity(null, noctuaFormConfig.evidenceAutoPopulate.nd.reference));
+    self.entity.setEvidence([evidence]);
+    self.noctuaAnnotonFormService.initializeForm();
+  }
+
+  addRootTerm() {
+    const self = this;
+
+    let term = _.find(noctuaFormConfig.rootNode, (rootNode) => {
+      return rootNode.aspect === self.entity.aspect
+    });
+
+    if (term) {
+      self.entity.setTerm(new Entity(term.id, term.label));
+      self.noctuaAnnotonFormService.initializeForm();
     }
-  
-    let success = function (selected) {
-      entity.addEvidences(selected.evidences, ['assignedBy']);
-    }
-    */
+  }
+
+  clearValues() {
+    const self = this;
+
+    self.entity.clearValues();
+    self.noctuaAnnotonFormService.initializeForm();
+  }
+
+  openSelectEvidenceDialog() {
+    const self = this;
 
     let evidences: Evidence[] = this.camService.getUniqueEvidence();
-    let success = (evidences: Evidence[]) => {
 
-      self.entity.setEvidence(evidences, ['assignedBy']);
+    let success = function (selected) {
+      if (selected.evidences && selected.evidences.length > 0) {
+        self.entity.setEvidence(selected.evidences, ['assignedBy']);
+        self.noctuaAnnotonFormService.initializeForm();
+      }
     }
 
     self.noctuaFormDialogService.openSelectEvidenceDialog(evidences, success);

@@ -82,8 +82,9 @@ export class AnnotonFormComponent implements OnInit, OnDestroy {
       });
 
     this.camService.onCamChanged.subscribe((cam) => {
-      this.cam = cam
+      if (!cam) return;
 
+      this.cam = cam
       this.cam.onGraphChanged.subscribe((annotons) => {
       });
     });
@@ -104,9 +105,9 @@ export class AnnotonFormComponent implements OnInit, OnDestroy {
       //self.annotonForm.linkFormNode(entity, selected.node);
       let annoton = self.noctuaGraphService.adjustAnnoton(self.noctuaAnnotonFormService.annoton)
       self.noctuaGraphService.saveAnnoton(self.cam, annoton).then((data) => {
-        //  localStorage.setItem('barista_token', value);
+        //  localStorage.setItem('barista_token', value);  
+        self.noctuaFormDialogService.openSuccessfulSaveToast('Activity successfully created.', 'OK');
         self.noctuaAnnotonFormService.clearForm();
-        // self.dialogService.openSuccessfulSaveToast();
       });
     }
 
