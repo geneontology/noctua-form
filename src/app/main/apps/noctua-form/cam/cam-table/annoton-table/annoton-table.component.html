@@ -1,16 +1,4 @@
 <div class="w-100-p">
-  <div *ngIf="false" class="noc-annoton-table-header w-100-p" fxLayout="row" fxLayoutAlign="start center">
-    <div fxFlex="120px" class="noc-header-cell"> Relationship </div>
-    <div fxFlex="50px" class="noc-header-cell"> Asp </div>
-    <div fxFlex="150px" class="noc-header-cell"> Term </div>
-    <div fxFlex="120px" class="noc-header-cell"> Relationship Ext </div>
-    <div fxFlex="150px" class="noc-header-cell"> Extension </div>
-    <div fxFlex="150px" class="noc-header-cell"> Evidence </div>
-    <div fxFlex="120px" class="noc-header-cell"> Reference </div>
-    <div fxFlex="120px" class="noc-header-cell"> Evidence </div>
-    <div fxFlex="120px" class="noc-header-cell"> With </div>
-    <div fxFlex="120px" class="noc-header-cell"> Assigned By </div>
-  </div>
   <div class="noc-annoton-table-body w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
     <div class="annoton-table" fxFlex="">
       <mat-table class="w-100-p" #table [dataSource]="grid" matSort [@animateStagger]="{value:'50'}"
@@ -54,13 +42,13 @@
         <ng-container cdkColumnDef="reference">
           <mat-header-cell *cdkHeaderCellDef fxFlex="150px">Reference</mat-header-cell>
           <mat-cell *cdkCellDef="let entity" fxFlex="150px">
-            <a href="{{entity.reference?.url}}" class="" target="_blank">{{entity.reference?.label}}</a>
+            <p class="">{{entity.reference}}</p>
           </mat-cell>
         </ng-container>
         <ng-container cdkColumnDef="with">
           <mat-header-cell *cdkHeaderCellDef fxFlex="120px">With</mat-header-cell>
           <mat-cell *cdkCellDef="let entity" fxFlex="150px">
-            <p class="">{{entity.with?.label}}</p>
+            <p class="">{{entity.with}}</p>
           </mat-cell>
         </ng-container>
         <ng-container cdkColumnDef="assignedBy">
@@ -71,7 +59,7 @@
         </ng-container>
         <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *cdkRowDef="let entity; columns: displayedColumns;" class="" matRipple
-          [ngClass]="{'noc-row-selected': entity.node.individualId === noctuaAnnotonEntityService.termNode?.individualId}"
+          [ngClass]="{'noc-row-selected': entity.node.uuid === noctuaAnnotonEntityService.termNode?.uuid}"
           (click)="selectEntity(entity.node)"></mat-row>
       </mat-table>
       <div *ngIf="grid?.length===0" class="noc-no-info">

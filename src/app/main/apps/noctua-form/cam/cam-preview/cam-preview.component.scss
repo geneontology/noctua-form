@@ -1,0 +1,15 @@
+@import "src/@noctua/scss/noctua";
+@import "src/@noctua.common/scss/noctua.common";
+
+$primary: map-get($theme, primary);
+$accent: map-get($theme, accent);
+
+:host {
+  height: 100%;
+  width: 100%;
+
+  .noc-graph-preview {
+    height: 100%;
+    width: 100%;
+  }
+}

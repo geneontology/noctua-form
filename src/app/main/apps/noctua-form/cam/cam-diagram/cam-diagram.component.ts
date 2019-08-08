@@ -46,7 +46,7 @@ import { Evidence } from 'noctua-form-base';
   templateUrl: './cam-diagram.component.html',
   styleUrls: ['./cam-diagram.component.scss']
 })
-export class CamDiagramComponent implements AfterViewInit, OnInit {
+export class CamDiagramComponent implements OnInit {
   title = 'Angular JsPlumb Integration';
 
   @Input('cam')
@@ -90,38 +90,12 @@ export class CamDiagramComponent implements AfterViewInit, OnInit {
   ngOnInit() {
     this.cam.onGraphChanged.subscribe((annotons) => {
       if (annotons) {
-        let newAnnotons = this.cam.annotonsWithoutLocation();
-        let destAnnotons = this.cam.annotons;
 
-        destAnnotons.forEach((destAnnoton: Annoton) => {
-          let location = JSON.parse(localStorage.getItem(destAnnoton.connectionId));
-          if (location) {
-            destAnnoton.location = location;
-          }
-        });
-        newAnnotons.forEach((destAnnoton: Annoton) => {
-          //     destAnnoton.location = this.noctuaAnnotonFormService.mfLocation;
-
-          if (this.noctuaAnnotonFormService.mfLocation) {
-            localStorage.setItem(destAnnoton.connectionId, JSON.stringify(destAnnoton.location));
-          }
-        });
-        //   let data = this.summaryGridService.getGrid(annotons);
-
-        //    this.camService.addCamChildren(this.cam, data);
-        //   console.log('poo', this.cam)
       }
     });
 
   }
 
-  ngAfterViewInit() {
-    // this.jsPlumbInstance = jsPlumb.getInstance();
-    //this.jsPlumbInstance.draggable('Source');
-
-    console.log("pppp")
-
-  }
 
   addNode(name: string) {
     this.nodes = [name];

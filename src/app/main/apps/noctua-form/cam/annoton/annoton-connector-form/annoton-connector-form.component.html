@@ -1,5 +1,5 @@
-<div *ngIf="selectedPanel.id === panel.selectConnector.id" fxLayout="column" fxLayoutAlign="start stretch"
-  class="noc-drawer w-100-p h-100-p">
+<div *ngIf="noctuaAnnotonConnectorService.selectedPanel.id === noctuaAnnotonConnectorService.panel.selectConnector.id"
+  fxLayout="column" fxLayoutAlign="start stretch" class="noc-drawer w-100-p h-100-p">
   <div class="noc-drawer-header" fxLayout="row" fxLayoutAlign="start center">
     <span class="noc-drawer-header-title">
       Select Downstream Activity</span>
@@ -41,6 +41,16 @@
                   Edit Connection
                 </small>
               </button>
+              <button mat-icon-button class="noc-action-button" fxFlex="40px"
+                [matMenuTriggerFor]="connectionOptionMenu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #connectionOptionMenu="matMenu" class="noc-dropdown-menu">
+                <h6 class="noc-menu-heading"> Danger Zone</h6>
+                <button mat-menu-item class="" (click)="deleteAnnoton(connector.connectorAnnoton)">
+                  Delete Connection
+                </button>
+              </mat-menu>
             </div>
             <div fxLayout="column" fxLayoutAlign="start stretch" class="noc-form-section noc-bt w-100-p">
               <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
@@ -52,9 +62,9 @@
                 <div class="noc-note" fxLayout="row" fxLayoutAlign="start center">
                   <mat-icon class="green-500-fg">check_circle</mat-icon>
                   <span class="noc-description">
-                    {{connector.connectorAnnoton?.rule.suggestedEdge.r1?.label}}
-                    <span *ngIf="connector.connectorAnnoton?.rule.suggestedEdge.r2">
-                      <strong> + </strong> {{connector.connectorAnnoton?.rule.suggestedEdge.r2?.label}}
+                    {{connector.connectorAnnoton?.rule.r1Edge?.label}}
+                    <span *ngIf="connector.connectorAnnoton?.rule.r2Edge">
+                      <strong> + </strong> {{connector.connectorAnnoton?.rule.r2Edge?.label}}
                     </span>
                   </span>
                 </div>
@@ -88,11 +98,14 @@
     <button (click)='close()' type="button" mat-raised-button color="" class="mr-8">Close</button>
   </div>
 </div>
-<form *ngIf="selectedPanel.id === panel.annotonConnectorForm.id" name="connectorFormGroup"
-  [formGroup]="connectorFormGroup" fxLayout="column" fxLayoutAlign="start stretch" class="noc-drawer w-100-p h-100-p">
+<form
+  *ngIf="noctuaAnnotonConnectorService.selectedPanel.id === noctuaAnnotonConnectorService.panel.annotonConnectorForm.id"
+  name="connectorFormGroup" [formGroup]="connectorFormGroup" fxLayout="column" fxLayoutAlign="start stretch"
+  class="noc-drawer w-100-p h-100-p">
   <div class="noc-drawer-header" fxLayout="row" fxLayoutAlign="start center">
-    <button mat-icon-button (click)="selectPanel(panel.selectConnector)" class="noc-rounded-button noc-sm"
-      color="primary">
+    <button mat-icon-button
+      (click)="noctuaAnnotonConnectorService.selectPanel(noctuaAnnotonConnectorService.panel.selectConnector)"
+      class="noc-rounded-button noc-sm" color="primary">
       <mat-icon>arrow_back</mat-icon>
     </button>
     <span class="noc-drawer-header-title">
@@ -258,8 +271,7 @@
                       rows="2"></textarea>
                     <mat-autocomplete #evidenceAuto="matAutocomplete" [displayWith]="evidenceDisplayFn"
                       class="noc-term-autocomplete">
-                      <mat-option
-                        *ngFor="let item of noctuaAnnotonConnectorService.subjectMFNode?.evidence[i]?.evidenceLookup.results"
+                      <mat-option *ngFor="let item of connectorAnnoton?.predicate?.evidence[i]?.evidenceLookup.results"
                         [value]="item">
                         <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
                           <div class="noc-term-label">
@@ -351,9 +363,9 @@
           <div class="noc-note mb-4" fxLayout="row" fxLayoutAlign="start center">
             <mat-icon class="green-500-fg">check_circle</mat-icon>
             <span class="noc-description">
-              {{currentConnectorAnnoton?.rule.suggestedEdge.r1?.label}}
-              <span *ngIf="currentConnectorAnnoton?.rule.suggestedEdge.r2">
-                <strong> + </strong> {{currentConnectorAnnoton?.rule.suggestedEdge.r2?.label}}
+              {{currentConnectorAnnoton?.rule.r1Edge?.label}}
+              <span *ngIf="currentConnectorAnnoton?.rule.r2Edge">
+                <strong> + </strong> {{currentConnectorAnnoton?.rule.r2Edge?.label}}
               </span>
             </span>
           </div>
@@ -368,9 +380,9 @@
         <div class="noc-note mb-4" fxLayout="row" fxLayoutAlign="start center">
           <mat-icon class="green-500-fg">check_circle</mat-icon>
           <span class="noc-description">
-            {{connectorAnnoton?.rule.suggestedEdge.r1?.label}}
-            <span *ngIf="connectorAnnoton?.rule.suggestedEdge.r2">
-              <strong> + </strong> {{connectorAnnoton?.rule.suggestedEdge.r2?.label}}
+            {{connectorAnnoton?.rule.r1Edge?.label}}
+            <span *ngIf="connectorAnnoton?.rule.r2Edge">
+              <strong> + </strong> {{connectorAnnoton?.rule.r2Edge?.label}}
             </span>
           </span>
         </div>

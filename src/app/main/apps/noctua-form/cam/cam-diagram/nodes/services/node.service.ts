@@ -12,7 +12,9 @@ import { Annoton } from 'noctua-form-base';
 import { NodeComponent } from './../node/node.component';
 import { jsPlumb } from 'jsplumb';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class NodeService {
   private rootViewContainer: any;
 

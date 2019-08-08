@@ -192,7 +192,7 @@ export class NoctuaSearchService {
             });
 
             forOwn(response.query_match, (individuals) => {
-                cam.filter.individualIds.push(...individuals.map((iri) => {
+                cam.filter.uuids.push(...individuals.map((iri) => {
                     return self.curieUtil.getCurie(iri);
                 }));
             });

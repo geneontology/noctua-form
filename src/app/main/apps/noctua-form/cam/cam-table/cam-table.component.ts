@@ -28,14 +28,11 @@ import {
   NoctuaAnnotonFormService,
   NoctuaLookupService,
   NoctuaAnnotonEntityService,
-  CamService
-} from 'noctua-form-base';
-
-import {
+  CamService,
   Cam,
-  Annoton,
-  AnnotonNode
+  Annoton
 } from 'noctua-form-base';
+import { NoctuaConfirmDialogService } from '@noctua/components/confirm-dialog/confirm-dialog.service';
 
 @Component({
   selector: 'noc-cam-table',
@@ -46,7 +43,7 @@ import {
 export class CamTableComponent implements OnInit, OnDestroy {
 
   searchCriteria: any = {};
-  searchFormData: any = []
+  searchFormData: any = [];
   searchForm: FormGroup;
   camDisplayType = noctuaFormConfig.camDisplayType.options;
 
@@ -71,6 +68,7 @@ export class CamTableComponent implements OnInit, OnDestroy {
     public camService: CamService,
     public noctuaFormService: NoctuaFormService,
     public noctuaFormConfigService: NoctuaFormConfigService,
+    private confirmDialogService: NoctuaConfirmDialogService,
     private noctuaSearchService: NoctuaSearchService,
     private noctuaAnnotonConnectorService: NoctuaAnnotonConnectorService,
     //  public noctuaFormService: NoctuaFormService,
@@ -90,13 +88,6 @@ export class CamTableComponent implements OnInit, OnDestroy {
   }
 
   addAnnoton() {
-    // let location = {
-    //   x: event.clientX,
-    //   y: event.clientY
-    //  }
-    // console.log(event.clientX + 'px');
-    // console.log(event.clientY + 'px');
-
     this.openForm(location);
   }
 
@@ -134,6 +125,20 @@ export class CamTableComponent implements OnInit, OnDestroy {
     this.camService.annoton = annoton;
     this.noctuaAnnotonFormService.initializeForm(annoton);
     this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.annotonForm)
+  }
+
+  deleteAnnoton(annoton: Annoton) {
+    const self = this;
+
+    const success = () => {
+      this.camService.deleteAnnoton(annoton).then(() => {
+        self.noctuaFormDialogService.openSuccessfulSaveToast('Activity successfully deleted.', 'OK');
+      });
+    };
+
+    this.confirmDialogService.openConfirmDialog('Confirm Delete?',
+      'You are about to delete an activity.',
+      success);
   }
 
   ngOnDestroy(): void {

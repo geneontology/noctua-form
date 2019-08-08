@@ -29,9 +29,24 @@
             {{cam?.state?.label}}
           </button>
         </div>
+        <span fxFlex></span>
+        <div [ngSwitch]="noctuaFormService.selectedMiddlePanel.id">
+          <button mat-button class="noc-bb" *ngSwitchCase="noctuaFormService.panel.camTable.id"
+            (click)="noctuaFormService.openMiddlePanel(noctuaFormService.panel.camPreview)" matTooltip="Search"
+            [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500"
+            [ngClass]="{'noc-active':noctuaFormService.selectedMiddlePanel.id===noctuaFormService.panel.camDiagram.id}">
+            <mat-icon> scatter_plot </mat-icon>
+          </button>
+          <button mat-button class="noc-bb" *ngSwitchCase="noctuaFormService.panel.camPreview.id"
+            (click)="noctuaFormService.openMiddlePanel(noctuaFormService.panel.camTable)" matTooltip="Search"
+            [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500"
+            [ngClass]="{'noc-active':noctuaFormService.selectedMiddlePanel.id===noctuaFormService.panel.camTable.id}">
+            <mat-icon> table_chart </mat-icon>
+          </button>
+        </div>
       </div>
-      <div [ngSwitch]="noctuaFormService.selectedMiddlePanel.id" class="w-100-p" noctuaPerfectScrollbar>
-        <noc-cam-diagram *ngSwitchCase="noctuaFormService.panel.camDiagram.id" [cam]="cam"></noc-cam-diagram>
+      <div [ngSwitch]="noctuaFormService.selectedMiddlePanel.id" class="w-100-p h-100-p" noctuaPerfectScrollbar>
+        <noc-cam-preview *ngSwitchCase="noctuaFormService.panel.camPreview.id" [cam]="cam"></noc-cam-preview>
         <noc-cam-table *ngSwitchCase="noctuaFormService.panel.camTable.id" [cam]="cam"></noc-cam-table>
       </div>
     </mat-drawer-content>

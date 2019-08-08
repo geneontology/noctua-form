@@ -4,7 +4,7 @@
   "license": "",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 4202  --extra-webpack-config webpack.extra.js",
+    "start": "ng serve --port 4203  --extra-webpack-config webpack.extra.js",
     "build": "ng build --index src/inject.tmpl  --base-href  /workbench/noctua-form/ --extra-webpack-config webpack.extra.js",
     "start-hmr": "ng serve --configuration hmr -sm=false",
     "start-hmr-sourcemaps": "ng serve --hmr -e=hmr",
@@ -92,7 +92,7 @@
     "ngx-color-picker": "7.5.0",
     "ngx-contextmenu": "^5.1.1",
     "ngx-cookie-service": "2.1.0",
-    "noctua-form-base": "file:../noctua-form-base/dist/noctua-form-base-0.4.1.tgz",
+    "noctua-form-base": "file:../noctua-form-base/dist/noctua-form-base-0.5.0.tgz",
     "noctua-sparql-query-builder": "file:../noctua-sparql-query-builder/noctua-sparql-query-builder-0.0.41.tgz",
     "node-bourbon": "^4.2.8",
     "perfect-scrollbar": "1.4.0",

@@ -1,0 +1,74 @@
+<div class="w-100-p h-100-p noc-graph-holder">
+  <ngx-graph class="w-100-p h-100-p" [links]="edges" [nodes]="nodes" [curve]="curve" [layout]="layout"
+    [layoutSettings]="layoutSettings" [curve]="curve" [draggingEnabled]="draggingEnabled"
+    [panningEnabled]="panningEnabled" [enableZoom]="zoomEnabled" [zoomSpeed]="zoomSpeed" [minZoomLevel]="minZoomLevel"
+    [maxZoomLevel]="maxZoomLevel" [panOnZoom]="panOnZoom" [autoZoom]="autoZoom" [autoCenter]="autoCenter"
+    [update$]="update$" [center$]="center$" [zoomToFit$]="zoomToFit$">
+
+    <ng-template #defsTemplate>
+      <svg:marker id="arrow" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="4" markerHeight="4" orient="auto">
+        <svg:path d="M0,-5L10,0L0,5" class="arrow-head" />
+      </svg:marker>
+    </ng-template>
+
+    <ng-template #nodeTemplate let-node>
+      <svg:g *ngIf="node.data.annoton" class="node" xmlns="http://www.w3.org/2000/xhtml" width="180" height="80">
+        <svg:foreignObject width="180" height="80">
+          <xhtml:div class="noc-node" xmlns="http://www.w3.org/1999/xhtml" [ngStyle]=getStyles(node)>
+            <div class="noc-node-conntent w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start center">
+              <div fxFlex="100%">
+                <small>{{ node.label}}</small>
+                enabled by:
+                <strong>{{ node.data.annoton.presentation.gpText}}</strong>
+              </div>
+              <div class="noc-node-actions" fxFlex="40px" fxLayout="column" fxLayoutAlign="start center">
+                <div mat-button (click)="openAnnotonForm(node.data.annoton)" matTooltip="Details"
+                  [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
+                  <mat-icon>edit </mat-icon>
+                </div>
+                <div (click)="openAnnotonConnectorList(node.data.annoton)" class="noc-connector" action="p"
+                  matTooltip="connect" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500" fxLayout="column"
+                  fxLayoutAlign="center center">
+                  <mat-icon class="s-24"> arrow_right_alt </mat-icon>
+                </div>
+              </div>
+            </div>
+          </xhtml:div>
+        </svg:foreignObject>
+      </svg:g>
+      <svg:g *ngIf="node.data.connectorAnnoton" class="node" xmlns="http://www.w3.org/2000/xhtml" width="120"
+        height="50">
+        <svg:foreignObject width="120" height="50">
+          <xhtml:div class="noc-node noc-sm" xmlns="http://www.w3.org/1999/xhtml" [ngStyle]=getStyles(node)>
+            <div class="noc-node-conntent w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start center">
+              <div fxFlex="100%">
+                <small>{{ node.label}}</small>
+              </div>
+              <div class="noc-node-actions" fxFlex="40px" fxLayout="column" fxLayoutAlign="start center">
+                <div mat-button (click)="openAnnotonConnector(node.data.connectorAnnoton)" matTooltip="Details"
+                  [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
+                  <mat-icon>edit </mat-icon>
+                </div>
+              </div>
+            </div>
+          </xhtml:div>
+        </svg:foreignObject>
+      </svg:g>
+    </ng-template>
+
+    <ng-template #linkTemplate let-link>
+      <svg:g class="edge" (click)="openAnnotonConnector(link.data.connectorAnnoton)">
+        <svg:path class="line" stroke-width="2" marker-end="url(#arrow)">
+        </svg:path>
+        <svg:text class="edge-label" text-anchor="middle">
+          <textPath class="text-path" [attr.href]="'#' + link.id" [style.dominant-baseline]="link.dominantBaseline"
+            startOffset="50%"></textPath>
+        </svg:text>
+      </svg:g>
+      <svg:g class="linkMidpoint" *ngIf="link.midPoint"
+        [attr.transform]="'translate(' + (link.midPoint.x) + ',' + (link.midPoint.y) + ')'">
+        <svg:text alignment-baseline="central">{{ link.label }}</svg:text>
+      </svg:g>
+    </ng-template>
+  </ngx-graph>
+</div>

@@ -11,12 +11,12 @@
         [ngClass]="{'noc-annoton-selected': annoton.id=== camService.annoton?.id}">
         <div class="noc-annoton-table-heading" fxLayout="row" fxLayoutAlign="start center">
           <div fxFlex="50px" (click)="$event.stopPropagation()">
-            <button mat-icon-button (click)="toggleExpand(annoton)" class="">
-              <mat-icon *ngIf="!annoton.expanded" class="s-32">
-                arrow_right
+            <button mat-icon-button (click)="toggleExpand(annoton)" color="primary" class="">
+              <mat-icon *ngIf="!annoton.expanded" class="">
+                keyboard_arrow_down
               </mat-icon>
-              <mat-icon *ngIf="annoton.expanded" class="s-12 mat-icon-rtl-mirror">
-                signal_cellular_4_bar
+              <mat-icon *ngIf="annoton.expanded" class="">
+                keyboard_arrow_up
               </mat-icon>
             </button>
           </div>
@@ -26,25 +26,26 @@
             </div>
           </div>
           <span fxFlex=""></span>
-          <div class="" fxFlex="150px" fxLayout="row" fxLayoutAlign="end center">
-            <!--
-        <button mat-icon-button (click)="openAnnotonForm(annoton)" color="primary" class="">
-          <mat-icon class=""> edit </mat-icon>
-        </button>
-        -->
+          <div class="" fxFlex="200px" fxLayout="row" fxLayoutAlign="end center">
+            <button mat-stroked-button (click)="openAnnotonForm(annoton)" color="primary"
+              class="noc-rounded-button noc-sm mr-8">
+              <small>Edit</small>
+            </button>
             <button mat-stroked-button (click)="openAnnotonConnector(annoton)" color="primary"
-              class="noc-rounded-button noc-sm" matTooltip="connect activity causal relation"
+              class="noc-rounded-button noc-sm mr-8" matTooltip="connect activity causal relation"
               [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
               <small>Connect</small>
             </button>
-            <button mat-icon-button (click)="toggleExpand(annoton)" color="primary" class="">
-              <mat-icon *ngIf="!annoton.expanded" class="">
-                keyboard_arrow_down
-              </mat-icon>
-              <mat-icon *ngIf="annoton.expanded" class="">
-                keyboard_arrow_up
-              </mat-icon>
+            <button mat-icon-button class="noc-rounded-button noc-sm" fxFlex="40px" color="primary"
+              [matMenuTriggerFor]="connectionOptionMenu">
+              <mat-icon>more_vert</mat-icon>
             </button>
+            <mat-menu #connectionOptionMenu="matMenu" class="noc-dropdown-menu">
+              <h6 class="noc-menu-heading"> Danger Zone</h6>
+              <button mat-menu-item class="" (click)="deleteAnnoton(annoton)">
+                Delete Activity
+              </button>
+            </mat-menu>
           </div>
         </div>
         <noc-annoton-table [cam]="cam" [annoton]="annoton" *ngIf="annoton.expanded" class="noc-cam-table-body"

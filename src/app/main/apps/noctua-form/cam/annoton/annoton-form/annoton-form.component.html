@@ -10,6 +10,21 @@
      </button>
    </div>
    <div class="noc-drawer-body noc-annoton-form" noctuaPerfectScrollbar>
+     <div *ngIf="state === annotonState.editing" class="noc-section-body w-100-p p-16" fxLayout="column"
+       fxLayoutAlign="start center">
+       <div fxLayout="row" fxLayoutAlign="center center " class="noc-summary-row w-100-p">
+         <div class="noc-annoton-box" fxLayout="column" fxLayoutAlign="center center">
+           <div class="noc-annoton-box-header">
+             Current Activity
+           </div>
+           <div class="p-8 w-100-p" fxFlex="100%">
+             <small>{{ currentAnnoton?.presentation.mfText}}</small>
+             enabled by:
+             <strong>{{ currentAnnoton?.presentation.gpText}}</strong>
+           </div>
+         </div>
+       </div>
+     </div>
      <div class="noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
        <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
          <div class="noc-section-heading">
@@ -81,6 +96,10 @@
          </div>
        </div>
      </div>
+     <noc-graph-preview *ngIf="noctuaAnnotonFormService.annoton"
+       [nodes]="noctuaAnnotonFormService.annoton?.graphPreview.nodes"
+       [edges]="noctuaAnnotonFormService.annoton?.graphPreview.edges" class="noc-graph-preview"></noc-graph-preview>
+
    </div>
    <div fxLayout="row" fxLayoutAlign="start center" class="noc-drawer-footer noc-submit-row">
      <button *ngIf="noctuaAnnotonFormService.annoton.submitErrors.length>0" (click)='checkErrors()' mat-button
@@ -88,6 +107,7 @@
        Why is the "Save" button disabled?
      </button>
      <span fxFlex></span>
+     <button (click)='preview()' type="button" mat-raised-button color="" class="mr-8">Preview</button>
      <button (click)='clear()' type="button" mat-raised-button color="" class="mr-8">Clear</button>
      <button [disabled]="noctuaAnnotonFormService.annoton.submitErrors.length>0" (click)="save()" type="submit" class=""
        mat-raised-button color="primary">Save</button>

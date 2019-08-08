@@ -97,6 +97,7 @@ export class AnnotonTableComponent implements OnInit, OnDestroy {
 
   loadCam() {
     this.grid = this.annoton.grid;
+    console.log(this.grid)
   }
 
   selectEntity(entity: AnnotonNode) {

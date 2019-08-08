@@ -102,12 +102,12 @@ export class NoctuaToolbarComponent implements OnInit {
 
     openCamForm() {
         //  this.noctuaFormService.initializeForm();
-        this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.camForm)
+        this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.camForm);
     }
 
     openAnnotonForm(location?) {
-        this.noctuaAnnotonFormService.initializeForm();
-        this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.annotonForm)
+        this.camService.initializeForm(this.cam);
+        this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.annotonForm);
     }
 
     search(value): void {

@@ -20,9 +20,12 @@ import {
 } from 'noctua-form-base';
 
 import 'rxjs/add/operator/map';
+import { NoctuaConfirmDialogComponent } from '@noctua/components/confirm-dialog/confirm-dialog.component';
 
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class NoctuaFormDialogService {
 
     dialogRef: any;
@@ -37,6 +40,22 @@ export class NoctuaFormDialogService {
             duration: 10000,
             verticalPosition: 'top'
         });
+    }
+
+    openConfirmDialog(searchCriteria, success): void {
+        this.dialogRef = this._matDialog.open(NoctuaConfirmDialogComponent, {
+            panelClass: 'noc-search-database-dialog',
+            data: {
+                searchCriteria: searchCriteria
+            },
+            width: '600px',
+        });
+        this.dialogRef.afterClosed()
+            .subscribe(response => {
+                if (response) {
+                    success(response);
+                }
+            });
     }
 
     openCamRowEdit(cam): void {
@@ -90,6 +109,7 @@ export class NoctuaFormDialogService {
 
             });
     }
+
     openLinkToExistingDialogComponent(cam): void {
         this.dialogRef = this._matDialog.open(LinkToExistingDialogComponent, {
             panelClass: 'link-to-existing-dialog',
@@ -102,6 +122,7 @@ export class NoctuaFormDialogService {
 
             });
     }
+
     openSelectEvidenceDialog(evidence: Evidence[], success): void {
         this.dialogRef = this._matDialog.open(SelectEvidenceDialogComponent, {
             panelClass: 'noc-select-evidence-dialog',

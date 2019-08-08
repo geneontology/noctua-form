@@ -35,25 +35,25 @@
           <ng-container cdkColumnDef="evidence">
             <mat-header-cell *cdkHeaderCellDef fxFlex="40%">Evidence</mat-header-cell>
             <mat-cell *cdkCellDef="let evidence" fxFlex="40%">
-              <p class="">{{evidence.getEvidence()?.label}}</p>
+              <p class="">{{evidence.evidence?.label}}</p>
             </mat-cell>
           </ng-container>
           <ng-container cdkColumnDef="reference">
             <mat-header-cell *cdkHeaderCellDef fxFlex="20%">Reference</mat-header-cell>
             <mat-cell *cdkCellDef="let evidence" fxFlex="20%">
-              <p class="">{{evidence.getReference()}}</p>
+              <p class="">{{evidence.reference}}</p>
             </mat-cell>
           </ng-container>
           <ng-container cdkColumnDef="with">
             <mat-header-cell *cdkHeaderCellDef fxFlex="20%">With</mat-header-cell>
             <mat-cell *cdkCellDef="let evidence" fxFlex="20%">
-              <p class="">{{evidence.getWith()}}</p>
+              <p class="">{{evidence.with}}</p>
             </mat-cell>
           </ng-container>
           <ng-container cdkColumnDef="assignedBy">
             <mat-header-cell *cdkHeaderCellDef fxFlex="">Assigned By</mat-header-cell>
             <mat-cell *cdkCellDef="let evidence" fxFlex="">
-              <p class="">{{evidence.getAssignedBy()}}</p>
+              <p class="">{{evidence.assignedBy}}</p>
             </mat-cell>
           </ng-container>
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

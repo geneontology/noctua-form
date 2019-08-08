@@ -34,7 +34,6 @@ import {
   AnnotonNode,
   Evidence,
   NoctuaAnnotonConnectorService,
-
   NoctuaGraphService,
   NoctuaAnnotonFormService,
   NoctuaFormConfigService,
@@ -44,6 +43,7 @@ import {
   Entity
 } from 'noctua-form-base';
 import { NoctuaFormDialogService } from '../../../services/dialog.service';
+import { NoctuaConfirmDialogService } from '@noctua/components/confirm-dialog/confirm-dialog.service';
 
 @Component({
   selector: 'noc-annoton-connector',
@@ -57,14 +57,8 @@ export class AnnotonConnectorFormComponent implements OnInit, OnDestroy {
 
   connectorType = ConnectorType;
   connectorState = ConnectorState;
-  panel = {
-    selectConnector: {
-      id: 1
-    }, annotonConnectorForm: {
-      id: 2
-    },
-  };
-  selectedPanel: any;
+
+
   annoton: Annoton;
   currentConnectorAnnoton: ConnectorAnnoton;
   connectorAnnoton: ConnectorAnnoton;
@@ -76,15 +70,13 @@ export class AnnotonConnectorFormComponent implements OnInit, OnDestroy {
 
   searchCriteria: any = {};
   evidenceFormArray: FormArray;
-  // annoton: Annoton = new Annoton();
-
-  selectedCausalEffect;
 
   private unsubscribeAll: Subject<any>;
 
 
   constructor(private route: ActivatedRoute,
     private camService: CamService,
+    private confirmDialogService: NoctuaConfirmDialogService,
     private formBuilder: FormBuilder,
     public noctuaAnnotonConnectorService: NoctuaAnnotonConnectorService,
     private noctuaSearchService: NoctuaSearchService,
@@ -104,72 +96,99 @@ export class AnnotonConnectorFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.connectorFormSub = this.noctuaAnnotonConnectorService.connectorFormGroup$
       .subscribe(connectorFormGroup => {
-        if (!connectorFormGroup) return;
+        if (!connectorFormGroup) {
+          return;
+        }
         this.connectorFormGroup = connectorFormGroup;
         this.currentConnectorAnnoton = this.noctuaAnnotonConnectorService.currentConnectorAnnoton;
         this.connectorAnnoton = this.noctuaAnnotonConnectorService.connectorAnnoton;
-
-        this.selectedCausalEffect = this.connectorFormGroup.get('causalEffect').value
-
-        console.log(this.selectedCausalEffect)
       });
 
     this.camService.onCamChanged.subscribe((cam) => {
-      if (!cam) return;
+      if (!cam) {
+        return;
+      }
 
-      this.cam = cam
+      this.cam = cam;
     });
 
     this.noctuaAnnotonConnectorService.onAnnotonChanged.subscribe((annoton) => {
       this.annoton = annoton;
-      this.selectPanel(this.panel.selectConnector);
+      this.noctuaAnnotonConnectorService.selectPanel(this.noctuaAnnotonConnectorService.panel.selectConnector);
     });
 
-    this.selectPanel(this.panel.selectConnector);
+    this.noctuaAnnotonConnectorService.selectPanel(this.noctuaAnnotonConnectorService.panel.selectConnector);
   }
 
-  selectPanel(panel) {
-    this.selectedPanel = panel;
-  }
+
 
   openAnnotonConnector(connector: Annoton) {
-    this.noctuaAnnotonConnectorService.initializeForm(this.noctuaAnnotonConnectorService.annoton.connectionId, connector.connectionId);
-    this.selectPanel(this.panel.annotonConnectorForm);
+    this.noctuaAnnotonConnectorService.initializeForm(this.noctuaAnnotonConnectorService.annoton.id, connector.id);
+    this.noctuaAnnotonConnectorService.selectPanel(this.noctuaAnnotonConnectorService.panel.annotonConnectorForm);
   }
-
 
   save() {
     const self = this;
-    this.noctuaAnnotonConnectorService.save().then(() => {
-      self.selectPanel(self.panel.selectConnector);
-      self.noctuaAnnotonConnectorService.getConnections();
+    this.noctuaAnnotonConnectorService.saveAnnoton().then(() => {
+      self.noctuaAnnotonConnectorService.selectPanel(self.noctuaAnnotonConnectorService.panel.selectConnector);
+     self.noctuaAnnotonConnectorService.getConnections();
       self.noctuaFormDialogService.openSuccessfulSaveToast('Causal relation successfully created.', 'OK');
     });
+  }
+
+  editAnnoton() {
+    const self = this;
+    const success = () => {
+      self.noctuaAnnotonConnectorService.saveAnnoton().then(() => {
+        self.noctuaAnnotonConnectorService.selectPanel(self.noctuaAnnotonConnectorService.panel.selectConnector);
+        self.noctuaAnnotonConnectorService.getConnections();
+        self.noctuaFormDialogService.openSuccessfulSaveToast('Causal relation successfully updated.', 'OK');
+      });
+    };
+
+    this.confirmDialogService.openConfirmDialog('Confirm Delete?',
+      'You are about to remove the causal relation',
+      success);
+  }
+
+  deleteAnnoton(connectorAnnoton: ConnectorAnnoton) {
+    const self = this;
+    const success = () => {
+      self.noctuaAnnotonConnectorService.deleteAnnoton(connectorAnnoton).then(() => {
+        self.noctuaAnnotonConnectorService.selectPanel(self.noctuaAnnotonConnectorService.panel.selectConnector);
+        self.noctuaAnnotonConnectorService.getConnections();
+        self.noctuaFormDialogService.openSuccessfulSaveToast('Causal relation successfully deleted.', 'OK');
+      });
+    };
+
+    this.confirmDialogService.openConfirmDialog('Confirm Delete?',
+      'You are about to remove the causal relation',
+      success);
   }
 
   addEvidence() {
     const self = this;
 
-    self.connectorAnnoton.upstreamNode.addEvidence();
+    self.connectorAnnoton.upstreamNode.predicate.addEvidence();
     this.noctuaAnnotonConnectorService.updateEvidence(self.connectorAnnoton.upstreamNode);
   }
 
   removeEvidence(index: number) {
     const self = this;
 
-    self.connectorAnnoton.upstreamNode.removeEvidence(index);
+    self.connectorAnnoton.upstreamNode.predicate.removeEvidence(index);
     this.noctuaAnnotonConnectorService.updateEvidence(self.connectorAnnoton.upstreamNode);
   }
 
   addNDEvidence() {
     const self = this;
 
-    let evidence = new Evidence();
+    const evidence = new Evidence();
     evidence.setEvidence(new Entity(
       noctuaFormConfig.evidenceAutoPopulate.nd.evidence.id,
       noctuaFormConfig.evidenceAutoPopulate.nd.evidence.label));
-    evidence.setReference(new Entity(null, noctuaFormConfig.evidenceAutoPopulate.nd.reference));
-    self.connectorAnnoton.upstreamNode.setEvidence([evidence]);
+    evidence.reference = noctuaFormConfig.evidenceAutoPopulate.nd.reference;
+    self.connectorAnnoton.upstreamNode.predicate.setEvidence([evidence]);
     this.noctuaAnnotonConnectorService.updateEvidence(self.connectorAnnoton.upstreamNode);
   }
 
@@ -183,14 +202,14 @@ export class AnnotonConnectorFormComponent implements OnInit, OnDestroy {
   openSelectEvidenceDialog() {
     const self = this;
 
-    let evidences: Evidence[] = this.camService.getUniqueEvidence();
+    const evidences: Evidence[] = this.camService.getUniqueEvidence();
 
-    let success = function (selected) {
+    const success = (selected) => {
       if (selected.evidences && selected.evidences.length > 0) {
-        self.connectorAnnoton.upstreamNode.setEvidence(selected.evidences, ['assignedBy']);
+        self.connectorAnnoton.upstreamNode.predicate.setEvidence(selected.evidences, ['assignedBy']);
         this.noctuaAnnotonConnectorService.updateEvidence(self.connectorAnnoton.upstreamNode);
       }
-    }
+    };
 
     self.noctuaFormDialogService.openSelectEvidenceDialog(evidences, success);
   }
@@ -200,7 +219,7 @@ export class AnnotonConnectorFormComponent implements OnInit, OnDestroy {
   }
 
   close() {
-    this.panelDrawer.close()
+    this.panelDrawer.close();
   }
 
   termDisplayFn(term): string | undefined {

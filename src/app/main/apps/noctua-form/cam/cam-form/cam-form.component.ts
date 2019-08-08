@@ -63,14 +63,18 @@ export class CamFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.camFormSub = this.camService.camFormGroup$
       .subscribe(camFormGroup => {
-        if (!camFormGroup) return;
+        if (!camFormGroup) {
+          return;
+        }
         this.camFormGroup = camFormGroup;
 
         console.log(this.camFormGroup)
       });
 
     this.camService.onCamChanged.subscribe((cam) => {
-      if (!cam) return;
+      if (!cam) {
+        return;
+      }
 
       this.cam = cam;
       this.sparqlService.getModelTerms(this.cam.id)
@@ -105,12 +109,12 @@ export class CamFormComponent implements OnInit, OnDestroy {
 
     let value = this.camFormGroup.value;
 
-    console.log(value)
+    console.log(value);
 
     let annotations = {
       title: value.title,
       state: value.state.name
-    }
+    };
 
     this.noctuaGraphService.saveModelGroup(this.cam, value.group.id);
     this.noctuaGraphService.saveCamAnnotations(this.cam, annotations);
@@ -121,7 +125,7 @@ export class CamFormComponent implements OnInit, OnDestroy {
   }
 
   close() {
-    this.panelDrawer.close()
+    this.panelDrawer.close();
   }
 
   ngOnDestroy(): void {

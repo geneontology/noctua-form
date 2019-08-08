@@ -35,10 +35,12 @@ import { NodeService } from './cam/cam-diagram/nodes/services/node.service';
 import { AnnotonConnectorFormComponent } from './cam/annoton/annoton-connector-form/annoton-connector-form.component';
 import { AnnotonEntityTableComponent } from './cam/cam-table/annoton-entity-table/annoton-entity-table.component';
 import { AnnotonTableComponent } from './cam/cam-table/annoton-table/annoton-table.component';
-import { TripleFormComponent } from './cam/annoton/triple-form/triple-form.component';
 import { TripleTableComponent } from './cam/cam-table/triple-table/triple-table.component';
 import { EvidenceTableComponent } from './cam/cam-table/triple-table/evidence-table/evidence-table.component';
-import { GraphPreviewComponent } from './cam/cam-diagram/graph-preview/graph-preview.component';
+import { GraphPreviewComponent } from './cam/cam-preview/graph-preview/graph-preview.component';
+import { NoctuaConfirmDialogModule } from '@noctua/components';
+import { CamPreviewComponent } from './cam/cam-preview/cam-preview.component';
+import { CamGraphComponent } from './cam/cam-preview/cam-graph/cam-graph.component';
 
 const routes = [
   {
@@ -54,6 +56,7 @@ const routes = [
     // NoctuaModule.forRoot(noctuaConfig),
     RouterModule.forChild(routes),
     ContextMenuModule.forRoot(),
+    NoctuaConfirmDialogModule,
   ],
   exports: [
     AnnotonFormComponent,
@@ -76,7 +79,7 @@ const routes = [
     AnnotonEntityTableComponent,
     AnnotonTableComponent,
     TripleTableComponent,
-    TripleFormComponent
+    CamPreviewComponent
   ],
   providers: [
     NoctuaFormDialogService,
@@ -107,8 +110,9 @@ const routes = [
     TripleTableComponent,
     AnnotonTableComponent,
     EvidenceTableComponent,
-    TripleFormComponent,
-      GraphPreviewComponent
+    GraphPreviewComponent,
+    CamPreviewComponent,
+    CamGraphComponent
   ],
   entryComponents: [
     CamRowEditDialogComponent,
@@ -119,8 +123,8 @@ const routes = [
     LinkToExistingDialogComponent,
     SelectEvidenceDialogComponent,
     SearchDatabaseDialogComponent,
-    NodeComponent,
-    NodesContainerComponent
+    //  NodeComponent,
+    // NodesContainerComponent
   ]
 })
 

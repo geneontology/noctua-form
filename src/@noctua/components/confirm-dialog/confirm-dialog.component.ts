@@ -7,8 +7,17 @@ import { MatDialogRef } from '@angular/material';
     styleUrls: ['./confirm-dialog.component.scss']
 })
 export class NoctuaConfirmDialogComponent {
-    public confirmMessage: string;
+    public title: string;
+    public message: string;
 
     constructor(public dialogRef: MatDialogRef<NoctuaConfirmDialogComponent>) {
+    }
+
+    confirm() {
+        this.dialogRef.close(true);
+    }
+
+    cancel() {
+        this.dialogRef.close(false);
     }
 }

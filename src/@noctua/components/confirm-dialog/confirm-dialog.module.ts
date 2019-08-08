@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
-import { MatButtonModule, MatDialogModule } from '@angular/material';
+import { MatButtonModule, MatDialogModule, MatIconModule } from '@angular/material';
 import { NoctuaConfirmDialogComponent } from './confirm-dialog.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
     declarations: [
@@ -8,7 +9,9 @@ import { NoctuaConfirmDialogComponent } from './confirm-dialog.component';
     ],
     imports: [
         MatDialogModule,
-        MatButtonModule
+        MatButtonModule,
+        MatIconModule,
+        FlexLayoutModule
     ],
     entryComponents: [
         NoctuaConfirmDialogComponent

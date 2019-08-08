@@ -1,14 +1,18 @@
-<h1 matDialogTitle>
-  Confirm
-</h1>
-<div mat-dialog-content>
-  {{confirmMessage}}
-</div>
-<div mat-dialog-actions class="pt-24">
-  <button mat-raised-button class="mat-primary mr-16" (click)="dialogRef.close(true)">
-    Confirm
-  </button>
-  <button mat-button (click)="dialogRef.close(false)">
-    Cancel
-  </button>
+<div class="dialog-content-wrapper noc-dialog" fxLayout="column" fxLayoutAlign="start stretch">
+  <div class="m-0 noc-dialog-header" fxLayout="row" fxLayoutAlign="start center">
+    <span class="noc-dialog-header-title">
+      {{title}}</span>
+    <span fxFlex></span>
+    <button mat-stroked-button (click)="cancel()" class="noc-rounded-button noc-sm" aria-label="Close dialog">
+      <mat-icon>close</mat-icon> Close
+    </button>
+  </div>
+  <div mat-dialog-content class="noc-dialog-body">
+    {{message}}
+  </div>
+  <div mat-dialog-actions class="m-0 p-16 noc-dialog-footer" fxLayout="row" fxLayoutAlign="space-between center">
+    <span fxFlex></span>
+    <button (click)='cancel()' type="button" mat-raised-button color="" class="mr-8">Cancel</button>
+    <button (click)="confirm()" type="button" mat-raised-button color="primary">Confirm</button>
+  </div>
 </div>

@@ -54,7 +54,7 @@
         <ng-container cdkColumnDef="reference">
           <mat-header-cell *cdkHeaderCellDef fxFlex="150px">Reference</mat-header-cell>
           <mat-cell *cdkCellDef="let entity" fxFlex="150px">
-            <a href="{{entity.reference?.url}}" class="" target="_blank">{{entity.reference?.label}}</a>
+            <p>{{entity.reference}}</p>
           </mat-cell>
         </ng-container>
         <ng-container cdkColumnDef="with">
@@ -71,7 +71,7 @@
         </ng-container>
         <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *cdkRowDef="let entity; columns: displayedColumns;" class="" matRipple
-          [ngClass]="{'noc-row-selected': entity.node.individualId === noctuaAnnotonEntityService.termNode?.individualId}"
+          [ngClass]="{'noc-row-selected': entity.node.uuid === noctuaAnnotonEntityService.termNode?.uuid}"
           (click)="selectEntity(entity.annoton, entity.node)"></mat-row>
       </mat-table>
       <div *ngIf="grid?.length===0" class="noc-no-info">

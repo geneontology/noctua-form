@@ -30,6 +30,7 @@ import {
   NoctuaAnnotonFormService,
   NoctuaFormConfigService,
   NoctuaLookupService,
+  AnnotonState,
 } from 'noctua-form-base';
 
 @Component({
@@ -42,16 +43,19 @@ export class AnnotonFormComponent implements OnInit, OnDestroy {
 
   @Input('panelDrawer')
   panelDrawer: MatDrawer;
+
+  annotonState = AnnotonState;
   cam: Cam;
   annotonFormGroup: FormGroup;
   annotonFormSub: Subscription;
 
   searchCriteria: any = {};
   annotonFormPresentation: any;
-  //annotonForm: FormGroup;
   evidenceFormArray: FormArray;
-  annotonFormData: any = []
-  // annoton: Annoton = new Annoton();
+  annotonFormData: any = [];
+  annoton: Annoton;
+  currentAnnoton: Annoton;
+  state: AnnotonState;
 
   private unsubscribeAll: Subject<any>;
 
@@ -77,54 +81,43 @@ export class AnnotonFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.annotonFormSub = this.noctuaAnnotonFormService.annotonFormGroup$
       .subscribe(annotonFormGroup => {
-        if (!annotonFormGroup) return;
+        if (!annotonFormGroup) {
+          return;
+        }
+
         this.annotonFormGroup = annotonFormGroup;
+        this.currentAnnoton = this.noctuaAnnotonFormService.currentAnnoton;
+        this.annoton = this.noctuaAnnotonFormService.annoton;
+        this.state = this.noctuaAnnotonFormService.state;
       });
 
     this.camService.onCamChanged.subscribe((cam) => {
-      if (!cam) return;
+      if (!cam) {
+        return;
+      }
 
-      this.cam = cam
+      this.cam = cam;
       this.cam.onGraphChanged.subscribe((annotons) => {
       });
     });
   }
 
   checkErrors() {
-    let errors = this.noctuaAnnotonFormService.annoton.submitErrors;
+    const errors = this.noctuaAnnotonFormService.annoton.submitErrors;
     this.noctuaFormDialogService.openAnnotonErrorsDialog(errors)
   }
 
   save() {
     const self = this;
-    let infos;
 
-    self.noctuaAnnotonFormService.annotonFormToAnnoton();
+    self.noctuaAnnotonFormService.saveAnnoton().then((data) => {
+      self.noctuaFormDialogService.openSuccessfulSaveToast('Activity successfully created.', 'OK');
+      self.noctuaAnnotonFormService.clearForm();
+    });
+  }
 
-    let saveAnnoton = function () {
-      //self.annotonForm.linkFormNode(entity, selected.node);
-      let annoton = self.noctuaGraphService.adjustAnnoton(self.noctuaAnnotonFormService.annoton)
-      self.noctuaGraphService.saveAnnoton(self.cam, annoton).then((data) => {
-        //  localStorage.setItem('barista_token', value);  
-        self.noctuaFormDialogService.openSuccessfulSaveToast('Activity successfully created.', 'OK');
-        self.noctuaAnnotonFormService.clearForm();
-      });
-    }
-
-    infos = self.noctuaGraphService.annotonAdjustments(self.noctuaAnnotonFormService.annoton);
-    // self.graph.createSave(self.annotonForm.annoton);
-    //temporarily off
-    if (infos.length > 0) {
-      let data = {
-        annoton: self.noctuaAnnotonFormService.annoton,
-        infos: infos
-      };
-
-      // self.dialogService.openBeforeSaveDialog(null, data, saveAnnoton);
-      /// saveAnnoton();
-    } else {
-      saveAnnoton();
-    }
+  preview() {
+    this.noctuaAnnotonFormService.annoton.setPreview();
   }
 
   clear() {

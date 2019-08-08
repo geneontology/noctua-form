@@ -90,7 +90,7 @@
         </ng-container>
         <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *cdkRowDef="let entity; columns: displayedColumns;" class="" matRipple
-          [ngClass]="{'noc-row-selected': entity.node?.individualId === noctuaAnnotonEntityService.termNode?.individualId}"
+          [ngClass]="{'noc-row-selected': entity.node?.uuid === noctuaAnnotonEntityService.termNode?.uuid}"
           (click)="selectEntity(entity.annoton, entity.node)"></mat-row>
       </mat-table>
       <div *ngIf="grid?.length===0" class="noc-no-info">

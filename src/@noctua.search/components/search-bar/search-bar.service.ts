@@ -129,7 +129,7 @@ export class SearchBarService {
                 originX: 'start',
                 originY: 'bottom'
             }]);
-        //..withOffsetY(1)
+        //.withOffsetY(1)
         //.withDirection('ltr')
         //.withFallbackPosition(origin.bottomRight, overlay.topRight)
         //.withFallbackPosition(origin.topLeft, overlay.bottomLeft)

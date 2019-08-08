@@ -23,10 +23,12 @@ export class NoctuaFormService {
       id: 4
     }, camDiagram: {
       id: 5
-    }, camTable: {
+    }, camPreview: {
       id: 6
-    }, connectorForm: {
+    }, camTable: {
       id: 7
+    }, connectorForm: {
+      id: 8
     }
   }
 
@@ -81,7 +83,7 @@ export class NoctuaFormService {
   }
 
   public openMiddlePanel(panel) {
-    this.selectMiddlePanel(panel)
+    this.selectMiddlePanel(panel);
   }
 
   public openRightDrawer(panel) {
