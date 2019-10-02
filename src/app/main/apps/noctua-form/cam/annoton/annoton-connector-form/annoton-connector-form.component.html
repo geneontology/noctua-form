@@ -123,7 +123,7 @@
           <div fxLayout="row" fxLayoutAlign="space-between center " class="noc-summary-row w-100-p">
             <div class="noc-annoton-box" fxLayout="column" fxLayoutAlign="center center">
               <div class="noc-annoton-box-header">
-                Downstream Activity
+                Upstream Activity
               </div>
               <div class="p-8 w-100-p" fxFlex="100%">
                 <small>{{ connectorAnnoton?.upstreamAnnoton?.presentation.mfText}}</small>
@@ -136,7 +136,7 @@
             </div>
             <div class="noc-annoton-box" fxLayout="column" fxLayoutAlign="center center">
               <div class="noc-annoton-box-header">
-                Upstream Activity
+                Downstream Activity
               </div>
               <div class="p-8 w-100-p" fxFlex="100%">
                 <small>{{ connectorAnnoton?.downstreamAnnoton?.presentation.mfText}}</small>
@@ -232,7 +232,7 @@
                 </mat-select>
               </mat-form-field>
               <mat-form-field appearance="outline" class="noc-sm">
-                <mat-label><strong>(Optional)</strong> Has Input (Gene Product/Chemical)</mat-label>
+                <mat-label><strong>(Optional)</strong> Has Input (GP/Chemical)</mat-label>
                 <textarea type="text" matInput formControlName="hasInput" [matAutocomplete]="hasInputAuto"
                   rows="2"></textarea>
                 <mat-autocomplete #hasInputAuto="matAutocomplete" [displayWith]="termDisplayFn"
@@ -271,7 +271,7 @@
                       rows="2"></textarea>
                     <mat-autocomplete #evidenceAuto="matAutocomplete" [displayWith]="evidenceDisplayFn"
                       class="noc-term-autocomplete">
-                      <mat-option *ngFor="let item of connectorAnnoton?.predicate?.evidence[i]?.evidenceLookup.results"
+                      <mat-option *ngFor="let item of connectorAnnoton?.predicate?.evidenceLookup.results"
                         [value]="item">
                         <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
                           <div class="noc-term-label">
@@ -344,7 +344,7 @@
         </div>
         <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
           <div class="noc-note" [ngClass]="{'noc-note-disabled':!note.condition}"
-            *ngFor="let note of currentConnectorAnnoton?.rule.notes" fxLayout="row" fxLayoutAlign="start center">
+            *ngFor="let note of connectorAnnoton?.rule.notes" fxLayout="row" fxLayoutAlign="start center">
             <mat-icon *ngIf="note.condition" class="green-500-fg">check_circle</mat-icon>
             <mat-icon *ngIf="!note.condition">check_circle_outline</mat-icon>
             <span class="noc-description">

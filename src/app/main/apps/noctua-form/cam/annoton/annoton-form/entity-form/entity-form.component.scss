@@ -4,7 +4,8 @@
 
 :host {
   width: 100%; // display: block;
-  background-color: white;
+
+
 
   .noc-tree-input {
     $border-color: rgba(#000, 0.20);
@@ -31,6 +32,11 @@
     }
 
 
+  }
+
+  .noc-evidence-db-trigger {
+    @include deep-height(20px);
+    @include deep-width(20px);
   }
 
   textarea {

@@ -10,6 +10,13 @@ $accent: map-get($theme, accent);
   background-color: white;
   @include mat-elevation(4);
 
+  .noc-group-side-heading {
+    @include deep-width(50px);
+    background-color: #DDD;
+    font-size: 10px;
+    text-align: center;
+  }
+
   .noc-header {
     @include deep-height(40px);
     background-color: #EEE;
@@ -65,9 +72,21 @@ $accent: map-get($theme, accent);
 
     .noc-term-group {
       // padding-bottom: 20px;
-      margin-bottom: 3px;
       //  border-bottom: #CCC solid 1px;
       background-color: #FFF;
+      border-left: #FFF solid 5px;
+
+      &.mf {
+        border-left-color: rgba(#cdf1d2, 0.8);
+      }
+
+      &.bp {
+        border-left-color: rgba(#f8c6e5, 0.8);
+      }
+
+      &.cc {
+        border-left-color: rgba(#d3b5f5, 0.8);
+      }
 
       .noc-group-heading {
         margin-bottom: 20px;

@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatPaginator, MatSort, MatDrawer } from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
 import { merge, Observable, Subscription, BehaviorSubject, fromEvent, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map, takeUntil } from 'rxjs/operators';
 
 
 import * as _ from 'lodash';
@@ -31,6 +31,7 @@ import {
   NoctuaFormConfigService,
   NoctuaLookupService,
   AnnotonState,
+  AnnotonType,
 } from 'noctua-form-base';
 
 @Component({
@@ -40,14 +41,17 @@ import {
 })
 
 export class AnnotonFormComponent implements OnInit, OnDestroy {
+  AnnotonState = AnnotonState;
+  AnnotonType = AnnotonType;
 
   @Input('panelDrawer')
   panelDrawer: MatDrawer;
 
-  annotonState = AnnotonState;
   cam: Cam;
   annotonFormGroup: FormGroup;
   annotonFormSub: Subscription;
+
+  molecularEntity: FormGroup;
 
   searchCriteria: any = {};
   annotonFormPresentation: any;
@@ -57,7 +61,7 @@ export class AnnotonFormComponent implements OnInit, OnDestroy {
   currentAnnoton: Annoton;
   state: AnnotonState;
 
-  private unsubscribeAll: Subject<any>;
+  private _unsubscribeAll: Subject<any>;
 
   constructor(private route: ActivatedRoute,
     private camService: CamService,
@@ -73,13 +77,15 @@ export class AnnotonFormComponent implements OnInit, OnDestroy {
     public noctuaFormService: NoctuaFormService,
     private sparqlService: SparqlService
   ) {
-    this.unsubscribeAll = new Subject();
+    this._unsubscribeAll = new Subject();
+
     // this.annoton = self.noctuaAnnotonFormService.annoton;
     //  this.annotonFormPresentation = this.noctuaAnnotonFormService.annotonPresentation;
   }
 
   ngOnInit(): void {
     this.annotonFormSub = this.noctuaAnnotonFormService.annotonFormGroup$
+      .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(annotonFormGroup => {
         if (!annotonFormGroup) {
           return;
@@ -89,22 +95,29 @@ export class AnnotonFormComponent implements OnInit, OnDestroy {
         this.currentAnnoton = this.noctuaAnnotonFormService.currentAnnoton;
         this.annoton = this.noctuaAnnotonFormService.annoton;
         this.state = this.noctuaAnnotonFormService.state;
+        this.molecularEntity = <FormGroup>this.annotonFormGroup.get('molecularEntity');
+
+        console.log(this.annotonFormGroup)
       });
 
-    this.camService.onCamChanged.subscribe((cam) => {
-      if (!cam) {
-        return;
-      }
+    this.camService.onCamChanged
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((cam) => {
+        if (!cam) {
+          return;
+        }
 
-      this.cam = cam;
-      this.cam.onGraphChanged.subscribe((annotons) => {
+        this.cam = cam;
+        this.cam.onGraphChanged
+          .pipe(takeUntil(this._unsubscribeAll))
+          .subscribe((annotons) => {
+          });
       });
-    });
   }
 
   checkErrors() {
     const errors = this.noctuaAnnotonFormService.annoton.submitErrors;
-    this.noctuaFormDialogService.openAnnotonErrorsDialog(errors)
+    this.noctuaFormDialogService.openAnnotonErrorsDialog(errors);
   }
 
   save() {
@@ -124,22 +137,10 @@ export class AnnotonFormComponent implements OnInit, OnDestroy {
     this.noctuaAnnotonFormService.clearForm();
   }
 
-  createExample(example) {
+  createExample() {
     const self = this;
 
-    self.noctuaAnnotonFormService.initializeFormData(example);
-  }
-
-  changeAnnotonTypeForm(annotonType) {
-    const self = this;
-
-    self.noctuaAnnotonFormService.setAnnotonType(self.noctuaAnnotonFormService.annoton, annotonType.name);
-  }
-
-  changeAnnotonModelTypeForm(annotonModelType) {
-    const self = this;
-
-    self.noctuaAnnotonFormService.setAnnotonModelType(self.noctuaAnnotonFormService.annoton, annotonModelType.name);
+    self.noctuaAnnotonFormService.initializeFormData();
   }
 
   termDisplayFn(term): string | undefined {
@@ -147,11 +148,11 @@ export class AnnotonFormComponent implements OnInit, OnDestroy {
   }
 
   close() {
-    this.panelDrawer.close()
+    this.panelDrawer.close();
   }
 
   ngOnDestroy(): void {
-    this.unsubscribeAll.next();
-    this.unsubscribeAll.complete();
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
   }
 }

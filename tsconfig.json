@@ -10,6 +10,11 @@
     "experimentalDecorators": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "paths": {
+      "noctua-form-base": [
+        "@noctua.form/"
+      ],
+    },
     "target": "es5",
     "typeRoots": [
       "node_modules/@types"

@@ -3,7 +3,7 @@ import { NavigationStart, Router } from '@angular/router';
 import { Platform } from '@angular/cdk/platform';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import * as _ from 'lodash';
+import { cloneDeep, isEqual, merge } from 'lodash';
 
 export const NOCTUA_CONFIG = new InjectionToken('noctuaCustomConfig');
 
@@ -24,7 +24,7 @@ export class NoctuaConfigService {
     set config(value) {
         let config = this._configSubject.getValue();
 
-        config = _.merge({}, config, value);
+        config = merge({}, config, value);
         this._configSubject.next(config);
     }
 
@@ -41,12 +41,12 @@ export class NoctuaConfigService {
             this._defaultConfig.customScrollbars = false;
         }
 
-        this._configSubject = new BehaviorSubject(_.cloneDeep(this._defaultConfig));
+        this._configSubject = new BehaviorSubject(cloneDeep(this._defaultConfig));
         this._router.events
             .pipe(filter(event => event instanceof NavigationStart))
             .subscribe(() => {
-                if (!_.isEqual(this._configSubject.getValue(), this._defaultConfig)) {
-                    const config = _.cloneDeep(this._defaultConfig);
+                if (!isEqual(this._configSubject.getValue(), this._defaultConfig)) {
+                    const config = cloneDeep(this._defaultConfig);
                     this._configSubject.next(config);
                 }
             });
@@ -55,7 +55,7 @@ export class NoctuaConfigService {
     setConfig(value, opts = { emitEvent: true }): void {
         let config = this._configSubject.getValue();
 
-        config = _.merge({}, config, value);
+        config = merge({}, config, value);
 
         if (opts.emitEvent === true) {
             this._configSubject.next(config);
@@ -67,6 +67,6 @@ export class NoctuaConfigService {
     }
 
     resetToDefaults(): void {
-        this._configSubject.next(_.cloneDeep(this._defaultConfig));
+        this._configSubject.next(cloneDeep(this._defaultConfig));
     }
 }

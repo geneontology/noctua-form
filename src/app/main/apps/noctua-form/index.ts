@@ -1,5 +1,5 @@
 export { NoctuaFormModule } from './noctua-form.module';
-export * from './cam'
+export * from './cam';
 
 export { NoctuaFormDialogService } from './services/dialog.service';
 export { CamRowEditDialogComponent } from './dialogs/cam-row-edit/cam-row-edit.component';

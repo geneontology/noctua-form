@@ -27,6 +27,16 @@ $accent: map-get($theme, accent);
     }
   }
 
+  .noc-group-side-heading {
+    @include deep-width(25px);
+    @include deep-height(100%);
+    background-color: #DDD;
+    font-size: 8px;
+    font-weight: bold;
+    text-align: center;
+    word-break: normal;
+    overflow-wrap: anywhere;
+  }
 
 
   .mat-tab-group,
@@ -57,14 +67,32 @@ $accent: map-get($theme, accent);
     //    border-bottom: 1px solid rgba(0, 0, 0, .12);
     //  overflow: auto;
 
+    tr.mat-footer-row,
+    tr.mat-row {
+      height: auto;
+    }
 
+    .noc-column-flex {
+      min-width: 150px !important;
+    }
 
 
     .mat-cell {
-      padding: 0 10px;
+      padding: 0 30px 0 10px;
       font-size: 12px !important;
       color: #000;
+      border-right: #AAA solid 1px;
+      position: relative;
+      word-break: break-all;
+
+      .noc-edit-button {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      }
     }
+
+
 
     .mat-header-cell {
       padding: 0 10px;

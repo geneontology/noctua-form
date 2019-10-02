@@ -1,13 +1,30 @@
-<div class="w-100-p p-8 cam-table" noctuaPerfectScrollbar>
+<div class="w-100-p p-0 cam-table" noctuaPerfectScrollbar>
+  <div class="noc-summary-bar" fxLayout="row" fxLayoutAlign="start center">
+    <span class='noc-title'>
+      ACTIVITIES
+    </span>
+    <span fxFlex></span>
+    <button mat-icon-button class="" fxFlex="40px" color="primary" [matMenuTriggerFor]="activityOptionMenu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #activityOptionMenu="matMenu" class="noc-dropdown-menu">
+      <button mat-menu-item class="" (click)="expandAll(true)">
+        Expand All
+      </button>
+      <button mat-menu-item class="" (click)="expandAll(false)">
+        Collapse All
+      </button>
+    </mat-menu>
+  </div>
   <ng-container [ngSwitch]="cam?.displayType.name">
-    <noc-annoton-entity-table *ngSwitchCase="camDisplayType.entity.name" [cam]="cam" class="noc-cam-table-body"
+    <noc-annoton-entity-table *ngSwitchCase="camDisplayTypeOptions.entity.name" [cam]="cam" class="noc-cam-table-body"
       fxLayout="row" fxLayoutAlign="start center">
     </noc-annoton-entity-table>
-    <noc-triple-table *ngSwitchCase="camDisplayType.triple.name" [cam]="cam" class="noc-cam-table-body" fxLayout="row"
-      fxLayoutAlign="start center">
+    <noc-triple-table *ngSwitchCase="camDisplayTypeOptions.triple.name" [cam]="cam" class="noc-cam-table-body"
+      fxLayout="row" fxLayoutAlign="start center">
     </noc-triple-table>
     <ng-container *ngSwitchDefault>
-      <div *ngFor="let annoton of cam.annotons" class="mb-16 w-100-p"
+      <div *ngFor="let annoton of cam.annotons" class="w-100-p"
         [ngClass]="{'noc-annoton-selected': annoton.id=== camService.annoton?.id}">
         <div class="noc-annoton-table-heading" fxLayout="row" fxLayoutAlign="start center">
           <div fxFlex="50px" (click)="$event.stopPropagation()">
@@ -20,22 +37,26 @@
               </mat-icon>
             </button>
           </div>
-          <div class="noc-title">
+          <div class="noc-title mr-12">
             <div class="text-truncate">
-              <small>enabled by: </small> {{annoton?.presentation.gpText}}
+              <strong> {{annoton?.presentation.qualifier}} </strong>
+              {{annoton?.presentation.title}}
             </div>
           </div>
+          <mat-chip class="noc-chip-xs" [ngClass]="annoton.annotonType">
+            <span>{{annotonTypeOptions[annoton.annotonType]?.label}}</span>
+          </mat-chip>
           <span fxFlex=""></span>
           <div class="" fxFlex="200px" fxLayout="row" fxLayoutAlign="end center">
-            <button mat-stroked-button (click)="openAnnotonForm(annoton)" color="primary"
-              class="noc-rounded-button noc-sm mr-8">
-              <small>Edit</small>
-            </button>
-            <button mat-stroked-button (click)="openAnnotonConnector(annoton)" color="primary"
-              class="noc-rounded-button noc-sm mr-8" matTooltip="connect activity causal relation"
-              [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
+            <button *ngIf="annoton.annotonType !==AnnotonType.ccOnly" mat-stroked-button
+              (click)="openAnnotonConnector(annoton)" color="primary" class="noc-rounded-button noc-sm mr-8"
+              matTooltip="connect activity causal relation" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
               <small>Connect</small>
             </button>
+            <!-- <button mat-stroked-button (click)="openAnnotonForm(annoton)" color="primary"
+              class="noc-rounded-button noc-sm mr-8">
+              <small>Edit</small>
+            </button> -->
             <button mat-icon-button class="noc-rounded-button noc-sm" fxFlex="40px" color="primary"
               [matMenuTriggerFor]="connectionOptionMenu">
               <mat-icon>more_vert</mat-icon>
@@ -49,7 +70,7 @@
           </div>
         </div>
         <noc-annoton-table [cam]="cam" [annoton]="annoton" *ngIf="annoton.expanded" class="noc-cam-table-body"
-          fxLayout="row" fxLayoutAlign="start center">
+          [@annotonExpand]="annoton.expanded ? 'expanded' : 'collapsed'" fxLayout="row" fxLayoutAlign="start center">
         </noc-annoton-table>
       </div>
     </ng-container>

@@ -1,34 +1,20 @@
-import { Component, Inject, Input, OnInit, ElementRef, OnDestroy, ViewEncapsulation, ViewChild, NgZone } from '@angular/core';
-import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 
-import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { MatPaginator, MatSort, MatDrawer } from '@angular/material';
-import { DataSource } from '@angular/cdk/collections';
-import { merge, Observable, Subscription, BehaviorSubject, fromEvent, Subject } from 'rxjs';
-import { debounceTime, take, distinctUntilChanged, map } from 'rxjs/operators';
+import { FormBuilder, FormControl, FormGroup, FormArray } from '@angular/forms';
+import { MatDrawer } from '@angular/material';
+import { Subscription, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 
 import * as _ from 'lodash';
-declare const require: any;
-const each = require('lodash/forEach');
 
-import { noctuaAnimations } from './../../../../../../../@noctua/animations';
 
 
 import { NoctuaFormService } from '../../../services/noctua-form.service';
-
-import { NoctuaSearchService } from './../../../../../../../@noctua.search/services/noctua-search.service';
-import { CamDiagramService } from './../../cam-diagram/services/cam-diagram.service';
 import { CamTableService } from './../../cam-table/services/cam-table.service';
-
-import { SparqlService } from './../../../../../../../@noctua.sparql/services/sparql/sparql.service';
-
 import {
-  NoctuaGraphService,
   NoctuaFormConfigService,
   NoctuaAnnotonFormService,
-  NoctuaLookupService,
   NoctuaAnnotonEntityService,
   CamService
 } from 'noctua-form-base';
@@ -36,7 +22,6 @@ import {
 import { Cam } from 'noctua-form-base';
 import { Annoton } from 'noctua-form-base';
 import { AnnotonNode } from 'noctua-form-base';
-import { Evidence } from 'noctua-form-base';
 import { NoctuaFormDialogService } from '../../../services/dialog.service';
 
 
@@ -58,35 +43,29 @@ export class AnnotonEntityFormComponent implements OnInit, OnDestroy {
   evidenceFormArray: FormArray;
   termNode: AnnotonNode;
 
-  private unsubscribeAll: Subject<any>;
+  private _unsubscribeAll: Subject<any>;
 
-  constructor(private route: ActivatedRoute,
-    private ngZone: NgZone,
+  constructor(
     private camService: CamService,
     private formBuilder: FormBuilder,
     private noctuaAnnotonEntityService: NoctuaAnnotonEntityService,
-    private noctuaSearchService: NoctuaSearchService,
-    private camDiagramService: CamDiagramService,
     public camTableService: CamTableService,
-    private noctuaGraphService: NoctuaGraphService,
     private noctuaFormDialogService: NoctuaFormDialogService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     public noctuaAnnotonFormService: NoctuaAnnotonFormService,
-    private noctuaLookupService: NoctuaLookupService,
     public noctuaFormService: NoctuaFormService,
-    private sparqlService: SparqlService
   ) {
-    this.unsubscribeAll = new Subject();
-    // this.annoton = self.noctuaAnnotonFormService.annoton;
+    this._unsubscribeAll = new Subject();
   }
 
   ngOnInit(): void {
-    this.annotonEntityFormSub = this.noctuaAnnotonEntityService.annotonEntityFormGroup$
+    this.annotonEntityFormSub = this.noctuaAnnotonEntityService.entityFormGroup$
+      .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(annotonEntityFormGroup => {
         if (!annotonEntityFormGroup) return;
         this.annotonEntityFormGroup = annotonEntityFormGroup;
         this.annoton = this.noctuaAnnotonEntityService.annoton;
-        this.termNode = this.noctuaAnnotonEntityService.termNode;
+        this.termNode = this.noctuaAnnotonEntityService.entity;
 
         console.log(this.termNode)
       });
@@ -95,7 +74,7 @@ export class AnnotonEntityFormComponent implements OnInit, OnDestroy {
       if (!cam) return;
 
       this.cam = cam
-      this.cam.onGraphChanged.subscribe((annotons) => {
+      this.cam.onGraphChanged.subscribe(() => {
         //  let data = this.summaryGridService.getGrid(annotons);
         //  this.dataSource = new CamsDataSource(this.sparqlService, this.paginator, this.sort);
       });
@@ -149,11 +128,11 @@ export class AnnotonEntityFormComponent implements OnInit, OnDestroy {
 
   }
 
-  openSelectEvidenceDialog(evidence: Evidence) {
+  openSelectEvidenceDialog() {
 
   }
 
-  addNDEvidence(evidence: Evidence) {
+  addNDEvidence() {
 
   }
   addEvidence() {
@@ -187,7 +166,7 @@ export class AnnotonEntityFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.unsubscribeAll.next();
-    this.unsubscribeAll.complete();
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
   }
 }

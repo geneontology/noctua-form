@@ -1,7 +1,7 @@
 
 import { Component, OnInit, OnDestroy, ViewChild, Inject, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormArray } from '@angular/forms';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
 import { SelectionModel } from '@angular/cdk/collections';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatMenuTrigger, MatTableDataSource } from '@angular/material';
@@ -63,15 +63,16 @@ export class SearchDatabaseDialogComponent implements OnInit, OnDestroy {
       this.searchCriteria.gpNode.id,
       this.searchCriteria.aspect,
       this.searchCriteria.params)
+      .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((response) => {
         console.log(response);
         this.annotonNodes = response;
       });
   }
 
-  selectAnnotonNode(annotonNode) {
+  selectAnnotonNode(annotonNode: AnnotonNode) {
     this.selectedAnnotonNode = annotonNode;
-    this.dataSource = new MatTableDataSource<Evidence>(annotonNode.evidence);
+    this.dataSource = new MatTableDataSource<Evidence>(annotonNode.predicate.evidence);
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -100,7 +101,6 @@ export class SearchDatabaseDialogComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Unsubscribe from all subscriptions
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
   }

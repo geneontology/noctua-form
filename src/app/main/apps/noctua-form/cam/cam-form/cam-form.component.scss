@@ -3,9 +3,13 @@
 
 :host {
   //width: 100%; // display: block;
-  @include deep-width(40px);
+
   background-color: white;
   @include mat-elevation(4);
+
+  .noc-cam-form {
+    @include deep-width(300px);
+  }
 
   .noc-header {
     @include deep-height(40px);
@@ -28,7 +32,5 @@
     padding: 0 14px 14px 14px;
   }
 
-  .noc-cam-form {
-    width: 500px;
-  }
+
 }

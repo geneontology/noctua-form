@@ -72,7 +72,7 @@
           <ng-container cdkColumnDef="assignedBy">
             <mat-header-cell *cdkHeaderCellDef fxFlex="">Assigned By</mat-header-cell>
             <mat-cell *cdkCellDef="let evidence" fxFlex="">
-              <p class="">{{evidence.assignedBy}}</p>
+              <p class="">{{evidence.assignedBy?.label}}</p>
             </mat-cell>
           </ng-container>
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

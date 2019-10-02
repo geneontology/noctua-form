@@ -64,7 +64,7 @@
                     rows="2"></textarea>
                   <mat-autocomplete #evidenceAuto="matAutocomplete" [displayWith]="evidenceDisplayFn"
                     class="noc-term-autocomplete">
-                    <mat-option *ngFor="let item of termNode?.evidence[i]?.evidenceLookup.results" [value]="item">
+                    <mat-option *ngFor="let item of termNode?.predicate?.evidenceLookup.results" [value]="item">
                       <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
                         <div class="noc-term-label">
                           {{ item.label }}

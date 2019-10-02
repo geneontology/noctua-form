@@ -62,27 +62,28 @@ export class CamFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.camFormSub = this.camService.camFormGroup$
+      .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(camFormGroup => {
         if (!camFormGroup) {
           return;
         }
         this.camFormGroup = camFormGroup;
-
-        console.log(this.camFormGroup)
       });
 
-    this.camService.onCamChanged.subscribe((cam) => {
-      if (!cam) {
-        return;
-      }
+    this.camService.onCamChanged
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((cam) => {
+        if (!cam) {
+          return;
+        }
 
-      this.cam = cam;
-      this.sparqlService.getModelTerms(this.cam.id)
-        .pipe(takeUntil(this._unsubscribeAll))
-        .subscribe((terms: Entity[]) => {
-          this.camService.onCamTermsChanged.next(terms);
-        });
-    });
+        this.cam = cam;
+        this.sparqlService.getModelTerms(this.cam.id)
+          .pipe(takeUntil(this._unsubscribeAll))
+          .subscribe((terms: Entity[]) => {
+            this.camService.onCamTermsChanged.next(terms);
+          });
+      });
   }
 
   loadGoTerms() {

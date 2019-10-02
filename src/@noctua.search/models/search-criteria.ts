@@ -2,6 +2,7 @@ import { Cam, Contributor, Group, Organism } from 'noctua-form-base';
 import { each } from 'lodash';
 
 export class SearchCriteria {
+    titles: any[] = [];
     gps: any[] = [];
     goterms: any[] = [];
     pmids: any[] = [];
@@ -17,8 +18,12 @@ export class SearchCriteria {
         const self = this;
         let query = ['offset=0&limit=50'];
 
+        each(self.titles, (title) => {
+            query.push(`title=${title}`);
+        });
+
         each(self.goterms, (goterm) => {
-            query.push(`goterm=${goterm.id}`)
+            query.push(`goterm=${goterm.id}`);
         });
 
         each(self.groups, (group: Group) => {

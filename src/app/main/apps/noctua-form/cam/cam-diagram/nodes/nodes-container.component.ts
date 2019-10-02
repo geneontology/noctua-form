@@ -12,7 +12,6 @@ import { NoctuaAnnotonFormService } from 'noctua-form-base';
 import { CamService } from 'noctua-form-base'
 import { Annoton } from 'noctua-form-base';
 import { AnnotonNode } from 'noctua-form-base';
-import { ComponentFactoryResolver } from '@angular/core/src/render3';
 
 @Component({
   selector: 'noc-nodes-container',
@@ -22,9 +21,9 @@ import { ComponentFactoryResolver } from '@angular/core/src/render3';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NodesContainerComponent implements OnChanges, AfterViewInit {
-  @ViewChild('nodes', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+  @ViewChild('nodes', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
   @Input() nodes: any[];
-  @ViewChild(ContextMenuComponent) public basicMenu: ContextMenuComponent;
+  @ViewChild(ContextMenuComponent, { static: true }) public basicMenu: ContextMenuComponent;
 
   constructor(
     public noctuaFormService: NoctuaFormService,

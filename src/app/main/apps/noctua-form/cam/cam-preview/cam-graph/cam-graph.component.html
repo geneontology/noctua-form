@@ -15,7 +15,7 @@
       <svg:g *ngIf="node.data.annoton" class="node" xmlns="http://www.w3.org/2000/xhtml" width="180" height="80">
         <svg:foreignObject width="180" height="80">
           <xhtml:div class="noc-node" xmlns="http://www.w3.org/1999/xhtml" [ngStyle]=getStyles(node)>
-            <div class="noc-node-conntent w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start center">
+            <div class="noc-node-conntent w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
               <div fxFlex="100%">
                 <small>{{ node.label}}</small>
                 enabled by:

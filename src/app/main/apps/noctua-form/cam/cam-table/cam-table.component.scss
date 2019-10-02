@@ -1,10 +1,51 @@
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
+$primary: map-get($theme, primary);
+$accent: map-get($theme, accent);
 
 :host {
   padding: 0px;
   width: 100%;
   background-color: #EEE;
+
+  mat-chip {
+    &.default {
+      border: #cdf1d2 solid 2px;
+    }
+
+    &.bpOnly {
+      border: #f8c6e5 solid 2px;
+    }
+
+    &.ccOnly {
+      border: #d3b5f5 solid 2px;
+    }
+  }
+
+  .noc-summary-bar {
+    margin-bottom: 4px;
+    padding: 0 10px;
+    @include deep-height(40px);
+    //  min-height: 40px; //min-height: 35px;
+    background-color: #F2F2F2;
+    font-size: 16px;
+    overflow: hidden;
+
+    @include mat-elevation(2);
+
+
+    .noc-summary-bar-section {
+      .noc-section-label {
+        font-size: 12px;
+        color: #555;
+      }
+    }
+
+    .noc-title {
+      font-size: 12px;
+      color: #555;
+    }
+  }
 
   .noc-action-bar {
     padding: 10px 10px;
@@ -18,16 +59,13 @@
     width: 100%;
   }
 
-
   .noc-annoton-table-heading {
-    margin-bottom: 4px;
+    margin-bottom: 1px;
     @include deep-height(50px);
     //min-height: 35px;
-    background-color: #fFF;
+    background-color: #f2F2F2;
     font-size: 16px;
-    border: rgba(#000, 0.2) solid 1px;
-
-    @include mat-elevation(1);
+    border-bottom: rgba(#000, 0.4) solid 1px;
 
     .noc-title {
       small {
@@ -39,13 +77,19 @@
     .noc-title-truncate {
       max-width: 200px
     }
-
-
   }
 
   .noc-annoton-selected {
+    border: rgba(map-get($accent, default), 0.4) solid 1px;
+    border-left: rgba(map-get($accent, default), 0.5) solid 5px;
+    background-color: #FFFFFF;
+
     .noc-annoton-table-heading {
-      background-color: rgba($noc-primary-color-light, 0.2);
+      background-color: rgba(map-get($accent, default), 0.05);
+    }
+
+    .noc-cam-table-body {
+      background-color: rgba(map-get($accent, default), 0.05);
     }
   }
 

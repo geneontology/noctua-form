@@ -20,7 +20,6 @@ import { noctuaAnimations } from './../../../../../../@noctua/animations';
 
 import "rxjs/add/operator/debounceTime";
 import "rxjs/add/operator/distinctUntilChanged";
-import { forEach } from '@angular/router/src/utils/collection';
 
 import { NoctuaTranslationLoaderService } from './../../../../../../@noctua/services/translation-loader.service';
 import { NoctuaFormConfigService } from 'noctua-form-base';
@@ -59,19 +58,13 @@ export class CamDiagramComponent implements OnInit {
 
   // annoton: Annoton = new Annoton();
 
-  private unsubscribeAll: Subject<any>;
+  private _unsubscribeAll: Subject<any>;
 
-  constructor(private route: ActivatedRoute,
-    private camService: CamService,
+  constructor(
     public noctuaFormConfigService: NoctuaFormConfigService,
-    private noctuaSearchService: NoctuaSearchService,
     public noctuaAnnotonFormService: NoctuaAnnotonFormService,
-    //   public noctuaFormService: NoctuaFormService,
-    public camDiagramService: CamDiagramService,
-    private noctuaFormDialogService: NoctuaFormDialogService,
-    private noctuaLookupService: NoctuaLookupService,
-    private noctuaGraphService: NoctuaGraphService) {
-    this.unsubscribeAll = new Subject();
+    public camDiagramService: CamDiagramService) {
+    this._unsubscribeAll = new Subject();
 
   }
 

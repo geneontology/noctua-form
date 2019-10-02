@@ -40,9 +40,9 @@ export class NoctuaFormService {
   private rightDrawer: MatDrawer;
 
   constructor() {
-    this.selectedLeftPanel = this.panel.annotonForm;
+    // this.selectedLeftPanel = this.panel.annotonForm;
     this.selectedMiddlePanel = this.panel.camTable;
-    this.selectedRightPanel = this.panel.tripleForm;
+    // this.selectedRightPanel = this.panel.tripleForm;
   }
 
   selectLeftPanel(panel) {
@@ -61,22 +61,10 @@ export class NoctuaFormService {
     this.leftDrawer = leftDrawer;
   }
 
-  public openLeftDrawer() {
-    return this.leftDrawer.open();
-  }
-
   public closeLeftDrawer() {
     return this.leftDrawer.close();
   }
 
-  public toggleLeftDrawer(panel) {
-    if (this.selectedLeftPanel.id === panel.id) {
-      this.leftDrawer.toggle();
-    } else {
-      this.selectLeftPanel(panel)
-      return this.openLeftDrawer();
-    }
-  }
 
   public setRightDrawer(rightDrawer: MatDrawer) {
     this.rightDrawer = rightDrawer;
@@ -84,6 +72,11 @@ export class NoctuaFormService {
 
   public openMiddlePanel(panel) {
     this.selectMiddlePanel(panel);
+  }
+
+  public openLeftDrawer(panel) {
+    this.selectLeftPanel(panel)
+    return this.leftDrawer.open();
   }
 
   public openRightDrawer(panel) {

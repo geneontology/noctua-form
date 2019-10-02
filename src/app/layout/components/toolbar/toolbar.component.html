@@ -5,6 +5,9 @@
       <mat-icon>apps</mat-icon>
     </button>
     <mat-menu #changeView="matMenu">
+      <button class="noc-create-button" (click)="createModel()" mat-menu-item>
+        Create New Model
+      </button>
       <a *ngFor="let workbench of cam?.model?.modelInfo?.workbenches" href="{{workbench.url}}" target="_blank"
         mat-menu-item>
         {{workbench.label}}
@@ -24,39 +27,28 @@
       </a>
     </div>
   </div>
-  <div *ngIf="cam" class="noc-title" fxLayout="column" fxLayoutAlign="start stretch">
-    <div class="h-100-p" *ngIf="cam.title; else noCamTitle" fxLayout="row" fxLayoutAlign="start center">
-      {{cam.title}}
-      <button mat-stroked-button (click)="openCamForm(annoton)" color="primary" class="ml-8 noc-rounded-button noc-xxs">
-        Edit Title
-      </button>
+  <div *ngIf="cam" class="noc-title mr-12" fxLayout="row" fxLayoutAlign="start center">
+    <div class="h-100-p mr-12" *ngIf="cam.title; else noCamTitle" fxLayout="row" fxLayoutAlign="start center">
+      <div class="noc-section-label noc-cam-title">
+        <div class="text-truncate" (click)="openCamForm()">
+          {{cam.title}}
+        </div>
+      </div>
     </div>
     <ng-template #noCamTitle>
-      <div class="h-100-p" fxLayout="row" fxLayoutAlign="start center">
-        <div class="noc-description">
-          <small>No Title Yet</small>
+      <div class="h-100-p mr-12" fxLayout="row" fxLayoutAlign="start center">
+        <div class="noc-section-label" (click)="openCamForm(annoton)">
+          No Title Yet
         </div>
-        <button mat-stroked-button (click)="openCamForm(annoton)" color="primary"
-          class="ml-8 noc-rounded-button noc-xxs">
-          Add Title
-        </button>
       </div>
     </ng-template>
   </div>
   <span fxFlex=""></span>
-  <!--
-  <div class="toolbar-separator"></div>
-  <div fxLayout="row" fxLayoutAlign="center center" fxFlex="100">
-    <noctua-search-bar fxFlex="60" class="noc-search-bar" (input)="search($event)"></noctua-search-bar>
-  </div>
-  <div class="toolbar-separator"></div>
--->
   <div *ngIf="!noctuaUserService.user" fxLayout="row" fxLayoutAlign="end center" fxFlex="250px">
     <a mat-button href="{{loginUrl}}">
       Login
     </a>
   </div>
-
   <div *ngIf="noctuaUserService.user" fxLayout="row" fxLayoutAlign="end center" fxFlex="250px">
     <button mat-button class="noc-name-button">
       <div fxLayout="row" fxLayoutAlign="start center">

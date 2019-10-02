@@ -1,0 +1,19 @@
+@import "src/@noctua/scss/noctua";
+@import "src/@noctua.common/scss/noctua.common";
+
+:host {
+  padding-top: 8px;
+  width: 100%;
+  @include mat-elevation(4);
+
+  background-color: #fbf9de;
+
+  .noc-evidence-db-trigger {
+    @include deep-height(20px);
+    @include deep-width(20px);
+  }
+
+  .noc-edit-field {
+    @include deep-width(300px);
+  }
+}

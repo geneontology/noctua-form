@@ -2,7 +2,6 @@
 
 # compiled output
 /dist
-/workbenches/annotation-review/public
 /tmp
 /out-tsc
 

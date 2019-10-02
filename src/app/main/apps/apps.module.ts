@@ -2,8 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { NoctuaSharedModule } from '@noctua/shared.module';
-import { NoctuaFormModule } from './noctua-form/noctua-form.module'
-
+import { NoctuaFormModule } from './noctua-form/noctua-form.module';
 
 
 @NgModule({
@@ -11,15 +10,13 @@ import { NoctuaFormModule } from './noctua-form/noctua-form.module'
   imports: [
     TranslateModule,
     NoctuaSharedModule,
-    NoctuaFormModule
+    NoctuaFormModule,
   ],
   exports: [
-    NoctuaFormModule
+    NoctuaFormModule,
+    NoctuaFormModule,
   ],
-  providers: [
-
-  ]
-
+  providers: []
 })
 
 export class AppsModule {

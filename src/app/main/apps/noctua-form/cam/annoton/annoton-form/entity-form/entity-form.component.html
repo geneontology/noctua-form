@@ -27,7 +27,9 @@
             </div>
             <span fxFlex></span>
             <div class="noc-term-id">
-              {{ item.id }}
+              <a (click)="$event.stopPropagation()" href="{{item.link}}" target="_blank">
+                {{ item.id }}
+              </a>
             </div>
           </div>
         </mat-option>
@@ -45,14 +47,21 @@
               rows="2"></textarea>
             <mat-autocomplete #evidenceAuto="matAutocomplete" [displayWith]="evidenceDisplayFn"
               class="noc-term-autocomplete">
-              <mat-option *ngFor="let item of entity?.predicate?.evidence[i]?.evidenceLookup.results" [value]="item">
+              <mat-option *ngFor="let item of entity?.predicate?.evidenceLookup.results" [value]="item">
                 <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
                   <div class="noc-term-label">
                     {{ item.label }}
                   </div>
                   <span fxFlex></span>
+                  <div class="noc-term-id mr-8">
+                    <strong>
+                      {{ item.xref }}
+                    </strong>
+                  </div>
                   <div class="noc-term-id">
-                    {{ item.id }}
+                    <a (click)="$event.stopPropagation()" href="{{item.link}}" target="_blank">
+                      {{ item.id }}
+                    </a>
                   </div>
                 </div>
               </mat-option>
@@ -63,6 +72,10 @@
           <mat-form-field appearance="outline" class="noc-sm w-100-p">
             <mat-label>Reference</mat-label>
             <textarea matInput formControlName="reference" rows="2"></textarea>
+            <button mat-icon-button matSuffix (click)="openAddReference($event, evidence, 'reference')"
+              class="noc-evidence-db-trigger">
+              <mat-icon>playlist_add</mat-icon>
+            </button>
           </mat-form-field>
         </div>
         <div class="p-4" fxFlex fxFlex="20">
@@ -76,24 +89,30 @@
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #entityMenu="matMenu" class="noc-dropdown-menu">
-          <button mat-menu-item class="" (click)="clearValues()">
-            Clear Values
-          </button>
-          <button mat-menu-item *ngIf="entity.aspect" class="" (click)="addRootTerm()">
-            Root Term
-          </button>
-          <h6 class="noc-menu-heading"> Add More Data </h6>
-          <button mat-menu-item *ngIf="entity.aspect" class="" (click)="openSearchDatabaseDialog(entity)">
-            Add Has Input  
-          </button>
-          <button mat-menu-item *ngIf="entity.aspect" class="" (click)="openSearchDatabaseDialog(entity)">
-            Add Has Output
-          </button>
-          <h6 class="noc-menu-heading"> Search </h6>
           <button mat-menu-item *ngIf="entity.aspect" class="" (click)="openSearchDatabaseDialog(entity)">
             Search Database
           </button>
-          <h6 class="noc-menu-heading"> Evidence</h6>
+          <button mat-menu-item *ngIf="true" class="" (click)="toggleIsComplement(entity)">
+            NOT Qualifier
+          </button>
+          <button mat-menu-item *ngIf="entity.canInsertNodes?.length>0" [matMenuTriggerFor]="addMenu">
+            Add an Extension
+          </button>
+          <button mat-menu-item [matMenuTriggerFor]="evidenceMenu">Evidence</button>
+          <button mat-menu-item *ngIf="entity.aspect" class="" (click)="addRootTerm()">
+            Add Root Term
+          </button>
+          <button mat-menu-item class="" (click)="clearValues()">
+            Clear Values
+          </button>
+        </mat-menu>
+        <mat-menu #addMenu="matMenu">
+          <button mat-menu-item *ngFor="let insertMenuItem of entity.canInsertNodes" class=""
+            (click)="insertEntity(insertMenuItem)">
+            {{insertMenuItem.label}}
+          </button>
+        </mat-menu>
+        <mat-menu #evidenceMenu="matMenu">
           <button mat-menu-item class="" (click)="addEvidence()">
             Add Evidence
           </button>
@@ -102,16 +121,6 @@
           </button>
           <button mat-menu-item class="" (click)="openSelectEvidenceDialog(evidence)">
             Clone Evidence
-          </button>
-          <button mat-menu-item class="" (click)="addNDEvidence()">
-            Add ND Reference
-          </button>
-
-          <button mat-menu-item *ngIf="entity.treeLevel===0" class="" (click)="toggleIsComplement(entity)">
-            NOT Qualifier
-          </button>
-          <button mat-menu-item class="" (click)="openMoreEvidenceDialog()">
-            More Evidence
           </button>
         </mat-menu>
       </div>

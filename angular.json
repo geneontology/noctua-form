@@ -15,8 +15,11 @@
       },
       "architect": {
         "build": {
-          "builder": "ngx-build-plus:build",
+          "builder": "@angular-builders/custom-webpack:browser",
           "options": {
+            "customWebpackConfig": {
+              "path": "./webpack.extra.js"
+            },
             "outputPath": "workbenches/noctua-form/public",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -67,8 +70,11 @@
           }
         },
         "serve": {
-          "builder": "ngx-build-plus:dev-server",
+          "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
+            "customWebpackConfig": {
+              "path": "./webpack.extra.js"
+            },
             "browserTarget": "noctua:build"
           },
           "configurations": {
@@ -94,7 +100,7 @@
           }
         },
         "test": {
-          "builder": "ngx-build-plus:karma",
+          "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "src/test.ts",
             "polyfills": "src/polyfills.ts",

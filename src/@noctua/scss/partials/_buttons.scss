@@ -3,7 +3,7 @@ $noc-border-color: #BBB;
 .noc-rounded-button {
   border-radius: 20px;
   @include deep-height(40px);
-  line-height: 40px;
+  line-height: 36px;
   font-size: 14px;
   font-weight: normal;
 
@@ -19,7 +19,7 @@ $noc-border-color: #BBB;
   &.noc-xs {
     border-radius: 12px;
     @include deep-height(24px);
-    line-height: 24px;
+    line-height: 20px;
     font-size: 12px;
     font-weight: normal;
   }
@@ -27,8 +27,21 @@ $noc-border-color: #BBB;
   &.noc-sm {
     border-radius: 15px;
     @include deep-height(30px);
-    line-height: 30px;
+    line-height: 26px;
     font-size: 12px;
     font-weight: normal;
+  }
+}
+
+.noc-half-button {
+  &.noc-r {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    margin-right: 2px;
+  }
+
+  &.noc-l {
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
   }
 }

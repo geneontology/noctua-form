@@ -18,7 +18,7 @@
         </div>
         <div flex class="noc-error-row-body">
           <div class="noc-heading">
-            <strong>{{error.meta.aspect}}</strong>: {{error.message}}
+            <strong>{{error.meta?.aspect}}</strong>: {{error.message}}
           </div>
           <div *ngIf="error.type===2 || error.type===3" class="pb-10" fxLayout="row">
             <div class="noc-node-card" fxLayout="column" fxLayoutAlign="center center">

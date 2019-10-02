@@ -1,0 +1,22 @@
+@import "src/@noctua/scss/noctua";
+
+$primary: map-get($theme, primary);
+$accent: map-get($theme, accent);
+
+:host {
+  .noc-trigger-button {
+    @include deep-height(20px);
+    @include deep-width(20px);
+    line-height: 15px;
+    background-color: rgba(map-get($accent, default), 0.1);
+    border-radius: 0;
+
+    &:hover {
+      background-color: map-get($accent, default);
+
+      mat-icon {
+        color: #FFF;
+      }
+    }
+  }
+}

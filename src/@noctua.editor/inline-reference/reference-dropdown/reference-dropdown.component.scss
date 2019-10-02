@@ -1,0 +1,28 @@
+@import "src/@noctua/scss/noctua";
+@import "src/@noctua.common/scss/noctua.common";
+
+:host {
+  padding-top: 8px;
+  width: 100%;
+  @include deep-width(400px);
+  @include mat-elevation(4);
+
+  background-color: #fbf9de;
+
+  .noc-edit-field {
+    @include deep-width(300px);
+  }
+
+  .noc-article-info {
+    padding: 12px 5px;
+
+    .noc-article-title {
+      font-size: 12px;
+      max-height: 60px;
+    }
+
+    .noc-article-author {}
+
+    .noc-article-date {}
+  }
+}

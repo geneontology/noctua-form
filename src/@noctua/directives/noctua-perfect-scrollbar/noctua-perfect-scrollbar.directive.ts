@@ -4,9 +4,8 @@ import { Platform } from '@angular/cdk/platform';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import PerfectScrollbar from 'perfect-scrollbar';
-import * as _ from 'lodash';
-
 import { NoctuaConfigService } from '@noctua/services/config.service';
+import { debounce, merge } from 'lodash';
 
 @Directive({
     selector: '[noctuaPerfectScrollbar]'
@@ -31,7 +30,7 @@ export class NoctuaPerfectScrollbarDirective implements AfterViewInit, OnDestroy
         this.isMobile = false;
 
         this._enabled = false;
-        this._debouncedUpdate = _.debounce(this.update, 150);
+        this._debouncedUpdate = debounce(this.update, 150);
         this._options = {
             updateOnRouteChange: false
         };
@@ -40,7 +39,7 @@ export class NoctuaPerfectScrollbarDirective implements AfterViewInit, OnDestroy
 
     @Input()
     set noctuaPerfectScrollbarOptions(value) {
-        this._options = _.merge({}, this._options, value);
+        this._options = merge({}, this._options, value);
     }
 
     get noctuaPerfectScrollbarOptions(): any {
