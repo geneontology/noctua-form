@@ -43,6 +43,11 @@ mat-chip {
   @include deep-width(1100px);
 }
 
+.noc-preview-annoton-dialog {
+  @include deep-height(90%);
+  @include deep-width(1000px);
+}
+
 textarea {
   resize: none !important;
   overflow: hidden;

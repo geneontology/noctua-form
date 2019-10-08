@@ -34,6 +34,7 @@ import { NoctuaConfirmDialogModule } from '@noctua/components';
 import { CamPreviewComponent } from './cam/cam-preview/cam-preview.component';
 import { CamGraphComponent } from './cam/cam-preview/cam-graph/cam-graph.component';
 import { NoctuaEditorModule } from '@noctua.editor/noctua-editor.module';
+import { PreviewAnnotonDialogComponent } from './dialogs/preview-annoton/preview-annoton.component';
 
 const routes = [
   {
@@ -65,6 +66,7 @@ const routes = [
     LinkToExistingDialogComponent,
     SelectEvidenceDialogComponent,
     SearchDatabaseDialogComponent,
+    PreviewAnnotonDialogComponent,
     CamDiagramComponent,
     CamFormComponent,
     NodeComponent,
@@ -91,6 +93,7 @@ const routes = [
     AddEvidenceDialogComponent,
     AnnotonErrorsDialogComponent,
     BeforeSaveDialogComponent,
+    PreviewAnnotonDialogComponent,
     CreateFromExistingDialogComponent,
     LinkToExistingDialogComponent,
     SelectEvidenceDialogComponent,
@@ -116,7 +119,8 @@ const routes = [
     CreateFromExistingDialogComponent,
     LinkToExistingDialogComponent,
     SelectEvidenceDialogComponent,
-    SearchDatabaseDialogComponent
+    SearchDatabaseDialogComponent,
+    PreviewAnnotonDialogComponent
     //  NodeComponent,
     // NodesContainerComponent
   ]

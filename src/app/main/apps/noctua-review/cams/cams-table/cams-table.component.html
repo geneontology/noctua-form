@@ -1,0 +1,73 @@
+<div *ngIf="noctuaSearchService.loading" class="noc-loading-container" fxLayout="column" fxLayoutAlign="center center">
+  <mat-progress-spinner class="example-margin" [color]="loadingSpinner.color" [mode]="loadingSpinner.mode">
+  </mat-progress-spinner>
+</div>
+<div class="cams-table" noctuaPerfectScrollbar>
+  <div class="w-100-p">
+    <div *ngFor="let cam of cams" class="mat-elevation-z1">
+      <div class="noc-cam-table-heading" fxLayout="row" fxLayoutAlign="start center">
+        <div fxFlex="50px" (click)="$event.stopPropagation()">
+          <button mat-icon-button (click)="toggleExpand(cam)" class="">
+            <mat-icon *ngIf="!cam.expanded" class="s-32">
+              arrow_right
+            </mat-icon>
+            <mat-icon *ngIf="cam.expanded" class="s-12 mat-icon-rtl-mirror">
+              signal_cellular_4_bar
+            </mat-icon>
+          </button>
+        </div>
+        <div class="pr-8" fxFlex="250px">
+          <div class="noc-title">
+            {{cam.title }}
+          </div>
+        </div>
+        <div class="noc-model-state pr-12" fxFlex="110px" fxLayout="row" fxLayoutAlign="start center">
+          <mat-chip *ngIf="cam.state" class="w-100-p"
+            (click)="noctuaSearchService.filter(noctuaSearchService.filterType.states, cam.state)">
+            <mat-icon class="s-16">playlist_add_check</mat-icon> <span> {{cam.state.label }}</span>
+          </mat-chip>
+        </div>
+        <div class="noc-date" fxFlex="100px" fxLayout="row" fxLayoutAlign="start center">
+          <mat-icon class="s-16">date_range</mat-icon> <span>{{cam.date }}</span>
+        </div>
+        <div class="" fxFlex="">
+          <mat-chip-list>
+            <mat-chip *ngFor="let contributor of cam.contributors"
+              (click)="noctuaSearchService.filter(noctuaSearchService.filterType.contributors, contributor)">
+              <mat-icon class="s-12">person</mat-icon>
+              <span>{{contributor.name}}</span>
+            </mat-chip>
+          </mat-chip-list>
+        </div>
+        <div class="" fxFlex="200px" fxLayout="row" fxLayoutAlign="end center">
+          <button mat-stroked-button [matMenuTriggerFor]="displayTypeMenu" class="noc-rounded-button noc-sm">
+            View As
+          </button>
+          <mat-menu #displayTypeMenu="matMenu">
+            <button *ngFor="let displayType of noctuaFormConfigService.camDisplayType.options" mat-menu-item
+              (click)="changeCamDisplayView(cam, displayType)">
+              {{displayType.label}}
+            </button>
+          </mat-menu>
+          <button mat-icon-button [matMenuTriggerFor]="appsMenu" class="">
+            <mat-icon>apps</mat-icon>
+          </button>
+          <mat-menu #appsMenu="matMenu">
+            <a *ngFor="let workbench of cam.model?.modelInfo.workbenches" href="{{workbench.url}}" target="_blank"
+              mat-menu-item>
+              {{workbench.label}}
+            </a>
+          </mat-menu>
+          <button mat-icon-button (click)="openCamForm(cam)" class="">
+            <mat-icon class="">
+              info
+            </mat-icon>
+          </button>
+        </div>
+      </div>
+      <noc-cam-table [cam]="cam" *ngIf="cam.expanded" class="noc-cam-table-body" fxLayout="row"
+        fxLayoutAlign="start center">
+      </noc-cam-table>
+    </div>
+  </div>
+</div>

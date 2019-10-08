@@ -34,6 +34,7 @@ export class NoctuaEditorDropdownComponent implements OnInit, OnDestroy {
   EditorCategory = EditorCategory;
   annoton: Annoton;
   cam: Cam;
+  insertEntity = false;
   entity: AnnotonNode;
   category: EditorCategory;
   evidenceIndex: number;
@@ -68,6 +69,7 @@ export class NoctuaEditorDropdownComponent implements OnInit, OnDestroy {
     this.entity = data.entity;
     this.category = data.category;
     this.evidenceIndex = data.evidenceIndex;
+    this.insertEntity = data.insertEntity;
   }
 
   ngOnInit(): void {
@@ -153,11 +155,6 @@ export class NoctuaEditorDropdownComponent implements OnInit, OnDestroy {
       //errors.push(error);
       // self.dialogService.openAnnotonErrorsDialog(ev, entity, errors)
     }
-  }
-
-  insertEntity(nodeDescription: InsertEntityDefinition.InsertNodeDescription) {
-    this.noctuaFormConfigService.insertAnnotonNode(this.noctuaAnnotonFormService.annoton, this.entity, nodeDescription);
-    this.noctuaAnnotonFormService.initializeForm();
   }
 
   addRootTerm() {

@@ -14,7 +14,7 @@ export class SearchCriteria {
     constructor() {
     }
 
-    build() {
+    query() {
         const self = this;
         let query = ['offset=0&limit=50'];
 
@@ -50,6 +50,53 @@ export class SearchCriteria {
             query.push(`state=${state.name}`);
         });
 
-        return query.join('&');
+        return query;
+    }
+
+    queryEncoded() {
+        const self = this;
+        const query = ['offset=0&limit=50'];
+
+        each(self.titles, (title) => {
+            query.push(`title=${encodeURIComponent(title)}`);
+        });
+
+        each(self.goterms, (goterm) => {
+            query.push(`goterm=${encodeURIComponent(goterm.id)}`);
+        });
+
+        each(self.groups, (group: Group) => {
+            query.push(`group=${encodeURIComponent(group.url)}`);
+        });
+
+        each(self.contributors, (contributor: Contributor) => {
+            query.push(`contributor=${encodeURIComponent(contributor.orcid)}`);
+        });
+
+        each(self.gps, (gp) => {
+            query.push(`gp=${encodeURIComponent(gp.id)}`);
+        });
+
+        each(self.pmids, (pmid) => {
+            query.push(`pmid=${encodeURIComponent(pmid)}`);
+        });
+
+        each(self.organisms, (organism: Organism) => {
+            query.push(`taxon=${encodeURIComponent(organism.taxonIri)}`);
+        });
+
+        each(self.states, (state: any) => {
+            query.push(`state=${encodeURIComponent(state.name)}`);
+        });
+
+        return query;
+    }
+
+    build() {
+        return this.query().join('&');
+    }
+
+    buildEncoded() {
+        return this.queryEncoded().join('&');
     }
 }

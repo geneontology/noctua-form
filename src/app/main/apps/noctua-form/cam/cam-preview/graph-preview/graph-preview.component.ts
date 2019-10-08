@@ -77,7 +77,7 @@ export class GraphPreviewComponent implements OnInit {
     'Step After',
     'Step Before'
   ];
-  draggingEnabled = true;
+  draggingEnabled = false;
   panningEnabled = true;
   zoomEnabled = true;
 
@@ -86,7 +86,7 @@ export class GraphPreviewComponent implements OnInit {
   maxZoomLevel = 4.0;
   panOnZoom = false;
 
-  autoZoom = false;
+  autoZoom = true;
   autoCenter = true;
 
   update$: Subject<boolean> = new Subject();
@@ -102,6 +102,10 @@ export class GraphPreviewComponent implements OnInit {
 
   ngOnInit() {
     this.setInterpolationType(this.curveType);
+    setTimeout(
+      () => {
+        window.dispatchEvent(new Event('resize'));
+      }, 10);
   }
 
   setInterpolationType(curveType) {

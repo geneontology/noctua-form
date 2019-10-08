@@ -77,9 +77,6 @@
          </div>
        </div>
      </div>
-     <noc-graph-preview *ngIf="noctuaAnnotonFormService.annoton"
-       [nodes]="noctuaAnnotonFormService.annoton?.graphPreview.nodes"
-       [edges]="noctuaAnnotonFormService.annoton?.graphPreview.edges" class="noc-graph-preview"></noc-graph-preview>
    </div>
    <div fxLayout="row" fxLayoutAlign="start center" class="noc-drawer-footer noc-submit-row">
      <button *ngIf="noctuaAnnotonFormService.annoton.submitErrors.length>0" (click)='checkErrors()' mat-button
