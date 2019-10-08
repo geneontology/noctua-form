@@ -5,6 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 4202 ",
+    "clean": "rm -r workbenches/noctua-form/public",
     "build": "ng build --index src/inject.tmpl  --base-href  /workbench/noctua-form/ ",
     "build-art": "ng build --index src/inject-art.tmpl --base-href  /workbench/noctua-annotation-reivew/",
     "build-search": "ng build --index src/inject-search.tmpl  --base-href  /workbench/noctua-search/",
