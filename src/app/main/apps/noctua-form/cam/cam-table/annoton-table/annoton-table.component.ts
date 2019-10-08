@@ -180,16 +180,16 @@ export class AnnotonTableComponent implements OnInit, OnDestroy {
 
   insertEntity(entity: AnnotonNode, nodeDescription: InsertEntityDefinition.InsertNodeDescription) {
     const self = this;
-    const insertedNode = this.noctuaFormConfigService.insertAnnotonNode(this.noctuaAnnotonFormService.annoton, entity, nodeDescription);
-    this.noctuaAnnotonFormService.initializeForm();
-
+    const insertedNode = this.noctuaFormConfigService.insertAnnotonNode(this.annoton, entity, nodeDescription);
+    //  this.noctuaAnnotonFormService.initializeForm();
 
     const data = {
       cam: this.cam,
       annoton: this.annoton,
       entity: insertedNode,
       category: EditorCategory.all,
-      evidenceIndex: 0
+      evidenceIndex: 0,
+      insertEntity: true
     };
 
     this.camService.onCamChanged.next(this.cam);

@@ -21,6 +21,7 @@ import {
 
 import 'rxjs/add/operator/map';
 import { NoctuaConfirmDialogComponent } from '@noctua/components/confirm-dialog/confirm-dialog.component';
+import { PreviewAnnotonDialogComponent } from '../dialogs/preview-annoton/preview-annoton.component';
 
 
 @Injectable({
@@ -152,5 +153,12 @@ export class NoctuaFormDialogService {
                     success(response);
                 }
             });
+    }
+
+    openPreviewAnnotonDialog(): void {
+        this.dialogRef = this._matDialog.open(PreviewAnnotonDialogComponent, {
+            panelClass: 'noc-preview-annoton-dialog',
+            width: '600px',
+        });
     }
 }

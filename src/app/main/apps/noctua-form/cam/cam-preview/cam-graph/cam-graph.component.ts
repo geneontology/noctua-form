@@ -1,32 +1,18 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormArray } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { MatPaginator, MatSort, MatDrawer } from '@angular/material';
-import { DataSource } from '@angular/cdk/collections';
-import { merge, Observable, BehaviorSubject, fromEvent, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { Subject } from 'rxjs';
 import * as shape from 'd3-shape';
-import { Edge, Node, ClusterNode, Layout } from '@swimlane/ngx-graph';
-
+import { Edge, Node, Layout } from '@swimlane/ngx-graph';
 import { noctuaAnimations } from './../../../../../../../@noctua/animations';
-
-
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
-
-
 import { NoctuaFormService } from './../../../services/noctua-form.service';
 import { NoctuaFormDialogService } from './../../../services/dialog.service';
-import { NoctuaSearchService } from './../../../../../../../@noctua.search/services/noctua-search.service';
-
 import {
   noctuaFormConfig,
   NoctuaAnnotonConnectorService,
-  NoctuaGraphService,
   NoctuaFormConfigService,
   NoctuaAnnotonFormService,
-  NoctuaLookupService,
-  NoctuaAnnotonEntityService,
   CamService,
   Cam,
   Annoton,
@@ -41,7 +27,6 @@ import { NoctuaConfirmDialogService } from '@noctua/components/confirm-dialog/co
   animations: noctuaAnimations
 })
 export class CamGraphComponent implements OnInit, OnDestroy {
-
   _nodes: Node[];
   _edges: Edge[];
   searchCriteria: any = {};
@@ -115,9 +100,9 @@ export class CamGraphComponent implements OnInit, OnDestroy {
     'Step Before'
   ];
 
-  draggingEnabled = true;
+  draggingEnabled = false;
   panningEnabled = true;
-  zoomEnabled = true;
+  zoomEnabled = false;
 
   zoomSpeed = 0.1;
   minZoomLevel = 0.1;
@@ -135,18 +120,16 @@ export class CamGraphComponent implements OnInit, OnDestroy {
 
   private unsubscribeAll: Subject<any>;
 
-  constructor(private route: ActivatedRoute,
-    public camService: CamService,
+  constructor(public camService: CamService,
     public noctuaFormService: NoctuaFormService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     private confirmDialogService: NoctuaConfirmDialogService,
-    private noctuaSearchService: NoctuaSearchService,
     private noctuaAnnotonConnectorService: NoctuaAnnotonConnectorService,
     public noctuaAnnotonFormService: NoctuaAnnotonFormService,
     private noctuaFormDialogService: NoctuaFormDialogService,
   ) {
 
-    this.searchFormData = this.noctuaFormConfigService.createReviewSearchFormData();
+    this.searchFormData = this.noctuaFormConfigService.createSearchFormData();
     this.unsubscribeAll = new Subject();
   }
 
@@ -195,8 +178,7 @@ export class CamGraphComponent implements OnInit, OnDestroy {
     }
   }
 
-  setLayout(layoutName: string): void {
-    const layout = this.layouts.find(l => l.value === layoutName);
+  setLayout(): void {
     // this.layout = layoutName;
   }
 
