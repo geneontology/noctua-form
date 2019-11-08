@@ -1,9 +1,19 @@
  <form name="annotonFormGroup" [formGroup]="annotonFormGroup" fxLayout="column" fxLayoutAlign="start stretch"
    class="noc-drawer w-100-p h-100-p">
    <div class="noc-drawer-header" fxLayout="row" fxLayoutAlign="start center">
-     <span class="noc-drawer-header-title">
-       Create New Activity
-     </span>
+     <div class="noc-drawer-header-title">
+       <ng-container [ngSwitch]="noctuaAnnotonFormService.annoton.annotonType">
+         <span *ngSwitchCase="AnnotonType.default">
+           Activity Unit Form
+         </span>
+         <span *ngSwitchCase="AnnotonType.bpOnly">
+           BP Annotation Form
+         </span>
+         <span *ngSwitchCase="AnnotonType.ccOnly">
+           CC Annotation Form
+         </span>
+       </ng-container>
+     </div>
      <span fxFlex></span>
      <button mat-stroked-button (click)="close()" class="noc-rounded-button noc-sm" color="primary"
        aria-label="Close dialog">
