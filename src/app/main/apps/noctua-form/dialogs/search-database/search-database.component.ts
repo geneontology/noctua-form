@@ -105,6 +105,3 @@ export class SearchDatabaseDialogComponent implements OnInit, OnDestroy {
     this._unsubscribeAll.complete();
   }
 }
-
-
-
