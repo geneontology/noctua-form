@@ -1,11 +1,6 @@
-Noctua Form 2.0 Tutorial
-========================
-Quick Start Tutorial
+Noctua Form 2.0 - Quick Start Tutorial
+======================================
 
-[Quick Tutorial](docs/quick-outline-tutorial.md)
-Release Notes
--------------
-[Changelog](docs/changelog.md)
 
 ACCESSING THE NOCTUA CURATION FORM
 ----------------------------------
