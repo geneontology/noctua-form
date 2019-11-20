@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="generator" content="Hugo 0.55.6" />
+
+  <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
+
+  <link rel="alternate" type="application/rss&#43;xml" href="/docs/index.xml">
+
+  <link rel="shortcut icon" href="/noctua-form/assets/favicons/favicon.ico">
+  <link rel="apple-touch-icon" href="/noctua-form/assets/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+  <link rel="icon" type="image/png" href="/noctua-form/assets/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/noctua-form/assets/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/noctua-form/assets/favicons/android-36x36.png" sizes="36x36">
+  <link rel="icon" type="image/png" href="/noctua-form/assets/favicons/android-48x48.png" sizes="48x48">
+  <link rel="icon" type="image/png" href="/noctua-form/assets/favicons/android-72x72.png" sizes="72x72">
+  <link rel="icon" type="image/png" href="/noctua-form/assets/favicons/android-96x196.png" sizes="96x196">
+  <link rel="icon" type="image/png" href="/noctua-form/assets/favicons/android-144x144.png" sizes="144x144">
+  <link rel="icon" type="image/png" href="/noctua-form/assets/favicons/android-192x192.png" sizes="192x192">
+
+  <title>Creating Bponly Annotations</title>
+  <meta property="og:title" content="Creating Bponly Annotations" />
+  <meta property="og:description"
+    content="Noctua Form Documentation and Tutorial.
+" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="http://localhost:4000" />
+  <meta property="og:site_name" content="http://localhost:4000" />
+
+  <meta itemprop="name" content="Creating Bponly Annotations">
+  <meta itemprop="description"
+    content="Noctua Form Documentation and Tutorial.
+">
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Creating Bponly Annotations" />
+  <meta name="twitter:description"
+    content="Noctua Form Documentation and Tutorial.
+" />
+
+  <link rel="stylesheet" href="/noctua-form/assets/scss/main.css">
+  <link rel="stylesheet" href="/noctua-form/assets/css/palette.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+</head>
+
+
+
+<body class="noc-section">
+  <header>
+  <nav class="js-navbar-scroll navbar navbar-expand flex-column flex-md-row noc-navbar">
+    <a class="navbar-brand" href="http://geneontology.org//">
+      <img src="/noctua-form/assets/img/go-logo.png">
+    </a>
+    <a class="navbar-brand" href="/noctua-form/">
+      <span class="font-weight-bold">Noctua Form Documentation</span>
+    </a>
+    <div class="noc-navbar-nav-scroll ml-md-auto" id="main_navbar">
+      <ul class="navbar-nav mt-2 mt-lg-0">
+        <li class="nav-item mr-4 mb-3 mb-lg-0">
+          <a class="nav-link" href="http://noctua-dev.berkeleybop.org/" target="_blank"><span>Noctua Form</span></a>
+        </li>
+        
+        <li class="nav-item mr-4 mb-2 mb-lg-0">
+          <a class="nav-link" href="https://github.com/geneontology/noctua-form" target="_blank"><span>GitHub</span></a>
+        </li>
+        
+        
+      </ul>
+    </div>
+    <div class="navbar-nav d-none d-lg-block">
+      <input type="search" class="form-control noc-search-input" placeholder="&#xf002 Search this site…"
+        aria-label="Search this site…" autocomplete="off">
+    </div>
+  </nav>
+</header>
+
+<script>
+  $(document).ready(function () {
+    var url = "https://api.github.com/search/repositories?q=geneontology/noctua-form";
+    fetch(url, {
+      headers: {
+        "Accept": "application/vnd.github.preview"
+      }
+    }).then(function (e) {
+      return e.json()
+    }).then(function (r) {
+      console.log(r.items[0])
+      stars = r.items[0]['stargazers_count']
+      forks = r.items[0]['forks_count']
+      $('#stars').text(stars + " Stars")
+      $('#forks').text(forks + " Forks")
+    });
+  });
+</script>
+  <div class="container-fluid noc-outer">
+    <div class="noc-main">
+      <div class="row flex-xl-nowrap">
+        <div class="col-12 col-md-3 col-xl-2 noc-sidebar d-print-none">
+          <div id="noc-sidebar-menu" class="noc-sidebar__inner">
+  <form class="noc-sidebar__search d-flex align-items-center">
+    <input type="search" class="form-control noc-search-input" placeholder="&#xf002 Search this site…"
+      aria-label="Search this site…" autocomplete="off">
+    <button class="btn btn-link noc-sidebar__toggle d-md-none p-0 ml-3 fas fa-bars" type="button" data-toggle="collapse"
+      data-target="#noc-section-nav" aria-controls="noc-docs-nav" aria-expanded="false"
+      aria-label="Toggle section navigation">
+    </button>
+  </form>
+  <nav class="collapse noc-sidebar-nav pt-2 pl-4" id="noc-section-nav">
+    
+    <ul class="noc-sidebar-nav__section pr-md-3">
+      <li class="noc-sidebar-nav__section-title">
+        <a href="/noctua-form//"
+          class="align-left pl-0 pr-2 active noc-sidebar-link noc-sidebar-link__section">Getting Started</a>
+      </li>
+      
+    </ul>
+    
+    <ul class="noc-sidebar-nav__section pr-md-3">
+      <li class="noc-sidebar-nav__section-title">
+        <a href="/noctua-form/docs/tutorials"
+          class="align-left pl-0 pr-2 active noc-sidebar-link noc-sidebar-link__section">Tutorials</a>
+      </li>
+      
+      <ul>
+        <li class="collapse show" id="tutorials">
+          <ul class="noc-sidebar-nav__section pr-md-3">
+            
+            <li class="noc-sidebar-nav__section-title">
+              <a href="/noctua-form/docs/tutorials/creating-annotations"
+                class="align-left pl-0 pr-2 noc-sidebar-link noc-sidebar-link__section">Creating GO Annotations</a>
+            </li>
+            <ul>
+              <li class="collapse show" id="">
+                <a class="noc-sidebar-link noc-sidebar-link__page "
+                  id="m-tutorials-creating-go-annotations-creating-a-basic-activity-unit"
+                  href="/noctua-form/docs/tutorials/creating-annotations">Creating a basic Activity Unit</a><a class="noc-sidebar-link noc-sidebar-link__page "
+                  id="m-tutorials-creating-go-annotations-adding-contextual-information"
+                  href="/noctua-form/docs/tutorials/adding-contextual-information">Adding Contextual Information</a><a class="noc-sidebar-link noc-sidebar-link__page "
+                  id="m-tutorials-creating-go-annotations-creating-bp-only-annotation"
+                  href="/noctua-form/docs/tutorials/creating-bponly-annotations">Creating BP Only Annotation</a><a class="noc-sidebar-link noc-sidebar-link__page "
+                  id="m-tutorials-creating-go-annotations-creating-cc-only-annotation"
+                  href="/noctua-form/docs/tutorials/creating-cconly-annotations">Creating CC Only Annotation</a>
+                
+              </li>
+            </ul>
+            
+          </ul>
+      </ul>
+      
+    </ul>
+    
+    <ul class="noc-sidebar-nav__section pr-md-3">
+      <li class="noc-sidebar-nav__section-title">
+        <a href=""
+          class="align-left pl-0 pr-2 active noc-sidebar-link noc-sidebar-link__section">Changelog</a>
+      </li>
+      
+      <ul>
+        <li class="collapse show" id="changelog">
+          <ul class="noc-sidebar-nav__section pr-md-3">
+            
+            <li class="noc-sidebar-nav__section-title">
+              <a href="/noctua-form/docs/changelog/noctua-form-2"
+                class="align-left pl-0 pr-2 noc-sidebar-link noc-sidebar-link__section">Noctua Form 2.0</a>
+            </li>
+            <ul>
+              <li class="collapse show" id="">
+              </li>
+            </ul>
+            
+            <li class="noc-sidebar-nav__section-title">
+              <a href="/noctua-form/docs/changelog/noctua-form-1"
+                class="align-left pl-0 pr-2 noc-sidebar-link noc-sidebar-link__section">Noctua Form 1.0</a>
+            </li>
+            <ul>
+              <li class="collapse show" id="">
+              </li>
+            </ul>
+            
+            <li class="noc-sidebar-nav__section-title">
+              <a href="/noctua-form/docs/changelog/noctua-form-0"
+                class="align-left pl-0 pr-2 noc-sidebar-link noc-sidebar-link__section">Noctua Form 0.1</a>
+            </li>
+            <ul>
+              <li class="collapse show" id="">
+              </li>
+            </ul>
+            
+            <li class="noc-sidebar-nav__section-title">
+              <a href="/noctua-form/docs/changelog/features"
+                class="align-left pl-0 pr-2 noc-sidebar-link noc-sidebar-link__section">Feature Changelog</a>
+            </li>
+            <ul>
+              <li class="collapse show" id="">
+              </li>
+            </ul>
+            
+          </ul>
+      </ul>
+      
+    </ul>
+    
+    <ul class="noc-sidebar-nav__section pr-md-3">
+      <li class="noc-sidebar-nav__section-title">
+        <a href="/noctua-form/docs/guides"
+          class="align-left pl-0 pr-2 active noc-sidebar-link noc-sidebar-link__section">Guides</a>
+      </li>
+      
+      <ul>
+        <li class="collapse show" id="guides">
+          <ul class="noc-sidebar-nav__section pr-md-3">
+            
+            <li class="noc-sidebar-nav__section-title">
+              <a href="/noctua-form/docs/guides/authentication"
+                class="align-left pl-0 pr-2 noc-sidebar-link noc-sidebar-link__section">Authentication</a>
+            </li>
+            <ul>
+              <li class="collapse show" id="">
+              </li>
+            </ul>
+            
+            <li class="noc-sidebar-nav__section-title">
+              <a href="/noctua-form/docs/guides/root-node"
+                class="align-left pl-0 pr-2 noc-sidebar-link noc-sidebar-link__section">Root Node</a>
+            </li>
+            <ul>
+              <li class="collapse show" id="">
+              </li>
+            </ul>
+            
+            <li class="noc-sidebar-nav__section-title">
+              <a href="/noctua-form/docs/guides/existing-annotations"
+                class="align-left pl-0 pr-2 noc-sidebar-link noc-sidebar-link__section">Existing Annotations</a>
+            </li>
+            <ul>
+              <li class="collapse show" id="">
+              </li>
+            </ul>
+            
+            <li class="noc-sidebar-nav__section-title">
+              <a href="/noctua-form/docs/guides/not-qualifier"
+                class="align-left pl-0 pr-2 noc-sidebar-link noc-sidebar-link__section">NOT Qualifier</a>
+            </li>
+            <ul>
+              <li class="collapse show" id="">
+              </li>
+            </ul>
+            
+          </ul>
+      </ul>
+      
+    </ul>
+    
+  </nav>
+</div>
+        </div>
+        <div class="d-none d-xl-block col-xl-2 noc-toc d-print-none">
+          <div class="noc-page-meta ml-2 pb-1 pt-2 mb-0">
+            <a href="https://github.com/geneontology/noctua-form/edit/master/_docs/tutorials/creating-bponly-annotations.md" target="_blank"><i class="fa fa-edit fa-fw"></i> Edit this page</a>
+<a href="https://github.com/geneontology/noctua-form/issues/new?labels=question&title=Question:&body=Question on: https://github.com/geneontology/noctua-form/tree/master/_docs/tutorials/creating-bponly-annotations.md" target="_blank"><i class="fab fa-github fa-fw"></i> Create documentation issue</a>
+<a href="https://github.com/geneontology/noctua-form/issues/new" target="_blank"><i class="fas fa-tasks fa-fw"></i> Create project issue</a>
+<!-- this will parse through the header fields and add a button to open
+     an issue / ask a question on Github. The editable field should be in
+     the post frontend matter, and refer to the label to open the issue for -->
+
+          </div>
+          <nav id="TableOfContents">
+            <ul>
+              <li>
+                <ul id="TOC">
+                  <!-- Links will be appended here-->
+                </ul>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <main class="col-12 col-md-9 col-xl-8 pl-md-5" role="main">
+          <!--      <nav aria-label="breadcrumb" class="d-none d-md-block d-print-none">
+            <ol class="breadcrumb spb-1">
+              <li class="breadcrumb-item active" aria-current="page">
+                <a href="/docs/tutorials/creating-bponly-annotations">Creating Bponly Annotations</a>
+              </li>
+            </ol>
+          </nav> -->
+          <div class="noc-content">
+            <h3 id="creating-a-biological-process-bp-only-annotation"><strong>Creating a Biological Process (BP) only annotation</strong></h3>
+
+<ul>
+  <li>Click on the arrow to the left of the ‘Create Activity’ icon.</li>
+  <li>Select ‘Create New BP Annotation’.</li>
+  <li>Using C. elegans as an example:
+    <ul>
+      <li>Type in gene name: <strong>skn-1</strong></li>
+      <li>Select the WBGene entry from the dropdown list</li>
+      <li>Gene products link out to respective gene product pages via dbxrefs.yaml</li>
+    </ul>
+  </li>
+  <li>Note that the BP only form automatically fills in the root Molecular
+  Function GO term (GO:0003674). This is done because the GO-CAM data model
+  requires an MF annotation in order to associate a gene with a BP.</li>
+  <li>
+    <p>Select the appropriate relation between the root MF term and the GO BP term
+  based on the experimental evidence you have in the paper. For example, a
+  mutant phenotype may simply warrant ‘causally upstream of or within’.</p>
+  </li>
+  <li>Add the BP
+    <ul>
+      <li>Search for ‘<strong>innate immune response</strong>’</li>
+      <li>Autocomplete options are presented in a pop-up window</li>
+      <li>Terms link out to AmiGO</li>
+      <li>Enter the appropriate evidence code from using ECO term names</li>
+      <li>Search for ‘<strong>mutant phenotype</strong>’</li>
+      <li>GO codes are indicated with bold three-letter GO code</li>
+      <li>Add a reference. Two options:
+        <ul>
+          <li>Cut and paste a DB and id, e.g. <strong>PMID:30442878 OR</strong></li>
+          <li>Click on the +/lines symbol</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Add the CC
+    <ul>
+      <li>If applicable, add that the BP ‘occurs in’ a GO CC. Note that this is
+  different from saying that the MF ‘occurs in’ a GO CC, which is the
+  statement made in an Activity Unit.</li>
+      <li>Search for ‘<strong>nucleus</strong>’</li>
+      <li>Autocomplete options are presented in a pop-up window</li>
+      <li>Terms link out to AmiGO</li>
+      <li>Evidence code autocomplete using ECO term names</li>
+      <li>Search for ‘<strong>direct assay</strong>’</li>
+      <li>GO codes are indicated with bold three-letter GO code</li>
+      <li>Add a reference. Two options:
+    - Cut and paste a DB and id, e.g. <strong>PMID:30442878 OR</strong>
+    - Click on the +/lines symbol
+        - Pop-up appears with a select drop-down of dbs for references:
+            PMID, DOI, GO_REF
+        - Select <strong>PMID</strong>
+        - Add identifier: <strong>30442878</strong></li>
+    </ul>
+  </li>
+  <li>Adding contextual information to a BP only annotation can be done as for
+  <a href="#_kjrzn3qe1kp6">Activity Units</a> but note that contextual information cannot
+  be added to the root MF term.</li>
+</ul>
+
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+<script>
+$(document).ready(function() {
+
+    var toc = $('#TOC');
+
+    // Select each header
+    sections = $('.noc-content h1');
+        $.each(sections, function(idx, v) {
+            section = $(v);
+            var div_id = $(section).attr('id');
+            var div_text = section.text().split('¶')[0];
+            var parent = $("#" + div_id)
+            var content = '<li id="link_' + div_id + '" class="md-nav__item"><a class="md-nav__link" href="#' + div_id + '" title="' + div_text +'">' + div_text +'</a></li>';
+            $(toc).append(content);
+
+            // Add section code to subnavigation
+            var children = $('<nav class="md-nav"><ul class="md-nav__list"></nav></ul>')
+            var contenders = $("#" + div_id).nextUntil("h1");
+            $.each(contenders, function(idx, contender){
+               if($(contender).is('h2') || $(contender).is('h3')) {
+                   var contender_id = $(contender).attr('id');
+                   var contender_text = $(contender).text().split('¶')[0];
+                   var content = '<li class="md-nav__item"><a class="md-nav__link" href="#' + contender_id + '" title="' + contender_text +'">' + contender_text +'</a></li>';
+                   children.append(content);
+                }
+             })
+             $("#link_" + div_id).append(children);
+        });
+    });
+</script>
+
+<script>
+    var headers = ["h1", "h2", "h3", "h4"]
+    var colors = ["red", "orange", "green", "blue"]
+
+    $.each(headers, function (i, header) {
+        var color = colors[i];
+        $(header).each(function () {
+            var href = $(this).attr("id");
+            $(this).append('<a class="headerlink" style="color:' + color + '" href="#' + href +
+                '" title="Permanent link"></a>')
+        });
+    })
+</script>
+<script>
+$('h1').first().append('<div></div>')</script>
+
+
+            
+            <br/>
+
+
+          </div>
+        </main>
+      </div>
+    </div>
+    <footer class="bg-dark py-5 row d-print-none">
+  <div class="container-fluid mx-sm-5">
+    <div class="row">
+      <div class="col-6 col-sm-4 text-xs-center order-sm-2">
+        
+      </div>
+      <div class="col-6 col-sm-4 text-right text-xs-center order-sm-3">
+        <ul class="list-inline mb-0">
+          <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="" aria-label="GitHub"
+            data-original-title="GitHub">
+            <a class="text-white" target="_blank" href="https://github.com/geneontology/noctua-form">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-12 col-sm-4 text-center py-2 order-sm-2">
+        <small class="text-white">© 2019 Gene Ontology All Rights Reserved</small>
+      </div>
+    </div>
+  </div>
+</footer>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="/noctua-form/assets/js/main.js"></script>
+
+</body>
+
+</html>

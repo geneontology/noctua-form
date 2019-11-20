@@ -1,0 +1,39 @@
+- title: "Getting Started"
+  url: "/"
+- title: "Tutorials"
+  url: "docs/tutorials"
+  links:
+  - title: Creating GO Annotations
+    url: "docs/tutorials/creating-annotations"
+    children:
+      - title: Creating a basic Activity Unit 
+        url: "docs/tutorials/creating-annotations"
+      - title: Adding Contextual Information
+        url: "docs/tutorials/adding-contextual-information"
+      - title: Creating BP Only Annotation
+        url: "docs/tutorials/creating-bponly-annotations"
+      - title: Creating CC Only Annotation
+        url: "docs/tutorials/creating-cconly-annotations"
+- title: "Changelog"
+  url: 
+  links:
+  - title: Noctua Form 2.0
+    url: "docs/changelog/noctua-form-2"
+  - title: Noctua Form 1.0
+    url: "docs/changelog/noctua-form-1"
+  - title: Noctua Form 0.1
+    url: "docs/changelog/noctua-form-0"
+  - title: Feature Changelog
+    url: "docs/changelog/features"
+- title: "Guides"
+  url: "docs/guides"
+  links: 
+  - title: Authentication
+    url: "docs/guides/authentication"
+  - title: Root Node
+    url: "docs/guides/root-node"
+  - title: "Existing Annotations"
+    url: "docs/guides/existing-annotations"
+  - title: NOT Qualifier
+    url: "docs/guides/not-qualifier"
+
