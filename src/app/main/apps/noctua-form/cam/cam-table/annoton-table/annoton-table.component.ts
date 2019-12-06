@@ -1,14 +1,9 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormArray } from '@angular/forms';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatPaginator, MatSort, MatDrawer } from '@angular/material';
-import { DataSource } from '@angular/cdk/collections';
-import { merge, Observable, BehaviorSubject, fromEvent, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 import { noctuaAnimations } from './../../../../../../../@noctua/animations';
 
-import { takeUntil, startWith } from 'rxjs/internal/operators';
 
 import "rxjs/add/operator/debounceTime";
 import "rxjs/add/operator/distinctUntilChanged";
@@ -19,17 +14,16 @@ import { NoctuaFormDialogService } from './../../../services/dialog.service';
 import { NoctuaSearchService } from './../../../../../../../@noctua.search/services/noctua-search.service';
 
 import {
-  NoctuaAnnotonConnectorService,
   NoctuaGraphService,
   NoctuaFormConfigService,
   NoctuaAnnotonFormService,
   NoctuaLookupService,
   NoctuaAnnotonEntityService,
   CamService,
-  AnnotonNodeType,
   Evidence,
   Entity,
-  noctuaFormConfig
+  noctuaFormConfig,
+  NoctuaUserService
 } from 'noctua-form-base';
 
 import {
@@ -79,22 +73,15 @@ export class AnnotonTableComponent implements OnInit, OnDestroy {
 
   private unsubscribeAll: Subject<any>;
 
-  constructor(private route: ActivatedRoute,
-    private camService: CamService,
+  constructor(private camService: CamService,
     public noctuaFormService: NoctuaFormService,
+    public noctuaUserService: NoctuaUserService,
     public noctuaFormConfigService: NoctuaFormConfigService,
-    private noctuaSearchService: NoctuaSearchService,
-    //  public noctuaFormService: NoctuaFormService,
     public camTableService: CamTableService,
     private noctuaFormDialogService: NoctuaFormDialogService,
-    private noctuaLookupService: NoctuaLookupService,
-    private noctuaGraphService: NoctuaGraphService,
     public noctuaAnnotonEntityService: NoctuaAnnotonEntityService,
-
     public noctuaAnnotonFormService: NoctuaAnnotonFormService,
-    private inlineEditorService: InlineEditorService,
-    private noctuaEditorDialogService: NoctuaEditorDialogService,
-    private sparqlService: SparqlService) {
+    private inlineEditorService: InlineEditorService) {
 
     this.unsubscribeAll = new Subject();
   }
@@ -134,7 +121,7 @@ export class AnnotonTableComponent implements OnInit, OnDestroy {
     self.noctuaAnnotonFormService.initializeForm();
   }
 
-  toggleIsComplement(entity: AnnotonNode) {
+  toggleIsComplement() {
 
   }
 
@@ -167,10 +154,6 @@ export class AnnotonTableComponent implements OnInit, OnDestroy {
 
       self.noctuaFormDialogService.openSearchDatabaseDialog(data, success);
     } else {
-      const errors = [];
-      const meta = {
-        aspect: gpNode ? gpNode.label : 'Gene Product'
-      }
       // const error = new AnnotonError('error', 1, "Please enter a gene product", meta)
       //errors.push(error);
       // self.dialogService.openAnnotonErrorsDialog(ev, entity, errors)
@@ -179,7 +162,6 @@ export class AnnotonTableComponent implements OnInit, OnDestroy {
 
 
   insertEntity(entity: AnnotonNode, nodeDescription: InsertEntityDefinition.InsertNodeDescription) {
-    const self = this;
     const insertedNode = this.noctuaFormConfigService.insertAnnotonNode(this.annoton, entity, nodeDescription);
     //  this.noctuaAnnotonFormService.initializeForm();
 

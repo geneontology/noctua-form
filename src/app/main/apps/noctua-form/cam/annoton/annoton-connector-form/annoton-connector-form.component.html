@@ -10,6 +10,9 @@
     </button>
   </div>
   <div class="noc-drawer-body" fxLayout="row" fxLayoutAlign="start start">
+    <div *ngIf="!noctuaUserService.user" class="noc-draw-body-disabled" fxLayoutAlign="center center">
+      Log in to Continue
+    </div>
     <div class="noc-annoton-list h-100-p p-12" noctuaPerfectScrollbar>
       <div fxLayout="column" fxLayoutAlign="start stretch" class="w-100-p">
         <ng-container *ngFor="let connector of noctuaAnnotonConnectorService.connectors">

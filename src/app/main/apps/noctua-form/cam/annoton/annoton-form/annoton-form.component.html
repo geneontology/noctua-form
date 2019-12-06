@@ -21,6 +21,9 @@
      </button>
    </div>
    <div class="noc-drawer-body noc-annoton-form" noctuaPerfectScrollbar>
+     <div *ngIf="!noctuaUserService.user" class="noc-draw-body-disabled" fxLayoutAlign="center center">
+       Log in to Continue
+     </div>
      <div class="noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
        <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
          <div class="noc-section-heading">

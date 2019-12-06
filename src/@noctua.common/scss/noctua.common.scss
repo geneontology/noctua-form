@@ -15,7 +15,6 @@ $accent: map-get($theme, accent);
 }
 
 
-
 .mat-row {
   &:hover {
     @include mat-elevation(1);
@@ -65,6 +64,19 @@ $accent: map-get($theme, accent);
 
   .noc-drawer-body {
     min-height: calc(100% - 90px);
+
+    .noc-draw-body-disabled {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba(#EEE, 0.5);
+      z-index: 10;
+      color: #8b2d2d;
+      font-weight: bold;
+      font-size: 24px;
+    }
   }
 
   .noc-drawer-footer {

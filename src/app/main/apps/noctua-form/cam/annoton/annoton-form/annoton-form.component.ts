@@ -15,6 +15,7 @@ import {
   NoctuaFormConfigService,
   AnnotonState,
   AnnotonType,
+  NoctuaUserService,
 } from 'noctua-form-base';
 
 @Component({
@@ -49,6 +50,7 @@ export class AnnotonFormComponent implements OnInit, OnDestroy {
   constructor(private camService: CamService,
     public camTableService: CamTableService,
     private noctuaFormDialogService: NoctuaFormDialogService,
+    public noctuaUserService: NoctuaUserService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     public noctuaAnnotonFormService: NoctuaAnnotonFormService,
     public noctuaFormService: NoctuaFormService) {

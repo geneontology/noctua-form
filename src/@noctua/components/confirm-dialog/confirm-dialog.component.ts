@@ -9,6 +9,7 @@ import { MatDialogRef } from '@angular/material';
 export class NoctuaConfirmDialogComponent {
     public title: string;
     public message: string;
+    public readonlyDialog = false;
 
     constructor(public dialogRef: MatDialogRef<NoctuaConfirmDialogComponent>) {
     }
