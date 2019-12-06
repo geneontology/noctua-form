@@ -12,5 +12,4 @@ export const environment = {
   noctuaUrl: 'http://noctua-dev.berkeleybop.org/',
   workbenchUrl: 'http://noctua-dev.berkeleybop.org//workbench/',
 
-  locationStoreApi: 'https://6xq2j25tah.execute-api.us-east-1.amazonaws.com/dev'
 };

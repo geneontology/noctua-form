@@ -13,7 +13,16 @@
     background-color: #E2E2E2;
   }
 
+  .noc-not-loggedin {
+    margin-bottom: 4px;
+    padding: 0 10px;
+    @include deep-height(40px);
+    width: 100%;
+    //min-height: 35px;
+    background-color: rgb(229, 194, 194);
+    font-size: 12px;
 
+  }
 
   .noc-cam-heading {
     margin-bottom: 4px;

@@ -35,7 +35,7 @@ export class NoctuaToolbarComponent implements OnInit, OnDestroy {
     horizontalNav: boolean;
     noNav: boolean;
     navigation: any;
-    noctuaUrl = environment.noctuaUrl;
+    noctuaFormUrl = '';
     loginUrl = '';
 
     private _unsubscribeAll: Subject<any>;
@@ -45,14 +45,24 @@ export class NoctuaToolbarComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private camService: CamService,
         private noctuaConfig: NoctuaConfigService,
+        private noctuaFormConfigService: NoctuaFormConfigService,
         private noctuaGraphService: NoctuaGraphService,
         public noctuaUserService: NoctuaUserService,
         public noctuaAnnotonFormService: NoctuaAnnotonFormService,
         public noctuaFormService: NoctuaFormService,
     ) {
         this._unsubscribeAll = new Subject();
-        this.loginUrl = 'http://barista-dev.berkeleybop.org/login?return=' + window.location.origin;
         this.getUserInfo();
+
+        this.route
+            .queryParams
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe(params => {
+                const modelId = params['model_id'] || null;
+                const noctuaFormUrl = `${environment.workbenchUrl}noctua-form/?model_id=${modelId}`;
+                this.loginUrl = `${environment.globalBaristaLocation}/login?return=${noctuaFormUrl}`;
+            });
+
         this.router.events.pipe(takeUntil(this._unsubscribeAll))
             .subscribe(
                 (event) => {
@@ -64,6 +74,9 @@ export class NoctuaToolbarComponent implements OnInit, OnDestroy {
                     }
                 });
 
+
+
+
     }
 
     ngOnInit(): void {
@@ -74,7 +87,9 @@ export class NoctuaToolbarComponent implements OnInit, OnDestroy {
                     return;
                 }
 
+
                 this.cam = cam;
+
             });
     }
 
@@ -85,17 +100,14 @@ export class NoctuaToolbarComponent implements OnInit, OnDestroy {
     getUserInfo() {
         const self = this;
 
-        self.noctuaUserService.onUserChanged.pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((response) => {
-                if (response) {
-                    self.user = new Contributor()
-                    self.user.name = response.nickname;
-                    self.user.groups = response.groups;
+        self.noctuaUserService.onUserChanged.pipe(
+            takeUntil(this._unsubscribeAll))
+            .subscribe((user: Contributor) => {
+                if (user) {
+                    self.user = user;
                 }
             });
     }
-
-
 
     openCamForm() {
         this.camService.initializeForm(this.cam);

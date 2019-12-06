@@ -25,7 +25,8 @@ import {
   NoctuaFormConfigService,
   CamService,
   noctuaFormConfig,
-  Entity
+  Entity,
+  NoctuaUserService
 } from 'noctua-form-base';
 import { NoctuaFormDialogService } from '../../../services/dialog.service';
 import { NoctuaConfirmDialogService } from '@noctua/components/confirm-dialog/confirm-dialog.service';
@@ -58,6 +59,7 @@ export class AnnotonConnectorFormComponent implements OnInit, OnDestroy {
   constructor(private camService: CamService,
     private confirmDialogService: NoctuaConfirmDialogService,
     public noctuaAnnotonConnectorService: NoctuaAnnotonConnectorService,
+    public noctuaUserService: NoctuaUserService,
     public camTableService: CamTableService,
     private noctuaFormDialogService: NoctuaFormDialogService,
     public noctuaFormConfigService: NoctuaFormConfigService,
