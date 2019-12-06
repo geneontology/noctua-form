@@ -23,8 +23,13 @@ export class NoctuaConfirmDialogService {
             disableClose: false,
             width: '600px',
         });
+
         confirmDialogRef.componentInstance.title = title;
         confirmDialogRef.componentInstance.message = message;
+        if (!success) {
+            confirmDialogRef.componentInstance.readonlyDialog = true;
+        }
+
         confirmDialogRef.afterClosed().subscribe(response => {
             if (response) {
                 success(response);

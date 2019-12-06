@@ -10,9 +10,15 @@
   <div mat-dialog-content class="noc-dialog-body">
     {{message}}
   </div>
-  <div mat-dialog-actions class="m-0 p-16 noc-dialog-footer" fxLayout="row" fxLayoutAlign="space-between center">
+  <div *ngIf="!readonlyDialog" mat-dialog-actions class="m-0 p-16 noc-dialog-footer" fxLayout="row"
+    fxLayoutAlign="space-between center">
     <span fxFlex></span>
     <button (click)='cancel()' type="button" mat-raised-button color="" class="mr-8">Cancel</button>
     <button (click)="confirm()" type="button" mat-raised-button color="primary">Confirm</button>
+  </div>
+  <div *ngIf="readonlyDialog" mat-dialog-actions class="m-0 p-16 noc-dialog-footer" fxLayout="row"
+    fxLayoutAlign="space-between center">
+    <span fxFlex></span>
+    <button (click)='cancel()' type="button" mat-raised-button color="" class="">Close</button>
   </div>
 </div>

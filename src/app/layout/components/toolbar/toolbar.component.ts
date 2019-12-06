@@ -37,6 +37,7 @@ export class NoctuaToolbarComponent implements OnInit, OnDestroy {
     navigation: any;
     noctuaFormUrl = '';
     loginUrl = '';
+    noctuaUrl = environment.noctuaUrl;
 
     private _unsubscribeAll: Subject<any>;
 
