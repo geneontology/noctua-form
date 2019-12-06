@@ -8,14 +8,14 @@ export const environment = {
   // spaqrlApiUrl: 'http://rdf.geneontology.org/blazegraph/sparql',
   // gorestApiUrl: 'https://api.geneontology.cloud/'
   gorestApiUrl: 'http://localhost:3000/',
-  globalGolrServer: ' http://noctua-golr.berkeleybop.org/',//'http://amigo-dev-golr.berkeleybop.org/',
+  globalGolrServer: ' http://noctua-golr.berkeleybop.org/',
   globalGolrCompanionServer: ' http://golr.berkeleybop.org/',
   globalGolrNeoServer: 'http://noctua-golr.berkeleybop.org/',
   globalMinervaDefinitionName: 'minerva_public_dev',
-  globalBaristaLocation: 'http://barista-dev.berkeleybop.org',
+  globalBaristaLocation: 'http://barista.berkeleybop.org',
   //Workbench
   noctuaUrl: `${window.location.origin}`,
-  workbenchUrl: `${window.location.origin}/workbench/`, //'http://noctua-dev.berkeleybop.org/workbench/',
+  workbenchUrl: `${window.location.origin}/workbench/`,
 
   locationStoreApi: 'https://6xq2j25tah.execute-api.us-east-1.amazonaws.com/dev',
   amigoTerm: 'http://amigo.geneontology.org/amigo/term/',
