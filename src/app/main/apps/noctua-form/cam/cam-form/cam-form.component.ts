@@ -106,13 +106,10 @@ export class CamFormComponent implements OnInit, OnDestroy {
   save() {
 
     const self = this;
-    //  self.camService.ann;
 
-    let value = this.camFormGroup.value;
+    const value = this.camFormGroup.value;
 
-    console.log(value);
-
-    let annotations = {
+    const annotations = {
       title: value.title,
       state: value.state.name
     };

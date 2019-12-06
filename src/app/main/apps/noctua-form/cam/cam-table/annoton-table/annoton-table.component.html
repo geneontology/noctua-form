@@ -27,8 +27,8 @@
                 {{ entity.term?.id }}
               </a>
             </p>
-            <noctua-inline-editor *ngIf="entity.term" [cam]="cam" [annoton]='annoton' [entity]="entity.node"
-              [category]="EditorCategory.term" class="noc-edit-button">
+            <noctua-inline-editor *ngIf="noctuaUserService.user && entity.term" [cam]="cam" [annoton]='annoton'
+              [entity]="entity.node" [category]="EditorCategory.term" class="noc-edit-button">
             </noctua-inline-editor>
           </td>
         </ng-container>
@@ -48,8 +48,8 @@
                 {{ entity.extension?.id }}
               </a>
             </p>
-            <noctua-inline-editor *ngIf="entity.extension" [cam]="cam" [annoton]='annoton' [entity]="entity.node"
-              [category]="EditorCategory.term" class="noc-edit-button">
+            <noctua-inline-editor *ngIf="noctuaUserService.user && entity.extension" [cam]="cam" [annoton]='annoton'
+              [entity]="entity.node" [category]="EditorCategory.term" class="noc-edit-button">
             </noctua-inline-editor>
           </td>
         </ng-container>
@@ -63,7 +63,7 @@
                 {{ entity.evidence?.id }}
               </a>
             </p>
-            <noctua-inline-editor [cam]="cam" [annoton]='annoton' [entity]="entity.node"
+            <noctua-inline-editor *ngIf="noctuaUserService.user" [cam]="cam" [annoton]='annoton' [entity]="entity.node"
               [category]="EditorCategory.evidence" [evidenceIndex]="entity.evidenceIndex" class="noc-edit-button">
             </noctua-inline-editor>
           </td>
@@ -73,7 +73,7 @@
           </th>
           <td mat-cell *matCellDef="let entity" fxFlex="150px" fxLayout="row" fxLayoutAlign="start center">
             <p class="">{{entity.reference}}</p>
-            <noctua-inline-editor [cam]="cam" [annoton]='annoton' [entity]="entity.node"
+            <noctua-inline-editor *ngIf="noctuaUserService.user" [cam]="cam" [annoton]='annoton' [entity]="entity.node"
               [category]="EditorCategory.reference" [evidenceIndex]="entity.evidenceIndex" class="noc-edit-button">
             </noctua-inline-editor>
           </td>
@@ -82,7 +82,7 @@
           <th mat-header-cell *matHeaderCellDef fxFlex="120px" fxLayout="row" fxLayoutAlign="start center">With</th>
           <td mat-cell *matCellDef="let entity" fxFlex="120px" fxLayout="row" fxLayoutAlign="start center">
             <p class="">{{entity.with}}</p>
-            <noctua-inline-editor [cam]="cam" [annoton]='annoton' [entity]="entity.node"
+            <noctua-inline-editor *ngIf="noctuaUserService.user" [cam]="cam" [annoton]='annoton' [entity]="entity.node"
               [category]="EditorCategory.with" [evidenceIndex]="entity.evidenceIndex" class="noc-edit-button">
             </noctua-inline-editor>
           </td>
@@ -98,8 +98,8 @@
           <th mat-header-cell *matHeaderCellDef fxFlex="50px" fxLayout="row" fxLayoutAlign="start center"></th>
           <td mat-cell *matCellDef="let entity" fxFlex="50px" fxLayout="row" fxLayoutAlign="start center">
             <span fxFlex=""></span>
-            <button mat-icon-button (click)="updateCurrentMenuEvent($event)" class="noc-action-button" fxFlex="40px"
-              [matMenuTriggerFor]="entityMenu">
+            <button mat-icon-button *ngIf="noctuaUserService.user" (click)="updateCurrentMenuEvent($event)"
+              class="noc-action-button" fxFlex="40px" [matMenuTriggerFor]="entityMenu">
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #entityMenu="matMenu" class="noc-dropdown-menu">
@@ -122,9 +122,9 @@
               <button mat-menu-item (click)="addEvidence(entity.node, entity.evidenceIndex)" class="">
                 Add Evidence
               </button>
-              <button (click)="removeEvidence(entity.node,i)" mat-menu-item>
+              <!--   <button (click)="removeEvidence(entity.node,i)" mat-menu-item>
                 Remove Evidence
-              </button>
+              </button> -->
             </mat-menu>
           </td>
         </ng-container>

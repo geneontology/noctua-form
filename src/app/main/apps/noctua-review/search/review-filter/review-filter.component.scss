@@ -1,0 +1,68 @@
+@import "src/@noctua/scss/noctua";
+@import "src/@noctua.common/scss/noctua.common";
+
+:host {
+  @include deep-width(100%);
+  @include deep-height(100%);
+
+  background-color: white;
+
+  mat-chip {
+    font-size: 12px;
+    font-weight: normal;
+    //min-height: 30px;
+    //  max-width: 200px;
+    // text-overflow: ellipsis;
+    //  white-space: nowrap;
+  }
+
+  .noc-search-form {
+    .noc-form-section {
+      width: 100%;
+      background-color: #FFF;
+
+      .noc-section-header {
+        height: 30px;
+        background-color: $noc-primary-color-light;
+
+        .noc-section-heading {
+          padding-left: 8px;
+          font-size: 12px;
+          line-height: 40px;
+          color: #555;
+        }
+
+        .noc-action-button {
+          margin: 0px;
+          height: 40px; // line-height: 36px;
+        }
+      }
+
+      .noc-section-body {
+        padding: 5px 5px;
+      }
+    }
+  }
+
+  input[type="file"] {
+    display: none;
+  }
+
+  button {
+    @include deep-height(35px);
+
+    &.noc-file-button {
+      pointer-events: none;
+    }
+  }
+
+  label {
+    padding: 0;
+  }
+
+  .noc-file-upload-title {
+    margin-left: 4px;
+    color: #888;
+    font-weight: bold;
+  }
+}

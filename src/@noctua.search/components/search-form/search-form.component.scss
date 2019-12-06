@@ -1,0 +1,142 @@
+@import "src/@noctua/scss/noctua";
+@import "src/@noctua.common/scss/noctua.common";
+
+:host {
+  width: 100%; // display: block;
+  background-color: white;
+  @include mat-elevation(4);
+
+  .noc-header {
+    @include deep-height(30px);
+    background-color: #EEE;
+    border-bottom: #CCC solid 1px;
+
+    mat-icon-button {
+      @include deep-height(30px);
+      @include deep-width(30px);
+      line-height: 30px;
+    }
+
+    .noc-title {
+      font-size: 10px;
+      padding: 0 14px;
+    }
+  }
+
+  .noc-body {
+    padding: 0 14px 14px 14px;
+  }
+
+  .noc-search-form {
+    .noc-form-section {
+      width: 100%;
+      background-color: #FFF;
+
+      .noc-section-header {
+        height: 30px;
+        background-color: $noc-primary-color-light;
+
+        .noc-section-heading {
+          padding-left: 8px;
+          font-size: 12px;
+          line-height: 40px;
+          color: #555;
+        }
+
+        .noc-action-button {
+          margin: 0px;
+          height: 40px; // line-height: 36px;
+        }
+      }
+
+      .noc-section-body {
+        padding: 5px 5px;
+      }
+    }
+
+    .noc-term-group {
+      // padding-bottom: 20px;
+      margin-bottom: 3px;
+      //  border-bottom: #CCC solid 1px;
+      background-color: #FFF;
+
+      .noc-group-heading {
+        margin-bottom: 20px;
+        height: 40px;
+        font-weight: 500;
+        font-size: 18px;
+      }
+
+      .noc-annoton-group-row {
+        &.noc-row-disabled {
+          opacity: 0.2;
+          pointer-events: none;
+        }
+
+        &.noc-input-heading {
+          margin-top: 10px;
+        }
+      }
+
+      .noc-action-button {
+        margin: 8px 0 0 0;
+        background-color: #FAFAFA;
+        width: 35px;
+        height: 35px;
+
+        mat-icon {
+          @include noc-icon-size(14px);
+          color: #AAA;
+          line-height: 18px;
+        }
+
+        &:hover {
+          background-color: #999;
+
+          mat-icon {
+            color: #222;
+          }
+        }
+      }
+    }
+
+
+    .noc-tree-input {
+      $border-color: rgba(#000, 0.12);
+      @include deep-width(20px);
+      border-right: $border-color solid 1px;
+
+      &.noc-level-0 {
+        border: none;
+      }
+    }
+
+    md-input-container {
+      margin: 0; //border-bottom: #555 solid 1px; 
+      padding-top: 20px;
+      padding-bottom: 8px;
+
+      label {
+        top: 0px;
+        bottom: auto !important;
+        left: 5px;
+      }
+
+      .md-errors-spacer {
+        visibility: hidden;
+        display: none;
+      }
+
+      input {
+        padding-left: 5px;
+      }
+    }
+
+
+    .noc-submit-row {
+      margin: 10px 0;
+      padding: 10px 0;
+      background-color: #FFF;
+    }
+  }
+}

@@ -16,6 +16,8 @@ import {
 } from 'noctua-form-base';
 import { InlineReferenceService } from '@noctua.editor/inline-reference/inline-reference.service';
 import { each, find } from 'lodash';
+import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
+import { SearchCriteria } from '@noctua.search/models/search-criteria';
 
 @Component({
   selector: 'noc-entity-form',
@@ -40,6 +42,7 @@ export class EntityFormComponent implements OnInit, OnDestroy {
   constructor(
     private noctuaFormDialogService: NoctuaFormDialogService,
     private camService: CamService,
+    private noctuaSearchService: NoctuaSearchService,
     private inlineReferenceService: InlineReferenceService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     public noctuaAnnotonFormService: NoctuaAnnotonFormService) {
@@ -95,6 +98,7 @@ export class EntityFormComponent implements OnInit, OnDestroy {
     }
 
   }
+
   openSearchDatabaseDialog(entity: AnnotonNode) {
     const self = this;
     const gpNode = this.noctuaAnnotonFormService.annoton.getGPNode();
@@ -127,6 +131,21 @@ export class EntityFormComponent implements OnInit, OnDestroy {
       //errors.push(error);
       // self.dialogService.openAnnotonErrorsDialog(ev, entity, errors)
     }
+  }
+
+  openSearchModels() {
+    const self = this;
+    const gpNode = this.noctuaAnnotonFormService.annoton.getGPNode();
+    const searchCriteria = new SearchCriteria();
+
+    searchCriteria.goterms.push(this.entity.term);
+
+    const url = this.noctuaFormConfigService.getUniversalWorkbenchUrl('noctua-search', searchCriteria.buildEncoded());
+
+    console.log(url);
+
+    window.open(url, '_blank');
+
   }
 
   insertEntity(nodeDescription: InsertEntityDefinition.InsertNodeDescription) {

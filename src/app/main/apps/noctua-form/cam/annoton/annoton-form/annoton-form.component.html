@@ -1,9 +1,19 @@
  <form name="annotonFormGroup" [formGroup]="annotonFormGroup" fxLayout="column" fxLayoutAlign="start stretch"
    class="noc-drawer w-100-p h-100-p">
    <div class="noc-drawer-header" fxLayout="row" fxLayoutAlign="start center">
-     <span class="noc-drawer-header-title">
-       Create New Activity
-     </span>
+     <div class="noc-drawer-header-title">
+       <ng-container [ngSwitch]="noctuaAnnotonFormService.annoton.annotonType">
+         <span *ngSwitchCase="AnnotonType.default">
+           Activity Unit Form
+         </span>
+         <span *ngSwitchCase="AnnotonType.bpOnly">
+           BP Annotation Form
+         </span>
+         <span *ngSwitchCase="AnnotonType.ccOnly">
+           CC Annotation Form
+         </span>
+       </ng-container>
+     </div>
      <span fxFlex></span>
      <button mat-stroked-button (click)="close()" class="noc-rounded-button noc-sm" color="primary"
        aria-label="Close dialog">
@@ -11,6 +21,9 @@
      </button>
    </div>
    <div class="noc-drawer-body noc-annoton-form" noctuaPerfectScrollbar>
+     <div *ngIf="!noctuaUserService.user" class="noc-draw-body-disabled" fxLayoutAlign="center center">
+       Log in to Continue
+     </div>
      <div class="noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
        <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
          <div class="noc-section-heading">
@@ -77,9 +90,6 @@
          </div>
        </div>
      </div>
-     <noc-graph-preview *ngIf="noctuaAnnotonFormService.annoton"
-       [nodes]="noctuaAnnotonFormService.annoton?.graphPreview.nodes"
-       [edges]="noctuaAnnotonFormService.annoton?.graphPreview.edges" class="noc-graph-preview"></noc-graph-preview>
    </div>
    <div fxLayout="row" fxLayoutAlign="start center" class="noc-drawer-footer noc-submit-row">
      <button *ngIf="noctuaAnnotonFormService.annoton.submitErrors.length>0" (click)='checkErrors()' mat-button

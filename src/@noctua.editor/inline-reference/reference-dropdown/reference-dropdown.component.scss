@@ -19,9 +19,13 @@
     .noc-article-title {
       font-size: 12px;
       max-height: 60px;
+      overflow: hidden;
     }
 
-    .noc-article-author {}
+    .noc-article-author {
+      max-height: 60px;
+      overflow: hidden;
+    }
 
     .noc-article-date {}
   }

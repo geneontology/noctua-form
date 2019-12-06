@@ -1,4 +1,7 @@
 <div class="w-100-p h-100-p" fxLayout="column" fxLayoutAlign="start start">
+  <div *ngIf="!noctuaUserService.user" class="noc-not-loggedin" fxLayout="row" fxLayoutAlign="center center">
+    Not Logged In: You can only view existing annotations
+  </div>
   <div class="noc-cam-heading" fxLayout="row" fxLayoutAlign="start center">
     <button mat-flat-button (click)="openAnnotonForm(AnnotonType.default)" color="primary"
       class="noc-rounded-button noc-half-button noc-r noc-sm">

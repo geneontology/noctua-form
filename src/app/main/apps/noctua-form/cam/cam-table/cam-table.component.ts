@@ -32,7 +32,8 @@ import {
   Cam,
   Annoton,
   EntityDefinition,
-  AnnotonType
+  AnnotonType,
+  NoctuaUserService
 } from 'noctua-form-base';
 import { NoctuaConfirmDialogService } from '@noctua/components/confirm-dialog/confirm-dialog.service';
 import { trigger, state, transition, style, animate } from '@angular/animations';
@@ -69,6 +70,7 @@ export class CamTableComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute,
     public camService: CamService,
     public noctuaFormService: NoctuaFormService,
+    public noctuaUserService: NoctuaUserService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     private confirmDialogService: NoctuaConfirmDialogService,
     private noctuaSearchService: NoctuaSearchService,
@@ -81,7 +83,7 @@ export class CamTableComponent implements OnInit, OnDestroy {
     private noctuaGraphService: NoctuaGraphService,
   ) {
 
-    this.searchFormData = this.noctuaFormConfigService.createReviewSearchFormData();
+    this.searchFormData = this.noctuaFormConfigService.createSearchFormData();
     this._unsubscribeAll = new Subject();
   }
 
@@ -146,9 +148,15 @@ export class CamTableComponent implements OnInit, OnDestroy {
       });
     };
 
-    this.confirmDialogService.openConfirmDialog('Confirm Delete?',
-      'You are about to delete an activity.',
-      success);
+    if (!self.noctuaUserService.user) {
+      this.confirmDialogService.openConfirmDialog('Not Logged In',
+        'Please log in to continue.',
+        null);
+    } else {
+      this.confirmDialogService.openConfirmDialog('Confirm Delete?',
+        'You are about to delete an activity.',
+        success);
+    }
   }
 
   ngOnDestroy(): void {

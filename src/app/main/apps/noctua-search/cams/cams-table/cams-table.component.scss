@@ -1,0 +1,144 @@
+@import "src/@noctua/scss/noctua";
+@import "src/@noctua.common/scss/noctua.common";
+
+
+
+:host {
+  padding: 0px;
+  width: 100%;
+  background-color: #F7F7F7;
+
+  .noc-drawer-container {
+    background-color: #DDD;
+  }
+
+  .mat-drawer-content {
+    width: 100%;
+  }
+
+  .noc-loading-container {
+    background-color: rgba(#555, 0.4);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 1000;
+  }
+
+  mat-chip {
+    font-size: 12px;
+    font-weight: normal;
+    @include deep-height(30px);
+    max-width: 200px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .noc-sidemenu {
+    padding: 10px 0;
+    margin-right: 5px;
+    @include deep-height(100%);
+    @include deep-width(50px);
+    @include mat-elevation(4);
+    background-color: #CCC;
+    border-right: #999 solid 1px;
+  }
+
+  .noc-cam-table-heading {
+    padding: 8px 12px 8px 0;
+    margin-bottom: 4px;
+    min-height: 40px;
+    background-color: #F7F7F7;
+    font-size: 12px;
+
+    //  @include mat-elevation(1);
+
+    .noc-title {
+      font-size: 12px;
+    }
+
+    .noc-model-state {
+      mat-chip {
+        @include deep-height(25px);
+        font-size: 10px;
+      }
+
+    }
+
+  }
+
+  .noc-cam-table-body {
+    background-color: #FFF;
+  }
+
+  .noc-form-container {
+    background-color: #EEE;
+    padding: 20px 10px;
+  }
+
+  .noc-toolbar {
+    padding: 0px 20px;
+    height: 40px;
+    width: 100%;
+    background-color: #F2F2F2;
+    border-bottom: #BBB solid 1px;
+
+    .noc-title {
+      line-height: 38px;
+      color: #555;
+      font-size: 14px;
+      font-weight: bold;
+    }
+  }
+
+  .cams-table {
+    width: 100%;
+    @include deep-height(100%);
+    padding-bottom: 300px;
+    // position: relative;
+    //  flex: 1 1 auto;
+    //    border-bottom: 1px solid rgba(0, 0, 0, .12);
+    //  overflow: auto;
+
+
+    .cam {
+      position: relative;
+      cursor: pointer;
+      min-height: 40px;
+      font-size: 12px;
+    }
+
+    .mat-cell {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .mat-column-id {
+      flex: 0 1 84px;
+    }
+
+    .mat-column-buttons {
+      flex: 0 1 80px;
+    }
+
+    /* .mat-header-cell {
+      display:flex;
+      justify-content:flex-end;
+     } */
+  }
+
+  .noc-left-drawer {
+    @include deep-height(100%);
+    background-color: #FFF;
+    border-right: #BBB solid 1px;
+    @include mat-elevation(4);
+  }
+
+  .noc-right-drawer {
+    @include deep-height(100%);
+    background-color: #FFF;
+    border-left: #BBB solid 1px;
+  }
+}

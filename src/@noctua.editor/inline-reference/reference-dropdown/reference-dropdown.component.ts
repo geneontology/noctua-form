@@ -15,6 +15,7 @@ import { referenceDropdownData } from './reference-dropdown.tokens';
 import { ReferenceDropdownOverlayRef } from './reference-dropdown-ref';
 import { NoctuaFormDialogService } from 'app/main/apps/noctua-form';
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
+import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
 
 @Component({
   selector: 'noc-reference-dropdown',
@@ -25,7 +26,6 @@ import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 export class NoctuaReferenceDropdownComponent implements OnInit, OnDestroy {
   evidenceDBForm: FormGroup;
   formControl: FormControl;
-  articles: Article[] = [];
   article: Article;
 
   private _unsubscribeAll: Subject<any>;
@@ -33,6 +33,7 @@ export class NoctuaReferenceDropdownComponent implements OnInit, OnDestroy {
   constructor(public dialogRef: ReferenceDropdownOverlayRef,
     @Inject(referenceDropdownData) public data: any,
     private sparqlService: SparqlService,
+    private noctuaSearchService: NoctuaSearchService,
     private noctuaFormDialogService: NoctuaFormDialogService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     public noctuaAnnotonFormService: NoctuaAnnotonFormService,
@@ -94,7 +95,6 @@ export class NoctuaReferenceDropdownComponent implements OnInit, OnDestroy {
     ).subscribe(data => {
       console.log(data);
       self.article = null;
-      self.articles = [];
       self._updateArticle(data);
     });
   }
@@ -107,17 +107,20 @@ export class NoctuaReferenceDropdownComponent implements OnInit, OnDestroy {
     const self = this;
 
     if (value.db.name === noctuaFormConfig.evidenceDB.options.pmid.name && value.accession) {
-      this.sparqlService.getPubmedInfo(value.accession).pipe(
+      const pmid = value.accession.trim();
+
+      if (pmid === '') {
+        return;
+      }
+      this.noctuaSearchService.getPubmedInfo(pmid).pipe(
         takeUntil(this._unsubscribeAll))
-        .subscribe((articles: Article[]) => {
-          self.articles = articles;
-          if (articles && articles.length > 0) {
-            self.article = articles[0];
-          }
-          console.log(articles);
+        .subscribe((article: Article) => {
+          self.article = article;
+          console.log(article);
         });
     }
   }
+
   ngOnDestroy(): void {
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
