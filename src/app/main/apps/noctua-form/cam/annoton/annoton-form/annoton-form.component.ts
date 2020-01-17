@@ -34,9 +34,7 @@ export class AnnotonFormComponent implements OnInit, OnDestroy {
   cam: Cam;
   annotonFormGroup: FormGroup;
   annotonFormSub: Subscription;
-
   molecularEntity: FormGroup;
-
   searchCriteria: any = {};
   annotonFormPresentation: any;
   evidenceFormArray: FormArray;
@@ -73,8 +71,6 @@ export class AnnotonFormComponent implements OnInit, OnDestroy {
         this.annoton = this.noctuaAnnotonFormService.annoton;
         this.state = this.noctuaAnnotonFormService.state;
         this.molecularEntity = <FormGroup>this.annotonFormGroup.get('molecularEntity');
-
-        console.log(this.annotonFormGroup)
       });
 
     this.camService.onCamChanged
