@@ -4,11 +4,13 @@
 
 
 declare var global_barista_location: any;
+declare var global_minerva_definition_name: any;
 
 const baristaLocation = typeof global_barista_location !== 'undefined' ? global_barista_location : 'http://barista-dev.berkeleybop.org';
+const minervaDefinitionName = typeof global_minerva_definition_name !== 'undefined' ? global_minerva_definition_name : 'minerva_public_dev';
 
 export const environment = {
-  production: true,
+  production: false,
   spaqrlApiUrl: 'http://rdf-internal.berkeleybop.io/blazegraph/sparql',
   // spaqrlApiUrl: 'http://rdf.geneontology.org/blazegraph/sparql',
   // gorestApiUrl: 'https://api.geneontology.cloud/'
@@ -16,11 +18,11 @@ export const environment = {
   globalGolrServer: ' http://noctua-golr.berkeleybop.org/',
   globalGolrCompanionServer: ' http://golr.berkeleybop.org/',
   globalGolrNeoServer: 'http://noctua-golr.berkeleybop.org/',
-  globalMinervaDefinitionName: 'minerva_public_dev',
+  globalMinervaDefinitionName: minervaDefinitionName,
   globalBaristaLocation: baristaLocation,
   //Workbench
   noctuaUrl: `${window.location.origin}`,
-  workbenchUrl: `${window.location.origin}/workbench/`, //'http://noctua-dev.berkeleybop.org/workbench/',
+  workbenchUrl: `${window.location.origin}/workbench/`,
 
   amigoTerm: 'http://amigo.geneontology.org/amigo/term/',
   wikidataSparqlUrl: 'https://query.wikidata.org/sparql',
