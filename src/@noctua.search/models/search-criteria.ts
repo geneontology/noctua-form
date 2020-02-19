@@ -10,6 +10,7 @@ export class SearchCriteria {
     groups: Group[] = [];
     organisms: Organism[] = [];
     states: any[] = [];
+    dates: any[] = [];
 
     constructor() {
     }
@@ -40,6 +41,10 @@ export class SearchCriteria {
 
         each(self.pmids, (pmid) => {
             query.push(`pmid=${pmid}`);
+        });
+
+        each(self.dates, (date) => {
+            query.push(`date=${date}`);
         });
 
         each(self.organisms, (organism: Organism) => {
@@ -79,6 +84,10 @@ export class SearchCriteria {
 
         each(self.pmids, (pmid) => {
             query.push(`pmid=${encodeURIComponent(pmid)}`);
+        });
+
+        each(self.dates, (date) => {
+            query.push(`date=${encodeURIComponent(date)}`);
         });
 
         each(self.organisms, (organism: Organism) => {

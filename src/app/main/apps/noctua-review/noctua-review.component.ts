@@ -150,7 +150,7 @@ export class NoctuaReviewComponent implements OnInit, OnDestroy {
         this.reviewService.onOrganismsChanged.next(response);
       });
 
-    this.sparqlService.onCamsChanged
+    this.noctuaSearchService.onCamsChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(cams => {
         this.cams = cams;
@@ -202,7 +202,7 @@ export class NoctuaReviewComponent implements OnInit, OnDestroy {
   }
 
   selectCam(cam) {
-    this.sparqlService.onCamChanged.next(cam);
+    this.noctuaSearchService.onCamChanged.next(cam);
   }
 
   ngOnDestroy(): void {

@@ -2,9 +2,94 @@
   <mat-progress-spinner class="example-margin" [color]="loadingSpinner.color" [mode]="loadingSpinner.mode">
   </mat-progress-spinner>
 </div>
-<div class="cams-table" noctuaPerfectScrollbar>
-  <div class="w-100-p">
-    <div *ngFor="let cam of cams" class="mat-elevation-z1">
+<div class="noc-cams-table" noctuaPerfectScrollbar>
+  <table fxFlex="1 1 auto" mat-table class="" [dataSource]="cams" [@animateStagger]="{value:'50'}">
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef fxFlex="250px" fxLayout="row" fxLayoutAlign="start center">
+        Title
+      </th>
+      <td mat-cell *matCellDef="let cam" fxFlex="250px" class="noc-title" fxLayout="row" fxLayoutAlign="start center">
+        {{cam.title }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="state">
+      <th mat-header-cell *matHeaderCellDef fxFlex="110px" fxLayout="row" fxLayoutAlign="start center">State</th>
+      <td mat-cell *matCellDef="let cam" fxFlex="110px" class="noc-model-state pr-12" fxLayout="row"
+        fxLayoutAlign="start center">
+        <mat-chip *ngIf="cam.state" class="w-100-p"
+          (click)="noctuaSearchService.filter(noctuaSearchService.filterType.states, cam.state)">
+          <mat-icon class="s-16">playlist_add_check</mat-icon> <span> {{cam.state.label }}</span>
+        </mat-chip>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef fxFlex="100px" fxLayout="row" fxLayoutAlign="start center">Date</th>
+      <td mat-cell *matCellDef="let cam" class="noc-date" fxFlex="100px" fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon class="s-16">date_range</mat-icon> <span>{{cam.date }}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="contributor">
+      <th mat-header-cell *matHeaderCellDef fxFlex="" fxLayout="row" fxLayoutAlign="start center">Contributors</th>
+      <td mat-cell *matCellDef="let cam" fxFlex="" fxLayout="row" fxLayoutAlign="start center">
+        <mat-chip-list>
+          <mat-chip *ngFor="let contributor of cam.contributors"
+            (click)="noctuaSearchService.filter(noctuaSearchService.filterType.contributors, contributor)">
+            <mat-icon class="s-12">person</mat-icon>
+            <span>{{contributor.name}}</span>
+          </mat-chip>
+        </mat-chip-list>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef fxFlex="100px" fxLayout="row" fxLayoutAlign="start center">Edit</th>
+      <td mat-cell *matCellDef="let cam" fxFlex="100px" fxLayout="row" fxLayoutAlign="start center">
+        <button mat-icon-button (click)="openForm(cam)" class="">
+          <mat-icon class="">list_alt</mat-icon>
+        </button>
+        <button mat-icon-button (click)="openGraph(cam)" class="">
+          <mat-icon class="icon-rotate-graph">share</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="export">
+      <th mat-header-cell *matHeaderCellDef fxFlex="100px" fxLayout="row" fxLayoutAlign="start center">Export</th>
+      <td mat-cell *matCellDef="let cam" fxFlex="100px" fxLayout="row" fxLayoutAlign="start center">
+        <button mat-stroked-button [matMenuTriggerFor]="exportMenu" class="noc-rounded-button noc-xs" color="primary">
+          Export As
+        </button>
+        <mat-menu #exportMenu="matMenu">
+          <a href="" target="_blank" mat-menu-item>
+            GPAD
+          </a>
+          <a href="" target="_blank" mat-menu-item>
+            OWL
+          </a>
+        </mat-menu>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let cam; columns: displayedColumns;" class=""></tr>
+  </table>
+  <div *ngIf="cams?.length===0" class="noc-no-info">
+    no results yet.
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- 
+
+  <cdk-virtual-scroll-viewport class="w-100-p h-100-p" itemSize="100">
+    <div *cdkVirtualFor="let cam of cams" class="mat-elevation-z1">
       <div class="noc-cam-table-heading" fxLayout="row" fxLayoutAlign="start center">
         <div fxFlex="50px" (click)="$event.stopPropagation()">
           <button mat-icon-button [matMenuTriggerFor]="appsMenu" class="">
@@ -54,9 +139,6 @@
           </button>
         </div>
       </div>
-      <noc-cam-table [cam]="cam" *ngIf="cam.expanded" class="noc-cam-table-body" fxLayout="row"
-        fxLayoutAlign="start center">
-      </noc-cam-table>
     </div>
-  </div>
+  </cdk-virtual-scroll-viewport> -->
 </div>

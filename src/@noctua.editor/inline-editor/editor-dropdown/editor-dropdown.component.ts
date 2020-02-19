@@ -200,11 +200,11 @@ export class NoctuaEditorDropdownComponent implements OnInit, OnDestroy {
 
 
   termDisplayFn(term): string | undefined {
-    return term ? term.label : undefined;
+    return term && term.id ? `${term.label} (${term.id})` : undefined;
   }
 
   evidenceDisplayFn(evidence): string | undefined {
-    return evidence ? evidence.label : undefined;
+    return evidence && evidence.id ? `${evidence.label} (${evidence.id})` : undefined;
   }
 
 

@@ -16,7 +16,7 @@
     //  white-space: nowrap;
   }
 
-  .noc-search-form {
+  .noc-filter-form {
     .noc-form-section {
       width: 100%;
       background-color: #FFF;
@@ -39,7 +39,11 @@
       }
 
       .noc-section-body {
-        padding: 5px 5px;
+        padding: 16px 5px 0 5px;
+
+        .noc-annoton-group-row {
+          margin-bottom: 8px;
+        }
       }
     }
   }

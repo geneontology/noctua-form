@@ -81,12 +81,12 @@ export class AnnotonEntityFormComponent implements OnInit, OnDestroy {
     });
   }
 
-  termDisplayFn(evidence): string | undefined {
-    return evidence ? evidence.label : undefined;
+  termDisplayFn(term): string | undefined {
+    return term && term.id ? `${term.label} (${term.id})` : undefined;
   }
 
   evidenceDisplayFn(evidence): string | undefined {
-    return evidence ? evidence.label : undefined;
+    return evidence && evidence.id ? `${evidence.label} (${evidence.id})` : undefined;
   }
 
   checkErrors() {
