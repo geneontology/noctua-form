@@ -37,6 +37,7 @@ export class NoctuaToolbarComponent implements OnInit, OnDestroy {
     navigation: any;
     noctuaFormUrl = '';
     loginUrl = '';
+    logoutUrl = '';
     noctuaUrl = '';
 
     private _unsubscribeAll: Subject<any>;
@@ -65,6 +66,7 @@ export class NoctuaToolbarComponent implements OnInit, OnDestroy {
                 const modelIdParams = { 'model_id': modelId };
 
                 this.loginUrl = `${environment.globalBaristaLocation}/login?return=${noctuaFormReturnUrl}`;
+                this.logoutUrl = `${environment.globalBaristaLocation}/logout?return=${noctuaFormReturnUrl}`;
                 this.noctuaUrl = environment.noctuaUrl + '?' + (baristaToken ? self._parameterize(Object.assign({}, baristaParams)) : '');
                 this.noctuaFormUrl = environment.workbenchUrl + 'noctua-form?'
                     + (baristaToken ? self._parameterize(Object.assign({}, modelIdParams, baristaParams)) : '');

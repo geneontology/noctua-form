@@ -9,6 +9,8 @@ import { SearchGroupsComponent } from './components/search-groups/search-groups.
 import { SearchContributorsComponent } from './components/search-contributors/search-contributors.component';
 import { SearchFormComponent } from './components/search-form/search-form.component';
 import { SearchFilterComponent } from './components/search-filter/search-filter.component';
+import { SearchRelationComponent } from './components/search-relation/search-relation.component';
+import { SearchHistoryComponent } from './components/search-history/search-history.component';
 
 @NgModule({
     declarations: [
@@ -16,7 +18,9 @@ import { SearchFilterComponent } from './components/search-filter/search-filter.
         SearchFormComponent,
         SearchContributorsComponent,
         SearchGroupsComponent,
-        SearchOrganismsComponent
+        SearchOrganismsComponent,
+        SearchRelationComponent,
+        SearchHistoryComponent
     ],
     imports: [
         CommonModule,
@@ -30,7 +34,9 @@ import { SearchFilterComponent } from './components/search-filter/search-filter.
         SearchFormComponent,
         SearchContributorsComponent,
         SearchGroupsComponent,
-        SearchOrganismsComponent
+        SearchOrganismsComponent,
+        SearchRelationComponent,
+        SearchHistoryComponent
     ]
 })
 export class NoctuaSearchBaseModule {

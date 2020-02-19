@@ -15,6 +15,17 @@
   border-left: #BBB solid 1px;
 }
 
+
+$rotate-relation: 155deg;
+
+.icon-rotate-relation {
+  -webkit-transform: rotate($rotate-relation);
+  -moz-transform: rotate($rotate-relation);
+  -ms-transform: rotate($rotate-relation);
+  -o-transform: rotate($rotate-relation);
+  transform: rotate($rotate-relation);
+}
+
 :host {
   padding: 0px;
   width: 100%;

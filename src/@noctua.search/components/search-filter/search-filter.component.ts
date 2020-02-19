@@ -63,7 +63,8 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
       groups: new FormControl(),
       organisms: new FormControl(),
       titles: new FormControl(),
-      states: new FormControl()
+      states: new FormControl(),
+      dates: new FormControl()
     });
   }
 
@@ -124,11 +125,11 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
   }
 
   termDisplayFn(term): string | undefined {
-    return term ? term.label : undefined;
+    return term && term.id ? `${term.label} (${term.id})` : undefined;
   }
 
   evidenceDisplayFn(evidence): string | undefined {
-    return evidence ? evidence.label : undefined;
+    return evidence && evidence.id ? `${evidence.label} (${evidence.id})` : undefined;
   }
 
   contributorDisplayFn(contributor: Contributor): string | undefined {
