@@ -20,10 +20,8 @@ export const environment = {
   globalGolrNeoServer: 'http://noctua-golr.berkeleybop.org/',
   globalMinervaDefinitionName: minervaDefinitionName,
   globalBaristaLocation: baristaLocation,
-  //Workbench
   noctuaUrl: `${window.location.origin}`,
   workbenchUrl: `${window.location.origin}/workbench/`,
-
   amigoTerm: 'http://amigo.geneontology.org/amigo/term/',
   wikidataSparqlUrl: 'https://query.wikidata.org/sparql',
   pubMedSummaryApi: 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&retmode=json&id='
