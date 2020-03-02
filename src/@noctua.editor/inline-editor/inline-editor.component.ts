@@ -7,7 +7,6 @@ import { cloneDeep } from 'lodash';
 
 import { InlineEditorService, EditorDropdownDialogConfig } from './inline-editor.service';
 
-import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 import {
     CamService,
     NoctuaAnnotonEntityService,
@@ -35,7 +34,6 @@ export class NoctuaInlineEditorComponent implements OnInit, OnDestroy {
 
     @ViewChild('editorDropdownTrigger', { read: ElementRef, static: false })
     private editorDropdownTrigger: ElementRef;
-
     private _unsubscribeAll: Subject<any>;
 
     constructor(private inlineEditorService: InlineEditorService,
@@ -48,8 +46,6 @@ export class NoctuaInlineEditorComponent implements OnInit, OnDestroy {
     ngOnInit(): void { }
 
     openEditorDropdown(event) {
-
-        console.log(event)
         const data = {
             cam: this.cam,
             annoton: this.annoton,

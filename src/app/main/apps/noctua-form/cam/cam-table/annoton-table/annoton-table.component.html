@@ -8,7 +8,12 @@
           <td mat-cell *matCellDef="let entity" fxFlex="120px">
             <p class="">
               <strong> {{entity.qualifier}} </strong>
-              {{entity.relationship}}</p>
+              {{entity.relationship}}
+            </p>
+            <noctua-inline-editor *ngIf="noctuaUserService.user && entity.relationEditable" [cam]="cam"
+              [annoton]='annoton' [entity]="entity.node" [category]="EditorCategory.relationship"
+              class="noc-edit-button">
+            </noctua-inline-editor>
           </td>
         </ng-container>
         <ng-container matColumnDef="aspect">

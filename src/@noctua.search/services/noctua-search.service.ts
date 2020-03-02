@@ -50,7 +50,7 @@ export class NoctuaSearchService {
         }, species: {
             id: 5
         }
-    }
+    };
 
     selectedLeftPanel;
 
@@ -130,7 +130,6 @@ export class NoctuaSearchService {
         searchCriteria.gp ? this.searchCriteria.gps.push(searchCriteria.gp) : null;
         searchCriteria.organism ? this.searchCriteria.organisms.push(searchCriteria.organism) : null;
         searchCriteria.state ? this.searchCriteria.states.push(searchCriteria.state) : null;
-
         searchCriteria.date ? this.searchCriteria.dates.push(searchCriteria.date) : null;
 
         this.updateSearch();

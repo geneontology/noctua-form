@@ -67,7 +67,6 @@ export class AnnotonEntityFormComponent implements OnInit, OnDestroy {
         this.annoton = this.noctuaAnnotonEntityService.annoton;
         this.termNode = this.noctuaAnnotonEntityService.entity;
 
-        console.log(this.termNode)
       });
 
     this.camService.onCamChanged.subscribe((cam) => {
