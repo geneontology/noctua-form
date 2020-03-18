@@ -16,7 +16,6 @@ import {
 } from 'noctua-form-base';
 import { InlineReferenceService } from '@noctua.editor/inline-reference/inline-reference.service';
 import { each, find } from 'lodash';
-import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
 import { SearchCriteria } from '@noctua.search/models/search-criteria';
 
 @Component({
@@ -42,7 +41,6 @@ export class EntityFormComponent implements OnInit, OnDestroy {
   constructor(
     private noctuaFormDialogService: NoctuaFormDialogService,
     private camService: CamService,
-    private noctuaSearchService: NoctuaSearchService,
     private inlineReferenceService: InlineReferenceService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     public noctuaAnnotonFormService: NoctuaAnnotonFormService) {

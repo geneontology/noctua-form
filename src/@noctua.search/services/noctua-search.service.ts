@@ -16,7 +16,8 @@ import {
     NoctuaUserService,
     Entity,
     Article,
-    noctuaFormConfig
+    noctuaFormConfig,
+    CamPage
 } from 'noctua-form-base';
 import { SearchCriteria } from './../models/search-criteria';
 
@@ -53,27 +54,25 @@ export class NoctuaSearchService {
     };
 
     selectedLeftPanel;
-
     onContributorsChanged: BehaviorSubject<any>;
     onGroupsChanged: BehaviorSubject<any>;
     onOrganismsChanged: BehaviorSubject<any>;
-
     contributors: Contributor[] = [];
     groups: Group[] = [];
     organisms: Organism[] = [];
     states: any[] = [];
 
-    private leftDrawer: MatDrawer;
-    private rightDrawer: MatDrawer;
     onSearcCriteriaChanged: BehaviorSubject<any>;
     baseUrl = environment.spaqrlApiUrl;
     curieUtil: any;
     cams: any[] = [];
+    camPage: CamPage;
     searchCriteria: SearchCriteria;
     baristaApi = environment.globalBaristaLocation;
     separator = '@@';
     loading = false;
     onCamsChanged: BehaviorSubject<any>;
+    onCamsPageChanged: BehaviorSubject<any>;
     onCamChanged: BehaviorSubject<any>;
     onContributorFilterChanged: BehaviorSubject<any>;
     searchSummary: any = {};
@@ -90,6 +89,9 @@ export class NoctuaSearchService {
         dates: 'dates'
     };
 
+    private leftDrawer: MatDrawer;
+    private rightDrawer: MatDrawer;
+
     constructor(private httpClient: HttpClient,
         public noctuaFormConfigService: NoctuaFormConfigService,
         public noctuaUserService: NoctuaUserService,
@@ -98,13 +100,13 @@ export class NoctuaSearchService {
         this.onGroupsChanged = new BehaviorSubject([]);
         this.onOrganismsChanged = new BehaviorSubject([]);
         this.onCamsChanged = new BehaviorSubject([]);
+        this.onCamsPageChanged = new BehaviorSubject(null);
         this.onCamChanged = new BehaviorSubject([]);
 
         this.selectedLeftPanel = this.leftPanel.search;
         this.states = this.noctuaFormConfigService.modelState.options;
         this.searchCriteria = new SearchCriteria();
         this.onSearcCriteriaChanged = new BehaviorSubject(null);
-
         this.curieUtil = this.curieService.getCurieUtil();
 
         this.onSearcCriteriaChanged.subscribe((searchCriteria: SearchCriteria) => {
@@ -115,6 +117,12 @@ export class NoctuaSearchService {
             this.getCams(searchCriteria).subscribe((response: any) => {
                 this.cams = this.cams = response;
                 this.onCamsChanged.next(this.cams);
+            });
+
+            this.getCamsCount(searchCriteria).subscribe((response: any) => {
+                this.camPage = new CamPage();
+                this.camPage.total = response.n;
+                this.onCamsPageChanged.next(this.camPage);
             });
         });
     }
@@ -234,6 +242,16 @@ export class NoctuaSearchService {
                     self.loading = false;
                 })
             );
+    }
+
+    getCamsCount(searchCriteria: SearchCriteria): Observable<any> {
+        const self = this;
+        const query = searchCriteria.build();
+        const url = `${this.baristaApi}/search?${query}&count`;
+
+        return this.httpClient
+            .get(url)
+            .pipe();
     }
 
     addCam(res) {

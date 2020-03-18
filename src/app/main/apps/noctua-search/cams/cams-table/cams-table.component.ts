@@ -1,34 +1,24 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormArray } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { MatPaginator, MatSort, MatDrawer } from '@angular/material';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { DataSource, CollectionViewer } from '@angular/cdk/collections';
-import { merge, Observable, BehaviorSubject, fromEvent, Subject, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { Observable, BehaviorSubject, Subject, Subscription } from 'rxjs';
 
 import { noctuaAnimations } from '@noctua/animations';
 
-import { takeUntil, startWith } from 'rxjs/internal/operators';
+import { takeUntil } from 'rxjs/internal/operators';
 
 
 import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 
 import {
-  NoctuaGraphService,
   NoctuaFormConfigService,
-  NoctuaLookupService,
-  CamService,
-  noctuaFormConfig
+  CamService
 } from 'noctua-form-base';
 
-import {
-  Cam,
-  Annoton,
-  AnnotonNode
-} from 'noctua-form-base';
-import { NoctuaFormService } from './../../../noctua-form/services/noctua-form.service';
+import { Cam, CamPage } from 'noctua-form-base';
 import { SearchService } from 'app/main/apps/noctua-search/services/search.service';
+import { MatPaginator } from '@angular/material';
 
 @Component({
   selector: 'noc-cams-table',
@@ -38,6 +28,9 @@ import { SearchService } from 'app/main/apps/noctua-search/services/search.servi
 })
 export class CamsTableComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any>;
+
+  @ViewChild(MatPaginator, { static: true })
+  paginator: MatPaginator;
 
   displayedColumns = [
     'title',
@@ -56,30 +49,39 @@ export class CamsTableComponent implements OnInit, OnDestroy {
   };
 
   cams: any[] = [];
-  searchResults = [];
-  dataSource: CamsDataSource;
+  camPage: CamPage;
 
   constructor(
     public noctuaFormConfigService: NoctuaFormConfigService,
     public noctuaSearchService: NoctuaSearchService,
     public searchService: SearchService,
-    private camService: CamService,
     public sparqlService: SparqlService) {
 
     this._unsubscribeAll = new Subject();
-
     this.searchFormData = this.noctuaFormConfigService.createSearchFormData();
 
-    this.dataSource = new CamsDataSource(camService);
   }
 
   ngOnInit(): void {
 
+    console.log('pp')
+
     this.noctuaSearchService.onCamsChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(cams => {
+        if (!cams) {
+          return;
+        }
         this.cams = cams;
-        console.log(cams)
+      });
+
+    this.noctuaSearchService.onCamsPageChanged
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((camPage: CamPage) => {
+        if (!camPage) {
+          return;
+        }
+        this.camPage = camPage;
       });
   }
 
@@ -101,29 +103,3 @@ export class CamsTableComponent implements OnInit, OnDestroy {
   }
 }
 
-
-export class CamsDataSource extends DataSource<Cam | undefined> {
-  private cachedCams = Array.from<Cam>({ length: 0 });
-  private dataStream = new BehaviorSubject<(Cam | undefined)[]>(this.cachedCams);
-  private subscription = new Subscription();
-
-  constructor(private camService: CamService) {
-    super();
-  }
-
-  connect(collectionViewer: CollectionViewer): Observable<(Cam | undefined)[] | ReadonlyArray<Cam | undefined>> {
-    this.subscription.add(collectionViewer.viewChange.subscribe(range => {
-      // const currentPage = this._getPageForIndex(range.end);
-
-      //  if (currentPage > this.lastPage) {
-      //    this.lastPage = currentPage;
-      //    this._fetchFactPage();
-      // }
-    }));
-    return this.dataStream;
-  }
-
-  disconnect(collectionViewer: CollectionViewer): void {
-    this.subscription.unsubscribe();
-  }
-}

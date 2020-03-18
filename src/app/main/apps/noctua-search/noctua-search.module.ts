@@ -4,8 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { NoctuaSharedModule } from '@noctua/shared.module';
 import { ContextMenuModule } from 'ngx-contextmenu';
 import { NoctuaFormModule } from './../noctua-form/noctua-form.module'
-
-import { CamService } from 'noctua-form-base';
 import { CamsTableComponent } from './cams/cams-table/cams-table.component';
 import { NoctuaSearchComponent } from './noctua-search.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
