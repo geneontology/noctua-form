@@ -9,7 +9,6 @@ import { Subject } from 'rxjs';
 import * as _ from 'lodash';
 import { Cam } from 'noctua-form-base';
 
-import { NoctuaTranslationLoaderService } from '../../../../../../@noctua/services/translation-loader.service';
 import { NoctuaFormConfigService } from 'noctua-form-base';
 import { NoctuaGraphService } from 'noctua-form-base';
 import { NoctuaLookupService } from 'noctua-form-base';
@@ -40,7 +39,7 @@ export class CamRowEditDialogComponent implements OnInit, OnDestroy {
     private noctuaLookupService: NoctuaLookupService,
     private noctuaGraphService: NoctuaGraphService,
     private sparqlService: SparqlService,
-    private noctuaTranslationLoader: NoctuaTranslationLoaderService
+
   ) {
     this._unsubscribeAll = new Subject();
 

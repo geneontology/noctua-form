@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
 import { ContextMenuModule } from 'ngx-contextmenu';
 import 'hammerjs';
 import { MatSidenavModule } from '@angular/material';
@@ -35,7 +34,6 @@ const appRoutes: Routes = [
         HttpClientModule,
         HttpClientJsonpModule,
         RouterModule.forRoot(appRoutes),
-        TranslateModule.forRoot(),
 
         // Noctua Main and Shared modules
         NoctuaModule.forRoot(noctuaConfig),
