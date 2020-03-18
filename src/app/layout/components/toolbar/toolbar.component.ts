@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router, ActivatedRoute } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 
 import {
     Cam,
@@ -37,6 +36,7 @@ export class NoctuaToolbarComponent implements OnInit, OnDestroy {
     navigation: any;
     noctuaFormUrl = '';
     loginUrl = '';
+    logoutUrl = '';
     noctuaUrl = '';
 
     private _unsubscribeAll: Subject<any>;
@@ -63,8 +63,12 @@ export class NoctuaToolbarComponent implements OnInit, OnDestroy {
                 const noctuaFormReturnUrl = `${environment.workbenchUrl}noctua-form/?model_id=${modelId}`;
                 const baristaParams = { 'barista_token': baristaToken };
                 const modelIdParams = { 'model_id': modelId };
+                const returnUrlParams = { 'return': noctuaFormReturnUrl };
 
-                this.loginUrl = `${environment.globalBaristaLocation}/login?return=${noctuaFormReturnUrl}`;
+                this.loginUrl = environment.globalBaristaLocation + '/login?' +
+                    self._parameterize(Object.assign({}, returnUrlParams));
+                this.logoutUrl = environment.globalBaristaLocation + '/logout?' +
+                    self._parameterize(Object.assign({}, baristaParams, returnUrlParams));
                 this.noctuaUrl = environment.noctuaUrl + '?' + (baristaToken ? self._parameterize(Object.assign({}, baristaParams)) : '');
                 this.noctuaFormUrl = environment.workbenchUrl + 'noctua-form?'
                     + (baristaToken ? self._parameterize(Object.assign({}, modelIdParams, baristaParams)) : '');

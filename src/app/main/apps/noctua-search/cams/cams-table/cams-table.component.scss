@@ -1,12 +1,43 @@
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
 
+$primary: map-get($theme, primary);
+$accent: map-get($theme, accent);
 
+$rotate-graph: 235deg;
 
 :host {
   padding: 0px;
   width: 100%;
   background-color: #F7F7F7;
+
+  .icon-rotate-graph {
+    -webkit-transform: rotate($rotate-graph);
+    -moz-transform: rotate($rotate-graph);
+    -ms-transform: rotate($rotate-graph);
+    -o-transform: rotate($rotate-graph);
+    transform: rotate($rotate-graph);
+  }
+
+
+
+  .noc-search-table-header {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1000;
+    @include deep-height(30px);
+    border-bottom: $noc-primary-color-light solid 1px;
+
+    .noc-header-cell {
+      padding: 0 10px;
+      font-size: 10px;
+      color: map-get($primary, default);
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+  }
 
   .noc-drawer-container {
     background-color: #DDD;
@@ -35,64 +66,13 @@
     white-space: nowrap;
   }
 
-  .noc-sidemenu {
-    padding: 10px 0;
-    margin-right: 5px;
-    @include deep-height(100%);
-    @include deep-width(50px);
-    @include mat-elevation(4);
-    background-color: #CCC;
-    border-right: #999 solid 1px;
-  }
 
-  .noc-cam-table-heading {
-    padding: 8px 12px 8px 0;
-    margin-bottom: 4px;
-    min-height: 40px;
+  .noc-cams-table {
     background-color: #F7F7F7;
     font-size: 12px;
 
     //  @include mat-elevation(1);
 
-    .noc-title {
-      font-size: 12px;
-    }
-
-    .noc-model-state {
-      mat-chip {
-        @include deep-height(25px);
-        font-size: 10px;
-      }
-
-    }
-
-  }
-
-  .noc-cam-table-body {
-    background-color: #FFF;
-  }
-
-  .noc-form-container {
-    background-color: #EEE;
-    padding: 20px 10px;
-  }
-
-  .noc-toolbar {
-    padding: 0px 20px;
-    height: 40px;
-    width: 100%;
-    background-color: #F2F2F2;
-    border-bottom: #BBB solid 1px;
-
-    .noc-title {
-      line-height: 38px;
-      color: #555;
-      font-size: 14px;
-      font-weight: bold;
-    }
-  }
-
-  .cams-table {
     width: 100%;
     @include deep-height(100%);
     padding-bottom: 300px;
@@ -101,12 +81,31 @@
     //    border-bottom: 1px solid rgba(0, 0, 0, .12);
     //  overflow: auto;
 
+    table {
+      @include deep-width(100%);
+    }
 
-    .cam {
-      position: relative;
-      cursor: pointer;
-      min-height: 40px;
-      font-size: 12px;
+    tr.mat-row {
+      height: auto;
+      // padding: 10px 5px;
+    }
+
+
+    .mat-header-cell {
+      padding: 0 10px;
+      font-size: 10px !important;
+      //color: #0F0; // map-get($primary, default);
+      font-weight: bold;
+      color: map-get($primary, default);
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .mat-header-row {
+
+      @include deep-height(30px);
+      border-bottom: $noc-primary-color-light solid 1px;
+
     }
 
     .mat-cell {
@@ -123,22 +122,35 @@
       flex: 0 1 80px;
     }
 
-    /* .mat-header-cell {
-      display:flex;
-      justify-content:flex-end;
-     } */
+    .noc-title {
+      font-size: 12px;
+    }
+
+    .noc-model-state {
+      mat-chip {
+        @include deep-height(25px);
+        font-size: 10px;
+      }
+
+    }
+
   }
 
-  .noc-left-drawer {
-    @include deep-height(100%);
-    background-color: #FFF;
-    border-right: #BBB solid 1px;
-    @include mat-elevation(4);
+
+
+  .noc-toolbar {
+    padding: 0px 20px;
+    height: 40px;
+    width: 100%;
+    background-color: #F2F2F2;
+    border-bottom: #BBB solid 1px;
+
+    .noc-title {
+      line-height: 38px;
+      color: #555;
+      font-size: 14px;
+      font-weight: bold;
+    }
   }
 
-  .noc-right-drawer {
-    @include deep-height(100%);
-    background-color: #FFF;
-    border-left: #BBB solid 1px;
-  }
 }

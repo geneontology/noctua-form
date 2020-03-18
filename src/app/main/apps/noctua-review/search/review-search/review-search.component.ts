@@ -14,7 +14,7 @@ import { takeUntil } from 'rxjs/internal/operators';
 
 import { ReviewService } from '../../services/review.service';
 
-import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loader.service';
+
 import { NoctuaFormConfigService, NoctuaUserService } from 'noctua-form-base';
 import { NoctuaLookupService } from 'noctua-form-base';
 import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
@@ -50,7 +50,7 @@ export class ReviewSearchComponent implements OnInit, OnDestroy {
     private reviewService: ReviewService,
     private sparqlService: SparqlService,
     private noctuaDataService: NoctuaDataService,
-    private noctuaTranslationLoader: NoctuaTranslationLoaderService) {
+  ) {
     this.searchForm = this.createAnswerForm();
 
     this.unsubscribeAll = new Subject();

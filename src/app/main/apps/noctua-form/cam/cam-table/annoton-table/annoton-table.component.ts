@@ -1,5 +1,4 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 
 import { noctuaAnimations } from './../../../../../../../@noctua/animations';
@@ -11,13 +10,10 @@ import "rxjs/add/operator/distinctUntilChanged";
 import { NoctuaFormService } from './../../../services/noctua-form.service';
 import { CamTableService } from './../services/cam-table.service';
 import { NoctuaFormDialogService } from './../../../services/dialog.service';
-import { NoctuaSearchService } from './../../../../../../../@noctua.search/services/noctua-search.service';
 
 import {
-  NoctuaGraphService,
   NoctuaFormConfigService,
   NoctuaAnnotonFormService,
-  NoctuaLookupService,
   NoctuaAnnotonEntityService,
   CamService,
   Evidence,
@@ -33,12 +29,9 @@ import {
   InsertEntityDefinition
 } from 'noctua-form-base';
 
-import { SparqlService } from './../../../../../../../@noctua.sparql/services/sparql/sparql.service';
 import { EditorCategory } from '@noctua.editor/models/editor-category';
-
 import { find } from 'lodash';
 import { InlineEditorService } from '@noctua.editor/inline-editor/inline-editor.service';
-import { NoctuaEditorDialogService } from '@noctua.editor/services/dialog.service';
 
 @Component({
   selector: 'noc-annoton-table',

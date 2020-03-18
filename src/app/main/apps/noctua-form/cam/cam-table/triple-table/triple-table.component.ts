@@ -85,7 +85,6 @@ export class TripleTableComponent implements OnInit, OnDestroy {
 
   loadCam() {
     this.grid = this.cam.generateTripleGrid();
-    console.log(this.grid);
   }
 
   selectTriple(triple) {

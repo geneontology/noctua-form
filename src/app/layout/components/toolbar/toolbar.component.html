@@ -44,13 +44,8 @@
     </ng-template>
   </div>
   <span fxFlex=""></span>
-  <div *ngIf="!noctuaUserService.user" fxLayout="row" fxLayoutAlign="end center" fxFlex="250px">
-    <a mat-button href="{{loginUrl}}">
-      Login
-    </a>
-  </div>
   <div *ngIf="noctuaUserService.user" fxLayout="row" fxLayoutAlign="end center" fxFlex="250px">
-    <button mat-button class="noc-name-button">
+    <button mat-button class="noc-name-button" [matMenuTriggerFor]="userMenu">
       <div fxLayout="row" fxLayoutAlign="start center">
         <div class="noc-info" fxLayout="column" fxLayoutAlign="start start">
           <div class="noc-name text-truncate">
@@ -60,8 +55,18 @@
             {{noctuaUserService.user?.group?.label}}
           </div>
         </div>
-        <b class="caret"></b>
+        <mat-icon>arrow_drop_down</mat-icon>
       </div>
     </button>
+    <mat-menu #userMenu="matMenu" class="">
+      <a mat-button href="{{logoutUrl}}" class="red-500-fg w-100-p">
+        Logout
+      </a>
+    </mat-menu>
+  </div>
+  <div *ngIf="!noctuaUserService.user" fxLayout="row" fxLayoutAlign="end center" fxFlex="150px">
+    <a mat-button href="{{loginUrl}}" class="green-300-bg">
+      Login
+    </a>
   </div>
 </mat-toolbar>

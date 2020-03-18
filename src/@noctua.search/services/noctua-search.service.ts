@@ -16,7 +16,8 @@ import {
     NoctuaUserService,
     Entity,
     Article,
-    noctuaFormConfig
+    noctuaFormConfig,
+    CamPage
 } from 'noctua-form-base';
 import { SearchCriteria } from './../models/search-criteria';
 
@@ -50,30 +51,28 @@ export class NoctuaSearchService {
         }, species: {
             id: 5
         }
-    }
+    };
 
     selectedLeftPanel;
-
     onContributorsChanged: BehaviorSubject<any>;
     onGroupsChanged: BehaviorSubject<any>;
     onOrganismsChanged: BehaviorSubject<any>;
-
     contributors: Contributor[] = [];
     groups: Group[] = [];
     organisms: Organism[] = [];
     states: any[] = [];
 
-    private leftDrawer: MatDrawer;
-    private rightDrawer: MatDrawer;
     onSearcCriteriaChanged: BehaviorSubject<any>;
     baseUrl = environment.spaqrlApiUrl;
     curieUtil: any;
     cams: any[] = [];
+    camPage: CamPage;
     searchCriteria: SearchCriteria;
     baristaApi = environment.globalBaristaLocation;
     separator = '@@';
     loading = false;
     onCamsChanged: BehaviorSubject<any>;
+    onCamsPageChanged: BehaviorSubject<any>;
     onCamChanged: BehaviorSubject<any>;
     onContributorFilterChanged: BehaviorSubject<any>;
     searchSummary: any = {};
@@ -86,25 +85,28 @@ export class NoctuaSearchService {
         contributors: 'contributors',
         groups: 'groups',
         organisms: 'organisms',
-        states: 'states'
+        states: 'states',
+        dates: 'dates'
     };
+
+    private leftDrawer: MatDrawer;
+    private rightDrawer: MatDrawer;
 
     constructor(private httpClient: HttpClient,
         public noctuaFormConfigService: NoctuaFormConfigService,
         public noctuaUserService: NoctuaUserService,
-        private sparqlService: SparqlService,
-        private curieService: CurieService,
-        private _router: Router) {
+        private curieService: CurieService) {
         this.onContributorsChanged = new BehaviorSubject([]);
         this.onGroupsChanged = new BehaviorSubject([]);
         this.onOrganismsChanged = new BehaviorSubject([]);
+        this.onCamsChanged = new BehaviorSubject([]);
+        this.onCamsPageChanged = new BehaviorSubject(null);
+        this.onCamChanged = new BehaviorSubject([]);
 
         this.selectedLeftPanel = this.leftPanel.search;
         this.states = this.noctuaFormConfigService.modelState.options;
         this.searchCriteria = new SearchCriteria();
         this.onSearcCriteriaChanged = new BehaviorSubject(null);
-        this.onCamsChanged = new BehaviorSubject({});
-        this.onCamChanged = new BehaviorSubject({});
         this.curieUtil = this.curieService.getCurieUtil();
 
         this.onSearcCriteriaChanged.subscribe((searchCriteria: SearchCriteria) => {
@@ -113,8 +115,14 @@ export class NoctuaSearchService {
             }
 
             this.getCams(searchCriteria).subscribe((response: any) => {
-                this.sparqlService.cams = this.cams = response;
-                this.sparqlService.onCamsChanged.next(this.cams);
+                this.cams = this.cams = response;
+                this.onCamsChanged.next(this.cams);
+            });
+
+            this.getCamsCount(searchCriteria).subscribe((response: any) => {
+                this.camPage = new CamPage();
+                this.camPage.total = response.n;
+                this.onCamsPageChanged.next(this.camPage);
             });
         });
     }
@@ -130,6 +138,7 @@ export class NoctuaSearchService {
         searchCriteria.gp ? this.searchCriteria.gps.push(searchCriteria.gp) : null;
         searchCriteria.organism ? this.searchCriteria.organisms.push(searchCriteria.organism) : null;
         searchCriteria.state ? this.searchCriteria.states.push(searchCriteria.state) : null;
+        searchCriteria.date ? this.searchCriteria.dates.push(searchCriteria.date) : null;
 
         this.updateSearch();
     }
@@ -147,6 +156,8 @@ export class NoctuaSearchService {
             new Entity(param.gp, '')) : null;
         param.organism ? this.searchCriteria.organisms.push(param.organism) : null;
         param.state ? this.searchCriteria.states.push(param.state) : null;
+
+        param.date ? this.searchCriteria.dates.push(param.date) : null;
 
         this.updateSearch();
     }
@@ -207,6 +218,10 @@ export class NoctuaSearchService {
             this.searchCriteria.states = searchCriteria.states;
         }
 
+        if (searchCriteria.dates) {
+            this.searchCriteria.dates = searchCriteria.dates;
+        }
+
         this.updateSearch();
     }
 
@@ -227,6 +242,16 @@ export class NoctuaSearchService {
                     self.loading = false;
                 })
             );
+    }
+
+    getCamsCount(searchCriteria: SearchCriteria): Observable<any> {
+        const self = this;
+        const query = searchCriteria.build();
+        const url = `${this.baristaApi}/search?${query}&count`;
+
+        return this.httpClient
+            .get(url)
+            .pipe();
     }
 
     addCam(res) {
@@ -293,7 +318,6 @@ export class NoctuaSearchService {
     }
 
     getPubmedInfo(pmid: string) {
-        const self = this;
         const url = environment.pubMedSummaryApi + pmid;
 
         return this.httpClient

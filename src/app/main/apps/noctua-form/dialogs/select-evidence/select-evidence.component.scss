@@ -124,6 +124,8 @@ $accent: map-get($theme, accent);
     margin: 0;
     padding: 0;
     @include deep-width(100%);
+    max-height: 65vh;
+    overflow: auto;
   }
 
   .mat-dialog-container {

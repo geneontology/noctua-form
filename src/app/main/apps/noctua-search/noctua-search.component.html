@@ -1,39 +1,46 @@
 <div class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
   <div class="noc-sidemenu" fxLayout="column" fxLayoutAlign="start center">
     <button mat-icon-button color="primary" class="noc-rounded-button"
-      (click)="toggleLeftDrawer(reviewService.leftPanel.search)" matTooltip="Search" [matTooltipPosition]="'after'"
+      (click)="toggleLeftDrawer(searchService.leftPanel.filter)" matTooltip="Filter" [matTooltipPosition]="'after'"
       [matTooltipShowDelay]="1500">
       <mat-icon> search </mat-icon>
     </button>
-    <button mat-icon-button color="primary" class="noc-rounded-button"
-      (click)="toggleLeftDrawer(reviewService.leftPanel.filter)" matTooltip="Filter" [matTooltipPosition]="'after'"
-      [matTooltipShowDelay]="1500">
-      <mat-icon> filter_list </mat-icon>
-    </button>
     <button mat-icon-button color="primary" class="noc-rounded-button" (click)="
-      toggleLeftDrawer(reviewService.leftPanel.group)" matTooltip="Search by group" [matTooltipPosition]="'after'"
+      toggleLeftDrawer(searchService.leftPanel.group)" matTooltip="Browse by group" [matTooltipPosition]="'after'"
       [matTooltipShowDelay]="1000">
       <mat-icon> people_outline </mat-icon>
     </button>
     <button mat-icon-button color="primary" class="noc-rounded-button" (click)="
-      toggleLeftDrawer(reviewService.leftPanel.contributor)" matTooltip="Search by contributor"
+      toggleLeftDrawer(searchService.leftPanel.contributor)" matTooltip="Browse by contributor"
       [matTooltipPosition]="'after'" [matTooltipShowDelay]="1000">
       <mat-icon>person_outline</mat-icon>
     </button>
-    <!--    <button mat-icon-button color="primary" class="noc-rounded-button" (click)="
-      toggleLeftDrawer(reviewService.leftPanel.species)" matTooltip="Search by species" [matTooltipPosition]="'after'"
+    <button mat-icon-button color="primary" class="noc-rounded-button" (click)="
+      toggleLeftDrawer(searchService.leftPanel.species)" matTooltip="Search by species" [matTooltipPosition]="'after'"
       [matTooltipShowDelay]="1000">
       <mat-icon> pets </mat-icon>
-    </button> -->
+    </button>
+    <button mat-icon-button color="primary" class="noc-rounded-button"
+      (click)="toggleLeftDrawer(searchService.leftPanel.relation)" matTooltip="Relation Search"
+      [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
+      <mat-icon class="icon-rotate-relation"> linear_scale </mat-icon>
+    </button>
+    <button mat-icon-button color="primary" class="noc-rounded-button"
+      (click)="toggleLeftDrawer(searchService.leftPanel.history)" matTooltip="History" [matTooltipPosition]="'after'"
+      [matTooltipShowDelay]="1500">
+      <mat-icon> history </mat-icon>
+    </button>
   </div>
   <mat-drawer-container class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start" autosize>
-    <mat-drawer #leftDrawer class="noc-left-drawer" mode="side" position="start">
-      <div [ngSwitch]="reviewService.selectedLeftPanel?.id" class="h-100-p">
-        <noc-review-search *ngSwitchCase="reviewService.leftPanel.search.id"></noc-review-search>
-        <noc-review-filter *ngSwitchCase="reviewService.leftPanel.filter.id"></noc-review-filter>
-        <noc-review-groups *ngSwitchCase="reviewService.leftPanel.group.id"></noc-review-groups>
-        <noc-review-contributors *ngSwitchCase="reviewService.leftPanel.contributor.id"></noc-review-contributors>
-        <noc-review-organisms *ngSwitchCase="reviewService.leftPanel.species.id"></noc-review-organisms>
+    <mat-drawer #leftDrawer class="noc-left-drawer" mode="side" position="start" opened>
+      <div [ngSwitch]="searchService.selectedLeftPanel?.id" class="h-100-p">
+        <noc-search-form *ngSwitchCase="searchService.leftPanel.search.id"></noc-search-form>
+        <noc-search-filter *ngSwitchCase="searchService.leftPanel.filter.id"></noc-search-filter>
+        <noc-search-relation *ngSwitchCase="searchService.leftPanel.relation.id"></noc-search-relation>
+        <noc-search-groups *ngSwitchCase="searchService.leftPanel.group.id"></noc-search-groups>
+        <noc-search-contributors *ngSwitchCase="searchService.leftPanel.contributor.id"></noc-search-contributors>
+        <noc-search-organisms *ngSwitchCase="searchService.leftPanel.species.id"></noc-search-organisms>
+        <noc-search-history *ngSwitchCase="searchService.leftPanel.history.id"></noc-search-history>
       </div>
     </mat-drawer>
     <mat-drawer-content class="noc-section-body w-100-p h-100-p" fxLayout="column" fxLayoutAlign="start stretch">
@@ -43,43 +50,43 @@
           <small class="mr-12">Filtered By: </small>
           <mat-chip-list>
             <mat-chip *ngIf="noctuaSearchService.searchCriteria.gps.length>0"
-              (click)="toggleLeftDrawer(reviewService.leftPanel.filter)" [removable]="true"
+              (click)="toggleLeftDrawer(searchService.leftPanel.filter)" [removable]="true"
               (removed)="noctuaSearchService.removeFilterType(noctuaSearchService.filterType.gps)">
               <small>GPs: </small> ({{ noctuaSearchService.searchCriteria.gps.length}})
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
             <mat-chip *ngIf="noctuaSearchService.searchCriteria.goterms.length>0"
-              (click)="toggleLeftDrawer(reviewService.leftPanel.filter)" [removable]="true"
+              (click)="toggleLeftDrawer(searchService.leftPanel.filter)" [removable]="true"
               (removed)="noctuaSearchService.removeFilterType(noctuaSearchService.filterType.goterms)">
               <small>GO Terms: </small> ({{ noctuaSearchService.searchCriteria.goterms.length}})
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
             <mat-chip *ngIf="noctuaSearchService.searchCriteria.contributors.length>0"
-              (click)="toggleLeftDrawer(reviewService.leftPanel.filter)" [removable]="true"
+              (click)="toggleLeftDrawer(searchService.leftPanel.filter)" [removable]="true"
               (removed)="noctuaSearchService.removeFilterType(noctuaSearchService.filterType.contributors)">
               <small>Contributors: </small> ({{ noctuaSearchService.searchCriteria.contributors.length}})
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
             <mat-chip *ngIf="noctuaSearchService.searchCriteria.groups.length>0"
-              (click)="toggleLeftDrawer(reviewService.leftPanel.filter)" [removable]="true"
+              (click)="toggleLeftDrawer(searchService.leftPanel.filter)" [removable]="true"
               (removed)="noctuaSearchService.removeFilterType(noctuaSearchService.filterType.groups)">
               <small>Groups: </small> ({{ noctuaSearchService.searchCriteria.groups.length}})
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
             <mat-chip *ngIf="noctuaSearchService.searchCriteria.organisms.length>0"
-              (click)="toggleLeftDrawer(reviewService.leftPanel.filter)" [removable]="true"
+              (click)="toggleLeftDrawer(searchService.leftPanel.filter)" [removable]="true"
               (removed)="noctuaSearchService.removeFilterType(noctuaSearchService.filterType.organisms)">
               <small>Species: </small> ({{ noctuaSearchService.searchCriteria.organisms.length}})
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
             <mat-chip *ngIf="noctuaSearchService.searchCriteria.pmids.length>0"
-              (click)="toggleLeftDrawer(reviewService.leftPanel.filter)" [removable]="true"
+              (click)="toggleLeftDrawer(searchService.leftPanel.filter)" [removable]="true"
               (removed)="noctuaSearchService.removeFilterType(noctuaSearchService.filterType.pmids)">
               <small>PMIDs: </small> ({{ noctuaSearchService.searchCriteria.pmids.length}})
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
             <mat-chip *ngIf="noctuaSearchService.searchCriteria.states.length>0"
-              (click)="toggleLeftDrawer(reviewService.leftPanel.filter)" [removable]="true"
+              (click)="toggleLeftDrawer(searchService.leftPanel.filter)" [removable]="true"
               (removed)="noctuaSearchService.removeFilterType(noctuaSearchService.filterType.states)">
               <small>Model State: </small> ({{ noctuaSearchService.searchCriteria.states.length}})
               <mat-icon matChipRemove>cancel</mat-icon>
@@ -101,14 +108,6 @@
     </mat-drawer-content>
     <mat-drawer #rightDrawer class="noc-right-drawer" noctuaPerfectScrollbar mode="side" position="end">
       <div [ngSwitch]="noctuaFormService.selectedRightPanel?.id" class="h-100-p">
-        <noc-cam-form [panelDrawer]="rightDrawer" *ngSwitchCase="noctuaFormService.panel.camForm.id">
-        </noc-cam-form>
-        <noc-annoton-form [panelDrawer]="rightDrawer" *ngSwitchCase="noctuaFormService.panel.annotonForm.id">
-        </noc-annoton-form>
-        <noc-annoton-entity-form [panelDrawer]="rightDrawer"
-          *ngSwitchCase="noctuaFormService.panel.annotonEntityForm.id"></noc-annoton-entity-form>
-        <noc-annoton-connector [panelDrawer]="rightDrawer" *ngSwitchCase="noctuaFormService.panel.connectorForm.id">
-        </noc-annoton-connector>
       </div>
     </mat-drawer>
   </mat-drawer-container>

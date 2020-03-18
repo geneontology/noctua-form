@@ -93,7 +93,6 @@ export class NoctuaReferenceDropdownComponent implements OnInit, OnDestroy {
       distinctUntilChanged(),
       debounceTime(400)
     ).subscribe(data => {
-      console.log(data);
       self.article = null;
       self._updateArticle(data);
     });
@@ -116,7 +115,6 @@ export class NoctuaReferenceDropdownComponent implements OnInit, OnDestroy {
         takeUntil(this._unsubscribeAll))
         .subscribe((article: Article) => {
           self.article = article;
-          console.log(article);
         });
     }
   }

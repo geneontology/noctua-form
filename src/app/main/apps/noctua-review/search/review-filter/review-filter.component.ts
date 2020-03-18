@@ -15,7 +15,7 @@ import { takeUntil } from 'rxjs/internal/operators';
 
 import { ReviewService } from '../../services/review.service';
 
-import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loader.service';
+
 import { NoctuaFormConfigService, NoctuaUserService, Group, Contributor, Organism } from 'noctua-form-base';
 import { NoctuaLookupService } from 'noctua-form-base';
 import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
@@ -59,7 +59,7 @@ export class ReviewFilterComponent implements OnInit, OnDestroy {
     private reviewService: ReviewService,
     private sparqlService: SparqlService,
     private noctuaDataService: NoctuaDataService,
-    private noctuaTranslationLoader: NoctuaTranslationLoaderService) {
+  ) {
     this.filterForm = this.createAnswerForm();
 
     this.unsubscribeAll = new Subject();
@@ -150,11 +150,11 @@ export class ReviewFilterComponent implements OnInit, OnDestroy {
   }
 
   termDisplayFn(term): string | undefined {
-    return term ? term.label : undefined;
+    return term && term.id ? `${term.label} (${term.id})` : undefined;
   }
 
   evidenceDisplayFn(evidence): string | undefined {
-    return evidence ? evidence.label : undefined;
+    return evidence && evidence.id ? `${evidence.label} (${evidence.id})` : undefined;
   }
 
   contributorDisplayFn(contributor: Contributor): string | undefined {

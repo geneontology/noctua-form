@@ -55,7 +55,7 @@ export class AnnotonFormComponent implements OnInit, OnDestroy {
     this._unsubscribeAll = new Subject();
 
     // this.annoton = self.noctuaAnnotonFormService.annoton;
-    //  this.annotonFormPresentation = this.noctuaAnnotonFormService.annotonPresentation;
+    // this.annotonFormPresentation = this.noctuaAnnotonFormService.annotonPresentation;
   }
 
   ngOnInit(): void {

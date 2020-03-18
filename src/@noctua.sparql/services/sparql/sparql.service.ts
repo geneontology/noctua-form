@@ -45,8 +45,8 @@ export class SparqlService {
   curieUtil: any;
   cams: any[] = [];
   loading: boolean = false;
-  onCamsChanged: BehaviorSubject<any>;
-  onCamChanged: BehaviorSubject<any>;
+  //onCamsChanged: BehaviorSubject<any>;
+  //onCamChanged: BehaviorSubject<any>;
   onContributorFilterChanged: BehaviorSubject<any>;
   linker = new amigo.linker();
 
@@ -57,8 +57,8 @@ export class SparqlService {
     private httpClient: HttpClient,
     private sparqlMinervaService: SparqlMinervaService,
     private curieService: CurieService) {
-    this.onCamsChanged = new BehaviorSubject({});
-    this.onCamChanged = new BehaviorSubject({});
+    // this.onCamsChanged = new BehaviorSubject({});
+    //  this.onCamChanged = new BehaviorSubject({});
     this.curieUtil = this.curieService.getCurieUtil();
   }
 

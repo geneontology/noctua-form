@@ -73,7 +73,7 @@ export class CamsTableComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.sparqlService.onCamsChanged
+    this.noctuaSearchService.onCamsChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(cams => {
         this.cams = cams;
@@ -129,7 +129,7 @@ export class CamsTableComponent implements OnInit, OnDestroy {
   }
 
   selectCam(cam: Cam) {
-    this.sparqlService.onCamChanged.next(cam);
+    this.noctuaSearchService.onCamChanged.next(cam);
   }
 
   ngOnDestroy(): void {

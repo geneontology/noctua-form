@@ -14,7 +14,7 @@ import { takeUntil } from 'rxjs/internal/operators';
 
 import { ReviewService } from '../../services/review.service';
 
-import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loader.service';
+
 import {
   NoctuaFormConfigService,
   NoctuaUserService
@@ -47,7 +47,7 @@ export class ReviewContributorsComponent implements OnInit, OnDestroy {
     private noctuaLookupService: NoctuaLookupService,
     private reviewService: ReviewService,
     private sparqlService: SparqlService,
-    private noctuaTranslationLoader: NoctuaTranslationLoaderService) {
+  ) {
     // this.contributors = this.reviewService.contributors;
     this.searchFormData = this.noctuaFormConfigService.createSearchFormData();
     this.unsubscribeAll = new Subject();

@@ -5,9 +5,7 @@ import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { NoctuaConfigService } from '@noctua/services/config.service';
-import { TranslateService } from '@ngx-translate/core';
 import { NoctuaSplashScreenService } from '@noctua/services/splash-screen.service';
-import { NoctuaTranslationLoaderService } from '@noctua/services/translation-loader.service';
 
 
 @Component({
@@ -23,19 +21,14 @@ export class AppComponent implements OnInit, OnDestroy {
     private _unsubscribeAll: Subject<any>;
 
     constructor(
-        private translate: TranslateService,
         private noctuaSplashScreen: NoctuaSplashScreenService,
-        private noctuaTranslationLoader: NoctuaTranslationLoaderService,
         private _renderer: Renderer2,
         private _elementRef: ElementRef,
         private noctuaConfigService: NoctuaConfigService,
         private platform: Platform,
         @Inject(DOCUMENT) private document: any
     ) {
-        this.translate.addLangs(['en', 'tr']);
-        this.translate.setDefaultLang('en');
-        this.noctuaTranslationLoader.loadTranslations();
-        this.translate.use('en');
+
 
         if (this.platform.ANDROID || this.platform.IOS) {
             this.document.body.className += ' is-mobile';
