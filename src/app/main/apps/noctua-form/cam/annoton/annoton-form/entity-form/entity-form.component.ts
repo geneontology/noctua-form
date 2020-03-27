@@ -11,7 +11,7 @@ import {
   Evidence,
   noctuaFormConfig,
   Entity,
-  InsertEntityDefinition,
+  ShapeDefinition,
   AnnotonError
 } from 'noctua-form-base';
 import { InlineReferenceService } from '@noctua.editor/inline-reference/inline-reference.service';
@@ -146,7 +146,7 @@ export class EntityFormComponent implements OnInit, OnDestroy {
 
   }
 
-  insertEntity(nodeDescription: InsertEntityDefinition.InsertNodeDescription) {
+  insertEntity(nodeDescription: ShapeDefinition.ShapeDescription) {
     this.noctuaFormConfigService.insertAnnotonNode(this.noctuaAnnotonFormService.annoton, this.entity, nodeDescription);
     this.noctuaAnnotonFormService.initializeForm();
   }
