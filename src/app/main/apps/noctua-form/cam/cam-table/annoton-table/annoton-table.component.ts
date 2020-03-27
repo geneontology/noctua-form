@@ -26,7 +26,7 @@ import {
   Cam,
   Annoton,
   AnnotonNode,
-  InsertEntityDefinition
+  ShapeDefinition
 } from 'noctua-form-base';
 
 import { EditorCategory } from '@noctua.editor/models/editor-category';
@@ -154,7 +154,7 @@ export class AnnotonTableComponent implements OnInit, OnDestroy {
   }
 
 
-  insertEntity(entity: AnnotonNode, nodeDescription: InsertEntityDefinition.InsertNodeDescription) {
+  insertEntity(entity: AnnotonNode, nodeDescription: ShapeDefinition.ShapeDescription) {
     const insertedNode = this.noctuaFormConfigService.insertAnnotonNode(this.annoton, entity, nodeDescription);
     //  this.noctuaAnnotonFormService.initializeForm();
 

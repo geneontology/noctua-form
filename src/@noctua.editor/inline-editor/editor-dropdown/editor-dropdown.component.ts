@@ -8,7 +8,6 @@ import {
   CamService,
   Entity,
   noctuaFormConfig,
-  InsertEntityDefinition
 } from 'noctua-form-base';
 
 import { Cam } from 'noctua-form-base';

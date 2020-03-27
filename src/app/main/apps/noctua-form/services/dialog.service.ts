@@ -13,9 +13,6 @@ import { SelectEvidenceDialogComponent } from './../dialogs/select-evidence/sele
 import { SearchDatabaseDialogComponent } from './../dialogs/search-database/search-database.component';
 
 import {
-    Cam,
-    Annoton,
-    AnnotonNode,
     Evidence
 } from 'noctua-form-base';
 
