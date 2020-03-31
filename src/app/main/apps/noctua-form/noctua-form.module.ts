@@ -10,7 +10,6 @@ import { AnnotonEntityFormComponent } from './cam/annoton/annoton-entity-form/an
 import { EntityFormComponent } from './cam/annoton/annoton-form/entity-form/entity-form.component';
 import { CamTableComponent } from './cam/cam-table/cam-table.component';
 import { CamFormComponent } from './cam/cam-form/cam-form.component';
-import { CamRowEditDialogComponent } from './dialogs/cam-row-edit/cam-row-edit.component';
 import { AddEvidenceDialogComponent } from './dialogs/add-evidence/add-evidence.component';
 import { AnnotonErrorsDialogComponent } from './dialogs/annoton-errors/annoton-errors.component';
 import { BeforeSaveDialogComponent } from './dialogs/before-save/before-save.component';
@@ -58,7 +57,6 @@ const routes = [
     AnnotonEntityFormComponent,
     EntityFormComponent,
     CamTableComponent,
-    CamRowEditDialogComponent,
     AddEvidenceDialogComponent,
     AnnotonErrorsDialogComponent,
     BeforeSaveDialogComponent,
@@ -89,7 +87,6 @@ const routes = [
     AnnotonEntityFormComponent,
     EntityFormComponent,
     CamTableComponent,
-    CamRowEditDialogComponent,
     AddEvidenceDialogComponent,
     AnnotonErrorsDialogComponent,
     BeforeSaveDialogComponent,
@@ -112,7 +109,6 @@ const routes = [
     CamGraphComponent,
   ],
   entryComponents: [
-    CamRowEditDialogComponent,
     AddEvidenceDialogComponent,
     AnnotonErrorsDialogComponent,
     BeforeSaveDialogComponent,

@@ -15,7 +15,7 @@ import { NoctuaFormConfigService } from 'noctua-form-base';
 import { Contributor } from 'noctua-form-base';
 import { Group } from 'noctua-form-base';
 
-import * as _ from 'lodash';
+
 import { v4 as uuid } from 'uuid';
 declare const require: any;
 const each = require('lodash/forEach');

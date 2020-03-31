@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { MatDialog, MatDialogRef, MatSnackBar } from '@angular/material';
-import { CamRowEditDialogComponent } from './../dialogs/cam-row-edit/cam-row-edit.component';
 
 import { AnnotonErrorsDialogComponent } from './../dialogs/annoton-errors/annoton-errors.component';
 import { BeforeSaveDialogComponent } from './../dialogs/before-save/before-save.component';
@@ -56,18 +55,6 @@ export class NoctuaFormDialogService {
             });
     }
 
-    openCamRowEdit(cam): void {
-        this.dialogRef = this._matDialog.open(CamRowEditDialogComponent, {
-            panelClass: 'cam-row-edit-dialog',
-            data: {
-                cam: cam
-            }
-        });
-        this.dialogRef.afterClosed()
-            .subscribe(response => {
-
-            });
-    }
 
     openAnnotonErrorsDialog(errors: any[]): void {
         this.dialogRef = this._matDialog.open(AnnotonErrorsDialogComponent, {

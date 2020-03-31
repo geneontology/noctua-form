@@ -1,30 +1,19 @@
 
-import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormArray } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { MatPaginator, MatSort, MatDrawer } from '@angular/material';
-import { DataSource } from '@angular/cdk/collections';
-import { merge, Observable, BehaviorSubject, fromEvent, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { Subject } from 'rxjs';
 
 import { noctuaAnimations } from './../../../../../../@noctua/animations';
-
-
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
-
 import { NoctuaFormService } from './../../services/noctua-form.service';
 import { NoctuaFormDialogService } from './../../services/dialog.service';
-import { NoctuaSearchService } from './../../../../../../@noctua.search/services/noctua-search.service';
 
 import {
   noctuaFormConfig,
   NoctuaAnnotonConnectorService,
-  NoctuaGraphService,
   NoctuaFormConfigService,
   NoctuaAnnotonFormService,
-  NoctuaLookupService,
-  NoctuaAnnotonEntityService,
   CamService,
   Cam,
   Annoton
@@ -51,18 +40,15 @@ export class CamPreviewComponent implements OnInit, OnDestroy {
 
   private unsubscribeAll: Subject<any>;
 
-  constructor(private route: ActivatedRoute,
-    public camService: CamService,
+  constructor(public camService: CamService,
     public noctuaFormService: NoctuaFormService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     private confirmDialogService: NoctuaConfirmDialogService,
-    private noctuaSearchService: NoctuaSearchService,
     private noctuaAnnotonConnectorService: NoctuaAnnotonConnectorService,
     public noctuaAnnotonFormService: NoctuaAnnotonFormService,
     private noctuaFormDialogService: NoctuaFormDialogService,
   ) {
 
-    this.searchFormData = this.noctuaFormConfigService.createSearchFormData();
     this.unsubscribeAll = new Subject();
   }
 
@@ -78,10 +64,6 @@ export class CamPreviewComponent implements OnInit, OnDestroy {
     this.noctuaAnnotonFormService.mfLocation = location;
     this.noctuaAnnotonFormService.initializeForm();
     this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.annotonForm);
-  }
-
-  openCamEdit(cam) {
-    this.noctuaFormDialogService.openCamRowEdit(cam);
   }
 
   openAnnotonConnector(annoton: Annoton) {
