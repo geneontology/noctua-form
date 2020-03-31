@@ -129,7 +129,6 @@ export class CamGraphComponent implements OnInit, OnDestroy {
     private noctuaFormDialogService: NoctuaFormDialogService,
   ) {
 
-    this.searchFormData = this.noctuaFormConfigService.createSearchFormData();
     this.unsubscribeAll = new Subject();
   }
 
@@ -190,10 +189,6 @@ export class CamGraphComponent implements OnInit, OnDestroy {
     this.noctuaAnnotonFormService.mfLocation = location;
     this.noctuaAnnotonFormService.initializeForm();
     this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.annotonForm);
-  }
-
-  openCamEdit(cam) {
-    this.noctuaFormDialogService.openCamRowEdit(cam);
   }
 
   openAnnotonConnectorList(annoton: Annoton) {

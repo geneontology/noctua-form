@@ -7,7 +7,7 @@ import { merge, Observable, Subscription, BehaviorSubject, fromEvent, Subject } 
 import { debounceTime, distinctUntilChanged, map, takeUntil } from 'rxjs/operators';
 
 
-import * as _ from 'lodash';
+
 declare const require: any;
 const each = require('lodash/forEach');
 

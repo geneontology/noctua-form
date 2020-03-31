@@ -1,13 +1,11 @@
 
-import { Component, OnInit, OnDestroy, ViewChild, Inject, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormArray } from '@angular/forms';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 
 import { SelectionModel } from '@angular/cdk/collections';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatMenuTrigger, MatTableDataSource } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
-import * as _ from 'lodash';
+
 import {
   Evidence,
   NoctuaFormConfigService,
@@ -15,7 +13,6 @@ import {
   NoctuaLookupService
 } from 'noctua-form-base';
 
-import { NoctuaSearchService } from './../../../../../../@noctua.search/services/noctua-search.service';
 import { SparqlService } from './../../../../../../@noctua.sparql/services/sparql/sparql.service';
 import { noctuaAnimations } from '@noctua/animations';
 
@@ -35,13 +32,7 @@ export class SelectEvidenceDialogComponent implements OnInit, OnDestroy {
   constructor(
     private _matDialogRef: MatDialogRef<SelectEvidenceDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private _data: any,
-    private _matDialog: MatDialog,
-    private route: ActivatedRoute,
     public noctuaFormConfigService: NoctuaFormConfigService,
-    private noctuaSearchService: NoctuaSearchService,
-    private noctuaLookupService: NoctuaLookupService,
-    private noctuaGraphService: NoctuaGraphService,
-    private sparqlService: SparqlService,
   ) {
     this._unsubscribeAll = new Subject();
 

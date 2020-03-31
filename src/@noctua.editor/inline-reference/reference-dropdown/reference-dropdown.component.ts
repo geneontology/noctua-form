@@ -8,14 +8,14 @@ import {
   NoctuaAnnotonFormService,
   AnnotonError,
   noctuaFormConfig,
-  Article
+  Article,
+  NoctuaLookupService
 } from 'noctua-form-base';
 
 import { referenceDropdownData } from './reference-dropdown.tokens';
 import { ReferenceDropdownOverlayRef } from './reference-dropdown-ref';
 import { NoctuaFormDialogService } from 'app/main/apps/noctua-form';
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
-import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
 
 @Component({
   selector: 'noc-reference-dropdown',
@@ -32,8 +32,7 @@ export class NoctuaReferenceDropdownComponent implements OnInit, OnDestroy {
 
   constructor(public dialogRef: ReferenceDropdownOverlayRef,
     @Inject(referenceDropdownData) public data: any,
-    private sparqlService: SparqlService,
-    private noctuaSearchService: NoctuaSearchService,
+    private noctuaLookupService: NoctuaLookupService,
     private noctuaFormDialogService: NoctuaFormDialogService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     public noctuaAnnotonFormService: NoctuaAnnotonFormService,
@@ -111,7 +110,7 @@ export class NoctuaReferenceDropdownComponent implements OnInit, OnDestroy {
       if (pmid === '') {
         return;
       }
-      this.noctuaSearchService.getPubmedInfo(pmid).pipe(
+      this.noctuaLookupService.getPubmedInfo(pmid).pipe(
         takeUntil(this._unsubscribeAll))
         .subscribe((article: Article) => {
           self.article = article;

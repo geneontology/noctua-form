@@ -3,7 +3,7 @@ import { FormGroup, FormArray } from '@angular/forms';
 import { MatDrawer } from '@angular/material';
 import { Subscription, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import * as _ from 'lodash';
+
 import { NoctuaFormService } from '../../../services/noctua-form.service';
 import { CamTableService } from './../../cam-table/services/cam-table.service';
 import { NoctuaFormDialogService } from './../../../services/dialog.service';

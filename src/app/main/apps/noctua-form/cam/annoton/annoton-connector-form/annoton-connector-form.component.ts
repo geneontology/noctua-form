@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatDrawer } from '@angular/material';
 import { Subscription, Subject } from 'rxjs';
 
-import * as _ from 'lodash';
+
 declare const require: any;
 
 import { NoctuaFormService } from '../../../services/noctua-form.service';
