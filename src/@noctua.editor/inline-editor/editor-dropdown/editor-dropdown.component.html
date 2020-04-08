@@ -86,7 +86,7 @@
       </mat-form-field>
     </div>
   </ng-container>
-  <button mat-icon-button class="noc-action-button" fxFlex="40px" [matMenuTriggerFor]="entityMenu">
+  <button *ngIf="false" mat-icon-button class="noc-action-button" fxFlex="40px" [matMenuTriggerFor]="entityMenu">
     <mat-icon>more_vert</mat-icon>
   </button>
   <mat-menu #entityMenu="matMenu" class="noc-dropdown-menu">
@@ -99,7 +99,7 @@
     </button>
   </mat-menu>
   <mat-menu #evidenceMenu="matMenu">
-    <button mat-menu-item class="" (click)="openSelectEvidenceDialog(evidence)">
+    <button mat-menu-item class="" (click)="openSelectEvidenceDialog()">
       Clone Evidence
     </button>
   </mat-menu>

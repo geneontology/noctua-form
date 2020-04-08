@@ -2,7 +2,7 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 
 

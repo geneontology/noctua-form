@@ -32,7 +32,7 @@ export class NoctuaInlineEditorComponent implements OnInit, OnDestroy {
     @Input() category: EditorCategory;
     @Input() evidenceIndex = 0;
 
-    @ViewChild('editorDropdownTrigger', { read: ElementRef, static: false })
+    @ViewChild('editorDropdownTrigger', { read: ElementRef })
     private editorDropdownTrigger: ElementRef;
     private _unsubscribeAll: Subject<any>;
 

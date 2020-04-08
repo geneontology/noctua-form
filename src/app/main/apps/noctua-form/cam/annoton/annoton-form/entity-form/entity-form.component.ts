@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormArray } from '@angular/forms';
-import { MatMenuTrigger } from '@angular/material';
+import { MatMenuTrigger } from '@angular/material/menu';
 import { Subject } from 'rxjs';
 import { NoctuaFormDialogService } from './../../../../services/dialog.service';
 import {
