@@ -2,7 +2,8 @@ import { environment } from '../../../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { MatDialog, MatDialogRef, MatSnackBar } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { AnnotonErrorsDialogComponent } from './../dialogs/annoton-errors/annoton-errors.component';
 import { BeforeSaveDialogComponent } from './../dialogs/before-save/before-save.component';

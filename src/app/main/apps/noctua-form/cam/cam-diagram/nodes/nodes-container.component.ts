@@ -1,5 +1,6 @@
 import { Component, OnChanges, AfterViewInit, Input, ViewEncapsulation, ChangeDetectionStrategy, ViewContainerRef, ViewChild } from '@angular/core';
-import { MatDrawer, MatMenuTrigger } from '@angular/material';
+import { MatMenuTrigger } from '@angular/material/menu';
+import { MatDrawer } from '@angular/material/sidenav';
 import { map, filter, delay, combineLatest, reduce, catchError, retry, tap } from 'rxjs/operators';
 import { BehaviorSubject, of, forkJoin, Observable, Subscriber } from 'rxjs';
 import 'rxjs/add/observable/combineLatest';
