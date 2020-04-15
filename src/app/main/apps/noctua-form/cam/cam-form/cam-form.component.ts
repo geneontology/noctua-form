@@ -1,36 +1,20 @@
-import { Component, Inject, Input, OnInit, ElementRef, OnDestroy, ViewEncapsulation, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { MatPaginator } from '@angular/material/paginator';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { MatDrawer } from '@angular/material/sidenav';
-import { MatSort } from '@angular/material/sort';
-import { DataSource } from '@angular/cdk/collections';
-import { merge, Observable, Subscription, BehaviorSubject, fromEvent, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map, takeUntil } from 'rxjs/operators';
-
-
-
-declare const require: any;
-const each = require('lodash/forEach');
-
-import { noctuaAnimations } from './../../../../../../@noctua/animations';
-import { NoctuaFormService } from '../../services/noctua-form.service';
-
-import { CamDiagramService } from './../cam-diagram/services/cam-diagram.service';
+import { Subscription, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { CamTableService } from './../cam-table/services/cam-table.service';
 
 import {
   Cam,
-  Contributor,
   NoctuaUserService,
   NoctuaFormConfigService,
   NoctuaGraphService,
-  NoctuaAnnotonFormService,
   CamService,
-  Entity
+  Entity,
+  NoctuaFormMenuService
 } from 'noctua-form-base';
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
-
 
 @Component({
   selector: 'noc-cam-form',
@@ -48,14 +32,13 @@ export class CamFormComponent implements OnInit, OnDestroy {
 
   private _unsubscribeAll: Subject<any>;
 
-  constructor(private route: ActivatedRoute,
-    public noctuaUserService: NoctuaUserService,
+  constructor(public noctuaUserService: NoctuaUserService,
     private sparqlService: SparqlService,
     private camService: CamService,
     public camTableService: CamTableService,
     private noctuaGraphService: NoctuaGraphService,
     public noctuaFormConfigService: NoctuaFormConfigService,
-    public noctuaFormService: NoctuaFormService
+    public noctuaFormMenuService: NoctuaFormMenuService
   ) {
     this._unsubscribeAll = new Subject();
     // this.annoton = self.noctuaCamFormService.annoton;
@@ -107,7 +90,6 @@ export class CamFormComponent implements OnInit, OnDestroy {
 
   save() {
 
-    const self = this;
 
     const value = this.camFormGroup.value;
 

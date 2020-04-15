@@ -21,6 +21,15 @@ $noc-secondary-color: #995014;
   @include deep-height($number);
 }
 
+@mixin noc-chip-color($color) {
+  border: $color solid 1px !important;
+  background-color: rgba($color, 0.2) !important;
+
+  .noc-icon {
+    background-color: $color !important;
+  }
+}
+
 mat-chip {
   &.noc-chip-sm {
     @include deep-height(25px);

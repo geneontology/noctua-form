@@ -11,13 +11,13 @@ import {
   Contributor,
   NoctuaUserService,
   NoctuaFormConfigService,
+  NoctuaFormMenuService,
   NoctuaGraphService,
   NoctuaAnnotonFormService,
   CamService,
   noctuaFormConfig
 } from 'noctua-form-base';
 
-import { NoctuaFormService } from './services/noctua-form.service';
 import { takeUntil } from 'rxjs/operators';
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 
@@ -52,7 +52,7 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
     public noctuaUserService: NoctuaUserService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     public noctuaAnnotonFormService: NoctuaAnnotonFormService,
-    public noctuaFormService: NoctuaFormService,
+    public noctuaFormMenuService: NoctuaFormMenuService,
     private sparqlService: SparqlService,
     private noctuaGraphService: NoctuaGraphService, ) {
 
@@ -94,8 +94,8 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.noctuaFormService.setLeftDrawer(this.leftDrawer);
-    this.noctuaFormService.setRightDrawer(this.rightDrawer);
+    this.noctuaFormMenuService.setLeftDrawer(this.leftDrawer);
+    this.noctuaFormMenuService.setRightDrawer(this.rightDrawer);
     this.sparqlService.getAllContributors()
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((contributors: Contributor[]) => {
@@ -111,12 +111,12 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
 
   openCamForm() {
     this.camService.initializeForm(this.cam);
-    this.noctuaFormService.openLeftDrawer(this.noctuaFormService.panel.camForm);
+    this.noctuaFormMenuService.openLeftDrawer(this.noctuaFormMenuService.panel.camForm);
   }
 
   openAnnotonForm(annotonType: AnnotonType) {
     this.noctuaAnnotonFormService.setAnnotonType(annotonType);
-    this.noctuaFormService.openLeftDrawer(this.noctuaFormService.panel.annotonForm);
+    this.noctuaFormMenuService.openLeftDrawer(this.noctuaFormMenuService.panel.annotonForm);
   }
 
   ngOnDestroy(): void {

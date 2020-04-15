@@ -10,13 +10,14 @@ import { takeUntil } from 'rxjs/operators';
 
 
 
-import { NoctuaFormService } from '../../../services/noctua-form.service';
+
 import { CamTableService } from './../../cam-table/services/cam-table.service';
 import {
   NoctuaFormConfigService,
   NoctuaAnnotonFormService,
   NoctuaAnnotonEntityService,
-  CamService
+  CamService,
+  NoctuaFormMenuService
 } from 'noctua-form-base';
 
 import { Cam } from 'noctua-form-base';
@@ -53,7 +54,7 @@ export class AnnotonEntityFormComponent implements OnInit, OnDestroy {
     private noctuaFormDialogService: NoctuaFormDialogService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     public noctuaAnnotonFormService: NoctuaAnnotonFormService,
-    public noctuaFormService: NoctuaFormService,
+    public noctuaFormMenuService: NoctuaFormMenuService,
   ) {
     this._unsubscribeAll = new Subject();
   }

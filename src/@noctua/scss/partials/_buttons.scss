@@ -1,7 +1,7 @@
 $noc-border-color: #BBB;
 
 .noc-rounded-button {
-  border-radius: 20px;
+  border-radius: 20px !important;
   @include deep-height(40px);
   line-height: 36px;
   font-size: 14px;

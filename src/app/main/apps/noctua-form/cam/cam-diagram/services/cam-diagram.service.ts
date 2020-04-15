@@ -10,9 +10,9 @@ import { map, filter, reduce, catchError, retry, tap } from 'rxjs/operators';
 import { jsPlumb } from 'jsplumb';
 
 import { CurieService } from './../../../../../../../@noctua.curie/services/curie.service';
-import { NoctuaGraphService } from 'noctua-form-base';
+import { NoctuaGraphService, NoctuaFormMenuService } from 'noctua-form-base';
 
-import { NoctuaFormService } from './../../../services/noctua-form.service';
+
 import { NoctuaAnnotonFormService } from 'noctua-form-base';
 import { NoctuaAnnotonConnectorService } from 'noctua-form-base';
 import { NoctuaFormConfigService } from 'noctua-form-base';
@@ -39,12 +39,10 @@ export class CamDiagramService {
     y: 0.5
   }
 
-
-
-  constructor(private noctuaAnnotonConnectorService: NoctuaAnnotonConnectorService,
-    public noctuaAnnotonFormService: NoctuaAnnotonFormService, public noctuaFormService: NoctuaFormService) {
-
-
+  constructor(
+    private noctuaAnnotonConnectorService: NoctuaAnnotonConnectorService,
+    public noctuaAnnotonFormService: NoctuaAnnotonFormService,
+    public noctuaFormMenuService: NoctuaFormMenuService) {
   }
 
   initJsPlumbInstance() {
@@ -119,14 +117,14 @@ export class CamDiagramService {
     const self = this;
 
     self.noctuaAnnotonFormService.initializeForm();
-    self.noctuaFormService.openRightDrawer(self.noctuaFormService.panel.annotonForm)
+    self.noctuaFormMenuService.openRightDrawer(self.noctuaFormMenuService.panel.annotonForm)
   }
 
   openConnectorForm(sourceId, targetId) {
     const self = this;
 
     self.noctuaAnnotonConnectorService.initializeForm(sourceId, targetId);
-    self.noctuaFormService.openRightDrawer(self.noctuaFormService.panel.connectorForm);
+    self.noctuaFormMenuService.openRightDrawer(self.noctuaFormMenuService.panel.connectorForm);
   }
 
   getCausalEffect(sourceId, targetId) {

@@ -1,5 +1,8 @@
 <div id="noctua-main">
   <mat-sidenav-container>
+    <mat-sidenav #leftSidenav>
+      <noc-noctua-apps [sidenav]="leftSidenav"></noc-noctua-apps>
+    </mat-sidenav>
     <div id="noctua-main-content">
       <ng-container>
         <noctua-toolbar class="above"></noctua-toolbar>
@@ -14,3 +17,17 @@
   <app-footer *ngIf="false" id="footer"></app-footer>
   <quick-panel *ngIf="false"></quick-panel>
 </div>
+
+
+<!-- <mat-sidenav-container
+    class="example-container" (backdropClick)="close('backdrop')" *ngIf="shouldRun">
+  <mat-sidenav #sidenav (keydown.escape)="close('escape')" disableClose>
+    <p><button mat-button (click)="close('toggle button')">Toggle</button></p>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <p><button mat-button (click)="sidenav.open()">Open</button></p>
+    <p>Closed due to: {{reason}}</p>
+  </mat-sidenav-content> 
+</mat-sidenav-container>
+-->

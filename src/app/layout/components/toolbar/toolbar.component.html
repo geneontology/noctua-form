@@ -1,72 +1,87 @@
 <mat-toolbar class="" fxLayout="row" fxLayoutAlign="start center">
   <mat-progress-bar *ngIf="showLoadingBar" class="loading-bar" color="accent" mode="indeterminate"></mat-progress-bar>
-  <div class="noc-br" fxLayout="row" fxLayoutAlign="start center" fxFlex="220px">
-    <button mat-icon-button [matMenuTriggerFor]="changeView" class="">
-      <mat-icon>apps</mat-icon>
+  <div class="noc-br h-100-p" fxLayout="row" fxLayoutAlign="start center" fxFlex="200px">
+    <div class="noc-logo pl-8" fxLayout="row" fxLayoutAlign="start">
+      <a href="http://geneontology.org/" target="_blank">
+        <img src="assets/images/logos/go-logo.large.png">
+      </a>
+    </div>
+  </div>
+  <div class="noc-logo pl-0 h-100-p" fxLayout="row" fxLayoutAlign="start center" fxFlex="180px">
+    <button mat-icon-button (click)="openApps()" class="noc-br noc-apps-button" matTooltip="Open Workbenches Menu"
+      [matTooltipPosition]="'below'" [matTooltipShowDelay]="1000">
+      <mat-icon class="">apps</mat-icon>
     </button>
-    <mat-menu #changeView="matMenu">
-      <button class="noc-create-button" (click)="createModel()" mat-menu-item>
-        Create New Model
+    <a class="noc-main-logo" href="{{noctuaUrl}}" target="_blank">
+      Noctua
+    </a>
+    <a class="noc-sub-logo" href="{{noctuaFormUrl}}" target=" _blank">
+      Form
+    </a>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="end center" fxFlex="">
+    <div class="noc-br pr-12" fxLayout="row" fxLayoutAlign="start center">
+      <a mat-icon-button href="https://github.com/geneontology" target="blank">
+        <fa-icon [icon]="['fab', 'github']"></fa-icon>
+      </a>
+      <a mat-icon-button href="https://twitter.com/news4go" target="blank">
+        <fa-icon [icon]="['fab', 'twitter']"></fa-icon>
+      </a>
+      <a mat-icon-button href="https://www.facebook.com/pages/Gene-Ontology/305908656519" target="blank">
+        <fa-icon [icon]="['fab', 'facebook']"></fa-icon>
+      </a>
+    </div>
+    <div class="pl-12 pr-12" fxLayout="row" fxLayoutAlign="start center">
+      <a mat-button class="" [matMenuTriggerFor]="aboutMenu">
+        About
+      </a>
+      <mat-menu #aboutMenu="matMenu">
+        <a href="http://geneontology.org/docs/introduction-to-go-resource/" target="_blank" mat-menu-item>
+          About The GO
+        </a>
+        <a href="http://geneontology.org/docs/gocam-overview/" target="_blank" mat-menu-item>
+          About GO-CAM
+        </a>
+      </mat-menu>
+      <a mat-button class="" [matMenuTriggerFor]="helpMenu">
+        Help
+      </a>
+      <mat-menu #helpMenu="matMenu">
+        <a href="http://wiki.geneontology.org/index.php/Noctua" target="_blank" mat-menu-item>
+          Noctua User's Guide
+        </a>
+      </mat-menu>
+    </div>
+    <div class="noc-br pr-12" fxLayout="row" fxLayoutAlign="start center">
+      <button *ngIf="noctuaUserService.user" mat-button class="noc-name-button" [matMenuTriggerFor]="userMenu">
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <div class="noc-info" fxLayout="column" fxLayoutAlign="start start">
+            <div class="noc-name text-truncate">
+              {{noctuaUserService.user.name}}
+            </div>
+            <div class="noc-group-name text-truncate">
+              {{noctuaUserService.user?.group?.label}}
+            </div>
+          </div>
+          <mat-icon>arrow_drop_down</mat-icon>
+        </div>
       </button>
-      <a *ngFor="let workbench of cam?.model?.modelInfo?.workbenches" href="{{workbench.url}}" target="_blank"
-        mat-menu-item>
-        {{workbench.label}}
-      </a>
-    </mat-menu>
-    <div fxLayoutAlign="center center" class="noc-logo-filler">
-      <a mat-icon-button href="http://geneontology.org/" target="_blank">
-        <img src="assets/images/logos/go-logo.png">
-      </a>
-    </div>
-    <div class="noc-logo" fxLayout="row" fxLayoutAlign="start">
-      <a class="noc-main-logo" href="{{noctuaUrl}}" target="_blank">
-        Noctua
-      </a>
-      <a class="noc-sub-logo" href="{{noctuaFormUrl}}" target=" _blank">
-        Form
-      </a>
-    </div>
-  </div>
-  <div *ngIf="cam" class="noc-title mr-12" fxLayout="row" fxLayoutAlign="start center">
-    <div class="h-100-p mr-12" *ngIf="cam.title; else noCamTitle" fxLayout="row" fxLayoutAlign="start center">
-      <div class="noc-section-label noc-cam-title">
-        <div class="text-truncate" (click)="openCamForm()">
-          {{cam.title}}
-        </div>
+      <mat-menu #userMenu="matMenu" class="">
+        <a mat-button href="{{logoutUrl}}" class="red-500-fg w-100-p">
+          Logout
+        </a>
+      </mat-menu>
+      <div *ngIf="!noctuaUserService.user">
+        <a mat-button href="{{loginUrl}}" class="noc-login-button">
+          Login
+        </a>
       </div>
     </div>
-    <ng-template #noCamTitle>
-      <div class="h-100-p mr-12" fxLayout="row" fxLayoutAlign="start center">
-        <div class="noc-section-label" (click)="openCamForm()">
-          No Title Yet
-        </div>
-      </div>
-    </ng-template>
+
   </div>
-  <span fxFlex=""></span>
-  <div *ngIf="noctuaUserService.user" fxLayout="row" fxLayoutAlign="end center" fxFlex="250px">
-    <button mat-button class="noc-name-button" [matMenuTriggerFor]="userMenu">
-      <div fxLayout="row" fxLayoutAlign="start center">
-        <div class="noc-info" fxLayout="column" fxLayoutAlign="start start">
-          <div class="noc-name text-truncate">
-            {{noctuaUserService.user.name}}
-          </div>
-          <div class="noc-group-name text-truncate">
-            {{noctuaUserService.user?.group?.label}}
-          </div>
-        </div>
-        <mat-icon>arrow_drop_down</mat-icon>
-      </div>
-    </button>
-    <mat-menu #userMenu="matMenu" class="">
-      <a mat-button href="{{logoutUrl}}" class="red-500-fg w-100-p">
-        Logout
-      </a>
-    </mat-menu>
-  </div>
-  <div *ngIf="!noctuaUserService.user" fxLayout="row" fxLayoutAlign="end center" fxFlex="150px">
-    <a mat-button href="{{loginUrl}}" class="green-300-bg">
-      Login
+  <div class="noc-bl noc-logo" fxLayout="row" fxLayoutAlign="start">
+    <a href="https://www.alliancegenome.org" target="_blank">
+      <img src="assets/images/logos/alliance-logo.png">
     </a>
   </div>
 </mat-toolbar>
