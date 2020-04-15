@@ -9,7 +9,7 @@ import { Subscription, Subject } from 'rxjs';
 
 declare const require: any;
 
-import { NoctuaFormService } from '../../../services/noctua-form.service';
+
 import { CamTableService } from './../../cam-table/services/cam-table.service';
 
 import {
@@ -26,7 +26,8 @@ import {
   CamService,
   noctuaFormConfig,
   Entity,
-  NoctuaUserService
+  NoctuaUserService,
+  NoctuaFormMenuService
 } from 'noctua-form-base';
 import { NoctuaFormDialogService } from '../../../services/dialog.service';
 import { NoctuaConfirmDialogService } from '@noctua/components/confirm-dialog/confirm-dialog.service';
@@ -64,7 +65,7 @@ export class AnnotonConnectorFormComponent implements OnInit, OnDestroy {
     private noctuaFormDialogService: NoctuaFormDialogService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     public noctuaAnnotonFormService: NoctuaAnnotonFormService,
-    public noctuaFormService: NoctuaFormService,
+    public noctuaFormMenuService: NoctuaFormMenuService,
   ) {
     this._unsubscribeAll = new Subject();
   }

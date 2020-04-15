@@ -4,8 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 
 
-import { locale as english } from './i18n/en';
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',

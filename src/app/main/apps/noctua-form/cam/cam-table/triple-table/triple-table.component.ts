@@ -1,24 +1,18 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-
 import { noctuaAnimations } from './../../../../../../../@noctua/animations';
-
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
-
-import { NoctuaFormService } from './../../../services/noctua-form.service';
 import { CamTableService } from './../services/cam-table.service';
 
 import {
   NoctuaFormConfigService,
   NoctuaTripleFormService,
-  CamService
+  CamService,
+  NoctuaFormMenuService
 } from 'noctua-form-base';
 
 import {
   Cam
 } from 'noctua-form-base';
-
 
 @Component({
   selector: 'noc-triple-table',
@@ -46,9 +40,9 @@ export class TripleTableComponent implements OnInit, OnDestroy {
   private unsubscribeAll: Subject<any>;
 
   constructor(private camService: CamService,
-    public noctuaFormService: NoctuaFormService,
+    public noctuaFormMenuService: NoctuaFormMenuService,
     public noctuaFormConfigService: NoctuaFormConfigService,
-    //  public noctuaFormService: NoctuaFormService,
+    //  public noctuaFormMenuService: NoctuaFormMenuService,
     public camTableService: CamTableService,
     public noctuaTripleFormService: NoctuaTripleFormService) {
 
@@ -68,7 +62,7 @@ export class TripleTableComponent implements OnInit, OnDestroy {
     this.camService.onCamChanged.next(this.cam);
 
     this.noctuaTripleFormService.initializeForm(triple);
-    this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.tripleForm);
+    this.noctuaFormMenuService.openRightDrawer(this.noctuaFormMenuService.panel.tripleForm);
   }
 
   ngOnDestroy(): void {

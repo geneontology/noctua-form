@@ -3,10 +3,9 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
 
-import { NoctuaFormService } from './../../services/noctua-form.service';
+
+
 import { CamTableService } from './services/cam-table.service';
 import { NoctuaFormDialogService } from './../../services/dialog.service';
 
@@ -19,7 +18,8 @@ import {
   Cam,
   Annoton,
   AnnotonType,
-  NoctuaUserService
+  NoctuaUserService,
+  NoctuaFormMenuService
 } from 'noctua-form-base';
 import { NoctuaConfirmDialogService } from '@noctua/components/confirm-dialog/confirm-dialog.service';
 import { trigger, state, transition, style, animate } from '@angular/animations';
@@ -58,12 +58,12 @@ export class CamTableComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any>;
 
   constructor(public camService: CamService,
-    public noctuaFormService: NoctuaFormService,
+    public noctuaFormMenuService: NoctuaFormMenuService,
     public noctuaUserService: NoctuaUserService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     private confirmDialogService: NoctuaConfirmDialogService,
     private noctuaAnnotonConnectorService: NoctuaAnnotonConnectorService,
-    //  public noctuaFormService: NoctuaFormService,
+    //  public noctuaFormMenuService: NoctuaFormMenuService,
     public noctuaAnnotonFormService: NoctuaAnnotonFormService,
     public camTableService: CamTableService,
     private noctuaFormDialogService: NoctuaFormDialogService,
@@ -83,7 +83,7 @@ export class CamTableComponent implements OnInit, OnDestroy {
   openForm(location?) {
     this.noctuaAnnotonFormService.mfLocation = location;
     this.noctuaAnnotonFormService.initializeForm();
-    this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.annotonForm)
+    this.noctuaFormMenuService.openRightDrawer(this.noctuaFormMenuService.panel.annotonForm)
   }
 
   search() {
@@ -106,14 +106,14 @@ export class CamTableComponent implements OnInit, OnDestroy {
     this.noctuaAnnotonConnectorService.annoton = annoton;
     this.noctuaAnnotonConnectorService.onAnnotonChanged.next(annoton);
     this.noctuaAnnotonConnectorService.getConnections();
-    this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.connectorForm);
+    this.noctuaFormMenuService.openRightDrawer(this.noctuaFormMenuService.panel.connectorForm);
   }
 
   openAnnotonForm(annoton: Annoton) {
     this.camService.onCamChanged.next(this.cam);
     this.camService.annoton = annoton;
     this.noctuaAnnotonFormService.initializeForm(annoton);
-    this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.annotonForm)
+    this.noctuaFormMenuService.openRightDrawer(this.noctuaFormMenuService.panel.annotonForm)
   }
 
   sortBy(sortCriteria) {

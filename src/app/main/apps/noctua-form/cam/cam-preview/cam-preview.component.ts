@@ -4,9 +4,8 @@ import { FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 
 import { noctuaAnimations } from './../../../../../../@noctua/animations';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
-import { NoctuaFormService } from './../../services/noctua-form.service';
+
+
 import { NoctuaFormDialogService } from './../../services/dialog.service';
 
 import {
@@ -16,7 +15,8 @@ import {
   NoctuaAnnotonFormService,
   CamService,
   Cam,
-  Annoton
+  Annoton,
+  NoctuaFormMenuService
 } from 'noctua-form-base';
 import { NoctuaConfirmDialogService } from '@noctua/components/confirm-dialog/confirm-dialog.service';
 
@@ -41,7 +41,7 @@ export class CamPreviewComponent implements OnInit, OnDestroy {
   private unsubscribeAll: Subject<any>;
 
   constructor(public camService: CamService,
-    public noctuaFormService: NoctuaFormService,
+    public noctuaFormMenuService: NoctuaFormMenuService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     private confirmDialogService: NoctuaConfirmDialogService,
     private noctuaAnnotonConnectorService: NoctuaAnnotonConnectorService,
@@ -63,7 +63,7 @@ export class CamPreviewComponent implements OnInit, OnDestroy {
   openForm(location?) {
     this.noctuaAnnotonFormService.mfLocation = location;
     this.noctuaAnnotonFormService.initializeForm();
-    this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.annotonForm);
+    this.noctuaFormMenuService.openRightDrawer(this.noctuaFormMenuService.panel.annotonForm);
   }
 
   openAnnotonConnector(annoton: Annoton) {
@@ -72,14 +72,14 @@ export class CamPreviewComponent implements OnInit, OnDestroy {
     this.noctuaAnnotonConnectorService.annoton = annoton;
     this.noctuaAnnotonConnectorService.onAnnotonChanged.next(annoton);
     this.noctuaAnnotonConnectorService.getConnections();
-    this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.connectorForm);
+    this.noctuaFormMenuService.openRightDrawer(this.noctuaFormMenuService.panel.connectorForm);
   }
 
   openAnnotonForm(annoton: Annoton) {
     this.camService.onCamChanged.next(this.cam);
     this.camService.annoton = annoton;
     this.noctuaAnnotonFormService.initializeForm(annoton);
-    this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.annotonForm);
+    this.noctuaFormMenuService.openRightDrawer(this.noctuaFormMenuService.panel.annotonForm);
   }
 
   deleteAnnoton(annoton: Annoton) {

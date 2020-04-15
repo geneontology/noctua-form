@@ -9,8 +9,7 @@ declare const require: any;
 
 
 
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
+
 
 import { NoctuaFormConfigService } from 'noctua-form-base';
 

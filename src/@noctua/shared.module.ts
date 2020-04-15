@@ -9,6 +9,7 @@ import { NoctuaDirectivesModule } from './directives/directives';
 import { NoctuaPipesModule } from './pipes/pipes.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgxGraphModule } from '@swimlane/ngx-graph';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
     imports: [
@@ -20,7 +21,8 @@ import { NgxGraphModule } from '@swimlane/ngx-graph';
         NoctuaDirectivesModule,
         NoctuaPipesModule,
         DragDropModule,
-        NgxGraphModule
+        NgxGraphModule,
+        FontAwesomeModule
     ],
     exports: [
         CommonModule,
@@ -31,7 +33,8 @@ import { NgxGraphModule } from '@swimlane/ngx-graph';
         NoctuaDirectivesModule,
         NoctuaPipesModule,
         DragDropModule,
-        NgxGraphModule
+        NgxGraphModule,
+        FontAwesomeModule
     ]
 })
 
