@@ -3,11 +3,10 @@ import { jsPlumb } from 'jsplumb';
 
 import { BehaviorSubject, Subject, Observable, Subscriber } from 'rxjs';
 import { NodeService } from './../services/node.service';
-import { NoctuaFormService } from '../../../../services/noctua-form.service';
+
 import { NoctuaFormDialogService } from './../../../../services/dialog.service';
 import { CamDiagramService } from './../../services/cam-diagram.service';
-import { NoctuaSearchService } from './../../../../../../../../@noctua.search/services/noctua-search.service';
-import { NoctuaAnnotonFormService } from 'noctua-form-base';
+import { NoctuaAnnotonFormService, NoctuaFormMenuService } from 'noctua-form-base';
 import { CamService } from 'noctua-form-base'
 import { Annoton } from 'noctua-form-base';
 import { AnnotonNode } from 'noctua-form-base';
@@ -33,8 +32,7 @@ export class NodeComponent implements OnInit, AfterViewInit {
   constructor(
     private noctuaFormDialogService: NoctuaFormDialogService,
     private camService: CamService,
-    private noctuaSearchService: NoctuaSearchService,
-    public noctuaFormService: NoctuaFormService,
+    public noctuaFormMenuService: NoctuaFormMenuService,
     public noctuaAnnotonFormService: NoctuaAnnotonFormService,
     public camDiagramService: CamDiagramService,
     private elRef: ElementRef,
@@ -120,7 +118,7 @@ export class NodeComponent implements OnInit, AfterViewInit {
 
   openAnnotonForm() {
     this.noctuaAnnotonFormService.initializeForm(this.annoton);
-    this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.annotonForm)
+    this.noctuaFormMenuService.openRightDrawer(this.noctuaFormMenuService.panel.annotonForm)
   }
 
 }

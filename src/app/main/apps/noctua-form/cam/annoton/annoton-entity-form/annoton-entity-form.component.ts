@@ -1,22 +1,23 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 
 import { FormBuilder, FormControl, FormGroup, FormArray } from '@angular/forms';
-import { MatDrawer } from '@angular/material';
+import { MatDrawer } from '@angular/material/sidenav';
 import { Subscription, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 
-import * as _ from 'lodash';
 
 
 
-import { NoctuaFormService } from '../../../services/noctua-form.service';
+
+
 import { CamTableService } from './../../cam-table/services/cam-table.service';
 import {
   NoctuaFormConfigService,
   NoctuaAnnotonFormService,
   NoctuaAnnotonEntityService,
-  CamService
+  CamService,
+  NoctuaFormMenuService
 } from 'noctua-form-base';
 
 import { Cam } from 'noctua-form-base';
@@ -53,7 +54,7 @@ export class AnnotonEntityFormComponent implements OnInit, OnDestroy {
     private noctuaFormDialogService: NoctuaFormDialogService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     public noctuaAnnotonFormService: NoctuaAnnotonFormService,
-    public noctuaFormService: NoctuaFormService,
+    public noctuaFormMenuService: NoctuaFormMenuService,
   ) {
     this._unsubscribeAll = new Subject();
   }

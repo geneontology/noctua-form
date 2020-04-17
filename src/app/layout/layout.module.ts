@@ -8,7 +8,7 @@ import { LayoutNoctuaModule } from 'app/layout/layout-noctua/layout-noctua.modul
         LayoutNoctuaModule
     ],
     exports: [
-        LayoutNoctuaModule
+        LayoutNoctuaModule,
     ]
 })
 export class LayoutModule {

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NoctuaSharedModule } from '@noctua/shared.module';
-
 import { HomeComponent } from './home/home.component';
 
 const routes = [{

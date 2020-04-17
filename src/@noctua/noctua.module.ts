@@ -19,7 +19,7 @@ export class NoctuaModule {
         }
     }
 
-    static forRoot(config): ModuleWithProviders {
+    static forRoot(config): ModuleWithProviders<NoctuaModule> {
         return {
             ngModule: NoctuaModule,
             providers: [

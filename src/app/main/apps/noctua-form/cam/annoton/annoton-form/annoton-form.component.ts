@@ -1,10 +1,10 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormArray } from '@angular/forms';
-import { MatDrawer } from '@angular/material';
+import { MatDrawer } from '@angular/material/sidenav';
 import { Subscription, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import * as _ from 'lodash';
-import { NoctuaFormService } from '../../../services/noctua-form.service';
+
+
 import { CamTableService } from './../../cam-table/services/cam-table.service';
 import { NoctuaFormDialogService } from './../../../services/dialog.service';
 import {
@@ -16,6 +16,7 @@ import {
   AnnotonState,
   AnnotonType,
   NoctuaUserService,
+  NoctuaFormMenuService,
 } from 'noctua-form-base';
 
 @Component({
@@ -51,7 +52,7 @@ export class AnnotonFormComponent implements OnInit, OnDestroy {
     public noctuaUserService: NoctuaUserService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     public noctuaAnnotonFormService: NoctuaAnnotonFormService,
-    public noctuaFormService: NoctuaFormService) {
+    public noctuaFormMenuService: NoctuaFormMenuService) {
     this._unsubscribeAll = new Subject();
 
     // this.annoton = self.noctuaAnnotonFormService.annoton;

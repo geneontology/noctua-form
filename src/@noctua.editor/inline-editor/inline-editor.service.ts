@@ -16,9 +16,6 @@ import { NoctuaEditorDropdownComponent } from './editor-dropdown/editor-dropdown
 import {
     CamService,
     NoctuaAnnotonEntityService,
-    AnnotonNode,
-    Annoton,
-    Cam,
     NoctuaAnnotonFormService
 } from 'noctua-form-base';
 

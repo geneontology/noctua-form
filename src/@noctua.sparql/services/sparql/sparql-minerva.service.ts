@@ -1,55 +1,20 @@
 import { environment } from './../../../environments/environment';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, Subscriber } from 'rxjs';
-import { map, finalize, filter, reduce, catchError, retry, tap } from 'rxjs/operators';
-import {
-  Graph,
-  Optional,
-  optional,
-  Prefix,
-  prefix,
-  Triple,
-  Query,
-  triple,
-} from "sparql-query-builder/dist";
+import { BehaviorSubject } from 'rxjs';
 
-import {
-  NoctuaQuery
-} from "noctua-sparql-query-builder/dist";
 
 import { CurieService } from './../../../@noctua.curie/services/curie.service';
 import {
-  NoctuaGraphService,
-  AnnotonNode,
   NoctuaFormConfigService,
-  Cam,
-  CamRow,
-  Contributor,
-  Group,
-  NoctuaUserService,
-  Organism
+  NoctuaUserService
 } from 'noctua-form-base'
 
-import * as _ from 'lodash';
-import { v4 as uuid } from 'uuid';
-import { SearchCriteria } from '@noctua.search/models/search-criteria';
+
 declare const require: any;
 
-const each = require('lodash/forEach');
-const forOwn = require('lodash/forOwn');
-const uuid = require('uuid/v1');
-const model = require('bbop-graph-noctua');
-const amigo = require('amigo2');
-const bbopx = require('bbopx');
-const golr_response = require('bbop-response-golr');
-const golr_manager = require('bbop-manager-golr');
-const golr_conf = require("golr-conf");
-const node_engine = require('bbop-rest-manager').node;
 const barista_response = require('bbop-response-barista');
 const minerva_requests = require('minerva-requests');
 const jquery_engine = require('bbop-rest-manager').jquery;
-const class_expression = require('class-expression');
 const minerva_manager = require('bbop-manager-minerva');
 
 @Injectable({
@@ -70,8 +35,6 @@ export class SparqlMinervaService {
 
   constructor(public noctuaFormConfigService: NoctuaFormConfigService,
     public noctuaUserService: NoctuaUserService,
-    private httpClient: HttpClient,
-    private noctuaGraphService: NoctuaGraphService,
     private curieService: CurieService) {
     this.onCamsChanged = new BehaviorSubject({});
     this.onCamChanged = new BehaviorSubject({});
@@ -119,11 +82,9 @@ export class SparqlMinervaService {
     }
 
     let shieldsUp = () => { }
-    let shieldsDown = () => { }
 
     manager.register('prerun', shieldsUp);
     manager.register('postrun', () => {
-      console.log("pllllllllooolil887235897d")
     }, 9);
     manager.register('manager_error', managerError, 10);
     manager.register('warning', warning, 10);

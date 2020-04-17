@@ -1,14 +1,15 @@
 import { Component, OnChanges, AfterViewInit, Input, ViewEncapsulation, ChangeDetectionStrategy, ViewContainerRef, ViewChild } from '@angular/core';
-import { MatDrawer, MatMenuTrigger } from '@angular/material';
+import { MatMenuTrigger } from '@angular/material/menu';
+import { MatDrawer } from '@angular/material/sidenav';
 import { map, filter, delay, combineLatest, reduce, catchError, retry, tap } from 'rxjs/operators';
 import { BehaviorSubject, of, forkJoin, Observable, Subscriber } from 'rxjs';
 import 'rxjs/add/observable/combineLatest';
-import { NoctuaFormService } from '../../../services/noctua-form.service';
+
 import { ContextMenuComponent } from 'ngx-contextmenu';
 import { NodeService } from './services/node.service';
 import { CamDiagramService } from './../services/cam-diagram.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { NoctuaAnnotonFormService } from 'noctua-form-base';
+import { NoctuaAnnotonFormService, NoctuaFormMenuService } from 'noctua-form-base';
 import { CamService } from 'noctua-form-base'
 import { Annoton } from 'noctua-form-base';
 import { AnnotonNode } from 'noctua-form-base';
@@ -26,7 +27,7 @@ export class NodesContainerComponent implements OnChanges, AfterViewInit {
   @ViewChild(ContextMenuComponent, { static: true }) public basicMenu: ContextMenuComponent;
 
   constructor(
-    public noctuaFormService: NoctuaFormService,
+    public noctuaFormMenuService: NoctuaFormMenuService,
     public camDiagramService: CamDiagramService,
     public noctuaAnnotonFormService: NoctuaAnnotonFormService,
     private nodeService: NodeService) { }
@@ -45,7 +46,7 @@ export class NodesContainerComponent implements OnChanges, AfterViewInit {
   openForm(location?) {
     this.noctuaAnnotonFormService.mfLocation = location;
     this.noctuaAnnotonFormService.initializeForm();
-    this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.annotonForm)
+    this.noctuaFormMenuService.openRightDrawer(this.noctuaFormMenuService.panel.annotonForm)
   }
 
   ngOnChanges() {

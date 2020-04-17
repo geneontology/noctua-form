@@ -1,22 +1,13 @@
 
-import { Component, OnInit, OnDestroy, ViewChild, Inject, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormArray } from '@angular/forms';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatMenuTrigger } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
-import * as _ from 'lodash';
-import { Cam } from 'noctua-form-base';
-import { MatTableDataSource, MatSort } from '@angular/material';
 
 import { NoctuaFormConfigService } from 'noctua-form-base';
-import { NoctuaGraphService } from 'noctua-form-base';
-import { NoctuaLookupService } from 'noctua-form-base';
 
-import { NoctuaSearchService } from './../../../../../../@noctua.search/services/noctua-search.service';
 
-import { SparqlService } from './../../../../../../@noctua.sparql/services/sparql/sparql.service';
 @Component({
   selector: 'app-before-save',
   templateUrl: './before-save.component.html',
@@ -31,17 +22,9 @@ export class BeforeSaveDialogComponent implements OnInit, OnDestroy {
   constructor(
     private _matDialogRef: MatDialogRef<BeforeSaveDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private _data: any,
-    private _matDialog: MatDialog,
-    private route: ActivatedRoute,
-    public noctuaFormConfigService: NoctuaFormConfigService,
-    private noctuaSearchService: NoctuaSearchService,
-    private noctuaLookupService: NoctuaLookupService,
-    private noctuaGraphService: NoctuaGraphService,
-    private sparqlService: SparqlService
-  ) {
+    public noctuaFormConfigService: NoctuaFormConfigService) {
     this._unsubscribeAll = new Subject();
 
-    this.searchFormData = this.noctuaFormConfigService.createSearchFormData();
     this.cam = this._data.cam
     this.searchForm = this.createAnswerForm();
   }

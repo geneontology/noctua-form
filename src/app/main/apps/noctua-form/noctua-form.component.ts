@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatDrawer } from '@angular/material';
+import { MatDrawer } from '@angular/material/sidenav';
 import { Subject } from 'rxjs';
 
 import { noctuaAnimations } from './../../../../@noctua/animations';
@@ -11,15 +11,16 @@ import {
   Contributor,
   NoctuaUserService,
   NoctuaFormConfigService,
+  NoctuaFormMenuService,
   NoctuaGraphService,
   NoctuaAnnotonFormService,
   CamService,
   noctuaFormConfig
 } from 'noctua-form-base';
 
-import { NoctuaFormService } from './services/noctua-form.service';
 import { takeUntil } from 'rxjs/operators';
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
+import { NoctuaDataService } from '@noctua.common/services/noctua-data.service';
 
 @Component({
   selector: 'app-noctua-form',
@@ -47,17 +48,18 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
 
   private _unsubscribeAll: Subject<any>;
 
-  constructor(private route: ActivatedRoute,
-    private camService: CamService,
-    public noctuaUserService: NoctuaUserService,
-    public noctuaFormConfigService: NoctuaFormConfigService,
-    public noctuaAnnotonFormService: NoctuaAnnotonFormService,
-    public noctuaFormService: NoctuaFormService,
-    private sparqlService: SparqlService,
-    private noctuaGraphService: NoctuaGraphService, ) {
+  constructor
+    (private route: ActivatedRoute,
+      private camService: CamService,
+      private noctuaDataService: NoctuaDataService,
+      public noctuaUserService: NoctuaUserService,
+      public noctuaFormConfigService: NoctuaFormConfigService,
+      public noctuaAnnotonFormService: NoctuaAnnotonFormService,
+      public noctuaFormMenuService: NoctuaFormMenuService) {
 
     this._unsubscribeAll = new Subject();
 
+    this.noctuaDataService.loadContributors();
     this.route
       .queryParams
       .pipe(takeUntil(this._unsubscribeAll))
@@ -65,7 +67,7 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
         this.modelId = params['model_id'] || null;
         this.baristaToken = params['barista_token'] || null;
         this.noctuaUserService.baristaToken = this.baristaToken;
-        this.noctuaFormConfigService.baristaToken = this.baristaToken;
+        this.noctuaFormConfigService.setUniversalUrls();
         this.getUserInfo();
         this.loadCam(this.modelId);
       });
@@ -94,29 +96,32 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.noctuaFormService.setLeftDrawer(this.leftDrawer);
-    this.noctuaFormService.setRightDrawer(this.rightDrawer);
-    this.sparqlService.getAllContributors()
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((contributors: Contributor[]) => {
-        this.noctuaUserService.contributors = contributors;
-        this.noctuaGraphService.populateContributors(this.cam);
-      });
+    const self = this;
+
+    self.noctuaFormMenuService.setLeftDrawer(self.leftDrawer);
+    self.noctuaFormMenuService.setRightDrawer(self.rightDrawer);
   }
 
 
   loadCam(modelId) {
-    this.cam = this.camService.getCam(modelId);
+    const self = this;
+
+    self.noctuaDataService.onContributorsChanged.pipe(
+      takeUntil(this._unsubscribeAll))
+      .subscribe((contributors: Contributor[]) => {
+        self.noctuaUserService.contributors = contributors;
+        this.cam = this.camService.getCam(modelId);
+      });
   }
 
   openCamForm() {
     this.camService.initializeForm(this.cam);
-    this.noctuaFormService.openLeftDrawer(this.noctuaFormService.panel.camForm);
+    this.noctuaFormMenuService.openLeftDrawer(this.noctuaFormMenuService.panel.camForm);
   }
 
   openAnnotonForm(annotonType: AnnotonType) {
     this.noctuaAnnotonFormService.setAnnotonType(annotonType);
-    this.noctuaFormService.openLeftDrawer(this.noctuaFormService.panel.annotonForm);
+    this.noctuaFormMenuService.openLeftDrawer(this.noctuaFormMenuService.panel.annotonForm);
   }
 
   ngOnDestroy(): void {
