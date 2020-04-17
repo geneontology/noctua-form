@@ -85,7 +85,6 @@ export class SparqlMinervaService {
 
     manager.register('prerun', shieldsUp);
     manager.register('postrun', () => {
-      console.log("pllllllllooolil887235897d")
     }, 9);
     manager.register('manager_error', managerError, 10);
     manager.register('warning', warning, 10);
