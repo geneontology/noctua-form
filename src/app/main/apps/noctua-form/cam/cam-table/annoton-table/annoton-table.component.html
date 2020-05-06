@@ -112,14 +112,8 @@
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #entityMenu="matMenu" class="noc-dropdown-menu">
-              <button mat-menu-item *ngIf="entity.treeLevel===0" class="" (click)="toggleIsComplement(entity)">
-                NOT Qualifier
-              </button>
               <button mat-menu-item *ngIf="entity.node.insertMenuNodes" [matMenuTriggerFor]="addMenu">Add</button>
               <button mat-menu-item [matMenuTriggerFor]="evidenceMenu">Evidence</button>
-              <button mat-menu-item class="">
-                Delete
-              </button>
             </mat-menu>
             <mat-menu #addMenu="matMenu">
               <button mat-menu-item *ngFor="let insertMenuItem of entity.node.insertMenuNodes" class=""

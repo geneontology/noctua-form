@@ -33,6 +33,9 @@ export const environment = {
   globalWorkbenchesModel: globalWorkbenchesModel,
   globalWorkbenchesUniversal: globalWorkbenchesUniversal,
 
+
+  searchApi: `${baristaLocation}/search/`,
+
   //Workbench
   noctuaUrl: `${window.location.origin}`,
   workbenchUrl: `${window.location.origin}/workbench/`,
