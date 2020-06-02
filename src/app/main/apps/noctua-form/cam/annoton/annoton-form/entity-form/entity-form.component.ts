@@ -12,13 +12,10 @@ import {
   noctuaFormConfig,
   Entity,
   ShapeDefinition,
-  AnnotonError,
-  NoctuaUserService
+  AnnotonError
 } from 'noctua-form-base';
 import { InlineReferenceService } from '@noctua.editor/inline-reference/inline-reference.service';
 import { each, find } from 'lodash';
-import { SearchCriteria } from '@noctua.search/models/search-criteria';
-import { environment } from 'environments/environment';
 
 @Component({
   selector: 'noc-entity-form',
@@ -43,7 +40,6 @@ export class EntityFormComponent implements OnInit, OnDestroy {
   constructor(
     private noctuaFormDialogService: NoctuaFormDialogService,
     private camService: CamService,
-    public noctuaUserService: NoctuaUserService,
     private inlineReferenceService: InlineReferenceService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     public noctuaAnnotonFormService: NoctuaAnnotonFormService) {
@@ -137,16 +133,15 @@ export class EntityFormComponent implements OnInit, OnDestroy {
   openSearchModels() {
     const self = this;
     const gpNode = this.noctuaAnnotonFormService.annoton.getGPNode();
-    const searchCriteria = new SearchCriteria();
+    // const searchCriteria = new SearchCriteria();
 
-    searchCriteria.terms.push(this.entity.term);
+    //searchCriteria.goterms.push(this.entity.term);
 
-    const url = 'http://localhost:8910/noctua-landing-page?barista_token='
-      + self.noctuaUserService.baristaToken + '&' + searchCriteria.buildEncoded();
+    // const url = this.noctuaFormConfigService.getUniversalWorkbenchUrl('noctua-search', searchCriteria.buildEncoded());
 
-    console.log(url);
+    // console.log(url);
 
-    window.open(url, '_blank');
+    // window.open(url, '_blank');
 
   }
 

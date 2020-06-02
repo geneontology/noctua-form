@@ -39,7 +39,6 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
   rightDrawer: MatDrawer;
 
   public cam: Cam;
-  public user: Contributor;
   searchResults = [];
   modelId = '';
   baristaToken = '';
@@ -67,33 +66,13 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
         this.modelId = params['model_id'] || null;
         this.baristaToken = params['barista_token'] || null;
         this.noctuaUserService.baristaToken = this.baristaToken;
+        this.noctuaUserService.getUser();
         this.noctuaFormConfigService.setUniversalUrls();
-        this.getUserInfo();
         this.loadCam(this.modelId);
       });
   }
 
-  getUserInfo() {
-    const self = this;
 
-    this.noctuaUserService.getUser()
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((response) => {
-        if (response && response.token) {
-          this.user = new Contributor();
-          this.user.name = response.nickname;
-          this.user.groups = response.groups;
-          // user.manager.use_groups([self.userInfo.selectedGroup.id]);
-          this.user.token = response.token;
-          this.noctuaUserService.user = this.user;
-          this.noctuaUserService.onUserChanged.next(this.user);
-        } else {
-          this.user = null;
-          this.noctuaUserService.user = this.user;
-          this.noctuaUserService.onUserChanged.next(this.user);
-        }
-      });
-  }
 
   ngOnInit(): void {
     const self = this;
