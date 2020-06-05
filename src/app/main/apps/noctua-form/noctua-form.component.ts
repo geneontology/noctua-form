@@ -21,6 +21,7 @@ import {
 import { takeUntil } from 'rxjs/operators';
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 import { NoctuaDataService } from '@noctua.common/services/noctua-data.service';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-noctua-form',
@@ -41,7 +42,6 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
   public cam: Cam;
   searchResults = [];
   modelId = '';
-  baristaToken = '';
 
   noctuaFormConfig = noctuaFormConfig;
 
@@ -64,23 +64,24 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(params => {
         this.modelId = params['model_id'] || null;
-        this.baristaToken = params['barista_token'] || null;
-        this.noctuaUserService.baristaToken = this.baristaToken;
-        this.noctuaUserService.getUser();
-        this.noctuaFormConfigService.setUniversalUrls();
+        const baristaToken = params['barista_token'] || null;
+        this.noctuaUserService.getUser(baristaToken);
+
         this.loadCam(this.modelId);
       });
   }
 
-
-
   ngOnInit(): void {
     const self = this;
-
+    self.noctuaUserService.onUserChanged.pipe(
+      takeUntil(this._unsubscribeAll))
+      .subscribe((user: Contributor) => {
+        this.noctuaFormConfigService.setupUrls();
+        this.noctuaFormConfigService.setUniversalUrls();
+      });
     self.noctuaFormMenuService.setLeftDrawer(self.leftDrawer);
     self.noctuaFormMenuService.setRightDrawer(self.rightDrawer);
   }
-
 
   loadCam(modelId) {
     const self = this;

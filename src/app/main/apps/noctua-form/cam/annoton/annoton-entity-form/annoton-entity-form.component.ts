@@ -101,7 +101,7 @@ export class AnnotonEntityFormComponent implements OnInit, OnDestroy {
     self.noctuaAnnotonEntityService.annotonEntityFormToAnnoton();
 
     //this.noctuaGraphService.edit(this.camService.cam, self.noctuaAnnotonEntityService.termNode).then((data) => {
-    //  localStorage.setItem('barista_token', value);  
+    //  localStorage.setItem('baristaToken', value);  
     //    self.noctuaFormDialogService.openSuccessfulSaveToast('Activity successfully edited.', 'OK');
     //  });
   }

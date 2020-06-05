@@ -84,7 +84,7 @@
     "ngx-contextmenu": "^5.1.1",
     "ngx-cookie-service": "2.2.0",
     "noctua-sparql-query-builder": "0.0.41",
-    "noctua-form-base": "0.7.73",
+    "noctua-form-base": "0.7.76",
     "node-bourbon": "^4.2.8",
     "perfect-scrollbar": "1.4.0",
     "prismjs": "1.16.0",
