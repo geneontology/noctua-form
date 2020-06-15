@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostBinding, Inject, OnInit, OnDestroy, Renderer2, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, HostBinding, Inject, OnInit, OnDestroy, Renderer2, ViewEncapsulation, HostListener } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Platform } from '@angular/cdk/platform';
 import { Subject, Subscription } from 'rxjs';
@@ -6,6 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { NoctuaConfigService } from '@noctua/services/config.service';
 import { NoctuaSplashScreenService } from '@noctua/services/splash-screen.service';
+import { NoctuaUserService } from 'noctua-form-base';
 
 
 @Component({
@@ -19,17 +20,27 @@ export class AppComponent implements OnInit, OnDestroy {
     navigation: any;
 
     private _unsubscribeAll: Subject<any>;
+    @HostListener('window:focus', ['$event'])
+    onFocus(event: FocusEvent): void {
+        this.noctuaUserService.getUser();
+        console.log('I am focused', event);
+    }
+
+    @HostListener('window:blur', ['$event'])
+    onBlur(event: FocusEvent): void {
+        this.noctuaUserService.getUser();
+        console.log('I am blurred', event)
+    }
 
     constructor(
         private noctuaSplashScreen: NoctuaSplashScreenService,
         private _renderer: Renderer2,
         private _elementRef: ElementRef,
         private noctuaConfigService: NoctuaConfigService,
+        public noctuaUserService: NoctuaUserService,
         private platform: Platform,
         @Inject(DOCUMENT) private document: any
     ) {
-
-
         if (this.platform.ANDROID || this.platform.IOS) {
             this.document.body.className += ' is-mobile';
         }
@@ -44,6 +55,7 @@ export class AppComponent implements OnInit, OnDestroy {
                 this.noctuaConfig = config;
             });
     }
+
 
     ngOnDestroy() {
         this._unsubscribeAll.next();
