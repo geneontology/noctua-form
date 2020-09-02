@@ -1,5 +1,11 @@
 export class NoctuaUtils {
 
+    public static cleanID(dirtyId: string) {
+        if (dirtyId) {
+            return dirtyId.replace(/\W/g, '_')
+        }
+        return dirtyId;
+    }
     public static filterArrayByString(mainArr, searchText) {
         if (searchText === '') {
             return mainArr;

@@ -1,0 +1,122 @@
+@import "src/@noctua/scss/noctua";
+@import "src/@noctua.common/scss/noctua.common";
+$primary: map-get($theme, primary);
+$accent: map-get($theme, accent);
+
+:host {
+
+  @include media-breakpoint('xs') {
+    width: 100%;
+  }
+
+  @include media-breakpoint-up('sm') {
+    width: 600px;
+  }
+
+  .noc-section-body {
+    background-color: #EEE;
+  }
+
+  .noc-term-box {
+    width: 100%;
+    margin-bottom: 12px;
+
+    @include mat-elevation(2);
+
+    .noc-term-row {
+      padding: 12px 8px;
+    }
+  }
+
+  noc-select-evidence {
+    width: 100%;
+
+    .mat-cell {
+      padding: 0 10px;
+      font-size: 12px !important;
+      color: #000;
+    }
+
+    .mat-header-cell,
+    .mat-header-row {
+      // display: none;
+      @include deep-height(30px);
+    }
+
+    .mat-header-cell {
+      padding: 0 10px;
+      font-size: 10px !important;
+      //color: #0F0; // map-get($primary, default);
+      font-weight: bold;
+      @include deep-height(30px);
+      border-bottom: $noc-primary-color-light solid 1px;
+
+      padding: 0 10px;
+      font-size: 10px;
+      color: map-get($primary, default);
+      text-transform: uppercase;
+    }
+
+
+    .noc-paginator {
+      @include deep-height(0);
+    }
+
+    .annoton {
+      position: relative;
+      cursor: pointer;
+      min-height: 40px;
+      font-size: 12px;
+    }
+
+
+    .mat-cell {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .mat-column-id {
+      flex: 0 1 84px;
+    }
+
+    /* .mat-header-cell {
+      display:flex;
+      justify-content:flex-end;
+     } */
+  }
+
+  .noc-form-section {
+    background-color: transparent;
+
+    .noc-section-header {
+      @include deep-height(40px);
+      padding-left: 8px;
+
+      .noc-section-heading {
+        padding: 0;
+        font-size: 12px;
+        line-height: 15px;
+      }
+    }
+  }
+
+  .noc-dialog-body {
+    margin: 0;
+    padding: 0;
+    @include deep-width(100%);
+  }
+
+  .mat-dialog-container {
+    padding: 0;
+  }
+
+  .mat-dialog-content {}
+
+  .dialog-content-wrapper {
+    @include deep-width(100%);
+    min-height: 90%;
+    display: flex;
+    flex-direction: column;
+  }
+}

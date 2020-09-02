@@ -8,7 +8,7 @@ import { NoctuaFormModule } from './noctua-form/noctua-form.module';
   declarations: [],
   imports: [
     NoctuaSharedModule,
-    NoctuaFormModule,
+    NoctuaFormModule
   ],
   exports: [
     NoctuaFormModule,

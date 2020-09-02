@@ -40,6 +40,11 @@ $noc-border-color: #BBB;
     margin-right: 2px;
   }
 
+  &.noc-m {
+    border-radius: 0 !important;
+    margin-right: 2px;
+  }
+
   &.noc-l {
     border-top-left-radius: 0 !important;
     border-bottom-left-radius: 0 !important;

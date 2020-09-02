@@ -1,0 +1,66 @@
+<div class="dialog-content-wrapper noc-dialog" fxLayout="column" fxLayoutAlign="start stretch">
+  <div class="m-0 noc-dialog-header" fxLayout="row" fxLayoutAlign="start center">
+    <span class="noc-dialog-header-title">
+      Search Evidence</span>
+    <span fxFlex></span>
+    <button mat-stroked-button (click)="close()" class="noc-rounded-button noc-sm" aria-label="Close dialog">
+      <mat-icon>close</mat-icon> Close
+    </button>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start start" class="noc-dialog-body">
+    <div class="h-100-p noc-form-section" fxFlex="100%" fxLayout="column" fxLayoutAlign="start stretch">
+      <div class="noc-section-header  w-100-p" fxLayout="row" fxLayoutAlign="start center">
+        <div class="noc-section-heading">
+          Selected Evidence : {{checklistSelection.selected.length}}
+          <small></small>
+        </div>
+      </div>
+      <div *ngIf="dataSource.data" class="noc-section-body w-100-p" noctuaPerfectScrollbar>
+        <mat-tree #tree [dataSource]="dataSource" [treeControl]="treeControl">
+          <mat-tree-node class="ann-tree-node" *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding
+            matTreeNodePaddingIndent="10" [ngClass]="{ 'background-highlight': activeAnnotation === node.short_name }">
+            <div class="w-100-p" fxLayout="row" fxLayoutAlign="start start">
+              <button mat-icon-button disabled class="ann-icon-button"></button>
+              <mat-checkbox class="checklist-leaf-node mr-8" [checked]="checklistSelection.isSelected(node)"
+                (change)="evidenceLeafItemSelectionToggle(node)"></mat-checkbox>
+              <div fxFlex="30%">
+                {{node.evidence?.evidence?.label}}
+              </div>
+              <div fxFlex="20%">
+                {{node.evidence?.reference}}
+              </div>
+              <div fxFlex="20%">
+                {{node.evidence?.with}}
+              </div>
+              <div fxFlex>
+                {{node.evidence?.assignedBy?.label}}
+              </div>
+            </div>
+          </mat-tree-node>
+          <mat-tree-node fxLayout="row" class="ann-tree-node text-truncate" *matTreeNodeDef="let node;when: hasChild"
+            matTreeNodePadding matTreeNodePaddingIndent="10"
+            [ngClass]="{ 'background-highlight': activeAnnotation === node.short_name }">
+            <button mat-icon-button matTreeNodeToggle class="">
+              <fa-icon *ngIf="!treeControl.isExpanded(node)" [icon]="['fas', 'chevron-right']"></fa-icon>
+              <fa-icon *ngIf="treeControl.isExpanded(node)" [icon]="['fas', 'chevron-down']"></fa-icon>
+            </button>
+            <!--  <mat-checkbox class="mr-8" [checked]="descendantsAllSelected(node)"
+              [indeterminate]="descendantsPartiallySelected(node)" (change)="evidenceItemSelectionToggle(node)">
+            </mat-checkbox> -->
+            {{node.annotonNode?.term?.label}}
+            (<small>{{node.annotonNode?.term?.id}}</small>)
+            <span fxFlex></span>
+            <div class="" fxFlex="100px">
+              {{node.count}}
+            </div>
+          </mat-tree-node>
+        </mat-tree>
+      </div>
+    </div>
+  </div>
+  <div class="m-0 p-16 noc-dialog-footer" fxLayout="row" fxLayoutAlign="space-between center">
+    <span fxFlex></span>
+    <button (click)='close()' type="button" mat-raised-button color="" class="mr-8">Cancel</button>
+    <button (click)="save()" type="button" mat-raised-button color="primary">Done</button>
+  </div>
+</div>

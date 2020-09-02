@@ -2,21 +2,41 @@
   <mat-toolbar class="mat-primary m-0">
     <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="start center">
       <span class="title dialog-title">
-        Add Evidence</span>
+        Choose from Exisiting Node</span>
       <span fxFlex></span>
-      <button mat-icon-button (click)="close()" aria-label="Close dialog">
-        <mat-icon>close</mat-icon>
+      <button mat-stroked-button (click)="close()" class="noc-rounded-button noc-sm" aria-label="Close dialog">
+        <mat-icon>close</mat-icon> Close
       </button>
     </mat-toolbar-row>
   </mat-toolbar>
-  <div mat-dialog-content class="noc-dialog-body" noctuaPerfectScrollbar>
-    <div fxLayout="column" fxLayoutAlign="start center" class="w-100-p">
-
+  <div class="noc-dialog-body noc-right-panel noc-form-section">
+    <div class="noc-section-header  w-100-p" fxLayout="row" fxLayoutAlign="start center">
+      <div class="noc-section-heading">
+        Select Node
+      </div>
+    </div>
+    <div class="noc-section-body w-100-p" noctuaPerfectScrollbar>
+      <mat-radio-group fxLayout="column" fxLayoutAlign="start stretch" class="w-100-p"
+        [(ngModel)]="selectedAnnotonNode">
+        <div *ngFor="let node of nodes" class="noc-radio-group-section" fxLayout="column" fxLayoutAlign="start stretch">
+          <div class="noc-title">
+            {{node.title}}
+          </div>
+          <mat-radio-button class="mb-8" *ngFor="let annotonNode of node.annotonNodes" [value]="annotonNode">
+            <div class="h4">
+              {{annotonNode.term?.label}}
+            </div>
+            <div class="">
+              <small>{{annotonNode.term?.id}}</small>
+            </div>
+          </mat-radio-button>
+        </div>
+      </mat-radio-group>
     </div>
   </div>
-  <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="space-between center">
+  <div class="m-0 p-16 noc-dialog-footer" fxLayout="row" fxLayoutAlign="space-between center">
     <span fxFlex></span>
     <button (click)='close()' type="button" mat-raised-button color="" class="mr-8">Cancel</button>
-    <button type="button" mat-raised-button color="primary">Save</button>
+    <button (click)="save()" type="button" mat-raised-button color="primary">Done</button>
   </div>
 </div>

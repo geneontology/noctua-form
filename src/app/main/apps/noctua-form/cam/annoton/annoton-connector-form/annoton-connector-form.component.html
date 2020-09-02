@@ -160,61 +160,30 @@
             <div fxFlex="180px">
               <p> Direction of Effect </p>
             </div>
-            <mat-radio-group fxFlex="" formControlName="causalEffect" fxLayout="row" fxLayoutAlign="start center">
+            <mat-radio-group fxFlex="" formControlName="causalEffect" fxLayout="column" fxLayoutAlign="start start">
               <mat-radio-button *ngFor="let causalEffect of noctuaFormConfigService.causalEffect.options"
-                class="noc-radio-button-rounded mr-12" [value]="causalEffect"
+                class="noc-radio-button-rounded mb-8" [value]="causalEffect"
                 [checked]="causalEffect.name === connectorAnnoton?.rule.effectDirection.direction.name">
                 {{causalEffect.label}}
               </mat-radio-button>
             </mat-radio-group>
           </div>
-          <div *ngIf="connectorAnnoton?.rule.displaySection.annotonsConsecutive" class="px-8 noc-group-row"
-            fxLayout="row" fxLayoutAlign="start center">
-            <div fxFlex="180px" class="pr-8 text-sm">
-              <p> Do you know the mechanism for how the upstream activity affects the downstream activity? </p>
+          <div *ngIf="connectorAnnoton?.rule.displaySection.mechanism" class="px-8 noc-group-row" fxLayout="row"
+            fxLayoutAlign="start center">
+            <div fxFlex="180px" class="pr-8">
+              <p>Mechanism
+                <mat-icon
+                  matTooltip="Do you know the mechanism for how the upstream activity affects the downstream activity?"
+                  [matTooltipPosition]="'below'" [matTooltipShowDelay]="1000">help</mat-icon>
+              </p>
             </div>
-            <mat-radio-group fxFlex="" formControlName="annotonsConsecutive" fxLayout="row"
-              fxLayoutAlign="start center">
-              <mat-radio-button class="noc-radio-button-rounded mr-12" [value]="true"> Yes</mat-radio-button>
-              <mat-radio-button class="noc-radio-button-rounded mr-12" [value]="false"> No/unknown</mat-radio-button>
+            <mat-radio-group fxFlex="" formControlName="mechanism" fxLayout="column" fxLayoutAlign="start start">
+              <mat-radio-button *ngFor="let mechanism of noctuaFormConfigService.mechanism.options"
+                class="noc-radio-button-rounded mb-8" [value]="mechanism"
+                [checked]="mechanism.name === connectorAnnoton?.rule.mechanism.mechanism.name">
+                {{mechanism.label}}
+              </mat-radio-button>
             </mat-radio-group>
-          </div>
-          <div *ngIf="connectorAnnoton?.rule.displaySection.effectDependency" class="px-8 noc-group-row"
-            fxLayout="column" fxLayoutAlign="start">
-            <div class="" fxLayout="row" fxLayoutAlign="start center">
-              <div fxFlex="180px">
-                <p> Causal Effect Dependency</p>
-              </div>
-              <mat-radio-group fxFlex="" formControlName="effectDependency" fxLayout="row" fxLayoutAlign="start center">
-                <mat-radio-button class="noc-radio-button-rounded mr-12" [value]="true"> Yes
-                </mat-radio-button>
-                <mat-radio-button class="noc-radio-button-rounded mr-12" [value]="false"> No
-                </mat-radio-button>
-              </mat-radio-group>
-            </div>
-            <div class="noc-hint">
-              Does the causal effect depend on another process? (for example, transcription factor activity depends on
-              transcription occurring).
-            </div>
-          </div>
-          <div *ngIf="connectorAnnoton?.rule.displaySection.causalReactionProduct" class="px-8 noc-group-row"
-            fxLayout="column" fxLayoutAlign="start">
-            <div class="" fxLayout="row" fxLayoutAlign="start center">
-              <div fxFlex="180px">
-                <p> Reaction Product</p>
-              </div>
-              <mat-radio-group fxFlex="" formControlName="causalReactionProduct" fxLayout="row"
-                fxLayoutAlign="start center">
-                <mat-radio-button
-                  *ngFor="let causalReactionProduct of noctuaFormConfigService.causalReactionProduct.options"
-                  class="noc-radio-button-rounded mr-12" [value]="causalReactionProduct">
-                  {{causalReactionProduct.label}}
-                </mat-radio-button>
-              </mat-radio-group>
-            </div>
-            <div class="noc-hint">
-              Does the product of reaction 1 REGULATE or become the SUBSTRATE for activity 2?
-            </div>
           </div>
         </div>
         <div *ngIf="connectorAnnoton?.rule.displaySection.process" class="noc-form-section p-0 w-100-p">

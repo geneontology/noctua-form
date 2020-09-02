@@ -30,7 +30,6 @@
             ],
             "styles": [
               "src/styles.scss",
-              "node_modules/font-awesome/css/font-awesome.min.css",
               "node_modules/jsplumb/dist/js/jsplumb.min.js"
             ],
             "scripts": []

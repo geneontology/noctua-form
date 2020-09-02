@@ -1,0 +1,49 @@
+<div (click)="$event.stopPropagation()" class="noc-item-details noc-drawer w-100-p">
+  <div class="noc-header w-100-p" fxLayout="row" fxLayoutAlign="start center">
+    <div class="noc-header-title">
+      <div class="text-truncate">
+        {{termDetail.label}}
+      </div>
+    </div>
+    <span fxFlex></span>
+    <button mat-stroked-button (click)="$event.stopPropagation(); close()" class="noc-rounded-button noc-sm"
+      color="primary" aria-label="Close Selected Item">
+      <mat-icon>close</mat-icon> Close
+    </button>
+  </div>
+  <div class="noc-body w-100-p" noctuaPerfectScrollbar>
+    <div class="noc-section-row">
+      <div class="noc-title">
+        Term
+      </div>
+      <div class="noc-description">
+        {{termDetail.label}} <small>({{termDetail.id}})</small>
+      </div>
+    </div>
+    <div class="noc-section-row">
+      <div class="noc-title">
+        Definition
+      </div>
+      <div class="noc-description">
+        {{termDetail.description}}
+      </div>
+    </div>
+    <div class="noc-section-row">
+      <div class="noc-title">
+        Is A Type Of
+      </div>
+      <div class="noc-description">
+        <div *ngFor="let rootType of termDetail.rootTypes">
+          {{rootType.label}}<small>({{rootType.id}})</small>
+          <a (click)="useTerm(rootType)">
+            Use
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="noc-footer w-100-p">
+    <span fxFlex></span>
+    <!-- <button class="noc-rounded-button" mat-raised-button color="primary">Use</button> -->
+  </div>
+</div>

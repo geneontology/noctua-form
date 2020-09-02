@@ -16,14 +16,26 @@ import { LayoutModule } from 'app/layout/layout.module';
 import { PagesModule } from './main/pages/pages.module';
 import { AppsModule } from './main/apps/apps.module';
 import {
+    faPaw,
     faPen,
     faSitemap,
     faUser,
     faUsers,
     faCalendarDay,
     faCalendarWeek,
+    faSearch,
     faTasks,
     faListAlt,
+    faChevronRight,
+    faHistory,
+    faCopy,
+    faPlus,
+    faLink,
+    faChevronDown,
+    faLevelDownAlt,
+    faLevelUpAlt,
+    faArrowUp,
+    faArrowDown,
 } from '@fortawesome/free-solid-svg-icons';
 import { faGithub, faFacebook, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
@@ -70,12 +82,24 @@ const appRoutes: Routes = [
 export class AppModule {
     constructor(library: FaIconLibrary) {
         library.addIcons(
+            faArrowUp,
+            faArrowDown,
             faCalendarDay,
             faCalendarWeek,
+            faChevronDown,
+            faChevronRight,
+            faCopy,
             faFacebook,
+            faHistory,
             faGithub,
+            faLevelDownAlt,
+            faLevelUpAlt,
+            faLink,
             faListAlt,
+            faPaw,
             faPen,
+            faPlus,
+            faSearch,
             faSitemap,
             faTasks,
             faTwitter,

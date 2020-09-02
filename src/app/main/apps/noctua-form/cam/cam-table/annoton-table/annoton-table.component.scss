@@ -127,6 +127,14 @@ $accent: map-get($theme, accent);
       min-width: 0;
       display: flex;
       align-items: center;
+
+      &.noc-highlight-match {
+        background-color: #ccc9fb;
+      }
+
+      &.noc-highlight-match-current {
+        border: #3d388f solid 5px;
+      }
     }
 
     .mat-column-id {
