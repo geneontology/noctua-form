@@ -22,7 +22,6 @@ $accent: map-get($theme, accent);
     }
   }
 
-
   .noc-loading-container {
     background-color: rgba(#555, 0.4);
     position: absolute;
@@ -74,7 +73,7 @@ $accent: map-get($theme, accent);
     margin-bottom: 1px;
     @include deep-height(50px);
     //min-height: 35px;
-    background-color: #f2F2F2;
+    background-color: #FFF;
     font-size: 16px;
     border-bottom: rgba(#000, 0.4) solid 1px;
 

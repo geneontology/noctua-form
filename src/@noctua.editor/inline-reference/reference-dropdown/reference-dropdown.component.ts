@@ -90,7 +90,7 @@ export class NoctuaReferenceDropdownComponent implements OnInit, OnDestroy {
     self.evidenceDBForm.valueChanges.pipe(
       takeUntil(this._unsubscribeAll),
       distinctUntilChanged(),
-      debounceTime(400)
+      debounceTime(1000)
     ).subscribe(data => {
       self.article = null;
       self._updateArticle(data);

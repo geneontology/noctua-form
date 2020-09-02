@@ -2,19 +2,15 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 
 import { SelectionModel } from '@angular/cdk/collections';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 
 import {
   Evidence,
-  NoctuaFormConfigService,
-  NoctuaGraphService,
-  NoctuaLookupService
+  NoctuaFormConfigService
 } from 'noctua-form-base';
 
-import { SparqlService } from './../../../../../../@noctua.sparql/services/sparql/sparql.service';
 import { noctuaAnimations } from '@noctua/animations';
 
 @Component({
@@ -69,7 +65,7 @@ export class SelectEvidenceDialogComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Unsubscribe from all subscriptions
+
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
   }

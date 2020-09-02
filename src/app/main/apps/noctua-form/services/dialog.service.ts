@@ -13,12 +13,13 @@ import { SelectEvidenceDialogComponent } from './../dialogs/select-evidence/sele
 import { SearchDatabaseDialogComponent } from './../dialogs/search-database/search-database.component';
 
 import {
-    Evidence
+    Evidence, AnnotonNode
 } from 'noctua-form-base';
 
 import 'rxjs/add/operator/map';
 import { NoctuaConfirmDialogComponent } from '@noctua/components/confirm-dialog/confirm-dialog.component';
 import { PreviewAnnotonDialogComponent } from '../dialogs/preview-annoton/preview-annoton.component';
+import { SearchEvidenceDialogComponent } from '../dialogs/search-evidence/search-evidence.component';
 
 
 @Injectable({
@@ -96,16 +97,14 @@ export class NoctuaFormDialogService {
             });
     }
 
-    openLinkToExistingDialogComponent(cam): void {
+    openLinkToExistingDialogComponent(data, success): void {
         this.dialogRef = this._matDialog.open(LinkToExistingDialogComponent, {
-            panelClass: 'link-to-existing-dialog',
-            data: {
-                cam: cam
-            }
+            panelClass: 'noc-link-to-existing-dialog',
+            data
         });
         this.dialogRef.afterClosed()
-            .subscribe(response => {
-
+            .subscribe((response) => {
+                success(response);
             });
     }
 
@@ -127,6 +126,22 @@ export class NoctuaFormDialogService {
     openSearchDatabaseDialog(searchCriteria, success): void {
         this.dialogRef = this._matDialog.open(SearchDatabaseDialogComponent, {
             panelClass: 'noc-search-database-dialog',
+            data: {
+                searchCriteria: searchCriteria
+            },
+            width: '600px',
+        });
+        this.dialogRef.afterClosed()
+            .subscribe(response => {
+                if (response) {
+                    success(response);
+                }
+            });
+    }
+
+    openSearchEvidenceDialog(searchCriteria, success): void {
+        this.dialogRef = this._matDialog.open(SearchEvidenceDialogComponent, {
+            panelClass: 'noc-search-evidence-dialog',
             data: {
                 searchCriteria: searchCriteria
             },

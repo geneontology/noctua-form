@@ -1,0 +1,41 @@
+<mat-table class="noc-evidence-table w-100-p" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}"
+  noctuaPerfectScrollbar>
+  <ng-container matColumnDef="select" class="">
+    <mat-header-cell *matHeaderCellDef fxFlex="30px">
+      <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+        [indeterminate]="selection.hasValue() && !isAllSelected()">
+      </mat-checkbox>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let row" fxFlex="30px">
+      <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+        [checked]="selection.isSelected(row)">
+      </mat-checkbox>
+    </mat-cell>
+  </ng-container>
+  <ng-container cdkColumnDef="evidence">
+    <mat-header-cell *cdkHeaderCellDef fxFlex="40%">Evidence</mat-header-cell>
+    <mat-cell *cdkCellDef="let evidence" fxFlex="40%">
+      <p class="">{{evidence.evidence?.label}}</p>
+    </mat-cell>
+  </ng-container>
+  <ng-container cdkColumnDef="reference">
+    <mat-header-cell *cdkHeaderCellDef fxFlex="20%">Reference</mat-header-cell>
+    <mat-cell *cdkCellDef="let evidence" fxFlex="20%">
+      <p class="">{{evidence.reference}}</p>
+    </mat-cell>
+  </ng-container>
+  <ng-container cdkColumnDef="with">
+    <mat-header-cell *cdkHeaderCellDef fxFlex="20%">With</mat-header-cell>
+    <mat-cell *cdkCellDef="let evidence" fxFlex="20%">
+      <p class="">{{evidence.with}}</p>
+    </mat-cell>
+  </ng-container>
+  <ng-container cdkColumnDef="assignedBy">
+    <mat-header-cell *cdkHeaderCellDef fxFlex="">Assigned By</mat-header-cell>
+    <mat-cell *cdkCellDef="let evidence" fxFlex="">
+      <p class="">{{evidence.assignedBy?.label}}</p>
+    </mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></mat-row>
+</mat-table>

@@ -53,7 +53,7 @@ mat-radio-button {
 .mat-autocomplete-panel {
   &.noc-term-autocomplete {
     background-color: #fbf9de;
-    @include deep-width(500px !important);
+    @include deep-width(400px !important);
 
     .mat-option {
       padding: 8px !important;
@@ -72,6 +72,10 @@ mat-radio-button {
         //margin-right: 
       }
 
+      .noc-term-detail-trigger {
+        padding: 0 8px;
+        @include deep-width(50px);
+      }
     }
   }
 }
@@ -82,7 +86,7 @@ mat-radio-button {
     @include deep-width(400px !important);
 
     .mat-option {
-      padding: 8px !important;
+      padding: 5px !important;
       border-bottom: rgba(map-get($primary, default), 0.6) solid 1px;
       height: auto !important;
       line-height: 18px !important;

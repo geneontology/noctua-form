@@ -1,9 +1,10 @@
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
 
-
 :host {
   width: 100%; // display: block;
+
+
 
   .noc-tree-input {
     $border-color: rgba(#000, 0.20);
@@ -28,8 +29,87 @@
         border-bottom: $border-color dotted 2px;
       }
     }
+  }
 
+  .noc-form-chip-row {
+    padding: 8px 5px;
+  }
 
+  mat-chip {
+    font-size: 12px;
+    font-weight: normal;
+    @include deep-height(25px);
+    max-width: 200px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    .noc-chip-label {
+      padding: 0 8px 0 4px;
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      .noc-icon-action {
+        font-size: 10px;
+        background-color: transparent;
+
+        &:hover {
+          font-size: 14px;
+          color: #222;
+        }
+      }
+    }
+
+    &.noc-form-chip {
+      padding: 0 0 0 8px;
+      @include deep-height(25px);
+      font-size: 10px;
+
+      .noc-icon,
+      .noc-icon-action {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 25px;
+        width: 25px;
+        border-radius: 50%;
+        color: #777;
+        font-size: 14px;
+      }
+
+      .noc-icon-action {
+        font-size: 10px;
+        background-color: transparent;
+
+        &:hover {
+          font-size: 14px;
+          color: #222;
+          background-color: rgba(#000000, 0.2);
+        }
+
+      }
+
+      @include noc-chip-color(#DDD);
+
+      &.noc-node-chip {
+        &.noc-mf {
+          @include noc-chip-color(#b6f1cc);
+          // border: #d59f80 solid 1px;/
+        }
+
+        &.noc-bp {
+          @include noc-chip-color(#f4c89c);
+          // border: #d59f80 solid 1px;/
+        }
+
+        &.noc-cc {
+          @include noc-chip-color(rgba(#d3b5f5, 0.8));
+          // border: #d59f80 solid 1px;/
+        }
+      }
+
+    }
   }
 
   .noc-evidence-db-trigger {
