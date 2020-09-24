@@ -145,57 +145,57 @@
             <button mat-icon-button class="noc-action-button" fxFlex="40px" [matMenuTriggerFor]="entityMenu">
               <mat-icon>more_vert</mat-icon>
             </button>
+            <mat-menu #entityMenu="matMenu" class="noc-dropdown-menu">
+              <button mat-menu-item *ngIf="entity.aspect" class="" (click)="openSearchDatabaseDialog(entity)">
+                Search Annotations
+              </button>
+              <!--  <button mat-menu-item *ngIf="entity.aspect" class="" (click)="openSearchEvidenceDialog(entity)">
+                Search Evidence
+              </button>
+               <button mat-menu-item *ngIf="entity.aspect" class="" (click)="openSearchModels()">
+            Search Models
+             </button> 
+              <button mat-menu-item *ngIf="entity.aspect==='P' && !entity.linkedNode" class="" (click)="linkNode(entity)">
+                Choose From an Existing Process
+              </button>
+              <button mat-menu-item *ngIf="entity.linkedNode" class="" (click)="unlinkNode(entity)">
+                Unlink Node
+              </button>
+            -->
+              <button mat-menu-item *ngIf="true" class="" (click)="toggleIsComplement(entity)">
+                NOT Qualifier
+              </button>
+              <button mat-menu-item *ngIf="entity.insertMenuNodes?.length>0" [matMenuTriggerFor]="addMenu">
+                Add an Extension
+              </button>
+              <button mat-menu-item [matMenuTriggerFor]="evidenceMenu">Evidence</button>
+              <button mat-menu-item *ngIf="entity.aspect" class="" (click)="addRootTerm()">
+                Add Root Term
+              </button>
+              <button mat-menu-item class="" (click)="clearValues()">
+                Clear Values
+              </button>
+            </mat-menu>
+            <mat-menu #addMenu="matMenu">
+              <button mat-menu-item *ngFor="let insertMenuItem of entity.insertMenuNodes" class=""
+                (click)="insertEntity(insertMenuItem)">
+                {{insertMenuItem.label}}
+              </button>
+            </mat-menu>
+            <mat-menu #evidenceMenu="matMenu">
+              <button mat-menu-item class="" (click)="addEvidence()">
+                Add Evidence
+              </button>
+              <button (click)="removeEvidence(i)" mat-menu-item>
+                Remove Evidence
+              </button>
+              <button mat-menu-item class="" (click)="openSelectEvidenceDialog()">
+                Clone Evidence
+              </button>
+            </mat-menu>
           </div>
         </div>
       </div>
-      <mat-menu #entityMenu="matMenu" class="noc-dropdown-menu">
-        <button mat-menu-item *ngIf="entity.aspect" class="" (click)="openSearchDatabaseDialog(entity)">
-          Search Annotations
-        </button>
-        <!--  <button mat-menu-item *ngIf="entity.aspect" class="" (click)="openSearchEvidenceDialog(entity)">
-          Search Evidence
-        </button>
-         <button mat-menu-item *ngIf="entity.aspect" class="" (click)="openSearchModels()">
-      Search Models
-       </button> 
-        <button mat-menu-item *ngIf="entity.aspect==='P' && !entity.linkedNode" class="" (click)="linkNode(entity)">
-          Choose From an Existing Process
-        </button>
-        <button mat-menu-item *ngIf="entity.linkedNode" class="" (click)="unlinkNode(entity)">
-          Unlink Node
-        </button>
-      -->
-        <button mat-menu-item *ngIf="true" class="" (click)="toggleIsComplement(entity)">
-          NOT Qualifier
-        </button>
-        <button mat-menu-item *ngIf="entity.insertMenuNodes?.length>0" [matMenuTriggerFor]="addMenu">
-          Add an Extension
-        </button>
-        <button mat-menu-item [matMenuTriggerFor]="evidenceMenu">Evidence</button>
-        <button mat-menu-item *ngIf="entity.aspect" class="" (click)="addRootTerm()">
-          Add Root Term
-        </button>
-        <button mat-menu-item class="" (click)="clearValues()">
-          Clear Values
-        </button>
-      </mat-menu>
-      <mat-menu #addMenu="matMenu">
-        <button mat-menu-item *ngFor="let insertMenuItem of entity.insertMenuNodes" class=""
-          (click)="insertEntity(insertMenuItem)">
-          {{insertMenuItem.label}}
-        </button>
-      </mat-menu>
-      <mat-menu #evidenceMenu="matMenu">
-        <button mat-menu-item class="" (click)="addEvidence()">
-          Add Evidence
-        </button>
-        <button (click)="removeEvidence(i)" mat-menu-item>
-          Remove Evidence
-        </button>
-        <button mat-menu-item class="" (click)="openSelectEvidenceDialog()">
-          Clone Evidence
-        </button>
-      </mat-menu>
     </div>
   </div>
 </div>
