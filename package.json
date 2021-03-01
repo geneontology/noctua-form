@@ -87,7 +87,7 @@
     "noctua-form-base": "0.7.76",
     "node-bourbon": "^4.2.8",
     "perfect-scrollbar": "1.4.0",
-    "prismjs": "1.16.0",
+    "prismjs": "1.23.0",
     "request": "^2.88.0",
     "rxjs": "6.5.5",
     "rxjs-compat": "6.5.1",
