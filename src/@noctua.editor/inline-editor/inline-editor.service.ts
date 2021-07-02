@@ -15,8 +15,8 @@ import { NoctuaEditorDropdownComponent } from './editor-dropdown/editor-dropdown
 
 import {
     CamService,
-    NoctuaAnnotonEntityService,
-    NoctuaAnnotonFormService
+    NoctuaActivityEntityService,
+    NoctuaActivityFormService
 } from 'noctua-form-base';
 
 export interface SearchCriiteria {
@@ -50,23 +50,23 @@ export class InlineEditorService {
         private injector: Injector,
         private overlay: Overlay,
         private camService: CamService,
-        public noctuaAnnotonFormService: NoctuaAnnotonFormService,
-        private noctuaAnnotonEntityService: NoctuaAnnotonEntityService) { }
+        public noctuaActivityFormService: NoctuaActivityFormService,
+        private noctuaActivityEntityService: NoctuaActivityEntityService) { }
 
-    openEditorDropdown(event, config) {
-        const data = {
-            cam: config.cam,
-            annoton: config.annoton,
-            entity: config.entity,
-            category: config.category,
-            evidenceIndex: config.evidenceIndex
-        };
-        // this.camService.onCamChanged.next(this.cam);
-        this.camService.onCamChanged.next(config.cam);
-        this.camService.annoton = config.annoton;
-        this.noctuaAnnotonEntityService.initializeForm(config.annoton, config.entity);
-        this.open(event.target, { data });
-    }
+    /*     openEditorDropdown(event, config) {
+            const data = {
+                cam: config.cam,
+                activity: config.activity,
+                entity: config.entity,
+                category: config.category,
+                evidenceIndex: config.evidenceIndex
+            };
+            // this.camService.onCamChanged.next(this.cam);
+            this.camService.onCamChanged.next(config.cam);
+            this.camService.activity = config.activity;
+            this.noctuaActivityEntityService.initializeForm(config.activity, config.entity);
+            this.open(event.target, { data });
+        } */
 
     open(elementToConnectTo: ElementRef, config: EditorDropdownDialogConfig = {}) {
         const dialogConfig = { ...DEFAULT_CONFIG, ...config };

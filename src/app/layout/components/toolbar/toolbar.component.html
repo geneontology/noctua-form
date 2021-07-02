@@ -1,4 +1,4 @@
-<mat-toolbar class="" fxLayout="row" fxLayoutAlign="start center">
+<mat-toolbar class="" fxLayout="row" fxLayoutAlign="start center" [ngClass]="{'noc-dev': isDev, 'noc-beta': isBeta }">
   <mat-progress-bar *ngIf="showLoadingBar" class="loading-bar" color="accent" mode="indeterminate"></mat-progress-bar>
   <div class="noc-br h-100-p" fxLayout="row" fxLayoutAlign="start center" fxFlex="200px">
     <div class="noc-logo pl-8" fxLayout="row" fxLayoutAlign="start">
@@ -12,12 +12,30 @@
       [matTooltipPosition]="'below'" [matTooltipShowDelay]="1000">
       <mat-icon class="">apps</mat-icon>
     </button>
-    <a class="noc-main-logo" href="{{noctuaConfigService.noctuaUrl}}" target="_blank">
-      Noctua
-    </a>
-    <a class="noc-sub-logo" href="{{noctuaConfigService.homeUrl}}" target=" _blank">
-      Form
-    </a>
+    <ng-container *ngIf="!isBeta && !isDev">
+      <a class="noc-main-logo" href="{{noctuaConfigService.noctuaUrl}}" target="_blank">
+        Noctua
+      </a>
+      <a class="noc-sub-logo" href="{{noctuaConfigService.homeUrl}}" target=" _blank">
+        ART
+      </a>
+    </ng-container>
+    <div *ngIf="isDev || isBeta" class="noc-beta-logo" fxLayout="column" fxLayoutAlign="center start ">
+      <div class="noc-title">
+        <a class="" href="{{noctuaConfigService.noctuaUrl}}" target="_blank">
+          Noctua
+        </a>
+        <a class="" href="{{noctuaConfigService.homeUrl}}" target="_blank">
+          ART
+        </a>
+        ({{betaText}})
+      </div>
+      <div class="noc-description">
+        Testing Version. Visit <a class="" href="http://noctua.geneontology.org/" target="_blank">
+          Noctua
+        </a> for production version
+      </div>
+    </div>
   </div>
   <div fxLayout="row" fxLayoutAlign="end center" fxFlex="">
     <div class="noc-br pr-12" fxLayout="row" fxLayoutAlign="start center">
@@ -67,7 +85,7 @@
         </div>
       </button>
       <mat-menu #userMenu="matMenu" class="">
-        <a mat-button href="{{noctuaConfigService.logoutUrl}}" class="red-500-fg w-100-p">
+        <a mat-button (click)="logout()" class="red-500-fg w-100-p">
           Logout
         </a>
       </mat-menu>

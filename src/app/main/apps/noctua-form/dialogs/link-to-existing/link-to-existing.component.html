@@ -17,17 +17,17 @@
     </div>
     <div class="noc-section-body w-100-p" noctuaPerfectScrollbar>
       <mat-radio-group fxLayout="column" fxLayoutAlign="start stretch" class="w-100-p"
-        [(ngModel)]="selectedAnnotonNode">
+        [(ngModel)]="selectedActivityNode">
         <div *ngFor="let node of nodes" class="noc-radio-group-section" fxLayout="column" fxLayoutAlign="start stretch">
           <div class="noc-title">
             {{node.title}}
           </div>
-          <mat-radio-button class="mb-8" *ngFor="let annotonNode of node.annotonNodes" [value]="annotonNode">
+          <mat-radio-button class="mb-8" *ngFor="let activityNode of node.activityNodes" [value]="activityNode">
             <div class="h4">
-              {{annotonNode.term?.label}}
+              {{activityNode.term?.label}}
             </div>
             <div class="">
-              <small>{{annotonNode.term?.id}}</small>
+              <small>{{activityNode.term?.id}}</small>
             </div>
           </mat-radio-button>
         </div>

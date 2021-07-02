@@ -8,7 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Subject, BehaviorSubject } from 'rxjs';
 
 import {
-  AnnotonNode,
+  ActivityNode,
   Evidence,
   NoctuaFormConfigService,
   NoctuaLookupService
@@ -20,7 +20,7 @@ import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material/tree'
 import { each } from 'lodash';
 
 export class EvidenceItemNode {
-  annotonNode: AnnotonNode;
+  activityNode: ActivityNode;
   evidence: Evidence;
   id: number;
   level: number;
@@ -30,7 +30,7 @@ export class EvidenceItemNode {
 
 export class EvidenceItemFlatNode {
   public id: number;
-  public annotonNode: AnnotonNode;
+  public activityNode: ActivityNode;
   public evidence: Evidence;
   public expandable: boolean;
   public level: number;
@@ -45,7 +45,7 @@ export class EvidenceItemFlatNode {
 })
 export class SearchEvidenceDialogComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any>;
-  annotonNodes: AnnotonNode[] = [];
+  activityNodes: ActivityNode[] = [];
   searchCriteria: any;
   selection = new SelectionModel<Evidence>(true, []);
 
@@ -91,17 +91,13 @@ export class SearchEvidenceDialogComponent implements OnInit, OnDestroy {
       this.searchCriteria.params)
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((response) => {
-        console.log(response);
-        this.annotonNodes = response;
-        this.dataSource.data = this._buildAnnotationTree(this.annotonNodes);
-
-        console.log(this.dataSource.data);
+        this.activityNodes = response;
+        this.dataSource.data = this._buildAnnotationTree(this.activityNodes);
 
       });
   }
 
   save() {
-    console.log(this.checklistSelection.selected);
     const selection: Evidence[] = [];
 
     each(this.checklistSelection.selected, (evidenceFlatNode: EvidenceItemFlatNode) => {
@@ -134,7 +130,7 @@ export class SearchEvidenceDialogComponent implements OnInit, OnDestroy {
    */
   transformer = (node: EvidenceItemNode, level: number) => {
     const flatNode = new EvidenceItemFlatNode();
-    flatNode.annotonNode = node.annotonNode;
+    flatNode.activityNode = node.activityNode;
     flatNode.evidence = node.evidence;
     flatNode.level = level;
     flatNode.expandable = !!node.children;
@@ -223,12 +219,12 @@ export class SearchEvidenceDialogComponent implements OnInit, OnDestroy {
   }
 
 
-  private _buildAnnotationTree(annotonNodes: AnnotonNode[]): EvidenceItemNode[] {
-    const result = annotonNodes.map((annotonNode: AnnotonNode) => {
+  private _buildAnnotationTree(activityNodes: ActivityNode[]): EvidenceItemNode[] {
+    const result = activityNodes.map((activityNode: ActivityNode) => {
       const node = new EvidenceItemNode();
-      node.annotonNode = annotonNode;
+      node.activityNode = activityNode;
 
-      node.children = annotonNode.predicate.evidence.map((evidence: Evidence) => {
+      node.children = activityNode.predicate.evidence.map((evidence: Evidence) => {
         const evidenceNode = new EvidenceItemNode();
         evidenceNode.evidence = evidence;
         return evidenceNode;

@@ -1,0 +1,121 @@
+@import "src/@noctua/scss/noctua";
+@import "src/@noctua.common/scss/noctua.common";
+$primary: map-get($theme, primary);
+$accent: map-get($theme, accent);
+
+:host {
+
+  width: 100%;
+  height: 100%;
+
+  .noc-dialog-body {
+    margin: 0;
+    padding: 0;
+    @include deep-width(100%);
+  }
+
+  .mat-dialog-container {
+    padding: 0;
+  }
+
+  .mat-dialog-content {}
+
+  .dialog-content-wrapper {
+    width: 100%;
+    @include deep-width(100%);
+    display: flex;
+    flex-direction: column;
+  }
+
+
+  .noc-stat-summary {
+    padding: 12px 0;
+    font-size: 16px;
+
+    .noc-number {
+      font-weight: bold;
+    }
+  }
+
+  .noc-group-row {
+    min-height: 40px;
+    max-height: 500px;
+    border-bottom: #CCC solid 1px;
+    font-size: 12px;
+    @include mat-elevation(1);
+
+    .noc-modified-header {
+      padding: 0 12px;
+      @include deep-height(30px);
+      font-size: 12px;
+      background-color: $noc-highlight-color;
+      border-bottom: darken($noc-highlight-color, 20%) solid 1px;
+
+      .noc-title {
+        font-weight: bold;
+        margin-right: 8px;
+      }
+
+      .noc-action-button {
+        // @include deep-height(30px);
+      }
+    }
+
+    .noc-item-body {
+      padding: 12px 10px;
+    }
+
+    .noc-name {
+      font-size: 14px;
+    }
+
+    .noc-item {
+      @include deep-width(100%);
+      font-size: 12px;
+
+      .noc-title {
+        font-weight: bold;
+        margin-right: 8px;
+        color: #999;
+      }
+    }
+
+    .noc-cams-number {
+      padding: 2px 5px;
+      @include deep-height(20px);
+      background-color: #DDD;
+      font-size: 10px;
+      border-radius: 25%;
+    }
+
+    .noc-edit-button {
+      background-color: #ffffff;
+      color: map-get($primary, default);
+      border: rgba(map-get($primary, default), 0.5) solid 1px;
+      @include mat-elevation(1)
+    }
+
+    .noc-more-details-button {
+      padding: 8px 0;
+      cursor: pointer;
+    }
+
+    .noc-remove-button {
+      height: 30px;
+      width: 30px;
+    }
+
+    &:hover {
+      background-color: #F2F2F2;
+    }
+
+    &.noc-selected {
+      background-color: $noc-highlight-model-color;
+    }
+  }
+
+  .noc-body {
+    padding: 0 14px 14px 14px;
+  }
+
+}

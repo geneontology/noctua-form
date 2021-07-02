@@ -3,8 +3,6 @@ import {
     Overlay,
     OverlayRef,
     OverlayConfig,
-    OriginConnectionPosition,
-    OverlayConnectionPosition,
     PositionStrategy
 } from '@angular/cdk/overlay';
 import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';

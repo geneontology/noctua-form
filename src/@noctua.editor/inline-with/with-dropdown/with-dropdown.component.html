@@ -37,7 +37,7 @@
     <div class="noc-with-group" *ngFor="let comp of myForm.get('companies')?.controls; let i=index">
       <div [formGroupName]="i">
         <div formArrayName="projects">
-          <div *ngFor="let project of comp.get('projects')?.controls; let j=index">
+          <div *ngFor="let project of comp.get('projects').controls; let j=index">
             <div [formGroupName]="j">
               <mat-form-field appearance="outline" fxFlex="" class="noc-sm w-100-p">
                 <input matInput formControlName="projectName" type="text" placeholder="Accession" autocomplete="off"
@@ -51,7 +51,7 @@
               </button>
             </div>
           </div>
-          <div class="p-16" *ngIf="comp.get('projects')?.controls.length===0">
+          <div class="p-16" *ngIf="comp.get('projects').controls.length===0">
             <a (click)="addNewProject(comp.controls.projects)">
               Add With/From
             </a>

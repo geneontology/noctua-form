@@ -3,7 +3,6 @@ import { FormGroup } from '@angular/forms';
 import { MatDrawer } from '@angular/material/sidenav';
 import { Subscription, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { CamTableService } from './../cam-table/services/cam-table.service';
 
 import {
   Cam,
@@ -35,14 +34,13 @@ export class CamFormComponent implements OnInit, OnDestroy {
   constructor(public noctuaUserService: NoctuaUserService,
     private sparqlService: SparqlService,
     private camService: CamService,
-    public camTableService: CamTableService,
     private noctuaGraphService: NoctuaGraphService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     public noctuaFormMenuService: NoctuaFormMenuService
   ) {
     this._unsubscribeAll = new Subject();
-    // this.annoton = self.noctuaCamFormService.annoton;
-    //  this.camFormPresentation = this.noctuaCamFormService.annotonPresentation;
+    // this.activity = self.noctuaCamFormService.activity;
+    //  this.camFormPresentation = this.noctuaCamFormService.activityPresentation;
   }
 
   ngOnInit(): void {
@@ -63,33 +61,10 @@ export class CamFormComponent implements OnInit, OnDestroy {
         }
 
         this.cam = cam;
-        this.sparqlService.getModelTerms(this.cam.id)
-          .pipe(takeUntil(this._unsubscribeAll))
-          .subscribe((terms: Entity[]) => {
-            this.camService.onCamTermsChanged.next(terms);
-          });
       });
-  }
-
-  loadGoTerms() {
-    this.camService.onCamTermsChanged
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((terms: Entity[]) => {
-        if (!terms) return;
-
-        this.cam.goterms = terms;
-      });
-  }
-
-  checkErrors() {
-    // this.noctuaAnnotonFormService.annoton.enableSubmit();
-
-    // let errors = this.noctuaAnnotonFormService.annoton.submitErrors;
-    //  this.noctuaFormDialogService.openAnnotonErrorsDialog(errors)
   }
 
   save() {
-
 
     const value = this.camFormGroup.value;
 

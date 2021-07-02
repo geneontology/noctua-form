@@ -1,12 +1,14 @@
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
+@import "src/@noctua.common/scss/noctua-form.common";
+
 $primary: map-get($theme, primary);
 $accent: map-get($theme, accent);
 
 :host {
   padding: 0px;
   width: 100%;
-  background-color: #EEE;
+  background-color: #ffffff;
 
   mat-chip {
     &.default {
@@ -20,29 +22,126 @@ $accent: map-get($theme, accent);
     &.ccOnly {
       border: #d3b5f5 solid 2px;
     }
+
+    &.noc-error-chip {
+      font-size: 10px;
+      font-weight: normal;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding: 0;
+
+      .noc-chip-label {
+        padding: 0 10px 0 10px;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        .noc-icon-action {
+          font-size: 10px;
+          background-color: transparent;
+
+          &:hover {
+            font-size: 14px;
+            color: #222;
+          }
+        }
+      }
+
+      .noc-icon,
+      .noc-icon-action {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
+        color: #777;
+        font-size: 10px;
+      }
+
+      .noc-icon-action {
+        font-size: 10px;
+        background-color: transparent;
+
+        &:hover {
+          font-size: 14px;
+          color: #222;
+          background-color: rgba(#000000, 0.2);
+        }
+      }
+
+      @include noc-chip-color(#eb9797);
+    }
   }
 
-  .noc-loading-container {
-    background-color: rgba(#555, 0.4);
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    z-index: 1000;
+  .noc-cam-rebuild {
+    color: rgb(149, 99, 57);
+  }
+  .noc-activity-header {
+    padding-left: 40px;
+    padding-right: 10px;
+    position: relative;
+    margin-bottom: 1px;
+    @include deep-width(100%);
+    @include deep-height(30px);
+    //min-height: 35px;
+    //background-color: #fff;
+    font-size: 14px;
+    border-bottom: $noc-primary-color-light solid 1px;
+  }
+
+  .noc-gp {
+    width: 250px;
+
+    &.noc-highlight-match {
+      background-color: #fffcd8;
+    }
+
+    &.noc-highlight-modified {
+      background-color: #fdd661;
+    }
+
+    &.noc-highlight-modified-user {
+      background-color: #f3ccbb;
+    }
+
+    &.noc-highlight-match-current {
+      border: #ac6219 solid 5px;
+    }
+
+    .noc-old-term {
+      color: #777;
+      font-size: 10px;
+      text-decoration: line-through rgba(#ec6868, 0.5);
+    }
+  }
+
+  .noc-cam-table-body {
+    position: relative;
+
+    .noc-loading-container {
+      background-color: rgba(#555, 0.4);
+      overflow: hidden;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      z-index: 1000;
+    }
   }
 
   .noc-summary-bar {
     margin-bottom: 4px;
     padding: 0 10px;
-    @include deep-height(40px);
+    @include deep-height(30px);
     //  min-height: 40px; //min-height: 35px;
-    background-color: #F2F2F2;
-    font-size: 16px;
+    background-color: #f2f2f2;
+    font-size: 14px;
     overflow: hidden;
 
     @include mat-elevation(2);
-
 
     .noc-summary-bar-section {
       .noc-section-label {
@@ -62,53 +161,44 @@ $accent: map-get($theme, accent);
   }
 
   .noc-drawer-container {
-    background-color: #DDD;
+    background-color: #ddd;
   }
 
   .mat-drawer-content {
     width: 100%;
   }
 
-  .noc-annoton-table-heading {
-    margin-bottom: 1px;
-    @include deep-height(50px);
-    //min-height: 35px;
-    background-color: #FFF;
-    font-size: 16px;
-    border-bottom: rgba(#000, 0.4) solid 1px;
+  .noc-selected {
+    background-color: #ffffff;
 
-    .noc-title {
-      small {
-        font-size: 12px;
-        font-style: italic;
+    .noc-activities-table-body {
+      &::before {
+        left: 37px;
+        width: 5px;
+        background-color: darken($noc-highlight-model-color, 15%);
+        content: "";
       }
     }
-
-    .noc-title-truncate {
-      max-width: 200px
-    }
   }
 
-  .noc-annoton-selected {
-    border: rgba(map-get($accent, default), 0.4) solid 1px;
-    border-left: rgba(map-get($accent, default), 0.5) solid 5px;
-    background-color: #FFFFFF;
+  .noc-activities-table-body {
+    position: relative;
+    background-color: #fff;
 
-    .noc-annoton-table-heading {
-      background-color: rgba(map-get($accent, default), 0.05);
+    &::before {
+      position: absolute;
+      top: 0;
+      left: 37px;
+      bottom: 0;
+      width: 2px;
+      color: white;
+      background-color: $noc-tree-line-color;
+      content: "";
     }
-
-    .noc-cam-table-body {
-      background-color: rgba(map-get($accent, default), 0.05);
-    }
-  }
-
-  .noc-cam-table-body {
-    background-color: #FFF;
   }
 
   .noc-form-container {
-    background-color: #EEE;
+    background-color: #eee;
     padding: 20px 10px;
   }
 
@@ -116,8 +206,8 @@ $accent: map-get($theme, accent);
     padding: 0px 20px;
     height: 40px;
     width: 100%;
-    background-color: #F2F2F2;
-    border-bottom: #BBB solid 1px;
+    background-color: #f2f2f2;
+    border-bottom: #bbb solid 1px;
 
     .noc-title {
       line-height: 38px;
@@ -127,7 +217,7 @@ $accent: map-get($theme, accent);
     }
   }
 
-  .cam-table {
+  .noc-cam-table {
     width: 100%;
     @include deep-height(100%);
     padding-bottom: 300px;
@@ -144,7 +234,7 @@ $accent: map-get($theme, accent);
       position: -webkit-sticky;
       top: 0;
       z-index: 1000;
-      background-color: #F7F7F7;
+      background-color: #f7f7f7;
       //  @include mat-elevation(1);
       //  background-color: $noc-primary-color-light;
       // font-size: 3px !important;
@@ -158,7 +248,7 @@ $accent: map-get($theme, accent);
     }
 
     .mat-cell {
-      min-width: 0;
+      // min-width: 0;
       display: flex;
       align-items: center;
     }
@@ -179,14 +269,14 @@ $accent: map-get($theme, accent);
 
   .noc-left-drawer {
     @include deep-height(100%);
-    background-color: #FFF;
-    border-right: #BBB solid 1px;
+    background-color: #fff;
+    border-right: #bbb solid 1px;
     @include mat-elevation(4);
   }
 
   .noc-right-drawer {
     @include deep-height(100%);
-    background-color: #FFF;
-    border-left: #BBB solid 1px;
+    background-color: #fff;
+    border-left: #bbb solid 1px;
   }
 }

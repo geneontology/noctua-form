@@ -23,7 +23,6 @@ const minerva_manager = require('bbop-manager-minerva');
 export class SparqlMinervaService {
   minervaDefinitionName = environment.globalMinervaDefinitionName;
   separator = '@@';
-  baseUrl = environment.spaqrlApiUrl;
   curieUtil: any;
   cams: any[] = [];
   loading: boolean = false;

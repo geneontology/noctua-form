@@ -1,10 +1,10 @@
 <div class="node" id="{{connectionId}}">
   <div class="noc-node-conntent w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start center">
     <div fxFlex="100%">
-      <strong>enabled by: </strong> {{annoton?.presentation.gpText}}
+      <strong>enabled by: </strong> {{activity?.presentation.gpText}}
     </div>
     <div class="noc-node-actions" fxFlex="40px" fxLayout="column" fxLayoutAlign="start center">
-      <button mat-button (click)="openAnnotonForm()" matTooltip="Details" [matTooltipPosition]="'after'"
+      <button mat-button (click)="openActivityForm()" matTooltip="Details" [matTooltipPosition]="'after'"
         [matTooltipShowDelay]="1500">
         <mat-icon>edit </mat-icon>
       </button>

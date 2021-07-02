@@ -1,0 +1,7 @@
+{
+  "out": "docs",
+  "entryPoints": ["./src/"],
+  "theme": "default",
+  "excludeExternals":true,
+  "exclude": ["node_modules/**"]
+}

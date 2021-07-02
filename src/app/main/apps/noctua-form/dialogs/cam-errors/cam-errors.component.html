@@ -1,0 +1,54 @@
+<div class="dialog-content-wrapper">
+  <mat-toolbar class="mat-primary m-0">
+    <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="start center">
+      <span class="title dialog-title">
+        Violations</span>
+      <span fxFlex></span>
+      <button mat-stroked-button (click)="close()" class="noc-rounded-button noc-sm" color="primary"
+        aria-label="Close dialog">
+        <mat-icon>close</mat-icon> Close
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <div mat-dialog-content class="noc-dialog-body" noctuaPerfectScrollbar>
+    <div class="" fxLayout="column" fxLayoutAlign="start stretch">
+      <div *ngFor="let error of errors; let i =index" class="noc-error-row" fxLayout="row">
+        <div class="noc-number">
+          {{i+1}}
+        </div>
+        <div fxFlex class="noc-error-row-body">
+          <div class="noc-heading">
+            <strong>{{error.meta?.aspect}}</strong>: {{error.message}}
+          </div>
+          <div *ngIf="error.type===ErrorType.relation" class="pb-10" fxLayout="row">
+            <div class="noc-node-card" fxLayout="column" fxLayoutAlign="center center">
+              <div> {{error.meta?.subjectNode?.label}}</div>
+            </div>
+            <div class="noc-edge-card" fxLayout="column" fxLayoutAlign="center stretch" fxFlex>
+              <div class="noc-line">
+                {{error.meta?.edge?.label}}
+              </div>
+            </div>
+            <div class="noc-node-card" fxLayout="column" fxLayoutAlign="center center">
+              <div>{{error.meta?.objectNode?.label}}</div>
+            </div>
+          </div>
+          <div *ngIf="error.type===ErrorType.cardinality" class="pb-10" fxLayout="row" fxLayoutAlign="center center">
+            <div class="noc-node-card" fxLayout="column" fxLayoutAlign="center center">
+              {{error.meta?.subjectNode?.label}}
+            </div>
+            <div class="noc-edge-card" fxFlex fxLayout="column" fxLayoutAlign="center stretch">
+              <div class="noc-line">
+                {{error.meta?.edge?.label}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="space-between center">
+    <span fxFlex></span>
+    <button (click)='close()' mat-raised-button color="" class="mr-8">Close</button>
+  </div>
+</div>

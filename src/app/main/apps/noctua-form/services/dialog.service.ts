@@ -1,11 +1,11 @@
 import { environment } from '../../../../../environments/environment';
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { AnnotonErrorsDialogComponent } from './../dialogs/annoton-errors/annoton-errors.component';
+import { ActivityErrorsDialogComponent } from './../dialogs/activity-errors/activity-errors.component';
 import { BeforeSaveDialogComponent } from './../dialogs/before-save/before-save.component';
 import { CreateFromExistingDialogComponent } from './../dialogs/create-from-existing/create-from-existing.component';
 import { LinkToExistingDialogComponent } from './../dialogs/link-to-existing/link-to-existing.component';
@@ -13,13 +13,15 @@ import { SelectEvidenceDialogComponent } from './../dialogs/select-evidence/sele
 import { SearchDatabaseDialogComponent } from './../dialogs/search-database/search-database.component';
 
 import {
-    Evidence, AnnotonNode
+    Evidence, ActivityNode, Activity, FormType
 } from 'noctua-form-base';
 
 import 'rxjs/add/operator/map';
 import { NoctuaConfirmDialogComponent } from '@noctua/components/confirm-dialog/confirm-dialog.component';
-import { PreviewAnnotonDialogComponent } from '../dialogs/preview-annoton/preview-annoton.component';
+import { PreviewActivityDialogComponent } from '../dialogs/preview-activity/preview-activity.component';
 import { SearchEvidenceDialogComponent } from '../dialogs/search-evidence/search-evidence.component';
+import { CamErrorsDialogComponent } from '../dialogs/cam-errors/cam-errors.component';
+import { CreateActivityDialogComponent } from '../dialogs/create-activity/create-activity.component';
 
 
 @Injectable({
@@ -30,15 +32,19 @@ export class NoctuaFormDialogService {
     dialogRef: any;
 
     constructor(private httpClient: HttpClient,
+        private zone: NgZone,
         private snackBar: MatSnackBar,
         private _matDialog: MatDialog) {
     }
 
-    openSuccessfulSaveToast(message: string, action: string) {
-        this.snackBar.open(message, action, {
-            duration: 10000,
-            verticalPosition: 'top'
+    openInfoToast(message: string, action: string) {
+        this.zone.run(() => {
+            this.snackBar.open(message, action, {
+                duration: 10000,
+                verticalPosition: 'top'
+            });
         });
+
     }
 
     openConfirmDialog(searchCriteria, success): void {
@@ -58,9 +64,35 @@ export class NoctuaFormDialogService {
     }
 
 
-    openAnnotonErrorsDialog(errors: any[]): void {
-        this.dialogRef = this._matDialog.open(AnnotonErrorsDialogComponent, {
-            panelClass: 'annoton-errors-dialog',
+    openCreateActivityDialog(formType: FormType): void {
+        this.dialogRef = this._matDialog.open(CreateActivityDialogComponent, {
+            panelClass: 'noc-activity-create-dialog',
+            data: {
+                formType
+            }
+        });
+        this.dialogRef.afterClosed()
+            .subscribe(response => {
+
+            });
+    }
+
+    openActivityErrorsDialog(errors: any[]): void {
+        this.dialogRef = this._matDialog.open(ActivityErrorsDialogComponent, {
+            panelClass: 'activity-errors-dialog',
+            data: {
+                errors: errors
+            }
+        });
+        this.dialogRef.afterClosed()
+            .subscribe(response => {
+
+            });
+    }
+
+    openCamErrorsDialog(errors: any[]): void {
+        this.dialogRef = this._matDialog.open(CamErrorsDialogComponent, {
+            panelClass: 'cam-errors-dialog',
             data: {
                 errors: errors
             }
@@ -155,9 +187,9 @@ export class NoctuaFormDialogService {
             });
     }
 
-    openPreviewAnnotonDialog(): void {
-        this.dialogRef = this._matDialog.open(PreviewAnnotonDialogComponent, {
-            panelClass: 'noc-preview-annoton-dialog',
+    openPreviewActivityDialog(): void {
+        this.dialogRef = this._matDialog.open(PreviewActivityDialogComponent, {
+            panelClass: 'noc-preview-activity-dialog',
             width: '600px',
         });
     }

@@ -12,21 +12,21 @@
     </ng-template>
 
     <ng-template #nodeTemplate let-node>
-      <svg:g *ngIf="node.data.annoton" class="node" xmlns="http://www.w3.org/2000/xhtml" width="180" height="80">
+      <svg:g *ngIf="node.data.activity" class="node" xmlns="http://www.w3.org/2000/xhtml" width="180" height="80">
         <svg:foreignObject width="180" height="80">
           <xhtml:div class="noc-node" xmlns="http://www.w3.org/1999/xhtml" [ngStyle]=getStyles(node)>
             <div class="noc-node-conntent w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
               <div fxFlex="100%">
                 <small>{{ node.label}}</small>
                 enabled by:
-                <strong>{{ node.data.annoton.presentation.gpText}}</strong>
+                <strong>{{ node.data.activity.presentation.gpText}}</strong>
               </div>
               <div class="noc-node-actions" fxFlex="40px" fxLayout="column" fxLayoutAlign="start center">
-                <div mat-button (click)="openAnnotonForm(node.data.annoton)" matTooltip="Details"
+                <div mat-button (click)="openActivityForm(node.data.activity)" matTooltip="Details"
                   [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
                   <mat-icon>edit </mat-icon>
                 </div>
-                <div (click)="openAnnotonConnectorList(node.data.annoton)" class="noc-connector" action="p"
+                <div (click)="openActivityConnectorList(node.data.activity)" class="noc-connector" action="p"
                   matTooltip="connect" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500" fxLayout="column"
                   fxLayoutAlign="center center">
                   <mat-icon class="s-24"> arrow_right_alt </mat-icon>
@@ -36,7 +36,7 @@
           </xhtml:div>
         </svg:foreignObject>
       </svg:g>
-      <svg:g *ngIf="node.data.connectorAnnoton" class="node" xmlns="http://www.w3.org/2000/xhtml" width="120"
+      <svg:g *ngIf="node.data.connectorActivity" class="node" xmlns="http://www.w3.org/2000/xhtml" width="120"
         height="50">
         <svg:foreignObject width="120" height="50">
           <xhtml:div class="noc-node noc-sm" xmlns="http://www.w3.org/1999/xhtml" [ngStyle]=getStyles(node)>
@@ -45,7 +45,7 @@
                 <small>{{ node.label}}</small>
               </div>
               <div class="noc-node-actions" fxFlex="40px" fxLayout="column" fxLayoutAlign="start center">
-                <div mat-button (click)="openAnnotonConnector(node.data.connectorAnnoton)" matTooltip="Details"
+                <div mat-button (click)="openActivityConnector(node.data.connectorActivity)" matTooltip="Details"
                   [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
                   <mat-icon>edit </mat-icon>
                 </div>
@@ -57,7 +57,7 @@
     </ng-template>
 
     <ng-template #linkTemplate let-link>
-      <svg:g class="edge" (click)="openAnnotonConnector(link.data.connectorAnnoton)">
+      <svg:g class="edge" (click)="openActivityConnector(link.data.connectorActivity)">
         <svg:path class="line" stroke-width="2" marker-end="url(#arrow)">
         </svg:path>
         <svg:text class="edge-label" text-anchor="middle">

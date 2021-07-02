@@ -7,20 +7,24 @@ import { noctuaAnimations } from './../../../../@noctua/animations';
 
 import {
   Cam,
-  AnnotonType,
+  ActivityType,
   Contributor,
   NoctuaUserService,
   NoctuaFormConfigService,
   NoctuaFormMenuService,
-  NoctuaAnnotonFormService,
+  NoctuaActivityFormService,
   CamService,
-  noctuaFormConfig
+  noctuaFormConfig,
+  MiddlePanel,
+  LeftPanel,
+  Activity,
+  NoctuaGraphService,
+  ActivityDisplayType
 } from 'noctua-form-base';
 
 import { takeUntil, distinctUntilChanged } from 'rxjs/operators';
-import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 import { NoctuaDataService } from '@noctua.common/services/noctua-data.service';
-import { environment } from 'environments/environment';
+import { TableOptions } from '@noctua.common/models/table-options';
 
 @Component({
   selector: 'app-noctua-form',
@@ -30,7 +34,10 @@ import { environment } from 'environments/environment';
   animations: noctuaAnimations
 })
 export class NoctuaFormComponent implements OnInit, OnDestroy {
-  AnnotonType = AnnotonType;
+  ActivityType = ActivityType;
+  LeftPanel = LeftPanel;
+  MiddlePanel = MiddlePanel;
+
 
   @ViewChild('leftDrawer', { static: true })
   leftDrawer: MatDrawer;
@@ -44,20 +51,31 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
 
   noctuaFormConfig = noctuaFormConfig;
 
+  tableOptions: TableOptions = {
+    displayType: ActivityDisplayType.TREE,
+    slimViewer: false,
+    editableTerms: true,
+    editableEvidence: true,
+    editableReference: true,
+    editableWith: true,
+    editableRelation: true,
+    showMenu: true
+  };
+
   private _unsubscribeAll: Subject<any>;
 
   constructor(
     private route: ActivatedRoute,
     private camService: CamService,
+    private _noctuaGraphService: NoctuaGraphService,
     private noctuaDataService: NoctuaDataService,
     public noctuaUserService: NoctuaUserService,
     public noctuaFormConfigService: NoctuaFormConfigService,
-    public noctuaAnnotonFormService: NoctuaAnnotonFormService,
+    public noctuaActivityFormService: NoctuaActivityFormService,
     public noctuaFormMenuService: NoctuaFormMenuService) {
 
     this._unsubscribeAll = new Subject();
 
-    this.noctuaDataService.loadContributors();
     this.route
       .queryParams
       .pipe(takeUntil(this._unsubscribeAll))
@@ -82,27 +100,29 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
 
     self.noctuaFormMenuService.setLeftDrawer(self.leftDrawer);
     self.noctuaFormMenuService.setRightDrawer(self.rightDrawer);
+
+    this._noctuaGraphService.onCamGraphChanged
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((cam: Cam) => {
+        if (!cam || cam.id !== self.cam.id) {
+          return;
+        }
+        this.cam = cam;
+      });
   }
 
   loadCam(modelId) {
-    const self = this;
-
-    self.noctuaDataService.onContributorsChanged.pipe(
-      takeUntil(this._unsubscribeAll))
-      .subscribe((contributors: Contributor[]) => {
-        self.noctuaUserService.contributors = contributors;
-        this.cam = this.camService.getCam(modelId);
-      });
+    this.cam = this.camService.getCam(modelId);
   }
 
   openCamForm() {
     this.camService.initializeForm(this.cam);
-    this.noctuaFormMenuService.openLeftDrawer(this.noctuaFormMenuService.panel.camForm);
+    this.noctuaFormMenuService.openLeftDrawer(LeftPanel.camForm);
   }
 
-  openAnnotonForm(annotonType: AnnotonType) {
-    this.noctuaAnnotonFormService.setAnnotonType(annotonType);
-    this.noctuaFormMenuService.openLeftDrawer(this.noctuaFormMenuService.panel.annotonForm);
+  openActivityForm(activityType: ActivityType) {
+    this.noctuaActivityFormService.setActivityType(activityType);
+    this.noctuaFormMenuService.openLeftDrawer(LeftPanel.activityForm);
   }
 
   ngOnDestroy(): void {

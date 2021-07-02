@@ -1,101 +1,54 @@
-<div class="w-100-p">
-  <div *ngFor="let triple of cam.triples" (click)="selectTriple(triple)" class="noc-triple noc-sm w-100-p"
-    fxLayout="row" fxLayoutAlign="start center">
-    <div class="noc-annoton-box" fxLayout="column" fxLayoutAlign="center center">
-      <span>
-        {{ triple.subject.getTerm().label}}
+<div class="w-100-p p-0 noc-cam-table">
+  <!--  <div class="noc-summary-bar" fxLayout="row" fxLayoutAlign="start center">
+    <span class='noc-title mr-12'>
+      <span *ngIf="!cam.loading?.status">
+        ACTIVITIES
       </span>
-    </div>
-    <div class="" fxFlex fxLayout="row" fxLayoutAlign="start center">
-      <div class="noc-line" fxFlex="" fxLayout="column" fxLayoutAlign="end stretch"></div>
-      <noc-evidence-table fxFlex="560px" [cam]="cam" [evidence]="triple.predicate"></noc-evidence-table>
-      <div class="noc-line" fxFlex="" fxLayout="column" fxLayoutAlign="end stretch"></div>
-      <mat-icon class="s-32 noc-arrow">chevron_right</mat-icon>
-    </div>
-    <div class="noc-annoton-box" fxLayout="column" fxLayoutAlign="center center">
-      <span>
-        {{ triple.object.getTerm().label}}
+      <span *ngIf="cam.loading?.status" class="noc-cam-progress-message">
+        {{cam.loading?.message}}
       </span>
+    </span>
+    <div *ngIf="cam.violations?.length>0" class="noc-error" fxLayout="row" fxLayoutAlign="start center">
+      <mat-chip class="noc-error-chip  noc-chip-xs ml-8" fxLayout="row" fxLayoutAlign="start center"
+        (click)="displayCamErrors()">
+        <div class="noc-icon">
+          <fa-icon [icon]="['fas', 'exclamation-triangle']"></fa-icon>
+        </div>
+        <div fxFlex="" class="noc-chip-label">
+          {{cam.violations?.length}} Errors Found
+        </div>
+      </mat-chip>
     </div>
+    <span fxFlex></span>
+    <button mat-icon-button class="" fxFlex="40px" color="primary" [matMenuTriggerFor]="activityOptionMenu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #activityOptionMenu="matMenu" class="noc-dropdown-menu">
+      <button mat-menu-item class="" (click)="expandAll(true)">
+        Expand All
+      </button>
+      <button mat-menu-item class="" (click)="expandAll(false)">
+        Collapse All
+      </button>
+    </mat-menu>
+    <button mat-stroked-button *ngIf="panelDrawer" (click)="close()" class="noc-rounded-button noc-sm" color="primary"
+      aria-label="Close dialog">
+      <mat-icon>close</mat-icon> Close
+    </button>
   </div>
-  <!--   <div class="noc-annoton-table-header w-100-p" fxLayout="row" fxLayoutAlign="start center">
-    <div fxFlex="150px" class="noc-header-cell"> Subject </div>
-    <div fxFlex="50px" class="noc-header-cell"> Asp </div>
-    <div fxFlex="120px" class="noc-header-cell"> Relationship </div>
-    <div fxFlex="150px" class="noc-header-cell"> Object </div>
-    <div fxFlex="50px" class="noc-header-cell"> Asp </div>
-    <div fxFlex="150px" class="noc-header-cell"> Evidence </div>
-    <div fxFlex="120px" class="noc-header-cell"> Reference </div>
-    <div fxFlex="120px" class="noc-header-cell"> Evidence </div>
-    <div fxFlex="120px" class="noc-header-cell"> With </div>
-    <div fxFlex="120px" class="noc-header-cell"> Assigned By </div>
-  </div>
-  <div class="noc-annoton-table-body w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
-    <div class="annoton-table" fxFlex="">
-      <mat-table class="w-100-p" #table [dataSource]="grid" matSort [@animateStagger]="{value:'50'}"
-        noctuaPerfectScrollbar>
-        <ng-container cdkColumnDef="subject">
-          <mat-header-cell *cdkHeaderCellDef fxFlex="150px">Subject</mat-header-cell>
-          <mat-cell *cdkCellDef="let entity" fxFlex="150px">
-            <p class="">{{entity.subject?.label}}</p>
-          </mat-cell>
-        </ng-container>
-        <ng-container cdkColumnDef="aspectS">
-          <mat-header-cell *cdkHeaderCellDef fxFlex="50px">Asp</mat-header-cell>
-          <mat-cell *cdkCellDef="let entity" fxFlex="50px">
-            <p class="">{{entity.aspect}}</p>
-          </mat-cell>
-        </ng-container>
-        <ng-container cdkColumnDef="relationship">
-          <mat-header-cell *cdkHeaderCellDef fxFlex="120px">Relationship</mat-header-cell>
-          <mat-cell *cdkCellDef="let entity" fxFlex="120px">
-            <p class="">{{entity.relationship}}</p>
-          </mat-cell>
-        </ng-container>
-        <ng-container cdkColumnDef="object">
-          <mat-header-cell *cdkHeaderCellDef fxFlex="150px">Object</mat-header-cell>
-          <mat-cell *cdkCellDef="let entity" fxFlex="150px">
-            <p class="">{{entity.object?.label}}</p>
-          </mat-cell>
-        </ng-container>
-        <ng-container cdkColumnDef="aspectO">
-          <mat-header-cell *cdkHeaderCellDef fxFlex="50px">Asp</mat-header-cell>
-          <mat-cell *cdkCellDef="let entity" fxFlex="50px">
-            <p class="">{{entity.aspect}}</p>
-          </mat-cell>
-        </ng-container>
-        <ng-container cdkColumnDef="evidence">
-          <mat-header-cell *cdkHeaderCellDef fxFlex="150px">Evidence</mat-header-cell>
-          <mat-cell *cdkCellDef="let entity" fxFlex="150px">
-            <p class="">{{entity.evidence?.label}}</p>
-          </mat-cell>
-        </ng-container>
-        <ng-container cdkColumnDef="reference">
-          <mat-header-cell *cdkHeaderCellDef fxFlex="120px">Reference</mat-header-cell>
-          <mat-cell *cdkCellDef="let entity" fxFlex="120px">
-            <a href="{{entity.reference?.url}}" class="" target="_blank">{{entity.reference?.label}}</a>
-          </mat-cell>
-        </ng-container>
-        <ng-container cdkColumnDef="with">
-          <mat-header-cell *cdkHeaderCellDef fxFlex="120px">With</mat-header-cell>
-          <mat-cell *cdkCellDef="let entity" fxFlex="120px">
-            <p class="">{{entity.with}}</p>
-          </mat-cell>
-        </ng-container>
-        <ng-container cdkColumnDef="assignedBy">
-          <mat-header-cell *cdkHeaderCellDef fxFlex="120px">Assigned By</mat-header-cell>
-          <mat-cell *cdkCellDef="let entity" fxFlex="120px">
-            <a href="{{entity.assignedBy?.link?.url}}" class="" target="_blank">{{entity.assignedBy?.link?.value}}</a>
-          </mat-cell>
-        </ng-container>
-        <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *cdkRowDef="let entity; columns: displayedColumns;" class="" matRipple
-          [ngClass]="{'noc-row-selected': entity.node?.uuid === noctuaAnnotonEntityService.termNode?.uuid}"
-          (click)="selectEntity(entity.annoton, entity.node)"></mat-row>
-      </mat-table>
-      <div *ngIf="grid?.length===0" class="noc-no-info">
-        no results yet.
-      </div>
+  <div class="w-100-p noc-cam-table-body">
+    <div *ngFor="let activity of cam.activities" [attr.id]="activity.displayId" class="w-100-p"
+      [ngClass]="{'noc-selected': activity.displayId===camsService.currentMatch?.activityDisplayId}">
+
+
+    </div>
+    <div *ngIf="!cam.loading?.status && cam.activities.length===0" class="noc-no-info">
+      no activities present.
+    </div>
+    <div *ngIf="cam?.loading.status" class="noc-loading-container" fxLayout="column" fxLayoutAlign="center center">
+      <mat-progress-spinner class="example-margin" diameter="70" [color]="loadingSpinner.color"
+        [mode]="loadingSpinner.mode">
+      </mat-progress-spinner>
     </div>
   </div> -->
 </div>

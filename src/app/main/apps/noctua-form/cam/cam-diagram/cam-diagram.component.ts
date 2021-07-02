@@ -1,24 +1,9 @@
 
 import { Component, OnInit, Input } from '@angular/core';
-
-import { Subject } from 'rxjs';
-
-
-
-declare const require: any;
-
-
-
-
-
 import { NoctuaFormConfigService } from 'noctua-form-base';
-
-
-import { NoctuaAnnotonFormService } from 'noctua-form-base';
+import { NoctuaActivityFormService } from 'noctua-form-base';
 import { CamDiagramService } from './services/cam-diagram.service';
-
 import { Cam } from 'noctua-form-base';
-
 
 @Component({
   selector: 'noc-cam-diagram',
@@ -36,14 +21,11 @@ export class CamDiagramComponent implements OnInit {
   buttonName = 'Connect';
   nodes = [];
 
-
   constructor(
     public noctuaFormConfigService: NoctuaFormConfigService,
-    public noctuaAnnotonFormService: NoctuaAnnotonFormService,
+    public noctuaActivityFormService: NoctuaActivityFormService,
     public camDiagramService: CamDiagramService) {
-
   }
-
 
   getPosition(el) {
     let x = 0;
@@ -56,19 +38,10 @@ export class CamDiagramComponent implements OnInit {
     return { top: y, left: x };
   }
 
-  ngOnInit() {
-    this.cam.onGraphChanged.subscribe((annotons) => {
-      if (annotons) {
-
-      }
-    });
-
-  }
-
+  ngOnInit() { }
 
   addNode(name: string) {
     this.nodes = [name];
-    console.log(this.nodes);
   }
 
   showConnectOnClick() {

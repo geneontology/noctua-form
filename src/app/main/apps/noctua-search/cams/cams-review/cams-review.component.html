@@ -1,0 +1,113 @@
+<div class="noc-drawer-body" fxLayout="column" fxLayoutAlign="start stretch">
+  <div *ngIf="!noctuaUserService.user" class="noc-draw-body-disabled" fxLayoutAlign="center center">
+    Log in to Continue
+  </div>
+  <div class="noc-summary-bar" fxLayout="row" fxLayoutAlign="start center">
+    <span class="noc-header-title mr-8">
+      Review Models</span>
+    (<span class="noc-review-number">{{artBasket?.cams.length}} models </span>)
+  </div>
+  <div class="noc-cams-results">
+    <div class="noc-cam-container" *ngFor="let cam of cams" id="{{'noc-review-cams-'+cam.displayId}}"
+      [ngClass]=" {'noc-selected': cam.id===camsService.currentMatch?.modelId}" fxLayout="column"
+      fxLayoutAlign="start stretch">
+      <div class="noc-cam-heading" fxFlex="1 1 auto" fxLayout="row" fxLayoutAlign="start center"
+        [@animateStagger]="{value:'50'}">
+        <mat-progress-bar *ngIf="cam.loading.status" class="noc-cam-progress" [color]="loadingSpinner.color"
+          [mode]="loadingSpinner.mode">
+        </mat-progress-bar>
+        <button mat-icon-button (click)="cam.toggleExpand()" class="noc-toggle-expand-button">
+          <fa-icon *ngIf="!cam.expanded" [icon]="['fas', 'caret-right']"></fa-icon>
+          <fa-icon *ngIf="cam.expanded" [icon]="['fas', 'caret-down']"></fa-icon>
+        </button>
+        <div class="noc-display-number mr-8">
+          {{cam.displayNumber}}
+        </div>
+        <div *ngIf="cam?.title" class="noc-title" fxLayout="row" fxLayoutAlign="start center">
+          <div class="text-truncate pr-8">
+            <strong>Title: </strong>{{cam?.title }}
+          </div>
+        </div>
+        <div fxFlex></div>
+        <!--  <button mat-button class="" fxFlex="100px" color="primary" (click)="resetCam(cam)">
+          Reset
+        </button> -->
+        <button mat-stroked-button class="noc-rounded-button noc-sm" color="primary"
+          [matMenuTriggerFor]="activityOptionMenu">
+          Options
+        </button>
+        <mat-menu #activityOptionMenu="matMenu" class="noc-dropdown-menu">
+          <button mat-menu-item class="" (click)="cam.expandAllActivities(true)">
+            Expand All
+          </button>
+          <button mat-menu-item class="" (click)="cam.expandAllActivities(false)">
+            Collapse All
+          </button>
+        </mat-menu>
+      </div>
+      <div *ngIf="false" class="noc-cam-heading">
+        <div fxFlex="110px" class="noc-model-state pr-12" fxLayout="row" fxLayoutAlign="start center">
+          <mat-chip *ngIf="cam.state" class="noc-table-chip noc-state-chip" [ngClass]="{'noc-development': cam.state.name === 'development',
+            'noc-production': cam.state.name === 'production',
+            'noc-review': cam.state.name === 'review'}" fxLayout="row" fxLayoutAlign="start center"
+            (click)="noctuaSearchService.filter(noctuaSearchService.filterType.states, cam.state)"
+            matTooltip="Add state to Filters" [matTooltipPosition]="'below'" [matTooltipShowDelay]="1000">
+            <div class="noc-icon">
+              <fa-icon [icon]="['fas', 'tasks']"></fa-icon>
+            </div>
+            <div fxFlex="" class="noc-chip-label">
+              {{cam.state.label}}
+            </div>
+          </mat-chip>
+        </div>
+        <div class="noc-date" fxFlex="100px" fxLayout="row" fxLayoutAlign="start center">
+          <mat-chip class="noc-table-chip noc-date-chip" fxLayout="row" fxLayoutAlign="start center"
+            (click)="noctuaSearchService.filter(noctuaSearchService.filterType.exactdates, cam.date)"
+            matTooltip="Add date to exact date filter" [matTooltipPosition]="'below'" [matTooltipShowDelay]="1000">
+            <div class="noc-icon">
+              <fa-icon [icon]="['fas', 'calendar-day']"></fa-icon>
+            </div>
+            <div fxFlex="" class="noc-chip-label">
+              {{cam.date}}
+            </div>
+          </mat-chip>
+        </div>
+        <div fxFlex="" fxLayout="row" fxLayoutAlign="start center">
+          <mat-chip-list>
+            <mat-chip class="noc-table-chip noc-user-chip" fxLayout="row" fxLayoutAlign="start center"
+              *ngFor="let contributor of cam.contributors"
+              (click)="noctuaSearchService.filter(noctuaSearchService.filterType.contributors, contributor)"
+              matTooltip="Add {{contributor.name}} to Filters" [matTooltipPosition]="'below'"
+              [matTooltipShowDelay]="1000" [style.borderColor]="contributor.color">
+              <div class="noc-icon noc-icon-initials" [style.backgroundColor]="contributor.color">
+                {{contributor.initials}}
+              </div>
+              <div fxFlex="" class="noc-chip-label">
+                {{contributor.name ? contributor.name :contributor.orcid}}
+              </div>
+            </mat-chip>
+          </mat-chip-list>
+        </div>
+        <div fxFlex="100px" fxLayout="row" fxLayoutAlign="start center">
+          <a mat-icon-button [href]='cam?.model?.modelInfo?.noctuaFormUrl' target="_blank"
+            class="noc-edit-button noc-rounded-button noc-sm  mr-4 noc-half-button noc-r" matTooltip="Noctua Form"
+            [matTooltipPosition]="'after'" [matTooltipShowDelay]="1000">
+            <fa-icon [icon]="['fas', 'list-alt']"></fa-icon>
+          </a>
+          <a mat-icon-button [href]='cam?.model?.modelInfo?.graphEditorUrl' target="_blank"
+            class="noc-edit-button noc-rounded-button noc-sm noc-half-button noc-l" matTooltip="Graph Editor"
+            [matTooltipPosition]="'after'" [matTooltipShowDelay]="1000">
+            <fa-icon [icon]="['fas', 'sitemap']"></fa-icon>
+          </a>
+        </div>
+      </div>
+      <noc-cam-table class="noc-cam-table" [cam]="cam" *ngIf="cam.expanded" [options]="tableOptions"></noc-cam-table>
+    </div>
+  </div>
+  <div *ngIf="artBasket?.cams.length===0" class="noc-no-info">
+    No models to review
+    <a (click)="selectMiddlePanel(MiddlePanel.cams)">
+      Add Models
+    </a>
+  </div>
+</div>

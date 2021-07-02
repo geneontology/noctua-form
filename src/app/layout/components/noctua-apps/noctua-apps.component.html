@@ -130,5 +130,35 @@
         </div>
       </div>
     </div>
+    <div class="noc-form-section noc-beta" fxLayout="column" fxLayoutAlign="start stretch">
+      <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
+        <div class="noc-section-heading">
+          Beta Testing Workbenches
+        </div>
+        <span fxFlex></span>
+      </div>
+      <div class="noc-section-body p-8" fxLayout="column" fxLayoutAlign="start start">
+        <div class="w-100-p p-4" *ngFor="let workbench of noctuaConfigService.globalUrl?.universalBetaTestWorkbenches">
+          <a class="w-100-p" href="{{workbench.url}}" target="_blank">
+            <mat-chip class="noc-table-chip" fxLayout="row" fxLayoutAlign="start center">
+              <div fxFlex="" class="noc-chip-label">
+                {{workbench.label}}
+              </div>
+            </mat-chip>
+          </a>
+        </div>
+        <ng-container *ngIf="cam">
+          <div class="w-100-p p-4" *ngFor="let workbench of cam?.model?.modelInfo?.modelBetaTestWorkbenches">
+            <a class="w-100-p" href="{{workbench.url}}" target="_blank">
+              <mat-chip class="noc-table-chip" fxLayout="row" fxLayoutAlign="start center">
+                <div fxFlex="" class="noc-chip-label">
+                  {{workbench.label}}
+                </div>
+              </mat-chip>
+            </a>
+          </div>
+        </ng-container>
+      </div>
+    </div>
   </div>
 </div>
