@@ -1,0 +1,131 @@
+<div class="noc-search-form  w-100-p">
+  <form *ngIf="searchForm" class="noc-section-body pt-8 w-100-p" fxLayout="column" fxLayoutAlign="start stretch"
+    name="searchForm" [formGroup]="searchForm">
+    <mat-form-field appearance="outline" class="noc-sm mb-4 noc-review-input">
+      <mat-label>Category</mat-label>
+      <mat-select placeholder="" formControlName="category" [compareWith]="compareCategory">
+        <mat-option *ngFor="let category of categories.options" [value]="category">
+          {{category.label}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="noc-activity-group-row mb-4 w-100-p" fxLayout="column" fxLayoutAlign="start stretch">
+      <button class="noc-text-clear" mat-icon-button aria-label="Clear" (click)="$event.stopPropagation(); clearFind()">
+        <fa-icon [icon]="['far', 'times-circle']"></fa-icon>
+      </button>
+      <mat-form-field *ngIf="selectedCategory?.name === ArtReplaceCategory.term" appearance="outline"
+        class="noc-sm noc-review-input">
+        <mat-label>Find What <strong>(Ontology Term)</strong>
+        </mat-label>
+        <textarea type="text" matInput formControlName="findWhat" [matAutocomplete]="findAuto"></textarea>
+      </mat-form-field>
+      <mat-form-field *ngIf="selectedCategory?.name === ArtReplaceCategory.gp" appearance="outline"
+        class="noc-sm  noc-review-input">
+        <mat-label>Find What <strong>(Gene Product)</strong></mat-label>
+        <textarea type="text" matInput formControlName="findWhat" [matAutocomplete]="findAuto"></textarea>
+      </mat-form-field>
+      <mat-form-field *ngIf="selectedCategory?.name === ArtReplaceCategory.reference" appearance="outline"
+        class="noc-sm  noc-review-input">
+        <mat-label>Find What <strong>(Reference)</strong></mat-label>
+        <textarea type="text" matInput formControlName="findWhat"></textarea>
+        <button mat-icon-button matSuffix (click)="openAddReference($event, 'findWhat')"
+          class="noc-evidence-db-trigger">
+          <mat-icon>playlist_add</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <div [ngClass]="{'noc-disabled':noctuaReviewSearchService.matchedCount===0 || !displayReplaceForm.replaceSection}"
+      class="noc-activity-group-row w-100-p" fxLayout="column" fxLayoutAlign="start stretch">
+      <button class="noc-text-clear" mat-icon-button aria-label="Clear"
+        (click)="$event.stopPropagation(); clearReplace()">
+        <fa-icon [icon]="['far', 'times-circle']"></fa-icon>
+      </button>
+      <mat-form-field *ngIf="selectedCategory?.name === ArtReplaceCategory.term" appearance="outline"
+        class="noc-sm noc-review-input">
+        <mat-label>Replace With <strong>(Ontology Term)</strong></mat-label>
+        <textarea type="text" matInput formControlName="replaceWith" [matAutocomplete]="replaceAuto"></textarea>
+      </mat-form-field>
+      <mat-form-field *ngIf="selectedCategory?.name === ArtReplaceCategory.gp" appearance="outline"
+        class="noc-sm  noc-review-input">
+        <mat-label>Replace With <strong>(Gene Product)</strong></mat-label>
+        <textarea type="text" matInput formControlName="replaceWith" [matAutocomplete]="replaceAuto"></textarea>
+      </mat-form-field>
+      <mat-form-field *ngIf="selectedCategory?.name === ArtReplaceCategory.reference" appearance="outline"
+        class="noc-sm  noc-review-input">
+        <mat-label>Replace With <strong>(Reference)</strong></mat-label>
+        <textarea type="text" matInput formControlName="replaceWith"></textarea>
+        <button mat-icon-button matSuffix (click)="openAddReference($event, 'replaceWith')"
+          class="noc-evidence-db-trigger">
+          <mat-icon>playlist_add</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <div class="noc-activity-group-row mt-8 w-100-p"
+      [ngClass]="{'noc-disabled':noctuaReviewSearchService.matchedCount===0}" fxLayout="row"
+      fxLayoutAlign="start center">
+      <div class="noc-review-actions" fxLayout="row" fxLayoutAlign="start center" fxFlex="">
+        <span fxFlex></span>
+        <div *ngIf="noctuaReviewSearchService.matchedCount===0" class="noc-matched-count">
+          No Results
+        </div>
+        <div *ngIf="noctuaReviewSearchService.matchedCount>0" class="noc-matched-count mr-8">
+          {{noctuaReviewSearchService.matchedCountCursor +1}} of {{noctuaReviewSearchService.matchedCount}}
+        </div>
+        <div class="mr-8">
+          <button mat-icon-button (click)="goto('first')" class="noc-icon-button"
+            [ngClass]="{'noc-disabled': noctuaReviewSearchService.matchedCountCursor===0}" color="primary">
+            <fa-icon [icon]="['fas', 'angle-double-left']"></fa-icon>
+          </button>
+          <button mat-icon-button (click)="findPrevious()" class="noc-icon-button" color="primary">
+            <fa-icon [icon]="['fas', 'angle-left']"></fa-icon>
+          </button>
+          <button mat-icon-button (click)="findNext()" class="noc-icon-button  noc-rotate-90" color="primary">
+            <fa-icon [icon]="['fas', 'angle-right']"></fa-icon>
+          </button>
+          <button mat-icon-button (click)="goto('last')" class="noc-icon-button"
+            [ngClass]="{'noc-disabled': noctuaReviewSearchService.matchedCountCursor===noctuaReviewSearchService.matchedCount-1}"
+            color="primary">
+            <fa-icon [icon]="['fas', 'angle-double-right']"></fa-icon>
+          </button>
+        </div>
+      </div>
+      <div [ngClass]="{'noc-disabled':!displayReplaceForm.replaceActions}" class="noc-review-actions" fxLayout="row"
+        fxLayoutAlign="start center">
+        <button (click)="replace()" mat-raised-button color="warn" class="noc-sm mr-4 noc-review-btn">
+          Replace
+        </button>
+        <button (click)="replaceAll()" mat-raised-button color="warn" class="noc-sm noc-review-btn">
+          Replace All
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+<mat-autocomplete #findAuto="matAutocomplete" (optionSelected)="findSelected($event.option.value)"
+  [displayWith]="termDisplayFn" class="noc-term-autocomplete">
+  <mat-option class="noc-term-autocomplete" *ngFor="let item of findNode?.termLookup.results" [value]="item">
+    <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
+      <div class="noc-term-label">
+        {{ item.label }}
+      </div>
+      <span fxFlex></span>
+      <div class="noc-term-id">
+        {{ item.id }}
+      </div>
+    </div>
+  </mat-option>
+</mat-autocomplete>
+
+<mat-autocomplete #replaceAuto="matAutocomplete" [displayWith]="termDisplayFn" class="noc-term-autocomplete">
+  <mat-option class="noc-term-autocomplete" *ngFor="let item of replaceNode?.termLookup.results" [value]="item">
+    <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
+      <div class="noc-term-label">
+        {{ item.label }}
+      </div>
+      <span fxFlex></span>
+      <div class="noc-term-id">
+        {{ item.id }}
+      </div>
+    </div>
+  </mat-option>
+</mat-autocomplete>

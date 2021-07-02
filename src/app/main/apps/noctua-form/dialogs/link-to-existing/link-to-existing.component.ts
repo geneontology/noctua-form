@@ -5,7 +5,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 
 
-import { NoctuaFormConfigService, AnnotonNode, Evidence } from 'noctua-form-base';
+import { NoctuaFormConfigService, ActivityNode, Evidence } from 'noctua-form-base';
 import { MatTableDataSource } from '@angular/material/table';
 
 
@@ -17,7 +17,7 @@ import { MatTableDataSource } from '@angular/material/table';
 export class LinkToExistingDialogComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any>;
   nodes: any[]
-  selectedAnnotonNode;
+  selectedActivityNode;
 
   constructor(
     private _matDialogRef: MatDialogRef<LinkToExistingDialogComponent>,
@@ -34,7 +34,7 @@ export class LinkToExistingDialogComponent implements OnInit, OnDestroy {
 
   save() {
     this._matDialogRef.close({
-      annotonNode: this.selectedAnnotonNode
+      activityNode: this.selectedActivityNode
     });
   }
 

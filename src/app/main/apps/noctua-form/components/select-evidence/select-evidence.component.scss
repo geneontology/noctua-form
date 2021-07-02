@@ -45,7 +45,7 @@ $accent: map-get($theme, accent);
       @include deep-height(0);
     }
 
-    .annoton {
+    .activity {
       position: relative;
       cursor: pointer;
       min-height: 40px;

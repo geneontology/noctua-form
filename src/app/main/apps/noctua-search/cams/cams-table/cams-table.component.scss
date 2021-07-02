@@ -1,0 +1,343 @@
+@import "src/@noctua/scss/noctua";
+@import "src/@noctua.common/scss/noctua.common";
+
+$primary: map-get($theme, primary);
+$accent: map-get($theme, accent);
+
+$rotate-graph: 235deg;
+
+:host {
+  padding: 0px;
+  width: 100%;
+  background-color: #f7f7f7;
+
+  .noc-cam-progress {
+    position: absolute;
+    top: 0;
+    height: 5px;
+    right: 0;
+    left: 0;
+    z-index: 1000;
+  }
+
+  .noc-hide-column {
+    visibility: hidden;
+    overflow: hidden;
+    display: none;
+    @include deep-width(0 !important);
+  }
+
+  .noc-summary-filter-bar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    margin-bottom: 4px;
+    padding: 0 10px;
+    @include deep-height(30px);
+    @include deep-width(100%);
+    //  min-height: 40px; //min-height: 35px;
+    background-color: #fff;
+    font-size: 16px;
+    overflow: hidden;
+    z-index: 10;
+
+    @include mat-elevation(2);
+
+    mat-chip-list {
+    }
+
+    mat-chip {
+      margin-right: 8px;
+      font-weight: normal;
+      font-size: 10px;
+      @include deep-height(25px);
+
+      &.noc-filter-chip {
+        font-size: 10px;
+        @include noc-chip-color(#bbc9cc);
+
+        .noc-filter-number {
+          font-weight: bold;
+          color: map-get($primary, default);
+        }
+      }
+
+      &.noc-clearall-chip {
+        @include noc-chip-color(#da7f7f);
+        font-size: 10px;
+      }
+    }
+  }
+
+  .noc-summary-results-bar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 31px;
+    margin-bottom: 4px;
+    padding: 0 10px 0 20px;
+    @include deep-height(40px);
+    //  min-height: 40px; //min-height: 35px;
+    background-color: #fff;
+    font-size: 16px;
+    overflow: hidden;
+    z-index: 10;
+
+    @include mat-elevation(2);
+
+    .noc-art-tools {
+      //background-color: ;
+      margin-right: 16px;
+    }
+
+    .noc-pagesize-select {
+      width: 50px;
+    }
+
+    mat-chip {
+      font-size: 14px;
+      font-weight: normal;
+      @include deep-height(30px);
+    }
+  }
+
+  .noc-search-table-header {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1000;
+    @include deep-height(30px);
+    border-bottom: $noc-primary-color-light solid 1px;
+
+    .noc-header-cell {
+      padding: 0 10px;
+      font-size: 10px;
+      color: map-get($primary, default);
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+  }
+
+  .noc-drawer-container {
+    background-color: #ddd;
+  }
+
+  .mat-drawer-content {
+    width: 100%;
+  }
+
+  .noc-loading-container {
+    background-color: rgba(#555, 0.4);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 1000;
+  }
+
+  mat-chip {
+    font-size: 12px;
+    font-weight: normal;
+    @include deep-height(25px);
+    max-width: 200px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    .noc-chip-label {
+      padding: 0 8px 0 4px;
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    &.noc-table-chip {
+      padding: 0;
+      @include deep-height(25px);
+      font-size: 10px;
+
+      .noc-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 25px;
+        width: 25px;
+        border-radius: 50%;
+        color: #888;
+        font-size: 14px;
+      }
+
+      @include noc-chip-color(#ccc);
+
+      &.noc-user-chip {
+        @include noc-chip-color(#bbc9cc);
+
+        .noc-icon {
+          color: #59939e;
+
+          &.noc-icon-initials {
+            font-size: 10px;
+            color: #000000;
+          }
+        }
+      }
+
+      &.noc-date-chip {
+        @include noc-chip-color(#bbc9cc);
+      }
+
+      &.noc-state-chip {
+        &.noc-development {
+          @include noc-chip-color(#f4c89c);
+        }
+
+        &.noc-production {
+          @include noc-chip-color(#b6f1cc);
+        }
+
+        &.noc-review {
+          @include noc-chip-color(#d8f6a3);
+        }
+      }
+    }
+  }
+
+  .noc-cams-result {
+    background-color: #f7f7f7;
+    font-size: 12px;
+
+    @include deep-width(100%);
+    @include deep-height(100%);
+    padding-bottom: 300px;
+
+    .noc-edit-button {
+      background-color: #ffffff;
+      color: map-get($primary, default);
+      border: rgba(map-get($primary, default), 0.5) solid 1px;
+      @include mat-elevation(1);
+    }
+
+    .noc-cams-table {
+      @include deep-width(100%);
+
+      .noc-display-number {
+        background-color: #fff;
+      }
+    }
+
+    tr.mat-row {
+      height: auto;
+    }
+
+    .mat-header-cell {
+      padding: 0 10px;
+      font-size: 10px !important;
+      //color: #0F0; // map-get($primary, default);
+      font-weight: bold;
+      color: map-get($primary, default);
+      //text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .mat-header-row {
+      position: -webkit-sticky;
+      position: sticky;
+      top: 72px;
+      background-color: #fff;
+      @include deep-height(30px);
+      border-bottom: $noc-primary-color-light solid 1px;
+      z-index: 10;
+    }
+
+    .mat-cell {
+      display: flex;
+      align-items: center;
+      padding-top: 6px;
+      padding-bottom: 6px;
+
+      &.noc-checkbox-cell {
+        padding-left: 16px;
+        //border-right: $noc-primary-color-light solid 1px;
+      }
+
+      &.noc-expand-cell {
+        position: relative;
+        padding-left: 8px;
+
+        .noc-toggle-expand-button {
+          width: 30px;
+          height: 30px;
+          line-height: 12px;
+        }
+      }
+    }
+
+    .noc-cam-table-container {
+      width: 100%;
+      position: relative;
+      padding-left: 70px;
+
+      &::before {
+        position: absolute;
+        top: 0;
+        left: 52px;
+        bottom: 0;
+        width: 2px;
+        color: white;
+        background-color: $noc-tree-line-color;
+        content: "";
+      }
+    }
+
+    .mat-column-id {
+      flex: 0 1 84px;
+    }
+
+    .mat-column-buttons {
+      flex: 0 1 80px;
+    }
+
+    .noc-title {
+      font-size: 12px;
+      padding-left: 12px;
+      padding-right: 10px;
+    }
+
+    .noc-model-state {
+      mat-chip {
+        @include deep-height(25px);
+        font-size: 10px;
+      }
+    }
+
+    .noc-model-saved {
+      font-size: 18px;
+      padding-left: 12px;
+    }
+  }
+
+  .noc-cams-result {
+    &.noc-review-mode {
+      .noc-summary-filter-bar {
+        top: 101px;
+      }
+
+      .noc-summary-results-bar {
+        top: 131px;
+      }
+
+      .mat-header-row {
+        top: 172px;
+      }
+
+      .noc-cam-table-container {
+        padding-left: 100px;
+
+        &::before {
+          left: 82px;
+        }
+      }
+    }
+  }
+}

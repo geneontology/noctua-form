@@ -8,7 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Subject } from 'rxjs';
 
 import {
-  AnnotonNode,
+  ActivityNode,
   Evidence,
   NoctuaFormConfigService,
   NoctuaLookupService
@@ -25,8 +25,8 @@ import { noctuaAnimations } from './../../../../../../@noctua/animations';
 export class SearchDatabaseDialogComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any>;
   evidence: Evidence[] = [];
-  annotonNodes: AnnotonNode[] = [];
-  selectedAnnotonNode: AnnotonNode;
+  activityNodes: ActivityNode[] = [];
+  selectedActivityNode: ActivityNode;
   searchCriteria: any;
   displayedColumns: string[] = ['select', 'evidence', 'reference', 'with', 'assignedBy'];
   dataSource;
@@ -45,8 +45,8 @@ export class SearchDatabaseDialogComponent implements OnInit, OnDestroy {
     this.initialize();
 
   }
-  ngOnInit() {
-  }
+  ngOnInit() { }
+
   initialize() {
     const self = this;
 
@@ -56,14 +56,13 @@ export class SearchDatabaseDialogComponent implements OnInit, OnDestroy {
       this.searchCriteria.params)
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((response) => {
-        console.log(response);
-        this.annotonNodes = response;
+        this.activityNodes = response;
       });
   }
 
-  selectAnnotonNode(annotonNode: AnnotonNode) {
-    this.selectedAnnotonNode = annotonNode;
-    this.dataSource = new MatTableDataSource<Evidence>(annotonNode.predicate.evidence);
+  selectActivityNode(activityNode: ActivityNode) {
+    this.selectedActivityNode = activityNode;
+    this.dataSource = new MatTableDataSource<Evidence>(activityNode.predicate.evidence);
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -82,7 +81,7 @@ export class SearchDatabaseDialogComponent implements OnInit, OnDestroy {
 
   save() {
     this._matDialogRef.close({
-      term: this.selectedAnnotonNode,
+      term: this.selectedActivityNode,
       evidences: <Evidence[]>this.selection.selected
     });
   }

@@ -10,12 +10,12 @@ import { NoctuaFormDialogService } from './../../services/dialog.service';
 
 import {
   noctuaFormConfig,
-  NoctuaAnnotonConnectorService,
+  NoctuaActivityConnectorService,
   NoctuaFormConfigService,
-  NoctuaAnnotonFormService,
+  NoctuaActivityFormService,
   CamService,
   Cam,
-  Annoton,
+  Activity,
   NoctuaFormMenuService
 } from 'noctua-form-base';
 import { NoctuaConfirmDialogService } from '@noctua/components/confirm-dialog/confirm-dialog.service';
@@ -31,7 +31,6 @@ export class CamPreviewComponent implements OnInit, OnDestroy {
   searchCriteria: any = {};
   searchFormData: any = [];
   searchForm: FormGroup;
-  camDisplayType = noctuaFormConfig.camDisplayType.options;
 
   @Input('cam')
   public cam: Cam;
@@ -44,8 +43,8 @@ export class CamPreviewComponent implements OnInit, OnDestroy {
     public noctuaFormMenuService: NoctuaFormMenuService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     private confirmDialogService: NoctuaConfirmDialogService,
-    private noctuaAnnotonConnectorService: NoctuaAnnotonConnectorService,
-    public noctuaAnnotonFormService: NoctuaAnnotonFormService,
+    private noctuaActivityConnectorService: NoctuaActivityConnectorService,
+    public noctuaActivityFormService: NoctuaActivityFormService,
     private noctuaFormDialogService: NoctuaFormDialogService,
   ) {
 
@@ -56,38 +55,37 @@ export class CamPreviewComponent implements OnInit, OnDestroy {
 
   }
 
-  addAnnoton() {
+  addActivity() {
     this.openForm(location);
   }
 
   openForm(location?) {
-    this.noctuaAnnotonFormService.mfLocation = location;
-    this.noctuaAnnotonFormService.initializeForm();
-    this.noctuaFormMenuService.openRightDrawer(this.noctuaFormMenuService.panel.annotonForm);
+    this.noctuaActivityFormService.mfLocation = location;
+    this.noctuaActivityFormService.initializeForm();
+    // this.noctuaFormMenuService.openRightDrawer(this.noctuaFormMenuService.panel.activityForm);
   }
 
-  openAnnotonConnector(annoton: Annoton) {
+  openActivityConnector(activity: Activity) {
     this.camService.onCamChanged.next(this.cam);
-    this.camService.annoton = annoton;
-    this.noctuaAnnotonConnectorService.annoton = annoton;
-    this.noctuaAnnotonConnectorService.onAnnotonChanged.next(annoton);
-    this.noctuaAnnotonConnectorService.getConnections();
-    this.noctuaFormMenuService.openRightDrawer(this.noctuaFormMenuService.panel.connectorForm);
+    this.camService.activity = activity;
+    this.noctuaActivityConnectorService.subjectActivity = activity;
+    this.noctuaActivityConnectorService.onActivityChanged.next(activity);
+    // this.noctuaFormMenuService.openRightDrawer(this.noctuaFormMenuService.panel.connectorForm);
   }
 
-  openAnnotonForm(annoton: Annoton) {
+  openActivityForm(activity: Activity) {
     this.camService.onCamChanged.next(this.cam);
-    this.camService.annoton = annoton;
-    this.noctuaAnnotonFormService.initializeForm(annoton);
-    this.noctuaFormMenuService.openRightDrawer(this.noctuaFormMenuService.panel.annotonForm);
+    this.camService.activity = activity;
+    this.noctuaActivityFormService.initializeForm(activity);
+    //  this.noctuaFormMenuService.openRightDrawer(this.noctuaFormMenuService.panel.activityForm);
   }
 
-  deleteAnnoton(annoton: Annoton) {
+  deleteActivity(activity: Activity) {
     const self = this;
 
     const success = () => {
-      this.camService.deleteAnnoton(annoton).then(() => {
-        self.noctuaFormDialogService.openSuccessfulSaveToast('Activity successfully deleted.', 'OK');
+      this.camService.deleteActivity(activity).then(() => {
+        self.noctuaFormDialogService.openInfoToast('Activity successfully deleted.', 'OK');
       });
     };
 

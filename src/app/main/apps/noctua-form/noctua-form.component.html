@@ -2,10 +2,11 @@
   <div *ngIf="!noctuaUserService.user" class="noc-not-loggedin" fxLayout="row" fxLayoutAlign="center center">
     Not Logged In: You can only view existing annotations
   </div>
+
   <div *ngIf="cam" class="noc-cam-heading" fxFlex="1 1 auto" fxLayout="row" fxLayoutAlign="start center"
     [@animateStagger]="{value:'50'}">
     <div class="" fxFlex="180px">
-      <button mat-flat-button (click)="openAnnotonForm(AnnotonType.default)" color="primary"
+      <button mat-flat-button (click)="openActivityForm(ActivityType.default)" color="primary"
         class="noc-rounded-button noc-half-button noc-r noc-sm">
         <mat-icon class=""> add </mat-icon> Create Activity
       </button>
@@ -14,10 +15,10 @@
         <mat-icon class="">arrow_drop_down </mat-icon>
       </button>
       <mat-menu #createOptions="matMenu" xPosition="before">
-        <a mat-menu-item (click)="openAnnotonForm(AnnotonType.bpOnly)">
+        <a mat-menu-item (click)="openActivityForm(ActivityType.bpOnly)">
           Create New BP Annotation
         </a>
-        <a mat-menu-item (click)="openAnnotonForm(AnnotonType.ccOnly)">
+        <a mat-menu-item (click)="openActivityForm(ActivityType.ccOnly)">
           Create New CC Annotation
         </a>
       </mat-menu>
@@ -115,37 +116,28 @@
       </button>
     </div> -->
   </div>
+
   <mat-drawer-container class="noc-drawer-container w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start"
     autosize>
     <mat-drawer #leftDrawer class="noc-left-drawer" mode="side" position="start">
-      <div [ngSwitch]="noctuaFormMenuService.selectedLeftPanel?.id" class="h-100-p">
-        <noc-cam-form [panelDrawer]="leftDrawer" *ngSwitchCase="noctuaFormMenuService.panel.camForm.id">
+      <div [ngSwitch]="noctuaFormMenuService.selectedLeftPanel" class="h-100-p">
+        <noc-cam-form [panelDrawer]="leftDrawer" *ngSwitchCase="LeftPanel.camForm">
         </noc-cam-form>
-        <noc-annoton-form [panelDrawer]="leftDrawer" *ngSwitchCase="noctuaFormMenuService.panel.annotonForm.id">
-        </noc-annoton-form>
-        <noc-annoton-entity-form [panelDrawer]="leftDrawer"
-          *ngSwitchCase="noctuaFormMenuService.panel.annotonEntityForm.id">
-        </noc-annoton-entity-form>
-        <noc-annoton-connector [panelDrawer]="leftDrawer" *ngSwitchCase="noctuaFormMenuService.panel.connectorForm.id">
-        </noc-annoton-connector>
+        <noc-activity-form [panelDrawer]="leftDrawer" *ngSwitchCase="LeftPanel.activityForm">
+        </noc-activity-form>
       </div>
     </mat-drawer>
     <mat-drawer-content class="w-100-p h-100-p" fxLayout="column" fxLayoutAlign="start stretch">
-      <div [ngSwitch]="noctuaFormMenuService.selectedMiddlePanel.id" class="w-100-p h-100-p" noctuaPerfectScrollbar>
-        <noc-cam-preview *ngSwitchCase="noctuaFormMenuService.panel.camPreview.id" [cam]="cam"></noc-cam-preview>
-        <noc-cam-table *ngSwitchCase="noctuaFormMenuService.panel.camTable.id" [cam]="cam"></noc-cam-table>
+      <div [ngSwitch]="noctuaFormMenuService.selectedMiddlePanel" class="w-100-p h-100-p" noctuaPerfectScrollbar>
+        <noc-cam-preview *ngSwitchCase="MiddlePanel.camPreview" [cam]="cam"></noc-cam-preview>
+        <noc-cam-table *ngSwitchCase="MiddlePanel.camTable" [cam]="cam" [options]="tableOptions"></noc-cam-table>
       </div>
     </mat-drawer-content>
     <mat-drawer #rightDrawer class="noc-right-drawer" mode="over" position="end">
-      <div [ngSwitch]="noctuaFormMenuService.selectedRightPanel?.id" class="h-100-p">
-        <noc-annoton-form [panelDrawer]="rightDrawer" *ngSwitchCase="noctuaFormMenuService.panel.annotonForm.id">
-        </noc-annoton-form>
-        <noc-annoton-entity-form [panelDrawer]="rightDrawer"
-          *ngSwitchCase="noctuaFormMenuService.panel.annotonEntityForm.id">
-        </noc-annoton-entity-form>
-        <noc-annoton-connector [panelDrawer]="rightDrawer" *ngSwitchCase="noctuaFormMenuService.panel.connectorForm.id">
-        </noc-annoton-connector>
-      </div>
+      <!--  <div [ngSwitch]="noctuaFormMenuService.selectedRightPanel?.id" class="h-100-p">
+        <noc-activity-connector [panelDrawer]="rightDrawer" *ngSwitchCase="noctuaFormMenuService.panel.connectorForm.id">
+        </noc-activity-connector>
+      </div> -->
     </mat-drawer>
   </mat-drawer-container>
 </div>

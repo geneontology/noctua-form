@@ -23,6 +23,10 @@ noc-noctua-apps {
     @include deep-width(300px);
   }
 
+  .noc-beta {
+    background-color: #fad38a;
+  }
+
   .noc-header {
     @include deep-height(40px);
     background-color: #EEE;

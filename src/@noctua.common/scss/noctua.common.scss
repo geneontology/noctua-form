@@ -1,24 +1,15 @@
-$noc-toolbar-color: #e7ecf4;
-$noc-primary-color: #3b5998;
-$noc-primary-color-accent: #8b9dc3;
-$noc-primary-color-lighter: #dfe3ee;
-$noc-primary-color-light: rgba(#798fb8, 0.3);
-$noc-primary-color-text: #4a8bfc;
-
 $primary: map-get($theme, primary);
 $accent: map-get($theme, accent);
-
 
 .noc-disabled {
   pointer-events: none;
   opacity: 0.3;
 }
 
-
 .mat-row {
   &:hover {
     @include mat-elevation(1);
-    background-color: #F5F5F5;
+    background-color: #f5f5f5;
   }
 
   &.noc-row-selected {
@@ -33,12 +24,12 @@ $accent: map-get($theme, accent);
     @include deep-height(40px);
 
     button {
-      color: #EEE;
-      border: #CCC solid 1px;
+      color: #eee;
+      border: #ccc solid 1px;
 
       &:hover {
-        color: #CCC;
-        border: #BBB solid 1px;
+        color: #ccc;
+        border: #bbb solid 1px;
       }
     }
   }
@@ -52,7 +43,7 @@ $accent: map-get($theme, accent);
   .noc-drawer-header {
     padding: 0 12px;
     @include deep-height(40px);
-    background-color: #FFF;
+    background-color: #fff;
     @include mat-elevation(2);
     z-index: 1000;
 
@@ -71,8 +62,8 @@ $accent: map-get($theme, accent);
       bottom: 0;
       left: 0;
       right: 0;
-      background-color: rgba(#EEE, 0.5);
-      z-index: 10;
+      background-color: rgba(#eee, 0.5);
+      z-index: 10000;
       color: #8b2d2d;
       font-weight: bold;
       font-size: 24px;
@@ -82,9 +73,9 @@ $accent: map-get($theme, accent);
   .noc-drawer-footer {
     padding: 0 12px;
     @include deep-height(50px);
-    background-color: #F2F2F2;
+    background-color: #f2f2f2;
 
-    border-top: 1px solid #CCC;
+    border-top: 1px solid #ccc;
     z-index: 1000;
 
     -webkit-box-shadow: 2px -5px 2px 0px rgba(0, 0, 0, 0.26);
@@ -101,7 +92,7 @@ $accent: map-get($theme, accent);
   .noc-dialog-header {
     padding: 0 12px;
     background-color: rgba(map-get($primary, default), 0.7);
-    color: #EEE;
+    color: #eee;
     @include deep-height(40px);
     @include mat-elevation(2);
     z-index: 1000;
@@ -112,26 +103,26 @@ $accent: map-get($theme, accent);
     }
 
     button {
-      color: #EEE;
-      border: #CCC solid 1px;
+      color: #eee;
+      border: #ccc solid 1px;
 
       &:hover {
-        color: #CCC;
-        border: #BBB solid 1px;
+        color: #ccc;
+        border: #bbb solid 1px;
       }
     }
   }
 
   .noc-dialog-body {
-    min-height: calc(100% - 90px);
+    @include deep-height(calc(100% - 90px));
   }
 
   .noc-dialog-footer {
     padding: 0 12px;
     @include deep-height(50px);
-    background-color: #F2F2F2;
+    background-color: #f2f2f2;
 
-    border-top: 1px solid #CCC;
+    border-top: 1px solid #ccc;
     z-index: 1000;
 
     -webkit-box-shadow: 2px -5px 2px 0px rgba(0, 0, 0, 0.26);
@@ -142,7 +133,7 @@ $accent: map-get($theme, accent);
 
 .noc-form-section {
   width: 100%;
-  background-color: #FFF;
+  background-color: #fff;
 
   .noc-section-header {
     height: 30px;
@@ -166,11 +157,10 @@ $accent: map-get($theme, accent);
   }
 }
 
-
 .noc-column-toolbar {
   padding: 5px;
   @include deep-height(40px); // @include mat-elevation(2);
-  border-bottom: #BBB solid 1px;
+  border-bottom: #bbb solid 1px;
   background-color: $noc-toolbar-color;
   z-index: 10;
 
@@ -187,18 +177,18 @@ $accent: map-get($theme, accent);
   font-weight: 500;
   @include deep-height(40px);
   @include mat-elevation(2);
-  border-bottom: #BBB solid 1px;
-  background-color: #FFF;
+  border-bottom: #bbb solid 1px;
+  background-color: #fff;
   z-index: 10;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 .noc-no-info {
-  padding: 50px 10px;
+  padding: 30px 10px;
   font-size: 30px;
   font-style: italic;
   text-align: center;
-  color: #AAA;
+  color: #aaa;
 }
 
 .noc-alert {
@@ -214,7 +204,7 @@ $accent: map-get($theme, accent);
     padding: 10px;
     @include deep-height(40px);
     @include deep-width(100%);
-    border-bottom: #CCC solid 1px;
+    border-bottom: #ccc solid 1px;
 
     .noc-title {
       font-size: 14px;

@@ -1,10 +1,8 @@
 import { environment } from 'environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { NoctuaUserService, Contributor, Group, Organism, compareOrganism, compareGroup, compareContributor } from 'noctua-form-base';
-import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
-import { differenceWith, sortBy } from 'lodash';
+import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
+import { NoctuaUserService, Contributor, Organism, compareOrganism, compareGroup, compareContributor } from 'noctua-form-base';
 import { map } from 'rxjs/operators';
 import { MatColors } from '@noctua/mat-colors';
 
@@ -15,18 +13,28 @@ import { MatColors } from '@noctua/mat-colors';
 export class NoctuaDataService {
   baristaUrl = environment.globalBaristaLocation;
   searchApi = environment.searchApi;
-  onContributorsChanged: BehaviorSubject<any>;
-  onGroupsChanged: BehaviorSubject<any>;
   onOrganismsChanged: BehaviorSubject<any>;
 
   constructor(
     private httpClient: HttpClient,
-    private sparqlService: SparqlService) {
-    this.onContributorsChanged = new BehaviorSubject([]);
-    this.onGroupsChanged = new BehaviorSubject([]);
+    private noctuaUserService: NoctuaUserService) {
     this.onOrganismsChanged = new BehaviorSubject([]);
 
-    // this._getUsersDifference();
+  }
+
+  setup() {
+    const self = this;
+    const setup$ = forkJoin([this.getUsers(), this.getGroups()]);
+
+    setup$.subscribe((responseList) => {
+      if (responseList) {
+        self.noctuaUserService.contributors = self.loadContributors(responseList[0]);
+        self.noctuaUserService.groups = self.loadGroups(responseList[1]);
+        return true;
+      } else {
+        return false;
+      }
+    });
   }
 
   getUsers(): Observable<any> {
@@ -57,48 +65,34 @@ export class NoctuaDataService {
   }
 
 
-  loadContributors() {
+  loadContributors(response) {
     const self = this;
+    const contributors = response.map((item) => {
+      const contributor = new Contributor();
 
-    this.getUsers()
-      .subscribe((response) => {
-        if (!response) {
-          return;
-        }
-        const contributors = response.map((item) => {
-          const contributor = new Contributor();
+      contributor.name = item.nickname;
+      contributor.orcid = item.uri;
+      contributor.group = item.group;
+      contributor.initials = self.getInitials(item.nickname);
+      contributor.color = self.getColor(contributor.initials);
 
-          contributor.name = item.nickname;
-          contributor.orcid = item.uri;
-          contributor.group = item.group;
-          contributor.initials = self.getInitials(item.nickname);
-          contributor.color = self.getColor(contributor.initials);
+      return contributor;
+    });
 
-          return contributor;
-        });
-
-        this.onContributorsChanged.next(contributors.sort(compareContributor));
-      });
+    return contributors.sort(compareContributor);
   }
 
-  loadGroups() {
-    this.getGroups()
-      .subscribe((response) => {
-        if (!response) {
-          return;
-        }
+  loadGroups(response) {
+    const groups = response.map((item) => {
+      const group: any = {
+        name: item.label,
+        url: item.id
+      };
 
-        const groups = response.map((item) => {
-          const group: any = {
-            name: item.label,
-            url: item.id
-          };
+      return group;
+    });
 
-          return group;
-        });
-
-        this.onGroupsChanged.next(groups.sort(compareGroup));
-      });
+    return groups.sort(compareGroup);
   }
 
   loadOrganisms() {
@@ -118,27 +112,6 @@ export class NoctuaDataService {
         });
 
         this.onOrganismsChanged.next(organisms.sort(compareOrganism));
-      });
-  }
-
-  // for checking
-  private _getUsersDifference() {
-    this.onContributorsChanged
-      .subscribe((baristaUsers) => {
-        this.sparqlService.getAllContributors().subscribe((sparqlUsers) => {
-          const diff = differenceWith(sparqlUsers, baristaUsers, (sparqlUser: any, baristaUser: any) => {
-            return sparqlUser.orcid === baristaUser.orcid;
-          });
-
-          const diffSorted = sortBy(diff, 'name').map((user) => {
-            return {
-              orcid: user.orcid,
-              name: user.name
-            };
-          });
-
-          console.log(JSON.stringify(diffSorted, undefined, 2));
-        });
       });
   }
 

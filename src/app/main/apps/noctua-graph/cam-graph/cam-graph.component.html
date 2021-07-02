@@ -1,0 +1,42 @@
+<div id="noc-canvas" class="">
+  <div id="noc-palette" class="">
+    <div fxLayout="column" fxLayoutAlign="start stretch" class="noc-cam-form noc-drawer h-100-p">
+      <div class="noc-drawer-header" fxLayout="row" fxLayoutAlign="start center">
+        <span class="noc-drawer-header-title">
+          TOOLBOX
+        </span>
+      </div>
+      <div class="noc-drawer-body w-100-p" noctuaPerfectScrollbar>
+        <div #stencils *ngFor="let stencil of stencils">
+          <div class="noc-heading">
+            {{stencil.label}}
+          </div>
+          <div [attr.id]="stencil.id" class=""></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div fxFlex="" class="noc-middle-panel" fxLayout="column" fxLayoutAlign="start ">
+    <div class="noc-workflow-toolbar w-100-p" fxLayout="row" fxLayoutAlign="start center">
+      <button mat-stroked-button (click)="automaticLayout()" color="primary" class="noc-rounded-button noc-xs mr-8"
+        matTooltip="Automatic Tree Layout" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
+        Automatic Layout
+      </button>
+
+      <button mat-icon-button (click)="zoomOut()" color="" class="noc-rounded-button noc-half-button noc-l">
+        <fa-icon class="" [icon]="['fas', 'search-minus']"></fa-icon>
+      </button>
+      <button mat-icon-button (click)="zoomIn()" color="" class="noc-rounded-button noc-half-button noc-l">
+        <fa-icon class="" [icon]="['fas', 'search-plus']"></fa-icon>
+      </button>
+      <button mat-icon-button (click)="noctuaCamGraphService.reset()" color=""
+        class="noc-rounded-button noc-half-button noc-l">
+        <mat-icon>youtube_searched_for</mat-icon>
+      </button>
+    </div>
+    <div class="noc-paper-container" (wheel)="onCtrlScroll($event)">
+      <div #paper id="noc-paper" class="">
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" class="noc-drawer h-100-p">
+  <div class="noc-drawer-header" fxLayout="row" fxLayoutAlign="start center">
+    <span class="noc-drawer-header-title">
+      Browse By Groups</span>
+    <span fxFlex></span>
+    <button mat-stroked-button (click)="close()" class="noc-rounded-button noc-sm" color="primary"
+      aria-label="Close dialog">
+      <mat-icon>close</mat-icon> CLOSE
+    </button>
+  </div>
+  <form fxLayout="column" fxLayoutAlign="start stretch" class="mt-8 noc-search-form" noctuaPerfectScrollbar>
+    <div *ngFor="let group of noctuaUserService.groups" (click)="selectGroup(group)" class="noc-group-row"
+      fxLayout="row" fxLayoutAlign="start center">
+      <div class="noc-name" fxFlex>
+        {{ group.name }}
+      </div>
+      <!--   <div class="w-100-p h-100-p" fxLayout="column" fxLayoutAlign="center center">
+
+      <div class="">
+          <strong>{{ group.cams }}</strong> Models
+        </div> 
+      </div>-->
+      <mat-icon class="s-24">
+        chevron_right
+      </mat-icon>
+    </div>
+  </form>
+</div>

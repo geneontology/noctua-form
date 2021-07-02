@@ -3,7 +3,7 @@ export * from './cam';
 
 export { NoctuaFormDialogService } from './services/dialog.service';
 export { AddEvidenceDialogComponent } from './dialogs/add-evidence/add-evidence.component';
-export { AnnotonErrorsDialogComponent } from './dialogs/annoton-errors/annoton-errors.component';
+export { ActivityErrorsDialogComponent } from './dialogs/activity-errors/activity-errors.component';
 export { BeforeSaveDialogComponent } from './dialogs/before-save/before-save.component';
 export { CreateFromExistingDialogComponent } from './dialogs/create-from-existing/create-from-existing.component';
 export { LinkToExistingDialogComponent } from './dialogs/link-to-existing/link-to-existing.component';

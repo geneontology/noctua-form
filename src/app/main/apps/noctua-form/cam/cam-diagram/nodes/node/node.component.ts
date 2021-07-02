@@ -6,10 +6,10 @@ import { NodeService } from './../services/node.service';
 
 import { NoctuaFormDialogService } from './../../../../services/dialog.service';
 import { CamDiagramService } from './../../services/cam-diagram.service';
-import { NoctuaAnnotonFormService, NoctuaFormMenuService } from 'noctua-form-base';
+import { NoctuaActivityFormService, NoctuaFormMenuService } from 'noctua-form-base';
 import { CamService } from 'noctua-form-base'
-import { Annoton } from 'noctua-form-base';
-import { AnnotonNode } from 'noctua-form-base';
+import { Activity } from 'noctua-form-base';
+import { ActivityNode } from 'noctua-form-base';
 
 
 
@@ -21,19 +21,19 @@ import { AnnotonNode } from 'noctua-form-base';
 })
 export class NodeComponent implements OnInit, AfterViewInit {
 
-  @Input() annoton: Annoton;
+  @Input() activity: Activity;
 
   onNodeReady: Subject<any> = new Subject();// = new BehaviorSubject({});
   gpTerm;
   connectionId
-  connector = new AnnotonNode();
+  connector = new ActivityNode();
 
 
   constructor(
     private noctuaFormDialogService: NoctuaFormDialogService,
     private camService: CamService,
     public noctuaFormMenuService: NoctuaFormMenuService,
-    public noctuaAnnotonFormService: NoctuaAnnotonFormService,
+    public noctuaActivityFormService: NoctuaActivityFormService,
     public camDiagramService: CamDiagramService,
     private elRef: ElementRef,
     private renderer: Renderer2) { }
@@ -43,9 +43,9 @@ export class NodeComponent implements OnInit, AfterViewInit {
 
     //  self.onNodeReady = new BehaviorSubject({});
     //  self.camDiagramService.onNodesReady.push(this.onNodeReady)
-    self.connectionId = self.annoton.id
-    self.gpTerm = self.annoton.getGPNode().getTerm();
-    self.connector = self.annoton.getMFNode();
+    self.connectionId = self.activity.id;
+    self.gpTerm = self.activity.getGPNode().getTerm();
+    self.connector = self.activity.getMFNode();
   }
 
   ngAfterViewInit() {
@@ -56,10 +56,10 @@ export class NodeComponent implements OnInit, AfterViewInit {
     // if()
 
 
-    let location = JSON.parse(localStorage.getItem(self.annoton.id));
+    let location = JSON.parse(localStorage.getItem(self.activity.id));
     if (location) {
       let locationX = location.x + 'px';
-      let locationY = location.y + 'px'
+      let locationY = location.y + 'px';
       self.renderer.setStyle(nodeEl, 'left', locationX);
       self.renderer.setStyle(nodeEl, 'top', locationY);
     }
@@ -116,9 +116,9 @@ export class NodeComponent implements OnInit, AfterViewInit {
     // self.nodeService.jsPlumbInstance.fire("jsPlumbDemoNodeAdded", el);
   }
 
-  openAnnotonForm() {
-    this.noctuaAnnotonFormService.initializeForm(this.annoton);
-    this.noctuaFormMenuService.openRightDrawer(this.noctuaFormMenuService.panel.annotonForm)
+  openActivityForm() {
+    this.noctuaActivityFormService.initializeForm(this.activity);
+    //this.noctuaFormMenuService.openRightDrawer(this.noctuaFormMenuService.panel.activityForm)
   }
 
 }

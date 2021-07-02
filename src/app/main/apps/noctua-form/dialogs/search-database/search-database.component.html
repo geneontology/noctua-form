@@ -18,11 +18,11 @@
         </div>
       </div>
       <div class="noc-section-body w-100-p" noctuaPerfectScrollbar>
-        <div class="noc-term-box" *ngFor="let annotonNode of annotonNodes" (click)="selectAnnotonNode(annotonNode)"
-          [ngClass]="{'noc-term-selected': annotonNode.getTerm().id===selectedAnnotonNode?.getTerm().id}" fxLayout="row"
-          fxLayoutAlign="start center">
+        <div class="noc-term-box" *ngFor="let activityNode of activityNodes" (click)="selectActivityNode(activityNode)"
+          [ngClass]="{'noc-term-selected': activityNode.getTerm().id===selectedActivityNode?.getTerm().id}"
+          fxLayout="row" fxLayoutAlign="start center">
           <mat-icon fkFlex="25px" class="green-300-fg mr-4">check_circle</mat-icon>
-          {{annotonNode.getTerm().label}}
+          {{activityNode.getTerm().label}}
         </div>
       </div>
     </div>
@@ -31,7 +31,7 @@
         <div class="noc-section-heading">
           Select Evidence <small>(optional)</small>
           <div class="text-truncate">
-            <small>{{selectedAnnotonNode?.getTerm().label}}</small>
+            <small>{{selectedActivityNode?.getTerm().label}}</small>
           </div>
         </div>
       </div>

@@ -28,7 +28,6 @@ export class CreateFromExistingDialogComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log(this.cam)
   }
 
   close() {
