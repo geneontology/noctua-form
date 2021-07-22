@@ -9,7 +9,6 @@ import {
   NoctuaFormConfigService,
   NoctuaFormMenuService,
   noctuaFormConfig,
-  CamsService,
   CamService,
   ActivityDisplayType
 } from 'noctua-form-base';
@@ -66,7 +65,7 @@ export class CamsReviewComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any>;
 
   constructor(
-    public camsService: CamsService,
+    public camService: CamService,
     public noctuaSearchMenuService: NoctuaSearchMenuService,
     public noctuaReviewSearchService: NoctuaReviewSearchService,
     public noctuaUserService: NoctuaUserService,
@@ -75,7 +74,7 @@ export class CamsReviewComponent implements OnInit, OnDestroy {
 
     this._unsubscribeAll = new Subject();
 
-    this.camsService.onCamsChanged
+    this.camService.onCamsChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(cams => {
         if (!cams) {

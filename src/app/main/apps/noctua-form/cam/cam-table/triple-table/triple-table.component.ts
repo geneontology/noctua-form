@@ -26,7 +26,8 @@ export class TripleTableComponent implements OnInit, OnDestroy {
 
   private unsubscribeAll: Subject<any>;
 
-  constructor(private camService: CamService,
+  constructor(
+    public camService: CamService,
     public noctuaFormMenuService: NoctuaFormMenuService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     //  public noctuaFormMenuService: NoctuaFormMenuService,

@@ -9,7 +9,7 @@
   </div>
   <div class="noc-cams-results">
     <div class="noc-cam-container" *ngFor="let cam of cams" id="{{'noc-review-cams-'+cam.displayId}}"
-      [ngClass]=" {'noc-selected': cam.id===camsService.currentMatch?.modelId}" fxLayout="column"
+      [ngClass]=" {'noc-selected': cam.id===camService.currentMatch?.modelId}" fxLayout="column"
       fxLayoutAlign="start stretch">
       <div class="noc-cam-heading" fxFlex="1 1 auto" fxLayout="row" fxLayoutAlign="start center"
         [@animateStagger]="{value:'50'}">

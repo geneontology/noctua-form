@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { NoctuaSharedModule } from '@noctua/shared.module';
 import { SearchOrganismsComponent } from './components/search-organisms/search-organisms.component';
 import { SearchGroupsComponent } from './components/search-groups/search-groups.component';
@@ -16,6 +15,7 @@ import { ArtBasketComponent } from './components/art-basket/art-basket.component
 import { ReviewFormComponent } from './components/review-form/review-form.component';
 import { CamsReviewChangesDialogComponent } from './components/dialogs/cams-review-changes/cams-review-changes.component';
 import { CamsUnsavedDialogComponent } from './components/dialogs/cams-unsaved/cams-unsaved.component';
+import { FindReplaceComponent } from './components/find-replace/find-replace.component';
 
 @NgModule({
     declarations: [
@@ -27,6 +27,7 @@ import { CamsUnsavedDialogComponent } from './components/dialogs/cams-unsaved/ca
         SearchRelationComponent,
         SearchHistoryComponent,
         ArtBasketComponent,
+        FindReplaceComponent,
         ReviewFormComponent,
         CamsReviewChangesDialogComponent,
         CamsUnsavedDialogComponent,
@@ -48,6 +49,7 @@ import { CamsUnsavedDialogComponent } from './components/dialogs/cams-unsaved/ca
         SearchRelationComponent,
         SearchHistoryComponent,
         ArtBasketComponent,
+        FindReplaceComponent,
         ReviewFormComponent,
         CamsReviewChangesDialogComponent,
         CamsUnsavedDialogComponent,

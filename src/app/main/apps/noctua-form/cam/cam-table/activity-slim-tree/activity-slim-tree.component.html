@@ -1,5 +1,5 @@
 <div [attr.id]="activity.displayId" fxLayout="column" fxLayoutAlign="start stretch" class="w-100-p"
-  [ngClass]="{'noc-selected': activity.displayId===camsService.currentMatch?.activityDisplayId}">
+  [ngClass]="{'noc-selected': activity.displayId===camService.currentMatch?.activityDisplayId}">
   <div class="noc-activity-heading" fxLayout="row" fxLayoutAlign="start center">
     <div fxFlex="25px" (click)="$event.stopPropagation()">
       <button mat-icon-button (click)="toggleExpand(activity)" color="primary" class="noc-toggle-expand-button">

@@ -28,7 +28,7 @@
       .If you leave, your basket will be cleared.
     </div>
     <div *ngFor="let cam of cams" class="noc-group-row"
-      [ngClass]="{'noc-selected': cam.id===camsService.currentMatch?.modelId}" fxLayout="column"
+      [ngClass]="{'noc-selected': cam.id===camService.currentMatch?.modelId}" fxLayout="column"
       fxLayoutAlign="start stretch">
       <div *ngIf="cam.modified" class="noc-modified-header w-100-p" fxLayout="row" fxLayoutAlign="start center">
         <div class="noc-title">Modified Model:

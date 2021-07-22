@@ -13,7 +13,7 @@ import {
     NoctuaFormConfigService,
     NoctuaUserService,
     Entity,
-    CamsService,
+
     NoctuaGraphService,
     CamService
 } from 'noctua-form-base';
@@ -76,7 +76,7 @@ export class NoctuaSearchService {
         private httpClient: HttpClient,
         private noctuaDataService: NoctuaDataService,
         private _noctuaGraphService: NoctuaGraphService,
-        private camsService: CamsService,
+
         private camService: CamService,
         public noctuaFormConfigService: NoctuaFormConfigService,
         public noctuaUserService: NoctuaUserService,
@@ -97,7 +97,7 @@ export class NoctuaSearchService {
 
             this.getCams(searchCriteria).subscribe((response: any) => {
                 this.cams = response;
-                this.camsService.updateDisplayNumber(this.cams);
+                this.camService.updateDisplayNumber(this.cams);
                 this.onCamsChanged.next(this.cams);
             });
 

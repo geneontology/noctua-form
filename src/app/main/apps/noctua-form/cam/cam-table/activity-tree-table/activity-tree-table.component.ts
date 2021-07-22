@@ -14,7 +14,7 @@ import {
   noctuaFormConfig,
   NoctuaUserService,
   NoctuaFormMenuService,
-  CamsService,
+
   ActivityType,
   ActivityTreeNode
 } from 'noctua-form-base';
@@ -61,7 +61,7 @@ export class ActivityTreeTableComponent implements OnInit, OnDestroy {
   private unsubscribeAll: Subject<any>;
 
   constructor(
-    public camsService: CamsService,
+    public camService: CamService,
     public noctuaFormMenuService: NoctuaFormMenuService,
     public noctuaUserService: NoctuaUserService,
     public noctuaFormConfigService: NoctuaFormConfigService,

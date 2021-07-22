@@ -10,7 +10,7 @@
   }
 
   .noc-drawer-container {
-    background-color: #E2E2E2;
+    background-color: #e2e2e2;
   }
 
   .noc-not-loggedin {
@@ -21,7 +21,6 @@
     //min-height: 35px;
     background-color: rgb(229, 194, 194);
     font-size: 12px;
-
   }
 
   .noc-cam-heading {
@@ -30,7 +29,7 @@
     @include deep-height(40px);
     width: 100%;
     //min-height: 35px;
-    background-color: #FFF;
+    background-color: #fff;
     font-size: 12px;
 
     @include mat-elevation(2);
@@ -68,7 +67,6 @@
       border-radius: 0 !important;
     }
   }
-
 
   mat-chip {
     font-size: 12px;
@@ -122,16 +120,15 @@
           color: #222;
           background-color: rgba(#000000, 0.2);
         }
-
       }
 
-      @include noc-chip-color(#DDD);
+      @include noc-chip-color(#ddd);
 
       &.noc-user-chip {
         @include noc-chip-color(#bbc9cc);
 
         .noc-icon {
-          color: #59939e
+          color: #59939e;
         }
       }
 
@@ -155,37 +152,32 @@
           // border: #d59f80 solid 1px;/
         }
       }
-
     }
   }
 
   .noc-sidemenu {
     padding: 0;
-    margin-right: 5px;
     @include deep-height(100%);
     @include deep-width(60px);
-    @include mat-elevation(2);
+    // @include mat-elevation(2);
     border-right: #999 solid 1px;
 
     button {
       @include deep-width(60px);
       @include deep-height(60px);
 
-      mat-icon {
-        @include noc-icon-size(28px);
-        color: $noc-primary-color-light;
-      }
+      font-size: 20px;
+      color: rgba(map-get($primary, default), 0.5);
 
       &.noc-active {
-        mat-icon {
-          color: #555;
-        }
+        font-size: 28px;
+        color: map-get($primary, default);
       }
     }
   }
 
   .noc-form-container {
-    background-color: #EEE;
+    background-color: #eee;
     padding: 20px 10px;
   }
 
@@ -193,8 +185,8 @@
     padding: 0px 20px;
     height: 40px;
     width: 100%;
-    background-color: #F2F2F2;
-    border-bottom: #BBB solid 1px;
+    background-color: #f2f2f2;
+    border-bottom: #bbb solid 1px;
 
     .noc-title {
       line-height: 38px;
@@ -206,14 +198,14 @@
 
   .noc-left-drawer {
     @include deep-height(100%);
-    background-color: #FFF;
-    border-right: #BBB solid 1px;
+    background-color: #fff;
+    border-right: #bbb solid 1px;
     @include mat-elevation(4);
   }
 
   .noc-right-drawer {
     @include deep-height(100%);
-    background-color: #FFF;
-    border-left: #BBB solid 1px;
+    background-color: #fff;
+    border-left: #bbb solid 1px;
   }
 }

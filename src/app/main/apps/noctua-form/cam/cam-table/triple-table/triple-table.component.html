@@ -38,7 +38,7 @@
   </div>
   <div class="w-100-p noc-cam-table-body">
     <div *ngFor="let activity of cam.activities" [attr.id]="activity.displayId" class="w-100-p"
-      [ngClass]="{'noc-selected': activity.displayId===camsService.currentMatch?.activityDisplayId}">
+      [ngClass]="{'noc-selected': activity.displayId===camService.currentMatch?.activityDisplayId}">
 
 
     </div>

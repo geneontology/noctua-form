@@ -1,0 +1,50 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" class="noc-drawer h-100-p">
+  <div class="noc-drawer-header" fxLayout="column" fxLayoutAlign="start stretch">
+    <div class="noc-header w-100-p" fxLayout="row" fxLayoutAlign="start center">
+      <span class="noc-drawer-header-title">
+        Find and Replace</span>
+      <span fxFlex></span>
+      <button mat-stroked-button (click)="close()" class="noc-rounded-button noc-sm" color="primary"
+        aria-label="Close dialog">
+        <mat-icon>close</mat-icon> CLOSE
+      </button>
+    </div>
+    <noc-review-form class="pt-4 px-12"></noc-review-form>
+  </div>
+  <div class="noc-drawer-body" noctuaPerfectScrollbar>
+    <div *ngIf="!noctuaUserService.user" class="noc-draw-body-disabled" fxLayoutAlign="center center">
+      Log in to Continue
+    </div>
+    <div *ngIf="summary?.stats.totalChanges>0" class="noc-stats-results" fxLayout="column" fxLayoutAlign="start center">
+      <div class="noc-stat-summary">
+        <span class="noc-number">
+          {{summary?.stats.totalChanges }}
+        </span>
+        changes on this model
+      </div>
+      <table fxFlex="1 1 auto" mat-table class="noc-summary-table" [dataSource]="stats">
+        <ng-container matColumnDef="category">
+          <th mat-header-cell *matHeaderCellDef fxFlex="200px" fxLayout="row" fxLayoutAlign="start center">
+            Category
+          </th>
+          <td mat-cell *matCellDef="let stat" fxFlex="200px" class="noc-title" fxLayout="row"
+            fxLayoutAlign="start center">
+            {{stat.category }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="count">
+          <th mat-header-cell *matHeaderCellDef fxFlex="" fxLayout="row" fxLayoutAlign="start center">Changes</th>
+          <td mat-cell *matCellDef="let stat" fxFlex="" fxLayout="row" fxLayoutAlign="start center">
+            {{stat.count}}
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row (click)="$event.stopPropagation()" *matRowDef="let stat; columns: displayedColumns;">
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start center" class="noc-drawer-footer noc-submit-row">
+
+  </div>
+</div>

@@ -5,7 +5,7 @@ import {
   NoctuaFormConfigService,
   NoctuaFormMenuService,
   NoctuaActivityFormService,
-  CamsService,
+
   CamService
 } from 'noctua-form-base';
 import { noctuaAnimations } from '@noctua/animations';
@@ -37,7 +37,7 @@ export class GraphSettingsDialogComponent implements OnInit, OnDestroy {
   constructor(
     private _matDialogRef: MatDialogRef<GraphSettingsDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private _data: any,
-    public camsService: CamsService,
+
     public camService: CamService,
     private noctuaCommonMenuService: NoctuaCommonMenuService,
     public noctuaUserService: NoctuaUserService,

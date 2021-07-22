@@ -16,7 +16,7 @@
       Log in to Continue
     </div>
     <div *ngFor="let cam of cams" id="{{'noc-basket-'+cam.displayId}}" (click)="selectItem(cam)" class="noc-group-row"
-      [ngClass]="{'noc-selected': cam.id===camsService.currentMatch?.modelId}" fxLayout="column"
+      [ngClass]="{'noc-selected': cam.id===camService.currentMatch?.modelId}" fxLayout="column"
       fxLayoutAlign="start stretch">
       <mat-progress-bar *ngIf="cam.loading.status" class="noc-cam-progress" [color]="loadingSpinner.color"
         [mode]="loadingSpinner.mode">

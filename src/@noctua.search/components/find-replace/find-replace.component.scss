@@ -1,0 +1,213 @@
+@import "src/@noctua/scss/noctua";
+@import "src/@noctua.common/scss/noctua.common";
+
+$primary: map-get($theme, primary);
+$accent: map-get($theme, accent);
+
+:host {
+  width: 100%;
+  background-color: white;
+  @include mat-elevation(4);
+
+  .noc-cam-progress {
+    position: absolute;
+    top: 0;
+    height: 5px;
+    right: 0;
+    left: 0;
+    z-index: 1000;
+  }
+
+  .noc-drawer {
+    @include deep-width(380px);
+
+    .noc-drawer-header {
+      padding: 0;
+      @include deep-height(280px);
+      background-color: #fff;
+      @include mat-elevation(2);
+      z-index: 1000;
+
+      .noc-header {
+        padding: 0 12px;
+        @include deep-height(40px);
+        border-bottom: #bbb solid 1px;
+        @include mat-elevation(2);
+        background-color: #fff;
+      }
+
+      .noc-drawer-header-title {
+        font-size: 14px;
+        font-weight: bold;
+      }
+    }
+
+    .noc-drawer-body {
+      padding: 24px 8 100px 0;
+      min-height: calc(100% - 330px);
+    }
+  }
+
+  .noc-group-row {
+    position: relative;
+    min-height: 40px;
+    max-height: 500px;
+    border-bottom: #ccc solid 1px;
+    font-size: 12px;
+    @include mat-elevation(1);
+
+    .noc-modified-header {
+      padding: 0 12px;
+      @include deep-height(30px);
+      font-size: 12px;
+      background-color: $noc-highlight-color;
+      border-bottom: darken($noc-highlight-color, 20%) solid 1px;
+
+      .noc-title {
+        font-weight: bold;
+        margin-right: 8px;
+      }
+
+      .noc-action-button {
+        // @include deep-height(30px);
+      }
+    }
+
+    .noc-item-body {
+      padding: 12px 10px;
+    }
+
+    .noc-name {
+      font-size: 14px;
+    }
+
+    .noc-item {
+      @include deep-width(100%);
+      font-size: 12px;
+
+      .noc-title {
+        font-weight: bold;
+        margin-right: 8px;
+        color: #999;
+      }
+    }
+
+    .noc-cams-number {
+      padding: 2px 5px;
+      @include deep-height(20px);
+      background-color: #ddd;
+      font-size: 10px;
+      border-radius: 25%;
+    }
+
+    .noc-edit-button {
+      background-color: #ffffff;
+      color: map-get($primary, default);
+      border: rgba(map-get($primary, default), 0.5) solid 1px;
+      @include mat-elevation(1);
+    }
+
+    .noc-more-details-button {
+      padding: 8px 0;
+      cursor: pointer;
+    }
+
+    .noc-remove-button {
+      height: 30px;
+      width: 30px;
+    }
+
+    &:hover {
+      background-color: #f2f2f2;
+    }
+
+    &.noc-selected {
+      background-color: $noc-highlight-model-color;
+    }
+  }
+
+  .noc-body {
+    padding: 0 14px 14px 14px;
+  }
+  .noc-summary-bar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 101px;
+    margin-bottom: 4px;
+    padding: 0 10px 0 20px;
+    @include deep-height(40px);
+    //  min-height: 40px; //min-height: 35px;
+    background-color: #fff;
+    font-size: 16px;
+    overflow: hidden;
+    z-index: 10;
+
+    @include mat-elevation(2);
+
+    .noc-art-tools {
+      //background-color: ;
+      margin-right: 16px;
+    }
+
+    .noc-pagesize-select {
+      width: 50px;
+    }
+
+    mat-chip {
+      font-size: 14px;
+      font-weight: normal;
+      @include deep-height(30px);
+    }
+  }
+
+  .noc-stats-results {
+    padding: 20px 10px 300px 10px;
+
+    .noc-stat-summary {
+      padding: 12px 0;
+      font-size: 16px;
+
+      .noc-number {
+        font-weight: bold;
+      }
+    }
+  }
+
+  .noc-summary-table {
+    @include deep-width(100%);
+
+    .noc-column-flex {
+      min-width: 100px !important;
+    }
+
+    .mat-cell {
+      padding: 0 5px;
+      font-size: 12px !important;
+      color: #000;
+      border-right: #aaa solid 1px;
+      position: relative;
+      overflow-wrap: break-word;
+
+      .noc-edit-button {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      }
+    }
+
+    .mat-header-cell {
+      padding: 0 10px;
+      font-size: 10px !important;
+      //color: #0F0; // map-get($primary, default);
+      font-weight: bold;
+      color: map-get($primary, default);
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .mat-header-row {
+      @include deep-height(30px);
+      border-bottom: $noc-primary-color-light solid 1px;
+    }
+  }
+}

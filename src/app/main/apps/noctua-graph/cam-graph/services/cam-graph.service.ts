@@ -6,7 +6,7 @@ import { CamCanvas } from '../models/cam-canvas';
 import { CamStencil } from '../models/cam-stencil';
 import { NoctuaCommonMenuService } from '@noctua.common/services/noctua-common-menu.service';
 import { NoctuaDataService } from '@noctua.common/services/noctua-data.service';
-import { Activity, Cam, CamService, CamsService, ConnectorPanel, FormType, NoctuaActivityConnectorService, NoctuaActivityFormService, NoctuaFormConfigService, NoctuaGraphService } from 'noctua-form-base';
+import { Activity, Cam, CamService, ConnectorPanel, FormType, NoctuaActivityConnectorService, NoctuaActivityFormService, NoctuaFormConfigService, NoctuaGraphService } from 'noctua-form-base';
 import { NodeLink, NodeCellList, NoctuaShapesService } from '@noctua.graph/services/shapes.service';
 import { NodeType } from 'scard-graph-ts';
 import { NodeCellType } from '@noctua.graph/models/shapes';
@@ -36,7 +36,6 @@ export class CamGraphService {
 
   constructor(
     private _camService: CamService,
-    private _camsService: CamsService,
     private _noctuaGraphService: NoctuaGraphService,
     private noctuaFormDialogService: NoctuaFormDialogService,
     private noctuaDataService: NoctuaDataService,
@@ -154,7 +153,7 @@ export class CamGraphService {
 
 
     activity.expanded = true;
-    this._camsService.currentMatch.activityDisplayId = activity.displayId;
+    this._camService.currentMatch.activityDisplayId = activity.displayId;
     const q = `#${activity.displayId}`;
 
     this.noctuaCommonMenuService.scrollTo(q);

@@ -194,12 +194,24 @@
       </td>
     </ng-container>
     <ng-container matColumnDef="export">
-      <th mat-header-cell *matHeaderCellDef fxFlex="115px" fxLayout="row" fxLayoutAlign="start center">Export</th>
+      <th mat-header-cell *matHeaderCellDef fxFlex="115px" fxLayout="row" fxLayoutAlign="start center"></th>
       <td mat-cell *matCellDef="let cam" fxFlex="115px" fxLayout="row" fxLayoutAlign="start center">
-        <button mat-stroked-button [matMenuTriggerFor]="exportMenu" class="noc-edit-button noc-rounded-button noc-sm"
+        <button mat-stroked-button [matMenuTriggerFor]="optionsMenu" class="noc-edit-button noc-rounded-button noc-sm"
           color="primary">
-          EXPORT AS
+          <mat-icon>more_horiz</mat-icon>
         </button>
+        <mat-menu #optionsMenu="matMenu">
+          <button mat-menu-item (click)="openCamForm(cam)" class="">
+            Model Info
+          </button>
+          <!--   <button mat-menu-item (click)="openDuplicateCamForm(cam)" class="">
+            Duplicate Model
+          </button> -->
+          <button mat-menu-item [matMenuTriggerFor]="exportMenu" class="">
+            Export As
+          </button>
+        </mat-menu>
+
         <mat-menu #exportMenu="matMenu">
           <a [href]='cam?.model?.modelInfo?.gpadUrl' target="_blank" mat-menu-item>
             GPAD

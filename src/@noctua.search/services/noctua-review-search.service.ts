@@ -8,7 +8,7 @@ import { map, finalize, switchMap, mergeMap } from 'rxjs/operators';
 import {
     Cam,
     Entity,
-    CamsService,
+
     CamQueryMatch,
     NoctuaUserService,
     NoctuaGraphService,
@@ -16,6 +16,7 @@ import {
     CamService,
     CamLoadingIndicator,
     _compareEntityWeight,
+    ReloadType,
 } from 'noctua-form-base';
 import { SearchCriteria } from './../models/search-criteria';
 import { saveAs } from 'file-saver';
@@ -28,11 +29,8 @@ import { NoctuaSearchMenuService } from './search-menu.service';
 import { NoctuaSearchService } from './noctua-search.service';
 import { LeftPanel, MiddlePanel } from './../models/menu-panels';
 import { NoctuaConfirmDialogService } from '@noctua/components/confirm-dialog/confirm-dialog.service';
-import { ReloadType } from './../models/review-mode';
 
-declare const require: any;
 
-const model = require('bbop-graph-noctua');
 
 @Injectable({
     providedIn: 'root'
@@ -74,7 +72,7 @@ export class NoctuaReviewSearchService {
         private confirmDialogService: NoctuaConfirmDialogService,
         private httpClient: HttpClient,
         private camService: CamService,
-        private camsService: CamsService,
+
         private curieService: CurieService) {
         const self = this;
 
@@ -94,14 +92,14 @@ export class NoctuaReviewSearchService {
                 return;
             }
 
-            self.camsService.resetMatch();
+            self.camService.resetMatch();
 
             if (searchCriteria.ids.length > 0) {
                 self.getCams(searchCriteria).subscribe(() => {
                     // self.cams = response;
                     self.matchedCountCursor = 0;
                     self.calculateMatched();
-                    self.camsService.applyMatchWeights(self.camsService.cams);
+                    self.camService.applyMatchWeights(self.camService.cams);
                     self.sortMatched();
                     self.goto(0);
                 });
@@ -110,7 +108,7 @@ export class NoctuaReviewSearchService {
             }
         });
 
-        this.camsService.onCamsChanged
+        this.camService.onCamsChanged
             .subscribe((cams: Cam[]) => {
                 if (!cams) {
                     return;
@@ -135,8 +133,8 @@ export class NoctuaReviewSearchService {
 
         if (artBasket) {
             this.artBasket = new ArtBasket(JSON.parse(artBasket));
-            this.camsService.cams = [];
-            this.addCamsToReview(this.artBasket.cams, this.camsService.cams);
+            this.camService.cams = [];
+            this.addCamsToReview(this.artBasket.cams, this.camService.cams);
             this.onArtBasketChanged.next(this.artBasket);
         }
     }
@@ -148,7 +146,7 @@ export class NoctuaReviewSearchService {
                 return;
             }
 
-            self.updateStoredCams([cam], self.camsService.cams);
+            self.updateStoredCams([cam], self.camService.cams);
         })
     }
 
@@ -186,13 +184,13 @@ export class NoctuaReviewSearchService {
                 return from(promises);
             }),
             mergeMap((cam: Cam) => {
-                return self.camsService.getStoredModel(cam);
+                return self.camService.getStoredModel(cam);
             }),
             finalize(() => {
-                self.camsService.sortCams();
-                self.camsService.updateDisplayNumber(cams);
-                self.camsService.onCamsChanged.next(cams);
-                //self.camsService.resetLoading(cams);
+                self.camService.sortCams();
+                self.camService.updateDisplayNumber(cams);
+                self.camService.onCamsChanged.next(cams);
+                //self.camService.resetLoading(cams);
             })).subscribe({
                 next: (response) => {
                     if (!response || !response.storedModel || !response.activeModel) return;
@@ -202,23 +200,23 @@ export class NoctuaReviewSearchService {
                     if (!cam) return;
 
                     self._noctuaGraphService.rebuildFromStoredApi(cam, response.activeModel);
-                    self.populateStoredModel(cam, response.storedModel)
+                    self.camService.populateStoredModel(cam, response.storedModel)
                     cam.loading.status = false;
-                    self.camsService.sortCams();
-                    self.camsService.updateDisplayNumber(cams);
-                    self.camsService.onCamsChanged.next(cams);
+                    self.camService.sortCams();
+                    self.camService.updateDisplayNumber(cams);
+                    self.camService.onCamsChanged.next(cams);
                     self.updateSearch();
                 },
             })
     }
 
     removeCamFromReview(cam: Cam) {
-        remove(this.camsService.cams, { id: cam.id });
+        remove(this.camService.cams, { id: cam.id });
         this.updateSearch();
         this.artBasket.removeCamFromBasket(cam.id);
         localStorage.setItem('artBasket', JSON.stringify(this.artBasket));
-        this.camsService.updateDisplayNumber(this.camsService.cams);
-        this.camsService.onCamsChanged.next(this.camsService.cams);
+        this.camService.updateDisplayNumber(this.camService.cams);
+        this.camService.onCamsChanged.next(this.camService.cams);
         this.onArtBasketChanged.next(this.artBasket);
     }
 
@@ -236,27 +234,27 @@ export class NoctuaReviewSearchService {
 
                 if (reloadType === ReloadType.RESET) {
                     cam.loading = new CamLoadingIndicator(true, 'Resetting Model ...');
-                    return self.camsService.resetCams([cam]);
+                    return self.camService.resetCams([cam]);
                 } else if (reloadType === ReloadType.STORE) {
                     cam.loading = new CamLoadingIndicator(true, 'Saving Model ...');
-                    return self.camsService.storeCams([cam]);
+                    return self.camService.storeCams([cam]);
                 } else {
                     return EMPTY;
                 }
             }),
             finalize(() => {
-                self.camsService.updateDisplayNumber(reviewCams);
-                self.camsService.onCamsChanged.next(reviewCams);
-                self.camsService.resetLoading(cams);
+                self.camService.updateDisplayNumber(reviewCams);
+                self.camService.onCamsChanged.next(reviewCams);
+                self.camService.resetLoading(cams);
                 self._noctuaSearchService.updateSearch();
                 self.onReplaceChanged.next(true);
 
                 self.updateSearch();
 
                 self.zone.run(() => {
-                    self.camsService.resetLoading(reviewCams);
+                    self.camService.resetLoading(reviewCams);
                     self.confirmDialogService.openInfoToast('Changes successfully saved.', 'OK');
-                    self.camsService.reviewChanges();
+                    self.camService.reviewChangesCams();
 
                     if (reset) {
                         self.confirmAfterSave();
@@ -272,10 +270,10 @@ export class NoctuaReviewSearchService {
                     if (!cam) return;
 
                     //self._noctuaGraphService.rebuild(cam, response);
-                    self.populateStoredModel(cam, response.data())
+                    self.camService.populateStoredModel(cam, response.data())
                     cam.loading.status = false;
-                    self.camsService.updateDisplayNumber(reviewCams);
-                    self.camsService.onCamsChanged.next(reviewCams);
+                    self.camService.updateDisplayNumber(reviewCams);
+                    self.camService.onCamsChanged.next(reviewCams);
                     self.updateSearch();
                 }
             })
@@ -307,7 +305,7 @@ export class NoctuaReviewSearchService {
             mergeMap((cam: Cam) => {
                 const reviewCam = find(reviewCams, { id: cam.id });
                 reviewCam.loading = new CamLoadingIndicator(true, 'Reloading Model ...');
-                return self.camsService.getStoredModel(cam);
+                return self.camService.getStoredModel(cam);
             }),
             finalize(() => {
 
@@ -320,11 +318,11 @@ export class NoctuaReviewSearchService {
                     if (!cam) return;
                     cam.rebuildRule.reset();
                     self._noctuaGraphService.rebuildFromStoredApi(cam, response.activeModel);
-                    self.populateStoredModel(cam, response.storedModel)
+                    self.camService.populateStoredModel(cam, response.storedModel)
                     cam.loading.status = false;
-                    self.camsService.sortCams();
-                    self.camsService.updateDisplayNumber(reviewCams);
-                    self.camsService.onCamsChanged.next(reviewCams);
+                    self.camService.sortCams();
+                    self.camService.updateDisplayNumber(reviewCams);
+                    self.camService.onCamsChanged.next(reviewCams);
                     self.updateSearch();
 
                 }
@@ -339,7 +337,7 @@ export class NoctuaReviewSearchService {
                 self.noctuaSearchMenuService.selectMiddlePanel(MiddlePanel.cams);
                 self.noctuaSearchMenuService.selectLeftPanel(LeftPanel.filter);
                 self.clear();
-                self.camsService.clearCams();
+                self.camService.clearCams();
                 self.clearBasket();
                 self.onResetReview.next(true);
                 self.noctuaSearchMenuService.scrollToTop();
@@ -356,23 +354,14 @@ export class NoctuaReviewSearchService {
             success, options);
     }
 
-    populateStoredModel(cam: Cam, storedCam) {
-        const self = this;
-        const noctua_graph = model.graph;
 
-        cam.storedGraph = new noctua_graph();
-        cam.storedGraph.load_data_basic(storedCam);
-        cam.storedActivities = self._noctuaGraphService.graphToActivities(cam.storedGraph)
-        cam.checkStored();
-        cam.reviewCamChanges();
-    }
 
     searchCamsByIds(ids: string[]) {
         const self = this;
 
         const searchCriteria = new SearchCriteria();
         searchCriteria.ids = ids;
-        self.camsService.resetMatch();
+        self.camService.resetMatch();
 
         return self._noctuaSearchService.getCams(searchCriteria);
     }
@@ -394,13 +383,11 @@ export class NoctuaReviewSearchService {
             return;
         }
 
-
-
         // so it circulates
         this.matchedCountCursor = (this.matchedCountCursor + 1) % this.matchedCount;
         this.currentMatchedEnity = this.matchedEntities[this.matchedCountCursor];
-        this.camsService.expandMatch(this.currentMatchedEnity.uuid);
-        this.camsService.currentMatch = this.currentMatchedEnity;
+        this.camService.expandMatch(this.currentMatchedEnity.uuid);
+        this.camService.currentMatch = this.currentMatchedEnity;
 
         if (!this.currentMatchedEnity.activityDisplayId && this.matchedCountCursor < this.matchedCount) {
             this.findNext();
@@ -422,8 +409,8 @@ export class NoctuaReviewSearchService {
         }
 
         this.currentMatchedEnity = this.matchedEntities[this.matchedCountCursor];
-        this.camsService.expandMatch(this.currentMatchedEnity.uuid);
-        this.camsService.currentMatch = this.currentMatchedEnity;
+        this.camService.expandMatch(this.currentMatchedEnity.uuid);
+        this.camService.currentMatch = this.currentMatchedEnity;
         this.noctuaSearchMenuService.scrollTo('#' + this.currentMatchedEnity.activityDisplayId);
 
         return this.currentMatchedEnity;
@@ -444,8 +431,8 @@ export class NoctuaReviewSearchService {
 
         this.matchedCountCursor = step;
         this.currentMatchedEnity = this.matchedEntities[this.matchedCountCursor];
-        this.camsService.expandMatch(this.currentMatchedEnity.uuid);
-        this.camsService.currentMatch = this.currentMatchedEnity;
+        this.camService.expandMatch(this.currentMatchedEnity.uuid);
+        this.camService.currentMatch = this.currentMatchedEnity;
         this.noctuaSearchMenuService.scrollTo('#' + this.currentMatchedEnity.activityDisplayId);
 
         return this.currentMatchedEnity;
@@ -456,7 +443,7 @@ export class NoctuaReviewSearchService {
         this.matchedCountCursor = 0;
         this.matchedCount = 0;
         this.currentMatchedEnity = undefined;
-        this.camsService.currentMatch = new Entity(null, null);
+        this.camService.currentMatch = new Entity(null, null);
         this.searchCriteria = new SearchCriteria();
     }
 
@@ -471,7 +458,7 @@ export class NoctuaReviewSearchService {
         if (inIds && inIds.length > 0) {
             this.searchCriteria.ids = inIds
         } else {
-            const ids = this.camsService.cams.map((cam: Cam) => {
+            const ids = this.camService.cams.map((cam: Cam) => {
                 return cam.id;
             });
             this.searchCriteria.ids = ids;
@@ -576,14 +563,14 @@ export class NoctuaReviewSearchService {
         const self = this;
         const result: Array<Cam> = [];
 
-        each(self.camsService.cams, (cam: Cam) => {
+        each(self.camService.cams, (cam: Cam) => {
             return cam.clearHighlight();
         });
 
         res.models.forEach((response) => {
 
             const modelId = response.id;
-            const cam: Cam = find(self.camsService.cams, (inCam: Cam) => {
+            const cam: Cam = find(self.camService.cams, (inCam: Cam) => {
                 return inCam.id === modelId;
             });
 
@@ -628,7 +615,7 @@ export class NoctuaReviewSearchService {
     }
 
     calculateMatchedCountNumber(): number {
-        const matchCount = this.camsService.cams.reduce((total, currentValue) => {
+        const matchCount = this.camService.cams.reduce((total, currentValue) => {
             total += currentValue.matchedCount;
             return total;
         }, 0);
@@ -638,7 +625,7 @@ export class NoctuaReviewSearchService {
 
 
     calculateMatched() {
-        this.matchedEntities = this.camsService.cams.reduce((total: Entity[], currentValue: Cam) => {
+        this.matchedEntities = this.camService.cams.reduce((total: Entity[], currentValue: Cam) => {
             if (currentValue.queryMatch && currentValue.queryMatch.terms) {
                 total.push(...currentValue.queryMatch.terms);
             }
