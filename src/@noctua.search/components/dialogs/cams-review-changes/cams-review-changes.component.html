@@ -44,28 +44,6 @@
         <tr mat-row (click)="$event.stopPropagation()" *matRowDef="let stat; columns: displayedColumns;">
         </tr>
       </table>
-      <!--   <div fxLayout="row" fxLayoutAlign="start center">
-        <div fxFlex="200px">
-          Summary
-        </div>
-        <div fxFlex>
-          Details
-        </div>
-      </div>
-      <div fxLayout="row" fxLayoutAlign="start center">
-        <div fxFlex="200px">
-          Terms
-        </div>
-        <div fxFlex>
-          <div *ngFor="let modelSummary of summary">
-            <div *ngFor="let term of modelSummary.changes?.terms">
-              <div *ngFor="let termHistory of term.termHistory">
-                {{term.label}} -> {{termHistory.label}}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> -->
     </div>
   </div>
   <div *ngIf="!readonlyDialog" class="m-0 p-16 noc-dialog-footer" fxLayout="row" fxLayoutAlign="space-between center">

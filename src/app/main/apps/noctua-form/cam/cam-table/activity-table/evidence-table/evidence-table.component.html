@@ -23,7 +23,7 @@
       fxLayoutAlign="start stretch"
       [ngClass]="{'noc-highlight-match': evidence.referenceEntity?.highlight,
             'noc-highlight-modified': evidence.referenceEntity?.modified,
-            'noc-highlight-match-current': camsService.currentMatch?.uuid && evidence.referenceEntity?.uuid===camsService.currentMatch?.uuid}">
+            'noc-highlight-match-current': camService.currentMatch?.uuid && evidence.referenceEntity?.uuid===camService.currentMatch?.uuid}">
       <span class="noc-old-term"
         *ngIf="evidence.referenceEntity?.modified && evidence.referenceEntity?.termHistory?.length>0">
         <a (click)="$event.stopPropagation()" href="{{evidence.referenceEntity?.termHistory[0]?.url}}" target="_blank">

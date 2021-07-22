@@ -140,6 +140,12 @@
       </div>
     </mat-drawer-content>
     <mat-drawer #rightDrawer class="noc-right-drawer" mode="over" position="end">
+      <div [ngSwitch]="noctuaSearchMenuService.selectedRightPanel" class="h-100-p">
+        <noc-cam-form [panelDrawer]="rightDrawer" *ngSwitchCase="RightPanel.camForm">
+        </noc-cam-form>
+        <noc-duplicate-cam-form [panelDrawer]="rightDrawer" *ngSwitchCase="RightPanel.duplicateCamForm">
+        </noc-duplicate-cam-form>
+      </div>
     </mat-drawer>
   </mat-drawer-container>
 </div>

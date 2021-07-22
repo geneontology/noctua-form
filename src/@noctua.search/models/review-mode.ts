@@ -10,7 +10,3 @@ export enum ArtReplaceCategory {
     reference = 'reference'
 }
 
-export enum ReloadType {
-    RESET = 'reset',
-    STORE = 'store'
-}

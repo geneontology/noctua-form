@@ -5,7 +5,7 @@ import {
   NoctuaFormConfigService,
   NoctuaFormMenuService,
   NoctuaActivityFormService,
-  CamsService,
+
   CamStats
 } from 'noctua-form-base';
 import { takeUntil } from 'rxjs/operators';
@@ -48,7 +48,7 @@ export class CamsReviewChangesDialogComponent implements OnInit, OnDestroy {
   constructor(
     private _matDialogRef: MatDialogRef<CamsReviewChangesDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private _data: any,
-    public camsService: CamsService,
+
     public noctuaReviewSearchService: NoctuaReviewSearchService,
     public noctuaSearchMenuService: NoctuaSearchMenuService,
     public noctuaUserService: NoctuaUserService,

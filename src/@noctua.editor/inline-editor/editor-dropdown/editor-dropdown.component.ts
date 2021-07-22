@@ -8,7 +8,7 @@ import {
   CamService,
   Entity,
   noctuaFormConfig,
-  CamsService,
+
   NoctuaGraphService,
 } from 'noctua-form-base';
 
@@ -60,7 +60,6 @@ export class NoctuaEditorDropdownComponent implements OnInit, OnDestroy {
     @Inject(editorDropdownData) public data: any,
     private noctuaFormDialogService: NoctuaFormDialogService,
     private noctuaGraphService: NoctuaGraphService,
-    private camsService: CamsService,
     private camService: CamService,
     private noctuaActivityEntityService: NoctuaActivityEntityService,
     private inlineReferenceService: InlineReferenceService,
@@ -113,13 +112,13 @@ export class NoctuaEditorDropdownComponent implements OnInit, OnDestroy {
           take(1),
           concatMap((result) => {
             return EMPTY;
-            //return self.camsService.getStoredModel(self.cam)
+            //return self.camService.getStoredModel(self.cam)
           }),
           finalize(() => {
             self.zone.run(() => {
               self.cam.loading.status = false;
               self.cam.reviewCamChanges()
-              //self.camsService.reviewChanges();
+              //self.camService.reviewChangesCams();
             })
           }))
           .subscribe(() => {

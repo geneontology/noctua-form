@@ -7,8 +7,9 @@ import {
   NoctuaFormConfigService,
   NoctuaFormMenuService,
   NoctuaActivityFormService,
-  CamsService,
-  CamStats
+
+  CamStats,
+  CamService
 } from 'noctua-form-base';
 import { takeUntil } from 'rxjs/operators';
 import { noctuaAnimations } from '@noctua/animations';
@@ -42,7 +43,7 @@ export class CamsReviewChangesComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any>;
 
   constructor(
-    public camsService: CamsService,
+    private camService: CamService,
     public noctuaReviewSearchService: NoctuaReviewSearchService,
     public noctuaSearchMenuService: NoctuaSearchMenuService,
     public noctuaUserService: NoctuaUserService,
@@ -52,7 +53,7 @@ export class CamsReviewChangesComponent implements OnInit, OnDestroy {
 
     this._unsubscribeAll = new Subject();
 
-    this.camsService.onCamsCheckoutChanged
+    this.camService.onCamsCheckoutChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(summary => {
         if (!summary) {

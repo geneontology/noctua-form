@@ -6,7 +6,7 @@ import {
   Cam,
   NoctuaUserService,
   NoctuaFormConfigService,
-  CamsService,
+
   CamService
 } from 'noctua-form-base';
 
@@ -36,7 +36,7 @@ export class CamsUnsavedDialogComponent implements OnInit, OnDestroy, AfterViewI
   constructor
     (
       private _matDialogRef: MatDialogRef<CamsUnsavedDialogComponent>,
-      private camsService: CamsService,
+
       private zone: NgZone,
       public camService: CamService,
       public noctuaConfigService: NoctuaFormConfigService,
@@ -53,7 +53,7 @@ export class CamsUnsavedDialogComponent implements OnInit, OnDestroy, AfterViewI
 
   ngOnInit(): void {
 
-    this.camsService.onCamsChanged
+    this.camService.onCamsChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(cams => {
         if (!cams) {
@@ -65,7 +65,7 @@ export class CamsUnsavedDialogComponent implements OnInit, OnDestroy, AfterViewI
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.camsService.onCamsCheckoutChanged
+      this.camService.onCamsCheckoutChanged
         .pipe(takeUntil(this._unsubscribeAll))
         .subscribe(summary => {
           if (!summary) {
@@ -85,7 +85,7 @@ export class CamsUnsavedDialogComponent implements OnInit, OnDestroy, AfterViewI
   reviewChanges() {
     const self = this;
 
-    self.camsService.reviewChanges();
+    self.camService.reviewChangesCams();
     self.noctuaSearchMenuService.selectLeftPanel(LeftPanel.artBasket);
     self.noctuaSearchMenuService.selectMiddlePanel(MiddlePanel.camsReview);
     self.noctuaSearchMenuService.reviewMode = ReviewMode.on;
@@ -95,7 +95,7 @@ export class CamsUnsavedDialogComponent implements OnInit, OnDestroy, AfterViewI
 
   logout() {
     this.noctuaReviewSearchService.clear();
-    this.camsService.clearCams();
+    this.camService.clearCams();
     this.noctuaReviewSearchService.clearBasket();
 
     this._matDialogRef.close(true);

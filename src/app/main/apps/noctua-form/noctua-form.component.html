@@ -1,97 +1,144 @@
-<div class="w-100-p h-100-p" fxLayout="column" fxLayoutAlign="start start">
-  <div *ngIf="!noctuaUserService.user" class="noc-not-loggedin" fxLayout="row" fxLayoutAlign="center center">
-    Not Logged In: You can only view existing annotations
+<div class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
+  <div class="noc-sidemenu" fxLayout="column" fxLayoutAlign="start center">
+    <button mat-icon-button color="" class="noc-rounded-button"
+      [ngClass]="{'noc-active': noctuaFormMenuService.selectedLeftPanel === LeftPanel.activityForm}" color="primary"
+      matTooltip="Add New Activity/Annotation" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500"
+      [matMenuTriggerFor]="createOptionsLeftMenu">
+      <fa-icon [icon]="['fas', 'plus']"></fa-icon>
+    </button>
+    <mat-menu #createOptionsLeftMenu="matMenu" xPosition="before">
+      <a mat-menu-item (click)="openActivityForm(ActivityType.default)">
+        Create Activity
+      </a>
+      <a mat-menu-item (click)="openActivityForm(ActivityType.bpOnly)">
+        Create New BP Annotation
+      </a>
+      <a mat-menu-item (click)="openActivityForm(ActivityType.ccOnly)">
+        Create New CC Annotation
+      </a>
+    </mat-menu>
+    <button mat-icon-button color="" class="noc-rounded-button"
+      [ngClass]="{'noc-active': noctuaFormMenuService.selectedLeftPanel === LeftPanel.camForm}" (click)="openCamForm()"
+      matTooltip="Model Details" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
+      <fa-icon [icon]="['fas', 'info-circle']"></fa-icon>
+    </button>
+    <button mat-icon-button color="" class="noc-rounded-button"
+      [ngClass]="{'noc-active': noctuaFormMenuService.selectedLeftPanel === LeftPanel.findReplace}"
+      (click)="openSearch()" matTooltip="Find and replace" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
+      <fa-icon [icon]="['fas', 'search']"></fa-icon>
+    </button>
+    <!--    <button mat-icon-button color="" class="noc-rounded-button" (click)="openDuplicateCamForm()"
+      [ngClass]="{'noc-active': noctuaFormMenuService.selectedLeftPanel === LeftPanel.duplicateCamForm}"
+      matTooltip="Make a copy of this model" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
+      <fa-icon [icon]="['fas', 'clone']"></fa-icon>
+    </button> -->
   </div>
 
-  <div *ngIf="cam" class="noc-cam-heading" fxFlex="1 1 auto" fxLayout="row" fxLayoutAlign="start center"
-    [@animateStagger]="{value:'50'}">
-    <div class="" fxFlex="180px">
-      <button mat-flat-button (click)="openActivityForm(ActivityType.default)" color="primary"
+  <div class="w-100-p h-100-p" fxLayout="column" fxLayoutAlign="start start">
+    <div *ngIf="!noctuaUserService.user" class="noc-not-loggedin" fxLayout="row" fxLayoutAlign="center center">
+      Not Logged In: You can only view existing annotations
+    </div>
+    <div *ngIf="noctuaUserService.user && cam?.modified && cam?.activities.length>0" class="noc-not-loggedin"
+      fxLayout="row" fxLayoutAlign="center center">
+      <small class="mr-16">Not Saved</small>
+      <button mat-raised-button fxFlex="100px" (click)="resetCam(cam)" color="warn"
         class="noc-rounded-button noc-half-button noc-r noc-sm">
-        <mat-icon class=""> add </mat-icon> Create Activity
+        Reset
       </button>
-      <button mat-flat-button fxFlex="35px" [matMenuTriggerFor]="createOptions" color="primary"
+      <button mat-raised-button fxFlex="100px" color="primary" (click)="storeCam(cam)"
         class="noc-rounded-button noc-half-button noc-l noc-sm mr-8 p-0">
-        <mat-icon class="">arrow_drop_down </mat-icon>
+        Save
       </button>
-      <mat-menu #createOptions="matMenu" xPosition="before">
-        <a mat-menu-item (click)="openActivityForm(ActivityType.bpOnly)">
-          Create New BP Annotation
-        </a>
-        <a mat-menu-item (click)="openActivityForm(ActivityType.ccOnly)">
-          Create New CC Annotation
-        </a>
-      </mat-menu>
     </div>
-    <div *ngIf="cam.title" class="noc-title" fxLayout="row" fxLayoutAlign="start center">
-      <div class="text-truncate pr-8">
-        <strong>Title: </strong>{{cam.title }}
+    <div *ngIf="cam" class="noc-cam-heading" fxFlex="1 1 auto" fxLayout="row" fxLayoutAlign="start center"
+      [@animateStagger]="{value:'50'}">
+      <div class="" fxFlex="180px">
+        <button mat-flat-button (click)="openActivityForm(ActivityType.default)" color="primary"
+          class="noc-rounded-button noc-half-button noc-r noc-sm">
+          <mat-icon class=""> add </mat-icon> Create Activity
+        </button>
+        <button mat-flat-button fxFlex="35px" [matMenuTriggerFor]="createOptions" color="primary"
+          class="noc-rounded-button noc-half-button noc-l noc-sm mr-8 p-0">
+          <mat-icon class="">arrow_drop_down </mat-icon>
+        </button>
+        <mat-menu #createOptions="matMenu" xPosition="before">
+          <a mat-menu-item (click)="openActivityForm(ActivityType.bpOnly)">
+            Create New BP Annotation
+          </a>
+          <a mat-menu-item (click)="openActivityForm(ActivityType.ccOnly)">
+            Create New CC Annotation
+          </a>
+        </mat-menu>
       </div>
-      <div class="noc-icon-action" (click)="openCamForm()">
-        <fa-icon [icon]="['fas', 'pen']"></fa-icon>
-      </div>
-    </div>
-    <div *ngIf="cam.state" class="noc-model-state" fxLayout="row" fxLayoutAlign="start center">
-      <mat-chip class="noc-table-chip noc-state-chip" [ngClass]="{'noc-development': cam.state.name === 'development',
-        'noc-production': cam.state.name === 'production',
-        'noc-review': cam.state.name === 'review'}" fxLayout="row" fxLayoutAlign="start center">
-        <div class="noc-icon">
-          <fa-icon [icon]="['fas', 'tasks']"></fa-icon>
-        </div>
-        <div fxFlex="" class="noc-chip-label">
-          {{cam.state.label}}
+      <div *ngIf="cam.title" class="noc-title" fxLayout="row" fxLayoutAlign="start center">
+        <div class="text-truncate pr-8">
+          <strong>Title: </strong>{{cam.title }}
         </div>
         <div class="noc-icon-action" (click)="openCamForm()">
           <fa-icon [icon]="['fas', 'pen']"></fa-icon>
         </div>
-      </mat-chip>
-    </div>
-    <div *ngIf="cam.date" class="noc-date" fxFlex="100px" fxLayout="row" fxLayoutAlign="start center">
-      <mat-chip class="noc-table-chip noc-date-chip" fxLayout="row" fxLayoutAlign="start center"
-        (click)="openCamForm()">
-        <div class="noc-icon">
-          <fa-icon [icon]="['fas', 'calendar-day']"></fa-icon>
-        </div>
-        <div fxFlex="" class="noc-chip-label">
-          {{cam.date}}
-        </div>
-      </mat-chip>
-    </div>
-    <div fxFlex="" fxLayout="row" fxLayoutAlign="start center">
-      <mat-chip-list>
-        <mat-chip class="noc-table-chip noc-user-chip" fxLayout="row" fxLayoutAlign="start center"
-          *ngFor="let contributor of cam.contributors" (click)="openCamForm()">
+      </div>
+      <div *ngIf="cam.state" class="noc-model-state" fxLayout="row" fxLayoutAlign="start center">
+        <mat-chip class="noc-table-chip noc-state-chip" [ngClass]="{'noc-development': cam.state.name === 'development',
+        'noc-production': cam.state.name === 'production',
+        'noc-review': cam.state.name === 'review'}" fxLayout="row" fxLayoutAlign="start center">
           <div class="noc-icon">
-            <fa-icon [icon]="['fas', 'user']"></fa-icon>
+            <fa-icon [icon]="['fas', 'tasks']"></fa-icon>
           </div>
           <div fxFlex="" class="noc-chip-label">
-            {{contributor.name}}
+            {{cam.state.label}}
+          </div>
+          <div class="noc-icon-action" (click)="openCamForm()">
+            <fa-icon [icon]="['fas', 'pen']"></fa-icon>
           </div>
         </mat-chip>
-      </mat-chip-list>
-    </div>
-    <div fxFlex="50px" fxLayout="row" fxLayoutAlign="start center">
-      <a mat-icon-button [href]='cam?.model?.modelInfo?.graphEditorUrl' target="_blank"
-        class="noc-edit-button noc-rounded-button noc-sm noc-half-button noc-l" matTooltip="Graph Editor"
-        [matTooltipPosition]="'after'" [matTooltipShowDelay]="1000">
-        <fa-icon [icon]="['fas', 'sitemap']"></fa-icon>
-      </a>
-    </div>
-    <div fxFlex="115px" fxLayout="row" fxLayoutAlign="start center">
-      <button mat-stroked-button [matMenuTriggerFor]="exportMenu" class="noc-edit-button noc-rounded-button noc-sm"
-        color="primary">
-        EXPORT AS
-      </button>
-      <mat-menu #exportMenu="matMenu">
-        <a [href]='cam?.model?.modelInfo?.gpadUrl' target="_blank" mat-menu-item>
-          GPAD
+      </div>
+      <div *ngIf="cam.date" class="noc-date" fxFlex="100px" fxLayout="row" fxLayoutAlign="start center">
+        <mat-chip class="noc-table-chip noc-date-chip" fxLayout="row" fxLayoutAlign="start center"
+          (click)="openCamForm()">
+          <div class="noc-icon">
+            <fa-icon [icon]="['fas', 'calendar-day']"></fa-icon>
+          </div>
+          <div fxFlex="" class="noc-chip-label">
+            {{cam.date}}
+          </div>
+        </mat-chip>
+      </div>
+      <div fxFlex="" fxLayout="row" fxLayoutAlign="start center">
+        <mat-chip-list>
+          <mat-chip class="noc-table-chip noc-user-chip" fxLayout="row" fxLayoutAlign="start center"
+            *ngFor="let contributor of cam.contributors" (click)="openCamForm()">
+            <div class="noc-icon">
+              <fa-icon [icon]="['fas', 'user']"></fa-icon>
+            </div>
+            <div fxFlex="" class="noc-chip-label">
+              {{contributor.name}}
+            </div>
+          </mat-chip>
+        </mat-chip-list>
+      </div>
+      <div fxFlex="50px" fxLayout="row" fxLayoutAlign="start center">
+        <a mat-icon-button [href]='cam?.model?.modelInfo?.graphEditorUrl' target="_blank"
+          class="noc-edit-button noc-rounded-button noc-sm noc-half-button noc-l" matTooltip="Graph Editor"
+          [matTooltipPosition]="'after'" [matTooltipShowDelay]="1000">
+          <fa-icon [icon]="['fas', 'sitemap']"></fa-icon>
         </a>
-        <a [href]='cam?.model?.modelInfo?.owlUrl' target="_blank" mat-menu-item>
-          OWL
-        </a>
-      </mat-menu>
-    </div>
-    <!--
+      </div>
+      <div fxFlex="115px" fxLayout="row" fxLayoutAlign="start center">
+        <button mat-stroked-button [matMenuTriggerFor]="exportMenu" class="noc-edit-button noc-rounded-button noc-sm"
+          color="primary">
+          EXPORT AS
+        </button>
+        <mat-menu #exportMenu="matMenu">
+          <a [href]='cam?.model?.modelInfo?.gpadUrl' target="_blank" mat-menu-item>
+            GPAD
+          </a>
+          <a [href]='cam?.model?.modelInfo?.owlUrl' target="_blank" mat-menu-item>
+            OWL
+          </a>
+        </mat-menu>
+      </div>
+      <!--
     <div class="" fxFlex="50px" fxLayout="row" fxLayoutAlign="end center">
     
       <div [ngSwitch]="noctuaFormMenuService.selectedMiddlePanel.id">
@@ -115,29 +162,34 @@
         </mat-icon>
       </button>
     </div> -->
-  </div>
-
-  <mat-drawer-container class="noc-drawer-container w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start"
-    autosize>
-    <mat-drawer #leftDrawer class="noc-left-drawer" mode="side" position="start">
-      <div [ngSwitch]="noctuaFormMenuService.selectedLeftPanel" class="h-100-p">
-        <noc-cam-form [panelDrawer]="leftDrawer" *ngSwitchCase="LeftPanel.camForm">
-        </noc-cam-form>
-        <noc-activity-form [panelDrawer]="leftDrawer" *ngSwitchCase="LeftPanel.activityForm">
-        </noc-activity-form>
-      </div>
-    </mat-drawer>
-    <mat-drawer-content class="w-100-p h-100-p" fxLayout="column" fxLayoutAlign="start stretch">
-      <div [ngSwitch]="noctuaFormMenuService.selectedMiddlePanel" class="w-100-p h-100-p" noctuaPerfectScrollbar>
-        <noc-cam-preview *ngSwitchCase="MiddlePanel.camPreview" [cam]="cam"></noc-cam-preview>
-        <noc-cam-table *ngSwitchCase="MiddlePanel.camTable" [cam]="cam" [options]="tableOptions"></noc-cam-table>
-      </div>
-    </mat-drawer-content>
-    <mat-drawer #rightDrawer class="noc-right-drawer" mode="over" position="end">
-      <!--  <div [ngSwitch]="noctuaFormMenuService.selectedRightPanel?.id" class="h-100-p">
+    </div>
+    <mat-drawer-container class="noc-drawer-container w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start"
+      autosize>
+      <mat-drawer #leftDrawer class="noc-left-drawer" mode="side" position="start">
+        <div [ngSwitch]="noctuaFormMenuService.selectedLeftPanel" class="h-100-p">
+          <noc-cam-form [panelDrawer]="leftDrawer" *ngSwitchCase="LeftPanel.camForm">
+          </noc-cam-form>
+          <noc-duplicate-cam-form [panelDrawer]="leftDrawer" *ngSwitchCase="LeftPanel.duplicateCamForm">
+          </noc-duplicate-cam-form>
+          <noc-activity-form [panelDrawer]="leftDrawer" *ngSwitchCase="LeftPanel.activityForm">
+          </noc-activity-form>
+          <noc-find-replace [panelDrawer]="leftDrawer"
+            [hidden]="noctuaFormMenuService.selectedLeftPanel !== LeftPanel.findReplace">
+          </noc-find-replace>
+        </div>
+      </mat-drawer>
+      <mat-drawer-content class="w-100-p h-100-p" fxLayout="column" fxLayoutAlign="start stretch">
+        <div *ngIf="cam" [ngSwitch]="noctuaFormMenuService.selectedMiddlePanel" class="w-100-p h-100-p"
+          noctuaPerfectScrollbar>
+          <noc-cam-table *ngSwitchCase="MiddlePanel.camTable" [cam]="cam" [options]="tableOptions"></noc-cam-table>
+        </div>
+      </mat-drawer-content>
+      <mat-drawer #rightDrawer class="noc-right-drawer" mode="over" position="end">
+        <!--  <div [ngSwitch]="noctuaFormMenuService.selectedRightPanel?.id" class="h-100-p">
         <noc-activity-connector [panelDrawer]="rightDrawer" *ngSwitchCase="noctuaFormMenuService.panel.connectorForm.id">
         </noc-activity-connector>
       </div> -->
-    </mat-drawer>
-  </mat-drawer-container>
+      </mat-drawer>
+    </mat-drawer-container>
+  </div>
 </div>

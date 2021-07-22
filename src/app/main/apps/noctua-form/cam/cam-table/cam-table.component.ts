@@ -13,7 +13,7 @@ import {
   Activity,
   ActivityType,
   NoctuaUserService,
-  CamsService,
+
   CamRebuildSignal,
   ActivityDisplayType
 } from 'noctua-form-base';
@@ -67,7 +67,6 @@ export class CamTableComponent implements OnInit, OnDestroy {
 
   constructor(
     public camService: CamService,
-    public camsService: CamsService,
     public noctuaCommonMenuService: NoctuaCommonMenuService,
     public noctuaUserService: NoctuaUserService,
     public noctuaFormConfigService: NoctuaFormConfigService,

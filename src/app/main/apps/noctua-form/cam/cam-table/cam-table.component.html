@@ -52,7 +52,7 @@
   </div>
   <div class="w-100-p noc-cam-table-body">
     <div *ngFor="let activity of cam.activities" [attr.id]="activity.displayId" class="w-100-p"
-      [ngClass]="{'noc-selected': activity.displayId===camsService.currentMatch?.activityDisplayId}">
+      [ngClass]="{'noc-selected': activity.displayId===camService.currentMatch?.activityDisplayId}">
 
       <noc-activity-table *ngIf="options.displayType===ActivityDisplayType.TABLE" [options]="options" [cam]="cam"
         [activity]="activity" class="noc-activities-table-body" fxLayout="row" fxLayoutAlign="start center">

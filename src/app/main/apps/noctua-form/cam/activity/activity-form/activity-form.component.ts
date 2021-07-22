@@ -3,8 +3,6 @@ import { FormGroup, FormArray } from '@angular/forms';
 import { MatDrawer } from '@angular/material/sidenav';
 import { Subscription, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
-
 import { NoctuaFormDialogService } from './../../../services/dialog.service';
 import {
   Cam,
@@ -45,6 +43,8 @@ export class ActivityFormComponent implements OnInit, OnDestroy {
   currentActivity: Activity;
   state: ActivityState;
 
+  descriptionLabel = 'Function Description';
+
   private _unsubscribeAll: Subject<any>;
 
   constructor(private camService: CamService,
@@ -72,6 +72,12 @@ export class ActivityFormComponent implements OnInit, OnDestroy {
         this.activity = this.noctuaActivityFormService.activity;
         this.state = this.noctuaActivityFormService.state;
         this.molecularEntity = <FormGroup>this.activityFormGroup.get('molecularEntity');
+
+        if (this.activity.activityType === ActivityType.ccOnly) {
+          this.descriptionLabel = 'Localization Description';
+        } else {
+          this.descriptionLabel = 'Function Description';
+        }
       });
   }
 
@@ -83,7 +89,7 @@ export class ActivityFormComponent implements OnInit, OnDestroy {
   save() {
     const self = this;
 
-    self.noctuaActivityFormService.saveActivity().then(() => {
+    self.noctuaActivityFormService.saveActivity().subscribe(() => {
       self.noctuaFormDialogService.openInfoToast('Activity successfully created.', 'OK');
       self.noctuaActivityFormService.clearForm();
       if (this.closeDialog) {

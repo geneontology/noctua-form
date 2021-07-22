@@ -9,7 +9,7 @@ import {
   NoctuaUserService,
   NoctuaFormConfigService,
   CamService,
-  CamsService,
+
   Activity,
   ActivityDisplayType,
   ActivityType,
@@ -104,7 +104,7 @@ export class NoctuaGraphComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private camService: CamService,
-    public camsService: CamsService,
+
     private graphDialogService: NoctuaGraphDialogService,
     public noctuaActivityFormService: NoctuaActivityFormService,
     public noctuaReviewSearchService: NoctuaReviewSearchService,
