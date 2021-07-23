@@ -27,7 +27,6 @@ import {
   Article,
   noctuaFormConfig
 } from 'noctua-form-base';
-import { SearchCriteria } from '@noctua.search/models/search-criteria';
 import { SparqlMinervaService } from './sparql-minerva.service';
 import { each, find } from 'lodash';
 declare const require: any;
@@ -45,8 +44,8 @@ export class SparqlService {
   curieUtil: any;
   cams: any[] = [];
   loading: boolean = false;
-  onCamsChanged: BehaviorSubject<any>;
-  onCamChanged: BehaviorSubject<any>;
+  //onCamsChanged: BehaviorSubject<any>;
+  //onCamChanged: BehaviorSubject<any>;
   onContributorFilterChanged: BehaviorSubject<any>;
   linker = new amigo.linker();
 
@@ -57,8 +56,8 @@ export class SparqlService {
     private httpClient: HttpClient,
     private sparqlMinervaService: SparqlMinervaService,
     private curieService: CurieService) {
-    this.onCamsChanged = new BehaviorSubject({});
-    this.onCamChanged = new BehaviorSubject({});
+    // this.onCamsChanged = new BehaviorSubject({});
+    //  this.onCamChanged = new BehaviorSubject({});
     this.curieUtil = this.curieService.getCurieUtil();
   }
 
@@ -103,31 +102,6 @@ export class SparqlService {
 
     return result;
   }
-
-  getCams(searchCriteria): Observable<any> {
-    const self = this;
-
-    const query = this.buildCamsQuery(searchCriteria)
-    const url = `${this.baseUrl}?query=${encodeURIComponent(query)}`
-
-    self.loading = true;
-
-    this.sparqlMinervaService.foo(query);
-
-    return this.httpClient
-      .get(url)
-      .pipe(
-        map(res => res['results']),
-        map(res => res['bindings']),
-        tap(val => console.dir(val)),
-        map(res => this.addCam(res)),
-        tap(val => console.dir(val)),
-        finalize(() => {
-          self.loading = false;
-        })
-      );
-  }
-
 
   getAllContributors(): Observable<any> {
     const query = this.buildAllContributorsQuery();
@@ -340,41 +314,7 @@ export class SparqlService {
 
   // BUILDER
 
-  buildCamsQuery(searchCriteria: SearchCriteria) {
-    const query = new NoctuaQuery();
 
-    each(searchCriteria.goterms, (goterm) => {
-      query.goterm(goterm.id)
-    });
-
-    each(searchCriteria.groups, (group: Group) => {
-      query.group(this.getXSD(group.url));
-    });
-
-    each(searchCriteria.contributors, (contributor: Contributor) => {
-      query.contributor(this.getXSD(contributor.orcid));
-    });
-
-    each(searchCriteria.gps, (gp) => {
-      query.gp(this.curieUtil.getIri(gp.id));
-    });
-
-    each(searchCriteria.pmids, (pmid) => {
-      query.pmid(pmid);
-    });
-
-    each(searchCriteria.organisms, (organism: Organism) => {
-      query.taxon(organism.taxonIri);
-    });
-
-    each(searchCriteria.states, (state: any) => {
-      query.state(this.getXSD(state.name));
-    });
-
-    query.limit(50);
-
-    return query.build();
-  }
 
   buildAllContributorsQuery() {
     const query = new Query();

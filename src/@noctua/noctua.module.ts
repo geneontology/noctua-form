@@ -3,7 +3,6 @@ import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core
 import { NOCTUA_CONFIG, NoctuaConfigService } from './services/config.service';
 import { NoctuaMatchMediaService } from './services/match-media.service';
 import { NoctuaSplashScreenService } from './services/splash-screen.service';
-import { NoctuaTranslationLoaderService } from './services/translation-loader.service';
 
 @NgModule({
     entryComponents: [],
@@ -11,7 +10,6 @@ import { NoctuaTranslationLoaderService } from './services/translation-loader.se
         NoctuaConfigService,
         NoctuaMatchMediaService,
         NoctuaSplashScreenService,
-        NoctuaTranslationLoaderService
     ]
 })
 export class NoctuaModule {
@@ -21,7 +19,7 @@ export class NoctuaModule {
         }
     }
 
-    static forRoot(config): ModuleWithProviders {
+    static forRoot(config): ModuleWithProviders<NoctuaModule> {
         return {
             ngModule: NoctuaModule,
             providers: [

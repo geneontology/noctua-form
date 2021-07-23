@@ -21,6 +21,15 @@ $noc-secondary-color: #995014;
   @include deep-height($number);
 }
 
+@mixin noc-chip-color($color) {
+  border: $color solid 1px !important;
+  background-color: rgba($color, 0.2) !important;
+
+  .noc-icon {
+    background-color: $color !important;
+  }
+}
+
 mat-chip {
   &.noc-chip-sm {
     @include deep-height(25px);
@@ -38,14 +47,30 @@ mat-chip {
   visibility: hidden
 }
 
+.noc-select-evidence-dialog {
+  @include deep-width(1100px);
+
+  @include media-breakpoint('lt-lg') {
+    @include deep-width(90%);
+  }
+}
+
 .noc-search-database-dialog {
   @include deep-height(90%);
   @include deep-width(1100px);
+
+  @include media-breakpoint('lt-lg') {
+    @include deep-width(90%);
+  }
 }
 
 .noc-preview-annoton-dialog {
   @include deep-height(90%);
-  @include deep-width(1000px);
+  @include deep-width(1100px);
+
+  @include media-breakpoint('lt-lg') {
+    @include deep-width(90%);
+  }
 }
 
 textarea {

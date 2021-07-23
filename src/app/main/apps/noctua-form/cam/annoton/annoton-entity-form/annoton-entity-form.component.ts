@@ -1,22 +1,23 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 
 import { FormBuilder, FormControl, FormGroup, FormArray } from '@angular/forms';
-import { MatDrawer } from '@angular/material';
+import { MatDrawer } from '@angular/material/sidenav';
 import { Subscription, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 
-import * as _ from 'lodash';
 
 
 
-import { NoctuaFormService } from '../../../services/noctua-form.service';
+
+
 import { CamTableService } from './../../cam-table/services/cam-table.service';
 import {
   NoctuaFormConfigService,
   NoctuaAnnotonFormService,
   NoctuaAnnotonEntityService,
-  CamService
+  CamService,
+  NoctuaFormMenuService
 } from 'noctua-form-base';
 
 import { Cam } from 'noctua-form-base';
@@ -53,7 +54,7 @@ export class AnnotonEntityFormComponent implements OnInit, OnDestroy {
     private noctuaFormDialogService: NoctuaFormDialogService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     public noctuaAnnotonFormService: NoctuaAnnotonFormService,
-    public noctuaFormService: NoctuaFormService,
+    public noctuaFormMenuService: NoctuaFormMenuService,
   ) {
     this._unsubscribeAll = new Subject();
   }
@@ -67,7 +68,6 @@ export class AnnotonEntityFormComponent implements OnInit, OnDestroy {
         this.annoton = this.noctuaAnnotonEntityService.annoton;
         this.termNode = this.noctuaAnnotonEntityService.entity;
 
-        console.log(this.termNode)
       });
 
     this.camService.onCamChanged.subscribe((cam) => {
@@ -81,12 +81,12 @@ export class AnnotonEntityFormComponent implements OnInit, OnDestroy {
     });
   }
 
-  termDisplayFn(evidence): string | undefined {
-    return evidence ? evidence.label : undefined;
+  termDisplayFn(term): string | undefined {
+    return term && term.id ? `${term.label} (${term.id})` : undefined;
   }
 
   evidenceDisplayFn(evidence): string | undefined {
-    return evidence ? evidence.label : undefined;
+    return evidence && evidence.id ? `${evidence.label} (${evidence.id})` : undefined;
   }
 
   checkErrors() {
@@ -101,7 +101,7 @@ export class AnnotonEntityFormComponent implements OnInit, OnDestroy {
     self.noctuaAnnotonEntityService.annotonEntityFormToAnnoton();
 
     //this.noctuaGraphService.edit(this.camService.cam, self.noctuaAnnotonEntityService.termNode).then((data) => {
-    //  localStorage.setItem('barista_token', value);  
+    //  localStorage.setItem('baristaToken', value);  
     //    self.noctuaFormDialogService.openSuccessfulSaveToast('Activity successfully edited.', 'OK');
     //  });
   }

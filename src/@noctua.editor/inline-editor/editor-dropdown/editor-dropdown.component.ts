@@ -8,7 +8,6 @@ import {
   CamService,
   Entity,
   noctuaFormConfig,
-  InsertEntityDefinition
 } from 'noctua-form-base';
 
 import { Cam } from 'noctua-form-base';
@@ -41,12 +40,12 @@ export class NoctuaEditorDropdownComponent implements OnInit, OnDestroy {
   entityFormGroup: FormGroup;
   evidenceFormGroup: FormGroup;
   entityFormSub: Subscription;
-
   termNode: AnnotonNode;
 
   private _unsubscribeAll: Subject<any>;
 
   displaySection = {
+    relationship: false,
     term: false,
     evidence: false,
     reference: false,
@@ -83,7 +82,6 @@ export class NoctuaEditorDropdownComponent implements OnInit, OnDestroy {
         const evidenceFormArray = entityFormGroup.get('evidenceFormArray') as FormArray;
         this.entityFormGroup = entityFormGroup;
         this.evidenceFormGroup = evidenceFormArray.at(this.evidenceIndex) as FormGroup;
-        console.log(this.evidenceFormGroup);
       });
   }
 
@@ -200,16 +198,22 @@ export class NoctuaEditorDropdownComponent implements OnInit, OnDestroy {
 
 
   termDisplayFn(term): string | undefined {
-    return term ? term.label : undefined;
+    return term && term.id ? `${term.label} (${term.id})` : undefined;
   }
 
   evidenceDisplayFn(evidence): string | undefined {
-    return evidence ? evidence.label : undefined;
+    return evidence && evidence.id ? `${evidence.label} (${evidence.id})` : undefined;
   }
 
+  compareEntity(a: any, b: any) {
+    return (a.id === b.id);
+  }
 
   private _displaySection(category: EditorCategory) {
     switch (category) {
+      case EditorCategory.relationship:
+        this.displaySection.relationship = true;
+        break;
       case EditorCategory.term:
         this.displaySection.term = true;
         break;

@@ -3,10 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
 import { ContextMenuModule } from 'ngx-contextmenu';
-import 'hammerjs';
-import { MatSidenavModule } from '@angular/material';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { NoctuaModule } from '@noctua/noctua.module';
 import { NoctuaProgressBarModule } from '@noctua/components';
 
@@ -17,6 +15,18 @@ import { LayoutModule } from 'app/layout/layout.module';
 
 import { PagesModule } from './main/pages/pages.module';
 import { AppsModule } from './main/apps/apps.module';
+import {
+    faPen,
+    faSitemap,
+    faUser,
+    faUsers,
+    faCalendarDay,
+    faCalendarWeek,
+    faTasks,
+    faListAlt,
+} from '@fortawesome/free-solid-svg-icons';
+import { faGithub, faFacebook, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 
 const appRoutes: Routes = [
     {
@@ -35,7 +45,6 @@ const appRoutes: Routes = [
         HttpClientModule,
         HttpClientJsonpModule,
         RouterModule.forRoot(appRoutes),
-        TranslateModule.forRoot(),
 
         // Noctua Main and Shared modules
         NoctuaModule.forRoot(noctuaConfig),
@@ -46,6 +55,9 @@ const appRoutes: Routes = [
         MatSidenavModule,
         NoctuaProgressBarModule,
 
+        //Material 
+        MatSidenavModule,
+
         //Noctua App
         PagesModule,
         AppsModule
@@ -54,5 +66,21 @@ const appRoutes: Routes = [
         AppComponent
     ]
 })
+
 export class AppModule {
+    constructor(library: FaIconLibrary) {
+        library.addIcons(
+            faCalendarDay,
+            faCalendarWeek,
+            faFacebook,
+            faGithub,
+            faListAlt,
+            faPen,
+            faSitemap,
+            faTasks,
+            faTwitter,
+            faUser,
+            faUsers,
+        );
+    }
 }

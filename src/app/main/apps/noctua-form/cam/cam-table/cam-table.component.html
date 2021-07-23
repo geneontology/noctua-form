@@ -24,6 +24,13 @@
       fxLayout="row" fxLayoutAlign="start center">
     </noc-triple-table>
     <ng-container *ngSwitchDefault>
+      <div *ngIf="cam?.loading.status" class="noc-loading-container" fxLayout="column" fxLayoutAlign="center center">
+        <mat-progress-spinner class="example-margin" [color]="loadingSpinner.color" [mode]="loadingSpinner.mode">
+        </mat-progress-spinner>
+        <h3>
+          {{cam?.loading.message}}
+        </h3>
+      </div>
       <div *ngFor="let annoton of cam.annotons" class="w-100-p"
         [ngClass]="{'noc-annoton-selected': annoton.id=== camService.annoton?.id}">
         <div class="noc-annoton-table-heading" fxLayout="row" fxLayoutAlign="start center">

@@ -1,7 +1,9 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { NoctuaConfigService } from '@noctua/services/config.service';
+import { MatSidenav } from '@angular/material/sidenav';
+import { NoctuaCommonMenuService } from '@noctua.common/services/noctua-common-menu.service';
 
 @Component({
     selector: 'layout-noctua',
@@ -13,9 +15,12 @@ import { NoctuaConfigService } from '@noctua/services/config.service';
 ) export class LayoutNoctuaComponent implements OnInit, OnDestroy {
     noctuaConfig: any;
     navigation: any;
+    @ViewChild('leftSidenav', { static: true })
+    leftSidenav: MatSidenav;
     private _unsubscribeAll: Subject<any>;
 
-    constructor(private _noctuaConfigService: NoctuaConfigService) {
+    constructor(private _noctuaConfigService: NoctuaConfigService,
+        public noctuaCommonMenuService: NoctuaCommonMenuService) {
         this._unsubscribeAll = new Subject();
     }
 
@@ -25,6 +30,7 @@ import { NoctuaConfigService } from '@noctua/services/config.service';
             .subscribe((config) => {
                 this.noctuaConfig = config;
             });
+        this.noctuaCommonMenuService.setLeftSidenav(this.leftSidenav);
     }
     ngOnDestroy(): void {
         this._unsubscribeAll.next();

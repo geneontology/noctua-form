@@ -1,0 +1,144 @@
+@import "src/@noctua/scss/noctua";
+@import "src/@noctua.common/scss/noctua.common";
+
+$primary: map-get($theme, primary);
+$accent: map-get($theme, accent);
+
+noc-noctua-apps {
+  @include deep-width(500px);
+  z-index: 100;
+  background-color: white;
+  @include mat-elevation(4);
+
+  .noc-create {
+    padding: 8px;
+
+    button {
+      color: map-get($accent, default);
+      @include mat-elevation(4);
+    }
+  }
+
+  .noc-cam-form {
+    @include deep-width(300px);
+  }
+
+  .noc-header {
+    @include deep-height(40px);
+    background-color: #EEE;
+    border-bottom: #CCC solid 1px;
+
+    mat-icon-button {
+      @include deep-height(40px);
+      @include deep-width(40px);
+      line-height: 40px;
+    }
+
+    .noc-title {
+      font-size: 10px;
+      padding: 0 14px;
+    }
+  }
+
+  .noc-body {
+    padding: 0 14px 14px 14px;
+  }
+
+  .noc-drawer-body {
+    padding-bottom: 250px;
+  }
+
+  a {
+    display: block;
+    text-decoration: none !important;
+  }
+
+  mat-chip {
+    font-size: 12px;
+    font-weight: normal;
+    @include deep-height(30px);
+    max-width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    .noc-chip-label {
+      padding: 0 8px 0 12px;
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      .noc-icon-action {
+        font-size: 10px;
+        background-color: transparent;
+
+        &:hover {
+          font-size: 14px;
+          color: #222;
+        }
+      }
+    }
+
+    &.noc-table-chip {
+      padding: 0;
+      @include deep-height(30px);
+      font-size: 10px;
+
+      .noc-icon,
+      .noc-icon-action {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        color: #777;
+        font-size: 14px;
+      }
+
+      .noc-icon-action {
+        font-size: 10px;
+        background-color: transparent;
+
+        &:hover {
+          font-size: 14px;
+          color: #222;
+          background-color: rgba(#000000, 0.2);
+        }
+
+      }
+
+      @include noc-chip-color(#bbc9cc);
+
+      &.noc-user-chip {
+        @include noc-chip-color(#bbc9cc);
+
+        .noc-icon {
+          color: #59939e
+        }
+      }
+
+      &.noc-date-chip {
+        @include noc-chip-color(#aee9f5);
+      }
+
+      &.noc-state-chip {
+        &.noc-development {
+          @include noc-chip-color(#f4c89c);
+          // border: #d59f80 solid 1px;/
+        }
+
+        &.noc-production {
+          @include noc-chip-color(#b6f1cc);
+          // border: #d59f80 solid 1px;/
+        }
+
+        &.noc-review {
+          @include noc-chip-color(#d8f6a3);
+          // border: #d59f80 solid 1px;/
+        }
+      }
+
+    }
+  }
+}

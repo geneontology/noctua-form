@@ -96,15 +96,15 @@
         </button>
         <mat-menu #entityMenu="matMenu" class="noc-dropdown-menu">
           <button mat-menu-item *ngIf="entity.aspect" class="" (click)="openSearchDatabaseDialog(entity)">
-            Search Database
+            Search Annotations
           </button>
-          <button mat-menu-item *ngIf="entity.aspect" class="" (click)="openSearchModels()">
+          <!--   <button mat-menu-item *ngIf="entity.aspect" class="" (click)="openSearchModels()">
             Search Models
-          </button>
+          </button> -->
           <button mat-menu-item *ngIf="true" class="" (click)="toggleIsComplement(entity)">
             NOT Qualifier
           </button>
-          <button mat-menu-item *ngIf="entity.canInsertNodes?.length>0" [matMenuTriggerFor]="addMenu">
+          <button mat-menu-item *ngIf="entity.insertMenuNodes?.length>0" [matMenuTriggerFor]="addMenu">
             Add an Extension
           </button>
           <button mat-menu-item [matMenuTriggerFor]="evidenceMenu">Evidence</button>
@@ -116,7 +116,7 @@
           </button>
         </mat-menu>
         <mat-menu #addMenu="matMenu">
-          <button mat-menu-item *ngFor="let insertMenuItem of entity.canInsertNodes" class=""
+          <button mat-menu-item *ngFor="let insertMenuItem of entity.insertMenuNodes" class=""
             (click)="insertEntity(insertMenuItem)">
             {{insertMenuItem.label}}
           </button>

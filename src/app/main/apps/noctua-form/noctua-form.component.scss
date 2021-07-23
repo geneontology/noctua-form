@@ -49,13 +49,19 @@
     }
 
     .noc-title {
+      padding-left: 8px;
+      padding-right: 8px;
+      max-width: 250px;
+
       strong {
         font-size: 12px;
       }
     }
 
-    .noc-title-truncate {
-      max-width: 200px
+    .noc-model-state {
+      padding-left: 8px;
+      padding-right: 8px;
+      max-width: 150px;
     }
 
     mat-icon-button {
@@ -63,6 +69,95 @@
     }
   }
 
+
+  mat-chip {
+    font-size: 12px;
+    font-weight: normal;
+    @include deep-height(25px);
+    max-width: 200px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    .noc-chip-label {
+      padding: 0 8px 0 4px;
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      .noc-icon-action {
+        font-size: 10px;
+        background-color: transparent;
+
+        &:hover {
+          font-size: 14px;
+          color: #222;
+        }
+      }
+    }
+
+    &.noc-table-chip {
+      padding: 0;
+      @include deep-height(25px);
+      font-size: 10px;
+
+      .noc-icon,
+      .noc-icon-action {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 25px;
+        width: 25px;
+        border-radius: 50%;
+        color: #777;
+        font-size: 14px;
+      }
+
+      .noc-icon-action {
+        font-size: 10px;
+        background-color: transparent;
+
+        &:hover {
+          font-size: 14px;
+          color: #222;
+          background-color: rgba(#000000, 0.2);
+        }
+
+      }
+
+      @include noc-chip-color(#DDD);
+
+      &.noc-user-chip {
+        @include noc-chip-color(#bbc9cc);
+
+        .noc-icon {
+          color: #59939e
+        }
+      }
+
+      &.noc-date-chip {
+        @include noc-chip-color(#aee9f5);
+      }
+
+      &.noc-state-chip {
+        &.noc-development {
+          @include noc-chip-color(#f4c89c);
+          // border: #d59f80 solid 1px;/
+        }
+
+        &.noc-production {
+          @include noc-chip-color(#b6f1cc);
+          // border: #d59f80 solid 1px;/
+        }
+
+        &.noc-review {
+          @include noc-chip-color(#d8f6a3);
+          // border: #d59f80 solid 1px;/
+        }
+      }
+
+    }
+  }
 
   .noc-sidemenu {
     padding: 0;

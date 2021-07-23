@@ -1,4 +1,17 @@
 <div [formGroup]="entityFormGroup" fxLayout="row" fxLayoutAlign="start center" class="w-100-p">
+  <div *ngIf="displaySection.relationship" class="noc-edit-field p-4" fxFlex="300px" fxLayout="row"
+    fxLayoutAlign="start stretch">
+    <div class="p-4 w-100-p">
+      <mat-form-field appearance="outline" class="noc-sm w-100-p">
+        <mat-label>Choose Causal Relation</mat-label>
+        <mat-select placeholder="" [compareWith]="compareEntity" formControlName="relationship">
+          <mat-option *ngFor="let bpOnlyEdge of noctuaFormConfigService.bpOnlyEdges.options" [value]="bpOnlyEdge">
+            {{bpOnlyEdge.label}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
   <div *ngIf="displaySection.term" class="noc-edit-field p-4" fxFlex="250px" fxLayout="row"
     fxLayoutAlign="start stretch">
     <mat-form-field class="noc-sm w-100-p" appearance="outline">
@@ -73,12 +86,12 @@
       </mat-form-field>
     </div>
   </ng-container>
-  <button mat-icon-button class="noc-action-button" fxFlex="40px" [matMenuTriggerFor]="entityMenu">
+  <button *ngIf="false" mat-icon-button class="noc-action-button" fxFlex="40px" [matMenuTriggerFor]="entityMenu">
     <mat-icon>more_vert</mat-icon>
   </button>
   <mat-menu #entityMenu="matMenu" class="noc-dropdown-menu">
     <button mat-menu-item *ngIf="entity.aspect" class="" (click)="openSearchDatabaseDialog(entity)">
-      Search Database
+      Search Annotations
     </button>
     <button mat-menu-item [matMenuTriggerFor]="evidenceMenu">Evidence</button>
     <button mat-menu-item *ngIf="entity.aspect" class="" (click)="addRootTerm()">
@@ -86,7 +99,7 @@
     </button>
   </mat-menu>
   <mat-menu #evidenceMenu="matMenu">
-    <button mat-menu-item class="" (click)="openSelectEvidenceDialog(evidence)">
+    <button mat-menu-item class="" (click)="openSelectEvidenceDialog()">
       Clone Evidence
     </button>
   </mat-menu>

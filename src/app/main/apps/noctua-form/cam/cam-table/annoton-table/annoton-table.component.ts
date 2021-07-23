@@ -1,44 +1,32 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 
 import { noctuaAnimations } from './../../../../../../../@noctua/animations';
-
-
-import "rxjs/add/operator/debounceTime";
-import "rxjs/add/operator/distinctUntilChanged";
-
-import { NoctuaFormService } from './../../../services/noctua-form.service';
 import { CamTableService } from './../services/cam-table.service';
 import { NoctuaFormDialogService } from './../../../services/dialog.service';
-import { NoctuaSearchService } from './../../../../../../../@noctua.search/services/noctua-search.service';
 
 import {
-  NoctuaGraphService,
   NoctuaFormConfigService,
   NoctuaAnnotonFormService,
-  NoctuaLookupService,
   NoctuaAnnotonEntityService,
   CamService,
   Evidence,
   Entity,
   noctuaFormConfig,
-  NoctuaUserService
+  NoctuaUserService,
+  NoctuaFormMenuService
 } from 'noctua-form-base';
 
 import {
   Cam,
   Annoton,
   AnnotonNode,
-  InsertEntityDefinition
+  ShapeDefinition
 } from 'noctua-form-base';
 
-import { SparqlService } from './../../../../../../../@noctua.sparql/services/sparql/sparql.service';
 import { EditorCategory } from '@noctua.editor/models/editor-category';
-
 import { find } from 'lodash';
 import { InlineEditorService } from '@noctua.editor/inline-editor/inline-editor.service';
-import { NoctuaEditorDialogService } from '@noctua.editor/services/dialog.service';
 
 @Component({
   selector: 'noc-annoton-table',
@@ -74,7 +62,7 @@ export class AnnotonTableComponent implements OnInit, OnDestroy {
   private unsubscribeAll: Subject<any>;
 
   constructor(private camService: CamService,
-    public noctuaFormService: NoctuaFormService,
+    public noctuaFormMenuService: NoctuaFormMenuService,
     public noctuaUserService: NoctuaUserService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     public camTableService: CamTableService,
@@ -161,7 +149,7 @@ export class AnnotonTableComponent implements OnInit, OnDestroy {
   }
 
 
-  insertEntity(entity: AnnotonNode, nodeDescription: InsertEntityDefinition.InsertNodeDescription) {
+  insertEntity(entity: AnnotonNode, nodeDescription: ShapeDefinition.ShapeDescription) {
     const insertedNode = this.noctuaFormConfigService.insertAnnotonNode(this.annoton, entity, nodeDescription);
     //  this.noctuaAnnotonFormService.initializeForm();
 
@@ -225,7 +213,7 @@ export class AnnotonTableComponent implements OnInit, OnDestroy {
     this.camService.onCamChanged.next(this.cam);
 
     this.noctuaAnnotonEntityService.initializeForm(this.annoton, entity);
-    this.noctuaFormService.openRightDrawer(this.noctuaFormService.panel.annotonEntityForm);
+    this.noctuaFormMenuService.openRightDrawer(this.noctuaFormMenuService.panel.annotonEntityForm);
 
   }
 
