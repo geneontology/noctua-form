@@ -1,0 +1,345 @@
+@import "src/@noctua/scss/noctua";
+@import "src/@noctua.common/scss/noctua.common";
+$primary: map-get($theme, primary);
+$accent: map-get($theme, accent);
+$warn: map-get($theme, warn);
+
+$noc-art-active: mat-color($primary, 600);
+$noc-art-visited: mat-color($primary, 300);
+$noc-art-badge: mat-color($mat-orange, 500);
+
+:host {
+  padding: 0px;
+  width: 100%;
+  background-color: #fff;
+
+  .noc-loading-container {
+    background-color: rgba(#555, 0.4);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 1000;
+  }
+
+  .noc-sidemenu {
+    padding: 0;
+    @include deep-height(100%);
+    @include deep-width(60px);
+    // @include mat-elevation(2);
+    border-right: #999 solid 1px;
+
+    button {
+      @include deep-width(60px);
+      @include deep-height(60px);
+
+      font-size: 20px;
+      color: rgba(map-get($primary, default), 0.5);
+
+      &.noc-active {
+        font-size: 28px;
+        color: map-get($primary, default);
+      }
+
+      .noc-badge {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        color: #fff;
+        background-color: $noc-art-badge;
+        font-size: 10px;
+        text-align: center;
+        line-height: 20px;
+      }
+    }
+  }
+
+  .noc-welcome {
+    padding: 10px;
+  }
+
+  .noc-section-body {
+    //scroll
+    position: relative;
+  }
+
+  .header {
+    padding-bottom: 10px;
+    background-image: linear-gradient(
+        to right,
+        #00174f,
+        rgba(#00174f, 0.8),
+        rgba(#00174f, 0.5)
+      ),
+      url("~assets/images/gene.jpeg");
+    background-blend-mode: initial;
+    background-size: cover;
+    background-position: top;
+    padding-top: 50px !important;
+    position: relative;
+    flex: 1 0 auto;
+    height: 280px;
+    min-width: 800px;
+    max-height: 280px;
+    text-align: center;
+    overflow: hidden;
+
+    @include media-breakpoint("lt-md") {
+      height: 200px;
+      min-width: 600px;
+    }
+
+    h1 {
+      font-size: 40px;
+      font-weight: 300;
+      letter-spacing: 0.01em;
+      text-align: center;
+      margin-top: 0;
+      margin-bottom: 16px;
+      color: rgba(white, 0.9);
+
+      @include media-breakpoint("lt-md") {
+        font-size: 24px;
+      }
+    }
+
+    h3 {
+      max-width: 80%;
+      text-align: center;
+      font-weight: 300;
+      letter-spacing: 0.03em;
+      margin: 0;
+      color: #ffffff;
+      line-height: 1.5;
+
+      @include media-breakpoint("lt-md") {
+        font-size: 14px;
+      }
+    }
+
+    h4 {
+      padding-top: 10px;
+      max-width: 80%;
+      text-align: center;
+      font-weight: 300;
+      font-size: 12px;
+      margin: 0;
+      color: rgba(#ffffff, 0.8);
+    }
+
+    .noc-login-button {
+      margin-left: 4px;
+      margin-right: 4px;
+      margin-top: 20px;
+      background-color: #52a16c;
+      color: #eee;
+    }
+  }
+
+  .noc-left-drawer {
+    @include deep-height(100%);
+    background-color: #fff;
+    border-right: #bbb solid 1px;
+    @include mat-elevation(4);
+  }
+
+  .noc-right-drawer {
+    @include deep-height(100%);
+    background-color: #fff;
+    border-left: #bbb solid 1px;
+  }
+
+  .mat-drawer-content {
+    width: 100%;
+  }
+
+  .noc-drawer-container {
+    background-color: #e2e2e2;
+  }
+
+  .noc-create {
+    padding: 8px;
+
+    button {
+      padding: 0 8px;
+      color: map-get($accent, default);
+      width: 250px;
+      font-weight: 500;
+      @include mat-elevation(4);
+
+      &.noc-review-mode-button {
+        .noc-title {
+          width: 200px;
+        }
+
+        &.noc-selected {
+          background-color: #cdf8cd;
+          -webkit-box-shadow: 10px 10px 40px 0px rgba(227, 227, 227, 1);
+          -moz-box-shadow: 10px 10px 40px 0px rgba(227, 227, 227, 1);
+          box-shadow: 10px 10px 40px 0px rgba(227, 227, 227, 1);
+          color: #000;
+        }
+      }
+    }
+  }
+
+  .noc-art-info {
+    padding: 0;
+    margin-bottom: 5px;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 1001;
+    padding: 0;
+    @include deep-height(100px);
+    background-color: #ffffff;
+    @include mat-elevation(2);
+    //color: #FFF;
+
+    .noc-art-tabs {
+      width: 100%;
+
+      .noc-line {
+        display: block;
+        height: 5px;
+        border-top: #ccc solid 1px;
+        border-bottom: #ccc solid 1px;
+        background-color: #ccc;
+        padding: 0;
+
+        &.noc-visited {
+          border-top: $noc-art-visited solid 1px;
+          border-bottom: $noc-art-visited solid 1px;
+          background-color: $noc-art-visited;
+        }
+      }
+
+      button {
+        @include deep-height(60px);
+        @include deep-width(180px);
+        line-height: 12px !important;
+
+        border: #bbb solid 1px;
+
+        .noc-badge {
+          position: absolute;
+          top: -8px;
+          right: -12px;
+          border-radius: 7px;
+          width: 70px;
+          height: 15px;
+          color: #eee;
+          background-color: $noc-art-badge;
+          font-size: 10px;
+          text-align: center;
+          line-height: 15px;
+        }
+
+        .noc-title {
+          font-size: 18px;
+          color: #aaa;
+        }
+
+        .noc-description {
+          font-size: 12px;
+          color: #bbb;
+        }
+
+        &.noc-visited {
+          border: $noc-art-visited solid 1px;
+
+          .noc-badge {
+            // border: $noc-art-visited solid 1px;
+          }
+
+          .noc-title {
+            color: $noc-art-visited;
+          }
+
+          .noc-description {
+            font-size: 12px;
+            color: $noc-art-visited;
+          }
+        }
+
+        &.noc-active {
+          border: $noc-art-active solid 1px;
+          border-bottom: $noc-art-active solid 5px;
+          @include mat-elevation(4);
+
+          .noc-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: $noc-art-active;
+          }
+
+          .noc-description {
+            color: $noc-art-active;
+          }
+
+          .noc-badge {
+            // border: $noc-art-active solid 1px;
+          }
+        }
+      }
+
+      .noc-icon-separator {
+        margin: 0 12px;
+      }
+    }
+  }
+
+  .noc-summary-filter-bar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    margin-bottom: 4px;
+    padding: 0 10px;
+    @include deep-height(30px);
+    //  min-height: 40px; //min-height: 35px;
+    background-color: #fff;
+    font-size: 16px;
+    overflow: hidden;
+    z-index: 10;
+
+    @include mat-elevation(2);
+
+    mat-chip-list {
+    }
+
+    mat-chip {
+      margin-right: 8px;
+      font-weight: normal;
+      font-size: 10px;
+      @include deep-height(25px);
+
+      &.noc-filter-chip {
+        font-size: 10px;
+        @include noc-chip-color(#bbc9cc);
+
+        .noc-filter-number {
+          font-weight: bold;
+          color: map-get($primary, default);
+        }
+      }
+
+      &.noc-clearall-chip {
+        @include noc-chip-color(#da7f7f);
+        font-size: 10px;
+      }
+    }
+  }
+
+  .noc-middle-panel {
+    min-height: 500px;
+    border-bottom: 200px;
+  }
+
+  .noc-table-container {
+    min-height: 500px;
+  }
+}

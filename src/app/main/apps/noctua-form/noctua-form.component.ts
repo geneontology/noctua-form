@@ -186,17 +186,14 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
       }
     }
 
-    if (summary?.stats.totalChanges > 0) {
-
-      const options = {
-        title: 'Discard Unsaved Changes',
-        message: `All your changes will be discarded for model. Model Name:"${cam.title}"`,
-        cancelLabel: 'Cancel',
-        confirmLabel: 'OK'
-      }
-
-      self.noctuaSearchDialogService.openCamReviewChangesDialog(success, summary, options)
+    const options = {
+      title: 'Discard Unsaved Changes',
+      message: `All your changes will be discarded for model. Model Name:"${cam.title}"`,
+      cancelLabel: 'Cancel',
+      confirmLabel: 'OK'
     }
+
+    self.noctuaSearchDialogService.openCamReviewChangesDialog(success, summary, options)
   }
 
   storeCam(cam: Cam) {
@@ -204,26 +201,24 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
     const self = this;
     const summary = self.camService.reviewCamChanges(cam);
 
-    if (summary?.stats.totalChanges > 0) {
-      const success = (replace) => {
-        if (replace) {
-          cam.loading = new CamLoadingIndicator(true, 'Saving Model ...');
-          self.camService.reloadCam(cam, ReloadType.STORE)
-          self.noctuaReviewSearchService.onClearForm.next(true);
-          self.noctuaReviewSearchService.clear();
-          self.cam.clearHighlight()
-        }
-      };
-
-      const options = {
-        title: 'Save Changes?',
-        message: `All your changes will be saved for model. Model Name:"${cam.title}"`,
-        cancelLabel: 'Go Back',
-        confirmLabel: 'Submit'
+    const success = (replace) => {
+      if (replace) {
+        cam.loading = new CamLoadingIndicator(true, 'Saving Model ...');
+        self.camService.reloadCam(cam, ReloadType.STORE)
+        self.noctuaReviewSearchService.onClearForm.next(true);
+        self.noctuaReviewSearchService.clear();
+        self.cam.clearHighlight()
       }
+    };
 
-      self.noctuaSearchDialogService.openCamReviewChangesDialog(success, summary, options)
+    const options = {
+      title: 'Save Changes?',
+      message: `All your changes will be saved for model. Model Name:"${cam.title}"`,
+      cancelLabel: 'Go Back',
+      confirmLabel: 'Submit'
     }
+
+    self.noctuaSearchDialogService.openCamReviewChangesDialog(success, summary, options)
   }
 }
 
