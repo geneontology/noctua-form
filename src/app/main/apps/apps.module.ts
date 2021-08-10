@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { NoctuaSharedModule } from '@noctua/shared.module';
 import { NoctuaFormModule } from './noctua-form/noctua-form.module';
 import { NoctuaGraphModule } from './noctua-graph/noctua-graph.module';
 import { NoctuaSearchModule } from './noctua-search/noctua-search.module';
-import { TreeModule } from '@circlon/angular-tree-component';
+import { NoctuaDoctorModule } from './noctua-doctor/noctua-doctor.module';
 
 @NgModule({
   declarations: [],
@@ -12,13 +11,15 @@ import { TreeModule } from '@circlon/angular-tree-component';
     NoctuaSharedModule,
     NoctuaFormModule,
     NoctuaSearchModule,
-    NoctuaGraphModule
+    NoctuaGraphModule,
+    NoctuaDoctorModule
   ],
   exports: [
     NoctuaFormModule,
     NoctuaFormModule,
     NoctuaSearchModule,
-    NoctuaGraphModule
+    NoctuaGraphModule,
+    NoctuaDoctorModule
   ],
   providers: [
 
