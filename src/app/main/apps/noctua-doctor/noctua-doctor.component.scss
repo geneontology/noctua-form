@@ -24,36 +24,37 @@ $noc-art-badge: mat-color($mat-orange, 500);
   }
 
   .noc-sidemenu {
-    padding: 0;
+    padding: 12px 8px;
     @include deep-height(100%);
-    @include deep-width(60px);
+    @include deep-width(200px);
     // @include mat-elevation(2);
     border-right: #999 solid 1px;
 
     button {
-      @include deep-width(60px);
-      @include deep-height(60px);
+      margin-bottom: 8px;
+      @include deep-width(100%);
+      @include deep-height(30px);
+      //line-height: 25px;
 
-      font-size: 20px;
-      color: rgba(map-get($primary, default), 0.5);
+      &.btn-flat {
+        border-radius: 0 !important;
+      }
+      //
+
+      //font-size: 14px;
 
       &.noc-active {
-        font-size: 28px;
-        color: map-get($primary, default);
+        //font-size: 20px;
       }
 
-      .noc-badge {
-        position: absolute;
-        top: 5px;
-        right: 5px;
-        border-radius: 50%;
-        width: 20px;
-        height: 20px;
-        color: #fff;
-        background-color: $noc-art-badge;
-        font-size: 10px;
-        text-align: center;
-        line-height: 20px;
+      .noc-icon {
+        margin-right: 8px;
+      }
+
+      .noc-label {
+        //text-transform: uppercase;
+        font-size: 12px;
+        //font-weight: bold;
       }
     }
   }

@@ -271,6 +271,13 @@ export class EntityFormComponent implements OnInit, OnDestroy {
     self.noctuaActivityFormService.initializeForm();
   }
 
+  removeNode() {
+    const self = this;
+
+    self.noctuaActivityFormService.activity.removeNode(self.entity);
+    self.noctuaActivityFormService.initializeForm();
+  }
+
   openSelectEvidenceDialog() {
     const self = this;
     const evidences: Evidence[] = this.camService.getUniqueEvidence(self.noctuaActivityFormService.activity);

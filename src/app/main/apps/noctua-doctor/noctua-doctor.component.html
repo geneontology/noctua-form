@@ -1,53 +1,6 @@
 <div class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
-
   <div class="noc-sidemenu" fxLayout="column" fxLayoutAlign="start center">
-    <button mat-icon-button color="" class="noc-rounded-button"
-      [ngClass]="{'noc-active': noctuaSearchMenuService.selectedLeftPanel === LeftPanel.filter}"
-      (click)="toggleLeftDrawer(LeftPanel.filter)" matTooltip="Filter" [matTooltipPosition]="'after'"
-      [matTooltipShowDelay]="1500">
-      <fa-icon [icon]="['fas', 'search']"></fa-icon>
-    </button>
-    <button mat-icon-button color="" class="noc-rounded-button"
-      [ngClass]="{'noc-active': noctuaSearchMenuService.selectedLeftPanel === LeftPanel.filter}"
-      (click)="toggleLeftDrawer(LeftPanel.filter)" matTooltip="Filter" [matTooltipPosition]="'after'"
-      [matTooltipShowDelay]="1500">
-      <fa-icon [icon]="['fas', 'check']"></fa-icon>
-    </button>
-    <!--  <button mat-icon-button color="" class="noc-rounded-button" (click)="toggleLeftDrawer(LeftPanel.relation)"
-      matTooltip="Relation Search" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
-      <mat-icon class="icon-rotate-relation"> linear_scale </mat-icon>
-    </button> -->
-    <button mat-icon-button color="" class="noc-rounded-button" (click)="
-      toggleLeftDrawer(LeftPanel.contributor)" matTooltip="Browse by contributor"
-      [ngClass]="{'noc-active': noctuaSearchMenuService.selectedLeftPanel === LeftPanel.contributor}"
-      [matTooltipPosition]="'after'" [matTooltipShowDelay]="1000">
-      <fa-icon [icon]="['fas', 'user']"></fa-icon>
-    </button>
-    <button mat-icon-button color="" class="noc-rounded-button" (click)="
-      toggleLeftDrawer(LeftPanel.group)"
-      [ngClass]="{'noc-active': noctuaSearchMenuService.selectedLeftPanel === LeftPanel.group}"
-      matTooltip="Browse by group" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1000">
-      <fa-icon [icon]="['fas', 'users']"></fa-icon>
-    </button>
-    <button mat-icon-button color="" class="noc-rounded-button" (click)="
-      toggleLeftDrawer(LeftPanel.organism)"
-      [ngClass]="{'noc-active': noctuaSearchMenuService.selectedLeftPanel === LeftPanel.organism}"
-      matTooltip="Search by organism" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1000">
-      <fa-icon [icon]="['fas', 'paw']"></fa-icon>
-    </button>
-    <button mat-icon-button color="" class="noc-rounded-button" (click)="toggleLeftDrawer(LeftPanel.history)"
-      [ngClass]="{'noc-active': noctuaSearchMenuService.selectedLeftPanel === LeftPanel.history}" matTooltip="History"
-      [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
-      <fa-icon [icon]="['fas', 'history']"></fa-icon>
-    </button>
-    <button mat-icon-button color="" class="noc-rounded-button" (click)="openBasketPanel()"
-      [ngClass]="{'noc-active': noctuaSearchMenuService.selectedLeftPanel === LeftPanel.artBasket}"
-      matTooltip="Art Basket" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
-      <div *ngIf="artBasket?.cams.length > 0" class="noc-badge">
-        {{artBasket?.cams.length}}
-      </div>
-      <fa-icon [icon]="['fas', 'shopping-basket']"></fa-icon>
-    </button>
+
   </div>
   <mat-drawer-container class="h-100-p" fxFlex="" fxLayout="row" fxLayoutAlign="start start" [hasBackdrop]="false"
     autosize>
