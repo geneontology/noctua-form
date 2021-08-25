@@ -1,0 +1,365 @@
+@import "src/@noctua/scss/noctua";
+@import "src/@noctua.common/scss/noctua.common";
+@import "src/@noctua.common/scss/noctua-form.common";
+
+$primary: map-get($theme, primary);
+$accent: map-get($theme, accent);
+
+:host {
+  padding: 0px;
+  width: 100%;
+
+  mat-chip {
+    &.default {
+      border: #cdf1d2 solid 2px;
+    }
+
+    &.bpOnly {
+      border: #f8c6e5 solid 2px;
+    }
+
+    &.ccOnly {
+      border: #d3b5f5 solid 2px;
+    }
+
+    &.noc-error-chip {
+      font-size: 12px;
+      font-weight: normal;
+      @include deep-height(30px);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding: 0;
+
+      .noc-chip-label {
+        padding: 0 12px 0 12px;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        .noc-icon-action {
+          font-size: 10px;
+          background-color: transparent;
+
+          &:hover {
+            font-size: 14px;
+            color: #222;
+          }
+        }
+      }
+
+      .noc-icon,
+      .noc-icon-action {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        color: #777;
+        font-size: 14px;
+      }
+
+      .noc-icon-action {
+        font-size: 10px;
+        background-color: transparent;
+
+        &:hover {
+          font-size: 14px;
+          color: #222;
+          background-color: rgba(#000000, 0.2);
+        }
+      }
+
+      @include noc-chip-color(#e28989);
+    }
+  }
+
+  .noc-form-container {
+    background-color: #eee;
+    padding: 20px 10px;
+  }
+
+  .noc-activity-header {
+    padding-left: 40px;
+    position: relative;
+    margin-bottom: 1px;
+    @include deep-width(100%);
+    @include deep-height(30px);
+    //min-height: 35px;
+    //background-color: #fff;
+    font-size: 14px;
+    border-bottom: $noc-primary-color-light solid 1px;
+  }
+
+  .noc-group-side-heading {
+    @include deep-width(25px);
+    @include deep-height(100%);
+    background-color: #ddd;
+    font-size: 8px;
+    font-weight: bold;
+    text-align: center;
+    word-break: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .noc-activity-heading {
+    position: relative;
+    margin-bottom: 1px;
+    @include deep-height(55px);
+    //min-height: 35px;
+    background-color: #fff;
+    font-size: 14px;
+    border-bottom: $noc-primary-color-light solid 1px;
+
+    //border-bottom: rgba(#000, 0.4) solid 1px;
+    .noc-toggle-expand-button {
+      width: 30px;
+      height: 30px;
+      line-height: 12px;
+    }
+
+    .noc-title {
+      height: 100%;
+
+      small {
+        font-size: 12px;
+        font-style: italic;
+      }
+    }
+
+    .noc-title-truncate {
+      max-width: 200px;
+    }
+
+    .noc-display-number {
+      background-color: #fff;
+      z-index: 2;
+    }
+
+    &::before {
+      position: absolute;
+      top: 27px;
+      left: -15px;
+      width: 25px;
+      height: 2px;
+      color: white;
+      background-color: $noc-tree-line-color;
+      content: "";
+    }
+
+    &::after {
+      position: absolute;
+      top: 0;
+      left: 37px;
+      bottom: 0;
+      width: 2px;
+      color: white;
+      background-color: $noc-tree-line-color;
+      content: "";
+      z-index: 1;
+    }
+  }
+
+  .noc-gp {
+    width: 350px;
+    line-height: 12px;
+    @include deep-height(55px);
+    // display: inline-block !important;
+    padding: 4px 8px;
+    font-size: 12px !important;
+    color: #000;
+    border-right: $noc-primary-color-light solid 1px;
+    position: relative;
+    overflow-wrap: break-word;
+
+    p {
+      padding: 0;
+      margin: 0;
+    }
+
+    a {
+      font-size: 10px !important;
+    }
+
+    &.noc-highlight-match {
+      background-color: #fffcd8;
+    }
+
+    &.noc-highlight-modified {
+      background-color: #fdd661;
+    }
+
+    &.noc-highlight-modified-user {
+      background-color: #f3ccbb;
+    }
+
+    &.noc-highlight-match-current {
+      border: #ac6219 solid 3px;
+    }
+
+    .noc-old-term {
+      color: #777;
+      font-size: 10px;
+      padding-bottom: 4px;
+      text-decoration: line-through rgba(#ec6868, 0.5);
+    }
+
+    .noc-edit-button {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+  }
+
+  .noc-toolbar {
+    padding: 0px 20px;
+    height: 40px;
+    width: 100%;
+    background-color: #f2f2f2;
+    border-bottom: #bbb solid 1px;
+
+    .noc-title {
+      line-height: 38px;
+      color: #555;
+      font-size: 14px;
+      font-weight: bold;
+    }
+  }
+
+  .noc-activity-table {
+    // position: relative;
+    //  flex: 1 1 auto;
+    //    border-bottom: 1px solid rgba(0, 0, 0, .12);
+
+    noc-activity-tree-node {
+      padding-left: 40px;
+    }
+
+    table {
+      // width: 800px;
+      @include deep-width(100%);
+      overflow: auto;
+      .mat-footer-row,
+      .mat-header-row,
+      .mat-row {
+        display: inline-flex;
+        min-width: 100%;
+      }
+    }
+
+    tr.mat-footer-row,
+    tr.mat-row {
+      height: auto;
+
+      &.noc-row-term {
+        &::before {
+          position: absolute;
+          left: 0px;
+          width: 20px;
+          height: 2px;
+          top: 50%;
+          transform: translateY(-50%);
+          color: white;
+          background-color: $noc-tree-line-color;
+          content: "";
+        }
+      }
+    }
+
+    tr.mat-header-row,
+    tr.mat-row {
+      padding-left: 15px;
+    }
+
+    .noc-column-flex {
+      min-width: 150px !important;
+    }
+
+    .mat-header-cell {
+      padding: 0 10px;
+      font-size: 10px !important;
+      //color: #0F0; // map-get($primary, default);
+      font-weight: bold;
+      color: map-get($primary, default);
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .mat-header-row {
+      @include deep-height(30px);
+      border-bottom: $noc-primary-color-light solid 1px;
+    }
+
+    .noc-paginator {
+      @include deep-height(0);
+    }
+
+    .activity {
+      position: relative;
+      cursor: pointer;
+      min-height: 40px;
+      font-size: 12px;
+    }
+
+    .mat-cell {
+      display: flex;
+      align-items: center;
+
+      //display: inline-block !important;
+      padding: 0 5px;
+      font-size: 12px !important;
+      color: #000;
+      border-right: #aaa solid 1px;
+      position: relative;
+      overflow-wrap: break-word;
+
+      .noc-edit-button {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      }
+
+      &.noc-highlight-match {
+        background-color: #fffcd8;
+      }
+
+      &.noc-highlight-modified {
+        background-color: #fdd661;
+      }
+
+      &.noc-highlight-modified-user {
+        background-color: #f3ccbb;
+      }
+
+      &.noc-highlight-match-current {
+        border: #ac6219 solid 5px;
+      }
+
+      .noc-old-term {
+        color: #777;
+        font-size: 10px;
+        text-decoration: line-through rgba(#ec6868, 0.5);
+      }
+    }
+
+    .mat-column-id {
+      flex: 0 1 84px;
+    }
+
+    .mat-column-buttons {
+      flex: 0 1 80px;
+    }
+
+    /* .mat-header-cell {
+      display:flex;
+      justify-content:flex-end;
+     } */
+
+    &.noc-selected {
+      table {
+        background-color: rgba($noc-highlight-model-color, 0.3);
+      }
+    }
+  }
+}

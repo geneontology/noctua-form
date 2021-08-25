@@ -1,0 +1,14 @@
+@import "src/@noctua/scss/noctua";
+@import "src/@noctua.common/scss/noctua.common";
+
+$primary: map-get($theme, primary);
+$accent: map-get($theme, accent);
+
+:host {
+  .footer {
+    background: #1A237E;
+    background: linear-gradient(to right, #0E2A3B 0%, #34306B 100%);
+    padding: 20px;
+    color: #FFF;
+  }
+}

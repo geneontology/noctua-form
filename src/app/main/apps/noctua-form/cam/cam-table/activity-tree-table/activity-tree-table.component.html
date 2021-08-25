@@ -1,0 +1,102 @@
+<div [attr.id]="activity.displayId" fxLayout="column" fxLayoutAlign="start stretch" class="w-100-p"
+  [ngClass]="{'noc-selected': activity.displayId===camService.currentMatch?.activityDisplayId}">
+  <div class="noc-activity-heading" fxLayout="row" fxLayoutAlign="start center">
+    <div fxFlex="25px" (click)="$event.stopPropagation()">
+      <button mat-icon-button (click)="toggleExpand(activity)" color="primary" class="noc-toggle-expand-button">
+        <fa-icon *ngIf="!activity.expanded" [icon]="['fas', 'caret-right']"></fa-icon>
+        <fa-icon *ngIf="activity.expanded" [icon]="['fas', 'caret-down']"></fa-icon>
+      </button>
+    </div>
+    <div class="noc-display-number noc-sm" (click)="$event.stopPropagation()">
+      {{activity.displayNumber}}
+    </div>
+    <div class="noc-title mr-12" fxLayout="row" fxLayoutAlign="start center">
+      <div class="noc-gp" *ngIf="gpNode" fxLayout="row" fxLayoutAlign="start center">
+        <span class="text-truncate">
+          {{gpNode.term?.label}}
+          <a class="ml-4" (click)="$event.stopPropagation()" href="{{gpNode.term?.url}}" target="_blank">
+            {{ gpNode.term?.id }}
+          </a>
+        </span>
+      </div>
+    </div>
+    <mat-chip class="noc-chip-xs" [ngClass]="activity.activityType">
+      <span>{{activityTypeOptions[activity.activityType]?.label}}</span>
+    </mat-chip>
+    <div *ngIf="activity.hasViolations" class="noc-error" fxLayout="row" fxLayoutAlign="start center">
+      <mat-chip class="noc-error-chip noc-chip-xs ml-8" fxLayout="row" fxLayoutAlign="start center"
+        (click)="displayActivityErrors(activity)">
+        <div class="noc-icon">
+          <fa-icon [icon]="['fas', 'exclamation-triangle']"></fa-icon>
+        </div>
+        <div fxFlex="" class="noc-chip-label">
+          {{activity.violations?.length}} Errors Found
+        </div>
+      </mat-chip>
+    </div>
+    <span fxFlex=""></span>
+  </div>
+  <div *ngIf="activity.expanded" class="noc-tree-container">
+    <div class="noctua-form-table noc-activity-header w-100-p" fxLayout="row" fxLayoutAlign="start center">
+      <div *ngIf="!options.slimViewer" class="noc-cell noc-relation-cell">
+        Relationship
+      </div>
+      <div class="noc-cell noc-term-cell" fxFlex="">
+        Term
+      </div>
+      <div class="noc-cell noc-aspect-cell">
+        Asp
+      </div>
+      <div class="noc-cell noc-extension-cell">
+        Ext
+      </div>
+      <div class="noc-evidence-cell" fxLayout="row" fxLayoutAlign="start center">
+        <div class="noc-cell noc-evidence-code-cell" fxFlex="">
+          Evidence
+        </div>
+        <div class="noc-cell noc-reference-cell">
+          Reference
+        </div>
+        <div class="noc-cell noc-with-cell">
+          With
+        </div>
+        <div class="noc-cell noc-group-cell">
+          Assigned By
+        </div>
+        <div class="noc-cell noc-contributor-cell">
+          Contributor
+        </div>
+      </div>
+      <div *ngIf="noctuaUserService.user &&  options.showMenu" class="noc-cell noc-action-cell"> </div>
+    </div>
+    <mat-tree #tree *ngIf="dataSource?.data" [dataSource]="dataSource" [treeControl]="treeControl">
+      <mat-tree-node class="noc-tree-node" *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding
+        matTreeNodePaddingIndent="16" [ngClass]="{ 'background-highlight': activeAnnotation === node.uuid}">
+        <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
+          <button mat-icon-button disabled class="noc-icon-button"></button>
+          <div class="noc-annotation-row" fxFlex="" fxLayout="row" fxLayoutAlign="start center">
+            <div *ngIf="options.slimViewer" class="noc-cell-label">
+              {{node.label}}
+            </div>
+            <noc-activity-tree-node [options]="options" [cam]="cam" [activity]="activity" [entity]="node"
+              class="w-100-p">
+            </noc-activity-tree-node>
+          </div>
+        </div>
+      </mat-tree-node>
+      <mat-tree-node fxLayout="row" class="noc-tree-node" *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding
+        matTreeNodePaddingIndent="16" [ngClass]="{ 'background-highlight': activeAnnotation === node.uuid}">
+        <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
+          <div class="noc-annotation-row" fxFlex="" fxLayout="column" fxLayoutAlign="start stretch">
+            <div *ngIf="options.slimViewer" class="noc-cell-label">
+              {{node.label}}
+            </div>
+            <noc-activity-tree-node [options]="options" [cam]="cam" [activity]="activity" [entity]="node"
+              class="w-100-p">
+            </noc-activity-tree-node>
+          </div>
+        </div>
+      </mat-tree-node>
+    </mat-tree>
+  </div>
+</div>

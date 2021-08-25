@@ -1,0 +1,96 @@
+<div class="dialog-content-wrapper noc-dialog">
+  <mat-toolbar class="mat-primary m-0">
+    <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="start center">
+      <span class="title dialog-title">
+        Unsaved Changes (Annotation Review Tool) </span>
+      <span fxFlex></span>
+      <button mat-stroked-button (click)="close()" class="noc-rounded-button noc-sm" aria-label="Close dialog">
+        <mat-icon>close</mat-icon> Close
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <div class="noc-dialog-body" noctuaPerfectScrollbar>
+    <div *ngIf="summary?.stats.totalChanges>0" class="alert alert-danger w-100-p">
+      It looks like you have pending changes for Annotation Review Tool.
+      .If you leave before saving, your basket changes will be lost.
+      <div class="noc-stat-summary w-100-p">
+        <span class="noc-number">
+          {{summary?.stats.totalChanges }}
+        </span>
+        unsaved changes across
+        <span class="noc-number">
+          {{summary?.stats.camsCount }} models
+        </span>
+      </div>
+    </div>
+    <div *ngIf="summary?.stats.totalChanges===0" class="alert alert-warning w-100-p">
+      It looks like Annotation Review Tool Basket is not empty.
+      .If you leave, your basket will be cleared.
+    </div>
+    <div *ngFor="let cam of cams" class="noc-group-row"
+      [ngClass]="{'noc-selected': cam.id===camService.currentMatch?.modelId}" fxLayout="column"
+      fxLayoutAlign="start stretch">
+      <div *ngIf="cam.modified" class="noc-modified-header w-100-p" fxLayout="row" fxLayoutAlign="start center">
+        <div class="noc-title">Modified Model:
+        </div>
+        (<strong class="mr-4">{{cam.modifiedStats?.totalChanges}}</strong> change(s) )
+        <span fxFlex></span>
+      </div>
+      <div class="noc-item-body w-100-p" fxLayout="row" fxLayoutAlign="start center">
+        <div class="w-100-p h-100-p" fxLayout="column" fxLayoutAlign="start start">
+          <div class="noc-item" fxLayout="row wrap" fxLayoutAlign="start center">
+            <div class="noc-title">Title:</div> {{cam.title}}
+          </div>
+          <div class="noc-item" fxLayout="row" fxLayoutAlign="start center">
+            <div class="noc-title">State:</div> {{cam.state?.label}}
+          </div>
+          <div *ngIf="cam.moreDetail" class="w-100-p">
+            <div class="noc-item" fxLayout="row wrap" fxLayoutAlign="start center">
+              <div class="noc-title">Contributors:</div>
+              <div class="mr-8" *ngFor="let contributor of cam.contributors" matTooltip="{{contributor.name}}"
+                [matTooltipPosition]="'below'" [matTooltipShowDelay]="1000">
+                {{contributor.name ? contributor.name :contributor.orcid}};
+              </div>
+            </div>
+            <div class="noc-item" fxLayout="row wrap" fxLayoutAlign="start center">
+              <div class="noc-title">Groups:</div>
+              <span class="" *ngFor="let group of cam.groups" matTooltip="{{group.name}}" [matTooltipPosition]="'below'"
+                [matTooltipShowDelay]="1000">
+                <div class="noc-chip-label">
+                  {{group.name ? group.name :group.url}}
+                </div>
+              </span>
+            </div>
+            <div class="noc-item" fxLayout="row" fxLayoutAlign="start center">
+              <div class="noc-title">Open In:</div>
+              <a class="mr-4" [href]='cam.model?.modelInfo?.noctuaFormUrl' target="_blank">
+                Noctua Form
+              </a>
+              <span>&#8226;</span>
+              <a class="ml-4" [href]='cam.model?.modelInfo?.graphEditorUrl' target="_blank">
+                Noctua Graph
+              </a>
+            </div>
+          </div>
+          <div class="noc-item">
+            <a (click)="$event.stopPropagation();cam.moreDetail =!cam.moreDetail" class="noc-more-details-button">
+              <span *ngIf="!cam.moreDetail">More Details
+                <fa-icon [icon]="['fas', 'angle-double-down']"></fa-icon>
+              </span>
+              <span *ngIf="cam.moreDetail">Less Details
+                <fa-icon [icon]="['fas', 'angle-double-up']"></fa-icon>
+              </span>
+            </a>
+          </div>
+        </div>
+        <span fxFlex></span>
+      </div>
+    </div>
+  </div>
+  <div class="m-0 p-16 noc-dialog-footer" fxLayout="row" fxLayoutAlign="space-between center">
+    <button (click)='close()' type="button" mat-raised-button color="" class="mr-8">Cancel</button>
+    <span fxFlex></span>
+    <button (click)="reviewChanges()" type="button" mat-raised-button color="primary">Review Changes</button>
+    <button (click)="logout()" type="button" mat-raised-button color="warn">Logout Anyway</button>
+  </div>
+</div>

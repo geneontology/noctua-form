@@ -1,0 +1,82 @@
+$noc-breakpoints: (
+  noc-lg: "screen and (max-width: 1367px)",
+) !default;
+
+@mixin noc-media-breakpoint($breakpointName) {
+  $mediaQuery: map_get($noc-breakpoints, $breakpointName);
+
+  @if ($mediaQuery != null) {
+    @media #{$mediaQuery} {
+      @content;
+    }
+  }
+}
+
+.noctua-form-table {
+  &.noc-tree-header-row {
+    padding-left: 40px;
+  }
+  .noc-cell {
+    padding: 0 10px;
+    font-size: 10px !important;
+    font-weight: bold;
+    color: map-get($primary, default);
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+
+  .noc-relation-cell {
+    @include deep-width(150px);
+  }
+  .noc-term-cell {
+    min-width: 100px;
+  }
+  .noc-aspect-cell {
+    @include deep-width(30px);
+  }
+
+  .noc-extension-cell {
+    @include deep-width(30px);
+  }
+
+  .noc-evidence-cell {
+    @include deep-width(600px);
+
+    @include noc-media-breakpoint("noc-lg") {
+      @include deep-width(450px);
+    }
+  }
+
+  .noc-evidence-code-cell {
+  }
+
+  .noc-reference-cell {
+    @include deep-width(100px);
+    @include noc-media-breakpoint("noc-lg") {
+      @include deep-width(80px);
+    }
+  }
+
+  .noc-with-cell {
+    @include deep-width(100px);
+    @include noc-media-breakpoint("noc-lg") {
+      @include deep-width(80px);
+    }
+  }
+  .noc-group-cell {
+    @include deep-width(100px);
+    @include noc-media-breakpoint("noc-lg") {
+      @include deep-width(80px);
+    }
+  }
+  .noc-contributor-cell {
+    @include deep-width(100px);
+    @include noc-media-breakpoint("noc-lg") {
+      @include deep-width(80px);
+    }
+  }
+  .noc-action-cell {
+    padding: 0;
+    @include deep-width(40px);
+  }
+}

@@ -1,0 +1,86 @@
+<div *ngIf="entity.predicate?.evidence.length>0" class="noc-evidence-table noctua-form-table w-100-p" fxLayout="column"
+  fxLayoutAlign="start stretch">
+  <div fxLayout="row" fxLayoutAlign="start stretch" class="noc-row"
+    *ngFor="let evidence of entity.predicate?.evidence; let i = index">
+    <div *ngIf="settings.showEvidenceCode" class="noc-evidence-code-cell noc-box-cell" fxFlex="" fxLayout="column"
+      fxLayoutAlign="start stretch" [ngClass]="{'noc-highlight-modified': evidence.evidence?.modified}">
+      <span class="noc-old-term" *ngIf="evidence.evidence?.modified && evidence.evidence?.termHistory?.length>0">
+        {{evidence.evidence?.termHistory[0]?.label}}
+        <a (click)="$event.stopPropagation()" href="{{evidence.evidence?.termHistory[0]?.url}}" target="_blank">
+          {{ evidence.evidence?.termHistory[0]?.id }}
+        </a>
+      </span>
+      <span class="">{{evidence.evidence?.label}}<br>
+        <a (click)="$event.stopPropagation()" href="{{evidence.evidence?.url}}" target="_blank">
+          {{ evidence.evidence?.id }}
+        </a>
+      </span>
+      <noctua-inline-editor *ngIf="noctuaUserService.user && options.editableEvidence" [cam]="cam" [activity]='activity'
+        [entity]="entity" [category]="EditorCategory.evidence" [evidenceIndex]="i" class="noc-edit-button">
+      </noctua-inline-editor>
+    </div>
+    <div *ngIf="settings.showReference" class="noc-reference-cell noc-box-cell" fxLayout="column"
+      fxLayoutAlign="start stretch"
+      [ngClass]="{'noc-highlight-match': evidence.referenceEntity?.highlight,
+            'noc-highlight-modified': evidence.referenceEntity?.modified,
+            'noc-highlight-match-current': camService.currentMatch?.uuid && evidence.referenceEntity?.uuid===camService.currentMatch?.uuid}">
+      <span class="noc-old-term"
+        *ngIf="evidence.referenceEntity?.modified && evidence.referenceEntity?.termHistory?.length>0">
+        <a (click)="$event.stopPropagation()" href="{{evidence.referenceEntity?.termHistory[0]?.url}}" target="_blank">
+          {{ evidence.referenceEntity?.termHistory[0]?.id }}
+        </a>
+      </span>
+      <span *ngIf="!evidence.referenceEntity?.url" class="">{{evidence.reference}}</span>
+      <span *ngIf="evidence.referenceEntity?.url" class="">
+        <a (click)="$event.stopPropagation()" href="{{evidence.referenceEntity?.url}}" target="_blank">
+          {{evidence.reference}}
+        </a>
+      </span>
+      <noctua-inline-editor *ngIf="noctuaUserService.user && options.editableReference" [cam]="cam"
+        [activity]='activity' [entity]="entity" [category]="EditorCategory.reference" [evidenceIndex]="i"
+        class="noc-edit-button">
+      </noctua-inline-editor>
+    </div>
+    <div *ngIf="settings.showWith" class="noc-with-cell noc-box-cell" fxLayout="column" fxLayoutAlign="start stretch"
+      [ngClass]="{'noc-highlight-modified': evidence.withEntity?.modified}">
+      <span class="noc-old-term" *ngIf="evidence.withEntity?.modified && evidence.withEntity?.termHistory?.length>0">
+        <a (click)="$event.stopPropagation()" href="{{evidence.withEntity?.termHistory[0]?.url}}" target="_blank">
+          {{ evidence.withEntity?.termHistory[0]?.id }}
+        </a>
+      </span>
+      <span *ngIf="!evidence.withEntity?.url" class="">{{evidence.with}}</span>
+      <span *ngIf="evidence.withEntity?.url" class="">
+        <a (click)="$event.stopPropagation()" href="{{evidence.withEntity?.url}}" target="_blank">
+          {{evidence.with}}
+        </a>
+      </span>
+      <noctua-inline-editor *ngIf="noctuaUserService.user && options.editableWith" [cam]="cam" [activity]='activity'
+        [entity]="entity" [category]="EditorCategory.with" [evidenceIndex]="i" class="noc-edit-button">
+      </noctua-inline-editor>
+    </div>
+    <div *ngIf="settings.showGroup" class="noc-group-cell noc-box-cell" fxLayout="column" fxLayoutAlign="start stretch">
+      <span class="">
+        <span *ngFor="let group of evidence.groups; let i=index; let isLast=last">
+          <a (click)="$event.stopPropagation()" href="{{group.url}}" target="_blank">
+            {{group.name}}
+          </a>
+          <span *ngIf="!isLast">&#44;&nbsp;</span>
+        </span>
+      </span>
+    </div>
+    <div *ngIf="settings.showContributor" class="noc-contributor-cell noc-box-cell" fxLayout="column"
+      fxLayoutAlign="start stretch">
+      <span class="">
+        <span *ngFor="let contributor of evidence.contributors; let i=index; let isLast=last">
+          <a (click)="$event.stopPropagation()" href="{{contributor.urcid}}" target="_blank">
+            {{contributor.name}}
+          </a>
+          <span *ngIf="!isLast">&#44;&nbsp;</span>
+        </span>
+      </span>
+    </div>
+  </div>
+</div>
+<div *ngIf="entity.predicate?.evidence.length===0" class="noc-no-info">
+  no evidence present.
+</div>

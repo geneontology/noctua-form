@@ -1,0 +1,109 @@
+<div [attr.id]="activity.displayId" fxLayout="column" fxLayoutAlign="start stretch" class="w-100-p"
+  [ngClass]="{'noc-selected': activity.displayId===camService.currentMatch?.activityDisplayId}">
+  <div class="noc-activity-heading" fxLayout="row" fxLayoutAlign="start center">
+    <div fxFlex="25px" (click)="$event.stopPropagation()">
+      <button mat-icon-button (click)="toggleExpand(activity)" color="primary" class="noc-toggle-expand-button">
+        <fa-icon *ngIf="!activity.expanded" [icon]="['fas', 'caret-right']"></fa-icon>
+        <fa-icon *ngIf="activity.expanded" [icon]="['fas', 'caret-down']"></fa-icon>
+      </button>
+    </div>
+    <div class="noc-display-number noc-sm" (click)="$event.stopPropagation()">
+      {{activity.displayNumber}}
+    </div>
+    <div class="noc-title mr-12">
+      <div class="noc-gp" *ngIf="gpNode" fxLayout="row" fxLayoutAlign="start center">
+        <span class="text-truncate">
+          {{gpNode.term?.label}}
+          <a class="ml-4" (click)="$event.stopPropagation()" href="{{gpNode.term?.url}}" target="_blank">
+            {{ gpNode.term?.id }}
+          </a>
+        </span>
+      </div>
+    </div>
+    <mat-chip class="noc-chip-xs" [ngClass]="activity.activityType">
+      <span>{{activityTypeOptions[activity.activityType]?.label}}</span>
+    </mat-chip>
+    <div *ngIf="activity.hasViolations" class="noc-error" fxLayout="row" fxLayoutAlign="start center">
+      <mat-chip class="noc-error-chip noc-chip-xs ml-8" fxLayout="row" fxLayoutAlign="start center"
+        (click)="displayActivityErrors(activity)">
+        <div class="noc-icon">
+          <fa-icon [icon]="['fas', 'exclamation-triangle']"></fa-icon>
+        </div>
+        <div fxFlex="" class="noc-chip-label">
+          {{activity.violations?.length}} Errors Found
+        </div>
+      </mat-chip>
+    </div>
+    <span fxFlex=""></span>
+    <button mat-icon-button (click)="setActivityDisplayType(ActivityDisplayType.GRAPH)"
+      class="noc-rounded-button noc-sm " matTooltip="Activity Graph Preview" [matTooltipPosition]="'after'"
+      [matTooltipShowDelay]="1000">
+      <fa-icon [icon]="['fas', 'sitemap']"></fa-icon>
+    </button>
+    <!--
+<div *ngIf="!options.reviewMode" class="" fxFlex="200px" fxLayout="row" fxLayoutAlign="end center">
+  <button *ngIf="activity.activityType !==ActivityType.ccOnly" mat-stroked-button
+    (click)="openActivityConnector(activity)" color="primary" class="noc-rounded-button noc-sm mr-8"
+    matTooltip="connect activity causal relation" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
+    <small>Connect</small>
+  </button>
+   <button mat-stroked-button (click)="openActivityForm(activity)" color="primary"
+    class="noc-rounded-button noc-sm mr-8">
+    <small>Edit</small>
+  </button> 
+  <button mat-icon-button class="noc-rounded-button noc-sm" fxFlex="40px" color="primary"
+    [matMenuTriggerFor]="connectionOptionMenu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #connectionOptionMenu="matMenu" class="noc-dropdown-menu">
+    <h6 class="noc-menu-heading"> Danger Zone</h6>
+    <button mat-menu-item class="" (click)="deleteActivity(activity)">
+      Delete Activity
+    </button>
+  </mat-menu>
+ 
+</div>-->
+  </div>
+  <div *ngIf="activity.expanded" class="noc-tree-container">
+    <div *ngIf="activity.activityDisplayType!==ActivityDisplayType.GRAPH" class="noc-tree">
+      <tree-root #tree (initialized)="onTreeLoad()" [nodes]="treeNodes" [options]="treeOptions">
+        <ng-template #treeNodeWrapperTemplate let-node let-index="index">
+          <div class="node-wrapper noc-tree-node" fxLayout="row" fxLayoutAlign="start center"
+            [style.padding-left]="node.getNodePadding()">
+            <button mat-icon-button class="noc-node-expander-button" color="primary" (click)="node.toggleExpanded()"
+              *ngIf="node.hasChildren">
+              <fa-icon *ngIf="node?.isCollapsed" [icon]="['fas', 'caret-right']"></fa-icon>
+              <fa-icon *ngIf="node?.isExpanded" [icon]="['fas', 'caret-down']"></fa-icon>
+            </button>
+            <div class="noc-expander-placeholder" *ngIf="!node.hasChildren">
+            </div>
+            <div class="node-content-wrapper" fxFlex="" fxLayout="row" fxLayoutAlign="start center"
+              [class.node-content-wrapper-active]="node.isActive" [class.node-content-wrapper-focused]="node.isFocused"
+              (click)="node.mouseAction('click', $event)" (dblclick)="node.mouseAction('dblClick', $event)"
+              (contextmenu)="node.mouseAction('contextMenu', $event)" (treeDrop)="node.onDrop($event)"
+              [treeAllowDrop]="node.allowDrop" [treeDrag]="node" [treeDragEnabled]="node.allowDrag()">
+
+              <div class="noc-annotation-row" fxFlex="" fxLayout="column" fxLayoutAlign="start stretch">
+                <div *ngIf="options.slimViewer" class="noc-cell-label" fxLayout="row" fxLayoutAlign="start center">
+                  {{node.data.node?.predicate?.edge?.label}}
+                  <noctua-inline-editor
+                    *ngIf="noctuaUserService.user && node.data.node.relationEditable && options.editableRelation"
+                    [cam]="cam" [activity]='activity' [entity]="node.data.node" [category]="EditorCategory.relationship"
+                    class="noc-edit-button ml-12">
+                  </noctua-inline-editor>
+                </div>
+                <noc-activity-slim-tree-node [settings]="settings" [options]="options" [cam]="cam" [activity]="activity"
+                  [entity]="node.data.node" class="w-100-p" [ngClass]='{"noc-causal-node": node.data.node?.causalNode}'>
+                </noc-activity-slim-tree-node>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </tree-root>
+    </div>
+    <div *ngIf="activity.activityDisplayType===ActivityDisplayType.GRAPH">
+      <noc-preview-activity [activity]='activity'>
+      </noc-preview-activity>
+    </div>
+  </div>
+</div>

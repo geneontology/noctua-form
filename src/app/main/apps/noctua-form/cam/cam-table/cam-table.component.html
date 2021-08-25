@@ -1,9 +1,38 @@
-<div class="w-100-p p-0 cam-table" noctuaPerfectScrollbar>
+<div class="w-100-p p-0 noc-cam-table">
   <div class="noc-summary-bar" fxLayout="row" fxLayoutAlign="start center">
-    <span class='noc-title'>
-      ACTIVITIES
+    <span class='noc-title mr-12'>
+      <span *ngIf="!cam.loading?.status">
+        ACTIVITIES
+      </span>
+      <span *ngIf="cam.loading?.status" class="noc-cam-progress-message">
+        {{cam.loading?.message}}
+      </span>
+      <span *ngIf="cam.rebuildRule?.signal !== CamRebuildSignal.NONE" class="noc-cam-rebuild">
+        {{cam.rebuildRule?.message}}
+        <button mat-button (click)="reload(cam)" class="" color="primary">
+          Reload
+        </button>
+      </span>
     </span>
+    <div *ngIf="cam.violations?.length>0" class="noc-error" fxLayout="row" fxLayoutAlign="start center">
+      <mat-chip class="noc-error-chip  noc-chip-xs ml-8" fxLayout="row" fxLayoutAlign="start center"
+        (click)="displayCamErrors()">
+        <div class="noc-icon">
+          <fa-icon [icon]="['fas', 'exclamation-triangle']"></fa-icon>
+        </div>
+        <div fxFlex="" class="noc-chip-label">
+          {{cam.violations?.length}} Errors Found
+        </div>
+      </mat-chip>
+    </div>
     <span fxFlex></span>
+    <!-- <button mat-button class="" color="primary" (click)="resetModel(cam)">
+      Reset Me
+    </button>
+    <button mat-button class="" color="primary" (click)="storedModel(cam)">
+      Stored
+    </button> -->
+
     <button mat-icon-button class="" fxFlex="40px" color="primary" [matMenuTriggerFor]="activityOptionMenu">
       <mat-icon>more_vert</mat-icon>
     </button>
@@ -15,71 +44,36 @@
         Collapse All
       </button>
     </mat-menu>
+
+    <button mat-stroked-button *ngIf="panelDrawer" (click)="close()" class="noc-rounded-button noc-sm" color="primary"
+      aria-label="Close dialog">
+      <mat-icon>close</mat-icon> Close
+    </button>
   </div>
-  <ng-container [ngSwitch]="cam?.displayType.name">
-    <noc-annoton-entity-table *ngSwitchCase="camDisplayTypeOptions.entity.name" [cam]="cam" class="noc-cam-table-body"
-      fxLayout="row" fxLayoutAlign="start center">
-    </noc-annoton-entity-table>
-    <noc-triple-table *ngSwitchCase="camDisplayTypeOptions.triple.name" [cam]="cam" class="noc-cam-table-body"
-      fxLayout="row" fxLayoutAlign="start center">
-    </noc-triple-table>
-    <ng-container *ngSwitchDefault>
-      <div *ngIf="cam?.loading.status" class="noc-loading-container" fxLayout="column" fxLayoutAlign="center center">
-        <mat-progress-spinner class="example-margin" [color]="loadingSpinner.color" [mode]="loadingSpinner.mode">
-        </mat-progress-spinner>
-        <h3>
-          {{cam?.loading.message}}
-        </h3>
-      </div>
-      <div *ngFor="let annoton of cam.annotons" class="w-100-p"
-        [ngClass]="{'noc-annoton-selected': annoton.id=== camService.annoton?.id}">
-        <div class="noc-annoton-table-heading" fxLayout="row" fxLayoutAlign="start center">
-          <div fxFlex="50px" (click)="$event.stopPropagation()">
-            <button mat-icon-button (click)="toggleExpand(annoton)" color="primary" class="">
-              <mat-icon *ngIf="!annoton.expanded" class="">
-                keyboard_arrow_down
-              </mat-icon>
-              <mat-icon *ngIf="annoton.expanded" class="">
-                keyboard_arrow_up
-              </mat-icon>
-            </button>
-          </div>
-          <div class="noc-title mr-12">
-            <div class="text-truncate">
-              <strong> {{annoton?.presentation.qualifier}} </strong>
-              {{annoton?.presentation.title}}
-            </div>
-          </div>
-          <mat-chip class="noc-chip-xs" [ngClass]="annoton.annotonType">
-            <span>{{annotonTypeOptions[annoton.annotonType]?.label}}</span>
-          </mat-chip>
-          <span fxFlex=""></span>
-          <div class="" fxFlex="200px" fxLayout="row" fxLayoutAlign="end center">
-            <button *ngIf="annoton.annotonType !==AnnotonType.ccOnly" mat-stroked-button
-              (click)="openAnnotonConnector(annoton)" color="primary" class="noc-rounded-button noc-sm mr-8"
-              matTooltip="connect activity causal relation" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
-              <small>Connect</small>
-            </button>
-            <!-- <button mat-stroked-button (click)="openAnnotonForm(annoton)" color="primary"
-              class="noc-rounded-button noc-sm mr-8">
-              <small>Edit</small>
-            </button> -->
-            <button mat-icon-button class="noc-rounded-button noc-sm" fxFlex="40px" color="primary"
-              [matMenuTriggerFor]="connectionOptionMenu">
-              <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #connectionOptionMenu="matMenu" class="noc-dropdown-menu">
-              <h6 class="noc-menu-heading"> Danger Zone</h6>
-              <button mat-menu-item class="" (click)="deleteAnnoton(annoton)">
-                Delete Activity
-              </button>
-            </mat-menu>
-          </div>
-        </div>
-        <noc-annoton-table [cam]="cam" [annoton]="annoton" *ngIf="annoton.expanded" class="noc-cam-table-body"
-          [@annotonExpand]="annoton.expanded ? 'expanded' : 'collapsed'" fxLayout="row" fxLayoutAlign="start center">
-        </noc-annoton-table>
-      </div>
-    </ng-container>
-  </ng-container>
+  <div class="w-100-p noc-cam-table-body">
+    <div *ngFor="let activity of cam.activities" [attr.id]="activity.displayId" class="w-100-p"
+      [ngClass]="{'noc-selected': activity.displayId===camService.currentMatch?.activityDisplayId}">
+
+      <noc-activity-table *ngIf="options.displayType===ActivityDisplayType.TABLE" [options]="options" [cam]="cam"
+        [activity]="activity" class="noc-activities-table-body" fxLayout="row" fxLayoutAlign="start center">
+      </noc-activity-table>
+      <noc-activity-tree *ngIf="options.displayType===ActivityDisplayType.TREE" [options]="options" [cam]="cam"
+        [activity]="activity" class="noc-activities-table-body" fxLayout="row" fxLayoutAlign="start center">
+      </noc-activity-tree>
+      <noc-activity-tree-table *ngIf="options.displayType===ActivityDisplayType.TREE_TABLE" [options]="options"
+        [cam]="cam" [activity]="activity" class="noc-activities-table-body" fxLayout="row" fxLayoutAlign="start center">
+      </noc-activity-tree-table>
+      <noc-activity-slim-tree *ngIf="options.displayType===ActivityDisplayType.SLIM_TREE" [options]="options"
+        [cam]="cam" [activity]="activity" class="noc-activities-table-body" fxLayout="row" fxLayoutAlign="start center">
+      </noc-activity-slim-tree>
+    </div>
+    <div *ngIf="!cam.loading?.status && cam.activities.length===0" class="noc-no-info">
+      no activities present.
+    </div>
+    <div *ngIf="cam?.loading.status" class="noc-loading-container" fxLayout="column" fxLayoutAlign="center center">
+      <mat-progress-spinner class="example-margin" diameter="70" [color]="loadingSpinner.color"
+        [mode]="loadingSpinner.mode">
+      </mat-progress-spinner>
+    </div>
+  </div>
 </div>

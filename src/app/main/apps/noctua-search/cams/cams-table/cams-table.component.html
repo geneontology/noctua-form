@@ -1,0 +1,247 @@
+<div class="noc-cams-result noc-drawer-body" [ngClass]="{'noc-review-mode': isReviewMode}" fxLayout="column"
+  fxLayoutAlign="start stretch">
+  <div class="noc-summary-filter-bar" fxLayout="row" fxLayoutAlign="start center">
+    <small class="mr-12">Filtered By: </small>
+    <mat-chip *ngIf="noctuaSearchService?.searchCriteria?.filtersCount>0" (click)="reset()" class="noc-clearall-chip">
+      Clear All
+    </mat-chip>
+    <mat-chip *ngIf="noctuaSearchService.searchCriteria.ids.length>0" class="noc-filter-chip"
+      (click)="openLeftDrawer(LeftPanel.filter)" [removable]="true"
+      (removed)="noctuaSearchService.removeFilterType(noctuaSearchService.filterType.ids)">
+      Model IDs: <span> ({{ noctuaSearchService.searchCriteria.ids.length}})</span>
+      <mat-icon matChipRemove>cancel</mat-icon>
+    </mat-chip>
+    <mat-chip *ngIf="noctuaSearchService.searchCriteria.gps.length>0" class="noc-filter-chip"
+      (click)="openLeftDrawer(LeftPanel.filter)" [removable]="true"
+      (removed)="noctuaSearchService.removeFilterType(noctuaSearchService.filterType.gps)">
+      GPs: <span> ({{ noctuaSearchService.searchCriteria.gps.length}})</span>
+      <mat-icon matChipRemove>cancel</mat-icon>
+    </mat-chip>
+    <mat-chip *ngIf="noctuaSearchService.searchCriteria.terms.length>0" class="noc-filter-chip"
+      (click)="openLeftDrawer(LeftPanel.filter)" [removable]="true"
+      (removed)="noctuaSearchService.removeFilterType(noctuaSearchService.filterType.terms)">
+      GO Terms: <span class="noc-filter-number"> ({{ noctuaSearchService.searchCriteria.terms.length}})</span>
+      <mat-icon matChipRemove>cancel</mat-icon>
+    </mat-chip>
+    <mat-chip *ngIf="noctuaSearchService.searchCriteria.contributors.length>0" class="noc-filter-chip"
+      (click)="openLeftDrawer(LeftPanel.filter)" [removable]="true"
+      (removed)="noctuaSearchService.removeFilterType(noctuaSearchService.filterType.contributors)">
+      Contributors: <span class="noc-filter-number">
+        ({{ noctuaSearchService.searchCriteria.contributors.length}})</span>
+      <mat-icon matChipRemove>cancel</mat-icon>
+    </mat-chip>
+    <mat-chip *ngIf="noctuaSearchService.searchCriteria.groups.length>0" class="noc-filter-chip"
+      (click)="openLeftDrawer(LeftPanel.filter)" [removable]="true"
+      (removed)="noctuaSearchService.removeFilterType(noctuaSearchService.filterType.groups)">
+      Groups: <span class="noc-filter-number"> ({{ noctuaSearchService.searchCriteria.groups.length}})</span>
+      <mat-icon matChipRemove>cancel</mat-icon>
+    </mat-chip>
+    <mat-chip *ngIf="noctuaSearchService.searchCriteria.organisms.length>0" class="noc-filter-chip"
+      (click)="openLeftDrawer(LeftPanel.filter)" [removable]="true"
+      (removed)="noctuaSearchService.removeFilterType(noctuaSearchService.filterType.organisms)">
+      Species: <span class="noc-filter-number"> ({{ noctuaSearchService.searchCriteria.organisms.length}})</span>
+      <mat-icon matChipRemove>cancel</mat-icon>
+    </mat-chip>
+    <mat-chip *ngIf="noctuaSearchService.searchCriteria.pmids.length>0" class="noc-filter-chip"
+      (click)="openLeftDrawer(LeftPanel.filter)" [removable]="true"
+      (removed)="noctuaSearchService.removeFilterType(noctuaSearchService.filterType.pmids)">
+      References: <span class="noc-filter-number"> ({{ noctuaSearchService.searchCriteria.pmids.length}})</span>
+      <mat-icon matChipRemove>cancel</mat-icon>
+    </mat-chip>
+    <mat-chip *ngIf="noctuaSearchService.searchCriteria.states.length>0" class="noc-filter-chip"
+      (click)="openLeftDrawer(LeftPanel.filter)" [removable]="true"
+      (removed)="noctuaSearchService.removeFilterType(noctuaSearchService.filterType.states)">
+      Model States: <span class="noc-filter-number">
+        ({{ noctuaSearchService.searchCriteria.states.length}})</span>
+      <mat-icon matChipRemove>cancel</mat-icon>
+    </mat-chip>
+    <mat-chip *ngIf="noctuaSearchService.searchCriteria.exactdates.length>0" class="noc-filter-chip"
+      (click)="openLeftDrawer(LeftPanel.filter)" [removable]="true"
+      (removed)="noctuaSearchService.removeFilterType(noctuaSearchService.filterType.exactdates)">
+      Date Modified: <span class="noc-filter-number">
+        ({{ noctuaSearchService.searchCriteria.exactdates.length}})</span>
+      <mat-icon matChipRemove>cancel</mat-icon>
+    </mat-chip>
+  </div>
+  <div class="noc-summary-results-bar" fxLayout="row" fxLayoutAlign="start center">
+    <mat-progress-bar *ngIf="noctuaSearchService.loading" class="noc-cam-progress" [color]="loadingSpinner.color"
+      [mode]="loadingSpinner.mode">
+    </mat-progress-bar>
+    <small>Results:</small>
+    <div class="ml-8 mr-16" fxLayout="row" fxLayoutAlign="start center">
+      <button mat-stroked-button color="" class="noc-rounded-button mr-4 noc-half-button noc-sm noc-r">
+        {{camPage?.total}}
+      </button>
+      <button mat-stroked-button (click)="refresh()" class="noc-rounded-button noc-half-button noc-sm noc-l"
+        color="primary" matTooltip="Refresh Search" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1000">
+        <mat-icon class="">
+          youtube_searched_for
+        </mat-icon>
+      </button>
+    </div>
+    <span fxFlex></span>
+    <mat-paginator *ngIf="camPage" class="noc-paginator" #paginatorBottom [length]="camPage.total"
+      [pageIndex]="camPage.pageNumber" [pageSize]="camPage.size" [pageSizeOptions]="camPage.pageSizeOptions"
+      (page)="pageEvent = $event; setPage($event)" [showFirstLastButtons]="true">
+    </mat-paginator>
+  </div>
+  <table mat-table multiTemplateDataRows class="noc-cams-table" [dataSource]="cams" [@animateStagger]="{value:'50'}">
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef fxFlex="30px">
+      </th>
+      <td class="noc-checkbox-cell" mat-cell *matCellDef="let cam" fxFlex="30px">
+        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? toggleSelection(cam) : null"
+          [checked]="selection.isSelected(cam)" [aria-label]="checkboxLabel(cam)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="expand">
+      <th mat-header-cell *matHeaderCellDef fxFlex="80px" fxLayout="row" fxLayoutAlign="start center"></th>
+      <td mat-cell *matCellDef="let cam" class="noc-expand-cell" fxFlex="80px" fxLayout="row"
+        fxLayoutAlign="start center">
+        <button mat-icon-button (click)="toggleCamExpand(cam)" color="primary" class="noc-toggle-expand-button">
+          <fa-icon *ngIf="!cam.expanded" [icon]="['fas', 'caret-right']"></fa-icon>
+          <fa-icon *ngIf="cam.expanded" [icon]="['fas', 'caret-down']"></fa-icon>
+        </button>
+        <div class="noc-display-number mr-8">
+          {{cam.displayNumber}}
+        </div>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef fxFlex="200px" fxLayout="row" fxLayoutAlign="start center">
+        Title
+      </th>
+      <td mat-cell *matCellDef="let cam" fxFlex="200px" class="noc-title" fxLayout="row" fxLayoutAlign="start center">
+        {{cam.title }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="saved">
+      <th mat-header-cell *matHeaderCellDef fxFlex="50px" fxLayout="row" fxLayoutAlign="start center">Saved</th>
+      <td mat-cell *matCellDef="let cam" fxFlex="50px" class="noc-model-saved pr-12" fxLayout="row"
+        fxLayoutAlign="center center">
+        <fa-icon *ngIf="cam.modified" class="red-500-fg" [icon]="['far', 'times-circle']"></fa-icon>
+        <fa-icon *ngIf="!cam.modified" class="green-500-fg" [icon]="['far', 'check-circle']"></fa-icon>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="state">
+      <th mat-header-cell *matHeaderCellDef fxFlex="110px" fxLayout="row" fxLayoutAlign="start center">State</th>
+      <td mat-cell *matCellDef="let cam" fxFlex="110px" class="noc-model-state pr-12" fxLayout="row"
+        fxLayoutAlign="start center">
+        <mat-chip *ngIf="cam.state" class="noc-table-chip noc-state-chip" [ngClass]="{'noc-development': cam.state.name === 'development',
+        'noc-production': cam.state.name === 'production',
+        'noc-review': cam.state.name === 'review'}" fxLayout="row" fxLayoutAlign="start center"
+          (click)="noctuaSearchService.filter(noctuaSearchService.filterType.states, cam.state)"
+          matTooltip="Add state to Filters" [matTooltipPosition]="'below'" [matTooltipShowDelay]="1000">
+          <div class="noc-icon">
+            <fa-icon [icon]="['fas', 'tasks']"></fa-icon>
+          </div>
+          <div fxFlex="" class="noc-chip-label">
+            {{cam.state.label}}
+          </div>
+        </mat-chip>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef fxFlex="100px" fxLayout="row" fxLayoutAlign="start center">
+        Date Modified
+      </th>
+      <td mat-cell *matCellDef="let cam" class="noc-date" fxFlex="100px" fxLayout="row" fxLayoutAlign="start center">
+        <mat-chip class="noc-table-chip noc-date-chip" fxLayout="row" fxLayoutAlign="start center"
+          (click)="noctuaSearchService.filter(noctuaSearchService.filterType.exactdates, cam.date)"
+          matTooltip="Add date to exact date filter" [matTooltipPosition]="'below'" [matTooltipShowDelay]="1000">
+          <div class="noc-icon">
+            <fa-icon [icon]="['fas', 'calendar-day']"></fa-icon>
+          </div>
+          <div fxFlex="" class="noc-chip-label">
+            {{cam.date}}
+          </div>
+        </mat-chip>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="contributor">
+      <th mat-header-cell *matHeaderCellDef fxFlex="" fxLayout="row" fxLayoutAlign="start center">Contributors</th>
+      <td mat-cell *matCellDef="let cam" fxFlex="" fxLayout="row" fxLayoutAlign="start center">
+        <mat-chip-list>
+          <mat-chip class="noc-table-chip noc-user-chip" fxLayout="row" fxLayoutAlign="start center"
+            *ngFor="let contributor of cam.contributors"
+            (click)="noctuaSearchService.filter(noctuaSearchService.filterType.contributors, contributor)"
+            matTooltip="Add {{contributor.name}} to Filters" [matTooltipPosition]="'below'" [matTooltipShowDelay]="1000"
+            [style.borderColor]="contributor.color">
+            <div class="noc-icon noc-icon-initials" [style.backgroundColor]="contributor.color">
+              {{contributor.initials}}
+            </div>
+            <div fxFlex="" class="noc-chip-label">
+              {{contributor.name ? contributor.name :contributor.orcid}}
+            </div>
+          </mat-chip>
+        </mat-chip-list>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef fxFlex="100px" fxLayout="row" fxLayoutAlign="start center">Open In</th>
+      <td mat-cell *matCellDef="let cam" fxFlex="100px" fxLayout="row" fxLayoutAlign="start center">
+        <a mat-icon-button [href]='cam?.model?.modelInfo?.noctuaFormUrl' target="_blank"
+          class="noc-edit-button noc-rounded-button noc-sm  mr-4 noc-half-button noc-r" matTooltip="Noctua Form"
+          [matTooltipPosition]="'after'" [matTooltipShowDelay]="1000">
+          <fa-icon [icon]="['fas', 'list-alt']"></fa-icon>
+        </a>
+        <a mat-icon-button [href]='cam?.model?.modelInfo?.graphEditorUrl' target="_blank"
+          class="noc-edit-button noc-rounded-button noc-sm noc-half-button noc-l" matTooltip="Graph Editor"
+          [matTooltipPosition]="'after'" [matTooltipShowDelay]="1000">
+          <fa-icon [icon]="['fas', 'sitemap']"></fa-icon>
+        </a>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="export">
+      <th mat-header-cell *matHeaderCellDef fxFlex="115px" fxLayout="row" fxLayoutAlign="start center"></th>
+      <td mat-cell *matCellDef="let cam" fxFlex="115px" fxLayout="row" fxLayoutAlign="start center">
+        <button mat-stroked-button [matMenuTriggerFor]="optionsMenu" class="noc-edit-button noc-rounded-button noc-sm"
+          color="primary">
+          <mat-icon>more_horiz</mat-icon>
+        </button>
+        <mat-menu #optionsMenu="matMenu">
+          <button mat-menu-item (click)="openCamForm(cam)" class="">
+            Model Info
+          </button>
+          <!--   <button mat-menu-item (click)="openDuplicateCamForm(cam)" class="">
+            Duplicate Model
+          </button> -->
+          <button mat-menu-item [matMenuTriggerFor]="exportMenu" class="">
+            Export As
+          </button>
+        </mat-menu>
+
+        <mat-menu #exportMenu="matMenu">
+          <a [href]='cam?.model?.modelInfo?.gpadUrl' target="_blank" mat-menu-item>
+            GPAD
+          </a>
+          <a [href]='cam?.model?.modelInfo?.owlUrl' target="_blank" mat-menu-item>
+            OWL
+          </a>
+        </mat-menu>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="expandedDetail">
+      <td class="p-0" mat-cell *matCellDef="let cam" [attr.colspan]="displayedColumns.length">
+        <div class="noc-cam-table-container">
+          <mat-progress-bar *ngIf="cam.loading.status" class="noc-cam-progress" [color]="loadingSpinner.color"
+            [mode]="loadingSpinner.mode">
+          </mat-progress-bar>
+          <noc-cam-table *ngIf="cam.expanded" [cam]="cam" [options]="tableOptions"></noc-cam-table>
+        </div>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row (click)="$event.stopPropagation()" *matRowDef="let cam; columns: displayedColumns;"
+      id="{{cleanId(cam.id)}}">
+    </tr>
+    <tr mat-row *matRowDef="let cam; columns: ['expandedDetail']"
+      [@detailExpand]="cam.expanded ? 'expanded' : 'collapsed'" style="overflow: hidden">
+    </tr>
+
+  </table>
+  <div *ngIf="cams?.length===0" class="noc-no-info">
+    no results yet.
+  </div>
+</div>

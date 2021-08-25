@@ -8,7 +8,7 @@ import {
 
 import { CamDiagramService } from './../../services/cam-diagram.service';
 
-import { Annoton } from 'noctua-form-base';
+import { Activity } from 'noctua-form-base';
 import { NodeComponent } from './../node/node.component';
 import { jsPlumb } from 'jsplumb';
 
@@ -25,14 +25,14 @@ export class NodeService {
     this.rootViewContainer = viewContainerRef;
   }
 
-  public addDynamicNode(annoton: Annoton) {
+  public addDynamicNode(activity: Activity) {
     const self = this;
 
     const factory = this.factoryResolver.resolveComponentFactory(NodeComponent);
     const component = factory.create(self.rootViewContainer.parentInjector);
     const nodeComponent: NodeComponent = <NodeComponent>component.instance
 
-    nodeComponent.annoton = annoton;
+    nodeComponent.activity = activity;
     self.rootViewContainer.insert(component.hostView);
     self.camDiagramService.onNodesReady.push(nodeComponent.onNodeReady)
 

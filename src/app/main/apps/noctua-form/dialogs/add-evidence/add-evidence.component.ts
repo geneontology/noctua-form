@@ -31,7 +31,6 @@ export class AddEvidenceDialogComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log(this.cam)
   }
 
   close() {
@@ -49,7 +48,7 @@ export class AddEvidenceDialogComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Unsubscribe from all subscriptions
+
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
   }

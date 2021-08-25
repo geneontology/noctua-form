@@ -1,0 +1,120 @@
+<div class="w-100-p">
+  <div [attr.id]="activity.displayId" class="w-100-p"
+    [ngClass]="{'noc-selected': activity.displayId===camService.currentMatch?.activityDisplayId}">
+    <div class="noc-activity-heading" fxLayout="row" fxLayoutAlign="start center">
+      <div fxFlex="25px" (click)="$event.stopPropagation()">
+        <button mat-icon-button (click)="toggleExpand(activity)" color="primary" class="noc-toggle-expand-button">
+          <fa-icon *ngIf="!activity.expanded" [icon]="['fas', 'caret-right']"></fa-icon>
+          <fa-icon *ngIf="activity.expanded" [icon]="['fas', 'caret-down']"></fa-icon>
+        </button>
+      </div>
+      <div class="noc-display-number noc-sm mr-8" (click)="$event.stopPropagation()">
+        {{activity.displayNumber}}
+      </div>
+      <div class="noc-title  mr-12" fxLayout="row" fxLayoutAlign="start center">
+        <div class="noc-relation mr-12"> <small>{{gpNode?.predicate?.edge?.label}}</small> </div>
+        <div class="noc-gp" *ngIf="gpNode" [attr.id]="gpNode.term?.displayId"
+          [ngClass]="{'noc-highlight-match': gpNode.term?.highlight,
+        'noc-highlight-modified': gpNode.term?.modified,
+        'noc-highlight-match-current': camService.currentMatch?.uuid && gpNode.term?.uuid===camService.currentMatch?.uuid}" fxLayout="column" fxLayoutAlign="center start">
+          <span class="noc-old-term text-truncate" *ngIf="gpNode.term?.modified && gpNode.term?.termHistory?.length>0">
+            {{gpNode.term?.termHistory[0]?.label}}
+            <a (click)="$event.stopPropagation()" href="{{gpNode.term?.termHistory[0]?.url}}" target="_blank">
+              {{ gpNode.term?.termHistory[0]?.id }}
+            </a>
+          </span>
+          <span class="text-truncate">
+            {{gpNode.term?.label}}
+          </span>
+          <a class="text-truncate" (click)="$event.stopPropagation()" href="{{gpNode.term?.url}}" target="_blank">
+            {{ gpNode.term?.id }}
+          </a>
+          <noctua-inline-editor *ngIf="noctuaUserService.user && gpNode.term && options.editableTerms" [cam]="cam"
+            [activity]='activity' [entity]="gpNode" [category]="EditorCategory.term" class="noc-edit-button">
+          </noctua-inline-editor>
+        </div>
+      </div>
+      <mat-chip class="noc-chip-xs" [ngClass]="activity.activityType">
+        <span>{{activityTypeOptions[activity.activityType]?.label}}</span>
+      </mat-chip>
+      <div *ngIf="activity.hasViolations" class="noc-error" fxLayout="row" fxLayoutAlign="start center">
+        <mat-chip class="noc-error-chip" fxLayout="row" fxLayoutAlign="start center"
+          (click)="displayActivityErrors(activity)">
+          <div class="noc-icon">
+            <fa-icon [icon]="['fas', 'exclamation-triangle']"></fa-icon>
+          </div>
+          <div fxFlex="" class="noc-chip-label">
+            {{activity.violations?.length}} Errors Found
+          </div>
+        </mat-chip>
+      </div>
+      <span fxFlex=""></span>
+      <!--
+    <div *ngIf="!options.reviewMode" class="" fxFlex="200px" fxLayout="row" fxLayoutAlign="end center">
+      <button *ngIf="activity.activityType !==ActivityType.ccOnly" mat-stroked-button
+        (click)="openActivityConnector(activity)" color="primary" class="noc-rounded-button noc-sm mr-8"
+        matTooltip="connect activity causal relation" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
+        <small>Connect</small>
+      </button>
+       <button mat-stroked-button (click)="openActivityForm(activity)" color="primary"
+        class="noc-rounded-button noc-sm mr-8">
+        <small>Edit</small>
+      </button> 
+      <button mat-icon-button class="noc-rounded-button noc-sm" fxFlex="40px" color="primary"
+        [matMenuTriggerFor]="connectionOptionMenu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #connectionOptionMenu="matMenu" class="noc-dropdown-menu">
+        <h6 class="noc-menu-heading"> Danger Zone</h6>
+        <button mat-menu-item class="" (click)="deleteActivity(activity)">
+          Delete Activity
+        </button>
+      </mat-menu>
+     
+    </div>-->
+    </div>
+  </div>
+
+  <div *ngIf="activity.expanded" class="noc-activity-table w-100-p"
+    [ngClass]="{'noc-selected': activity.displayId===camService.currentMatch?.activityDisplayId}" fxLayout="column"
+    fxLayoutAlign="start start">
+    <div class="noctua-form-table noc-activity-header w-100-p" fxLayout="row" fxLayoutAlign="start center">
+      <div *ngIf="!options.slimViewer" fxFlex="" class="noc-cell noc-relation-cell">
+        Relationship
+      </div>
+      <div class="noc-cell noc-term-cell" fxFlex="">
+        Term
+      </div>
+      <div *ngIf="!options.slimViewer" class="noc-cell noc-aspect-cell">
+        Asp
+      </div>
+      <div class="noc-cell noc-extension-cell">
+        Ext
+      </div>
+      <div class="noc-evidence-cell" fxLayout="row" fxLayoutAlign="start center">
+        <div class="noc-cell noc-evidence-code-cell" fxFlex="">
+          Evidence
+        </div>
+        <div class="noc-cell noc-reference-cell">
+          Reference
+        </div>
+        <div class="noc-cell noc-with-cell">
+          With
+        </div>
+        <div class="noc-cell noc-group-cell">
+          Assigned By
+        </div>
+        <div class="noc-cell noc-contributor-cell">
+          Contributor
+        </div>
+      </div>
+      <div class="noc-cell noc-action-cell"> </div>
+    </div>
+    <noc-activity-tree-node *ngFor="let node of nodes" [options]="options" [cam]="cam" [activity]="activity"
+      [entity]="node" class="w-100-p">
+    </noc-activity-tree-node>
+    <div *ngIf="activity.nodes?.length===0" class="noc-no-info">
+      no results yet.
+    </div>
+  </div>
+</div>

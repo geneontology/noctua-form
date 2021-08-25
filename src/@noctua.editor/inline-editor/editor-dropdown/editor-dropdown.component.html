@@ -17,7 +17,7 @@
     <mat-form-field class="noc-sm w-100-p" appearance="outline">
       <mat-label>{{entity.label}}</mat-label>
       <textarea type="text" matInput formControlName="term" [matAutocomplete]="termAuto" row="2">
-    </textarea>
+      </textarea>
       <mat-autocomplete #termAuto="matAutocomplete" [displayWith]="termDisplayFn" class="noc-term-autocomplete">
         <mat-option *ngFor="let item of entity?.termLookup.results" [value]="item">
           <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
@@ -38,7 +38,7 @@
       </mat-autocomplete>
     </mat-form-field>
   </div>
-  <ng-container [formGroup]="evidenceFormGroup">
+  <ng-container *ngIf="evidenceFormGroup" [formGroup]="evidenceFormGroup">
     <div *ngIf="displaySection.evidence" class="noc-edit-field p-4" fxFlex="250px">
       <mat-form-field appearance="outline" class="noc-sm w-100-p">
         <mat-label>Evidence</mat-label>

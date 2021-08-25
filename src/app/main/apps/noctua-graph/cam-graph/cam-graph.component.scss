@@ -1,0 +1,81 @@
+@import "src/@noctua/scss/noctua";
+@import "src/@noctua.common/scss/noctua.common";
+
+$grid-line-color: rgba(#000, 0.1);
+$primary: #324c74;
+
+:host {
+  width: 100%;
+
+  #noc-canvas {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  .noc-middle-panel {
+    //  @include deep-width(100%);
+    overflow: hidden;
+  }
+
+  .noc-workflow-toolbar {
+    background-color: #ffffff;
+    padding: 2px 12px;
+    @include deep-height(35px);
+    @include mat-elevation(2);
+    //  border-bottom: 1px solid #002255;
+  }
+
+  .noc-paper-container {
+    height: calc(100%-35px);
+    //background-color: #e4adad;
+    overflow: auto;
+    //background-size: 10px 10px;
+    //  background-image: linear-gradient(to right, $grid-line-color 1px, transparent 1px), linear-gradient(to bottom, $grid-line-color 1px, transparent 1px);
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  #noc-paper {
+  }
+
+  #noc-palette {
+    background-color: #fff;
+    border-right: solid 1px #002255;
+    @include deep-width(100px);
+    @include deep-height(100%);
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    .noc-drawer-header {
+      @include deep-height(35px);
+      @include mat-elevation(2);
+    }
+
+    .noc-drawer-body {
+      padding-bottom: 200px;
+    }
+
+    .noc-heading {
+      padding-left: 8px;
+      display: flex;
+      align-items: center;
+      height: 35px;
+      color: #002255;
+      border-bottom: solid 1px #324c74;
+      font-size: 12px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+  }
+
+  #noc-flypaper {
+    height: 400px;
+    width: 400px;
+  }
+}

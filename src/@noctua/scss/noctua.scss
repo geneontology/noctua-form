@@ -2,6 +2,27 @@
 @import "mixins/breakpoints";
 $noc-primary-color: #039be5;
 $noc-secondary-color: #995014;
+$noc-highlight-model-color: #e1f5fe;
+$noc-highlight-color: #fffcd8;
+
+$noc-toolbar-color: #e7ecf4;
+$noc-primary-color: #3b5998;
+$noc-primary-color-accent: #8b9dc3;
+$noc-primary-color-lighter: #dfe3ee;
+$noc-primary-color-light: rgba(#798fb8, 0.3);
+$noc-primary-color-text: #4a8bfc;
+$noc-tree-line-color: rgba(#798fb8, 0.3);
+
+//aspect
+$noc-mf: #7cd488;
+$noc-bp: #f4c89c;
+$noc-cc: #d3b5f5;
+
+.ps__rail-x {
+  top: 3px;
+  top: initial !important;
+  bottom: 0 !important;
+}
 
 @mixin deep-width($number) {
   width: $number;
@@ -44,13 +65,35 @@ mat-chip {
 
 .navbar {
   display: none !important;
-  visibility: hidden
+  visibility: hidden;
+}
+
+.noc-activity-create-dialog {
+  @include deep-height(90%);
+  @include deep-width(900px);
+
+  noc-activity-form {
+    @include deep-height(100%);
+    @include deep-width(100%);
+  }
+
+  @include media-breakpoint("lt-lg") {
+    @include deep-width(95%);
+  }
 }
 
 .noc-select-evidence-dialog {
   @include deep-width(1100px);
 
-  @include media-breakpoint('lt-lg') {
+  @include media-breakpoint("lt-lg") {
+    @include deep-width(90%);
+  }
+}
+
+.noc-link-to-existing-dialog {
+  @include deep-width(1100px);
+
+  @include media-breakpoint("lt-lg") {
     @include deep-width(90%);
   }
 }
@@ -59,17 +102,70 @@ mat-chip {
   @include deep-height(90%);
   @include deep-width(1100px);
 
-  @include media-breakpoint('lt-lg') {
+  @include media-breakpoint("lt-lg") {
     @include deep-width(90%);
   }
 }
 
-.noc-preview-annoton-dialog {
+.noc-search-evidence-dialog {
+  @include deep-height(90%);
+  @include deep-width(1000px);
+
+  @include media-breakpoint("lt-lg") {
+    @include deep-width(90%);
+  }
+}
+
+.noc-preview-activity-dialog {
   @include deep-height(90%);
   @include deep-width(1100px);
 
-  @include media-breakpoint('lt-lg') {
+  @include media-breakpoint("lt-lg") {
     @include deep-width(90%);
+  }
+}
+
+.noc-cams-replace-confirm-dialog {
+  @include deep-height(90%);
+  @include deep-width(1100px);
+
+  @include media-breakpoint("lt-lg") {
+    @include deep-width(90%);
+  }
+}
+
+.noc-cams-review-changes-dialog {
+  @include deep-height(90%);
+  @include deep-width(800px);
+
+  @include media-breakpoint("lt-lg") {
+    @include deep-width(90%);
+  }
+}
+
+.noc-cams-unsaved-dialog {
+  @include deep-width(600px);
+
+  @include media-breakpoint("sm") {
+    @include deep-width(100%);
+  }
+}
+
+.noc-display-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  @include deep-height(30px);
+  @include deep-width(30px);
+  border: #bbb solid 1px;
+  font-size: 12px;
+  z-index: 2;
+
+  &.noc-sm {
+    @include deep-height(25px);
+    @include deep-width(25px);
+    font-size: 10px;
   }
 }
 
@@ -91,16 +187,18 @@ textarea {
     .mat-form-field-wrapper {
       font-size: 12px;
     }
+
+    textarea {
+      @include deep-height(26px);
+    }
   }
 }
-
-
 
 .noc-dropdown-menu {
   .noc-menu-heading {
     margin: 0;
     padding: 10px 14px;
-    background-color: #E2E2E2;
+    background-color: #e2e2e2;
   }
 
   .noc-item {
@@ -112,15 +210,26 @@ textarea {
 
 .noc-paginator {
   overflow: hidden;
-  @include deep-height(40px);
-  background-color: #DDD;
+  @include deep-height(50px);
+
+  display: flex;
+  justify-content: left;
+  align-items: center;
+
+  .mat-paginator-page-size {
+    align-items: center;
+  }
+
+  .mat-paginator-page-size-select {
+    margin-top: -15px;
+  }
 
   .mat-paginator-container {
-    @include deep-height(40px !important);
+    @include deep-height(50px !important);
   }
 }
 
-input[type=text] {
+input[type="text"] {
   &.noc-textbox-legacy {
     padding-left: 10px;
     height: 36px;
@@ -131,11 +240,11 @@ input[type=text] {
     -moz-box-sizing: border-box;
     background: #fff;
     border: 1px solid #bbb;
-    -webkit-transition: all 0.30s ease-in-out;
-    -moz-transition: all 0.30s ease-in-out;
-    -ms-transition: all 0.30s ease-in-out;
-    -o-transition: all 0.30s ease-in-out;
-    transition: all 0.30s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
   }
 }
 
@@ -145,7 +254,7 @@ input[type=text] {
   line-height: 36px;
   @include deep-width(36px);
   border-radius: 0;
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
 }
 
 .noc-truncate {
@@ -191,5 +300,59 @@ input[type=text] {
   mat-icon {
     margin-left: 10px;
     margin-right: 10px;
+  }
+}
+
+.angular-tree-component {
+  width: 100%;
+  position: relative;
+  display: inline-block;
+  cursor: auto;
+  -webkit-touch-callout: auto; /* iOS Safari */
+  -webkit-user-select: auto; /* Chrome/Safari/Opera */
+  -khtml-user-select: auto; /* Konqueror */
+  -moz-user-select: auto; /* Firefox */
+  -ms-user-select: auto; /* IE/Edge */
+  user-select: auto; /* non-prefixed version, currently not supported by any browser */
+}
+
+.noc-tree {
+  padding-left: 0;
+  //margin-left: -5px;
+
+  .node-drop-slot {
+    display: none;
+    visibility: hidden;
+    @include deep-height(0);
+  }
+
+  .tree-children::before {
+    content: "";
+    position: absolute;
+    border-left: 1px solid $noc-tree-line-color;
+    height: 100%;
+    top: -14px;
+    left: 10px;
+  }
+
+  .tree-children {
+    position: relative;
+    padding-left: 0;
+    margin-left: 16px;
+  }
+
+  .tree-node-leaf {
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      border-bottom: 1px solid $noc-tree-line-color;
+      width: 12px;
+      //  margin-top: 12px;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
   }
 }

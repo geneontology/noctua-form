@@ -30,10 +30,18 @@
             ],
             "styles": [
               "src/styles.scss",
-              "node_modules/font-awesome/css/font-awesome.min.css",
-              "node_modules/jsplumb/dist/js/jsplumb.min.js"
+              "node_modules/jsplumb/dist/js/jsplumb.min.js",
+              "node_modules/jointjs/css/layout.css",
+              "node_modules/jointjs/css/themes/material.css",
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/jqueryui/jquery-ui.min.js",
+              "node_modules/lodash/lodash.js",
+              "node_modules/backbone/backbone.js",
+              "node_modules/dagre/dist/dagre.min.js",
+              "node_modules/graphlib/dist/graphlib.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -51,10 +59,10 @@
               "vendorChunk": false,
               "buildOptimizer": true
             },
-            "dev-temp": {
+            "beta-test": {
               "fileReplacements": [{
                 "replace": "src/environments/environment.ts",
-                "with": "src/environments/environment.dev-temp.ts"
+                "with": "src/environments/environment.beta-test.ts"
               }],
               "optimization": true,
               "outputHashing": "all",
@@ -80,8 +88,8 @@
             "production": {
               "browserTarget": "noctua:build:production"
             },
-            "dev-temp": {
-              "browserTarget": "noctua:build:dev-temp"
+            "beta-test": {
+              "browserTarget": "noctua:build:beta-test"
             },
             "hmr": {
               "hmr": true,
@@ -105,12 +113,22 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
-            "styles": [
-              "styles.scss"
-            ],
-            "scripts": [],
             "assets": [
               "src/assets"
+            ],
+            "styles": [
+              "src/styles.scss",
+              "node_modules/jsplumb/dist/js/jsplumb.min.js",
+              "node_modules/jointjs/css/layout.css",
+              "node_modules/jointjs/css/themes/material.css",
+            ],
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/jqueryui/jquery-ui.min.js",
+              "node_modules/lodash/lodash.js",
+              "node_modules/backbone/backbone.js",
+              "node_modules/dagre/dist/dagre.min.js",
+              "node_modules/graphlib/dist/graphlib.min.js"
             ]
           }
         },

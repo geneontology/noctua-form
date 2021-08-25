@@ -9,10 +9,10 @@ import { ContextMenuComponent } from 'ngx-contextmenu';
 import { NodeService } from './services/node.service';
 import { CamDiagramService } from './../services/cam-diagram.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { NoctuaAnnotonFormService, NoctuaFormMenuService } from 'noctua-form-base';
+import { NoctuaActivityFormService, NoctuaFormMenuService } from 'noctua-form-base';
 import { CamService } from 'noctua-form-base'
-import { Annoton } from 'noctua-form-base';
-import { AnnotonNode } from 'noctua-form-base';
+import { Activity } from 'noctua-form-base';
+import { ActivityNode } from 'noctua-form-base';
 
 @Component({
   selector: 'noc-nodes-container',
@@ -29,24 +29,22 @@ export class NodesContainerComponent implements OnChanges, AfterViewInit {
   constructor(
     public noctuaFormMenuService: NoctuaFormMenuService,
     public camDiagramService: CamDiagramService,
-    public noctuaAnnotonFormService: NoctuaAnnotonFormService,
+    public noctuaActivityFormService: NoctuaActivityFormService,
     private nodeService: NodeService) { }
 
-  addAnnoton(event) {
+  addActivity(event) {
     let location = {
       x: event.clientX,
       y: event.clientY
     }
-    console.log(event.clientX + 'px');
-    console.log(event.clientY + 'px');
 
     this.openForm(location);
   }
 
   openForm(location?) {
-    this.noctuaAnnotonFormService.mfLocation = location;
-    this.noctuaAnnotonFormService.initializeForm();
-    this.noctuaFormMenuService.openRightDrawer(this.noctuaFormMenuService.panel.annotonForm)
+    this.noctuaActivityFormService.mfLocation = location;
+    this.noctuaActivityFormService.initializeForm();
+    //this.noctuaFormMenuService.openRightDrawer(this.noctuaFormMenuService.panel.activityForm)
   }
 
   ngOnChanges() {
@@ -73,14 +71,14 @@ export class NodesContainerComponent implements OnChanges, AfterViewInit {
   connectNodes() {
     const self = this;
     self.camDiagramService.jsPlumbInstance.batch(function () {
-      self.nodes.forEach((annoton: Annoton) => {
-        let connections = annoton.annotonConnections;
+      self.nodes.forEach((activity: Activity) => {
+        let connections = activity.activityConnections;
 
         //connections.forEach(connection => {
-        //   let effect = self.camDiagramService.getCausalEffect(annoton.connectionId, connection.object.uuid);
+        //   let effect = self.camDiagramService.getCausalEffect(activity.connectionId, connection.object.uuid);
 
         //   self.camDiagramService.jsPlumbInstance.connect({
-        //      source: annoton.connectionId,
+        //      source: activity.connectionId,
         //     target: connection.object.uuid,
         //     type: "basic",
         // paintStyle: { strokeWidth: 1, stroke: '#000000' },

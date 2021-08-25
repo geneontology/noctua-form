@@ -1,0 +1,233 @@
+@import "src/@noctua/scss/noctua";
+@import "src/@noctua.common/scss/noctua.common";
+
+$primary: map-get($theme, primary);
+
+:host {
+  padding: 0px;
+  width: 100%;
+
+  .noc-drawer-header {
+    border-bottom: #ddd solid 1px;
+  }
+
+  .noc-cams {
+    @include deep-width(100%);
+  }
+
+  .noc-section-header {
+    padding: 8px 12px;
+    @include deep-height(80px);
+  }
+
+  .noc-search-form {
+    //padding: 12px;
+    @include deep-height(100%);
+    background-color: #fff;
+  }
+
+  .noc-activity-group-row {
+    position: relative;
+    .noc-text-clear {
+      background-color: #fff;
+      position: absolute;
+      right: 10px;
+      top: -5px;
+      @include deep-width(25px);
+      @include deep-height(15px);
+      font-size: 14px;
+      line-height: 14px;
+      z-index: 2;
+    }
+  }
+
+  .noc-cams-results {
+    padding: 12px;
+
+    .noc-cam-container {
+      @include mat-elevation(2);
+      margin-bottom: 12px;
+    }
+
+    .noc-cam-heading {
+      margin-bottom: 4px;
+      padding: 0 10px;
+      @include deep-height(40px);
+      width: 100%;
+      //min-height: 35px;
+      background-color: #f2f2f2;
+      font-size: 12px;
+
+      .noc-cam-title {
+        max-width: 400px !important;
+      }
+
+      .noc-cam-heading-section {
+        height: 100%;
+
+        .noc-section-label {
+          font-size: 12px;
+          color: #555;
+        }
+      }
+
+      .noc-title {
+        padding-left: 8px;
+        padding-right: 8px;
+        max-width: 250px;
+
+        strong {
+          font-size: 12px;
+        }
+      }
+
+      .noc-model-state {
+        padding-left: 8px;
+        padding-right: 8px;
+        max-width: 150px;
+      }
+
+      mat-icon-button {
+        border-radius: 0 !important;
+      }
+    }
+  }
+
+  .noc-review-actions {
+    .noc-matched-count {
+      display: flex;
+      flex-direction: row;
+      justify-items: center;
+      align-items: center;
+      padding: 0 8px;
+      height: 100%;
+      font-size: 12px;
+    }
+
+    .noc-icon-button {
+      @include deep-width(30px);
+      @include deep-height(30px);
+      line-height: 28px;
+      font-size: 18px;
+      //border: map-get($accent, default) solid 1px;
+      //border-radius: 0 !important;
+    }
+
+    .noc-review-btn {
+      padding: 0 8px;
+      height: 30px;
+      line-height: 28px;
+      font-size: 12px;
+    }
+
+    .noc-disabled {
+    }
+  }
+
+  mat-chip {
+    font-size: 12px;
+    font-weight: normal;
+    @include deep-height(25px);
+    max-width: 200px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    .noc-chip-label {
+      padding: 0 8px 0 4px;
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      .noc-icon-action {
+        font-size: 10px;
+        background-color: transparent;
+
+        &:hover {
+          font-size: 14px;
+          color: #222;
+        }
+      }
+    }
+
+    &.noc-table-chip {
+      padding: 0;
+      @include deep-height(25px);
+      font-size: 10px;
+
+      .noc-icon,
+      .noc-icon-action {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 25px;
+        width: 25px;
+        border-radius: 50%;
+        color: #777;
+        font-size: 14px;
+      }
+
+      .noc-icon-action {
+        font-size: 10px;
+        background-color: transparent;
+
+        &:hover {
+          font-size: 14px;
+          color: #222;
+          background-color: rgba(#000000, 0.2);
+        }
+      }
+
+      @include noc-chip-color(#ddd);
+
+      &.noc-user-chip {
+        @include noc-chip-color(#bbc9cc);
+
+        .noc-icon {
+          color: #59939e;
+        }
+      }
+
+      &.noc-date-chip {
+        @include noc-chip-color(#aee9f5);
+      }
+
+      &.noc-state-chip {
+        &.noc-development {
+          @include noc-chip-color(#f4c89c);
+          // border: #d59f80 solid 1px;/
+        }
+
+        &.noc-production {
+          @include noc-chip-color(#b6f1cc);
+          // border: #d59f80 solid 1px;/
+        }
+
+        &.noc-review {
+          @include noc-chip-color(#d8f6a3);
+          // border: #d59f80 solid 1px;/
+        }
+      }
+    }
+  }
+
+  .noc-form-container {
+    background-color: #eee;
+    padding: 20px 10px;
+  }
+
+  .noc-toolbar {
+    padding: 0px 20px;
+    height: 40px;
+    width: 100%;
+    background-color: #f2f2f2;
+    border-bottom: #bbb solid 1px;
+
+    .noc-title {
+      line-height: 38px;
+      color: #555;
+      font-size: 14px;
+      font-weight: bold;
+    }
+  }
+}
