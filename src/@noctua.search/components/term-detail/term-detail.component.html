@@ -1,0 +1,79 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" class="noc-drawer h-100-p">
+  <div class="noc-drawer-header" fxLayout="column" fxLayoutAlign="start stretch">
+    <div class="noc-header w-100-p" fxLayout="row" fxLayoutAlign="start center">
+      <span class="noc-drawer-header-title">
+        Term Details</span>
+      <span fxFlex></span>
+      <button mat-stroked-button (click)="close()" class="noc-rounded-button noc-sm" color="primary"
+        aria-label="Close dialog">
+        <mat-icon>close</mat-icon> CLOSE
+      </button>
+    </div>
+  </div>
+  <div class="noc-drawer-body noc-item-details" noctuaPerfectScrollbar>
+    <div *ngIf="termDetail.isObsolete" class="noc-section-row alert alert-danger">
+      <div class="noc-title">
+        Term Is Obsolete
+      </div>
+      <div *ngIf="termDetail.replacedBy" class="noc-description">
+        <div *ngFor="let replacedBy of termDetail.replacedBy" fxLayout="column" fxLayoutAlign="start start">
+          <div class="noc-term-row" fxFlex="" fxLayout="row" fxLayoutAlign="start center">
+            <div class="">
+              Replaced By {{replacedBy}}
+            </div>
+            <span fxFlex=""></span>
+            <div class="noc-icon" (click)="loadTerm(replacedBy)" fxLayout="row" fxLayoutAlign="center center">
+              <fa-icon [icon]="['fas', 'info-circle']"></fa-icon>
+            </div>
+            <button mat-icon-button class="noc-icon-button" [matMenuTriggerFor]="optionMenu">
+              <fa-icon [icon]="['fas', 'bars']"></fa-icon>
+            </button>
+            <mat-menu #optionMenu="matMenu" class="noc-dropdown-menu">
+              <button mat-menu-item class="" (click)="openSearchReplace(replacedBy)">
+                Find/Replace in Model
+              </button>
+              <button mat-menu-item class="" (click)="searchModels(replacedBy)">
+                Search Models
+              </button>
+              <button mat-menu-item class="" (click)="searchModelsByContributor(replacedBy)">
+                Search My Models
+              </button>
+            </mat-menu>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="noc-section-row">
+      <div class="noc-title">
+        Term
+      </div>
+      <div class="noc-description">
+        {{termDetail.label}} <small>({{termDetail.id}})</small>
+      </div>
+    </div>
+    <div class="noc-section-row">
+      <div class="noc-title">
+        Definition
+      </div>
+      <div class="noc-description">
+        {{termDetail.description}}
+      </div>
+    </div>
+    <div class="noc-section-row">
+      <div class="noc-title">
+        Is A Type Of
+      </div>
+      <div class="noc-description">
+        <div *ngFor="let rootType of termDetail.rootTypes">
+          {{rootType.label}}<small>({{rootType.id}})</small>
+          <a (click)="loadTerm(rootType.id)">
+            View
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start center" class="noc-drawer-footer noc-submit-row">
+
+  </div>
+</div>

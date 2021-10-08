@@ -138,7 +138,8 @@ $accent: map-get($theme, accent);
     @include deep-height(30px);
     //  min-height: 40px; //min-height: 35px;
     background-color: #f2f2f2;
-    font-size: 14px;
+    font-size: 12px;
+    color: #555;
     overflow: hidden;
 
     @include mat-elevation(2);
@@ -149,10 +150,14 @@ $accent: map-get($theme, accent);
         color: #555;
       }
     }
+  }
 
-    .noc-title {
-      font-size: 12px;
-      color: #555;
+  .noc-action-button {
+    font-size: 10px;
+    border: mat-color($primary, 300) solid 1px;
+
+    &.noc-icon {
+      font-size: 14px;
     }
   }
 
@@ -200,21 +205,6 @@ $accent: map-get($theme, accent);
   .noc-form-container {
     background-color: #eee;
     padding: 20px 10px;
-  }
-
-  .noc-toolbar {
-    padding: 0px 20px;
-    height: 40px;
-    width: 100%;
-    background-color: #f2f2f2;
-    border-bottom: #bbb solid 1px;
-
-    .noc-title {
-      line-height: 38px;
-      color: #555;
-      font-size: 14px;
-      font-weight: bold;
-    }
   }
 
   .noc-cam-table {

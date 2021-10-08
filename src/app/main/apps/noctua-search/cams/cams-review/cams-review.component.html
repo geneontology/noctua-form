@@ -50,8 +50,8 @@
           <mat-chip *ngIf="cam.state" class="noc-table-chip noc-state-chip" [ngClass]="{'noc-development': cam.state.name === 'development',
             'noc-production': cam.state.name === 'production',
             'noc-review': cam.state.name === 'review'}" fxLayout="row" fxLayoutAlign="start center"
-            (click)="noctuaSearchService.filter(noctuaSearchService.filterType.states, cam.state)"
-            matTooltip="Add state to Filters" [matTooltipPosition]="'below'" [matTooltipShowDelay]="1000">
+            (click)="noctuaSearchService.filter(SearchFilterType.states, cam.state)" matTooltip="Add state to Filters"
+            [matTooltipPosition]="'below'" [matTooltipShowDelay]="1000">
             <div class="noc-icon">
               <fa-icon [icon]="['fas', 'tasks']"></fa-icon>
             </div>
@@ -62,7 +62,7 @@
         </div>
         <div class="noc-date" fxFlex="100px" fxLayout="row" fxLayoutAlign="start center">
           <mat-chip class="noc-table-chip noc-date-chip" fxLayout="row" fxLayoutAlign="start center"
-            (click)="noctuaSearchService.filter(noctuaSearchService.filterType.exactdates, cam.date)"
+            (click)="noctuaSearchService.filter(SearchFilterType.exactdates, cam.date)"
             matTooltip="Add date to exact date filter" [matTooltipPosition]="'below'" [matTooltipShowDelay]="1000">
             <div class="noc-icon">
               <fa-icon [icon]="['fas', 'calendar-day']"></fa-icon>
@@ -76,7 +76,7 @@
           <mat-chip-list>
             <mat-chip class="noc-table-chip noc-user-chip" fxLayout="row" fxLayoutAlign="start center"
               *ngFor="let contributor of cam.contributors"
-              (click)="noctuaSearchService.filter(noctuaSearchService.filterType.contributors, contributor)"
+              (click)="noctuaSearchService.filter(SearchFilterType.contributors, contributor)"
               matTooltip="Add {{contributor.name}} to Filters" [matTooltipPosition]="'below'"
               [matTooltipShowDelay]="1000" [style.borderColor]="contributor.color">
               <div class="noc-icon noc-icon-initials" [style.backgroundColor]="contributor.color">

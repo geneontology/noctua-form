@@ -55,6 +55,10 @@ mat-radio-button {
     background-color: #fbf9de;
     @include deep-width(400px !important);
 
+    &.scard-lg {
+      @include deep-width(600px !important);
+    }
+
     .mat-option {
       padding: 8px !important;
       border-bottom: rgba(map-get($primary, default), 0.6) solid 1px;
@@ -64,18 +68,22 @@ mat-radio-button {
 
       .noc-term-id {
         font-size: 10px;
-        //margin-right: 
+        //margin-right:
       }
 
       .noc-term-label {
         font-size: 12px;
-        //margin-right: 
+        //margin-right:
       }
 
       .noc-term-detail-trigger {
         padding: 0 8px;
         @include deep-width(50px);
       }
+    }
+
+    .scard-more-info {
+      @include deep-width(200px !important);
     }
   }
 }
@@ -94,14 +102,13 @@ mat-radio-button {
 
       .noc-term-id {
         font-size: 10px;
-        //margin-right: 
+        //margin-right:
       }
 
       .noc-term-label {
         font-size: 12px;
-        //margin-right: 
+        //margin-right:
       }
-
     }
   }
 }

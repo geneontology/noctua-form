@@ -44,10 +44,10 @@ export class EntityFormComponent implements OnInit, OnDestroy {
   selectedItemDisplay;
   friendNodes;
   friendNodesFlat;
-
   activityNodeType = ActivityNodeType;
-
   displayAddButton;
+
+  termData
 
   private unsubscribeAll: Subject<any>;
 
@@ -339,6 +339,9 @@ export class EntityFormComponent implements OnInit, OnDestroy {
       formControl: this.entityFormGroup.controls['term'] as FormControl,
     };
     this.inlineDetailService.open(event.target, { data });
+
+    //this.termData = data
+
   }
 
   termDisplayFn(term): string | undefined {

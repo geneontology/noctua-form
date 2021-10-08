@@ -17,7 +17,7 @@ export class CurieService {
 
   private _curie: any;
 
-  constructor(private httpClient: HttpClient) {
+  constructor() {
     const map = parseContext(goContextConfig);
     this._curie = new CurieUtil(map);
   }

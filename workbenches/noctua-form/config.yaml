@@ -2,6 +2,3 @@ menu-name: "Noctua Form 2.0"
 page-name: "Noctua Form 2.0"
 type: "model"
 help-link: "https://github.com/geneontology/noctua-form/issues"
-javascript:
-  - main.js
-css: []

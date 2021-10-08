@@ -33,7 +33,6 @@ export class NoctuaDetailDropdownComponent implements OnInit, OnDestroy {
     this.formControl = data.formControl;
     this.termDetail = data.termDetail;
 
-    console.log(this.termDetail)
   }
 
   ngOnInit(): void {

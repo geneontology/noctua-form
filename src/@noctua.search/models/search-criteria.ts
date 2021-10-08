@@ -2,6 +2,21 @@ import { Cam, Contributor, Group, Organism } from 'noctua-form-base';
 import { each } from 'lodash';
 import { CamPage } from './cam-page';
 
+export enum SearchFilterType {
+    ids = 'ids',
+    titles = 'titles',
+    gps = 'gps',
+    terms = 'terms',
+    pmids = 'pmids',
+    contributors = 'contributors',
+    groups = 'groups',
+    organisms = 'organisms',
+    states = 'states',
+    exactdates = 'exactdates',
+    startdates = 'startdates',
+    enddates = 'enddates',
+};
+
 export class SearchCriteria {
     camPage: CamPage = new CamPage();
     titles: any[] = [];

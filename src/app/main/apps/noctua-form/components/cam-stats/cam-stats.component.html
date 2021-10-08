@@ -1,0 +1,116 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" class="noc-drawer h-100-p">
+  <div class="noc-drawer-header" fxLayout="row" fxLayoutAlign="start center">
+    <span class="noc-drawer-header-title">
+      Cam Details & Stats</span>
+    <span fxFlex></span>
+    <button mat-stroked-button (click)="close()" class="noc-rounded-button noc-sm" color="primary"
+      aria-label="Close dialog">
+      <mat-icon>close</mat-icon> CLOSE
+    </button>
+  </div>
+  <div class="noc-drawer-body" noctuaPerfectScrollbar>
+    <div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+      <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
+        <div class="noc-section-heading">
+          Number of terms
+        </div>
+        <span fxFlex></span>
+      </div>
+      <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
+        <ngx-charts-bar-vertical-stacked [results]="stats.aspect" [view]="aspectOptions.view"
+          [scheme]="aspectOptions.colorScheme" [gradient]="aspectOptions.gradient" [xAxis]="aspectOptions.showXAxis"
+          [yAxis]="aspectOptions.showYAxis" [legend]="aspectOptions.legend"
+          [showXAxisLabel]="aspectOptions.showXAxisLabel" [showYAxisLabel]="aspectOptions.showYAxisLabel"
+          [xAxisLabel]="aspectOptions.xAxisLabel" [yAxisLabel]="aspectOptions.yAxisLabel"
+          [animations]="aspectOptions.animations" [customColors]="aspectOptions.customColors">
+        </ngx-charts-bar-vertical-stacked>
+      </div>
+    </div>
+    <div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+      <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
+        <div class="noc-section-heading">
+          Number of terms by aspect
+        </div>
+        <span fxFlex></span>
+      </div>
+      <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
+        <ngx-charts-pie-chart [results]="stats.aspectPie" [view]="aspectPieOptions.view"
+          [scheme]="aspectPieOptions.colorScheme" [gradient]="aspectPieOptions.gradient"
+          [legend]="aspectPieOptions.legend" [maxLabelLength]="aspectPieOptions.maxLabelLength"
+          [labels]="aspectPieOptions.showLabels" [doughnut]="aspectPieOptions.isDoughnut">
+        </ngx-charts-pie-chart>
+      </div>
+    </div>
+
+    <div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+      <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
+        <div class="noc-section-heading">
+          Relations
+        </div>
+        <span fxFlex></span>
+      </div>
+      <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
+        <ngx-charts-bar-horizontal [results]="stats.relationsBar" [view]="relationsBarOptions.view"
+          [gradient]="relationsBarOptions.gradient" [xAxis]="relationsBarOptions.showXAxis"
+          [yAxis]="relationsBarOptions.showYAxis" [legend]="relationsBarOptions.legend"
+          [showXAxisLabel]="relationsBarOptions.showXAxisLabel"
+          [maxYAxisTickLength]="relationsBarOptions.maxYAxisTickLength"
+          [showYAxisLabel]="relationsBarOptions.showYAxisLabel" [xAxisLabel]="relationsBarOptions.xAxisLabel"
+          [yAxisLabel]="relationsBarOptions.yAxisLabel">
+        </ngx-charts-bar-horizontal>
+      </div>
+    </div>
+    <div *ngFor="let pie of pies" class="noc-table-form noc-form-section" fxLayout="column"
+      fxLayoutAlign="start stretch">
+      <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
+        <div class="noc-section-heading">
+          {{pie.label}}
+        </div>
+        <span fxFlex></span>
+      </div>
+      <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
+        <ngx-charts-pie-chart [results]="pie.data" [view]="gpPieOptions.view" [scheme]="gpPieOptions.colorScheme"
+          [gradient]="gpPieOptions.gradient" [legend]="gpPieOptions.legend"
+          [maxLabelLength]="gpPieOptions.maxLabelLength" [legendPosition]="gpPieOptions.legendPosition"
+          [labels]="gpPieOptions.showLabels" [doughnut]="gpPieOptions.isDoughnut">
+        </ngx-charts-pie-chart>
+      </div>
+    </div>
+    <div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+      <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
+        <div class="noc-section-heading">
+          Contribution
+        </div>
+        <span fxFlex></span>
+      </div>
+      <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
+        <ngx-charts-bar-horizontal [results]="stats.contributorBar" [view]="contributorBarOptions.view"
+          [gradient]="contributorBarOptions.gradient" [xAxis]="contributorBarOptions.showXAxis"
+          [yAxis]="contributorBarOptions.showYAxis" [legend]="contributorBarOptions.legend"
+          [showXAxisLabel]="contributorBarOptions.showXAxisLabel"
+          [maxYAxisTickLength]="contributorBarOptions.maxYAxisTickLength"
+          [showYAxisLabel]="contributorBarOptions.showYAxisLabel" [xAxisLabel]="contributorBarOptions.xAxisLabel"
+          [yAxisLabel]="contributorBarOptions.yAxisLabel">
+        </ngx-charts-bar-horizontal>
+      </div>
+    </div>
+
+    <div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+      <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
+        <div class="noc-section-heading">
+          Contribution over time
+        </div>
+        <span fxFlex></span>
+      </div>
+      <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
+        <ngx-charts-line-chart [results]="stats.datesLine" [view]="datesLineOptions.view"
+          [legend]="datesLineOptions.legend" [showXAxisLabel]="datesLineOptions.showXAxisLabel"
+          [showYAxisLabel]="datesLineOptions.showYAxisLabel" [xAxis]="datesLineOptions.xAxis"
+          [yAxis]="datesLineOptions.yAxis" [xAxisLabel]="datesLineOptions.xAxisLabel"
+          [legendPosition]="datesLineOptions.legendPosition" [yAxisLabel]="datesLineOptions.yAxisLabel"
+          [timeline]="datesLineOptions.timeline">
+        </ngx-charts-line-chart>
+      </div>
+    </div>
+  </div>
+</div>

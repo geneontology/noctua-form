@@ -45,7 +45,6 @@ export class SparqlBuilder {
 
         query.addClause(prefix);
 
-        console.log(query.build())
 
     }
 

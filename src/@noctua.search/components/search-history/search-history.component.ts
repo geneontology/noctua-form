@@ -34,7 +34,7 @@ export class SearchHistoryComponent implements OnInit, OnDestroy {
 
   selectSearch(searchHistoryItem: SearchHistory) {
     this.noctuaSearchService.searchCriteria = searchHistoryItem.getSearchCriteria();
-    this.noctuaSearchService.updateSearch(false);
+    this.noctuaSearchService.updateSearch(true, false);
   }
 
   clear() {

@@ -1,28 +1,85 @@
 <div [attr.id]="activity.displayId" fxLayout="column" fxLayoutAlign="start stretch" class="w-100-p"
   [ngClass]="{'noc-selected': activity.displayId===camService.currentMatch?.activityDisplayId}">
-  <div class="noc-activity-heading" fxLayout="row" fxLayoutAlign="start center">
+  <div class="noc-activity-heading" fxLayout="row" fxLayoutAlign="start stretch">
     <div fxFlex="25px" (click)="$event.stopPropagation()">
       <button mat-icon-button (click)="toggleExpand(activity)" color="primary" class="noc-toggle-expand-button">
         <fa-icon *ngIf="!activity.expanded" [icon]="['fas', 'caret-right']"></fa-icon>
         <fa-icon *ngIf="activity.expanded" [icon]="['fas', 'caret-down']"></fa-icon>
       </button>
     </div>
-    <div class="noc-display-number noc-sm" (click)="$event.stopPropagation()">
-      {{activity.displayNumber}}
-    </div>
-    <div class="noc-title mr-12">
-      <div class="noc-gp" *ngIf="gpNode" fxLayout="row" fxLayoutAlign="start center">
-        <span class="text-truncate">
-          {{gpNode.term?.label}}
-          <a class="ml-4" (click)="$event.stopPropagation()" href="{{gpNode.term?.url}}" target="_blank">
-            {{ gpNode.term?.id }}
-          </a>
-        </span>
+    <div class=" noc-cell" fxLayout="row" fxLayoutAlign="start center">
+      <div class="noc-display-number noc-sm" (click)="$event.stopPropagation()">
+        {{activity.displayNumber}}
       </div>
     </div>
-    <mat-chip class="noc-chip-xs" [ngClass]="activity.activityType">
-      <span>{{activityTypeOptions[activity.activityType]?.label}}</span>
-    </mat-chip>
+    <div class="noc-gp noc-cell" fxLayout="row" fxLayoutAlign="start center">
+      <span class="noc-no-info" *ngIf="!gpNode">Gene info no available</span>
+      <span class="text-truncate" *ngIf="gpNode"
+        matTooltip="GP:  {{gpNode.term?.label}}  &#13; ( {{ gpNode.term?.id }})" [matTooltipPosition]="'below'"
+        [matTooltipShowDelay]="1000">
+        {{gpNode.term?.label}}
+        <a class="ml-4" (click)="$event.stopPropagation()" href="{{gpNode.term?.url}}" target="_blank">
+          {{ gpNode.term?.id }}
+        </a>
+      </span>
+    </div>
+    <div class="noc-cam-type noc-cell" fxLayout="row" fxLayoutAlign="start center">
+      <img [src]="'assets/images/activity/'+activity.activityType+'.png'"
+        matTooltip="{{activityTypeOptions[activity.activityType]?.label}}" [matTooltipPosition]="'below'"
+        [matTooltipShowDelay]="1000">
+      <!--   {{activityTypeOptions[activity.activityType]?.label}}
+      <mat-chip class="noc-chip-activity-type noc-chip-xs">
+        <span>{{activityTypeOptions[activity.activityType]?.label}}</span>
+      </mat-chip> -->
+    </div>
+    <div class="noc-cam-date noc-cell" fxLayout="row" fxLayoutAlign="start center">
+      <fa-icon class="noc-icon" [icon]="['fas', 'calendar-day']"></fa-icon> <span
+        class="ml-4">{{activity.formattedDate}}</span>
+    </div>
+    <div fxFlex="" class="scard-title-summary" fxLayout="row" fxLayoutAlign="start stretch">
+      <div fxFlex="33%" class="noc-cell" fxLayout="row" fxLayoutAlign="start center">
+        <mat-chip *ngIf="activity.mfNode" class="noc-chip-xs noc-mf noc-summary-chip noc-type-chip" fxLayout="row"
+          fxLayoutAlign="start center" matTooltip="{{activity.summary['mf'].tooltip}}" [matTooltipPosition]="'below'"
+          [matTooltipShowDelay]="1000">
+          <div class="noc-icon noc-icon-initials">
+            {{activity.summary['mf'].shorthand}}
+          </div>
+          <div fxFlex="" class="noc-chip-label">
+            <span>
+              {{activity.mfNode.term?.label}}
+            </span>
+          </div>
+        </mat-chip>
+      </div>
+      <div fxFlex="33%" class="noc-cell" fxLayout="row" fxLayoutAlign="start center">
+        <mat-chip *ngIf="activity.bpNode" class="noc-chip-xs noc-bp noc-summary-chip noc-type-chip" fxLayout="row"
+          fxLayoutAlign="start center" matTooltip="{{activity.summary['bp'].tooltip}}" [matTooltipPosition]="'below'"
+          [matTooltipShowDelay]="1000">
+          <div class="noc-icon noc-icon-initials">
+            {{activity.summary['bp'].shorthand}}
+          </div>
+          <div fxFlex="" class="noc-chip-label">
+            <span>
+              {{activity.bpNode.term?.label}}
+            </span>
+          </div>
+        </mat-chip>
+      </div>
+      <div fxFlex="33%" class="noc-cell" fxLayout="row" fxLayoutAlign="start center">
+        <mat-chip *ngIf="activity.ccNode" class="noc-chip-xs noc-cc noc-summary-chip noc-type-chip" fxLayout="row"
+          fxLayoutAlign="start center" matTooltip="{{activity.summary['cc'].tooltip}}" [matTooltipPosition]="'below'"
+          [matTooltipShowDelay]="1000">
+          <div class="noc-icon noc-icon-initials">
+            {{activity.summary['cc'].shorthand}}
+          </div>
+          <div fxFlex="" class="noc-chip-label">
+            <span>
+              {{activity.ccNode.term?.label}}
+            </span>
+          </div>
+        </mat-chip>
+      </div>
+    </div>
     <div *ngIf="activity.hasViolations" class="noc-error" fxLayout="row" fxLayoutAlign="start center">
       <mat-chip class="noc-error-chip noc-chip-xs ml-8" fxLayout="row" fxLayoutAlign="start center"
         (click)="displayActivityErrors(activity)">
@@ -34,30 +91,33 @@
         </div>
       </mat-chip>
     </div>
-    <span fxFlex=""></span>
-    <!--
-<div *ngIf="!options.reviewMode" class="" fxFlex="200px" fxLayout="row" fxLayoutAlign="end center">
-  <button *ngIf="activity.activityType !==ActivityType.ccOnly" mat-stroked-button
-    (click)="openActivityConnector(activity)" color="primary" class="noc-rounded-button noc-sm mr-8"
-    matTooltip="connect activity causal relation" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
-    <small>Connect</small>
-  </button>
-   <button mat-stroked-button (click)="openActivityForm(activity)" color="primary"
-    class="noc-rounded-button noc-sm mr-8">
-    <small>Edit</small>
-  </button> 
-  <button mat-icon-button class="noc-rounded-button noc-sm" fxFlex="40px" color="primary"
-    [matMenuTriggerFor]="connectionOptionMenu">
-    <mat-icon>more_vert</mat-icon>
-  </button>
-  <mat-menu #connectionOptionMenu="matMenu" class="noc-dropdown-menu">
-    <h6 class="noc-menu-heading"> Danger Zone</h6>
-    <button mat-menu-item class="" (click)="deleteActivity(activity)">
-      Delete Activity
-    </button>
-  </mat-menu>
- 
-</div>-->
+
+
+    <div *ngIf="!options.reviewMode" class="" fxFlex="50px" fxLayout="row" fxLayoutAlign="end center">
+      <!--     <button *ngIf="activity.activityType !==ActivityType.ccOnly" mat-stroked-button
+        (click)="openActivityConnector(activity)" color="primary" class="noc-rounded-button noc-sm mr-8"
+        matTooltip="connect activity causal relation" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
+        <small>Connect</small>
+      </button>
+      <button mat-stroked-button (click)="openActivityForm(activity)" color="primary"
+        class="noc-rounded-button noc-sm mr-8">
+        <small>Edit</small>
+      </button> -->
+      <button mat-icon-button class="noc-rounded-button noc-sm" fxFlex="40px" color="primary"
+        [matMenuTriggerFor]="connectionOptionMenu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #connectionOptionMenu="matMenu" class="noc-dropdown-menu">
+        <h6 class="noc-menu-heading"> Danger Zone</h6>
+        <button mat-menu-item class="" (click)="cloneActivity(activity)">
+          Clone Activity
+        </button>
+        <button mat-menu-item class="" (click)="deleteActivity(activity)">
+          Delete Activity
+        </button>
+      </mat-menu>
+
+    </div>
   </div>
   <div *ngIf="activity.expanded" class="noc-tree-container">
     <div class="noctua-form-table noc-activity-header w-100-p" fxLayout="row" fxLayoutAlign="start center">

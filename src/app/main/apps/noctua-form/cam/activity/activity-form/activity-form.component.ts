@@ -15,6 +15,7 @@ import {
   NoctuaUserService,
   NoctuaFormMenuService,
 } from 'noctua-form-base';
+import { ResizeEvent } from 'angular-resizable-element';
 
 @Component({
   selector: 'noc-activity-form',
@@ -30,6 +31,8 @@ export class ActivityFormComponent implements OnInit, OnDestroy {
   panelDrawer: MatDrawer;
 
   @Input() public closeDialog: () => void;
+
+  resizeStyle = {};
 
   cam: Cam;
   activityFormGroup: FormGroup;
@@ -79,6 +82,35 @@ export class ActivityFormComponent implements OnInit, OnDestroy {
           this.descriptionLabel = 'Function Description';
         }
       });
+  }
+
+  resizeValidate(event: ResizeEvent): boolean {
+    const MIN_DIMENSIONS_PX: number = 50;
+    if (
+      event.rectangle.width &&
+      event.rectangle.height &&
+      (event.rectangle.width < MIN_DIMENSIONS_PX ||
+        event.rectangle.height < MIN_DIMENSIONS_PX)
+    ) {
+      return false;
+    }
+    return true;
+  }
+
+  /**
+   * Finilizes resize positions
+   * (used for drawer/sidenav width)
+   * @param event 
+   */
+  onResizeEnd(event: ResizeEvent): void {
+    this.resizeStyle = {
+      // enable/disable these per your needs
+      //position: 'fixed',
+      //left: `${event.rectangle.left}px`,
+      //top: `${event.rectangle.top}px`,
+      //height: `${event.rectangle.height}px`,
+      width: `${event.rectangle.width}px`,
+    };
   }
 
   checkErrors() {
