@@ -21,7 +21,7 @@ const golrNeoServer = typeof global_golr_neo_server !== 'undefined'
   : 'http://noctua-golr.berkeleybop.org/';
 const golrServer = typeof global_golr_server !== 'undefined'
   ? global_golr_server
-  : 'http://golr.berkeleybop.org/';//'http://golr-aux.geneontology.io/solr/'
+  : 'http://golr-aux.geneontology.io/solr/';//'http://golr-aux.geneontology.io/solr/'
 
 const globalWorkbenchesModel = typeof global_workbenches_model !== 'undefined'
   ? global_workbenches_model
@@ -44,6 +44,7 @@ const globalKnownRelations = typeof global_known_relations !== 'undefined'
   : enviromnenetData.globalKnownRelations;
 
 export const environment = {
+  noctuaTempUrl: 'http://localhost:8910/workbench/noctua-landing-page',
   production: false,
   isDev: true,
   isBeta: true,
@@ -64,7 +65,7 @@ export const environment = {
   searchApi: `${baristaLocation}/search/`,
 
   //Workbench
-  noctuaUrl: `${window.location.origin}`,
+  noctuaUrl: `${window.location.origin}/workbench/noctua-landing-page`,
   workbenchUrl: `${window.location.origin}/workbench/`,
 
   amigoTerm: 'http://amigo.geneontology.org/amigo/term/',

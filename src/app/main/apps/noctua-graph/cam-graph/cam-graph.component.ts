@@ -105,7 +105,6 @@ export class CamGraphComponent implements OnInit, AfterViewInit, OnDestroy {
   onCtrlScroll($event) {
     const self = this;
     const delta = Math.max(-1, Math.min(1, ($event.wheelDelta || $event.detail))) / 10;
-    console.log(delta)
 
     if ($event.ctrlKey) {
       self.noctuaCamGraphService.zoom(delta, $event);

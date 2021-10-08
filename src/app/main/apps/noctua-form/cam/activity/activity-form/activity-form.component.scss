@@ -10,6 +10,10 @@ $accent: map-get($theme, accent);
   background-color: white;
   @include mat-elevation(4);
 
+  .noc-drawer {
+    padding-right: 8px;
+  }
+
   .noc-group-side-heading {
     @include deep-width(50px);
     background-color: #ddd;

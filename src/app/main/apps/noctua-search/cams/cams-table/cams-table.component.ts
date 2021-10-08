@@ -14,7 +14,7 @@ import {
   ActivityDisplayType,
 } from 'noctua-form-base';
 
-import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CamPage } from '@noctua.search/models/cam-page';
 import { NoctuaSearchMenuService } from '@noctua.search/services/search-menu.service';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -26,6 +26,7 @@ import { NoctuaUtils } from '@noctua/utils/noctua-utils';
 import { LeftPanel, MiddlePanel, RightPanel } from '@noctua.search/models/menu-panels';
 import { each, find } from 'lodash';
 import { TableOptions } from '@noctua.common/models/table-options';
+import { SearchFilterType } from '@noctua.search/models/search-criteria';
 
 
 export function CustomPaginator() {
@@ -53,6 +54,7 @@ export function CustomPaginator() {
   ]
 })
 export class CamsTableComponent implements OnInit, OnDestroy {
+  SearchFilterType = SearchFilterType
   ReviewMode = ReviewMode;
   LeftPanel = LeftPanel;
   MiddlePanel = MiddlePanel;

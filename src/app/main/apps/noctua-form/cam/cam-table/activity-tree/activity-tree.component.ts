@@ -17,7 +17,8 @@ import {
 
   ActivityType,
   ActivityTreeNode,
-  ActivityNodeType
+  ActivityNodeType,
+  FormType
 } from 'noctua-form-base';
 
 import {
@@ -31,7 +32,6 @@ import { EditorCategory } from '@noctua.editor/models/editor-category';
 import { find } from 'lodash';
 import { InlineEditorService } from '@noctua.editor/inline-editor/inline-editor.service';
 import { NoctuaUtils } from '@noctua/utils/noctua-utils';
-import { FlatTreeControl } from '@angular/cdk/tree';
 import { NoctuaConfirmDialogService } from '@noctua/components/confirm-dialog/confirm-dialog.service';
 import { takeUntil } from 'rxjs/operators';
 
@@ -44,6 +44,7 @@ import { takeUntil } from 'rxjs/operators';
 export class ActivityTreeComponent implements OnInit, OnDestroy {
   EditorCategory = EditorCategory;
   ActivityType = ActivityType;
+  ActivityNodeType = ActivityNodeType;
   activityTypeOptions = noctuaFormConfig.activityType.options;
 
   treeNodes: ActivityTreeNode[] = [];
@@ -64,8 +65,6 @@ export class ActivityTreeComponent implements OnInit, OnDestroy {
   gpNode: ActivityNode;
   editableTerms = false;
   currentMenuEvent: any = {};
-  treeControl = new FlatTreeControl<ActivityNode>(
-    node => node.treeLevel, node => node.expandable);
 
   treeOptions = {
     allowDrag: false,
@@ -120,6 +119,9 @@ export class ActivityTreeComponent implements OnInit, OnDestroy {
 
   toggleExpand(activity: Activity) {
     activity.expanded = !activity.expanded;
+
+
+    console.log(activity)
   }
 
   toggleNodeExpand(node: ActivityNode) {
@@ -288,7 +290,13 @@ export class ActivityTreeComponent implements OnInit, OnDestroy {
     }
   }
 
+  cloneActivity(activity: Activity) {
+    const self = this;
 
+    self.noctuaActivityFormService.initializeForm(activity);
+    self.noctuaFormDialogService.openCreateActivityDialog(FormType.ACTIVITY);
+
+  }
 
   cleanId(dirtyId: string) {
     return NoctuaUtils.cleanID(dirtyId);

@@ -1,0 +1,162 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" class="noc-drawer h-100-p">
+  <div class="noc-drawer-header" fxLayout="row" fxLayoutAlign="start center">
+    <span class="noc-drawer-header-title">
+      Terms</span>
+    <span fxFlex></span>
+    <button mat-stroked-button (click)="close()" class="noc-rounded-button noc-sm" color="primary"
+      aria-label="Close dialog">
+      <mat-icon>close</mat-icon> CLOSE
+    </button>
+  </div>
+  <div class="noc-drawer-body" noctuaPerfectScrollbar>
+    <div class="noc-tree-container">
+
+      <div class="noc-tree">
+        <tree-root #tree (initialized)="onTreeLoad()" [nodes]="treeNodes" [options]="treeOptions">
+          <ng-template #treeNodeWrapperTemplate let-node let-index="index">
+            <div class="node-wrapper noc-tree-node" fxLayout="row" fxLayoutAlign="start center"
+              [style.padding-left]="node.getNodePadding()">
+              <button mat-icon-button class="noc-node-expander-button" color="primary" (click)="node.toggleExpanded()"
+                *ngIf="node.hasChildren">
+                <fa-icon *ngIf="node?.isCollapsed" [icon]="['fas', 'caret-right']"></fa-icon>
+                <fa-icon *ngIf="node?.isExpanded" [icon]="['fas', 'caret-down']"></fa-icon>
+              </button>
+              <div class="noc-expander-placeholder" *ngIf="!node.hasChildren">
+              </div>
+              <div class="node-content-wrapper" fxFlex="" fxLayout="row" fxLayoutAlign="start center"
+                [class.node-content-wrapper-active]="node.isActive"
+                [class.node-content-wrapper-focused]="node.isFocused" (click)="node.mouseAction('click', $event)"
+                (dblclick)="node.mouseAction('dblClick', $event)"
+                (contextmenu)="node.mouseAction('contextMenu', $event)" (treeDrop)="node.onDrop($event)"
+                [treeAllowDrop]="node.allowDrop" [treeDrag]="node" [treeDragEnabled]="node.allowDrag()">
+
+                <div *ngIf="node.data.isCategory" class="noc-term-row noc-category-row" fxFlex="" fxLayout="row"
+                  fxLayoutAlign="start center">
+                  <div>
+                    {{node.data.label}}
+                  </div>
+                  <span fxFlex=""></span>
+                  <div class="noc-aspect-badge" (click)="openSearch(node.data)" fxLayout="row"
+                    fxLayoutAlign="center center">
+                    {{node.data.frequency}}
+                  </div>
+                </div>
+                <div *ngIf="!node.data.isCategory" class="noc-term-row" fxFlex="" fxLayout="row"
+                  fxLayoutAlign="start center">
+                  <ng-container [ngSwitch]="node.data.entityType">
+                    <ng-container *ngSwitchCase="EntityType.ACTIVITY_NODE">
+                      <div (click)="search(node.data)" class="noc-title">
+                        {{node.data.term?.label}}
+                      </div>
+                      <span fxFlex=""></span>
+                      <div class="noc-badge" (click)="openSearch(node.data)" fxLayout="row"
+                        fxLayoutAlign="center center">
+                        {{node.data.frequency}}
+                      </div>
+                      <div class="noc-icon" (click)="openTermDetail(node.data)" fxLayout="row"
+                        fxLayoutAlign="center center">
+                        <fa-icon [icon]="['fas', 'info-circle']"></fa-icon>
+                      </div>
+                      <button mat-icon-button class="noc-icon-button" [matMenuTriggerFor]="optionMenu">
+                        <fa-icon [icon]="['fas', 'bars']"></fa-icon>
+                      </button>
+                      <mat-menu #optionMenu="matMenu" class="noc-dropdown-menu">
+                        <button mat-menu-item class="" (click)="openSearch(node.data)">
+                          Find in Model
+                        </button>
+                        <button mat-menu-item class="" (click)="searchModels(node.data)">
+                          Search Models
+                        </button>
+                        <button mat-menu-item class="" (click)="searchModelsByContributor(node.data)">
+                          Search My Models
+                        </button>
+                      </mat-menu>
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="EntityType.EVIDENCE">
+                      <div fxFlex="" fxLayout="column" fxLayoutAlign="start stretch">
+                        <div class="noc-title">
+                          {{node.data.evidence?.label}}
+                        </div>
+                        <div class="noc-subtitle">
+                          <a (click)="$event.stopPropagation()" href="{{node.data.referenceEntity?.url}}"
+                            target="_blank">
+                            {{node.data.referenceEntity?.label}}
+                          </a>
+                        </div>
+                        <div class="noc-subtitle">
+                          {{node.data.withEntity?.label}}
+                        </div>
+                      </div>
+                      <div class="noc-badge" (click)="openSearch(node.data)" fxLayout="row"
+                        fxLayoutAlign="center center">
+                        {{node.data.frequency}}
+                      </div>
+                      <div class="noc-icon" (click)="openTermDetail(node.data)" fxLayout="row"
+                        fxLayoutAlign="center center">
+                        <fa-icon [icon]="['fas', 'info-circle']"></fa-icon>
+                      </div>
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="EntityType.ENTITY">
+                      <div (click)="search(node.data)" class="noc-title">
+                        {{node.data.label}}
+                      </div>
+                      <span fxFlex=""></span>
+                      <div class="noc-badge" (click)="openSearch(node.data)" fxLayout="row"
+                        fxLayoutAlign="center center">
+                        {{node.data.frequency}}
+                      </div>
+                      <div class="noc-icon" (click)="openTermDetail(node.data)" fxLayout="row"
+                        fxLayoutAlign="center center">
+                        <fa-icon [icon]="['fas', 'info-circle']"></fa-icon>
+                      </div>
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="EntityType.CONTRIBUTOR">
+                      <div (click)="search(node.data)" class="noc-title">
+                        {{node.data.name}}
+                      </div>
+                      <span fxFlex=""></span>
+                      <div class="noc-badge" (click)="openSearch(node.data)" fxLayout="row"
+                        fxLayoutAlign="center center">
+                        {{node.data.frequency}}
+                      </div>
+                      <div class="noc-icon" (click)="openTermDetail(node.data)" fxLayout="row"
+                        fxLayoutAlign="center center">
+                        <fa-icon [icon]="['fas', 'info-circle']"></fa-icon>
+                      </div>
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="EntityType.ARTICLE">
+                      <div fxFlex="" fxLayout="column" fxLayoutAlign="start stretch">
+                        <div class="noc-article-title">
+                          {{node.data.title}}
+                        </div>
+                        <div class="noc-subtitle">
+                          <a (click)="$event.stopPropagation()" href="{{node.data.link}}" target="_blank">
+                            {{node.data.id}}
+                          </a>
+                        </div>
+                        <div class="noc-article-author" fxLayout="row" fxLayoutAlign="start center">
+                          <mat-icon class="s-16 mr-4">person</mat-icon> <span fxFlex="">{{node.data.author}}</span>
+                        </div>
+                        <div class="noc-article-date">
+                          <mat-icon class="s-16 mr-4">date_range</mat-icon> <span>{{node.data.date}}</span>
+                        </div>
+                      </div>
+                      <div class="noc-badge" (click)="openSearch(node.data)" fxLayout="row"
+                        fxLayoutAlign="center center">
+                        {{node.data.frequency}}
+                      </div>
+                    </ng-container>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </tree-root>
+      </div>
+    </div>
+  </div>
+</div>

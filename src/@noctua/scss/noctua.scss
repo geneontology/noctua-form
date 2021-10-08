@@ -43,11 +43,11 @@ $noc-cc: #d3b5f5;
 }
 
 @mixin noc-chip-color($color) {
-  border: $color solid 1px !important;
-  background-color: rgba($color, 0.2) !important;
+  border: $color solid 1px;
+  background-color: rgba($color, 0.2);
 
   .noc-icon {
-    background-color: $color !important;
+    background-color: $color;
   }
 }
 

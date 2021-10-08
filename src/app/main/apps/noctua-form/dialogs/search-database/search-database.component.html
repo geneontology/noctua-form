@@ -72,7 +72,12 @@
           <ng-container cdkColumnDef="assignedBy">
             <mat-header-cell *cdkHeaderCellDef fxFlex="">Assigned By</mat-header-cell>
             <mat-cell *cdkCellDef="let evidence" fxFlex="">
-              <p class="">{{evidence.assignedBy?.label}}</p>
+              <span *ngFor="let group of evidence.groups; let i=index; let isLast=last">
+                <p (click)="$event.stopPropagation()">
+                  {{group.name}}
+                </p>
+                <span *ngIf="!isLast">&#44;&nbsp;</span>
+              </span>
             </mat-cell>
           </ng-container>
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

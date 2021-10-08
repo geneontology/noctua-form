@@ -25,8 +25,8 @@
             <mat-label>Filter by Term</mat-label>
             <mat-chip-list #termChipList>
               <mat-chip class="noc-form-chip" *ngFor="let term of noctuaSearchService.searchCriteria.terms"
-                [selectable]="true" [removable]="true" (removed)="remove(term, noctuaSearchService.filterType.terms)"
-                fxLayout="row" fxLayoutAlign="start center" matTooltip="Term: {{term.label}} ({{term.id}})"
+                [selectable]="true" [removable]="true" (removed)="remove(term, SearchFilterType.terms)" fxLayout="row"
+                fxLayoutAlign="start center" matTooltip="Term: {{term.label}} ({{term.id}})"
                 [matTooltipPosition]="'below'" [matTooltipShowDelay]="1000">
                 <div fxFlex="" class="noc-chip-label">
                   {{term.label}}
@@ -37,9 +37,8 @@
                 [matChipInputFor]="termChipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                 [matChipInputAddOnBlur]="false">
             </mat-chip-list>
-            <mat-autocomplete #termAuto="matAutocomplete"
-              (optionSelected)="selected($event, noctuaSearchService.filterType.terms)" [displayWith]="termDisplayFn"
-              class="noc-term-autocomplete">
+            <mat-autocomplete #termAuto="matAutocomplete" (optionSelected)="selected($event, SearchFilterType.terms)"
+              [displayWith]="termDisplayFn" class="noc-term-autocomplete">
               <mat-option class="noc-term-autocomplete" *ngFor="let item of termNode.termLookup.results" [value]="item">
                 <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
                   <div class="noc-term-label">
@@ -59,9 +58,9 @@
             <mat-label>Filter by Gene Product</mat-label>
             <mat-chip-list #gpChipList>
               <mat-chip class="noc-form-chip" *ngFor="let gp of noctuaSearchService.searchCriteria.gps"
-                [selectable]="true" [removable]="true" (removed)="remove(gp, noctuaSearchService.filterType.gps)"
-                fxLayout="row" fxLayoutAlign="start center" matTooltip="Term: {{gp.label}} ({{gp.id}})"
-                [matTooltipPosition]="'below'" [matTooltipShowDelay]="1000">
+                [selectable]="true" [removable]="true" (removed)="remove(gp, SearchFilterType.gps)" fxLayout="row"
+                fxLayoutAlign="start center" matTooltip="Term: {{gp.label}} ({{gp.id}})" [matTooltipPosition]="'below'"
+                [matTooltipShowDelay]="1000">
                 <div fxFlex="" class="noc-chip-label">
                   {{gp.label}}
                 </div>
@@ -71,9 +70,8 @@
                 [matChipInputFor]="gpChipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                 [matChipInputAddOnBlur]="false">
             </mat-chip-list>
-            <mat-autocomplete #gpAuto="matAutocomplete"
-              (optionSelected)="selected($event, noctuaSearchService.filterType.gps)" [displayWith]="termDisplayFn"
-              class="noc-term-autocomplete">
+            <mat-autocomplete #gpAuto="matAutocomplete" (optionSelected)="selected($event, SearchFilterType.gps)"
+              [displayWith]="termDisplayFn" class="noc-term-autocomplete">
               <mat-option class="noc-term-autocomplete" *ngFor="let item of gpNode.termLookup.results" [value]="item">
                 <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
                   <div class="noc-term-label">
@@ -93,9 +91,9 @@
             <mat-label>Filter by Reference</mat-label>
             <mat-chip-list #pmidChipList>
               <mat-chip class="noc-form-chip" *ngFor="let pmid of noctuaSearchService.searchCriteria.pmids"
-                [selectable]="true" [removable]="true" (removed)="remove(pmid, noctuaSearchService.filterType.pmids)"
-                fxLayout="row" fxLayoutAlign="start center" matTooltip="Reference: {{pmid}}"
-                [matTooltipPosition]="'below'" [matTooltipShowDelay]="1000">
+                [selectable]="true" [removable]="true" (removed)="remove(pmid, SearchFilterType.pmids)" fxLayout="row"
+                fxLayoutAlign="start center" matTooltip="Reference: {{pmid}}" [matTooltipPosition]="'below'"
+                [matTooltipShowDelay]="1000">
                 <div fxFlex="" class="noc-chip-label">
                   {{pmid}}
                 </div>
@@ -103,8 +101,7 @@
               </mat-chip>
               <input #searchInput formControlName="pmids" placeholder="Add PMID Filter" #pmidInput
                 [matChipInputFor]="pmidChipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                [matChipInputAddOnBlur]="false"
-                (matChipInputTokenEnd)="add($event, noctuaSearchService.filterType.pmids)">
+                [matChipInputAddOnBlur]="false" (matChipInputTokenEnd)="add($event, SearchFilterType.pmids)">
               <button mat-icon-button matSuffix (click)="openAddReference($event, 'pmids')"
                 class="noc-evidence-db-trigger">
                 <mat-icon>playlist_add</mat-icon>
@@ -116,10 +113,10 @@
           <mat-form-field appearance="outline" class="noc-sm w-100-p">
             <mat-chip-list #organismChipList>
               <mat-chip class="noc-form-chip" *ngFor="let organism of noctuaSearchService.searchCriteria.organisms"
-                [selectable]="true" [removable]="true"
-                (removed)="remove(organism, noctuaSearchService.filterType.organisms)" fxLayout="row"
-                fxLayoutAlign="start center" matTooltip="Species: {{organism.taxonName}} ({{organism.taxonIri}})"
-                [matTooltipPosition]="'below'" [matTooltipShowDelay]="1000">
+                [selectable]="true" [removable]="true" (removed)="remove(organism, SearchFilterType.organisms)"
+                fxLayout="row" fxLayoutAlign="start center"
+                matTooltip="Species: {{organism.taxonName}} ({{organism.taxonIri}})" [matTooltipPosition]="'below'"
+                [matTooltipShowDelay]="1000">
                 <div fxFlex="" class="noc-chip-label">
                   {{organism.taxonName}}
                 </div>
@@ -130,8 +127,8 @@
                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="false">
             </mat-chip-list>
             <mat-autocomplete #organismAuto="matAutocomplete"
-              (optionSelected)="selected($event, noctuaSearchService.filterType.organisms)"
-              [displayWith]="organismDisplayFn" class="noc-term-autocomplete">
+              (optionSelected)="selected($event, SearchFilterType.organisms)" [displayWith]="organismDisplayFn"
+              class="noc-term-autocomplete">
               <mat-option class="noc-term-autocomplete" *ngFor="let item of filteredOrganisms | async" [value]="item">
                 <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
                   <div class="noc-term-label">
@@ -162,10 +159,9 @@
             <mat-chip-list #contributorChipList>
               <mat-chip class="noc-form-chip"
                 *ngFor="let contributor of noctuaSearchService.searchCriteria.contributors" [selectable]="true"
-                [removable]="true" (removed)="remove(contributor, noctuaSearchService.filterType.contributors)"
-                fxLayout="row" fxLayoutAlign="start center"
-                matTooltip="Contributor: {{contributor.name}} ({{contributor.orcid}})" [matTooltipPosition]="'below'"
-                [matTooltipShowDelay]="1000">
+                [removable]="true" (removed)="remove(contributor, SearchFilterType.contributors)" fxLayout="row"
+                fxLayoutAlign="start center" matTooltip="Contributor: {{contributor.name}} ({{contributor.orcid}})"
+                [matTooltipPosition]="'below'" [matTooltipShowDelay]="1000">
                 <div fxFlex="" class="noc-chip-label">
                   {{contributor.name}}
                 </div>
@@ -176,8 +172,8 @@
                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="false">
             </mat-chip-list>
             <mat-autocomplete #contributorAuto="matAutocomplete"
-              (optionSelected)="selected($event, noctuaSearchService.filterType.contributors)"
-              [displayWith]="contributorDisplayFn" class="noc-term-autocomplete">
+              (optionSelected)="selected($event, SearchFilterType.contributors)" [displayWith]="contributorDisplayFn"
+              class="noc-term-autocomplete">
               <mat-option class="noc-term-autocomplete" *ngFor="let item of filteredContributors | async"
                 [value]="item">
                 <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
@@ -198,8 +194,8 @@
             <mat-label>Filter by Group</mat-label>
             <mat-chip-list #groupChipList>
               <mat-chip class="noc-form-chip" *ngFor="let group of noctuaSearchService.searchCriteria.groups"
-                [selectable]="true" [removable]="true" (removed)="remove(group, noctuaSearchService.filterType.groups)"
-                fxLayout="row" fxLayoutAlign="start center" matTooltip="Term: {{group.name}} ({{group.url}})"
+                [selectable]="true" [removable]="true" (removed)="remove(group, SearchFilterType.groups)" fxLayout="row"
+                fxLayoutAlign="start center" matTooltip="Term: {{group.name}} ({{group.url}})"
                 [matTooltipPosition]="'below'" [matTooltipShowDelay]="1000">
                 <div fxFlex="" class="noc-chip-label">
                   {{group.name}}
@@ -210,9 +206,8 @@
                 #groupInput [matChipInputFor]="groupChipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                 [matChipInputAddOnBlur]="false">
             </mat-chip-list>
-            <mat-autocomplete #groupAuto="matAutocomplete"
-              (optionSelected)="selected($event, noctuaSearchService.filterType.groups)" [displayWith]="groupDisplayFn"
-              class="noc-term-autocomplete">
+            <mat-autocomplete #groupAuto="matAutocomplete" (optionSelected)="selected($event, SearchFilterType.groups)"
+              [displayWith]="groupDisplayFn" class="noc-term-autocomplete">
               <mat-option class="noc-term-autocomplete" *ngFor="let item of filteredGroups | async" [value]="item">
                 <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
                   <div class="noc-term-label">
@@ -244,9 +239,8 @@
             <mat-label>Filter by Exact Date</mat-label>
             <mat-chip-list #dateChipList>
               <mat-chip class="noc-form-chip" *ngFor="let date of noctuaSearchService.searchCriteria.exactdates"
-                [selectable]="true" [removable]="true"
-                (removed)="remove(date, noctuaSearchService.filterType.exactdates)" fxLayout="row"
-                fxLayoutAlign="start center">
+                [selectable]="true" [removable]="true" (removed)="remove(date, SearchFilterType.exactdates)"
+                fxLayout="row" fxLayoutAlign="start center">
                 <div fxFlex="" class="noc-chip-label">
                   {{date}}
                 </div>
@@ -255,7 +249,7 @@
               <input #searchInput formControlName="exactdates" [matDatepicker]="exactDatePicker"
                 placeholder="Add Exact Date Filter" #dateInput [matChipInputFor]="dateChipList"
                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="false"
-                (matChipInputTokenEnd)="add($event, noctuaSearchService.filterType.exactdates)">
+                (matChipInputTokenEnd)="add($event, SearchFilterType.exactdates)">
             </mat-chip-list>
             <mat-datepicker-toggle matSuffix [for]="exactDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #exactDatePicker></mat-datepicker>
@@ -265,9 +259,8 @@
               <mat-label>Start Date</mat-label>
               <mat-chip-list #startDateChipList>
                 <mat-chip class="noc-form-chip" *ngFor="let date of noctuaSearchService.searchCriteria.startdates"
-                  [selectable]="true" [removable]="true"
-                  (removed)="remove(date, noctuaSearchService.filterType.startdates)" fxLayout="row"
-                  fxLayoutAlign="start center">
+                  [selectable]="true" [removable]="true" (removed)="remove(date, SearchFilterType.startdates)"
+                  fxLayout="row" fxLayoutAlign="start center">
                   <div fxFlex="" class="noc-chip-label">
                     {{date}}
                   </div>
@@ -276,7 +269,7 @@
                 <input #searchInput formControlName="startdates" [matDatepicker]="startDatePicker"
                   placeholder="Start Date" #dateInput [matChipInputFor]="startDateChipList"
                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="false"
-                  (matChipInputTokenEnd)="add($event, noctuaSearchService.filterType.startdates)">
+                  (matChipInputTokenEnd)="add($event, SearchFilterType.startdates)">
               </mat-chip-list>
               <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #startDatePicker></mat-datepicker>
@@ -285,9 +278,8 @@
               <mat-label>End Date</mat-label>
               <mat-chip-list #dateChipList>
                 <mat-chip class="noc-form-chip" *ngFor="let date of noctuaSearchService.searchCriteria.enddates"
-                  [selectable]="true" [removable]="true"
-                  (removed)="remove(date, noctuaSearchService.filterType.enddates)" fxLayout="row"
-                  fxLayoutAlign="start center">
+                  [selectable]="true" [removable]="true" (removed)="remove(date, SearchFilterType.enddates)"
+                  fxLayout="row" fxLayoutAlign="start center">
                   <div fxFlex="" class="noc-chip-label">
                     {{date}}
                   </div>
@@ -295,8 +287,7 @@
                 </mat-chip>
                 <input #searchInput formControlName="enddates" [matDatepicker]="endDatePicker" placeholder="End Date"
                   #dateInput [matChipInputFor]="dateChipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                  [matChipInputAddOnBlur]="false"
-                  (matChipInputTokenEnd)="add($event, noctuaSearchService.filterType.enddates)">
+                  [matChipInputAddOnBlur]="false" (matChipInputTokenEnd)="add($event, SearchFilterType.enddates)">
               </mat-chip-list>
               <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #endDatePicker></mat-datepicker>
@@ -318,8 +309,8 @@
             <mat-label>Filter by Model Ids</mat-label>
             <mat-chip-list #idChipList>
               <mat-chip class="noc-form-chip" *ngFor="let id of noctuaSearchService.searchCriteria.ids"
-                [selectable]="true" [removable]="true" (removed)="remove(id, noctuaSearchService.filterType.ids)"
-                fxLayout="row" fxLayoutAlign="start center" matTooltip="Keyword: {{id}}" [matTooltipPosition]="'below'"
+                [selectable]="true" [removable]="true" (removed)="remove(id, SearchFilterType.ids)" fxLayout="row"
+                fxLayoutAlign="start center" matTooltip="Keyword: {{id}}" [matTooltipPosition]="'below'"
                 [matTooltipShowDelay]="1000">
                 <div fxFlex="" class="noc-chip-label">
                   {{id}}
@@ -328,8 +319,7 @@
               </mat-chip>
               <input #searchInput formControlName="ids" placeholder="Add Model Id Filter" #idInput
                 [matChipInputFor]="idChipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                [matChipInputAddOnBlur]="false"
-                (matChipInputTokenEnd)="add($event, noctuaSearchService.filterType.ids)">
+                [matChipInputAddOnBlur]="false" (matChipInputTokenEnd)="add($event, SearchFilterType.ids)">
             </mat-chip-list>
           </mat-form-field>
         </div>
@@ -338,9 +328,9 @@
             <mat-label>Filter by Title</mat-label>
             <mat-chip-list #titleChipList>
               <mat-chip class="noc-form-chip" *ngFor="let title of noctuaSearchService.searchCriteria.titles"
-                [selectable]="true" [removable]="true" (removed)="remove(title, noctuaSearchService.filterType.titles)"
-                fxLayout="row" fxLayoutAlign="start center" matTooltip="Keyword: {{title}}"
-                [matTooltipPosition]="'below'" [matTooltipShowDelay]="1000">
+                [selectable]="true" [removable]="true" (removed)="remove(title, SearchFilterType.titles)" fxLayout="row"
+                fxLayoutAlign="start center" matTooltip="Keyword: {{title}}" [matTooltipPosition]="'below'"
+                [matTooltipShowDelay]="1000">
                 <div fxFlex="" class="noc-chip-label">
                   {{title}}
                 </div>
@@ -348,8 +338,7 @@
               </mat-chip>
               <input #searchInput formControlName="titles" placeholder="Add Title Filter (only one allowed)" #titleInput
                 [matChipInputFor]="titleChipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                [matChipInputAddOnBlur]="false"
-                (matChipInputTokenEnd)="add($event, noctuaSearchService.filterType.titles, 1)">
+                [matChipInputAddOnBlur]="false" (matChipInputTokenEnd)="add($event, SearchFilterType.titles, 1)">
             </mat-chip-list>
           </mat-form-field>
         </div>
@@ -358,8 +347,8 @@
             <mat-label>Filter by State</mat-label>
             <mat-chip-list #stateChipList>
               <mat-chip class="noc-form-chip" *ngFor="let state of noctuaSearchService.searchCriteria.states"
-                [selectable]="true" [removable]="true" (removed)="remove(state, noctuaSearchService.filterType.states)"
-                fxLayout="row" fxLayoutAlign="start center">
+                [selectable]="true" [removable]="true" (removed)="remove(state, SearchFilterType.states)" fxLayout="row"
+                fxLayoutAlign="start center">
                 <div fxFlex="" class="noc-chip-label">
                   {{state.name}}
                 </div>
@@ -369,9 +358,8 @@
                 #stateInput [matChipInputFor]="stateChipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                 [matChipInputAddOnBlur]="false">
             </mat-chip-list>
-            <mat-autocomplete #stateAuto="matAutocomplete"
-              (optionSelected)="selected($event, noctuaSearchService.filterType.states)" [displayWith]="stateDisplayFn"
-              class="noc-term-autocomplete">
+            <mat-autocomplete #stateAuto="matAutocomplete" (optionSelected)="selected($event, SearchFilterType.states)"
+              [displayWith]="stateDisplayFn" class="noc-term-autocomplete">
               <mat-option class="noc-term-autocomplete" *ngFor="let item of filteredStates | async" [value]="item">
                 <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
                   <div class="noc-term-label">

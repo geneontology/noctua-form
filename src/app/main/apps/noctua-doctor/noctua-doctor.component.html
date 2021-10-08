@@ -1,19 +1,66 @@
 <div class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
   <div class="noc-sidemenu" fxLayout="column" fxLayoutAlign="start center">
+    <button mat-button color="" class="noc-rounded-button green-400-bg" fxLayout="row" fxLayoutAlign="start center"
+      matTooltip="Filter" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
+      <fa-icon [icon]="['fas', 'plus']" class="noc-icon"></fa-icon>
+      <div class="noc-label" fxFlex="">
+        Create
+      </div>
+    </button>
+    <button mat-button color="" class="" fxLayout="row" fxLayoutAlign="start center"
+      [ngClass]="{'noc-active': noctuaDoctorMenuService.selectedMiddlePanel === MiddlePanel.home}"
+      matTooltip="Board home" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
+      <fa-icon [icon]="['fas', 'home']" class="noc-icon"></fa-icon>
+      <div class="noc-label" fxFlex="">
+        Home
+      </div>
+    </button>
 
+    <button mat-button color="" class="" fxLayout="row" fxLayoutAlign="start center"
+      [ngClass]="{'noc-active': noctuaDoctorMenuService.selectedMiddlePanel === MiddlePanel.home}"
+      matTooltip="Board home" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
+      <fa-icon [icon]="['fas', 'home']" class="noc-icon"></fa-icon>
+      <div class="noc-label" fxFlex="">
+        Obsolete Manager
+      </div>
+    </button>
+    <button mat-button color="" class="" fxLayout="row" fxLayoutAlign="start center"
+      [ngClass]="{'noc-active': noctuaDoctorMenuService.selectedMiddlePanel === MiddlePanel.home}"
+      matTooltip="Board home" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
+      <fa-icon [icon]="['fas', 'home']" class="noc-icon"></fa-icon>
+      <div class="noc-label" fxFlex="">
+        My Terms
+      </div>
+    </button>
+    <button mat-button color="" class="" fxLayout="row" fxLayoutAlign="start center"
+      [ngClass]="{'noc-active': noctuaDoctorMenuService.selectedMiddlePanel === MiddlePanel.home}"
+      matTooltip="Board home" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
+      <fa-icon [icon]="['fas', 'home']" class="noc-icon"></fa-icon>
+      <div class="noc-label" fxFlex="">
+        Checklist
+      </div>
+    </button>
+    <button mat-button color="" class="" fxLayout="row" fxLayoutAlign="start center"
+      [ngClass]="{'noc-active': noctuaDoctorMenuService.selectedMiddlePanel === MiddlePanel.home}"
+      matTooltip="Board home" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
+      <fa-icon [icon]="['fas', 'home']" class="noc-icon"></fa-icon>
+      <div class="noc-label" fxFlex="">
+        Calendar
+      </div>
+    </button>
+    <button mat-button color="" class="" fxLayout="row" fxLayoutAlign="start center"
+      [ngClass]="{'noc-active': noctuaDoctorMenuService.selectedMiddlePanel === MiddlePanel.home}"
+      matTooltip="Board home" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
+      <fa-icon [icon]="['fas', 'home']" class="noc-icon"></fa-icon>
+      <div class="noc-label" fxFlex="">
+        Chat
+      </div>
+    </button>
   </div>
   <mat-drawer-container class="h-100-p" fxFlex="" fxLayout="row" fxLayoutAlign="start start" [hasBackdrop]="false"
     autosize>
     <mat-drawer #leftDrawer class="noc-left-drawer" mode="side" position="start" opened>
       <div [ngSwitch]="noctuaSearchMenuService.selectedLeftPanel" class="h-100-p">
-        <noc-search-filter *ngSwitchCase="LeftPanel.filter"></noc-search-filter>
-        <noc-search-relation *ngSwitchCase="LeftPanel.relation"></noc-search-relation>
-        <noc-search-groups *ngSwitchCase="LeftPanel.group"></noc-search-groups>
-        <noc-search-contributors *ngSwitchCase="LeftPanel.contributor">
-        </noc-search-contributors>
-        <noc-search-organisms *ngSwitchCase="LeftPanel.organism"></noc-search-organisms>
-        <noc-search-history *ngSwitchCase="LeftPanel.history"></noc-search-history>
-        <noc-art-basket [hidden]="noctuaSearchMenuService.selectedLeftPanel !== LeftPanel.artBasket"></noc-art-basket>
       </div>
     </mat-drawer>
     <mat-drawer-content #scrollbarRef class="noc-section-body w-100-p" [perfectScrollbar]="scrollbarConfig">
@@ -25,37 +72,6 @@
         <h3 [@animate]="{value:'*',params:{delay:'100ms', y:'25px'}}">
           Notify
         </h3>
-      </div>
-      <div *ngIf="noctuaSearchMenuService.reviewMode !== ReviewMode.off" class="noc-art-info" fxLayout="row"
-        fxLayoutAlign="center center">
-        <div class="noc-art-tabs" fxLayout="row" fxLayoutAlign="center center">
-          <div class="noc-line noc-visited" fxFlex>
-          </div>
-          <button mat-stroked-button (click)="selectMiddlePanel(MiddlePanel.cams)" class="" color="" [ngClass]="{'noc-active': noctuaSearchMenuService.selectedMiddlePanel === MiddlePanel.cams,
-            'noc-visited': noctuaSearchMenuService.reviewLevel>0}">
-            <div class="noc-title">Search</div><br>
-            <div class="noc-description">Add/remove to review</div>
-            <div class="noc-badge">
-              {{artBasket?.cams.length}} selected
-            </div>
-          </button>
-          <div class="noc-line" fxFlex="80px" [ngClass]="{'noc-visited': noctuaSearchMenuService.reviewLevel>0}">
-          </div>
-          <button mat-stroked-button (click)="selectMiddlePanel(MiddlePanel.camsReview)" [ngClass]="{'noc-active': noctuaSearchMenuService.selectedMiddlePanel === MiddlePanel.camsReview,
-            'noc-visited': noctuaSearchMenuService.reviewLevel>1}" class="" color="">
-            <div class="noc-title">Review</div> <br>
-            <div class="noc-description">Edit models</div>
-          </button>
-          <div class="noc-line" fxFlex="80px" [ngClass]="{'noc-visited': noctuaSearchMenuService.reviewLevel>1}">
-          </div>
-          <button mat-stroked-button (click)="selectMiddlePanel(MiddlePanel.reviewChanges)" class="" color="" [ngClass]="{'noc-active': noctuaSearchMenuService.selectedMiddlePanel === MiddlePanel.reviewChanges,
-            'noc-visited': noctuaSearchMenuService.reviewLevel>2}">
-            <div class="noc-title">Checkout</div> <br>
-            <div class="noc-description">Review and submit changes</div>
-          </button>
-          <div class="noc-line" fxFlex [ngClass]="{'noc-visited': noctuaSearchMenuService.reviewLevel>2}">
-          </div>
-        </div>
       </div>
       <div class="noc-middle-panel w-100-p">
       </div>

@@ -58,7 +58,6 @@ export class FindReplaceComponent implements OnInit, OnDestroy {
           return;
         }
         this.cam = cam;
-
       });
 
     this.camService.onCamsCheckoutChanged

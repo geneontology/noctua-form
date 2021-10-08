@@ -1,0 +1,44 @@
+<div class="reveal">
+  <div class="slides">
+    <section>
+      <h2>Introduction</h2>
+      GO-CAM models are based on the semantic annotation and combination of biological facts. Each fact or statement
+      corresponds to a standard GO Annotation, that is a Gene associated to a GO-Term. To read more about standard GO
+      annotations, click here
+
+      GO-CAM relies on the Gene Ontology to define a controlled set of vocabulary and enable curators to create
+      structured biological facts, also called annotations. GO-CAM combines those single biological facts to describe
+      and define larger biological processes. Each biological fact can be written as.a triplet subject - predicate -
+      object and a model, as a collection of triplets, can be stored in TTL file.
+
+      The curators use the platform Noctua to create these GO-CAM models. Noctua is the front-end, currently written
+      with that allows for the creation of workbenches (end-user UI to access and manipulate the models in different
+      ways)
+    </section>
+    <section *ngFor="let activity of cam.activities">
+      <section>
+        <div class="noc-card-content" fxLayout="column" fxLayoutAlign="start center">
+          <div class="card">
+            <div class="noc-card" nocPerfectScrollbar>
+              <div class="noc-title" fxLayout="column" fxLayoutAlign="start center">
+                {{activity.title}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section *ngFor="let node of activity.nodes" fxLayout="column" fxLayoutAlign="center center">
+        {{node.term?.label}}
+        <!--   <noc-entity-form [entityFormGroup]="entityForm" fxLayout="row" fxLayoutAlign="start center"
+        class="w-100-p">
+      </noc-entity-form>      -->
+
+        <noc-activity-tree-node [options]="tableOptions" [cam]="cam" [activity]="activity" [entity]="node" class="">
+        </noc-activity-tree-node>
+
+        What is the evidence
+        <input />
+      </section>
+    </section>
+  </div>
+</div>

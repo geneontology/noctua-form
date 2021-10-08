@@ -45,7 +45,7 @@ const globalKnownRelations = typeof global_known_relations !== 'undefined'
 
 export const environment = {
   production: true,
-  isDev: false,
+  isDev: true,
   isBeta: false,
   isGraph: false,
   spaqrlApiUrl: 'http://rdf-internal.berkeleybop.io/blazegraph/sparql',
@@ -64,7 +64,7 @@ export const environment = {
   searchApi: `${baristaLocation}/search/`,
 
   //Workbench
-  noctuaUrl: `${window.location.origin}`,
+  noctuaUrl: `${window.location.origin}/workbench/noctua-landing-page`,
   workbenchUrl: `${window.location.origin}/workbench/`,
 
   amigoTerm: 'http://amigo.geneontology.org/amigo/term/',

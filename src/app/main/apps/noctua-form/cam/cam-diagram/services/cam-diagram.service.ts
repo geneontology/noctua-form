@@ -84,7 +84,6 @@ export class CamDiagramService {
     self._jsPlumbInstance.bind("click", (c) => {
       // self.camDiagramService.jsPlumbInstance.deleteConnection(c);
       self.openConnectorForm(c.sourceId, c.targetId);
-      console.log(c)
     });
   }
 
