@@ -10,7 +10,7 @@ $accent: map-get($theme, accent);
   @include mat-elevation(4);
 
   .noc-drawer {
-    @include deep-width(420px);
+    @include deep-width(520px);
 
     .noc-drawer-header {
       padding: 0 12px;
@@ -25,9 +25,34 @@ $accent: map-get($theme, accent);
       }
     }
 
+    .noc-tab-bar {
+      @include deep-height(40px);
+      padding-top: 10px;
+      .noc-tab-button {
+        @include deep-height(30px);
+        min-width: 20px;
+        padding: 0 16px;
+        line-height: 12px;
+        font-size: 12px;
+        border-radius: 0;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        border: #bbb solid 1px;
+        border-bottom: #eee solid 3px;
+        color: #777;
+
+        &.noc-active {
+          border-bottom: $noc-primary-color solid 3px;
+          background-color: #ccc;
+          color: #000;
+        }
+      }
+    }
+
     .noc-drawer-body {
+      border-top: #888 solid 1px;
       padding: 24px 8 100px 0;
-      min-height: calc(100% - 30px);
+      min-height: calc(100% - 80px);
     }
   }
 
