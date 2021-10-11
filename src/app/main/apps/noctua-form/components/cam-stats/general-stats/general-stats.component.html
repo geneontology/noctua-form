@@ -1,0 +1,49 @@
+<div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+  <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
+    <div class="noc-section-heading">
+      Number of terms
+    </div>
+    <span fxFlex></span>
+  </div>
+  <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
+    <ngx-charts-bar-vertical-stacked [results]="stats.aspect" [view]="aspectOptions.view"
+      [scheme]="aspectOptions.colorScheme" [gradient]="aspectOptions.gradient" [xAxis]="aspectOptions.showXAxis"
+      [yAxis]="aspectOptions.showYAxis" [legend]="aspectOptions.legend" [showXAxisLabel]="aspectOptions.showXAxisLabel"
+      [showYAxisLabel]="aspectOptions.showYAxisLabel" [xAxisLabel]="aspectOptions.xAxisLabel"
+      [yAxisLabel]="aspectOptions.yAxisLabel" [animations]="aspectOptions.animations"
+      [customColors]="aspectOptions.customColors">
+    </ngx-charts-bar-vertical-stacked>
+  </div>
+</div>
+<div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+  <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
+    <div class="noc-section-heading">
+      Number of terms by aspect
+    </div>
+    <span fxFlex></span>
+  </div>
+  <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
+    <ngx-charts-pie-chart [results]="stats.aspectPie" [view]="aspectPieOptions.view"
+      [scheme]="aspectPieOptions.colorScheme" [gradient]="aspectPieOptions.gradient" [legend]="aspectPieOptions.legend"
+      [maxLabelLength]="aspectPieOptions.maxLabelLength" [labels]="aspectPieOptions.showLabels"
+      [doughnut]="aspectPieOptions.isDoughnut">
+    </ngx-charts-pie-chart>
+  </div>
+</div>
+
+<div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+  <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
+    <div class="noc-section-heading">
+      Terms Distribution (first 20)
+    </div>
+    <span fxFlex></span>
+  </div>
+  <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
+    <ngx-charts-bar-horizontal [results]="stats.termsBar" [view]="termsBarOptions.view"
+      [gradient]="termsBarOptions.gradient" [xAxis]="termsBarOptions.showXAxis" [yAxis]="termsBarOptions.showYAxis"
+      [legend]="termsBarOptions.legend" [showXAxisLabel]="termsBarOptions.showXAxisLabel"
+      [maxYAxisTickLength]="termsBarOptions.maxYAxisTickLength" [showYAxisLabel]="termsBarOptions.showYAxisLabel"
+      [xAxisLabel]="termsBarOptions.xAxisLabel" [yAxisLabel]="termsBarOptions.yAxisLabel">
+    </ngx-charts-bar-horizontal>
+  </div>
+</div>

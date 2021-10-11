@@ -1,0 +1,32 @@
+<div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+  <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
+    <div class="noc-section-heading">
+      Terms Distribution (first 20)
+    </div>
+    <span fxFlex></span>
+  </div>
+  <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
+    <ngx-charts-bar-horizontal [results]="stats.termsBar" [view]="termsBarOptions.view"
+      [gradient]="termsBarOptions.gradient" [xAxis]="termsBarOptions.showXAxis" [yAxis]="termsBarOptions.showYAxis"
+      [legend]="termsBarOptions.legend" [showXAxisLabel]="termsBarOptions.showXAxisLabel"
+      [maxYAxisTickLength]="termsBarOptions.maxYAxisTickLength" [showYAxisLabel]="termsBarOptions.showYAxisLabel"
+      [xAxisLabel]="termsBarOptions.xAxisLabel" [yAxisLabel]="termsBarOptions.yAxisLabel">
+    </ngx-charts-bar-horizontal>
+  </div>
+</div>
+
+<div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+  <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
+    <div class="noc-section-heading">
+      Gene Product
+    </div>
+    <span fxFlex></span>
+  </div>
+  <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
+    <ngx-charts-pie-chart [results]="stats.gpPie" [view]="aspectPieOptions.view" [scheme]="aspectPieOptions.colorScheme"
+      [gradient]="aspectPieOptions.gradient" [legend]="aspectPieOptions.legend"
+      [maxLabelLength]="aspectPieOptions.maxLabelLength" [labels]="aspectPieOptions.showLabels"
+      [doughnut]="aspectPieOptions.isDoughnut">
+    </ngx-charts-pie-chart>
+  </div>
+</div>

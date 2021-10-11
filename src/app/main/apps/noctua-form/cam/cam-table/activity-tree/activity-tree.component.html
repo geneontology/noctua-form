@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="noc-gp noc-cell" fxLayout="row" fxLayoutAlign="start center">
-      <span class="noc-no-info" *ngIf="!gpNode">Gene info no available</span>
+      <span class="noc-no-info" *ngIf="!gpNode">GP info not available</span>
       <span class="text-truncate" *ngIf="gpNode"
         matTooltip="GP:  {{gpNode.term?.label}}  &#13; ( {{ gpNode.term?.id }})" [matTooltipPosition]="'below'"
         [matTooltipShowDelay]="1000">

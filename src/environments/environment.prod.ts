@@ -64,7 +64,8 @@ export const environment = {
   searchApi: `${baristaLocation}/search/`,
 
   //Workbench
-  noctuaUrl: `${window.location.origin}/workbench/noctua-landing-page`,
+  noctuaUrl: `${window.location.origin}`,
+  noctuaLandingPageUrl: `${window.location.origin}/workbench/noctua-landing-page`,
   workbenchUrl: `${window.location.origin}/workbench/`,
 
   amigoTerm: 'http://amigo.geneontology.org/amigo/term/',

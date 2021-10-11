@@ -1,0 +1,18 @@
+<div class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+  <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
+    <div class="noc-section-heading">
+      Contribution
+    </div>
+    <span fxFlex></span>
+  </div>
+  <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
+    <ngx-charts-bar-horizontal [results]="stats.contributorBar" [view]="contributorBarOptions.view"
+      [gradient]="contributorBarOptions.gradient" [xAxis]="contributorBarOptions.showXAxis"
+      [yAxis]="contributorBarOptions.showYAxis" [legend]="contributorBarOptions.legend"
+      [showXAxisLabel]="contributorBarOptions.showXAxisLabel"
+      [maxYAxisTickLength]="contributorBarOptions.maxYAxisTickLength"
+      [showYAxisLabel]="contributorBarOptions.showYAxisLabel" [xAxisLabel]="contributorBarOptions.xAxisLabel"
+      [yAxisLabel]="contributorBarOptions.yAxisLabel">
+    </ngx-charts-bar-horizontal>
+  </div>
+</div>
