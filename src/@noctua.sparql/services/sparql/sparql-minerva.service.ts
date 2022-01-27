@@ -7,7 +7,7 @@ import { CurieService } from './../../../@noctua.curie/services/curie.service';
 import {
   NoctuaFormConfigService,
   NoctuaUserService
-} from 'noctua-form-base'
+} from '@geneontology/noctua-form-base'
 
 
 declare const require: any;

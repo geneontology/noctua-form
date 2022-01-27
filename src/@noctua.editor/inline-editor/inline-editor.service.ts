@@ -17,7 +17,7 @@ import {
     CamService,
     NoctuaActivityEntityService,
     NoctuaActivityFormService
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 
 export interface SearchCriiteria {
     gp: string;

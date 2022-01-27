@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 
-import { FormType, NoctuaActivityFormService, NoctuaFormConfigService } from 'noctua-form-base';
+import { FormType, NoctuaActivityFormService, NoctuaFormConfigService } from '@geneontology/noctua-form-base';
 
 @Component({
   selector: 'app-create-activity-dialog',

@@ -9,10 +9,10 @@ import { ContextMenuComponent } from 'ngx-contextmenu';
 import { NodeService } from './services/node.service';
 import { CamDiagramService } from './../services/cam-diagram.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { NoctuaActivityFormService, NoctuaFormMenuService } from 'noctua-form-base';
-import { CamService } from 'noctua-form-base'
-import { Activity } from 'noctua-form-base';
-import { ActivityNode } from 'noctua-form-base';
+import { NoctuaActivityFormService, NoctuaFormMenuService } from '@geneontology/noctua-form-base';
+import { CamService } from '@geneontology/noctua-form-base'
+import { Activity } from '@geneontology/noctua-form-base';
+import { ActivityNode } from '@geneontology/noctua-form-base';
 
 @Component({
   selector: 'noc-nodes-container',

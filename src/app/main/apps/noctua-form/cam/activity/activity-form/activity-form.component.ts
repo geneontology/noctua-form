@@ -14,7 +14,7 @@ import {
   ActivityType,
   NoctuaUserService,
   NoctuaFormMenuService,
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 import { ResizeEvent } from 'angular-resizable-element';
 
 @Component({
@@ -46,7 +46,8 @@ export class ActivityFormComponent implements OnInit, OnDestroy {
   currentActivity: Activity;
   state: ActivityState;
 
-  descriptionLabel = 'Function Description';
+  descriptionSectionTitle = 'Function Description';
+  annotatedSectionTitle = 'Gene Product';
 
   private _unsubscribeAll: Subject<any>;
 
@@ -77,9 +78,12 @@ export class ActivityFormComponent implements OnInit, OnDestroy {
         this.molecularEntity = <FormGroup>this.activityFormGroup.get('molecularEntity');
 
         if (this.activity.activityType === ActivityType.ccOnly) {
-          this.descriptionLabel = 'Localization Description';
+          this.descriptionSectionTitle = 'Localization Description';
+        } else if (this.activity.activityType === ActivityType.molecule) {
+          this.annotatedSectionTitle = 'Small Molecule';
+          this.descriptionSectionTitle = 'Location (optional)';
         } else {
-          this.descriptionLabel = 'Function Description';
+          this.descriptionSectionTitle = 'Function Description';
         }
       });
   }

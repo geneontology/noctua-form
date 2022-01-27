@@ -9,14 +9,17 @@ $accent: map-get($theme, accent);
   background-color: white;
   @include mat-elevation(4);
 
+  .noc-drawer-body {
+    min-height: calc(100% - 80px);
+  }
+
   .noc-radio-button-rounded {
     min-width: 110px;
   }
 
   .noc-connector-form {
-    width: 600px;
+    width: 100%;
     background-color: #fff;
-    padding-bottom: 300px;
   }
 
   .noc-form-section {
@@ -28,7 +31,9 @@ $accent: map-get($theme, accent);
     }
 
     .noc-hint {
+      margin-left: 12px;
       font-size: 12px;
+      max-width: 300px;
       color: #676767;
       font-style: italic;
     }
@@ -85,12 +90,12 @@ $accent: map-get($theme, accent);
   }
 
   .noc-graph-preview {
-    height: 400px;
+    height: 100px;
     width: 100%;
   }
 
   .noc-connector-form-notes {
-    width: 416px;
+    width: 100%;
     background-color: rgba($noc-primary-color-lighter, 0.6);
 
     .noc-form-section {
@@ -118,6 +123,7 @@ $accent: map-get($theme, accent);
   }
 
   .noc-note {
+    padding: 20px 0;
     .noc-description {
       padding-left: 10px;
       font-size: 12px;

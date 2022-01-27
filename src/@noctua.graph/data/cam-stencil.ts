@@ -1,11 +1,12 @@
-import { ActivityType, noctuaFormConfig } from "noctua-form-base";
+import { ActivityType, noctuaFormConfig } from '@geneontology/noctua-form-base';
 import { cloneDeep } from "lodash";
 
 export interface StencilItemNode {
     id: string;
     label: string;
-    type: ActivityType,
-    iconUrl: string
+    type: ActivityType;
+    iconUrl: string;
+    description: string;
 }
 
 export interface StencilItem {
@@ -22,22 +23,20 @@ const camStencil: StencilItem[] = [{
         type: ActivityType.default,
         id: noctuaFormConfig.activityType.options.default.name,
         label: noctuaFormConfig.activityType.options.default.label.toUpperCase(),
-        iconUrl: './assets/images/activity/default.png'
+        iconUrl: './assets/images/activity/default.png',
+        description: 'Click and drag onto canvas to create new activity for a single object, either a gene product or a protein complex identifier'
     }, {
-        type: ActivityType.bpOnly,
-        id: noctuaFormConfig.activityType.options.bpOnly.name,
-        label: noctuaFormConfig.activityType.options.bpOnly.label.toUpperCase(),
-        iconUrl: './assets/images/activity/bpOnly.png'
-    }, {
-        type: ActivityType.ccOnly,
-        id: noctuaFormConfig.activityType.options.ccOnly.name,
-        label: noctuaFormConfig.activityType.options.ccOnly.label.toUpperCase(),
-        iconUrl: './assets/images/activity/ccOnly.png'
+        type: ActivityType.proteinComplex,
+        id: noctuaFormConfig.activityType.options.proteinComplex.name,
+        label: noctuaFormConfig.activityType.options.proteinComplex.label.toUpperCase(),
+        iconUrl: './assets/images/activity/proteinComplex.png',
+        description: 'Click and drag onto canvas to create new activity for a protein complex that you define using a GO complex term and specifying the gene product subunits'
     }, {
         type: ActivityType.molecule,
         id: noctuaFormConfig.activityType.options.molecule.name,
         label: noctuaFormConfig.activityType.options.molecule.label.toUpperCase(),
-        iconUrl: './assets/images/activity/molecule.png'
+        iconUrl: './assets/images/activity/molecule.png',
+        description: 'Click and drag onto canvas to create a new small molecule that is either a substrate, a product, or a regulator of an activity'
     }]
 }]
 

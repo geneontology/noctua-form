@@ -13,7 +13,7 @@ import {
   withfrom,
   ErrorLevel,
   ErrorType
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 
 import { withDropdownData } from './with-dropdown.tokens';
 import { WithDropdownOverlayRef } from './with-dropdown-ref';

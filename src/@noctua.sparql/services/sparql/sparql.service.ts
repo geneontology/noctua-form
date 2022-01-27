@@ -26,7 +26,7 @@ import {
   Entity,
   Article,
   noctuaFormConfig
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 import { SparqlMinervaService } from './sparql-minerva.service';
 import { each, find } from 'lodash';
 declare const require: any;

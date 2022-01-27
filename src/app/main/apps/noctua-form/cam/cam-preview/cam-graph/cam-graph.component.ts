@@ -18,7 +18,7 @@ import {
   ConnectorActivity,
   NoctuaFormMenuService,
   LeftPanel
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 import { NoctuaConfirmDialogService } from '@noctua/components/confirm-dialog/confirm-dialog.service';
 
 @Component({

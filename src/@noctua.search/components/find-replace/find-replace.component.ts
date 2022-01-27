@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, NgZone, Input } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Cam, CamLoadingIndicator, CamService, CamStats, NoctuaFormConfigService, NoctuaUserService } from 'noctua-form-base';
+import { Cam, CamLoadingIndicator, CamService, CamStats, NoctuaFormConfigService, NoctuaUserService } from '@geneontology/noctua-form-base';
 import { NoctuaSearchService } from './../..//services/noctua-search.service';
 import { NoctuaSearchMenuService } from '../../services/search-menu.service';
 import { finalize, takeUntil } from 'rxjs/operators';

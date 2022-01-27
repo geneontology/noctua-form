@@ -10,11 +10,14 @@ import { NoctuaFormModule } from '../noctua-form';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CamGraphComponent } from './cam-graph/cam-graph.component';
 import { NoctuaGraphComponent } from './noctua-graph.component';
-import { GraphSettingsDialogComponent } from './dialogs/graph-settings/graph-settings.component';
+import { GraphSettingsComponent } from './graph-settings/graph-settings.component';
+import { RelationPreviewComponent } from './relation-preview/relation-preview.component';
+import { ActivityTableComponent } from './activity-table/activity-table.component';
+import { ActivityConnectorTableComponent } from './activity-connector-table/activity-connector-table.component';
 
 const routes = [
   {
-    path: 'ggg',
+    path: 'g',
     component: NoctuaGraphComponent
   }
 ];
@@ -35,7 +38,10 @@ const routes = [
   declarations: [
     NoctuaGraphComponent,
     CamGraphComponent,
-    GraphSettingsDialogComponent
+    GraphSettingsComponent,
+    RelationPreviewComponent,
+    ActivityTableComponent,
+    ActivityConnectorTableComponent
   ]
 })
 

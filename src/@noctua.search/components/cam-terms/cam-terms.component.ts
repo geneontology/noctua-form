@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, NgZone, Input, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
-import { ActivityNode, Article, Cam, CamLoadingIndicator, CamService, CamStats, CamSummary, EntityType, Evidence, LeftPanel, NoctuaFormConfigService, NoctuaFormMenuService, NoctuaGraphService, NoctuaLookupService, NoctuaUserService, RightPanel, TermsSummary } from 'noctua-form-base';
+import { ActivityNode, Article, Cam, CamLoadingIndicator, CamService, CamStats, CamSummary, EntityType, Evidence, LeftPanel, NoctuaFormConfigService, NoctuaFormMenuService, NoctuaGraphService, NoctuaLookupService, NoctuaUserService, RightPanel, TermsSummary } from '@geneontology/noctua-form-base';
 import { NoctuaSearchService } from './../..//services/noctua-search.service';
 import { NoctuaSearchMenuService } from '../../services/search-menu.service';
 import { finalize, takeUntil } from 'rxjs/operators';

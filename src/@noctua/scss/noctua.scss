@@ -51,6 +51,14 @@ $noc-cc: #d3b5f5;
   }
 }
 
+i {
+  font-size: 12px !important;
+  color: #000;
+  line-height: initial !important;
+  @include deep-height(initial!important);
+  @include deep-width(initial!important);
+}
+
 mat-chip {
   &.noc-chip-sm {
     @include deep-height(25px);

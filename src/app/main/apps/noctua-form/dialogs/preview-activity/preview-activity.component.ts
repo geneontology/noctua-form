@@ -10,7 +10,7 @@ import {
   Evidence,
   NoctuaFormConfigService,
   NoctuaActivityFormService
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 
 import { noctuaAnimations } from './../../../../../../@noctua/animations';
 

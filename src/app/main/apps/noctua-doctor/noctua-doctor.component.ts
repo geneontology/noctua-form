@@ -9,7 +9,7 @@ import {
   NoctuaUserService,
   NoctuaFormConfigService,
   CamService,
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 
 import { FormGroup } from '@angular/forms';
 import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';

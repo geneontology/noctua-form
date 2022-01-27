@@ -1,4 +1,4 @@
-import { Cam, Contributor, Group, Organism } from 'noctua-form-base';
+import { Cam, Contributor, Group, Organism } from '@geneontology/noctua-form-base';
 import { each } from 'lodash';
 import { CamPage } from './cam-page';
 

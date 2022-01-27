@@ -12,7 +12,7 @@ import {
 
   Cam,
   ActivityDisplayType,
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CamPage } from '@noctua.search/models/cam-page';

@@ -6,7 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { NoctuaConfigService } from '@noctua/services/config.service';
 import { NoctuaSplashScreenService } from '@noctua/services/splash-screen.service';
-import { NoctuaUserService } from 'noctua-form-base';
+import { NoctuaUserService } from '@geneontology/noctua-form-base';
 
 
 @Component({

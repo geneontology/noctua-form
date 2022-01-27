@@ -8,7 +8,7 @@ import {
 
 import { CamDiagramService } from './../../services/cam-diagram.service';
 
-import { Activity } from 'noctua-form-base';
+import { Activity } from '@geneontology/noctua-form-base';
 import { NodeComponent } from './../node/node.component';
 import { jsPlumb } from 'jsplumb';
 

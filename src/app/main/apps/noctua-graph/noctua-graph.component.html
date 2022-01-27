@@ -1,5 +1,5 @@
 <div class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
-
+  <!-- 
   <div class="noc-sidemenu" fxLayout="column" fxLayoutAlign="start center">
     <button mat-icon-button color="" class="noc-rounded-button"
       [ngClass]="{'noc-active': noctuaCommonMenuService.selectedMiddlePanel === MiddlePanel.camGraph}"
@@ -11,7 +11,7 @@
       (click)="openTable()" matTooltip="Filter" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
       <fa-icon [icon]="['fas', 'table']"></fa-icon>
     </button>
-  </div>
+  </div> -->
   <div class="w-100-p h-100-p" fxLayout="column" fxLayoutAlign="start stretch">
     <div *ngIf="!noctuaUserService.user" class="noc-not-loggedin" fxLayout="row" fxLayoutAlign="center center">
       Not Logged In: You can only view existing annotations
@@ -19,7 +19,7 @@
 
     <div *ngIf="cam" class="noc-cam-heading" fxFlex="1 1 auto" fxLayout="row" fxLayoutAlign="start center"
       [@animateStagger]="{value:'50'}">
-      <div class="" fxFlex="180px">
+      <div *ngIf="noctuaCommonMenuService.selectedMiddlePanel===RightPanel.camTable" class="" fxFlex="180px">
         <button mat-flat-button (click)="openActivityForm(ActivityType.default)" color="primary"
           class="noc-rounded-button noc-half-button noc-r noc-sm">
           <mat-icon class=""> add </mat-icon> Create Activity
@@ -128,14 +128,19 @@
       <mat-drawer #rightDrawer class="noc-right-drawer" mode="over" position="end">
         <div [ngSwitch]="noctuaCommonMenuService.selectedRightPanel" class="h-100-p" #scrollbarRef
           [perfectScrollbar]="scrollbarConfig">
-          <noc-cam-form [panelDrawer]="rightDrawer" *ngSwitchCase="RightPanel.camForm">
-          </noc-cam-form>
           <noc-cam-table [ngStyle]="{width:tableWidth}" [panelDrawer]="rightDrawer" *ngSwitchCase="RightPanel.camTable"
             [cam]="cam" [options]="tableOptions"></noc-cam-table>
-          <noc-activity-connector *ngSwitchCase="RightPanel.connectorForm">
-          </noc-activity-connector>
-          <noc-triple-table [panelDrawer]="rightDrawer" [cam]="cam" *ngSwitchCase="RightPanel.tripleTable">
-          </noc-triple-table>
+
+          <noc-graph-activity-table [panelDrawer]="rightDrawer" *ngSwitchCase="RightPanel.activityTable"
+            [options]="tableOptions" [cam]="cam">
+          </noc-graph-activity-table>
+
+          <noc-activity-connector-table [panelDrawer]="rightDrawer" *ngSwitchCase="RightPanel.activityConnectorTable"
+            [cam]="cam">
+          </noc-activity-connector-table>
+
+          <noc-graph-settings [panelDrawer]="rightDrawer" *ngSwitchCase="RightPanel.graphSettings">
+          </noc-graph-settings>
         </div>
       </mat-drawer>
     </mat-drawer-container>

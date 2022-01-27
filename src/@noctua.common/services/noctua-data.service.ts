@@ -2,7 +2,7 @@ import { environment } from 'environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
-import { NoctuaUserService, Contributor, Organism, compareOrganism, compareGroup, compareContributor } from 'noctua-form-base';
+import { NoctuaUserService, Contributor, Organism, compareOrganism, compareGroup, compareContributor } from '@geneontology/noctua-form-base';
 import { map } from 'rxjs/operators';
 import { MatColors } from '@noctua/mat-colors';
 

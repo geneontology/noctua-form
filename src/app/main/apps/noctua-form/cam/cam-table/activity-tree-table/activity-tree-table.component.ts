@@ -17,14 +17,14 @@ import {
 
   ActivityType,
   ActivityTreeNode
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 
 import {
   Cam,
   Activity,
   ActivityNode,
   compareNodeWeight,
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 
 import { EditorCategory } from '@noctua.editor/models/editor-category';
 import { NoctuaUtils } from '@noctua/utils/noctua-utils';

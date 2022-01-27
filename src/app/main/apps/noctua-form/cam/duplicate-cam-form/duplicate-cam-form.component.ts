@@ -12,7 +12,7 @@ import {
   CamService,
   Entity,
   NoctuaFormMenuService
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 
 @Component({

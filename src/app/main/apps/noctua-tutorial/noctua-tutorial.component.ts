@@ -23,7 +23,7 @@ import {
   ActivityDisplayType,
   CamLoadingIndicator,
   ReloadType
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 
 import { takeUntil, distinctUntilChanged } from 'rxjs/operators';
 import { NoctuaDataService } from '@noctua.common/services/noctua-data.service';

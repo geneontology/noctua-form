@@ -16,14 +16,14 @@ import {
   NoctuaFormMenuService,
 
   ActivityType
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 
 import {
   Cam,
   Activity,
   ActivityNode,
   ShapeDefinition
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 
 import { EditorCategory } from '@noctua.editor/models/editor-category';
 import { find } from 'lodash';

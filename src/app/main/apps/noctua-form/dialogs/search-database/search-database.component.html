@@ -54,7 +54,13 @@
           <ng-container cdkColumnDef="evidence">
             <mat-header-cell *cdkHeaderCellDef fxFlex="40%">Evidence</mat-header-cell>
             <mat-cell *cdkCellDef="let evidence" fxFlex="40%">
-              <p class="">{{evidence.evidence?.label}}</p>
+              <p class="">
+                {{evidence.evidence?.label}} <br>
+                <span *ngIf="evidence.evidenceExt">
+                  Ext: <small *ngFor="let relation of evidence.evidenceExt.relations">
+                    {{relation?.label}} : {{evidence.evidenceExt.term?.label}} </small> <br>
+                </span>
+              </p>
             </mat-cell>
           </ng-container>
           <ng-container cdkColumnDef="reference">

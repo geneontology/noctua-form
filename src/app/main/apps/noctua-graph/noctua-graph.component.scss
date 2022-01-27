@@ -9,6 +9,21 @@
     display: block;
   }
 
+  noc-activity-connector {
+    display: block;
+    @include deep-width(600px);
+  }
+
+  noc-graph-settings {
+    display: block;
+    @include deep-width(500px);
+  }
+
+  noc-graph-activity-table {
+    display: block;
+    min-width: 400px;
+  }
+
   .mat-drawer-content {
     width: 100%;
   }

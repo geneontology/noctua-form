@@ -14,7 +14,7 @@ declare var global_workbenches_model_beta_test: any;
 declare var global_workbenches_universal_beta_test: any;
 declare var global_known_relations: any;
 
-const baristaLocation = typeof global_barista_location !== 'undefined' ? global_barista_location : 'http://barista-dev.berkeleybop.org'; //'http://localhost:3400';';
+const baristaLocation = typeof global_barista_location !== 'undefined' ? global_barista_location : 'http://localhost:3400';//'http://barista-dev.berkeleybop.org'; //';
 const minervaDefinitionName = typeof global_minerva_definition_name !== 'undefined' ? global_minerva_definition_name : 'minerva_public_dev';
 const golrNeoServer = typeof global_golr_neo_server !== 'undefined'
   ? global_golr_neo_server
@@ -50,9 +50,6 @@ export const environment = {
   isBeta: true,
   isGraph: false,
   spaqrlApiUrl: 'http://rdf-internal.berkeleybop.io/blazegraph/sparql',
-  // spaqrlApiUrl: 'http://rdf.geneontology.org/blazegraph/sparql',
-  // gorestApiUrl: 'https://api.geneontology.cloud/'
-  gorestApiUrl: 'http://localhost:3000/',
   globalGolrNeoServer: golrNeoServer,
   globalGolrServer: golrServer,
   globalMinervaDefinitionName: minervaDefinitionName,

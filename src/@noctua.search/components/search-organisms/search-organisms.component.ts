@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import {
   NoctuaFormConfigService,
   NoctuaUserService
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 import { NoctuaSearchService } from './../..//services/noctua-search.service';
 import { NoctuaSearchMenuService } from '../../services/search-menu.service';
 

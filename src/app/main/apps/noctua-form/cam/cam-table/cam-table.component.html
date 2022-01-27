@@ -82,9 +82,6 @@
       <noc-activity-tree-table *ngIf="options.displayType===ActivityDisplayType.TREE_TABLE" [options]="options"
         [cam]="cam" [activity]="activity" class="noc-activities-table-body" fxLayout="row" fxLayoutAlign="start center">
       </noc-activity-tree-table>
-      <noc-activity-slim-tree *ngIf="options.displayType===ActivityDisplayType.SLIM_TREE" [options]="options"
-        [cam]="cam" [activity]="activity" class="noc-activities-table-body" fxLayout="row" fxLayoutAlign="start center">
-      </noc-activity-slim-tree>
     </div>
     <div *ngIf="!cam.loading?.status && cam.activities.length===0" class="noc-no-info">
       no activities present.

@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 
-import { ErrorLevel, ErrorType, NoctuaFormConfigService } from 'noctua-form-base';
+import { ErrorLevel, ErrorType, NoctuaFormConfigService } from '@geneontology/noctua-form-base';
 
 
 

@@ -1,146 +1,166 @@
-export const globalWorkbenchesModel = [
-  {
-    'menu-name': 'Noctua Form 2.0',
-    'page-name': 'Noctua Form 2.0',
-    'type': 'model',
-    'help-link': 'https://github.com/geneontology/noctua-form/issues',
-    'javascript': [
-      'main.js'
-    ],
-    'css': [
+export const globalWorkbenchesModel =
 
-    ],
-    'workbench-id': 'noctua-form',
-    'template-injectable': '../noctua-form/workbenches/noctua-form/public/inject.tmpl',
-    'public-directory': '../noctua-form/workbenches/noctua-form/public'
-  },
-  {
-    'menu-name': 'Noctua form Legacy',
-    'page-name': 'Noctua form 1.0',
-    'type': 'model',
-    'help-link': 'http://github.com/geneontology/noctua-form-legacy/issues',
-    'javascript': [
-      'bundle.js'
-    ],
-    'css': [
+  [
+    {
+      "menu-name": "Noctua Form 2.0",
+      "page-name": "Noctua Form 2.0",
+      "type": "model",
+      "help-link": "https://github.com/geneontology/noctua-form/issues",
+      "workbench-id": "noctua-form",
+      "template-injectable": "../noctua-form/workbenches/noctua-form/public/inject.tmpl",
+      "public-directory": "../noctua-form/workbenches/noctua-form/public"
+    },
+    {
+      "menu-name": "Alliance Pathway Preview",
+      "page-name": "Alliance Pathway Preview",
+      "type": "model",
+      "help-link": "https://github.com/geneontology/alliance-pathway-preview/issues",
+      "workbench-id": "noctua-gocam-pathway",
+      "template-injectable": "../alliance-pathway-preview/workbenches/noctua-gocam-pathway/public/inject.tmpl",
+      "public-directory": "../alliance-pathway-preview/workbenches/noctua-gocam-pathway/public"
+    },
+    {
+      "menu-name": "Noctua form Legacy",
+      "page-name": "Noctua form 1.0",
+      "type": "model",
+      "help-link": "http://github.com/geneontology/noctua-form-legacy/issues",
+      "javascript": [
+        "bundle.js"
+      ],
+      "css": [
 
-    ],
-    'workbench-id': 'noctua-form-legacy',
-    'template-injectable': '../noctua-form-legacy/workbenches/noctua-form-legacy/public/inject.tmpl',
-    'public-directory': '../noctua-form-legacy/workbenches/noctua-form-legacy/public'
-  },
-  {
-    'menu-name': 'Annotation preview',
-    'page-name': 'Annotation Preview',
-    'type': 'model',
-    'help-link': 'http://github.com/geneontology/noctua/issues',
-    'javascript': [
-      'AnnPreviewBundle.js',
-      'jquery.dataTables.min.js'
-    ],
-    'css': [
-      'https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css'
-    ],
-    'workbench-id': 'annpreview',
-    'template-injectable': 'workbenches/annpreview/public/inject.tmpl',
-    'public-directory': 'workbenches/annpreview/public'
-  },
-  {
-    'menu-name': 'Function companion',
-    'page-name': 'Function Companion',
-    'type': 'model',
-    'help-link': 'http://github.com/geneontology/noctua/issues',
-    'javascript': [
-      'CompanionBundle.js'
-    ],
-    'css': [
+      ],
+      "workbench-id": "noctua-form-legacy",
+      "template-injectable": "../noctua-form-legacy/workbenches/noctua-form-legacy/public/inject.tmpl",
+      "public-directory": "../noctua-form-legacy/workbenches/noctua-form-legacy/public"
+    },
+    {
+      "menu-name": "Activity Graph",
+      "page-name": "Activity Graph",
+      "type": "model",
+      "help-link": "https://github.com/geneontology/noctua-form/issues",
+      "javascript": [
+        "main.js"
+      ],
+      "css": [
 
-    ],
-    'workbench-id': 'companion',
-    'template-injectable': 'workbenches/companion/public/inject.tmpl',
-    'public-directory': 'workbenches/companion/public'
-  },
-  {
-    'menu-name': 'Cytoscape layout tool',
-    'page-name': 'Cytoscape Layout Tool',
-    'type': 'model',
-    'help-link': 'http://github.com/geneontology/noctua/issues',
-    'javascript': [
-      'CytoViewBundle.js'
-    ],
-    'css': [
+      ],
+      "workbench-id": "visual-pathway-editor",
+      "template-injectable": "../noctua-form-base/workbenches/visual-pathway-editor/public/inject.tmpl",
+      "public-directory": "../noctua-form-base/workbenches/visual-pathway-editor/public"
+    },
+    {
+      "menu-name": "Annotation preview",
+      "page-name": "Annotation Preview",
+      "type": "model",
+      "help-link": "http://github.com/geneontology/noctua/issues",
+      "javascript": [
+        "AnnPreviewBundle.js",
+        "jquery.dataTables.min.js"
+      ],
+      "css": [
+        "https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css"
+      ],
+      "workbench-id": "annpreview",
+      "template-injectable": "workbenches/annpreview/public/inject.tmpl",
+      "public-directory": "workbenches/annpreview/public"
+    },
+    {
+      "menu-name": "Function companion",
+      "page-name": "Function Companion",
+      "type": "model",
+      "help-link": "http://github.com/geneontology/noctua/issues",
+      "javascript": [
+        "CompanionBundle.js"
+      ],
+      "css": [
 
-    ],
-    'workbench-id': 'cytoview',
-    'template-injectable': 'workbenches/cytoview/public/inject.tmpl',
-    'public-directory': 'workbenches/cytoview/public'
-  },
-  {
-    'menu-name': 'Gosling (Noctua\'s little GOOSE)',
-    'page-name': 'Gosling (Noctua\'s little GOOSE)',
-    'type': 'model',
-    'help-link': 'http://github.com/geneontology/noctua/issues',
-    'javascript': [
-      'http://cdn.jsdelivr.net/yasqe/2.11.10/yasqe.bundled.min.js',
-      'http://cdn.jsdelivr.net/yasr/2.10.8/yasr.bundled.min.js',
-      'GoslingModelBundle.js'
-    ],
-    'css': [
-      'http://cdn.jsdelivr.net/yasqe/2.11.10/yasqe.min.css',
-      'http://cdn.jsdelivr.net/yasr/2.10.8/yasr.min.css'
-    ],
-    'workbench-id': 'gosling-model',
-    'template-injectable': 'workbenches/gosling-model/public/inject.tmpl',
-    'public-directory': 'workbenches/gosling-model/public'
-  },
-  {
-    'menu-name': 'Inference explanations',
-    'page-name': 'Inference explanations',
-    'type': 'model',
-    'help-link': 'http://github.com/geneontology/noctua/issues',
-    'javascript': [
-      'InferredRelationsBundle.js',
-      'jquery.dataTables.min.js'
-    ],
-    'css': [
-      'https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css'
-    ],
-    'workbench-id': 'inferredrelations',
-    'template-injectable': 'workbenches/inferredrelations/public/inject.tmpl',
-    'public-directory': 'workbenches/inferredrelations/public'
-  },
-  {
-    'menu-name': 'Macromolecular complex creator',
-    'page-name': 'Macromolecular Complex Creator',
-    'type': 'model',
-    'help-link': 'http://github.com/geneontology/noctua/issues',
-    'javascript': [
-      'MMCCBundle.js'
-    ],
-    'css': [
-      'selectize.bootstrap3.css',
-      'override-selectize.css'
-    ],
-    'workbench-id': 'mmcc',
-    'template-injectable': 'workbenches/mmcc/public/inject.tmpl',
-    'public-directory': 'workbenches/mmcc/public'
-  },
-  {
-    'menu-name': 'Pathway view',
-    'page-name': 'Pathway View',
-    'type': 'model',
-    'help-link': 'http://github.com/geneontology/noctua/issues',
-    'javascript': [
-      'PathwayViewBundle.js'
-    ],
-    'css': [
+      ],
+      "workbench-id": "companion",
+      "template-injectable": "workbenches/companion/public/inject.tmpl",
+      "public-directory": "workbenches/companion/public"
+    },
+    {
+      "menu-name": "Cytoscape layout tool",
+      "page-name": "Cytoscape Layout Tool",
+      "type": "model",
+      "help-link": "http://github.com/geneontology/noctua/issues",
+      "javascript": [
+        "CytoViewBundle.js"
+      ],
+      "css": [
 
-    ],
-    'workbench-id': 'pathwayview',
-    'template-injectable': 'workbenches/pathwayview/public/inject.tmpl',
-    'public-directory': 'workbenches/pathwayview/public'
-  }
-];
+      ],
+      "workbench-id": "cytoview",
+      "template-injectable": "workbenches/cytoview/public/inject.tmpl",
+      "public-directory": "workbenches/cytoview/public"
+    },
+    {
+      "menu-name": "Gosling (Noctua's little GOOSE)",
+      "page-name": "Gosling (Noctua's little GOOSE)",
+      "type": "model",
+      "help-link": "http://github.com/geneontology/noctua/issues",
+      "javascript": [
+        "http://cdn.jsdelivr.net/yasqe/2.11.10/yasqe.bundled.min.js",
+        "http://cdn.jsdelivr.net/yasr/2.10.8/yasr.bundled.min.js",
+        "GoslingModelBundle.js"
+      ],
+      "css": [
+        "http://cdn.jsdelivr.net/yasqe/2.11.10/yasqe.min.css",
+        "http://cdn.jsdelivr.net/yasr/2.10.8/yasr.min.css"
+      ],
+      "workbench-id": "gosling-model",
+      "template-injectable": "workbenches/gosling-model/public/inject.tmpl",
+      "public-directory": "workbenches/gosling-model/public"
+    },
+    {
+      "menu-name": "Inference explanations",
+      "page-name": "Inference explanations",
+      "type": "model",
+      "help-link": "http://github.com/geneontology/noctua/issues",
+      "javascript": [
+        "InferredRelationsBundle.js",
+        "jquery.dataTables.min.js"
+      ],
+      "css": [
+        "https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css"
+      ],
+      "workbench-id": "inferredrelations",
+      "template-injectable": "workbenches/inferredrelations/public/inject.tmpl",
+      "public-directory": "workbenches/inferredrelations/public"
+    },
+    {
+      "menu-name": "Macromolecular complex creator",
+      "page-name": "Macromolecular Complex Creator",
+      "type": "model",
+      "help-link": "http://github.com/geneontology/noctua/issues",
+      "javascript": [
+        "MMCCBundle.js"
+      ],
+      "css": [
+        "selectize.bootstrap3.css",
+        "override-selectize.css"
+      ],
+      "workbench-id": "mmcc",
+      "template-injectable": "workbenches/mmcc/public/inject.tmpl",
+      "public-directory": "workbenches/mmcc/public"
+    },
+    {
+      "menu-name": "Pathway view",
+      "page-name": "Pathway View",
+      "type": "model",
+      "help-link": "http://github.com/geneontology/noctua/issues",
+      "javascript": [
+        "PathwayViewBundle.js"
+      ],
+      "css": [
+
+      ],
+      "workbench-id": "pathwayview",
+      "template-injectable": "workbenches/pathwayview/public/inject.tmpl",
+      "public-directory": "workbenches/pathwayview/public"
+    }
+  ];
 
 export const globalWorkbenchesUniversal = [
   {

@@ -80,9 +80,10 @@ export class NodeCellList extends shapes.NodeCellList {
     const deep = getColor(colorKey, low ? low : 200);
     const light = getColor(colorKey, high ? high : 100);
 
-    self.attr('.activity-name-rect/fill', deep);
+    self.attr('.activity-gp-rect/fill', deep);
     self.attr('.activity-mf-rect/fill', light);
-    self.attr('.activity-gp-rect/fill', light);
+    self.attr('.activity-cc-rect/fill', light);
+    self.attr('.activity-bp-rect/fill', light);
 
     //this.attr('.icon/height', 200);
 
@@ -110,7 +111,72 @@ export class NodeCellList extends shapes.NodeCellList {
 
   hover(on: boolean): this {
     const self = this;
-    self.attr('.wrapper/strokeWidth', on ? 30 : 0);
+    self.attr('.wrapper/strokeWidth', on ? 40 : 0);
+    self.attr('.edit/visibility', on ? 'visible' : 'hidden');
+    self.attr('.delete/visibility', on ? 'visible' : 'hidden');
+
+    return this;
+  }
+}
+
+export class NodeCellMolecule extends shapes.NodeCellMolecule {
+  constructor() {
+    super();
+
+  }
+
+  addNodePorts(): this {
+    const self = this;
+
+    return this;
+  }
+
+  setColor(colorKey: string, low?: number, high?: number): this {
+    const self = this;
+    const deep = getColor(colorKey, low ? low : 200);
+    const light = getColor(colorKey, high ? high : 100);
+
+    self.attr('.circle/stroke', deep);
+    self.attr('.circle/fill', light);
+
+    //this.attr('.icon/height', 200);
+
+    return this;
+  }
+
+
+  setText(text: string): this {
+    const self = this;
+
+    self.attr('.label/text', text);
+
+    return this;
+  }
+
+
+  setBorder(colorKey: string, hue?: number): this {
+    const self = this;
+    const deep = getColor(colorKey, hue ? hue : 500);
+
+    self.attr('.highlighter/stroke', deep);
+
+    return this;
+  }
+
+  unsetBorder(): this {
+    const self = this;
+
+    self.attr('.highlighter/stroke', 'transparent');
+
+    return this;
+  }
+
+
+  hover(on: boolean): this {
+    const self = this;
+    self.attr('.wrapper/strokeWidth', on ? 40 : 0);
+    self.attr('.edit/visibility', on ? 'visible' : 'hidden');
+    self.attr('.delete/visibility', on ? 'visible' : 'hidden');
 
     return this;
   }
@@ -228,6 +294,7 @@ export class NoctuaShapesService {
       noctua: {
         StencilNode: StencilNode,
         NodeCell: NodeCell,
+        NodeCellMolecule: NodeCellMolecule,
         NodeCellList: NodeCellList,
         NodeLink: NodeLink
       }

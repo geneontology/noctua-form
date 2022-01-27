@@ -12,7 +12,7 @@ import {
     ActivityType,
     NoctuaFormMenuService,
     LeftPanel,
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
