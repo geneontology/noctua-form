@@ -1,0 +1,38 @@
+@import "src/@noctua/scss/noctua";
+@import "src/@noctua.common/scss/noctua.common";
+
+$primary: map-get($theme, primary);
+$accent: map-get($theme, accent);
+
+:host {
+  width: 100%;
+  background-color: white;
+  @include mat-elevation(4);
+
+  .noc-drawer {
+    @include deep-width(520px);
+
+    .noc-drawer-header {
+      padding: 0 12px;
+      @include deep-height(30px);
+      background-color: #fff;
+      @include mat-elevation(2);
+      z-index: 1000;
+
+      .noc-drawer-header-title {
+        font-size: 14px;
+        font-weight: bold;
+      }
+    }
+
+    .noc-drawer-body {
+      border-top: #888 solid 1px;
+      padding: 24px 12px 100px 12px;
+      min-height: calc(100% - 80px);
+    }
+  }
+
+  .noc-body {
+    padding: 0 14px 14px 14px;
+  }
+}

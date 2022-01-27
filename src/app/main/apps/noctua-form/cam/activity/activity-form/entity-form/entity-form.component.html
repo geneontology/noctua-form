@@ -14,7 +14,7 @@
     <div *ngIf="entity.treeLevel===5" class="noc-tree-line line-t" fxFlex="50%"></div>
     <div *ngIf="entity.treeLevel<5" class="noc-tree-line iine-b" fxFlex="50%"></div>
   </div>
-  <div class="p-4" fxFlex="40%" fxLayout="row" fxLayoutAlign="start stretch">
+  <div class="p-4" fxFlex="flex" fxLayout="row" fxLayoutAlign="start stretch">
     <mat-form-field class="noc-sm w-100-p" appearance="outline">
       <mat-label>{{entity.label}}</mat-label>
       <textarea type="text" matInput formControlName="term" (focus)="updateTermList()" [matAutocomplete]="termAuto"

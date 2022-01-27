@@ -17,7 +17,7 @@ import {
     NoctuaGraphService,
     CamService,
     NoctuaLookupService
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 import { SearchCriteria, SearchFilterType } from './../models/search-criteria';
 import { saveAs } from 'file-saver';
 import { forOwn, each, find, groupBy } from 'lodash';

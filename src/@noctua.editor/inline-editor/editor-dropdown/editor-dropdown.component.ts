@@ -10,12 +10,12 @@ import {
   noctuaFormConfig,
 
   NoctuaGraphService,
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 
-import { Cam } from 'noctua-form-base';
-import { Activity } from 'noctua-form-base';
-import { ActivityNode } from 'noctua-form-base';
-import { Evidence } from 'noctua-form-base';
+import { Cam } from '@geneontology/noctua-form-base';
+import { Activity } from '@geneontology/noctua-form-base';
+import { ActivityNode } from '@geneontology/noctua-form-base';
+import { Evidence } from '@geneontology/noctua-form-base';
 
 import { editorDropdownData } from './editor-dropdown.tokens';
 import { EditorDropdownOverlayRef } from './editor-dropdown-ref';

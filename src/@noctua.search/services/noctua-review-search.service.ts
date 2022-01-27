@@ -17,7 +17,7 @@ import {
     CamLoadingIndicator,
     _compareEntityWeight,
     ReloadType,
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 import { SearchCriteria } from './../models/search-criteria';
 import { saveAs } from 'file-saver';
 import { each, find, remove } from 'lodash';

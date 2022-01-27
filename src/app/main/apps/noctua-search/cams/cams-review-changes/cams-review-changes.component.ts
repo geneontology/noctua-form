@@ -10,7 +10,7 @@ import {
 
   CamStats,
   CamService
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 import { takeUntil } from 'rxjs/operators';
 import { noctuaAnimations } from '@noctua/animations';
 import { NoctuaReviewSearchService } from '@noctua.search/services/noctua-review-search.service';

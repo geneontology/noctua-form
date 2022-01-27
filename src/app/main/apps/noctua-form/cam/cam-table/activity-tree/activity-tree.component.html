@@ -24,17 +24,16 @@
       </span>
     </div>
     <div class="noc-cam-type noc-cell" fxLayout="row" fxLayoutAlign="start center">
-      <img [src]="'assets/images/activity/'+activity.activityType+'.png'"
-        matTooltip="{{activityTypeOptions[activity.activityType]?.label}}" [matTooltipPosition]="'below'"
-        [matTooltipShowDelay]="1000">
-      <!--   {{activityTypeOptions[activity.activityType]?.label}}
       <mat-chip class="noc-chip-activity-type noc-chip-xs">
         <span>{{activityTypeOptions[activity.activityType]?.label}}</span>
-      </mat-chip> -->
+      </mat-chip>
     </div>
     <div class="noc-cam-date noc-cell" fxLayout="row" fxLayoutAlign="start center">
       <fa-icon class="noc-icon" [icon]="['fas', 'calendar-day']"></fa-icon> <span
         class="ml-4">{{activity.formattedDate}}</span>
+    </div>
+    <div class="noc-cam-coverage noc-cell" fxLayout="row" fxLayoutAlign="start center">
+      <img [src]="'assets/images/activity/coverage-'+activity.summary?.coverage+'.png'">
     </div>
     <div fxFlex="" class="scard-title-summary" fxLayout="row" fxLayoutAlign="start stretch">
       <div fxFlex="33%" class="noc-cell" fxLayout="row" fxLayoutAlign="start center">

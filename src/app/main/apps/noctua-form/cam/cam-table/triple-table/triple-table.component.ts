@@ -7,11 +7,11 @@ import {
   NoctuaTripleFormService,
   CamService,
   NoctuaFormMenuService
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 
 import {
   Cam
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 
 @Component({
   selector: 'noc-triple-table',

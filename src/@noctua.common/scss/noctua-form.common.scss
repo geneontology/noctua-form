@@ -11,11 +11,27 @@ $noc-breakpoints: (
     }
   }
 }
-
+.noc-cell-floating-title {
+  position: absolute;
+  left: 4px;
+  top: -6px;
+  height: 12px;
+  padding: 0px 4px 0 4px;
+  font-size: 8px;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 80%;
+  text-overflow: ellipsis;
+  background-color: #fff;
+  //border-radius: 3px;
+  //border: #bbb solid 1px;
+  color: #656565;
+}
 .noctua-form-table {
   &.noc-tree-header-row {
     padding-left: 40px;
   }
+
   .noc-cell {
     padding: 0 10px;
     font-size: 10px !important;

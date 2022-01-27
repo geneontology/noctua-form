@@ -45,13 +45,10 @@ const globalKnownRelations = typeof global_known_relations !== 'undefined'
 
 export const environment = {
   production: false,
-  isDev: true,
+  isDev: false,
   isBeta: true,
   isGraph: false,
   spaqrlApiUrl: 'http://rdf-internal.berkeleybop.io/blazegraph/sparql',
-  // spaqrlApiUrl: 'http://rdf.geneontology.org/blazegraph/sparql',
-  // gorestApiUrl: 'https://api.geneontology.cloud/'
-  gorestApiUrl: 'http://localhost:3000/',
   globalGolrNeoServer: golrNeoServer,
   globalGolrServer: golrServer,
   globalMinervaDefinitionName: minervaDefinitionName,

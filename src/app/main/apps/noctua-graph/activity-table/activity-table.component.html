@@ -1,0 +1,24 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" class="noc-drawer w-100-p h-100-p">
+  <div class="noc-drawer-header" fxLayout="row" fxLayoutAlign="start center">
+    <span class="noc-drawer-header-title">
+    </span>
+    <span fxFlex></span>
+    <button mat-icon-button class="" fxFlex="40px" color="primary" [matMenuTriggerFor]="activityOptionMenu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #activityOptionMenu="matMenu" class="noc-dropdown-menu">
+      <button mat-menu-item color="warn" class="" (click)="deleteActivity(activity)">
+        Delete
+      </button>
+    </mat-menu>
+    <button mat-stroked-button (click)="close()" class="noc-rounded-button noc-sm" color="primary"
+      aria-label="Close dialog">
+      <mat-icon>close</mat-icon> Close
+    </button>
+  </div>
+  <div class="noc-drawer-body" fxLayout="column" fxLayoutAlign="start start" noctuaPerfectScrollbar>
+    <noc-activity-form-table *ngIf="activity" [options]="options" [cam]="cam" [activity]="activity"
+      class="noc-activities-table-body" fxLayout="row" fxLayoutAlign="start center">
+    </noc-activity-form-table>
+  </div>
+</div>

@@ -9,7 +9,7 @@ import { Subject } from 'rxjs';
 import {
   Evidence,
   NoctuaFormConfigService
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 
 import { noctuaAnimations } from '@noctua/animations';
 

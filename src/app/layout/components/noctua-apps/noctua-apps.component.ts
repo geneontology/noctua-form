@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation, Input } from '@angular
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Cam, CamService, NoctuaUserService, NoctuaFormConfigService } from 'noctua-form-base';
+import { Cam, CamService, NoctuaUserService, NoctuaFormConfigService } from '@geneontology/noctua-form-base';
 import { MatSidenav } from '@angular/material/sidenav';
 import { NoctuaCommonMenuService } from '@noctua.common/services/noctua-common-menu.service';
 

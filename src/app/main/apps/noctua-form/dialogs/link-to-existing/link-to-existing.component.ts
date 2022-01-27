@@ -5,7 +5,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 
 
-import { NoctuaFormConfigService, ActivityNode, Evidence } from 'noctua-form-base';
+import { NoctuaFormConfigService, ActivityNode, Evidence } from '@geneontology/noctua-form-base';
 import { MatTableDataSource } from '@angular/material/table';
 
 

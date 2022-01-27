@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import {
   NoctuaFormConfigService,
   Entity,
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 
 
 @Component({

@@ -5,6 +5,7 @@ import { NoctuaGraphModule } from './noctua-graph/noctua-graph.module';
 import { NoctuaSearchModule } from './noctua-search/noctua-search.module';
 import { NoctuaDoctorModule } from './noctua-doctor/noctua-doctor.module';
 import { NoctuaTutorialModule } from './noctua-tutorial/noctua-tutorial.module';
+import { NoctuaPathwayModule } from './noctua-pathway/noctua-pathway.module';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { NoctuaTutorialModule } from './noctua-tutorial/noctua-tutorial.module';
     NoctuaGraphModule,
     NoctuaDoctorModule,
     NoctuaTutorialModule,
+    NoctuaPathwayModule
   ],
   exports: [
     NoctuaFormModule,
@@ -21,11 +23,13 @@ import { NoctuaTutorialModule } from './noctua-tutorial/noctua-tutorial.module';
     NoctuaSearchModule,
     NoctuaGraphModule,
     NoctuaDoctorModule,
-    NoctuaTutorialModule
+    NoctuaTutorialModule,
+    NoctuaPathwayModule
   ],
   providers: [
 
-  ]
+  ],
+  declarations: []
 
 })
 

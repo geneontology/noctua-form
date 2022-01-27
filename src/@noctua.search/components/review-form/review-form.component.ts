@@ -24,7 +24,7 @@ import {
   NoctuaGraphService,
   CamLoadingIndicator,
   CamService
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 
 import { takeUntil, distinctUntilChanged, debounceTime, take, concatMap, finalize } from 'rxjs/operators';
 import { noctuaAnimations } from '@noctua/animations';

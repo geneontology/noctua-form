@@ -225,34 +225,52 @@ export const NodeCellList = joint.dia.Element.define('noctua.NodeCellList', {
     },
     'rect': { width: 300, },
 
-    '.activity-name-rect': {
+    '.activity-gp-rect': {
       fill: '#d5d2d5',
       stroke: '#fff',
       height: 50,
       'stroke-width': 0.5
     },
-    '.icon': {
-      event: 'element:.icon:pointerdown',
+    '.edit': {
+      event: 'element:.edit:pointerdown',
       'xlink:href': './assets/icons/edit.svg',
-      ref: '.activity-name-rect',
+      ref: '.wrapper',
       refX: '100%',
-      refX2: -30,
-      y: 10,
+      refX2: 5,
+      y: 0,
       height: 20,
-      cursor: 'pointer'
+      cursor: 'pointer',
+      visibility: 'hidden'
     },
+    '.delete': {
+      event: 'element:.delete:pointerdown',
+      'xlink:href': './assets/icons/delete.svg',
+      ref: '.wrapper',
+      refX: '100%',
+      refX2: 5,
+      y: 30,
+      height: 20,
+      cursor: 'pointer',
+      visibility: 'hidden',
+    },
+
     '.activity-mf-rect': {
       fill: '#d5fdd5',
       stroke: '#fff',
       'stroke-width': 0.5
     },
-    '.activity-gp-rect': {
+    '.activity-cc-rect': {
       fill: '#d5fdd5',
       stroke: '#fff',
       'stroke-width': 0.5
     },
-    '.activity-name-text': {
-      'ref': '.activity-name-rect',
+    '.activity-bp-rect': {
+      fill: '#d5fdd5',
+      stroke: '#fff',
+      'stroke-width': 0.5
+    },
+    '.activity-gp-text': {
+      'ref': '.activity-gp-rect',
       'ref-y': .5,
       'ref-x': 5,
       'text-anchor': 'left',
@@ -260,7 +278,11 @@ export const NodeCellList = joint.dia.Element.define('noctua.NodeCellList', {
       'font-weight': 'bold',
       'fill': 'black',
       'font-size': 12,
-      'font-family': 'Times New Roman'
+      'font-family': 'Times New Roman',
+      textWrap: {
+        width: '90%',
+        ellipsis: false,
+      },
     },
     '.activity-mf-text': {
       'ref': '.activity-mf-rect',
@@ -269,16 +291,30 @@ export const NodeCellList = joint.dia.Element.define('noctua.NodeCellList', {
       'font-size': 12,
       'font-family': 'Times New Roman',
       textWrap: {
+        width: '90%',
         ellipsis: false,
       },
     },
-    '.activity-gp-text': {
-      'ref': '.activity-gp-rect',
-      'ref-y': 5,
-      'ref-x': 5,
+    '.activity-cc-text': {
+      'ref': '.activity-cc-rect',
+      'ref-y': 5, 'ref-x': 5,
       'fill': 'black',
       'font-size': 12,
-      'font-family': 'Times New Roman'
+      'font-family': 'Times New Roman',
+      textWrap: {
+        ellipsis: false,
+      },
+    },
+    '.activity-bp-text': {
+      'ref': '.activity-bp-rect',
+      'ref-y': 5, 'ref-x': 5,
+      'fill': 'black',
+      'font-size': 12,
+      'font-family': 'Times New Roman',
+      textWrap: {
+        width: '90%',
+        ellipsis: false,
+      },
     }
   },
 
@@ -287,17 +323,21 @@ export const NodeCellList = joint.dia.Element.define('noctua.NodeCellList', {
   gp: []
 }, {
   markup: [
-
     '<rect class="wrapper"/>',
     '<rect class="highlighter"/>',
     '<g class="rotatable">',
     '<g class="scalable">',
-    '<rect class="activity-name-rect"/>',
     '<rect class="activity-mf-rect"/>',
     '<rect class="activity-gp-rect"/>',
+    '<rect class="activity-cc-rect"/>',
+    '<rect class="activity-bp-rect"/>',
     '</g>',
-    '<text class="activity-name-text"/><text class="activity-mf-text"/><text class="activity-gp-text"/>',
-    '<image class="icon"/>',
+    '<text class="activity-mf-text"/>',
+    '<text class="activity-gp-text"/>',
+    '<text class="activity-cc-text"/>',
+    '<text class="activity-bp-text"/>',
+    '<image class="delete"/>',
+    '<image class="edit"/>',
     '</g>'
   ].join(''),
 
@@ -322,10 +362,20 @@ export const NodeCellList = joint.dia.Element.define('noctua.NodeCellList', {
     const attrs = this.get('attrs');
 
     const rects = [
-      { type: 'name', text: this.getClassName() },
+      { type: 'gp', text: this.get('gp') },
       { type: 'mf', text: this.get('mf') },
-      { type: 'gp', text: this.get('gp') }
     ];
+
+    const cc = this.get('cc');
+    const bp = this.get('bp');
+
+    if (cc) {
+      rects.push({ type: 'cc', text: cc })
+    }
+
+    if (bp) {
+      rects.push({ type: 'bp', text: bp })
+    }
 
     let offsetY = 0;
 
@@ -344,6 +394,82 @@ export const NodeCellList = joint.dia.Element.define('noctua.NodeCellList', {
 
 });
 
+
+export const NodeCellMolecule = joint.dia.Element.define('noctua.NodeCellMolecule', {
+  attrs: {
+    '.wrapper': {
+      refCx: '50%',
+      refCy: '50%',
+      refR: '50%',
+      magnet: true,
+      refWidth: '100%',
+      refHeight: '100%',
+      fill: 'transparent',
+      stroke: 'rgba(0,0,255,0.3)',
+    },
+    '.circle': {
+      // refPoints: '0,10 10,15 30,15 40,10 30,5 10,5',
+      refCx: '50%',
+      refCy: '50%',
+      refR: '50%',
+      strokeWidth: 2,
+    },
+    '.label': {
+      textVerticalAnchor: 'middle',
+      textAnchor: 'middle',
+      refX: '50%',
+      refY: '50%',
+      fontSize: 12,
+      fill: '#333333',
+      textWrap: {
+        ellipsis: false,
+        width: '95%'
+      }
+    },
+    '.edit': {
+      event: 'element:.edit:pointerdown',
+      'xlink:href': './assets/icons/edit.svg',
+      ref: '.wrapper',
+      refX: '100%',
+      refX2: -10,
+      y: 0,
+      height: 20,
+      cursor: 'pointer',
+      visibility: 'hidden'
+    },
+    '.delete': {
+      event: 'element:.delete:pointerdown',
+      'xlink:href': './assets/icons/delete.svg',
+      ref: '.wrapper',
+      refX: '100%',
+      refX2: 5,
+      y: 30,
+      height: 20,
+      cursor: 'pointer',
+      visibility: 'hidden',
+    },
+  }
+}, {
+  markup: [
+    '<circle class="wrapper"/>',
+    '<g class="rotatable">',
+    '<g class="scalable">',
+    '<circle class="circle"/>',
+    '</g>',
+    '<text class="label"/>',
+    '<image class="delete"/>',
+    '<image class="edit"/>',
+    '</g>'
+  ].join(''),
+}, {
+  create: function (text) {
+    return new this({
+      attrs: {
+        label: { text: text }
+      }
+    });
+  }
+});
 
 export const NodeLink = joint.shapes.devs.Link.define('noctua.NodeLink', {
   attrs: {

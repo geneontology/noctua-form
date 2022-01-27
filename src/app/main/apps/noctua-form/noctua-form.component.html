@@ -204,14 +204,9 @@
       </mat-drawer-content>
       <mat-drawer #rightDrawer class="noc-right-drawer" mode="side" position="end">
         <div [ngSwitch]="noctuaFormMenuService.selectedRightPanel" class="h-100-p">
-          <!--    <noc-activity-connector [panelDrawer]="rightDrawer" *ngSwitchCase="noctuaFormMenuService.panel.connectorForm.id">
-        </noc-activity-connector>  -->
-
           <noc-term-detail [panelDrawer]="rightDrawer" *ngSwitchCase="RightPanel.termDetail">
           </noc-term-detail>
         </div>
-
-
       </mat-drawer>
     </mat-drawer-container>
   </div>

@@ -11,7 +11,7 @@ import {
   noctuaFormConfig,
   CamService,
   ActivityDisplayType
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 
 import { takeUntil } from 'rxjs/operators';
 import { noctuaAnimations } from '@noctua/animations';

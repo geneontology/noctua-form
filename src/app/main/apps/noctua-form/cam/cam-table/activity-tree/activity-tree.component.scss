@@ -121,11 +121,15 @@ $accent: map-get($theme, accent);
       }
     }
 
-    .noc-cam-type {
+    .noc-cam-coverage {
       @include deep-width(50px);
       img {
         height: 30px;
       }
+    }
+
+    .noc-cam-type {
+      @include deep-width(85px);
     }
 
     .noc-cam-date {
@@ -307,8 +311,10 @@ $accent: map-get($theme, accent);
       @include noc-chip-color(#e28989);
     }
 
-    .noc-chip-activity-type {
-      font-size: 10px;
+    &.noc-chip-activity-type {
+      padding-right: 8px;
+      padding-left: 8px;
+      font-size: 8px;
     }
 
     &.noc-summary-chip {

@@ -12,13 +12,13 @@ import {
   NoctuaFormMenuService,
   Predicate,
   NoctuaUserService,
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 
 import {
   Cam,
   Activity,
   ActivityNode
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 import { EditorCategory } from '@noctua.editor/models/editor-category';
 import { SettingsOptions } from '@noctua.common/models/graph-settings';
 

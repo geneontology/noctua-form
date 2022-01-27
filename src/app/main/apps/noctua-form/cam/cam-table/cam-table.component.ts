@@ -18,7 +18,7 @@ import {
   ActivityDisplayType,
   NoctuaGraphService,
   ActivitySortField
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 import { NoctuaConfirmDialogService } from '@noctua/components/confirm-dialog/confirm-dialog.service';
 import { trigger, state, transition, style, animate } from '@angular/animations';
 import { NoctuaCommonMenuService } from '@noctua.common/services/noctua-common-menu.service';

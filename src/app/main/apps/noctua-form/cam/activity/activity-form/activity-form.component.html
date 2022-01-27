@@ -17,6 +17,9 @@
           <span *ngSwitchCase="ActivityType.molecule">
             Molecule Form
           </span>
+          <span *ngSwitchCase="ActivityType.proteinComplex">
+            Protein Complex Form
+          </span>
         </ng-container>
       </div>
       <span fxFlex></span>
@@ -32,7 +35,7 @@
       <div class="noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
         <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
           <div class="noc-section-heading">
-            Gene Product
+            {{annotatedSectionTitle }}
           </div>
           <span fxFlex></span>
           <button mat-icon-button (click)="createExample()">
@@ -50,33 +53,10 @@
           </div>
         </div>
       </div>
-      <!--    <div *ngIf="noctuaActivityFormService.activity.activityType===ActivityType.ccOnly" class="noc-form-section"
-      fxLayout="column" fxLayoutAlign="start stretch">
-      <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
-        <div class="noc-section-heading">
-          Relations
-        </div>
-        <span fxFlex></span>
-      </div>
-      <div class="noc-section-body p-0" fxLayout="column" fxLayoutAlign="start stretch">
-        <div class="mat-elevation-z1 noc-term-group mb-4 px-8 mf" fxLayout="row" fxLayoutAlign="start center">
-          <div class="p-4" fxFlex="600px" fxLayout="row" fxLayoutAlign="start stretch">
-            <mat-form-field appearance="outline" class="noc-sm w-100-p">
-              <mat-label>Choose CC Only Relation</mat-label>
-              <mat-select placeholder="" formControlName="ccOnlyEdge">
-                <mat-option *ngFor="let ccOnlyEdge of noctuaFormConfigService.ccOnlyEdges.options" [value]="ccOnlyEdge">
-                  {{ccOnlyEdge.label}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-        </div>
-      </div>
-    </div> -->
       <div class="noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
         <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
           <div class="noc-section-heading">
-            {{descriptionLabel}}
+            {{descriptionSectionTitle}}
           </div>
           <span fxFlex></span>
         </div>
@@ -108,10 +88,9 @@
               fxLayoutAlign="center center">
               <div>IS NOT</div>
             </div>
-            <div fxFlex="" class="">
+            <div class="w-100-p">
               <ng-container [formGroupName]="i" *ngFor="let entityForm of nodeGroup.get('entityGroup')?.controls">
-                <noc-entity-form [entityFormGroup]="entityForm" fxLayout="row" fxLayoutAlign="start center"
-                  class="w-100-p">
+                <noc-entity-form [entityFormGroup]="entityForm" class="">
                 </noc-entity-form>
               </ng-container>
             </div>
