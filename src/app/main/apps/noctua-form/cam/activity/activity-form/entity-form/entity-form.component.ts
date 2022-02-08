@@ -40,7 +40,6 @@ export class EntityFormComponent implements OnInit, OnDestroy {
   evidenceDBForm: FormGroup;
   evidenceFormArray: FormArray;
   entity: ActivityNode;
-  insertMenuItems = [];
   selectedItemDisplay;
   friendNodes;
   friendNodesFlat;
@@ -152,13 +151,27 @@ export class EntityFormComponent implements OnInit, OnDestroy {
         }
       };
 
-      const success = function (selected) {
+      const success = (selected) => {
         if (selected.term) {
           entity.term = new Entity(selected.term.term.id, selected.term.term.label);
 
           if (selected.evidences && selected.evidences.length > 0) {
             entity.predicate.setEvidence(selected.evidences);
+
+            selected.evidences.forEach((evidence: Evidence) => {
+
+              evidence.evidenceExts.forEach((evidenceExt) => {
+                evidenceExt.relations.forEach((relation) => {
+                  const node = self.noctuaFormConfigService.insertActivityNodeByPredicate(self.noctuaActivityFormService.activity, self.entity, relation.id);
+                  node.term = new Entity(evidenceExt.term.id, evidenceExt.term.id);
+                  node.predicate.setEvidence([evidence]);
+                });
+              });
+
+            });
           }
+
+
           self.noctuaActivityFormService.initializeForm();
         }
       };
