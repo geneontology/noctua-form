@@ -84,6 +84,7 @@ export class ActivityTreeNodeComponent implements OnInit, OnDestroy {
 
     this.optionsDisplay = { ...this.options, hideHeader: true };
     this.relationWidth = 150 - (this.entity.treeLevel) * 16 + 'px';
+
   }
 
   toggleExpand(activity: Activity) {

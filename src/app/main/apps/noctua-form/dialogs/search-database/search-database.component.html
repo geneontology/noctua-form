@@ -56,9 +56,9 @@
             <mat-cell *cdkCellDef="let evidence" fxFlex="40%">
               <p class="">
                 {{evidence.evidence?.label}} <br>
-                <span *ngIf="evidence.evidenceExt">
-                  Ext: <small *ngFor="let relation of evidence.evidenceExt.relations">
-                    {{relation?.label}} : {{evidence.evidenceExt.term?.label}} </small> <br>
+                <span *ngFor="let evidenceExt of evidence.evidenceExts">
+                  Ext: <small *ngFor="let relation of evidenceExt.relations">
+                    {{relation?.label}} : {{evidenceExt.term?.label}} </small> <br>
                 </span>
               </p>
             </mat-cell>
