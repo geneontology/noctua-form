@@ -129,7 +129,7 @@ $accent: map-get($theme, accent);
     }
 
     .noc-cam-type {
-      @include deep-width(85px);
+      @include deep-width(95px);
     }
 
     .noc-cam-date {

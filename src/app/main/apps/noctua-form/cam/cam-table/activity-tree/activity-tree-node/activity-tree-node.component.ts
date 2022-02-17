@@ -87,6 +87,23 @@ export class ActivityTreeNodeComponent implements OnInit, OnDestroy {
 
   }
 
+  editEntity(entity: ActivityNode) {
+
+    const data = {
+      cam: this.cam,
+      activity: this.activity,
+      entity: entity,
+      category: EditorCategory.all,
+      evidenceIndex: 0,
+      insertEntity: true
+    };
+
+    this.camService.onCamChanged.next(this.cam);
+    this.camService.activity = this.activity;
+    this.noctuaActivityEntityService.initializeForm(this.activity, entity);
+    this.inlineEditorService.open(this.currentMenuEvent.target, { data });
+  }
+
   toggleExpand(activity: Activity) {
     activity.expanded = !activity.expanded;
   }
