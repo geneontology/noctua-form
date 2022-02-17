@@ -409,6 +409,8 @@ export class CamCanvas {
 
         const activityType = activity.getActivityTypeDetail();
 
+        console.log('poo', activity.mfNode)
+
         if (activity.mfNode) {
             el.prop({ 'mf': [activity.mfNode.term.label] });
         }
@@ -422,6 +424,8 @@ export class CamCanvas {
         }
         if (activity.gpNode) {
             el.prop({ 'gp': [activity.gpNode?.term.label] });
+        } else {
+            el.prop({ 'gp': [''] });
         }
 
         el.attr({
