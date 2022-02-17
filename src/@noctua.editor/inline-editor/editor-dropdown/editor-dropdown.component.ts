@@ -10,6 +10,9 @@ import {
   noctuaFormConfig,
 
   NoctuaGraphService,
+  ActivityError,
+  ErrorType,
+  ErrorLevel,
 } from '@geneontology/noctua-form-base';
 
 import { Cam } from '@geneontology/noctua-form-base';
@@ -155,11 +158,12 @@ export class NoctuaEditorDropdownComponent implements OnInit, OnDestroy {
 
   }
 
+
   openSearchDatabaseDialog(entity: ActivityNode) {
     const self = this;
-    const gpNode = this.noctuaActivityFormService.activity.getGPNode();
+    const gpNode = this.activity.getGPNode();
 
-    if (gpNode) {
+    if (gpNode && gpNode.hasValue()) {
       const data = {
         readonly: false,
         gpNode: gpNode.term,
@@ -171,21 +175,33 @@ export class NoctuaEditorDropdownComponent implements OnInit, OnDestroy {
         }
       };
 
-      const success = function (selected) {
+      const success = (selected) => {
         if (selected.term) {
-          entity.term = new Entity(selected.term.term.id, selected.term.term.label);
+          const term = new Entity(selected.term.term.id, selected.term.term.label);
 
           if (selected.evidences && selected.evidences.length > 0) {
-            entity.predicate.setEvidence(selected.evidences);
+            self.noctuaActivityEntityService.reinitializeForm(term, selected.evidences);
+
+            /*  selected.evidences.forEach((evidence: Evidence) => {
+               evidence.evidenceExts.forEach((evidenceExt) => {
+                 evidenceExt.relations.forEach((relation) => {
+                   const node = self.noctuaFormConfigService.insertActivityNodeByPredicate(self.noctuaActivityFormService.activity, self.entity, relation.id);
+                   node.term = new Entity(evidenceExt.term.id, evidenceExt.term.id);
+                   node.predicate.setEvidence([evidence]);
+                 });
+               });
+ 
+             }); */
           }
-          self.noctuaActivityFormService.initializeForm();
         }
-      }
+      };
       self.noctuaFormDialogService.openSearchDatabaseDialog(data, success);
     } else {
-      // const error = new ActivityError(ErrorLevel.error, ErrorType.general,  "Please enter a gene product", meta)
-      //errors.push(error);
-      // self.dialogService.openActivityErrorsDialog(ev, entity, errors)
+      const meta = {
+        aspect: 'Gene Product'
+      };
+      const error = new ActivityError(ErrorLevel.error, ErrorType.general, 'Please enter a gene product', meta)
+      self.noctuaFormDialogService.openActivityErrorsDialog([error])
     }
   }
 
@@ -197,16 +213,13 @@ export class NoctuaEditorDropdownComponent implements OnInit, OnDestroy {
     });
 
     if (term) {
-      self.entity.term = new Entity(term.id, term.label);
-      self.noctuaActivityFormService.initializeForm();
 
       const evidence = new Evidence();
       evidence.setEvidence(new Entity(
         noctuaFormConfig.evidenceAutoPopulate.nd.evidence.id,
         noctuaFormConfig.evidenceAutoPopulate.nd.evidence.label));
       evidence.reference = noctuaFormConfig.evidenceAutoPopulate.nd.reference;
-      self.entity.predicate.setEvidence([evidence]);
-      self.noctuaActivityFormService.initializeForm();
+      self.noctuaActivityEntityService.reinitializeForm(new Entity(term.id, term.label), [evidence]);
     }
   }
 

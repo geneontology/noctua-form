@@ -116,6 +116,7 @@ export class NoctuaSearchService {
                 this.organisms = organisms;
             });
 
+        //For testing
         const contributor =
             {
                 'name': 'Tremayne Mushayahama',

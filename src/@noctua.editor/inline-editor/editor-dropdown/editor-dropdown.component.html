@@ -86,14 +86,15 @@
       </mat-form-field>
     </div>
   </ng-container>
-  <button *ngIf="false" mat-icon-button class="noc-action-button" fxFlex="40px" [matMenuTriggerFor]="entityMenu">
+  <button *ngIf="true" mat-icon-button class="noc-action-button" fxFlex="40px" [matMenuTriggerFor]="entityMenu">
     <mat-icon>more_vert</mat-icon>
   </button>
   <mat-menu #entityMenu="matMenu" class="noc-dropdown-menu">
     <button mat-menu-item *ngIf="entity.aspect" class="" (click)="openSearchDatabaseDialog(entity)">
       Search Annotations
     </button>
-    <button mat-menu-item [matMenuTriggerFor]="evidenceMenu">Evidence</button>
+    <!-- 
+    <button mat-menu-item [matMenuTriggerFor]="evidenceMenu">Evidence</button> -->
     <button mat-menu-item *ngIf="entity.aspect" class="" (click)="addRootTerm()">
       Add Root Term
     </button>
