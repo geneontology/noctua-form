@@ -9,7 +9,7 @@ import {
   NoctuaUserService,
   NoctuaFormConfigService,
   CamService,
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 
 import { FormGroup } from '@angular/forms';
 import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
@@ -23,6 +23,7 @@ import { ArtBasket } from '@noctua.search/models/art-basket';
 import { NoctuaReviewSearchService } from '@noctua.search/services/noctua-review-search.service';
 import { NgScrollbar } from 'ngx-scrollbar';
 import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
+import { NoctuaDoctorMenuService } from '@noctua-doctor/services/doctor-menu.service';
 
 @Component({
   selector: 'noc-noctua-doctor',
@@ -76,6 +77,8 @@ export class NoctuaDoctorComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private camService: CamService,
+
+    public noctuaDoctorMenuService: NoctuaDoctorMenuService,
 
     public noctuaReviewSearchService: NoctuaReviewSearchService,
     public noctuaFormConfigService: NoctuaFormConfigService,

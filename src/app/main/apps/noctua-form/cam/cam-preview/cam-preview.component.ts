@@ -17,7 +17,7 @@ import {
   Cam,
   Activity,
   NoctuaFormMenuService
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 import { NoctuaConfirmDialogService } from '@noctua/components/confirm-dialog/confirm-dialog.service';
 
 @Component({

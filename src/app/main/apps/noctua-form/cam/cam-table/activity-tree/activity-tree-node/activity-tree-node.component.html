@@ -4,7 +4,7 @@
     fxLayoutAlign="start stretch">
     <div *ngIf="!options.slimViewer" class="noc-relation-cell noc-entity-cell" fxFlex="{{relationWidth}}">
       <span class="">
-        <strong> {{entity.qualifier}} </strong>
+        <strong *ngIf="entity.predicate?.isComplement"> NOT </strong>
         {{entity.predicate?.edge?.label}}
       </span>
       <noctua-inline-editor *ngIf="noctuaUserService.user && entity.relationEditable" [cam]="cam" [activity]='activity'
@@ -45,7 +45,7 @@
       </mat-chip>
     </div>
     <div class="noc-evidence-cell p-0" fxLayout="column" fxLayoutAlign="start stretch">
-      <noc-evidence-table *ngIf="!entity.skipEvidence" class="w-100-p" [options]="optionsDisplay" [cam]="cam"
+      <noc-evidence-table *ngIf="!entity.skipEvidenceCheck" class="w-100-p" [options]="optionsDisplay" [cam]="cam"
         [entity]="entity">
       </noc-evidence-table>
     </div>
@@ -56,6 +56,9 @@
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #entityMenu="matMenu" class="noc-dropdown-menu">
+        <button mat-menu-item *ngIf="entity.aspect" class="" (click)="editEntity(entity)">
+          Edit
+        </button>
         <button mat-menu-item *ngIf="entity.treeLevel===0" class="" (click)="toggleIsComplement(entity)">
           NOT Qualifier
         </button>

@@ -10,6 +10,7 @@ export enum LeftPanel {
 };
 
 export enum MiddlePanel {
+    home = 'home',
     cams = 'cams',
     camsReview = 'camReview',
     reviewChanges = 'reviewChanges'

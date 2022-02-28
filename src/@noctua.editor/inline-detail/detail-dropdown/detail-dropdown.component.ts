@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import {
   NoctuaFormConfigService,
   Entity,
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 
 import { detailDropdownData } from './detail-dropdown.tokens';
 import { DetailDropdownOverlayRef } from './detail-dropdown-ref';
@@ -33,7 +33,6 @@ export class NoctuaDetailDropdownComponent implements OnInit, OnDestroy {
     this.formControl = data.formControl;
     this.termDetail = data.termDetail;
 
-    console.log(this.termDetail)
   }
 
   ngOnInit(): void {

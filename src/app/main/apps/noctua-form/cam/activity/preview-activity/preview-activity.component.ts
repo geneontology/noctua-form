@@ -11,7 +11,7 @@ import {
   NoctuaFormConfigService,
   NoctuaActivityFormService,
   Activity
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 import { noctuaAnimations } from '@noctua/animations';
 import { takeUntil } from 'rxjs/operators';
 

@@ -9,8 +9,6 @@ import { NoctuaFormModule } from '../noctua-form';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { NoctuaDoctorComponent } from './noctua-doctor.component';
-import { TermCamsComponent } from './apps/term-cams/term-cams.component';
-import { DoctorReviewChangesComponent } from './apps/review-changes/review-changes.component';
 
 const routes = [
   {
@@ -33,9 +31,7 @@ const routes = [
     PerfectScrollbarModule
   ],
   declarations: [
-    NoctuaDoctorComponent,
-    TermCamsComponent,
-    DoctorReviewChangesComponent,
+    NoctuaDoctorComponent
   ]
 })
 

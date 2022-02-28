@@ -2,7 +2,7 @@ import { environment } from 'environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { MatDrawer, MatSidenav } from '@angular/material/sidenav';
-import { NoctuaGraphService, NoctuaUserService } from 'noctua-form-base';
+import { NoctuaGraphService, NoctuaUserService } from '@geneontology/noctua-form-base';
 import { LeftPanel, MiddlePanel, RightPanel } from './../models/menu-panels';
 import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 import { BehaviorSubject } from 'rxjs';

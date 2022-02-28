@@ -1,110 +1,6 @@
-<div *ngIf="noctuaActivityConnectorService.selectedPanel === ConnectorPanel.SELECT" fxLayout="column"
-  fxLayoutAlign="start stretch" class="noc-drawer w-100-p h-100-p">
+<form name="connectorFormGroup" [formGroup]="connectorFormGroup" fxLayout="column" fxLayoutAlign="start stretch"
+  class="noc-drawer w-100-p h-100-p">
   <div class="noc-drawer-header" fxLayout="row" fxLayoutAlign="start center">
-    <span class="noc-drawer-header-title">
-      Select Downstream Activity</span>
-    <span fxFlex></span>
-    <button mat-stroked-button (click)="close()" class="noc-rounded-button noc-sm" color="primary"
-      aria-label="Close dialog">
-      <mat-icon>close</mat-icon> Close
-    </button>
-  </div>
-  <div class="noc-drawer-body" fxLayout="row" fxLayoutAlign="start start">
-    <div *ngIf="!noctuaUserService.user" class="noc-draw-body-disabled" fxLayoutAlign="center center">
-      Log in to Continue
-    </div>
-    <div class="noc-activity-list h-100-p p-12" noctuaPerfectScrollbar>
-      <div fxLayout="column" fxLayoutAlign="start stretch" class="w-100-p">
-        <ng-container *ngFor="let connector of noctuaActivityConnectorService.connectors">
-          <div *ngIf="!connector.connectorActivity" class="noc-activity-connector-box">
-            <div class="noc-activity-header w-100-p" fxLayout="row" fxLayoutAlign="start center">
-              <div>
-                {{ connector.activity.presentation.mfText}}<br>
-                <small> enabled by:</small>
-                <strong>{{ connector.activity.presentation.gpText}}</strong>
-              </div>
-              <span fxFlex></span>
-              <button mat-raised-button color="primary" class="noc-rounded-button noc-sm"
-                (click)="openActivityConnector(connector.activity)">
-                Select
-              </button>
-            </div>
-          </div>
-          <div *ngIf="connector.connectorActivity" class="noc-activity-connector-box">
-            <div class="noc-activity-header w-100-p" fxLayout="row" fxLayoutAlign="start center">
-              <div>
-                {{ connector.activity.presentation.mfText}}<br>
-                <small> enabled by:</small>
-                <strong>{{ connector.activity.presentation.gpText}}</strong>
-              </div>
-              <span fxFlex></span>
-              <button mat-stroked-button color="primary" class="noc-rounded-button noc-sm"
-                (click)="openActivityConnector(connector.activity)">
-                <small>
-                  Edit Connection
-                </small>
-              </button>
-              <button mat-icon-button class="noc-action-button" fxFlex="40px"
-                [matMenuTriggerFor]="connectionOptionMenu">
-                <mat-icon>more_vert</mat-icon>
-              </button>
-              <mat-menu #connectionOptionMenu="matMenu" class="noc-dropdown-menu">
-                <h6 class="noc-menu-heading"> Danger Zone</h6>
-                <button mat-menu-item class="" (click)="deleteActivity(connector.connectorActivity)">
-                  Delete Connection
-                </button>
-              </mat-menu>
-            </div>
-            <div fxLayout="column" fxLayoutAlign="start stretch" class="noc-form-section noc-bt w-100-p">
-              <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
-                <div class="noc-section-heading">
-                  Selected Causal Relation
-                </div>
-              </div>
-              <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
-                <div class="noc-note" fxLayout="row" fxLayoutAlign="start center">
-                  <mat-icon class="green-500-fg">check_circle</mat-icon>
-                  <span class="noc-description">
-                    {{connector.connectorActivity?.predicate.edge?.label}}
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div fxLayout="column" fxLayoutAlign="start stretch" class="noc-form-section noc-bt w-100-p">
-              <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
-                <div class="noc-section-heading">
-                  Notes
-                </div>
-              </div>
-              <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
-                <div class="noc-note" [ngClass]="{'noc-note-disabled':!note.condition}"
-                  *ngFor="let note of connector.connectorActivity?.rule.notes" fxLayout="row"
-                  fxLayoutAlign="start center">
-                  <mat-icon *ngIf="note.condition" class="green-500-fg">check_circle</mat-icon>
-                  <mat-icon *ngIf="!note.condition">check_circle_outline</mat-icon>
-                  <span class="noc-description">
-                    {{note.label}}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </ng-container>
-      </div>
-    </div>
-  </div>
-  <div fxLayout="row" fxLayoutAlign="start center" class="noc-drawer-footer noc-submit-row">
-    <span fxFlex></span>
-    <button (click)='close()' type="button" mat-raised-button color="" class="mr-8">Close</button>
-  </div>
-</div>
-<form *ngIf="noctuaActivityConnectorService.selectedPanel === ConnectorPanel.FORM" name="connectorFormGroup"
-  [formGroup]="connectorFormGroup" fxLayout="column" fxLayoutAlign="start stretch" class="noc-drawer w-100-p h-100-p">
-  <div class="noc-drawer-header" fxLayout="row" fxLayoutAlign="start center">
-    <button mat-icon-button (click)="noctuaActivityConnectorService.selectPanel(ConnectorPanel.SELECT)"
-      class="noc-rounded-button noc-sm" color="primary">
-      <mat-icon>arrow_back</mat-icon>
-    </button>
     <span class="noc-drawer-header-title">
       Causal Relation Form</span>
     <span fxFlex></span>
@@ -113,63 +9,108 @@
       <mat-icon>close</mat-icon> Close
     </button>
   </div>
-  <div class="noc-drawer-body" fxLayout="row" fxLayoutAlign="start start">
-    <div *ngIf="connectorFormGroup" class="noc-connector-form h-100-p" noctuaPerfectScrollbar>
+  <div class="noc-drawer-body" fxLayout="column" fxLayoutAlign="start start" noctuaPerfectScrollbar>
+    <div *ngIf="connectorFormGroup" class="noc-connector-form">
       <div fxLayout="column" fxLayoutAlign="start stretch" class="noc-form-section w-100-p">
         <div class="noc-section-body w-100-p p-0" fxLayout="column" fxLayoutAlign="start center">
-          <div fxLayout="row" fxLayoutAlign="space-between center" class="noc-summary-row p-8 w-100-p">
-            <div class="noc-activity-box" fxLayout="column" fxLayoutAlign="center start">
-              <div class="noc-activity-box-header" fxLayout="row" fxLayoutAlign="start center">
-                Upstream Activity
-              </div>
-              <div class="noc-activity-box-row">
-                {{ connectorActivity?.subject?.presentation.mfText}}
-              </div>
-              <div class="noc-activity-box-row">
-                <small>enabled by:</small><strong>{{ connectorActivity?.subject?.presentation.gpText}} </strong>
-              </div>
-            </div>
-            <div>
-              <mat-icon class="s-32">arrow_right_alt</mat-icon>
-            </div>
-            <div class="noc-activity-box" fxLayout="column" fxLayoutAlign="center start">
-              <div class="noc-activity-box-header" fxLayout="row" fxLayoutAlign="start center">
-                Downstream Activity
-              </div>
-              <div class="noc-activity-box-row">
-                {{ connectorActivity?.object?.presentation.mfText}}
-              </div>
-              <div class="noc-activity-box-row">
-                <small>enabled by:</small><strong>{{ connectorActivity?.object?.presentation.gpText}}</strong>
-              </div>
-            </div>
-          </div>
+          <noc-graph-preview [nodes]="connectorActivity?.graphPreview.nodes"
+            [edges]="connectorActivity?.graphPreview.edges" class="noc-graph-preview"></noc-graph-preview>
         </div>
-        <div class="noc-form-section p-0 w-100-p">
-          <div class="px-8 noc-group-row" fxLayout="row" fxLayoutAlign="start center">
-            <div fxFlex="180px" class="pr-8">
-              <p>Mechanism
-                <mat-icon
-                  matTooltip="Do you know the mechanism for how the upstream activity affects the downstream activity?"
-                  [matTooltipPosition]="'below'" [matTooltipShowDelay]="1000">help</mat-icon>
-              </p>
-            </div>
-            <mat-radio-group fxFlex="" formControlName="mechanism" fxLayout="column" fxLayoutAlign="start start">
-              <mat-radio-button *ngFor="let mechanism of noctuaFormConfigService.mechanism.options"
-                class="noc-radio-button-rounded mb-8" [value]="mechanism"
-                [checked]="mechanism.name === connectorActivity?.rule.mechanism.mechanism.name">
-                {{mechanism.label}}
-              </mat-radio-button>
-            </mat-radio-group>
-          </div>
-          <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
-            <div class="noc-section-heading">
-              Causal Effect
-            </div>
-          </div>
+        <div *ngIf="connectorActivity.connectorType === ConnectorType.ACTIVITY_ACTIVITY"
+          class="noc-form-section p-0 w-100-p">
           <div class="px-8 noc-group-row" fxLayout="row" fxLayoutAlign="start center">
             <div fxFlex="180px">
-              <p> Direction of Effect </p>
+              <p>Relationship</p>
+            </div>
+            <mat-radio-group fxFlex="" formControlName="activityRelationship" fxLayout="column"
+              fxLayoutAlign="start start">
+              <div *ngFor="let relationship of noctuaFormConfigService.activityRelationship.options" class="mb-8"
+                fxLayout="row" fxLayoutAlign="start center">
+                <mat-radio-button class="noc-radio-button-rounded"
+                  [checked]="relationship.name === connectorActivity?.rule.activityRelationship.relation.name"
+                  [value]="relationship">
+                  {{relationship.label}}
+                </mat-radio-button>
+                <div *ngIf="relationship.description" class="noc-hint">
+                  {{relationship.description}}
+                </div>
+              </div>
+            </mat-radio-group>
+          </div>
+          <ng-container *ngIf="connectorActivity?.rule.displaySection.directionCausalEffect">
+            <div class="px-8 noc-group-row" fxLayout="row" fxLayoutAlign="start center">
+              <div fxFlex="180px">
+                <p>Effect Direction</p>
+              </div>
+              <mat-radio-group fxFlex="" formControlName="causalEffect" fxLayout="column" fxLayoutAlign="start start">
+                <mat-radio-button *ngFor="let causalEffect of noctuaFormConfigService.causalEffect.options"
+                  class="noc-radio-button-rounded mb-8" [value]="causalEffect"
+                  [checked]="causalEffect.name === connectorActivity?.rule.effectDirection.direction.name">
+                  {{causalEffect.label}}
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div class="px-8 noc-group-row" fxLayout="row" fxLayoutAlign="start center">
+              <div fxFlex="180px" class="pr-8">
+                <p>Directness
+                </p>
+              </div>
+              <mat-radio-group fxFlex="" formControlName="directness" fxLayout="column" fxLayoutAlign="start start">
+                <mat-radio-button *ngFor="let directness of noctuaFormConfigService.directness.options"
+                  class="noc-radio-button-rounded mb-8" [value]="directness"
+                  [checked]="directness.name === connectorActivity?.rule.directness.directness.name">
+                  {{directness.label}}
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </ng-container>
+        </div>
+        <div *ngIf="connectorActivity.connectorType === ConnectorType.ACTIVITY_MOLECULE"
+          class="noc-form-section p-0 w-100-p">
+          <div class="px-8 noc-group-row" fxLayout="row" fxLayoutAlign="start center">
+            <div fxFlex="180px" class="pr-8">
+              <p>Relationship
+              </p>
+            </div>
+            <mat-radio-group fxFlex="" formControlName="directness" fxLayout="column" fxLayoutAlign="start start">
+              <div *ngFor="let directness of noctuaFormConfigService.directnessActivityMolecule.options" class="mb-8"
+                fxLayout="row" fxLayoutAlign="start center">
+                <mat-radio-button class="noc-radio-button-rounded" [value]="directness"
+                  [checked]="directness.name === connectorActivity?.rule.directness.directness.name">
+                  {{directness.label}}
+                </mat-radio-button>
+                <div *ngIf="directness.description" class="noc-hint">
+                  {{directness.description}}
+                </div>
+              </div>
+            </mat-radio-group>
+          </div>
+        </div>
+        <div *ngIf="connectorActivity.connectorType === ConnectorType.MOLECULE_ACTIVITY"
+          class="noc-form-section p-0 w-100-p">
+          <div class="px-8 noc-group-row" fxLayout="row" fxLayoutAlign="start center">
+            <div fxFlex="180px">
+              <p>Relationship</p>
+            </div>
+            <mat-radio-group fxFlex="" formControlName="chemicalRelationship" fxLayout="column"
+              fxLayoutAlign="start start">
+              <div *ngFor="let relationship of noctuaFormConfigService.chemicalRelationship.options" class="mb-8"
+                fxLayout="row" fxLayoutAlign="start center">
+                <mat-radio-button class="noc-radio-button-rounded"
+                  [checked]="relationship.name === connectorActivity?.rule.chemicalRelationship.relation.name"
+                  [value]="relationship">
+                  {{relationship.label}}
+                </mat-radio-button>
+                <div *ngIf="relationship.description" class="noc-hint">
+                  {{relationship.description}}
+                </div>
+              </div>
+            </mat-radio-group>
+          </div>
+          <div *ngIf="connectorActivity?.rule.displaySection.causalEffect" class="px-8 noc-group-row" fxLayout="row"
+            fxLayoutAlign="start center">
+            <div fxFlex="180px">
+              <p>Effect Direction</p>
             </div>
             <mat-radio-group fxFlex="" formControlName="causalEffect" fxLayout="column" fxLayoutAlign="start start">
               <mat-radio-button *ngFor="let causalEffect of noctuaFormConfigService.causalEffect.options"
@@ -179,6 +120,16 @@
               </mat-radio-button>
             </mat-radio-group>
           </div>
+        </div>
+        <div class="noc-section-header noc-bt" fxLayout="row" fxLayoutAlign="start center">
+          <div class="noc-section-heading">
+            Suggested Causal Relation
+          </div>
+        </div>
+        <div class="noc-note mb-4" fxLayout="row" fxLayoutAlign="start center">
+          <span class="noc-description">
+            {{connectorActivity?.predicate.edge?.label}}
+          </span>
         </div>
         <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
           <div class="noc-section-heading">
@@ -225,60 +176,10 @@
                   </mat-form-field>
                 </div>
                 <span fxFlex=""></span>
-
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="noc-connector-form-notes p-8 h-100-p" noctuaPerfectScrollbar>
-      <div fxLayout="column" fxLayoutAlign="start stretch" class="noc-form-section w-100-p">
-        <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
-          <div class="noc-section-heading">
-            Notes
-          </div>
-        </div>
-        <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
-          <div class="noc-note" [ngClass]="{'noc-note-disabled':!note.condition}"
-            *ngFor="let note of connectorActivity?.rule.notes" fxLayout="row" fxLayoutAlign="start center">
-            <mat-icon *ngIf="note.condition" class="green-500-fg">check_circle</mat-icon>
-            <mat-icon *ngIf="!note.condition">check_circle_outline</mat-icon>
-            <span class="noc-description">
-              {{note.label}} <strong>
-                {{note.descriptionSuffix}}
-              </strong>
-            </span>
-          </div>
-        </div>
-        <ng-container *ngIf="currentConnectorActivity">
-          <div class="noc-section-header noc-bt" fxLayout="row" fxLayoutAlign="start center">
-            <div class="noc-section-heading">
-              Current Causal Relation
-            </div>
-          </div>
-          <div class="noc-note mb-4" fxLayout="row" fxLayoutAlign="start center">
-            <mat-icon class="green-500-fg">check_circle</mat-icon>
-            <span class="noc-description">
-              {{currentConnectorActivity?.predicate.edge?.label}}
-            </span>
-          </div>
-          <noc-graph-preview [nodes]="currentConnectorActivity?.graphPreview.nodes"
-            [edges]="currentConnectorActivity?.graphPreview.edges" class="noc-graph-preview"></noc-graph-preview>
-        </ng-container>
-        <div class="noc-section-header noc-bt" fxLayout="row" fxLayoutAlign="start center">
-          <div class="noc-section-heading">
-            Suggested Causal Relation
-          </div>
-        </div>
-        <div class="noc-note mb-4" fxLayout="row" fxLayoutAlign="start center">
-          <mat-icon class="green-500-fg">check_circle</mat-icon>
-          <span class="noc-description">
-            {{connectorActivity?.predicate.edge?.label}}
-          </span>
-        </div>
-        <noc-graph-preview [nodes]="connectorActivity?.graphPreview.nodes"
-          [edges]="connectorActivity?.graphPreview.edges" class="noc-graph-preview"></noc-graph-preview>
       </div>
     </div>
   </div>
@@ -288,7 +189,6 @@
       Why is the "Save" button disabled?
     </button>
     <span fxFlex></span>
-    <button (click)='clear()' type="button" mat-raised-button color="" class="mr-8">Clear</button>
     <button [disabled]="!connectorFormGroup.valid" (click)="save()" type="submit" class="noc-rounded-button"
       mat-raised-button color="primary">Save</button>
   </div>

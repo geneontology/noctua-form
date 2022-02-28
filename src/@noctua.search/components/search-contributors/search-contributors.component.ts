@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import {
   NoctuaFormConfigService,
   NoctuaUserService
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 import { NoctuaSearchService } from './../../services/noctua-search.service';
 import { NoctuaSearchMenuService } from '../../services/search-menu.service';
 
@@ -25,7 +25,7 @@ export class SearchContributorsComponent implements OnInit, OnDestroy {
     public noctuaSearchMenuService: NoctuaSearchMenuService,
     private noctuaSearchService: NoctuaSearchService,
     private formBuilder: FormBuilder,
-    public noctuaFormConfigService: NoctuaFormConfigService, ) {
+    public noctuaFormConfigService: NoctuaFormConfigService,) {
     // this.contributors = this.noctuaSearchService.contributors;
 
     this.unsubscribeAll = new Subject();

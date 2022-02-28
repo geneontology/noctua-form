@@ -24,7 +24,7 @@ import {
   NoctuaGraphService,
   CamLoadingIndicator,
   CamService
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 
 import { takeUntil, distinctUntilChanged, debounceTime, take, concatMap, finalize } from 'rxjs/operators';
 import { noctuaAnimations } from '@noctua/animations';
@@ -105,6 +105,26 @@ export class ReviewFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.selectedCategory = this.categories.selected;
     this.resetForm(this.selectedCategory);
+
+    this.noctuaReviewSearchService.onCamTermSearch
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((term) => {
+        if (!term) {
+          return;
+        }
+        this.clearFind();
+        this.searchForm.controls.findWhat.setValue(term)
+        this.findSelected(term)
+      });
+
+    this.noctuaReviewSearchService.onCamReplaceTermSearch
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((term) => {
+        if (!term) {
+          return;
+        }
+        this.searchForm.controls.replaceWith.setValue(term)
+      });
 
     this.noctuaReviewSearchService.onClearForm
       .pipe(takeUntil(this._unsubscribeAll))

@@ -1,0 +1,33 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" class="noc-drawer h-100-p">
+  <div class="noc-drawer-header" fxLayout="row" fxLayoutAlign="start center">
+    <span class="noc-drawer-header-title">
+      Graph Settings</span>
+    <span fxFlex></span>
+    <button mat-stroked-button (click)="close()" class="noc-rounded-button noc-sm" color="primary"
+      aria-label="Close dialog">
+      <mat-icon>close</mat-icon> CLOSE
+    </button>
+  </div>
+  <div class="noc-drawer-body" noctuaPerfectScrollbar>
+    <form *ngIf="settingsForm" fxLayout="column" fxLayoutAlign="start stretch" name="settingsForm"
+      [formGroup]="settingsForm">
+      <h2>Columns</h2>
+      <mat-checkbox formControlName="showAspect" class="noc-checkbox" color="primary">Show Aspect
+      </mat-checkbox>
+      <mat-checkbox formControlName="showIsExtension" class="noc-checkbox" color="primary">Show Is Extension
+      </mat-checkbox>
+      <mat-checkbox formControlName="showEvidence" class="noc-checkbox" color="primary">Show Evidence
+      </mat-checkbox>
+      <mat-checkbox formControlName="showEvidenceCode" class="noc-checkbox" color="primary">Show Evidence Code
+      </mat-checkbox>
+      <mat-checkbox formControlName="showReference" class="noc-checkbox" color="primary">Show Reference
+      </mat-checkbox>
+      <mat-checkbox formControlName="showWith" class="noc-checkbox" color="primary">Show With/From
+      </mat-checkbox>
+      <mat-checkbox formControlName="showGroup" class="noc-checkbox" color="primary">Show Group
+      </mat-checkbox>
+      <mat-checkbox formControlName="showContributor" class="noc-checkbox" color="primary">Show Contributor
+      </mat-checkbox>
+    </form>
+  </div>
+</div>

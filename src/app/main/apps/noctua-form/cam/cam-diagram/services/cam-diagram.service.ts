@@ -10,11 +10,11 @@ import { map, filter, reduce, catchError, retry, tap } from 'rxjs/operators';
 import { jsPlumb } from 'jsplumb';
 
 import { CurieService } from './../../../../../../../@noctua.curie/services/curie.service';
-import { NoctuaGraphService, NoctuaFormMenuService } from 'noctua-form-base';
+import { NoctuaGraphService, NoctuaFormMenuService } from '@geneontology/noctua-form-base';
 
 
-import { NoctuaActivityFormService } from 'noctua-form-base';
-import { NoctuaActivityConnectorService } from 'noctua-form-base';
+import { NoctuaActivityFormService } from '@geneontology/noctua-form-base';
+import { NoctuaActivityConnectorService } from '@geneontology/noctua-form-base';
 
 
 @Injectable({
@@ -84,7 +84,6 @@ export class CamDiagramService {
     self._jsPlumbInstance.bind("click", (c) => {
       // self.camDiagramService.jsPlumbInstance.deleteConnection(c);
       self.openConnectorForm(c.sourceId, c.targetId);
-      console.log(c)
     });
   }
 

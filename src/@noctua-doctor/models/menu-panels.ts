@@ -1,4 +1,5 @@
 export enum LeftPanel {
+    home = 'home',
     checklist = 'checklist',
     obsolete = 'obsolete',
     terms = 'terms',
@@ -11,6 +12,7 @@ export enum LeftPanel {
 };
 
 export enum MiddlePanel {
+    home = 'home',
     cams = 'cams',
     camsReview = 'camReview',
     reviewChanges = 'reviewChanges'

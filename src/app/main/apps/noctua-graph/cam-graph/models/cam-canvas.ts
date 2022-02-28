@@ -1,14 +1,15 @@
 import {
     Activity,
+    ActivityNodeType,
     ActivityType,
     Cam,
     Entity,
     noctuaFormConfig,
     Predicate,
     Triple
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 import { NodeCellType } from '@noctua.graph/models/shapes';
-import { NodeCellList, NodeLink, StencilNode } from '@noctua.graph/services/shapes.service';
+import { NodeCellList, NodeCellMolecule, NodeLink, StencilNode } from '@noctua.graph/services/shapes.service';
 import * as joint from 'jointjs';
 import { each, cloneDeep } from 'lodash';
 import { StencilItemNode } from '@noctua.graph/data/cam-stencil';
@@ -21,6 +22,7 @@ export class CamCanvas {
     selectedStencilElement;
     elementOnClick: (element: joint.shapes.noctua.NodeCellList) => void;
     editOnClick: (element: joint.shapes.noctua.NodeCellList) => void;
+    deleteOnClick: (element: joint.shapes.noctua.NodeCellList) => void;
     linkOnClick: (element: joint.shapes.noctua.NodeLink) => void;
     onUpdateCamLocations: (cam: Cam) => void
     onLinkCreated: (
@@ -69,7 +71,8 @@ export class CamCanvas {
             },
 
             // connectionStrategy: joint.connectionStrategies.pinAbsolute,
-            defaultConnectionPoint: { name: 'boundary', args: { selector: 'border' } },
+            defaultConnectionPoint: { name: 'boundary', args: { sticky: true } },
+
             defaultConnector: { name: 'smooth' },
             async: true,
             interactive: { labelMove: false },
@@ -89,13 +92,6 @@ export class CamCanvas {
                 return NodeLink.create();
             },
             perpendicularLinks: false,
-            // defaultRouter: {
-            //   name: 'manhattan',
-            //   args: {
-            //  perpendicular: false,
-            //    step: 20
-            //    }
-            //   },
 
         });
 
@@ -115,7 +111,7 @@ export class CamCanvas {
             const element = cellView.model;
             self.elementOnClick(element);
 
-            if (element.get('type') === NodeCellType.cell) {
+            if (element.get('type') !== NodeCellType.link) {
                 const cell = element as NodeCellList
                 self.selectNode(cell)
             }
@@ -123,7 +119,7 @@ export class CamCanvas {
 
         this.canvasPaper.on('element:mouseover', function (cellView) {
             const element = cellView.model;
-            if (element.get('type') === NodeCellType.cell) {
+            if (element.get('type') !== NodeCellType.link) {
                 const cell = element as NodeCellList
                 cell.hover(true);
                 self.highlightSuccessorNodes(cell)
@@ -133,7 +129,7 @@ export class CamCanvas {
         this.canvasPaper.on('element:mouseleave', function (cellView) {
             cellView.removeTools();
             const element = cellView.model;
-            if (element.get('type') === NodeCellType.cell) {
+            if (element.get('type') !== NodeCellType.link) {
                 (element as NodeCellList).hover(false);
                 self.unhighlightAllNodes()
             }
@@ -171,12 +167,19 @@ export class CamCanvas {
             self.unselectAll();
         });
 
-
-        this.canvasPaper.on('element:.icon:pointerdown', function (elementView: joint.dia.ElementView, evt) {
+        this.canvasPaper.on('element:.edit:pointerdown', function (elementView: joint.dia.ElementView, evt) {
             evt.stopPropagation();
 
             const element = elementView.model;
             self.editOnClick(element);
+
+        });
+
+        this.canvasPaper.on('element:.delete:pointerdown', function (elementView: joint.dia.ElementView, evt) {
+            evt.stopPropagation();
+
+            const element = elementView.model;
+            self.deleteOnClick(element);
 
         });
 
@@ -236,18 +239,18 @@ export class CamCanvas {
 
 
         each(self.canvasGraph.getCells(), (cell: NodeCellList) => {
-            if (cell.get('type') === NodeCellType.cell) {
+            if (cell.get('type') !== NodeCellType.link) {
                 cell.setColor('grey', 200, 300);
             }
         })
         each(successors, (cell: NodeCellList) => {
-            if (cell.get('type') === NodeCellType.cell) {
+            if (cell.get('type') !== NodeCellType.link) {
                 cell.setColor('amber', 200, 300)
             }
         })
 
         each(predecessors, (cell: NodeCellList) => {
-            if (cell.get('type') === NodeCellType.cell) {
+            if (cell.get('type') !== NodeCellType.link) {
                 cell.setColor('yellow', 50, 100)
             }
         })
@@ -267,7 +270,7 @@ export class CamCanvas {
         const self = this;
 
         each(self.canvasGraph.getElements(), (element: NodeCellList) => {
-            if (element.get('type') === NodeCellType.cell) {
+            if (element.get('type') !== NodeCellType.link) {
                 const activity = element.prop('activity') as Activity
                 if (activity) {
                     const position = element.position();
@@ -284,7 +287,7 @@ export class CamCanvas {
     unhighlightAllNodes() {
         const self = this;
         each(self.canvasGraph.getCells(), (cell: NodeCellList) => {
-            if (cell.get('type') === NodeCellType.cell) {
+            if (cell.get('type') !== NodeCellType.link) {
                 const activity = cell.prop('activity') as Activity
                 cell.setColor(activity.backgroundColor);
             }
@@ -294,7 +297,7 @@ export class CamCanvas {
     unselectAll() {
         const self = this;
         each(self.canvasGraph.getCells(), (cell: NodeCellList) => {
-            if (cell.get('type') === NodeCellType.cell) {
+            if (cell.get('type') !== NodeCellType.link) {
                 cell.unsetBorder();
             }
         })
@@ -373,7 +376,6 @@ export class CamCanvas {
     toggleActivityVisibility(cell: joint.dia.Element, activity: Activity) {
         const self = this;
 
-
         //self.activity.subgraphVisibility(activity, !activity.expanded);
         const elements = self.canvasGraph.getSuccessors(cell).concat(cell);
         // find all the links between successors and the element
@@ -404,19 +406,64 @@ export class CamCanvas {
         //.addActivityPorts()
         el.setColor(activity.backgroundColor)
         //.setSuccessorCount(activity.successorCount)
-        const gpNode = activity.getGPNode();
-        const mfNode = activity.getMFNode();
 
         const activityType = activity.getActivityTypeDetail();
 
-        el.prop({ 'name': [activityType ? activityType.label : 'Activity Unity'] });
+        console.log('poo', activity.mfNode)
 
-        if (mfNode) {
-            el.prop({ 'mf': [mfNode.term.label,] });
+        if (activity.mfNode) {
+            el.prop({ 'mf': [activity.mfNode.term.label] });
         }
 
-        if (gpNode) {
-            el.prop({ 'gp': [activity.title] });
+        if (activity.ccNode) {
+            el.prop({ 'cc': [`occurs in: ${activity.ccNode.term.label}`] });
+        }
+
+        if (activity.bpNode) {
+            el.prop({ 'bp': [`part of: ${activity.bpNode.term.label}`] });
+        }
+        if (activity.gpNode) {
+            el.prop({ 'gp': [activity.gpNode?.term.label] });
+        } else {
+            el.prop({ 'gp': [''] });
+        }
+
+        el.attr({
+            expand: {
+                event: 'element:expand:pointerdown',
+                stroke: 'black',
+                strokeWidth: 2
+            },
+        })
+        el.set({
+            activity: activity,
+            id: activity.id,
+            position: activity.position,
+            size: activity.size,
+        });
+
+        return el
+    }
+
+    createMolecule(activity: Activity): NodeCellList {
+        const el = new NodeCellMolecule()
+        activity.size.width = 120;
+        activity.size.height = 120;
+        //.addActivityPorts()
+        el.setColor(activity.backgroundColor)
+        //.setSuccessorCount(activity.successorCount)  
+        const activityType = activity.getActivityTypeDetail();
+        const moleculeNode = activity.rootNode;
+
+        el.prop({ 'name': [activityType ? activityType.label : 'Activity Unity'] });
+
+        if (moleculeNode) {
+            let label = moleculeNode.term.label
+
+            if (activity.ccNode) {
+                label += `\nlocated in: ${activity.ccNode.term.label}`;
+            }
+            el.setText(label);
         }
 
         el.attr({
@@ -445,29 +492,37 @@ export class CamCanvas {
 
         each(cam.activities, (activity: Activity) => {
             if (activity.visible) {
-                const el = self.createNode(activity);
+                let el
+                if (activity.activityType === ActivityType.molecule) {
+                    el = self.createMolecule(activity);
+                } else {
+                    el = self.createNode(activity);
+                }
                 nodes.push(el);
             }
         });
 
         each(cam.causalRelations, (triple: Triple<Activity>) => {
-            if (triple.predicate.visible) {
+            if (triple.predicate.visible && triple.isTripleComplete()) {
                 const color = getEdgeColor(triple.predicate.edge.id);
                 const link = NodeLink.create();
-                // link.set('connector', { name: 'jumpover', args: { type: 'gap' } })
-                link.setText(triple.predicate.edge.label);
-                link.set({
-                    activity: triple.predicate,
-                    source: {
-                        id: triple.subject.id,
-                    },
-                    target: {
-                        id: triple.object.id,
-                    }
-                });
+                if (triple.predicate.isReverseLink) {
+                    this.reverseLink(triple, link)
+                } else {
+                    // link.set('connector', { name: 'jumpover', args: { type: 'gap' } })
+                    link.setText(triple.predicate.edge.label);
+                    link.set({
+                        activity: triple.predicate,
+                        source: {
+                            id: triple.subject.id,
+                        },
+                        target: {
+                            id: triple.object.id,
+                        }
+                    });
+                }
 
                 link.setColor(color)
-
                 nodes.push(link);
             }
         });
@@ -498,6 +553,19 @@ export class CamCanvas {
                        }
                    });
            }); */
+    }
+
+    reverseLink(triple: Triple<Activity>, link: NodeLink) {
+        link.setText(triple.predicate.reverseLinkTitle);
+        link.set({
+            activity: triple.predicate,
+            source: {
+                id: triple.object.id,
+            },
+            target: {
+                id: triple.subject.id,
+            }
+        });
     }
 
     addStencilGraph(graph: joint.dia.Graph, activities: Activity[]) {
@@ -539,7 +607,6 @@ export class CamCanvas {
         // Automatic Layout
         joint.layout.DirectedGraph.layout(graph.getSubgraph(autoLayoutElements), {
             align: 'UR',
-            setVertices: true,
             setLabels: true,
             marginX: 50,
             marginY: 50,

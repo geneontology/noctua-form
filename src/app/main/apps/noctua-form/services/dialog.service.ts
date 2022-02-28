@@ -14,7 +14,7 @@ import { SearchDatabaseDialogComponent } from './../dialogs/search-database/sear
 
 import {
     Evidence, ActivityNode, Activity, FormType
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 
 import 'rxjs/add/operator/map';
 import { NoctuaConfirmDialogComponent } from '@noctua/components/confirm-dialog/confirm-dialog.component';

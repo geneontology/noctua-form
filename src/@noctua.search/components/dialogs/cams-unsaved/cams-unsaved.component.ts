@@ -8,7 +8,7 @@ import {
   NoctuaFormConfigService,
 
   CamService
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 
 import { takeUntil } from 'rxjs/operators';
 import { NoctuaSearchService } from '../../../services/noctua-search.service';

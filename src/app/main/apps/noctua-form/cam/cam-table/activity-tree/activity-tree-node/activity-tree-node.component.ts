@@ -16,14 +16,14 @@ import {
   NoctuaFormMenuService,
 
   ActivityType
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 
 import {
   Cam,
   Activity,
   ActivityNode,
   ShapeDefinition
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 
 import { EditorCategory } from '@noctua.editor/models/editor-category';
 import { find } from 'lodash';
@@ -84,6 +84,24 @@ export class ActivityTreeNodeComponent implements OnInit, OnDestroy {
 
     this.optionsDisplay = { ...this.options, hideHeader: true };
     this.relationWidth = 150 - (this.entity.treeLevel) * 16 + 'px';
+
+  }
+
+  editEntity(entity: ActivityNode) {
+
+    const data = {
+      cam: this.cam,
+      activity: this.activity,
+      entity: entity,
+      category: EditorCategory.all,
+      evidenceIndex: 0,
+      insertEntity: true
+    };
+
+    this.camService.onCamChanged.next(this.cam);
+    this.camService.activity = this.activity;
+    this.noctuaActivityEntityService.initializeForm(this.activity, entity);
+    this.inlineEditorService.open(this.currentMenuEvent.target, { data });
   }
 
   toggleExpand(activity: Activity) {

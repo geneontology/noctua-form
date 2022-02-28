@@ -58,11 +58,21 @@ import { ActivityTreeComponent } from './cam/cam-table/activity-tree/activity-tr
 import { ActivityTreeNodeComponent } from './cam/cam-table/activity-tree/activity-tree-node/activity-tree-node.component';
 import { CreateActivityDialogComponent } from './dialogs/create-activity/create-activity.component';
 import { ActivityTreeTableComponent } from './cam/cam-table/activity-tree-table/activity-tree-table.component';
-import { ActivitySlimTreeComponent } from './cam/cam-table/activity-slim-tree/activity-slim-tree.component';
-import { ActivitySlimTreeNodeComponent } from './cam/cam-table/activity-slim-tree/activity-slim-tree-node/activity-tree-node.component';
 import { PreviewActivityComponent } from './cam/activity/preview-activity/preview-activity.component';
 import { NoctuaSearchBaseModule } from '@noctua.search';
 import { DuplicateCamFormComponent } from './cam/duplicate-cam-form/duplicate-cam-form.component';
+import { ResizableModule } from 'angular-resizable-element';
+import { NoctuaTermDetailComponent } from './components/term-detail/term-detail.component';
+import { CamStatsComponent } from './components/cam-stats/cam-stats.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { GeneralStatsComponent } from './components/cam-stats/general-stats/general-stats.component';
+import { AspectStatsComponent } from './components/cam-stats/aspect-stats/aspect-stats.component';
+import { ContributionStatsComponent } from './components/cam-stats/contribution-stats/contribution-stats.component';
+import { StatementStatsComponent } from './components/cam-stats/statement-stats/statement-stats.component';
+import { GPStatsComponent } from './components/cam-stats/gp-stats/gp-stats.component';
+import { ActivityFormTableNodeComponent } from './cam/cam-table/activity-form-table/activity-form-table-node/activity-form-table-node.component';
+import { ActivityFormTableComponent } from './cam/cam-table/activity-form-table/activity-form-table.component';
+import { EvidenceFormTableComponent } from './cam/cam-table/activity-form-table/evidence-table/evidence-table.component';
 
 const routes = [
   {
@@ -82,6 +92,7 @@ const routes = [
     NoctuaConfirmDialogModule,
     NoctuaEditorModule,
     NoctuaSearchBaseModule,
+    NgxChartsModule,
 
     //Material
     MatAutocompleteModule,
@@ -103,6 +114,7 @@ const routes = [
     MatTableModule,
     MatTooltipModule,
     MatTreeModule,
+    ResizableModule,
   ],
   exports: [
     ActivityFormComponent,
@@ -130,10 +142,12 @@ const routes = [
     ActivityTreeTableComponent,
     TripleTableComponent,
     ActivityTreeNodeComponent,
-    ActivitySlimTreeComponent,
-    ActivitySlimTreeNodeComponent,
+    ActivityFormTableComponent,
+    ActivityFormTableNodeComponent,
     CamPreviewComponent,
-    PreviewActivityComponent
+    PreviewActivityComponent,
+    GraphPreviewComponent,
+    EvidenceFormTableComponent
   ],
   providers: [
     NoctuaFormDialogService,
@@ -171,10 +185,18 @@ const routes = [
     CamGraphComponent,
     ActivityTreeComponent,
     ActivityTreeNodeComponent,
-    ActivitySlimTreeComponent,
-    ActivitySlimTreeNodeComponent,
+    ActivityFormTableComponent,
+    ActivityFormTableNodeComponent,
     SelectEvidenceComponent,
-    PreviewActivityComponent
+    PreviewActivityComponent,
+    NoctuaTermDetailComponent,
+    CamStatsComponent,
+    GPStatsComponent,
+    AspectStatsComponent,
+    GeneralStatsComponent,
+    ContributionStatsComponent,
+    StatementStatsComponent,
+    EvidenceFormTableComponent
   ],
 })
 

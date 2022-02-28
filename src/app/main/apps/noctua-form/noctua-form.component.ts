@@ -22,14 +22,16 @@ import {
   NoctuaGraphService,
   ActivityDisplayType,
   CamLoadingIndicator,
-  ReloadType
-} from 'noctua-form-base';
+  ReloadType,
+  RightPanel
+} from '@geneontology/noctua-form-base';
 
 import { takeUntil, distinctUntilChanged } from 'rxjs/operators';
 import { NoctuaDataService } from '@noctua.common/services/noctua-data.service';
 import { TableOptions } from '@noctua.common/models/table-options';
 import { NoctuaSearchDialogService } from '@noctua.search/services/dialog.service';
 import { NoctuaReviewSearchService } from '@noctua.search/services/noctua-review-search.service';
+import { ResizeEvent } from 'angular-resizable-element';
 
 @Component({
   selector: 'app-noctua-form',
@@ -42,6 +44,7 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
   ActivityType = ActivityType;
   LeftPanel = LeftPanel;
   MiddlePanel = MiddlePanel;
+  RightPanel = RightPanel;
 
 
   @ViewChild('leftDrawer', { static: true })
@@ -54,6 +57,7 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
   public cam: Cam;
   searchResults = [];
   modelId = '';
+  resizeStyle = {};
 
   noctuaFormConfig = noctuaFormConfig;
 
@@ -103,9 +107,6 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
         this.noctuaFormConfigService.setupUrls();
         this.noctuaFormConfigService.setUniversalUrls();
         this.loadCam(this.modelId);
-
-        console.log('loading', user)
-
       });
   }
 
@@ -122,7 +123,6 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
           return;
         }
         this.cam = cam;
-        console.log(cam)
 
         if (cam.activities.length > 0) {
           this.camService.addCamEdit(this.cam)
@@ -149,9 +149,37 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
     this._unsubscribeAll.complete();
   }
 
+  resizeValidate(event: ResizeEvent): boolean {
+    const MIN_DIMENSIONS_PX: number = 50;
+    if (
+      event.rectangle.width &&
+      event.rectangle.height &&
+      (event.rectangle.width < MIN_DIMENSIONS_PX ||
+        event.rectangle.height < MIN_DIMENSIONS_PX)
+    ) {
+      return false;
+    }
+    return true;
+  }
+
+  /**
+   * Finilizes resize positions
+   * (used for drawer/sidenav width)
+   * @param event 
+   */
+  onResizeEnd(event: ResizeEvent): void {
+    this.resizeStyle = {
+      // enable/disable these per your needs
+      //position: 'fixed',
+      //left: `${event.rectangle.left}px`,
+      //top: `${event.rectangle.top}px`,
+      //height: `${event.rectangle.height}px`,
+      width: `${event.rectangle.width}px`,
+    };
+  }
+
   loadCam(modelId) {
     this.cam = this.camService.getCam(modelId);
-
   }
 
   openCamForm() {
@@ -166,6 +194,14 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
 
   openSearch() {
     this.noctuaFormMenuService.openLeftDrawer(LeftPanel.findReplace);
+  }
+
+  openTermsSummary() {
+    this.noctuaFormMenuService.openLeftDrawer(LeftPanel.camTermsSummary);
+  }
+
+  openCamStats() {
+    this.noctuaFormMenuService.openLeftDrawer(LeftPanel.camStats);
   }
 
   openDuplicateCamForm() {

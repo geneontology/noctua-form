@@ -1,0 +1,15 @@
+<div *ngFor="let pie of pies" class="noc-table-form noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+  <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
+    <div class="noc-section-heading">
+      {{pie.label}}
+    </div>
+    <span fxFlex></span>
+  </div>
+  <div class="noc-section-body" fxLayout="column" fxLayoutAlign="start stretch">
+    <ngx-charts-pie-chart [results]="pie.data" [view]="aspectPieOptions.view" [scheme]="aspectPieOptions.colorScheme"
+      [gradient]="aspectPieOptions.gradient" [legend]="aspectPieOptions.legend"
+      [maxLabelLength]="aspectPieOptions.maxLabelLength" [labels]="aspectPieOptions.showLabels"
+      [doughnut]="aspectPieOptions.isDoughnut">
+    </ngx-charts-pie-chart>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 @import "theming";
 @import "mixins/breakpoints";
-$noc-primary-color: #039be5;
+//$noc-primary-color: #039be5;
 $noc-secondary-color: #995014;
 $noc-highlight-model-color: #e1f5fe;
 $noc-highlight-color: #fffcd8;
@@ -43,12 +43,20 @@ $noc-cc: #d3b5f5;
 }
 
 @mixin noc-chip-color($color) {
-  border: $color solid 1px !important;
-  background-color: rgba($color, 0.2) !important;
+  border: $color solid 1px;
+  background-color: rgba($color, 0.2);
 
   .noc-icon {
-    background-color: $color !important;
+    background-color: $color;
   }
+}
+
+i {
+  font-size: 12px !important;
+  color: #000;
+  line-height: initial !important;
+  @include deep-height(initial!important);
+  @include deep-width(initial!important);
 }
 
 mat-chip {

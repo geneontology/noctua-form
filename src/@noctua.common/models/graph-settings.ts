@@ -2,7 +2,10 @@ import { FormControl, FormGroup } from "@angular/forms";
 
 
 export class SettingsOptions {
+  showAspect = false;
+  showIsExtension = false;
   showEvidence = true;
+  showEvidenceSummary = true;
   showReference = true;
   showEvidenceCode = true;
   showWith = true;
@@ -11,29 +14,38 @@ export class SettingsOptions {
 
   createSettingsForm() {
     return new FormGroup({
+      showAspect: new FormControl(this.showAspect),
+      showIsExtension: new FormControl(this.showIsExtension),
       showEvidence: new FormControl(this.showEvidence),
+      showEvidenceSummary: new FormControl(this.showEvidenceSummary),
       showEvidenceCode: new FormControl(this.showEvidenceCode),
       showReference: new FormControl(this.showReference),
       showWith: new FormControl(this.showWith),
       showGroup: new FormControl(this.showGroup),
-      showContributor: new FormControl(this.showWith),
+      showContributor: new FormControl(this.showContributor),
     });
   }
 
   populateSettings(value) {
+    this.showAspect = value.showAspect;
+    this.showIsExtension = value.showIsExtension;
     this.showEvidence = value.showEvidence;
     this.showReference = value.showReference;
     this.showEvidenceCode = value.showEvidenceCode;
+    this.showEvidenceSummary = value.showEvidenceSummary;
     this.showWith = value.showWith;
     this.showGroup = value.showGroup;
     this.showContributor = value.showContributor;
   }
 
   graphSettings() {
-    this.showEvidence = false;
-    this.showReference = false;
-    this.showEvidenceCode = false;
-    this.showWith = false;
+    this.showAspect = false;
+    this.showIsExtension = false;
+    this.showEvidence = true;
+    this.showEvidenceSummary = true;
+    this.showReference = true;
+    this.showEvidenceCode = true;
+    this.showWith = true;
     this.showGroup = false;
     this.showContributor = false;
   }

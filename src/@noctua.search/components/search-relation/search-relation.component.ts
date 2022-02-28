@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
-import { NoctuaFormConfigService, NoctuaUserService, NoctuaLookupService } from 'noctua-form-base';
+import { NoctuaFormConfigService, NoctuaUserService, NoctuaLookupService } from '@geneontology/noctua-form-base';
 import { NoctuaSearchService } from './../..//services/noctua-search.service';
 import { startWith, map, distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { NoctuaSearchMenuService } from '../../services/search-menu.service';

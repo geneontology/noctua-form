@@ -18,7 +18,7 @@ import {
   ErrorLevel,
   ErrorType,
   ActivityType
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 import { InlineReferenceService } from '@noctua.editor/inline-reference/inline-reference.service';
 import { each, find, flatten } from 'lodash';
 import { InlineWithService } from '@noctua.editor/inline-with/inline-with.service';
@@ -40,14 +40,13 @@ export class EntityFormComponent implements OnInit, OnDestroy {
   evidenceDBForm: FormGroup;
   evidenceFormArray: FormArray;
   entity: ActivityNode;
-  insertMenuItems = [];
   selectedItemDisplay;
   friendNodes;
   friendNodesFlat;
-
   activityNodeType = ActivityNodeType;
+  displayAddButton = false;
 
-  displayAddButton;
+  termData
 
   private unsubscribeAll: Subject<any>;
 
@@ -65,8 +64,15 @@ export class EntityFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.entity = this.noctuaActivityFormService.activity.getNode(this.entityFormGroup.get('id').value);
     this.friendNodes = this.camService.getNodesByType(this.entity.type);
-    this.displayAddButton = this.noctuaActivityFormService.activity.activityType === ActivityType.ccOnly
-      && this.entity.type === ActivityNodeType.GoMolecularEntity
+    if (this.noctuaActivityFormService.activity.activityType === ActivityType.ccOnly
+      && this.entity.type === ActivityNodeType.GoMolecularEntity) {
+      this.displayAddButton = true;
+    }
+
+    if (this.noctuaActivityFormService.activity.activityType === ActivityType.proteinComplex
+      && this.entity.type === ActivityNodeType.GoProteinContainingComplex) {
+      this.displayAddButton = true;
+    }
     //  this.friendNodesFlat = this.camService.getNodesByTypeFlat(this.entity.type);
   }
 
@@ -145,13 +151,27 @@ export class EntityFormComponent implements OnInit, OnDestroy {
         }
       };
 
-      const success = function (selected) {
+      const success = (selected) => {
         if (selected.term) {
           entity.term = new Entity(selected.term.term.id, selected.term.term.label);
 
           if (selected.evidences && selected.evidences.length > 0) {
             entity.predicate.setEvidence(selected.evidences);
+
+            selected.evidences.forEach((evidence: Evidence) => {
+
+              evidence.evidenceExts.forEach((evidenceExt) => {
+                evidenceExt.relations.forEach((relation) => {
+                  const node = self.noctuaFormConfigService.insertActivityNodeByPredicate(self.noctuaActivityFormService.activity, self.entity, relation.id);
+                  node.term = new Entity(evidenceExt.term.id, evidenceExt.term.id);
+                  node.predicate.setEvidence([evidence]);
+                });
+              });
+
+            });
           }
+
+
           self.noctuaActivityFormService.initializeForm();
         }
       };
@@ -339,6 +359,9 @@ export class EntityFormComponent implements OnInit, OnDestroy {
       formControl: this.entityFormGroup.controls['term'] as FormControl,
     };
     this.inlineDetailService.open(event.target, { data });
+
+    //this.termData = data
+
   }
 
   termDisplayFn(term): string | undefined {

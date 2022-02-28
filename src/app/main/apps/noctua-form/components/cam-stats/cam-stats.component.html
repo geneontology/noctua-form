@@ -1,0 +1,28 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" class="noc-drawer h-100-p">
+  <div class="noc-drawer-header" fxLayout="row" fxLayoutAlign="start center">
+    <span class="noc-drawer-header-title">
+      Cam Details & Stats</span>
+    <span fxFlex></span>
+    <button mat-stroked-button (click)="close()" class="noc-rounded-button noc-sm" color="primary"
+      aria-label="Close dialog">
+      <mat-icon>close</mat-icon> CLOSE
+    </button>
+  </div>
+  <div class="noc-tab-bar" fxLayout="row" fxLayoutAlign="start center">
+    <button mat-button *ngFor="let statsType of statsTypes" color="" class="noc-tab-button"
+      [ngClass]="{'noc-active': selectedStatsType === statsType.name}" (click)="selectStatsType(statsType.name)"
+      matTooltip="{{statsType.tooltip}}" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
+      {{statsType.label}}
+    </button>
+  </div>
+  <div *ngIf="termsSummary" class="noc-drawer-body" noctuaPerfectScrollbar>
+    <div [ngSwitch]="selectedStatsType">
+      <noc-general-stats *ngSwitchCase="StatsType.GENERAL" [termsSummary]="termsSummary"></noc-general-stats>
+      <noc-gp-stats *ngSwitchCase="StatsType.GP" [termsSummary]="termsSummary"></noc-gp-stats>
+      <noc-aspect-stats *ngSwitchCase="StatsType.TERM" [termsSummary]="termsSummary"></noc-aspect-stats>
+      <noc-statement-stats *ngSwitchCase="StatsType.STATEMENT" [termsSummary]="termsSummary"></noc-statement-stats>
+      <noc-contribution-stats *ngSwitchCase="StatsType.CONTRIBUTION" [termsSummary]="termsSummary">
+      </noc-contribution-stats>
+    </div>
+  </div>
+</div>

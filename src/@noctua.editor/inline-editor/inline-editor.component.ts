@@ -14,7 +14,7 @@ import {
     Activity,
     Cam,
     NoctuaActivityFormService
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 import { EditorCategory } from './../models/editor-category';
 
 @Component({
@@ -56,7 +56,6 @@ export class NoctuaInlineEditorComponent implements OnInit, OnDestroy {
             category: this.category,
             evidenceIndex: this.evidenceIndex
         };
-        // this.camService.onCamChanged.next(this.cam);
         this.camService.onCamChanged.next(this.cam);
         this.camService.activity = this.activity;
         this.noctuaActivityEntityService.initializeForm(this.activity, displayEntity);

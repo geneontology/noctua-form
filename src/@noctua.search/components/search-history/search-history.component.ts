@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
-import { NoctuaFormConfigService, NoctuaUserService } from 'noctua-form-base';
+import { NoctuaFormConfigService, NoctuaUserService } from '@geneontology/noctua-form-base';
 import { NoctuaSearchService } from './../..//services/noctua-search.service';
 import { NoctuaSearchMenuService } from '../../services/search-menu.service';
 import { takeUntil } from 'rxjs/operators';
@@ -34,7 +34,7 @@ export class SearchHistoryComponent implements OnInit, OnDestroy {
 
   selectSearch(searchHistoryItem: SearchHistory) {
     this.noctuaSearchService.searchCriteria = searchHistoryItem.getSearchCriteria();
-    this.noctuaSearchService.updateSearch(false);
+    this.noctuaSearchService.updateSearch(true, false);
   }
 
   clear() {

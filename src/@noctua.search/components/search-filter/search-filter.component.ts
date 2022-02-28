@@ -5,8 +5,8 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Observable, Subject } from 'rxjs';
 import { startWith, map, distinctUntilChanged, debounceTime } from 'rxjs/operators';
-import { NoctuaFormConfigService, NoctuaUserService, Group, Contributor, Organism, EntityDefinition, ActivityNode, EntityLookup } from 'noctua-form-base';
-import { NoctuaLookupService, NoctuaFormUtils } from 'noctua-form-base';
+import { NoctuaFormConfigService, NoctuaUserService, Group, Contributor, Organism, EntityDefinition, ActivityNode, EntityLookup } from '@geneontology/noctua-form-base';
+import { NoctuaLookupService, NoctuaFormUtils } from '@geneontology/noctua-form-base';
 import { NoctuaSearchService } from './../../services/noctua-search.service';
 import { NoctuaSearchMenuService } from '../../services/search-menu.service';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
@@ -18,6 +18,7 @@ import * as _moment from 'moment';
 import { default as _rollupMoment } from 'moment';
 import { InlineReferenceService } from '@noctua.editor/inline-reference/inline-reference.service';
 import { NoctuaConfirmDialogService } from '@noctua/components/confirm-dialog/confirm-dialog.service';
+import { SearchFilterType } from './../../models/search-criteria';
 
 
 const moment = _rollupMoment || _moment;
@@ -48,6 +49,7 @@ export const MY_FORMATS = {
   ],
 })
 export class SearchFilterComponent implements OnInit, OnDestroy {
+  SearchFilterType = SearchFilterType
 
   @ViewChildren('searchInput')
   searchInput: QueryList<ElementRef>;
@@ -163,13 +165,13 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
       this.confirmDialogService.openInfoToast(`Reached maximum number of ${filterType} filters allowed`, 'OK');
     } else if ((value || '').trim()) {
 
-      if (filterType === this.noctuaSearchService.filterType.ids) {
+      if (filterType === this.SearchFilterType.ids) {
         this.noctuaSearchService.searchCriteria[filterType].push(
           NoctuaFormUtils.cleanModelId(value.trim()));
       } else {
         this.noctuaSearchService.searchCriteria[filterType].push(value.trim());
       }
-      this.noctuaSearchService.updateSearch();
+      this.noctuaSearchService.updateSearch(true);
       this.searchInput.forEach((item) => {
         item.nativeElement.value = null;
       });

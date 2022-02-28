@@ -2,7 +2,7 @@ import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
 import { map, finalize } from 'rxjs/operators';
 
 import {
@@ -15,9 +15,10 @@ import {
     Entity,
 
     NoctuaGraphService,
-    CamService
-} from 'noctua-form-base';
-import { SearchCriteria } from './../models/search-criteria';
+    CamService,
+    NoctuaLookupService
+} from '@geneontology/noctua-form-base';
+import { SearchCriteria, SearchFilterType } from './../models/search-criteria';
 import { saveAs } from 'file-saver';
 import { forOwn, each, find, groupBy } from 'lodash';
 import { CurieService } from '@noctua.curie/services/curie.service';
@@ -45,6 +46,7 @@ export class NoctuaSearchService {
 
     onSearchCriteriaChanged: BehaviorSubject<any>;
     onSearchHistoryChanged: BehaviorSubject<any>;
+    onDetailTermChanged: BehaviorSubject<any>;
     curieUtil: any;
     cams: any[] = [];
     camPage: CamPage;
@@ -57,31 +59,19 @@ export class NoctuaSearchService {
     onContributorFilterChanged: BehaviorSubject<any>;
     searchSummary: any = {};
 
-    filterType = {
-        ids: 'ids',
-        titles: 'titles',
-        gps: 'gps',
-        terms: 'terms',
-        pmids: 'pmids',
-        contributors: 'contributors',
-        groups: 'groups',
-        organisms: 'organisms',
-        states: 'states',
-        exactdates: 'exactdates',
-        startdates: 'startdates',
-        enddates: 'enddates',
-    };
+
 
     constructor(
         private httpClient: HttpClient,
         private noctuaDataService: NoctuaDataService,
         private _noctuaGraphService: NoctuaGraphService,
-
+        private noctuaLookupService: NoctuaLookupService,
         private camService: CamService,
         public noctuaFormConfigService: NoctuaFormConfigService,
         public noctuaUserService: NoctuaUserService,
         private noctuaSearchMenuService: NoctuaSearchMenuService,
         private curieService: CurieService) {
+        this.onDetailTermChanged = new BehaviorSubject(null);
         this.onCamsChanged = new BehaviorSubject([]);
         this.onCamsPageChanged = new BehaviorSubject(null);
         this.onSearchHistoryChanged = new BehaviorSubject(null);
@@ -126,6 +116,7 @@ export class NoctuaSearchService {
                 this.organisms = organisms;
             });
 
+        //For testing
         const contributor =
             {
                 'name': 'Tremayne Mushayahama',
@@ -134,8 +125,34 @@ export class NoctuaSearchService {
                 'color': '#e1bee7'
             } as Contributor;
         //  this.searchCriteria.contributors = [contributor];
-        this.updateSearch();
+
+        if (this.searchCriteria.terms.length > 0) {
+            this.searchFormUrl()
+        } else {
+            this.updateSearch();
+        }
     }
+
+    searchFormUrl() {
+        const self = this;
+        const promises = []
+        const terms = [...this.searchCriteria.gps, ...this.searchCriteria.terms]
+
+        terms.forEach((term) => {
+            promises.push(self.noctuaLookupService.getTermDetail(term.id))
+        })
+
+        forkJoin(promises).subscribe((response: []) => {
+            if (response) {
+                terms.forEach((term) => {
+                    const found = find(response, { id: term.id })
+                    Object.assign(term, found)
+                })
+                this.updateSearch();
+            }
+        });
+    }
+
 
     loadCamRebuild() {
         const self = this;
@@ -180,34 +197,67 @@ export class NoctuaSearchService {
     }
 
     paramsToSearch(param) {
-        this.searchCriteria = new SearchCriteria();
-
-        param.title ? this.searchCriteria.titles.push(param.title) : null;
-        param.id ? this.searchCriteria.ids.push(param.id) : null;
-        param.contributor ? this.searchCriteria.contributors.push(param.contributor) : null;
-        param.group ? this.searchCriteria.groups.push(param.group) : null;
-        param.pmid ? this.searchCriteria.pmids.push(param.pmid) : null;
-        param.term ? this.searchCriteria.terms.push(
-            new Entity(param.term, '')) : null;
-        param.gp ? this.searchCriteria.gps.push(
-            new Entity(param.gp, '')) : null;
-        param.organism ? this.searchCriteria.organisms.push(param.organism) : null;
-        param.state ? this.searchCriteria.states.push(param.state) : null;
-        param.exactdate ? this.searchCriteria.exactdates.push(param.exactdate) : null;
-        param.startdate ? this.searchCriteria.exactdates.push(param.startdate) : null;
-        param.enddate ? this.searchCriteria.exactdates.push(param.enddate) : null;
-
-        this.updateSearch();
+        this.searchCriteria.titles = this.makeArray(param.title)
+        this.searchCriteria.contributors = this.makeArray(param.contributor, SearchFilterType.contributors)
+        this.searchCriteria.groups = this.makeArray(param.group, SearchFilterType.groups)
+        this.searchCriteria.pmids = this.makeArray(param.pmid)
+        this.searchCriteria.terms = this.makeArray(param.term, SearchFilterType.terms)
+        this.searchCriteria.gps = this.makeArray(param.gp, SearchFilterType.gps)
+        this.searchCriteria.organisms = this.makeArray(param.organism, SearchFilterType.organisms)
+        this.searchCriteria.states = this.makeArray(param.state)
+        this.searchCriteria.exactdates = this.makeArray(param.exactdate)
+        this.searchCriteria.startdates = this.makeArray(param.startdate)
+        this.searchCriteria.enddates = this.makeArray(param.enddate)
     }
 
-    updateSearch(save: boolean = true) {
+    makeArray(val, filterType?: SearchFilterType) {
+        let filter;
+        if (Array.isArray(val)) {
+            filter = val
+        }
+        if (typeof val === 'string') {
+            filter = [val]
+        } else {
+            filter = []
+        }
+
+        switch (filterType) {
+            case SearchFilterType.terms:
+            case SearchFilterType.gps:
+                return filter.map(item => ({ id: item, label: item }));
+            case SearchFilterType.contributors:
+                return filter.map(item => ({ orcid: item, name: item } as Contributor));
+            case SearchFilterType.groups:
+                return filter.map(item => ({ url: item, name: item } as Group));
+            case SearchFilterType.organisms:
+                return filter.map(item => ({ taxonIri: item, taxonName: item } as Organism));
+            default:
+                return filter;
+        }
+    }
+
+    updateSearch(pushState = true, save = true) {
         this.searchCriteria.updateFiltersCount();
         this.onSearchCriteriaChanged.next(this.searchCriteria);
 
         if (save) {
             this.saveHistory();
         }
+
+        if (pushState) {
+            if (this.searchCriteria.filtersCount > 0) {
+                const query = this.searchCriteria.build();
+                const url = `${window.location.origin}${window.location.pathname}?${query}`
+                history.pushState({}, '', url)
+            } else {
+                const url = `${window.location.origin}${window.location.pathname}`
+                history.replaceState({}, '', url)
+            }
+
+        }
     }
+
+
 
     filter(filterType, filter) {
         this.searchCriteria[filterType].push(filter);

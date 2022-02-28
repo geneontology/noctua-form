@@ -1,9 +1,9 @@
 
 import { Component, OnInit, Input } from '@angular/core';
-import { NoctuaFormConfigService } from 'noctua-form-base';
-import { NoctuaActivityFormService } from 'noctua-form-base';
+import { NoctuaFormConfigService } from '@geneontology/noctua-form-base';
+import { NoctuaActivityFormService } from '@geneontology/noctua-form-base';
 import { CamDiagramService } from './services/cam-diagram.service';
-import { Cam } from 'noctua-form-base';
+import { Cam } from '@geneontology/noctua-form-base';
 
 @Component({
   selector: 'noc-cam-diagram',

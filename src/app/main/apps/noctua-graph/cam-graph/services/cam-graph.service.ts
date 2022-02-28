@@ -6,13 +6,14 @@ import { CamCanvas } from '../models/cam-canvas';
 import { CamStencil } from '../models/cam-stencil';
 import { NoctuaCommonMenuService } from '@noctua.common/services/noctua-common-menu.service';
 import { NoctuaDataService } from '@noctua.common/services/noctua-data.service';
-import { Activity, Cam, CamService, ConnectorPanel, FormType, NoctuaActivityConnectorService, NoctuaActivityFormService, NoctuaFormConfigService, NoctuaGraphService } from 'noctua-form-base';
+import { Activity, Cam, CamService, FormType, NoctuaActivityConnectorService, NoctuaActivityFormService, NoctuaFormConfigService, NoctuaGraphService, NoctuaUserService } from '@geneontology/noctua-form-base';
 import { NodeLink, NodeCellList, NoctuaShapesService } from '@noctua.graph/services/shapes.service';
 import { NodeType } from 'scard-graph-ts';
 import { NodeCellType } from '@noctua.graph/models/shapes';
 import { noctuaStencil, StencilItemNode } from '@noctua.graph/data/cam-stencil';
 import { RightPanel } from '@noctua.common/models/menu-panels';
 import { NoctuaFormDialogService } from 'app/main/apps/noctua-form';
+import { NoctuaConfirmDialogService } from '@noctua/components/confirm-dialog/confirm-dialog.service';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,6 @@ export class CamGraphService {
 
   selectedElement: joint.shapes.noctua.NodeCellList | joint.shapes.noctua.NodeLink;
   selectedStencilElement: joint.shapes.noctua.NodeCellList;
-
   placeholderElement: joint.shapes.noctua.NodeCellList = new NodeCellList();
 
   camCanvas: CamCanvas;
@@ -37,7 +37,9 @@ export class CamGraphService {
   constructor(
     private _camService: CamService,
     private _noctuaGraphService: NoctuaGraphService,
-    private noctuaFormDialogService: NoctuaFormDialogService,
+    private _noctuaFormDialogService: NoctuaFormDialogService,
+    private _noctuaUserService: NoctuaUserService,
+    private confirmDialogService: NoctuaConfirmDialogService,
     private noctuaDataService: NoctuaDataService,
     private noctuaFormConfigService: NoctuaFormConfigService,
     private _activityFormService: NoctuaActivityFormService,
@@ -47,23 +49,23 @@ export class CamGraphService {
 
     const self = this;
 
-    this._camService.onCamChanged
-      .subscribe((cam: Cam) => {
-        if (!cam || !self.selectedElement) {
-          return;
-        }
-
-        const type = self.selectedElement.get('type');
-
-        if (type === NodeCellType.link) {
-          (self.selectedElement as NodeLink).setText(cam.title);
-        } else {
-          self.selectedElement.attr('noctuaTitle/text', cam.title);
-          // (self.selectedElement as NodeCell).addColor(cam.backgroundColor);
-        }
-        self.selectedElement.set({ cam: cam });
-        self.selectedElement.set({ id: cam.id });
-      });
+    /*    this._camService.onCamChanged
+         .subscribe((cam: Cam) => {
+           if (!cam || !self.selectedElement) {
+             return;
+           }
+   
+           const type = self.selectedElement.get('type');
+   
+           if (type === NodeCellType.link) {
+             (self.selectedElement as NodeLink).setText(cam.title);
+           } else {
+             self.selectedElement.attr('noctuaTitle/text', cam.title);
+             // (self.selectedElement as NodeCell).addColor(cam.backgroundColor);
+           }
+           self.selectedElement.set({ cam: cam });
+           self.selectedElement.set({ id: cam.id });
+         }); */
   }
 
   initializeGraph() {
@@ -71,7 +73,8 @@ export class CamGraphService {
 
     self.camCanvas = new CamCanvas();
     self.camCanvas.elementOnClick = self.openTable.bind(self);
-    self.camCanvas.editOnClick = self.editActivity.bind(self);
+    self.camCanvas.editOnClick = self.openTable.bind(self);
+    self.camCanvas.deleteOnClick = self.deleteActivity.bind(self);
     self.camCanvas.linkOnClick = self.openConnector.bind(self);
     self.camCanvas.onLinkCreated = self.createActivityConnector.bind(self);
     self.camCanvas.onUpdateCamLocations = self.updateCamLocations.bind(self);
@@ -106,9 +109,12 @@ export class CamGraphService {
     const self = this;
     const node = element.get('node') as StencilItemNode;
 
+    console.log(x, y)
+
     self.placeholderElement.position(x, y);
     self._activityFormService.setActivityType(node.type)
-    self.noctuaFormDialogService.openCreateActivityDialog(FormType.ACTIVITY);
+    self._activityFormService.activity.validateEvidence = false;
+    self._noctuaFormDialogService.openCreateActivityDialog(FormType.ACTIVITY);
   }
 
   createActivityConnector(
@@ -118,19 +124,21 @@ export class CamGraphService {
     const self = this;
 
     self._activityConnectorService.initializeForm(sourceId, targetId);
-    self._activityConnectorService.selectPanel(ConnectorPanel.FORM)
-    self.noctuaFormDialogService.openCreateActivityDialog(FormType.ACTIVITY_CONNECTOR);
+    self._noctuaFormDialogService.openCreateActivityDialog(FormType.ACTIVITY_CONNECTOR);
   }
 
   addActivity(activity: Activity) {
     const self = this;
-
-    const el = self.camCanvas.createNode(activity)
     const position = self.placeholderElement.prop('position') as joint.dia.Point
 
-    el.position(position.x, position.y);
+    activity.position.x = position.x
+    activity.position.y = position.y
+
+    const el = self.camCanvas.createNode(activity)
+
     self.camCanvas.canvasGraph.addCell(el);
-    self.updateCamLocations(self.cam);
+
+    this._noctuaGraphService.addActivityLocation(self.cam, activity);
   }
 
   editActivity(element: joint.shapes.noctua.NodeCellList) {
@@ -138,16 +146,41 @@ export class CamGraphService {
     const activity = element.get('activity') as Activity;
 
     self._activityFormService.initializeForm(activity);
-    self.noctuaFormDialogService.openCreateActivityDialog(FormType.ACTIVITY);
+    self._noctuaFormDialogService.openCreateActivityDialog(FormType.ACTIVITY);
+  }
+
+  deleteActivity(element: joint.shapes.noctua.NodeCellList) {
+    const self = this;
+
+    const activity = element.get('activity') as Activity;
+
+    const success = () => {
+      this._camService.deleteActivity(activity).then(() => {
+        this._camService.onSelectedActivityChanged.next(null);
+        this.noctuaCommonMenuService.closeRightDrawer();
+        this._camService.getCam(this.cam.id);
+        self._noctuaFormDialogService.openInfoToast('Activity successfully deleted.', 'OK');
+      });
+    };
+
+    if (!self._noctuaUserService.user) {
+      this.confirmDialogService.openConfirmDialog('Not Logged In',
+        'Please log in to continue.',
+        null);
+    } else {
+      this.confirmDialogService.openConfirmDialog('Confirm Delete?',
+        'You are about to delete an activity.',
+        success);
+    }
   }
 
 
   openTable(element: joint.shapes.noctua.NodeCellList) {
     const activity = element.prop('activity') as Activity
     this.selectedElement = element;
-    this._activityFormService.onActivityChanged.next(activity);
+    this._camService.onSelectedActivityChanged.next(activity);
     // activity.type = element.get('type');
-    this.noctuaCommonMenuService.selectRightPanel(RightPanel.camTable);
+    this.noctuaCommonMenuService.selectRightPanel(RightPanel.activityTable);
     this.noctuaCommonMenuService.closeLeftDrawer();
     this.noctuaCommonMenuService.openRightDrawer();
 
@@ -169,9 +202,7 @@ export class CamGraphService {
     if (!source || !target) return;
 
     self._activityConnectorService.initializeForm(source.id, target.id);
-    self._activityConnectorService.selectPanel(ConnectorPanel.FORM)
-
-    self.noctuaCommonMenuService.selectRightPanel(RightPanel.connectorForm);
+    self.noctuaCommonMenuService.selectRightPanel(RightPanel.activityConnectorTable);
     self.noctuaCommonMenuService.closeLeftDrawer();
     self.noctuaCommonMenuService.openRightDrawer();
 

@@ -12,7 +12,7 @@ import {
   NoctuaLookupService,
   ErrorLevel,
   ErrorType
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 
 import { referenceDropdownData } from './reference-dropdown.tokens';
 import { ReferenceDropdownOverlayRef } from './reference-dropdown-ref';

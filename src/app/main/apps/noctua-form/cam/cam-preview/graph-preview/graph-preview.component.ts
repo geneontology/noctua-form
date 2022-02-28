@@ -39,28 +39,7 @@ export class GraphPreviewComponent implements OnInit {
     return this._edges;
   }
 
-  layout: String | Layout = 'dagreCluster';
-  layouts: any[] = [
-    {
-      label: 'Dagre',
-      value: 'dagre',
-    },
-    {
-      label: 'Dagre Cluster',
-      value: 'dagreCluster',
-      isClustered: true,
-    },
-    {
-      label: 'Cola Force Directed',
-      value: 'colaForceDirected',
-      isClustered: true,
-    },
-    {
-      label: 'D3 Force Directed',
-      value: 'd3ForceDirected',
-    },
-  ];
-
+  layout: String | Layout = 'dagre';
 
   // line interpolation
   curveType: string = 'Bundle';
@@ -77,7 +56,7 @@ export class GraphPreviewComponent implements OnInit {
     'Step After',
     'Step Before'
   ];
-  draggingEnabled = false;
+  draggingEnabled = true;
   panningEnabled = true;
   zoomEnabled = true;
 
@@ -95,7 +74,10 @@ export class GraphPreviewComponent implements OnInit {
 
 
   public layoutSettings = {
-    orientation: "TB"
+    edgePadding: 100,
+    nodePadding: 100,
+    orientation: "LR",
+    //ranker: 'network-simplex'
   }
   //  public curve: any = shape.curveLinear;
   //public layout: Layout = new DagreNodesOnlyLayout();
@@ -142,10 +124,6 @@ export class GraphPreviewComponent implements OnInit {
     }
   }
 
-  setLayout(layoutName: string): void {
-    const layout = this.layouts.find(l => l.value === layoutName);
-    // this.layout = layoutName;  
-  }
 
   public getStyles(node: Node): any {
     return {

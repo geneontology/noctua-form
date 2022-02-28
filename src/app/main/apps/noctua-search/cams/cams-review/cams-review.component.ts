@@ -11,7 +11,7 @@ import {
   noctuaFormConfig,
   CamService,
   ActivityDisplayType
-} from 'noctua-form-base';
+} from '@geneontology/noctua-form-base';
 
 import { takeUntil } from 'rxjs/operators';
 import { noctuaAnimations } from '@noctua/animations';
@@ -21,6 +21,7 @@ import { LeftPanel, MiddlePanel, RightPanel } from '@noctua.search/models/menu-p
 import { NoctuaSearchMenuService } from '@noctua.search/services/search-menu.service';
 import { ReviewMode } from '@noctua.search/models/review-mode';
 import { TableOptions } from '@noctua.common/models/table-options';
+import { SearchFilterType } from '@noctua.search/models/search-criteria';
 
 @Component({
   selector: 'noc-cams-review',
@@ -29,7 +30,7 @@ import { TableOptions } from '@noctua.common/models/table-options';
   animations: noctuaAnimations,
 })
 export class CamsReviewComponent implements OnInit, OnDestroy {
-
+  SearchFilterType = SearchFilterType
   ReviewMode = ReviewMode;
   LeftPanel = LeftPanel;
   MiddlePanel = MiddlePanel;

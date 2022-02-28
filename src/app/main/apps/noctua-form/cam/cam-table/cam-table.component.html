@@ -1,18 +1,37 @@
 <div class="w-100-p p-0 noc-cam-table">
-  <div class="noc-summary-bar" fxLayout="row" fxLayoutAlign="start center">
-    <span class='noc-title mr-12'>
-      <span *ngIf="!cam.loading?.status">
-        ACTIVITIES
-      </span>
-      <span *ngIf="cam.loading?.status" class="noc-cam-progress-message">
-        {{cam.loading?.message}}
-      </span>
-      <span *ngIf="cam.rebuildRule?.signal !== CamRebuildSignal.NONE" class="noc-cam-rebuild">
-        {{cam.rebuildRule?.message}}
-        <button mat-button (click)="reload(cam)" class="" color="primary">
-          Reload
-        </button>
-      </span>
+  <div *ngIf="cam.loading?.status" class="noc-summary-bar" fxLayout="row" fxLayoutAlign="start center">
+    <span class="noc-cam-progress-message">
+      {{cam.loading?.message}}
+    </span>
+  </div>
+  <div *ngIf="!cam.loading?.status" class="noc-summary-bar" fxLayout="row" fxLayoutAlign="start center">
+    <span class='mr-12'>
+      <strong>{{cam.activities.length}}</strong> Activities
+    </span>
+    <span class='mr-4'>
+      <strong>Sort By</strong> :
+    </span>
+    <button mat-stroked-button class="noc-rounded-button noc-action-button noc-half-button noc-r noc-xs" color="primary"
+      [matMenuTriggerFor]="sortByOptionMenu">
+      {{cam.sortBy.label}} <fa-icon *ngIf="cam.expanded" [icon]="['fas', 'caret-down']"></fa-icon>
+    </button>
+    <button mat-stroked-button (click)="toggleSortDirection()"
+      class="noc-rounded-button noc-action-button noc-icon noc-half-button noc-l noc-xs" color="primary">
+      <fa-icon *ngIf="cam.sortBy.ascending" [icon]="['fas', 'sort-alpha-down']"></fa-icon>
+      <fa-icon *ngIf="!cam.sortBy.ascending" [icon]="['fas', 'sort-alpha-down-alt']"></fa-icon>
+    </button>
+    <mat-menu #sortByOptionMenu="matMenu" class="noc-dropdown-menu">
+      <button mat-menu-item *ngFor="let sortByOption of noctuaFormConfigService.activitySortField.options" class=""
+        (click)="sortBy(sortByOption)">
+        {{sortByOption.label}}
+      </button>
+    </mat-menu>
+
+    <span *ngIf="cam.rebuildRule?.signal !== CamRebuildSignal.NONE" class="noc-cam-rebuild">
+      {{cam.rebuildRule?.message}}
+      <button mat-button (click)="reload(cam)" class="" color="primary">
+        Reload
+      </button>
     </span>
     <div *ngIf="cam.violations?.length>0" class="noc-error" fxLayout="row" fxLayoutAlign="start center">
       <mat-chip class="noc-error-chip  noc-chip-xs ml-8" fxLayout="row" fxLayoutAlign="start center"
@@ -63,9 +82,6 @@
       <noc-activity-tree-table *ngIf="options.displayType===ActivityDisplayType.TREE_TABLE" [options]="options"
         [cam]="cam" [activity]="activity" class="noc-activities-table-body" fxLayout="row" fxLayoutAlign="start center">
       </noc-activity-tree-table>
-      <noc-activity-slim-tree *ngIf="options.displayType===ActivityDisplayType.SLIM_TREE" [options]="options"
-        [cam]="cam" [activity]="activity" class="noc-activities-table-body" fxLayout="row" fxLayoutAlign="start center">
-      </noc-activity-slim-tree>
     </div>
     <div *ngIf="!cam.loading?.status && cam.activities.length===0" class="noc-no-info">
       no activities present.
