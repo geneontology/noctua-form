@@ -86,7 +86,7 @@
     "lodash": "4.17.21",
     "material-steppers": "^2.0.0",
     "minerva-requests": "0.0.18",
-    "moment": "2.29.1",
+    "moment": "2.29.2",
     "ng-packagr": "^11.2.4",
     "ng2-charts": "2.4.2",
     "ngrx-store-freeze": "0.2.4",
