@@ -1,24 +1,49 @@
 <div *ngIf="activity" [attr.id]="activity.displayId" fxLayout="column" fxLayoutAlign="start stretch" class="w-100-p"
   [ngClass]="{'noc-selected': activity.displayId===camService.currentMatch?.activityDisplayId}">
-  <div *ngIf="gpNode" class="noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
-    <div *ngIf="activity.activityType !== ActivityType.molecule" class="noc-section-header" fxLayout="row"
-      fxLayoutAlign="start center">
+
+  <div class="noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+    <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
       <div class="noc-section-heading">
-        Gene Product
+        {{annotatedSectionTitle}}
       </div>
       <span fxFlex></span>
     </div>
     <div class="noc-form-section noc-tree-container">
-      <noc-activity-form-table-node [settings]="gbSettings" [options]="gbOptions" [cam]="cam" [activity]="activity"
-        [entity]="gpNode" class="w-100-p">
-      </noc-activity-form-table-node>
+      <tree-root #gpTree (initialized)="onGPTreeLoad()" [nodes]="gpTreeNodes" [options]="treeOptions">
+        <ng-template #treeNodeWrapperTemplate let-node let-index="index">
+          <div class="node-wrapper noc-tree-node" fxLayout="row" fxLayoutAlign="start center"
+            [style.padding-left]="node.getNodePadding()">
+            <button mat-icon-button class="noc-node-expander-button" color="primary" (click)="node.toggleExpanded()"
+              *ngIf="node.hasChildren">
+              <fa-icon *ngIf="node?.isCollapsed" [icon]="['fas', 'caret-right']"></fa-icon>
+              <fa-icon *ngIf="node?.isExpanded" [icon]="['fas', 'caret-down']"></fa-icon>
+            </button>
+            <div class="noc-expander-placeholder" *ngIf="!node.hasChildren">
+            </div>
+            <div class="node-content-wrapper" fxFlex="" fxLayout="row" fxLayoutAlign="start center"
+              [class.node-content-wrapper-active]="node.isActive" [class.node-content-wrapper-focused]="node.isFocused"
+              (click)="node.mouseAction('click', $event)" (dblclick)="node.mouseAction('dblClick', $event)"
+              (contextmenu)="node.mouseAction('contextMenu', $event)" (treeDrop)="node.onDrop($event)"
+              [treeAllowDrop]="node.allowDrop" [treeDrag]="node" [treeDragEnabled]="node.allowDrag()">
+
+              <div class="noc-annotation-row" fxFlex="" fxLayout="column" fxLayoutAlign="start stretch">
+                <noc-activity-form-table-node *ngIf="node.data.node?.id ===activity.gpNode?.id" [settings]="gpSettings"
+                  [options]="gpOptions" [cam]="cam" [activity]="activity" [entity]="node.data.node" class="w-100-p">
+                </noc-activity-form-table-node>
+                <noc-activity-form-table-node *ngIf="node.data.node?.id !==activity.gpNode?.id" [settings]="settings"
+                  [options]="options" [cam]="cam" [activity]="activity" [entity]="node.data.node" class="w-100-p">
+                </noc-activity-form-table-node>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </tree-root>
     </div>
   </div>
   <div class="noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
-    <div *ngIf="activity.activityType !== ActivityType.molecule" class="noc-section-header" fxLayout="row"
-      fxLayoutAlign="start center">
+    <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
       <div class="noc-section-heading">
-        Function Description
+        {{descriptionSectionTitle}}
       </div>
       <span fxFlex></span>
     </div>
@@ -41,14 +66,7 @@
               [treeAllowDrop]="node.allowDrop" [treeDrag]="node" [treeDragEnabled]="node.allowDrag()">
 
               <div class="noc-annotation-row" fxFlex="" fxLayout="column" fxLayoutAlign="start stretch">
-                <!--     <div class="noc-cell-label" fxLayout="row" fxLayoutAlign="start center">
-                  {{node.data.node?.predicate?.edge?.label}}
-                  <noctua-inline-editor
-                    *ngIf="noctuaUserService.user && node.data.node.relationEditable && options.editableRelation"
-                    [cam]="cam" [activity]='activity' [entity]="node.data.node" [category]="EditorCategory.relationship"
-                    class="noc-edit-button ml-12">
-                  </noctua-inline-editor>
-                </div> -->
+
                 <noc-activity-form-table-node [settings]="settings" [options]="options" [cam]="cam"
                   [activity]="activity" [entity]="node.data.node" class="w-100-p">
                 </noc-activity-form-table-node>

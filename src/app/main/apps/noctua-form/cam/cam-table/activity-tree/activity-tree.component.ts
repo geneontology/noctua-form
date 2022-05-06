@@ -290,14 +290,6 @@ export class ActivityTreeComponent implements OnInit, OnDestroy {
     }
   }
 
-  cloneActivity(activity: Activity) {
-    const self = this;
-
-    self.noctuaActivityFormService.initializeForm(activity);
-    self.noctuaFormDialogService.openCreateActivityDialog(FormType.ACTIVITY);
-
-  }
-
   cleanId(dirtyId: string) {
     return NoctuaUtils.cleanID(dirtyId);
   }

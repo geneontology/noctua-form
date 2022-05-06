@@ -5,6 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Cam, CamService, NoctuaUserService, NoctuaFormConfigService } from '@geneontology/noctua-form-base';
 import { MatSidenav } from '@angular/material/sidenav';
 import { NoctuaCommonMenuService } from '@noctua.common/services/noctua-common-menu.service';
+import { WorkbenchId } from '@noctua.common/models/workench-id';
 
 @Component({
     selector: 'noc-noctua-apps',
@@ -13,6 +14,7 @@ import { NoctuaCommonMenuService } from '@noctua.common/services/noctua-common-m
     encapsulation: ViewEncapsulation.None
 })
 export class NoctuaAppsComponent implements OnInit, OnDestroy {
+    WorkbenchId = WorkbenchId;
     @Input('sidenav')
     sidenav: MatSidenav;
 
@@ -43,7 +45,7 @@ export class NoctuaAppsComponent implements OnInit, OnDestroy {
             });
     }
 
-    createModel(type: 'graph-editor' | 'noctua-form') {
+    createModel(type: WorkbenchId) {
         this.noctuaCommonMenuService.createModel(type);
     }
 

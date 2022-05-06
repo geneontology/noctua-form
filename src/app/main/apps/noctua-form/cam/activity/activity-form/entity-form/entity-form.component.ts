@@ -20,7 +20,7 @@ import {
   ActivityType
 } from '@geneontology/noctua-form-base';
 import { InlineReferenceService } from '@noctua.editor/inline-reference/inline-reference.service';
-import { each, find, flatten } from 'lodash';
+import { each, find } from 'lodash';
 import { InlineWithService } from '@noctua.editor/inline-with/inline-with.service';
 import { InlineDetailService } from '@noctua.editor/inline-detail/inline-detail.service';
 

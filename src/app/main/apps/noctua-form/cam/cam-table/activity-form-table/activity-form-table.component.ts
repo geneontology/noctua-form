@@ -19,7 +19,8 @@ import {
   ActivityTreeNode,
   ActivityNodeType,
   ActivityDisplayType,
-  NoctuaGraphService
+  NoctuaGraphService,
+  compareNodeWeight
 } from '@geneontology/noctua-form-base';
 
 import {
@@ -39,6 +40,7 @@ import { takeUntil } from 'rxjs/operators';
 import { NoctuaCommonMenuService } from '@noctua.common/services/noctua-common-menu.service';
 import { SettingsOptions } from '@noctua.common/models/graph-settings';
 import { TableOptions } from '@noctua.common/models/table-options';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'noc-activity-form-table',
@@ -52,25 +54,38 @@ export class ActivityFormTableComponent implements OnInit, OnDestroy, OnChanges,
   ActivityType = ActivityType;
   activityTypeOptions = noctuaFormConfig.activityType.options;
 
-  treeNodes: ActivityTreeNode[] = [];
+
 
   settings: SettingsOptions = new SettingsOptions()
-  gbSettings: SettingsOptions = new SettingsOptions()
+  gpSettings: SettingsOptions = new SettingsOptions()
 
   @ViewChild('tree') tree;
+  @ViewChild('gpTree') gpTree;
   @Input('cam') cam: Cam
   @Input('activity') activity: Activity
   @Input('options') options: TableOptions = {};
 
-  gbOptions: TableOptions = {};
+  gpOptions: TableOptions = {};
 
   optionsDisplay: any = {}
 
   gpNode: ActivityNode;
   editableTerms = false;
   currentMenuEvent: any = {};
+
+  descriptionSectionTitle = 'Function Description';
+  annotatedSectionTitle = 'Gene Product';
+
+  //Tree
+  treeNodes: ActivityTreeNode[] = [];
   treeControl = new FlatTreeControl<ActivityNode>(
     node => node.treeLevel, node => node.expandable);
+
+  gpTreeNodes: ActivityTreeNode[] = [];
+  gpTreeControl = new FlatTreeControl<ActivityNode>(
+    node => node.treeLevel, node => node.expandable);
+
+  dataSource: MatTableDataSource<ActivityNode>;
 
   treeOptions = {
     allowDrag: false,
@@ -98,6 +113,7 @@ export class ActivityFormTableComponent implements OnInit, OnDestroy, OnChanges,
     public noctuaActivityFormService: NoctuaActivityFormService,
     private inlineEditorService: InlineEditorService) {
 
+    this.dataSource = new MatTableDataSource<ActivityNode>();
     this._unsubscribeAll = new Subject();
   }
 
@@ -108,8 +124,18 @@ export class ActivityFormTableComponent implements OnInit, OnDestroy, OnChanges,
 
   ngOnInit(): void {
     this.loadTree()
-    this.gbOptions = cloneDeep(this.options)
-    this.gbOptions.showMenu = this.activity.activityType === ActivityType.molecule
+    this.gpOptions = cloneDeep(this.options);
+    this.gpOptions.showMenu = this.activity.activityType === ActivityType.molecule ||
+      this.activity.activityType === ActivityType.proteinComplex;
+
+    if (this.activity.activityType === ActivityType.ccOnly) {
+      this.descriptionSectionTitle = 'Localization Description';
+    } else if (this.activity.activityType === ActivityType.molecule) {
+      this.annotatedSectionTitle = 'Small Molecule';
+      this.descriptionSectionTitle = 'Location (optional)';
+    } else {
+      this.descriptionSectionTitle = 'Function Description';
+    }
 
     this.noctuaCommonMenuService.onCamSettingsChanged
       .pipe(takeUntil(this._unsubscribeAll))
@@ -118,9 +144,9 @@ export class ActivityFormTableComponent implements OnInit, OnDestroy, OnChanges,
           return;
         }
         this.settings = settings;
-        this.gbSettings = cloneDeep(settings)
-        this.gbSettings.showEvidence = false;
-        this.gbSettings.showEvidenceSummary = false;
+        this.gpSettings = cloneDeep(settings)
+        this.gpSettings.showEvidence = false;
+        this.gpSettings.showEvidenceSummary = false;
       });
 
     if (this.options?.editableTerms) {
@@ -140,8 +166,15 @@ export class ActivityFormTableComponent implements OnInit, OnDestroy, OnChanges,
   }
 
   ngAfterViewInit(): void {
-    this.tree.treeModel.filterNodes((node) => {
-      return (node.data.id !== this.gpNode?.id);
+
+    this.gpTree?.treeModel.filterNodes((node) => {
+      const activityNode = node.data.node as ActivityNode;
+      return (activityNode?.displaySection.id === noctuaFormConfig.displaySection.gp.id);
+    });
+
+    this.tree?.treeModel.filterNodes((node) => {
+      const activityNode = node.data.node as ActivityNode;
+      return (activityNode?.displaySection.id === noctuaFormConfig.displaySection.fd.id);
     });
   }
 
@@ -156,11 +189,15 @@ export class ActivityFormTableComponent implements OnInit, OnDestroy, OnChanges,
     this.gpNode = this.activity.getGPNode();
     this.optionsDisplay = { ...this.options, hideHeader: true };
     this.treeNodes = this.activity.buildTrees();
-
+    this.gpTreeNodes = this.activity.buildGPTrees();
   }
 
   onTreeLoad() {
-    this.tree.treeModel.expandAll();
+    this.tree?.treeModel.expandAll();
+  }
+
+  onGPTreeLoad() {
+    this.gpTree?.treeModel.expandAll();
   }
 
   setActivityDisplayType(displayType: ActivityDisplayType) {
@@ -205,138 +242,6 @@ export class ActivityFormTableComponent implements OnInit, OnDestroy, OnChanges,
 
     self.noctuaActivityFormService.initializeForm();
   }
-
-  removeEvidence(entity: ActivityNode, index: number) {
-    const self = this;
-
-    entity.predicate.removeEvidence(index);
-    self.noctuaActivityFormService.initializeForm();
-  }
-
-  toggleIsComplement() {
-
-  }
-
-  openSearchDatabaseDialog(entity: ActivityNode) {
-    const self = this;
-    const gpNode = this.noctuaActivityFormService.activity.getGPNode();
-
-    if (gpNode) {
-      const data = {
-        readonly: false,
-        gpNode: gpNode.term,
-        aspect: entity.aspect,
-        entity: entity,
-        params: {
-          term: '',
-          evidence: ''
-        }
-      };
-
-      const success = function (selected) {
-        if (selected.term) {
-          entity.term = new Entity(selected.term.term.id, selected.term.term.label);
-
-          if (selected.evidences && selected.evidences.length > 0) {
-            entity.predicate.setEvidence(selected.evidences);
-          }
-          self.noctuaActivityFormService.initializeForm();
-        }
-      };
-
-      self.noctuaFormDialogService.openSearchDatabaseDialog(data, success);
-    } else {
-      // const error = new ActivityError(ErrorLevel.error, ErrorType.general,  "Please enter a gene product", meta)
-      //errors.push(error);
-      // self.dialogService.openActivityErrorsDialog(ev, entity, errors)
-    }
-  }
-
-
-  insertEntity(entity: ActivityNode, nodeDescription: ShapeDefinition.ShapeDescription) {
-    const insertedNode = this.noctuaFormConfigService.insertActivityNode(this.activity, entity, nodeDescription);
-    //  this.noctuaActivityFormService.initializeForm();
-
-    const data = {
-      cam: this.cam,
-      activity: this.activity,
-      entity: insertedNode,
-      category: EditorCategory.all,
-      evidenceIndex: 0,
-      insertEntity: true
-    };
-
-    this.camService.onCamChanged.next(this.cam);
-    this.camService.activity = this.activity;
-    this.noctuaActivityEntityService.initializeForm(this.activity, insertedNode);
-    this.inlineEditorService.open(this.currentMenuEvent.target, { data });
-  }
-
-  addRootTerm(entity: ActivityNode) {
-    const self = this;
-
-    const term = find(noctuaFormConfig.rootNode, (rootNode) => {
-      return rootNode.aspect === entity.aspect;
-    });
-
-    if (term) {
-      entity.term = new Entity(term.id, term.label);
-      self.noctuaActivityFormService.initializeForm();
-
-      const evidence = new Evidence();
-      evidence.setEvidence(new Entity(
-        noctuaFormConfig.evidenceAutoPopulate.nd.evidence.id,
-        noctuaFormConfig.evidenceAutoPopulate.nd.evidence.label));
-      evidence.reference = noctuaFormConfig.evidenceAutoPopulate.nd.reference;
-      entity.predicate.setEvidence([evidence]);
-      self.noctuaActivityFormService.initializeForm();
-    }
-  }
-
-  clearValues(entity: ActivityNode) {
-    const self = this;
-
-    entity.clearValues();
-    self.noctuaActivityFormService.initializeForm();
-  }
-
-  openSelectEvidenceDialog(entity: ActivityNode) {
-    const self = this;
-    const evidences: Evidence[] = this.camService.getUniqueEvidence(self.noctuaActivityFormService.activity);
-    const success = (selected) => {
-      if (selected.evidences && selected.evidences.length > 0) {
-        entity.predicate.setEvidence(selected.evidences);
-        self.noctuaActivityFormService.initializeForm();
-      }
-    };
-
-    self.noctuaFormDialogService.openSelectEvidenceDialog(evidences, success);
-  }
-
-  updateCurrentMenuEvent(event) {
-    this.currentMenuEvent = event;
-  }
-
-  deleteActivity(activity: Activity) {
-    const self = this;
-
-    const success = () => {
-      this.camService.deleteActivity(activity).then(() => {
-        self.noctuaFormDialogService.openInfoToast('Activity successfully deleted.', 'OK');
-      });
-    };
-
-    if (!self.noctuaUserService.user) {
-      this.confirmDialogService.openConfirmDialog('Not Logged In',
-        'Please log in to continue.',
-        null);
-    } else {
-      this.confirmDialogService.openConfirmDialog('Confirm Delete?',
-        'You are about to delete an activity.',
-        success);
-    }
-  }
-
 
 
   cleanId(dirtyId: string) {
