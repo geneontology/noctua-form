@@ -23,6 +23,7 @@ import { ArtBasket } from '@noctua.search/models/art-basket';
 import { NoctuaReviewSearchService } from '@noctua.search/services/noctua-review-search.service';
 import { NgScrollbar } from 'ngx-scrollbar';
 import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
+import { WorkbenchId } from '@noctua.common/models/workench-id';
 
 @Component({
   selector: 'noc-noctua-search',
@@ -52,7 +53,7 @@ export class NoctuaSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   scrollbarConfig = {
     suppressScrollX: true
   }
-
+  WorkbenchId = WorkbenchId;
   ReviewMode = ReviewMode;
   LeftPanel = LeftPanel;
   MiddlePanel = MiddlePanel;
@@ -172,7 +173,7 @@ export class NoctuaSearchComponent implements OnInit, AfterViewInit, OnDestroy {
     this.noctuaSearchMenuService.selectMiddlePanel(MiddlePanel.cams);
   }
 
-  createModel(type: 'graph-editor' | 'noctua-form') {
+  createModel(type: WorkbenchId) {
     this.noctuaCommonMenuService.createModel(type);
   }
 

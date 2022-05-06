@@ -44,7 +44,6 @@ export class CamTableComponent implements OnInit, OnDestroy {
   searchFormData: any = [];
   searchForm: FormGroup;
   activityTypeOptions = noctuaFormConfig.activityType.options;
-  sortByOptions = noctuaFormConfig.activitySortField.options;
 
   @Input('panelDrawer')
   panelDrawer: MatDrawer;
@@ -123,12 +122,6 @@ export class CamTableComponent implements OnInit, OnDestroy {
     this.camService.activity = activity;
     this.noctuaActivityConnectorService.subjectActivity = activity;
     this.noctuaActivityConnectorService.onActivityChanged.next(activity);
-  }
-
-  openActivityForm(activity: Activity) {
-    this.camService.onCamChanged.next(this.cam);
-    this.camService.activity = activity;
-    this.noctuaActivityFormService.initializeForm(activity);
   }
 
   sortBy(sortCriteria: { id, label }) {

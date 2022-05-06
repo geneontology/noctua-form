@@ -117,7 +117,7 @@ export class NodeComponent implements OnInit, AfterViewInit {
   }
 
   openActivityForm() {
-    this.noctuaActivityFormService.initializeForm(this.activity);
+    this.noctuaActivityFormService.initializeForm();
     //this.noctuaFormMenuService.openRightDrawer(this.noctuaFormMenuService.panel.activityForm)
   }
 

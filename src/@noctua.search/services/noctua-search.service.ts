@@ -113,7 +113,9 @@ export class NoctuaSearchService {
 
         self.noctuaDataService.onOrganismsChanged
             .subscribe(organisms => {
-                this.organisms = organisms;
+                if (organisms) {
+                    this.organisms = organisms;
+                }
             });
 
         //For testing

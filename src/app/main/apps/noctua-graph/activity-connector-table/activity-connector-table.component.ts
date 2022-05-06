@@ -48,7 +48,8 @@ export class ActivityConnectorTableComponent implements OnInit, OnDestroy {
     editableEvidence: true,
     editableReference: true,
     editableWith: true,
-    showEvidenceMenu: true
+    showEvidenceMenu: true,
+    showAddEvidenceButton: true
   };
 
 

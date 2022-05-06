@@ -18,7 +18,7 @@ export class NoctuaDataService {
   constructor(
     private httpClient: HttpClient,
     private noctuaUserService: NoctuaUserService) {
-    this.onOrganismsChanged = new BehaviorSubject([]);
+    this.onOrganismsChanged = new BehaviorSubject(null);
 
   }
 

@@ -12,10 +12,6 @@ import { WithDropdownOverlayRef } from './with-dropdown/with-dropdown-ref';
 import { withDropdownData } from './with-dropdown/with-dropdown.tokens';
 import { NoctuaWithDropdownComponent } from './with-dropdown/with-dropdown.component';
 
-export interface SearchCriiteria {
-    gp: string;
-    url: string;
-}
 
 export interface WithDropdownDialogConfig {
     panelClass?: string;

@@ -4,8 +4,10 @@ import 'jqueryui';
 import * as _ from 'lodash';
 import * as joint from 'jointjs';
 import * as shapes from './../models/shapes';
+import * as listShape from './../models/shapes/list';
 import * as Backbone from 'backbone';
 import { getColor } from '@noctua.common/data/noc-colors';
+import { LIST_GROUP_NAME, LIST_ITEM_WIDTH } from './../models/shapes/list';
 
 export class StencilNode extends shapes.StencilNode {
 
@@ -62,17 +64,52 @@ export class NodeCell extends shapes.NodeCell {
   }
 }
 
-export class NodeCellList extends shapes.NodeCellList {
+export class NodeCellList extends listShape.NodeCellList {
 
   constructor() {
     super();
-
   }
 
-  addNodePorts(): this {
-    const self = this;
+  addHeader(label: string) {
+    this.attr('label/text', label);
+  }
 
-    return this;
+  addEntity(relationship: string, term: string, hasEvidence) {
+    const attrs: any = {}
+
+    if (relationship) {
+      attrs.relationship = { text: relationship }
+      attrs.portLabel = { text: term }
+
+      if (!hasEvidence) {
+        attrs.portLabel.x = 75;
+      }
+    } else {
+      attrs.relationship = { visibility: 'hidden' };
+      attrs.portLabel = {
+        text: term,
+        x: hasEvidence ? 8 : 25,
+        width: LIST_ITEM_WIDTH,
+        textWrap: {
+          width: LIST_ITEM_WIDTH - 16,
+        },
+      }
+    }
+
+    if (!hasEvidence) {
+      attrs.noEvidence = { visibility: 'visible' }
+      attrs.textWrap = {
+        width: LIST_ITEM_WIDTH - 50,
+      };
+      if (!relationship) {
+        attrs.noEvidence.x = 8;
+      }
+
+    }
+    this.addPort({
+      group: LIST_GROUP_NAME,
+      attrs
+    })
   }
 
   setColor(colorKey: string, low?: number, high?: number): this {
@@ -80,12 +117,11 @@ export class NodeCellList extends shapes.NodeCellList {
     const deep = getColor(colorKey, low ? low : 200);
     const light = getColor(colorKey, high ? high : 100);
 
-    self.attr('.activity-gp-rect/fill', deep);
-    self.attr('.activity-mf-rect/fill', light);
-    self.attr('.activity-cc-rect/fill', light);
-    self.attr('.activity-bp-rect/fill', light);
+    self.attr('body/fill', light);
 
-    //this.attr('.icon/height', 200);
+    /*   this.getPorts().forEach(el => {
+        this.portProp(el.id, 'attrs/body/fill', light)
+      }) */
 
     return this;
   }
@@ -106,6 +142,10 @@ export class NodeCellList extends shapes.NodeCellList {
     self.attr('.highlighter/stroke', 'transparent');
 
     return this;
+  }
+
+  addIcon(icon: string) {
+    this.attr('icon/xlinkHref', icon);
   }
 
 
@@ -183,6 +223,8 @@ export class NodeCellMolecule extends shapes.NodeCellMolecule {
 }
 
 export class NodeLink extends shapes.NodeLink {
+  colorKey = 'grey'
+
   static create() {
     const link = new NodeLink();
     link.prop({
@@ -252,8 +294,12 @@ export class NodeLink extends shapes.NodeLink {
     return this;
   }
 
-  setColor(colorKey: string): this {
+  setColor(colorKey: string, defaultColor = false): this {
     const self = this;
+
+    if (defaultColor) {
+      this.colorKey = colorKey;
+    }
     const deep = getColor(colorKey, 800);
     const light = getColor(colorKey, 600);
 
@@ -276,8 +322,79 @@ export class NodeLink extends shapes.NodeLink {
 
     return this;
   }
+
+  hover(on: boolean): this {
+    const self = this;
+
+    self.attr('line/strokeWidth', on ? 4 : 1);
+    self.label(0, {
+      attrs: {
+        labelBody: {
+          strokeWidth: on ? 2 : 1
+        }
+      }
+    });
+
+    return this;
+  }
 }
 
+export class NodeCellList2 extends shapes.NodeCellList {
+
+  constructor() {
+    super();
+
+  }
+
+  addNodePorts(): this {
+    const self = this;
+
+    return this;
+  }
+
+  setColor(colorKey: string, low?: number, high?: number): this {
+    const self = this;
+    const deep = getColor(colorKey, low ? low : 200);
+    const light = getColor(colorKey, high ? high : 100);
+
+    self.attr('.activity-gp-rect/fill', deep);
+    self.attr('.activity-mf-rect/fill', light);
+    self.attr('.activity-cc-rect/fill', light);
+    self.attr('.activity-bp-rect/fill', light);
+
+    //this.attr('.icon/height', 200);
+
+    return this;
+  }
+
+
+  setBorder(colorKey: string, hue?: number): this {
+    const self = this;
+    const deep = getColor(colorKey, hue ? hue : 500);
+
+    self.attr('.highlighter/stroke', deep);
+
+    return this;
+  }
+
+  unsetBorder(): this {
+    const self = this;
+
+    self.attr('.highlighter/stroke', 'transparent');
+
+    return this;
+  }
+
+
+  hover(on: boolean): this {
+    const self = this;
+    self.attr('.wrapper/strokeWidth', on ? 40 : 0);
+    self.attr('.edit/visibility', on ? 'visible' : 'hidden');
+    self.attr('.delete/visibility', on ? 'visible' : 'hidden');
+
+    return this;
+  }
+}
 @Injectable({
   providedIn: 'root'
 })

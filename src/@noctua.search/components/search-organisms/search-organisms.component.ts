@@ -19,8 +19,6 @@ export class SearchOrganismsComponent implements OnInit, OnDestroy {
   searchForm: FormGroup;
   groupsForm: FormGroup;
   searchFormData: any = []
-  // groups: any[] = [];
-  // organisms: any[] = [];
 
   private unsubscribeAll: Subject<any>;
 

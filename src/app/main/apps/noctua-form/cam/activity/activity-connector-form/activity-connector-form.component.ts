@@ -4,18 +4,14 @@ import { MatDrawer } from '@angular/material/sidenav';
 import { Subscription, Subject } from 'rxjs';
 
 import {
-  Cam,
   Activity,
   ConnectorActivity,
   ConnectorState,
   ActivityNode,
-  Evidence,
   NoctuaActivityConnectorService,
   NoctuaActivityFormService,
   NoctuaFormConfigService,
   CamService,
-  noctuaFormConfig,
-  Entity,
   NoctuaUserService,
   NoctuaFormMenuService,
   ConnectorType
@@ -49,7 +45,6 @@ export class ActivityConnectorFormComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any>;
 
   constructor(
-    private camService: CamService,
     private confirmDialogService: NoctuaConfirmDialogService,
     public noctuaActivityConnectorService: NoctuaActivityConnectorService,
     public noctuaUserService: NoctuaUserService,

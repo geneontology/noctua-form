@@ -11,6 +11,7 @@ export class SettingsOptions {
   showWith = true;
   showGroup = true;
   showContributor = true;
+  showAddEvidenceButton = false;
 
   createSettingsForm() {
     return new FormGroup({

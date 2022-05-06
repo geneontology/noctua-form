@@ -2,11 +2,9 @@ import { Injectable } from '@angular/core';
 import 'jqueryui';
 import * as joint from 'jointjs';
 import { each } from 'lodash';
-import { CamCanvas } from '../models/cam-canvas';
-import { CamStencil } from '../models/cam-stencil';
 import { NoctuaCommonMenuService } from '@noctua.common/services/noctua-common-menu.service';
 import { NoctuaDataService } from '@noctua.common/services/noctua-data.service';
-import { Activity, Cam, CamService, FormType, NoctuaActivityConnectorService, NoctuaActivityFormService, NoctuaFormConfigService, NoctuaGraphService, NoctuaUserService } from '@geneontology/noctua-form-base';
+import { Activity, Cam, CamService, FormType, NoctuaActivityConnectorService, NoctuaActivityFormService, noctuaFormConfig, NoctuaFormConfigService, NoctuaGraphService, NoctuaUserService } from '@geneontology/noctua-form-base';
 import { NodeLink, NodeCellList, NoctuaShapesService } from '@noctua.graph/services/shapes.service';
 import { NodeType } from 'scard-graph-ts';
 import { NodeCellType } from '@noctua.graph/models/shapes';
@@ -14,6 +12,9 @@ import { noctuaStencil, StencilItemNode } from '@noctua.graph/data/cam-stencil';
 import { RightPanel } from '@noctua.common/models/menu-panels';
 import { NoctuaFormDialogService } from 'app/main/apps/noctua-form';
 import { NoctuaConfirmDialogService } from '@noctua/components/confirm-dialog/confirm-dialog.service';
+import { CamCanvas } from '@noctua.graph/models/cam-canvas';
+import { CamStencil } from '@noctua.graph/models/cam-stencil';
+import { NoctuaGraphEditorService } from '@noctua.graph/services/graphEditorService';
 
 @Injectable({
   providedIn: 'root'
@@ -36,18 +37,16 @@ export class CamGraphService {
 
   constructor(
     private _camService: CamService,
+    private noctuaGraphEditorService: NoctuaGraphEditorService,
     private _noctuaGraphService: NoctuaGraphService,
     private _noctuaFormDialogService: NoctuaFormDialogService,
     private _noctuaUserService: NoctuaUserService,
     private confirmDialogService: NoctuaConfirmDialogService,
-    private noctuaDataService: NoctuaDataService,
-    private noctuaFormConfigService: NoctuaFormConfigService,
     private _activityFormService: NoctuaActivityFormService,
     private _activityConnectorService: NoctuaActivityConnectorService,
     public noctuaCommonMenuService: NoctuaCommonMenuService,
     private noctuaShapesService: NoctuaShapesService) {
 
-    const self = this;
 
     /*    this._camService.onCamChanged
          .subscribe((cam: Cam) => {
@@ -88,9 +87,9 @@ export class CamGraphService {
     self.camStencil.onAddElement = self.createActivity.bind(self);
   }
 
-  addToCanvas(cam: Cam) {
+  addToCanvas(cam: Cam, graphLayoutDetail: string) {
     this.cam = cam;
-    this.camCanvas.addCanvasGraph(cam);
+    this.camCanvas.addCanvasGraph(cam, graphLayoutDetail);
   }
 
   zoom(delta: number, e?) {
@@ -127,26 +126,18 @@ export class CamGraphService {
     self._noctuaFormDialogService.openCreateActivityDialog(FormType.ACTIVITY_CONNECTOR);
   }
 
-  addActivity(activity: Activity) {
+  addActivity(activity: Activity, graphLayoutDetail: string) {
     const self = this;
     const position = self.placeholderElement.prop('position') as joint.dia.Point
 
     activity.position.x = position.x
     activity.position.y = position.y
 
-    const el = self.camCanvas.createNode(activity)
+    const el = self.camCanvas.createNode(activity, graphLayoutDetail)
 
     self.camCanvas.canvasGraph.addCell(el);
 
     this._noctuaGraphService.addActivityLocation(self.cam, activity);
-  }
-
-  editActivity(element: joint.shapes.noctua.NodeCellList) {
-    const self = this;
-    const activity = element.get('activity') as Activity;
-
-    self._activityFormService.initializeForm(activity);
-    self._noctuaFormDialogService.openCreateActivityDialog(FormType.ACTIVITY);
   }
 
   deleteActivity(element: joint.shapes.noctua.NodeCellList) {

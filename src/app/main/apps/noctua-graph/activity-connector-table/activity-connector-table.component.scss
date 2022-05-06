@@ -11,6 +11,7 @@ $accent: map-get($theme, accent);
 
   .noc-drawer-body {
     min-height: calc(100% - 80px);
+    padding-bottom: 150px;
   }
 
   .noc-radio-button-rounded {

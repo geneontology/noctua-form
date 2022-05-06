@@ -15,9 +15,9 @@ export const globalWorkbenchesModel =
       "page-name": "Alliance Pathway Preview",
       "type": "model",
       "help-link": "https://github.com/geneontology/alliance-pathway-preview/issues",
-      "workbench-id": "noctua-gocam-pathway",
-      "template-injectable": "../alliance-pathway-preview/workbenches/noctua-gocam-pathway/public/inject.tmpl",
-      "public-directory": "../alliance-pathway-preview/workbenches/noctua-gocam-pathway/public"
+      "workbench-id": "noctua-alliance-pathway-preview",
+      "template-injectable": "../alliance-pathway-preview/workbenches/noctua-alliance-pathway-preview/public/inject.tmpl",
+      "public-directory": "../alliance-pathway-preview/workbenches/noctua-alliance-pathway-preview/public"
     },
     {
       "menu-name": "Noctua form Legacy",
@@ -45,9 +45,9 @@ export const globalWorkbenchesModel =
       "css": [
 
       ],
-      "workbench-id": "visual-pathway-editor",
-      "template-injectable": "../noctua-form-base/workbenches/visual-pathway-editor/public/inject.tmpl",
-      "public-directory": "../noctua-form-base/workbenches/visual-pathway-editor/public"
+      "workbench-id": "noctua-visual-pathway-editor",
+      "template-injectable": "../noctua-form-base/workbenches/noctua-visual-pathway-editor/public/inject.tmpl",
+      "public-directory": "../noctua-form-base/workbenches/noctua-visual-pathway-editor/public"
     },
     {
       "menu-name": "Annotation preview",

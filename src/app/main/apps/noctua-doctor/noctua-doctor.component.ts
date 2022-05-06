@@ -24,6 +24,7 @@ import { NoctuaReviewSearchService } from '@noctua.search/services/noctua-review
 import { NgScrollbar } from 'ngx-scrollbar';
 import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 import { NoctuaDoctorMenuService } from '@noctua-doctor/services/doctor-menu.service';
+import { WorkbenchId } from '@noctua.common/models/workench-id';
 
 @Component({
   selector: 'noc-noctua-doctor',
@@ -179,7 +180,7 @@ export class NoctuaDoctorComponent implements OnInit, AfterViewInit, OnDestroy {
     this.noctuaSearchMenuService.selectMiddlePanel(MiddlePanel.cams);
   }
 
-  createModel(type: 'graph-editor' | 'noctua-form') {
+  createModel(type: WorkbenchId) {
     this.noctuaCommonMenuService.createModel(type);
   }
 

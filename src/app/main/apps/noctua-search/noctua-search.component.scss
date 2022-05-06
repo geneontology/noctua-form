@@ -82,9 +82,9 @@ $noc-art-badge: mat-color($mat-orange, 500);
     padding-top: 50px !important;
     position: relative;
     flex: 1 0 auto;
-    height: 280px;
+    height: 320px;
     min-width: 800px;
-    max-height: 280px;
+    max-height: 320px;
     text-align: center;
     overflow: hidden;
 
@@ -162,18 +162,40 @@ $noc-art-badge: mat-color($mat-orange, 500);
   }
 
   .noc-create {
+    margin-top: 20px;
     padding: 8px;
 
     button {
       padding: 0 8px;
       color: map-get($accent, default);
-      width: 250px;
-      font-weight: 500;
+      @include deep-height(60px);
+      line-height: 20px;
+      width: 140px;
+      font-size: 12px;
+
       @include mat-elevation(4);
+
+      strong {
+        font-weight: 500;
+      }
+
+      .noc-badge {
+        position: absolute;
+        top: -8px;
+        right: 8px;
+        border-radius: 7px;
+        width: 40px;
+        height: 15px;
+        color: #eee;
+        background-color: #3c8b43;
+        font-size: 10px;
+        text-align: center;
+        line-height: 15px;
+      }
 
       &.noc-review-mode-button {
         .noc-title {
-          width: 200px;
+          //  width: 200px;
         }
 
         &.noc-selected {

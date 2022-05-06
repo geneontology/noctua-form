@@ -201,9 +201,13 @@
           <mat-icon>more_horiz</mat-icon>
         </button>
         <mat-menu #optionsMenu="matMenu">
-          <a mat-menu-item [href]="cam?.model?.modelInfo?.workbenches['noctua-gocam-pathway']?.url" target="_blank"
-            class="">
+          <a mat-menu-item [href]="cam?.model?.modelInfo?.workbenches['noctua-alliance-pathway-preview']?.url"
+            target="_blank" class="">
             Alliance Pathway Preview
+          </a>
+          <a mat-menu-item [href]="cam?.model?.modelInfo?.workbenches['noctua-visual-pathway-editor']?.url"
+            target="_blank" class="">
+            Visual Pathway Editor
           </a>
           <button mat-menu-item (click)="openCamForm(cam)" class="">
             Model Info

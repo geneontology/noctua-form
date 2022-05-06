@@ -154,10 +154,7 @@ export class NoctuaEditorDropdownComponent implements OnInit, OnDestroy {
     self.noctuaActivityFormService.initializeForm();
   }
 
-  toggleIsComplement() {
-
-  }
-
+  toggleIsComplement() { }
 
   openSearchDatabaseDialog(entity: ActivityNode) {
     const self = this;
@@ -241,6 +238,26 @@ export class NoctuaEditorDropdownComponent implements OnInit, OnDestroy {
     };
 
     self.noctuaFormDialogService.openSelectEvidenceDialog(evidences, success);
+  }
+
+  updateTermList() {
+    const self = this;
+    this.camService.updateTermList(self.noctuaActivityFormService.activity, this.entity);
+  }
+
+  updateEvidenceList() {
+    const self = this;
+    this.camService.updateEvidenceList(self.noctuaActivityFormService.activity, this.entity);
+  }
+
+  updateReferenceList() {
+    const self = this;
+    this.camService.updateReferenceList(self.noctuaActivityFormService.activity, this.entity);
+  }
+
+  updateWithList() {
+    const self = this;
+    this.camService.updateWithList(self.noctuaActivityFormService.activity, this.entity);
   }
 
 

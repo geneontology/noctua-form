@@ -5,12 +5,12 @@ import { ContextMenuComponent } from 'ngx-contextmenu';
 import { CamGraphService } from './services/cam-graph.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ActivatedRoute, } from '@angular/router';
 import { NoctuaCommonMenuService } from '@noctua.common/services/noctua-common-menu.service';
 import { NoctuaDataService } from '@noctua.common/services/noctua-data.service';
-import { Activity, Cam, CamOperation, CamService, NoctuaGraphService } from '@geneontology/noctua-form-base';
+import { Activity, Cam, CamOperation, NoctuaFormConfigService, NoctuaGraphService } from '@geneontology/noctua-form-base';
 import { NoctuaShapesService } from '@noctua.graph/services/shapes.service';
 import { noctuaStencil } from '@noctua.graph/data/cam-stencil';
+import { NoctuaGraphEditorService } from '@noctua.graph/services/graphEditorService';
 
 @Component({
   selector: 'noc-cam-graph',
@@ -28,11 +28,14 @@ export class CamGraphComponent implements OnInit, AfterViewInit, OnDestroy {
   private _unsubscribeAll: Subject<any>;
   stencils = [];
 
+  selectedLayoutDetail;
+
   constructor(
     public noctuaDataService: NoctuaDataService,
+    public noctuaFormConfigService: NoctuaFormConfigService,
+    public noctuaGraphEditorService: NoctuaGraphEditorService,
     // public noctuaCamEditorService: NoctuaCamEditorService,
     private _noctuaGraphService: NoctuaGraphService,
-    private _camService: CamService,
     public noctuaCommonMenuService: NoctuaCommonMenuService,
     public noctuaCamGraphService: CamGraphService,
     private noctuaCamShapesService: NoctuaShapesService) {
@@ -40,6 +43,17 @@ export class CamGraphComponent implements OnInit, AfterViewInit, OnDestroy {
     this._unsubscribeAll = new Subject();
 
     this.stencils = noctuaStencil.camStencil
+
+    this.noctuaGraphEditorService.onGraphLayoutDetailChanged
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((layoutDetail) => {
+        if (!layoutDetail) {
+          return;
+        }
+
+        this.noctuaCamGraphService.addToCanvas(this.cam, this.noctuaGraphEditorService.selectedGraphLayoutDetail.id);
+
+      });
 
   }
 
@@ -58,7 +72,7 @@ export class CamGraphComponent implements OnInit, AfterViewInit, OnDestroy {
         self.cam = cam;
         self.noctuaCamGraphService.cam = self.cam;
         if (cam.operation !== CamOperation.ADD_ACTIVITY) {
-          self.noctuaCamGraphService.addToCanvas(self.cam);
+          self.noctuaCamGraphService.addToCanvas(self.cam, this.noctuaGraphEditorService.selectedGraphLayoutDetail.id);
         }
 
       });
@@ -74,7 +88,7 @@ export class CamGraphComponent implements OnInit, AfterViewInit, OnDestroy {
           return;
         }
         //self.noctuaCamGraphService.cam.activities.push(activity)
-        self.noctuaCamGraphService.addActivity(activity);
+        self.noctuaCamGraphService.addActivity(activity, this.noctuaGraphEditorService.selectedGraphLayoutDetail.id);
 
       });
   }
@@ -82,6 +96,11 @@ export class CamGraphComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
+  }
+
+  selectLayoutDetail(selected) {
+    this.noctuaGraphEditorService.selectedGraphLayoutDetail = selected;
+    this.noctuaGraphEditorService.onGraphLayoutDetailChanged.next(selected)
   }
 
   canMove(e: any): boolean {
