@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -8,8 +8,10 @@ import {
   NoctuaUserService,
   NoctuaFormConfigService,
   CamService,
-  NoctuaFormMenuService
+  NoctuaFormMenuService,
+  LeftPanel
 } from '@geneontology/noctua-form-base';
+import { NoctuaSearchMenuService } from '@noctua.search/services/search-menu.service';
 
 @Component({
   selector: 'noc-copy-model',
@@ -19,8 +21,8 @@ import {
 
 export class CopyModelComponent implements OnInit, OnDestroy {
 
-  @Input('panelDrawer')
-  panelDrawer: MatDrawer;
+  @Input('panelDrawer') panelDrawer: MatDrawer;
+  @Input('panelSide') panelSide: string
   cam: Cam;
   loading = false;
 
@@ -29,8 +31,10 @@ export class CopyModelComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any>;
 
   constructor(public noctuaUserService: NoctuaUserService,
+    private ngZone: NgZone,
     private camService: CamService,
     public noctuaFormConfigService: NoctuaFormConfigService,
+    public noctuaSearchMenuService: NoctuaSearchMenuService,
     public noctuaFormMenuService: NoctuaFormMenuService
   ) {
     this._unsubscribeAll = new Subject();
@@ -39,7 +43,6 @@ export class CopyModelComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
     this.camService.onCamChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((cam) => {
@@ -54,13 +57,11 @@ export class CopyModelComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((cam) => {
         this.loading = false;
-        if (!cam) {
-          return;
-        }
 
-        setTimeout(() => {
+        this.ngZone.run(() => {
+          console.log('zone ran')
           this.duplicatedCam = cam
-        }, 100)
+        });
       });
   }
 
@@ -70,10 +71,17 @@ export class CopyModelComponent implements OnInit, OnDestroy {
   }
 
   close() {
+
+    if (this.panelSide === 'left') {
+      this.noctuaFormMenuService.selectLeftPanel(LeftPanel.camForm);
+    } else if (this.panelSide === 'right') {
+      this.noctuaSearchMenuService.selectRightPanel(null);
+    }
     this.panelDrawer.close();
   }
 
   ngOnDestroy(): void {
+    this.camService.onCopyModelChanged.next(null)
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
   }
