@@ -22,6 +22,7 @@ import { PreviewActivityDialogComponent } from '../dialogs/preview-activity/prev
 import { SearchEvidenceDialogComponent } from '../dialogs/search-evidence/search-evidence.component';
 import { CamErrorsDialogComponent } from '../dialogs/cam-errors/cam-errors.component';
 import { CreateActivityDialogComponent } from '../dialogs/create-activity/create-activity.component';
+import { AddEvidenceDialogComponent } from '../dialogs/add-evidence/add-evidence.component';
 
 
 @Injectable({
@@ -100,6 +101,21 @@ export class NoctuaFormDialogService {
         this.dialogRef.afterClosed()
             .subscribe(response => {
 
+            });
+    }
+
+    openAddEvidenceDialog(success): void {
+        this.dialogRef = this._matDialog.open(AddEvidenceDialogComponent, {
+            panelClass: 'noc-add-evidence-dialog',
+            data: {
+            },
+            width: '600px',
+        });
+        this.dialogRef.afterClosed()
+            .subscribe(response => {
+                if (response) {
+                    success(response);
+                }
             });
     }
 

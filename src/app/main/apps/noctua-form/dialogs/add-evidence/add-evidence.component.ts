@@ -1,11 +1,12 @@
 
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 
-import { NoctuaFormConfigService } from '@geneontology/noctua-form-base';
+import { ActivityNode, CamService, EntityDefinition, EntityForm, NoctuaActivityEntityService, NoctuaFormConfigService } from '@geneontology/noctua-form-base';
+import { InlineReferenceService } from '@noctua.editor/inline-reference/inline-reference.service';
 
 
 @Component({
@@ -14,44 +15,77 @@ import { NoctuaFormConfigService } from '@geneontology/noctua-form-base';
   styleUrls: ['./add-evidence.component.scss']
 })
 export class AddEvidenceDialogComponent implements OnInit, OnDestroy {
+  private _fb = new FormBuilder();
   private _unsubscribeAll: Subject<any>;
-  searchForm: FormGroup;
   searchFormData: any = {};
   cam: any = {};
+  entityForm: EntityForm;
+  evidenceFormGroup: FormGroup;
+  entity: ActivityNode;
 
   constructor(
     private _matDialogRef: MatDialogRef<AddEvidenceDialogComponent>,
+    private _noctuaActivityEntityService: NoctuaActivityEntityService,
+    private camService: CamService,
+    private inlineReferenceService: InlineReferenceService,
     @Inject(MAT_DIALOG_DATA) private _data: any,
     public noctuaFormConfigService: NoctuaFormConfigService,
   ) {
     this._unsubscribeAll = new Subject();
 
-    this.cam = this._data.cam
-    this.searchForm = this.createAnswerForm();
+    this.evidenceFormGroup = this.createEvidenceForm();
   }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
+  }
+
+  createEvidenceForm() {
+    this.entity = EntityDefinition.generateBaseTerm([]);
+    this.entityForm = this._noctuaActivityEntityService.createActivityEntityForm(this.entity);
+    const entityFormGroup = this._fb.group(this.entityForm);
+    const evidenceFormArray = entityFormGroup.get('evidenceFormArray') as FormArray;
+    return evidenceFormArray.at(0) as FormGroup;
+
+  }
+
+
+  clearValues() {
+    this.entity.clearValues();
+  }
+
+  openAddReference(event, name: string) {
+    const data = {
+      formControl: this.evidenceFormGroup.controls[name] as FormControl,
+    };
+    this.inlineReferenceService.open(event.target, { data });
+  }
+
+  updateEvidenceList() {
+    this.camService.updateEvidenceList(null, this.entity);
+  }
+
+  updateReferenceList() {
+    this.camService.updateReferenceList(null, this.entity);
+  }
+
+  updateWithList() {
+    this.camService.updateWithList(null, this.entity);
+  }
+
+  evidenceDisplayFn(evidence): string | undefined {
+    return evidence && evidence.id ? `${evidence.label} (${evidence.id})` : undefined;
+  }
+
+  save() {
+    this.entityForm.populateTermEvidenceOnly();
+    this._matDialogRef.close(this.entity.predicate.evidence);
   }
 
   close() {
     this._matDialogRef.close();
   }
-
-  createAnswerForm() {
-    return new FormGroup({
-      annotatedEntity: new FormControl(this.cam.annotatedEntity.id),
-      term: new FormControl(this.cam.term.id),
-      evidence: new FormControl(this.cam.evidence.id),
-      reference: new FormControl(this.cam.reference.label),
-      with: new FormControl(this.cam.with),
-    });
-  }
-
-  ngOnDestroy(): void {
-
-    this._unsubscribeAll.next();
-    this._unsubscribeAll.complete();
-  }
-
 }
-

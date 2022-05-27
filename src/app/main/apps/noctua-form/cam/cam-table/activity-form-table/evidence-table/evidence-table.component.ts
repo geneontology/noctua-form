@@ -1,5 +1,5 @@
 
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { noctuaAnimations } from './../../../../../../../../@noctua/animations';
@@ -71,7 +71,6 @@ export class EvidenceFormTableComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
   }
 
   ngOnDestroy(): void {
@@ -97,6 +96,24 @@ export class EvidenceFormTableComponent implements OnInit, OnDestroy {
     this.inlineEditorService.open(this.currentMenuEvent.target, { data });
 
     self.noctuaActivityFormService.initializeForm();
+  }
+
+  createEvidence() {
+    const self = this;
+
+    const success = (evidence: Evidence[]) => {
+      if (evidence) {
+        this.camService.onCamChanged.next(this.cam);
+        this.camService.activity = this.activity;
+        this.noctuaActivityEntityService.initializeForm(this.activity, this.entity);
+
+        self.noctuaActivityEntityService.createEvidence(evidence).then(() => {
+          self.noctuaFormDialogService.openInfoToast(`Evidence successfully added.`, 'OK');
+          self.noctuaActivityFormService.initializeForm();
+        });
+      };
+    }
+    this.noctuaFormDialogService.openAddEvidenceDialog(success);
   }
 
   removeEvidence(evidence: Evidence) {
@@ -146,8 +163,9 @@ export class EvidenceFormTableComponent implements OnInit, OnDestroy {
       `${message}`, success);
   }
 
+
+
   updateCurrentMenuEvent(event) {
-    console.log(event)
     this.currentMenuEvent = event;
   }
 }

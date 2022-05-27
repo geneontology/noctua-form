@@ -33,6 +33,13 @@
         Log in to Continue
       </div>
       <div class="noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+
+        <div *ngIf="noctuaActivityFormService.activity.activityType===ActivityType.proteinComplex"
+          class="alert alert-warning w-100-p mb-0">
+          Note that this should be used rarely, and only in the case where the activity cannot be ascribed to a single
+          subunit of a complex
+        </div>
+
         <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
           <div class="noc-section-heading">
             {{annotatedSectionTitle }}

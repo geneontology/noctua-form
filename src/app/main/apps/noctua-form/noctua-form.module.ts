@@ -60,7 +60,7 @@ import { CreateActivityDialogComponent } from './dialogs/create-activity/create-
 import { ActivityTreeTableComponent } from './cam/cam-table/activity-tree-table/activity-tree-table.component';
 import { PreviewActivityComponent } from './cam/activity/preview-activity/preview-activity.component';
 import { NoctuaSearchBaseModule } from '@noctua.search';
-import { DuplicateCamFormComponent } from './cam/duplicate-cam-form/duplicate-cam-form.component';
+import { CopyModelComponent } from './cam/copy-model/copy-model.component';
 import { ResizableModule } from 'angular-resizable-element';
 import { NoctuaTermDetailComponent } from './components/term-detail/term-detail.component';
 import { CamStatsComponent } from './components/cam-stats/cam-stats.component';
@@ -133,7 +133,7 @@ const routes = [
     PreviewActivityDialogComponent,
     CamDiagramComponent,
     CamFormComponent,
-    DuplicateCamFormComponent,
+    CopyModelComponent,
     NodeComponent,
     NodesContainerComponent,
     ActivityConnectorFormComponent,
@@ -172,7 +172,7 @@ const routes = [
     SearchEvidenceDialogComponent,
     CamDiagramComponent,
     CamFormComponent,
-    DuplicateCamFormComponent,
+    CopyModelComponent,
     NodeComponent,
     NodesContainerComponent,
     ActivityConnectorFormComponent,

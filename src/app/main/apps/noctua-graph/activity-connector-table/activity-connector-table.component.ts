@@ -69,7 +69,6 @@ export class ActivityConnectorTableComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any>;
 
   constructor(
-    private camService: CamService,
     private confirmDialogService: NoctuaConfirmDialogService,
     public noctuaActivityConnectorService: NoctuaActivityConnectorService,
     public noctuaUserService: NoctuaUserService,
@@ -77,10 +76,8 @@ export class ActivityConnectorTableComponent implements OnInit, OnDestroy {
     public noctuaFormConfigService: NoctuaFormConfigService,
     public noctuaActivityFormService: NoctuaActivityFormService,
     public noctuaFormMenuService: NoctuaFormMenuService,
-    private _noctuaGraphService: NoctuaGraphService,
     private noctuaCommonMenuService: NoctuaCommonMenuService,
     public noctuaActivityEntityService: NoctuaActivityEntityService,
-    private inlineEditorService: InlineEditorService
   ) {
     this._unsubscribeAll = new Subject();
   }

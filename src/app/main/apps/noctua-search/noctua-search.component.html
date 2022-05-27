@@ -151,8 +151,8 @@
       <div [ngSwitch]="noctuaSearchMenuService.selectedRightPanel" class="h-100-p">
         <noc-cam-form [panelDrawer]="rightDrawer" *ngSwitchCase="RightPanel.camForm">
         </noc-cam-form>
-        <noc-duplicate-cam-form [panelDrawer]="rightDrawer" *ngSwitchCase="RightPanel.duplicateCamForm">
-        </noc-duplicate-cam-form>
+        <noc-copy-model [panelDrawer]="rightDrawer" *ngSwitchCase="RightPanel.copyModel">
+        </noc-copy-model>
       </div>
     </mat-drawer>
   </mat-drawer-container>
