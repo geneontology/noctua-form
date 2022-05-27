@@ -39,11 +39,11 @@
       [matTooltipShowDelay]="1500">
       <fa-icon [icon]="['fas', 'chart-bar']"></fa-icon>
     </button>
-    <!--    <button mat-icon-button color="" class="noc-rounded-button" (click)="openDuplicateCamForm()"
-      [ngClass]="{'noc-active': noctuaFormMenuService.selectedLeftPanel === LeftPanel.duplicateCamForm}"
+    <button mat-icon-button color="" class="noc-rounded-button" (click)="openCopyModel()"
+      [ngClass]="{'noc-active': noctuaFormMenuService.selectedLeftPanel === LeftPanel.copyModel}"
       matTooltip="Make a copy of this model" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
       <fa-icon [icon]="['fas', 'clone']"></fa-icon>
-    </button> -->
+    </button>
   </div>
 
   <div class="w-100-p h-100-p" fxLayout="column" fxLayoutAlign="start start">
@@ -182,8 +182,8 @@
         <div [ngSwitch]="noctuaFormMenuService.selectedLeftPanel" class="h-100-p">
           <noc-cam-form [panelDrawer]="leftDrawer" *ngSwitchCase="LeftPanel.camForm">
           </noc-cam-form>
-          <noc-duplicate-cam-form [panelDrawer]="leftDrawer" *ngSwitchCase="LeftPanel.duplicateCamForm">
-          </noc-duplicate-cam-form>
+          <noc-copy-model [panelDrawer]="leftDrawer" *ngSwitchCase="LeftPanel.copyModel">
+          </noc-copy-model>
           <noc-activity-form [panelDrawer]="leftDrawer" *ngSwitchCase="LeftPanel.activityForm">
           </noc-activity-form>
           <noc-find-replace [panelDrawer]="leftDrawer"

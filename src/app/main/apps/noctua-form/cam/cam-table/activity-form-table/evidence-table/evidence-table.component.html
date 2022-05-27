@@ -77,10 +77,9 @@
     </div>
   </div>
 </div>
-<div *ngIf="entity.predicate?.evidence.length===0" class="noc-no-info" fxLayout="row" fxLayoutAlign="start center">
+<div *ngIf="entity.predicate.evidence.length===0" class="noc-no-info" fxLayout="row" fxLayoutAlign="start center">
   no evidence present.
-  <button *ngIf="options.showAddEvidenceButton" mat-button (click)="updateCurrentMenuEvent($event); addEvidence(entity)"
-    class="">
+  <button *ngIf="options.showAddEvidenceButton" mat-button (click)="createEvidence()" class="">
     +
   </button>
 </div>

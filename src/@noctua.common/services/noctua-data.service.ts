@@ -104,7 +104,7 @@ export class NoctuaDataService {
 
         const organisms = response.map((item) => {
           const organism: Organism = {
-            taxonName: item.label,
+            taxonName: item.label ? item.label : '',
             taxonIri: item.id
           };
 

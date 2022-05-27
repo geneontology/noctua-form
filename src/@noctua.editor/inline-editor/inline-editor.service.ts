@@ -72,7 +72,6 @@ export class InlineEditorService {
         const dialogConfig = { ...DEFAULT_CONFIG, ...config };
 
         dialogConfig['positionStrategy'] = this._getPosition(elementToConnectTo);
-        console.log(dialogConfig['positionStrategy'])
         // dialogConfig['width'] = '420px';
         // const originRect = elementToConnectTo.nativeElement;
         const overlayRef = this.createOverlay(dialogConfig);

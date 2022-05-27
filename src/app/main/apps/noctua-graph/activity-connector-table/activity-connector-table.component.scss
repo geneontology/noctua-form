@@ -37,6 +37,9 @@ $accent: map-get($theme, accent);
       max-width: 300px;
       color: #676767;
       font-style: italic;
+      &.noc-sm {
+        max-width: 260px;
+      }
     }
   }
 
