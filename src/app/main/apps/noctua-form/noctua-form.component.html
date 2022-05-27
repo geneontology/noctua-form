@@ -182,7 +182,7 @@
         <div [ngSwitch]="noctuaFormMenuService.selectedLeftPanel" class="h-100-p">
           <noc-cam-form [panelDrawer]="leftDrawer" *ngSwitchCase="LeftPanel.camForm">
           </noc-cam-form>
-          <noc-copy-model [panelDrawer]="leftDrawer" *ngSwitchCase="LeftPanel.copyModel">
+          <noc-copy-model [panelDrawer]="leftDrawer" [panelSide]="'left'" *ngSwitchCase="LeftPanel.copyModel">
           </noc-copy-model>
           <noc-activity-form [panelDrawer]="leftDrawer" *ngSwitchCase="LeftPanel.activityForm">
           </noc-activity-form>

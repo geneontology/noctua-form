@@ -282,7 +282,9 @@ export class CamsTableComponent implements OnInit, OnDestroy {
   }
 
   openCopyModel(cam: Cam) {
+    this.camService.loadCamMeta(cam)
     this.camService.cam = cam;
+
     this.camService.onCamChanged.next(cam);
 
     this.openRightDrawer(RightPanel.copyModel)
