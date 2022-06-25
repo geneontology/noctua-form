@@ -29,12 +29,6 @@ import { NoctuaDetailDropdownComponent } from './inline-detail/detail-dropdown/d
         NoctuaInlineEditorComponent,
         NoctuaReferenceDropdownComponent,
         NoctuaWithDropdownComponent
-    ],
-    entryComponents: [
-        NoctuaDetailDropdownComponent,
-        NoctuaEditorDropdownComponent,
-        NoctuaReferenceDropdownComponent,
-        NoctuaWithDropdownComponent
     ]
 })
 export class NoctuaEditorModule {

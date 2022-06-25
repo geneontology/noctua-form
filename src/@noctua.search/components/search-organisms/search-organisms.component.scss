@@ -1,10 +1,11 @@
+@use '@angular/material' as mat;
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
 
 :host {
   width: 100%; // display: block;
   background-color: white;
-  @include mat-elevation(4);
+  @include mat.elevation(4);
 
   .noc-drawer {
     @include deep-width(300px);
@@ -14,7 +15,7 @@
     padding: 8px 10px;
     min-height: 50px;
     border-top: #CCC solid 1px;
-    @include mat-elevation(1);
+    @include mat.elevation(1);
     font-size: 12px;
 
     .noc-name {

@@ -1,3 +1,4 @@
+@use '@angular/material' as mat;
 html {
   font-size: 62.5%;
   font-family: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;
@@ -62,7 +63,7 @@ h6,
 }
 
 a {
-  color: mat-color($accent);
+  color: mat.get-color-from-palette($accent);
   text-decoration: none;
   &:not(.mat-button):not(.mat-raised-button):not(.mat-icon-button) {
     &:hover,
@@ -283,7 +284,7 @@ strong {
     background: white;
     margin-bottom: 24px;
     padding: 24px 32px;
-    @include mat-elevation(2);
+    @include mat.elevation(2);
     >.title {
       display: flex;
       align-items: center;

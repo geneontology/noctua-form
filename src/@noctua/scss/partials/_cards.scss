@@ -1,9 +1,10 @@
+@use '@angular/material' as mat;
 .noctua-card {
   max-width: 320px;
   min-width: 320px;
   background: white;
   border-radius: 2px;
-  @include mat-elevation(2);
+  @include mat.elevation(2);
   &.variable-width {
     min-width: 0;
   }

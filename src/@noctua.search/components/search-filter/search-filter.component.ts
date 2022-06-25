@@ -166,7 +166,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._unsubscribeAll.next();
+    this._unsubscribeAll.next(null);
     this._unsubscribeAll.complete();
   }
 
@@ -272,7 +272,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
       this.noctuaSearchService.updateSearch();
     });
 
-    this.filteredContributors = this.filterForm.controls.contributors.valueChanges
+    this.filteredContributors = this.filterForm.controls['contributors'].valueChanges
       .pipe(
         startWith(''),
         map(
@@ -280,7 +280,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
         map(contributor => contributor ? this.noctuaUserService.filterContributors(contributor) : this.noctuaUserService.contributors.slice())
       );
 
-    this.filteredGroups = this.filterForm.controls.groups.valueChanges
+    this.filteredGroups = this.filterForm.controls['groups'].valueChanges
       .pipe(
         startWith(''),
         map(
@@ -290,7 +290,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
 
 
 
-    this.filteredStates = this.filterForm.controls.states.valueChanges
+    this.filteredStates = this.filterForm.controls['states'].valueChanges
       .pipe(
         startWith(''),
         map(
@@ -302,7 +302,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
   private _onValueOrganismChanges() {
     const self = this;
 
-    this.filteredOrganisms = this.filterForm.controls.organisms.valueChanges
+    this.filteredOrganisms = this.filterForm.controls['organisms'].valueChanges
       .pipe(
         startWith(''),
         map(value => typeof value === 'string' ? value : value['short_name']),

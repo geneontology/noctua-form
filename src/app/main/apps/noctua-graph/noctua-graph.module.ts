@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NoctuaSharedModule } from '@noctua/shared.module';
-import { ContextMenuModule } from 'ngx-contextmenu';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NoctuaSearchBaseModule } from '@noctua.search';
 import { NoctuaFooterModule } from 'app/layout/components/footer/footer.module';
@@ -28,7 +27,6 @@ const routes = [
     ScrollingModule,
     CommonModule,
     RouterModule.forChild(routes),
-    ContextMenuModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
     NoctuaSearchBaseModule,

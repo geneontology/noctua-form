@@ -1,12 +1,13 @@
+@use '@angular/material' as mat;
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
 $primary: map-get($theme, primary);
 $accent: map-get($theme, accent);
 $warn: map-get($theme, warn);
 
-$noc-art-active: mat-color($primary, 600);
-$noc-art-visited: mat-color($primary, 300);
-$noc-art-badge: mat-color($mat-orange, 500);
+$noc-art-active: mat.get-color-from-palette($primary, 600);
+$noc-art-visited: mat.get-color-from-palette($primary, 300);
+$noc-art-badge: mat.get-color-from-palette(mat.$orange-palette, 500);
 
 :host {
   padding: 0px;
@@ -144,7 +145,7 @@ $noc-art-badge: mat-color($mat-orange, 500);
     @include deep-height(100%);
     background-color: #fff;
     border-right: #bbb solid 1px;
-    @include mat-elevation(4);
+    @include mat.elevation(4);
   }
 
   .noc-right-drawer {
@@ -173,7 +174,7 @@ $noc-art-badge: mat-color($mat-orange, 500);
       width: 140px;
       font-size: 12px;
 
-      @include mat-elevation(4);
+      @include mat.elevation(4);
 
       strong {
         font-weight: 500;
@@ -219,7 +220,7 @@ $noc-art-badge: mat-color($mat-orange, 500);
     padding: 0;
     @include deep-height(100px);
     background-color: #ffffff;
-    @include mat-elevation(2);
+    @include mat.elevation(2);
     //color: #FFF;
 
     .noc-art-tabs {
@@ -291,7 +292,7 @@ $noc-art-badge: mat-color($mat-orange, 500);
         &.noc-active {
           border: $noc-art-active solid 1px;
           border-bottom: $noc-art-active solid 5px;
-          @include mat-elevation(4);
+          @include mat.elevation(4);
 
           .noc-title {
             font-size: 20px;
@@ -328,7 +329,7 @@ $noc-art-badge: mat-color($mat-orange, 500);
     overflow: hidden;
     z-index: 10;
 
-    @include mat-elevation(2);
+    @include mat.elevation(2);
 
     mat-chip-list {
     }

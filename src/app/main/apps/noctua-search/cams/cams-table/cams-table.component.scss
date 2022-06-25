@@ -1,3 +1,4 @@
+@use '@angular/material' as mat;
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
 
@@ -41,7 +42,7 @@ $rotate-graph: 235deg;
     overflow: hidden;
     z-index: 10;
 
-    @include mat-elevation(2);
+    @include mat.elevation(2);
 
     mat-chip-list {
     }
@@ -82,7 +83,7 @@ $rotate-graph: 235deg;
     overflow: hidden;
     z-index: 10;
 
-    @include mat-elevation(2);
+    @include mat.elevation(2);
 
     .noc-art-tools {
       //background-color: ;
@@ -215,7 +216,7 @@ $rotate-graph: 235deg;
       background-color: #ffffff;
       color: map-get($primary, default);
       border: rgba(map-get($primary, default), 0.5) solid 1px;
-      @include mat-elevation(1);
+      @include mat.elevation(1);
     }
 
     .noc-cams-table {

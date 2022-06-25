@@ -289,8 +289,6 @@ $accent: map-get($theme, accent);
       font-size: 10px;
       color: map-get($primary, default);
       border-bottom: $noc-primary-color-light solid 1px;
-      .noc-edit-button {
-      }
     }
 
     .noc-tree {

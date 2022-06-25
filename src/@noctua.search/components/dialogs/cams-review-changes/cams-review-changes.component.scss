@@ -1,3 +1,4 @@
+@use '@angular/material' as mat;
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
 $primary: map-get($theme, primary);
@@ -45,7 +46,7 @@ $accent: map-get($theme, accent);
     overflow: hidden;
     z-index: 10;
 
-    @include mat-elevation(2);
+    @include mat.elevation(2);
 
     .noc-art-tools {
       //background-color: ;

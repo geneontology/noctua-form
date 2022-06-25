@@ -1,3 +1,4 @@
+@use '@angular/material' as mat;
 @import "src/@noctua/scss/noctua";
 
 vertical-layout-1 {
@@ -19,7 +20,7 @@ vertical-layout-1 {
         &.boxed {
             max-width: 1200px;
             margin: 0 auto;
-            @include mat-elevation(8);
+            @include mat.elevation(8);
         }
 
         // Container 1

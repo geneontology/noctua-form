@@ -1,3 +1,4 @@
+@use '@angular/material' as mat;
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
 
@@ -50,7 +51,7 @@
     overflow: hidden;
     z-index: 10;
 
-    @include mat-elevation(2);
+    @include mat.elevation(2);
 
     .noc-header-title {}
 
@@ -81,7 +82,7 @@
     padding: 12px;
 
     .noc-cam-container {
-      @include mat-elevation(2);
+      @include mat.elevation(2);
 
       &.noc-selected {
         border-left: darken($noc-highlight-model-color, 15%) solid 1px;

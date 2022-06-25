@@ -4,19 +4,28 @@
     "baseUrl": "./src",
     "module": "es2020",
     "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    //"strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    //"noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
-    "declaration": false,
+    "downlevelIteration": true,
     "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2017",
+    "declaration": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "paths": {
       "@geneontology/noctua-form-base": [
         "@noctua.form/"
       ]
     },
-    "target": "es5",
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -24,5 +33,11 @@
       "es2017",
       "dom"
     ]
+  },
+  "angularCompilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    //"strictInjectionParameters": true,
+    //"strictInputAccessModifiers": true,
+   // "strictTemplates": true
   }
 }

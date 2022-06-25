@@ -72,21 +72,21 @@ export class SearchFormComponent implements OnInit, OnDestroy {
     })
 
 
-    this.filteredOrganisms = this.searchForm.controls.organism.valueChanges
+    this.filteredOrganisms = this.searchForm.controls['organism'].valueChanges
       .pipe(
         startWith(''),
         map(value => typeof value === 'string' ? value : value['short_name']),
         map(organism => organism ? this.noctuaSearchService.filterOrganisms(organism) : this.noctuaSearchService.organisms.slice())
       )
 
-    this.filteredContributors = this.searchForm.controls.contributor.valueChanges
+    this.filteredContributors = this.searchForm.controls['contributor'].valueChanges
       .pipe(
         startWith(''),
         map(value => typeof value === 'string' ? value : value['name']),
         map(contributor => contributor ? this.noctuaUserService.filterContributors(contributor) : this.noctuaUserService.contributors.slice())
       )
 
-    this.filteredGroups = this.searchForm.controls.group.valueChanges
+    this.filteredGroups = this.searchForm.controls['group'].valueChanges
       .pipe(
         startWith(''),
         map(value => typeof value === 'string' ? value : value['name']),
@@ -121,13 +121,13 @@ export class SearchFormComponent implements OnInit, OnDestroy {
   }
 
   clear() {
-    this.searchForm.controls.title.setValue('');
-    this.searchForm.controls.gp.setValue('');
-    this.searchForm.controls.term.setValue('');
-    this.searchForm.controls.pmid.setValue('');
-    this.searchForm.controls.contributor.setValue('');
-    this.searchForm.controls.group.setValue('');
-    this.searchForm.controls.organism.setValue('');
+    this.searchForm.controls['title'].setValue('');
+    this.searchForm.controls['gp'].setValue('');
+    this.searchForm.controls['term'].setValue('');
+    this.searchForm.controls['pmid'].setValue('');
+    this.searchForm.controls['contributor'].setValue('');
+    this.searchForm.controls['group'].setValue('');
+    this.searchForm.controls['organism'].setValue('');
   }
 
   close() {
@@ -135,7 +135,7 @@ export class SearchFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.unsubscribeAll.next();
+    this.unsubscribeAll.next(null);
     this.unsubscribeAll.complete();
   }
 }

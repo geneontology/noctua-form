@@ -5,7 +5,6 @@ import { NoctuaMatchMediaService } from './services/match-media.service';
 import { NoctuaSplashScreenService } from './services/splash-screen.service';
 
 @NgModule({
-    entryComponents: [],
     providers: [
         NoctuaConfigService,
         NoctuaMatchMediaService,

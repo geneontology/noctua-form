@@ -2,8 +2,8 @@ export const globalWorkbenchesModel =
 
   [
     {
-      "menu-name": "Noctua Form 2.0",
-      "page-name": "Noctua Form 2.0",
+      "menu-name": "Form Editor 2.0",
+      "page-name": "Form Editor 2.0",
       "type": "model",
       "help-link": "https://github.com/geneontology/noctua-form/issues",
       "workbench-id": "noctua-form",
@@ -20,8 +20,8 @@ export const globalWorkbenchesModel =
       "public-directory": "../alliance-pathway-preview/workbenches/noctua-alliance-pathway-preview/public"
     },
     {
-      "menu-name": "Noctua form Legacy",
-      "page-name": "Noctua form 1.0",
+      "menu-name": "Form Editor Legacy",
+      "page-name": "Form Editor 1.0",
       "type": "model",
       "help-link": "http://github.com/geneontology/noctua-form-legacy/issues",
       "javascript": [
@@ -225,7 +225,7 @@ export const globalWorkbenchesUniversal = [
 
 
 export const globalWorkbenchesModelBetaTest =
-  [{ "menu-name": "Noctua Form (Beta)", "page-name": "Noctua Form (Beta)", "type": "model", "is-beta": true, "help-link": "https://github.com/geneontology/noctua-form/issues", "javascript": ["main.js"], "css": [], "workbench-id": "noctua-form-beta", "template-injectable": "../noctua-form/workbenches/noctua-form-beta/public/inject.tmpl", "public-directory": "../noctua-form/workbenches/noctua-form-beta/public" }];
+  [{ "menu-name": "Form Editor (Beta)", "page-name": "Form Editor (Beta)", "type": "model", "is-beta": true, "help-link": "https://github.com/geneontology/noctua-form/issues", "javascript": ["main.js"], "css": [], "workbench-id": "noctua-form-beta", "template-injectable": "../noctua-form/workbenches/noctua-form-beta/public/inject.tmpl", "public-directory": "../noctua-form/workbenches/noctua-form-beta/public" }];
 export const globalWorkbenchesUniversalBetaTest = [
   {
     'menu-name': 'Noctua Landing Page',

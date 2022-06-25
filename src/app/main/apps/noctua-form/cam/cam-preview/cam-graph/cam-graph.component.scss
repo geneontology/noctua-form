@@ -1,3 +1,4 @@
+@use '@angular/material' as mat;
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
 
@@ -22,7 +23,7 @@ $grid-line-color: rgba(#000, 0.1);
     display: block;
     padding: 4px 0 4px 4px;
     //box-shadow: 0 1px 40px 0 #B0C1D9;
-    @include mat-elevation(2);
+    @include mat.elevation(2);
     //text-align: center;
     z-index: 4;
     border: 1px solid #2e6f9a;
@@ -77,7 +78,7 @@ $grid-line-color: rgba(#000, 0.1);
       display: block;
       padding: 12px 0 12px 12px;
       //box-shadow: 0 1px 40px 0 #B0C1D9;
-      @include mat-elevation(1);
+      @include mat.elevation(1);
       background-color: #DDD;
     }
   }

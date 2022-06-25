@@ -87,9 +87,9 @@ export class SearchRelationComponent implements OnInit, OnDestroy {
   }
 
   clear() {
-    this.searchForm.controls.subject.setValue('');
-    this.searchForm.controls.predicate.setValue('');
-    this.searchForm.controls.object.setValue('');
+    this.searchForm.controls['subject'].setValue('');
+    this.searchForm.controls['predicate'].setValue('');
+    this.searchForm.controls['object'].setValue('');
   }
 
   close() {
@@ -97,7 +97,7 @@ export class SearchRelationComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.unsubscribeAll.next();
+    this.unsubscribeAll.next(null);
     this.unsubscribeAll.complete();
   }
 }

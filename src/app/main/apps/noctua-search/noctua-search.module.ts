@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { NoctuaSharedModule } from '@noctua/shared.module';
-import { ContextMenuModule } from 'ngx-contextmenu';
 import { CamsTableComponent } from './cams/cams-table/cams-table.component';
 import { NoctuaSearchComponent } from './noctua-search.component';
 import { NoctuaSearchBaseModule } from '@noctua.search';
@@ -25,7 +24,6 @@ const routes = [
     NoctuaSharedModule,
     CommonModule,
     RouterModule.forChild(routes),
-    ContextMenuModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
     NoctuaSearchBaseModule,
@@ -41,5 +39,4 @@ const routes = [
   ]
 })
 
-export class NoctuaSearchModule {
-}
+export class NoctuaSearchModule { }

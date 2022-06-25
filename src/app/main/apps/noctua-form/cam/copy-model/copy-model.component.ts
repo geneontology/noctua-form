@@ -2,7 +2,7 @@ import { Component, Input, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
+import { FormGroup, FormControl } from '@angular/forms';
 import {
   Cam,
   NoctuaUserService,
@@ -12,6 +12,8 @@ import {
   LeftPanel
 } from '@geneontology/noctua-form-base';
 import { NoctuaSearchMenuService } from '@noctua.search/services/search-menu.service';
+import { NoctuaFormDialogService } from '../../services/dialog.service';
+
 
 @Component({
   selector: 'noc-copy-model',
@@ -25,6 +27,7 @@ export class CopyModelComponent implements OnInit, OnDestroy {
   @Input('panelSide') panelSide: string
   cam: Cam;
   loading = false;
+  camForm: FormGroup;
 
   duplicatedCam;
 
@@ -33,6 +36,7 @@ export class CopyModelComponent implements OnInit, OnDestroy {
   constructor(public noctuaUserService: NoctuaUserService,
     private ngZone: NgZone,
     private camService: CamService,
+    private noctuaFormDialogService: NoctuaFormDialogService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     public noctuaSearchMenuService: NoctuaSearchMenuService,
     public noctuaFormMenuService: NoctuaFormMenuService
@@ -43,6 +47,7 @@ export class CopyModelComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.camForm = this.createCamForm();
     this.camService.onCamChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((cam) => {
@@ -65,9 +70,32 @@ export class CopyModelComponent implements OnInit, OnDestroy {
       });
   }
 
+  ngOnDestroy(): void {
+    this.camService.onCopyModelChanged.next(null)
+    this._unsubscribeAll.next(null);
+    this._unsubscribeAll.complete();
+  }
+
+  createCamForm() {
+    return new FormGroup({
+      title: new FormControl(),
+    });
+  }
+
   copyModel() {
-    this.loading = true;
-    this.camService.copyModel(this.cam);
+
+    const self = this;
+
+    const success = (value) => {
+      if (value) {
+        this.loading = true;
+        this.camService.copyModel(this.cam, value?.title);
+      } else {
+        this.loading = false;
+      };
+    }
+
+    this.noctuaFormDialogService.openConfirmCopyModelDialog(self.cam, success);
   }
 
   close() {
@@ -80,9 +108,5 @@ export class CopyModelComponent implements OnInit, OnDestroy {
     this.panelDrawer.close();
   }
 
-  ngOnDestroy(): void {
-    this.camService.onCopyModelChanged.next(null)
-    this._unsubscribeAll.next();
-    this._unsubscribeAll.complete();
-  }
+
 }
