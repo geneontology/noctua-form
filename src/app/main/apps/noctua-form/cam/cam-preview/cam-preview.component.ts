@@ -42,7 +42,7 @@ export class CamPreviewComponent implements OnInit, OnDestroy {
   ngOnInit(): void { }
 
   ngOnDestroy(): void {
-    this.unsubscribeAll.next();
+    this.unsubscribeAll.next(null);
     this.unsubscribeAll.complete();
   }
 }

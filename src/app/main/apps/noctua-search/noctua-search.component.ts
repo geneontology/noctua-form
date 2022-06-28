@@ -60,9 +60,9 @@ export class NoctuaSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   RightPanel = RightPanel;
   artBasket: ArtBasket = new ArtBasket();
 
-  camPage: CamPage;
-  public cam: Cam;
-  public user: Contributor;
+  camPage: CamPage | undefined;
+  cam: Cam | undefined;
+  user: Contributor | undefined;
 
   cams: any[] = [];
 
@@ -139,12 +139,12 @@ export class NoctuaSearchComponent implements OnInit, AfterViewInit, OnDestroy {
     this.noctuaSearchMenuService.resultsViewScrollbar = this.scrollbarRef;
   }
 
-  openLeftDrawer(panel) {
+  openLeftDrawer(panel: LeftPanel) {
     this.noctuaSearchMenuService.selectLeftPanel(panel);
     this.noctuaSearchMenuService.openLeftDrawer();
   }
 
-  selectMiddlePanel(panel) {
+  selectMiddlePanel(panel: MiddlePanel) {
     const self = this;
     this.noctuaSearchMenuService.selectMiddlePanel(panel);
 
@@ -163,12 +163,12 @@ export class NoctuaSearchComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  openRightDrawer(panel) {
+  openRightDrawer(panel: RightPanel) {
     this.noctuaSearchMenuService.selectRightPanel(panel);
     this.noctuaSearchMenuService.openRightDrawer();
   }
 
-  toggleLeftDrawer(panel) {
+  toggleLeftDrawer(panel: LeftPanel) {
     this.noctuaSearchMenuService.toggleLeftDrawer(panel);
     this.noctuaSearchMenuService.selectMiddlePanel(MiddlePanel.cams);
   }
@@ -209,7 +209,7 @@ export class NoctuaSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._unsubscribeAll.next();
+    this._unsubscribeAll.next(null);
     this._unsubscribeAll.complete();
   }
 }

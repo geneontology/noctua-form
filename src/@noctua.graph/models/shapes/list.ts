@@ -199,7 +199,7 @@ const headerAttributes = {
 
 export class NodeCellList extends dia.Element {
 
-  defaults() {
+  override defaults() {
     return {
       ...super.defaults,
       ...headerAttributes,
@@ -217,7 +217,7 @@ export class NodeCellList extends dia.Element {
     }
   }
 
-  initialize(...args: any[]) {
+  override initialize(...args: any[]) {
     this.on('change:ports', () => this.resizeToFitPorts());
     this.resizeToFitPorts();
     super.initialize.call(this, ...args);

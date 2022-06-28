@@ -1,3 +1,4 @@
+@use "@angular/material" as mat;
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
 
@@ -5,16 +6,16 @@
   //width: 100%; // display: block;
 
   background-color: white;
-  @include mat-elevation(4);
+  @include mat.elevation(4);
 
   .noc-cam-form {
-    @include deep-width(300px);
+    @include deep-width(350px);
   }
 
   .noc-header {
     @include deep-height(40px);
-    background-color: #EEE;
-    border-bottom: #CCC solid 1px;
+    background-color: #eee;
+    border-bottom: #ccc solid 1px;
 
     mat-icon-button {
       @include deep-height(40px);
@@ -31,6 +32,4 @@
   .noc-body {
     padding: 0 14px 14px 14px;
   }
-
-
 }

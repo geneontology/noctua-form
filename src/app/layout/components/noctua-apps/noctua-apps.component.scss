@@ -1,3 +1,4 @@
+@use '@angular/material' as mat;
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
 
@@ -9,7 +10,7 @@ noc-noctua-apps {
   @include deep-width(370px);
   z-index: 100;
   background-color: white;
-  @include mat-elevation(4);
+  @include mat.elevation(4);
 
   .noc-create {
     padding: 8px;
@@ -17,7 +18,7 @@ noc-noctua-apps {
     button {
       color: map-get($accent, default);
       font-size: 10px;
-      @include mat-elevation(4);
+      @include mat.elevation(4);
     }
   }
 

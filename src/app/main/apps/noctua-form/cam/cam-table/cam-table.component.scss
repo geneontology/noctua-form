@@ -1,3 +1,4 @@
+@use '@angular/material' as mat;
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
 @import "src/@noctua.common/scss/noctua-form.common";
@@ -142,7 +143,7 @@ $accent: map-get($theme, accent);
     color: #555;
     overflow: hidden;
 
-    @include mat-elevation(2);
+    @include mat.elevation(2);
 
     .noc-summary-bar-section {
       .noc-section-label {
@@ -154,7 +155,7 @@ $accent: map-get($theme, accent);
 
   .noc-action-button {
     font-size: 10px;
-    border: mat-color($primary, 300) solid 1px;
+    border: mat.get-color-from-palette($primary, 300) solid 1px;
 
     &.noc-icon {
       font-size: 14px;
@@ -174,7 +175,7 @@ $accent: map-get($theme, accent);
   }
 
   .noc-selected {
-    border: mat-color($primary, 300) solid 5px;
+    border: mat.get-color-from-palette($primary, 300) solid 5px;
     background-color: #ffffff;
 
     .noc-activities-table-body {
@@ -262,7 +263,7 @@ $accent: map-get($theme, accent);
     @include deep-height(100%);
     background-color: #fff;
     border-right: #bbb solid 1px;
-    @include mat-elevation(4);
+    @include mat.elevation(4);
   }
 
   .noc-right-drawer {

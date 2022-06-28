@@ -1,3 +1,4 @@
+@use '@angular/material' as mat;
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
 
@@ -51,7 +52,7 @@
     background-color: #fff;
     font-size: 12px;
 
-    @include mat-elevation(2);
+    @include mat.elevation(2);
 
     .noc-cam-title {
       max-width: 400px !important;
@@ -179,7 +180,7 @@
     margin-right: 5px;
     @include deep-height(100%);
     @include deep-width(60px);
-    @include mat-elevation(2);
+    @include mat.elevation(2);
     border-right: #999 solid 1px;
 
     button {
@@ -223,7 +224,7 @@
     @include deep-height(100%);
     background-color: #fff;
     border-right: #bbb solid 1px;
-    @include mat-elevation(4);
+    @include mat.elevation(4);
   }
 
   .noc-right-drawer {

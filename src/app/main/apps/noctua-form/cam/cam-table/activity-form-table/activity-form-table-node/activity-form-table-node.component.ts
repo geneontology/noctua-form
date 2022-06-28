@@ -282,7 +282,7 @@ export class ActivityFormTableNodeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.unsubscribeAll.next();
+    this.unsubscribeAll.next(null);
     this.unsubscribeAll.complete();
   }
 

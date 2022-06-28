@@ -113,7 +113,7 @@ export class ReviewFormComponent implements OnInit, OnDestroy {
           return;
         }
         this.clearFind();
-        this.searchForm.controls.findWhat.setValue(term)
+        this.searchForm.controls['findWhat'].setValue(term)
         this.findSelected(term)
       });
 
@@ -123,7 +123,7 @@ export class ReviewFormComponent implements OnInit, OnDestroy {
         if (!term) {
           return;
         }
-        this.searchForm.controls.replaceWith.setValue(term)
+        this.searchForm.controls['replaceWith'].setValue(term)
       });
 
     this.noctuaReviewSearchService.onClearForm
@@ -137,7 +137,7 @@ export class ReviewFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._unsubscribeAll.next();
+    this._unsubscribeAll.next(null);
     this._unsubscribeAll.complete();
   }
 

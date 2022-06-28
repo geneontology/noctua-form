@@ -1,0 +1,29 @@
+<div class="dialog-content-wrapper">
+  <mat-toolbar class="mat-primary m-0">
+    <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="start center">
+      <span class="title dialog-title">
+        Confirm Copy</span>
+      <span fxFlex></span>
+      <button mat-icon-button (click)="close()" aria-label="Close dialog">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <div mat-dialog-content class="noc-dialog-body">
+    <div fxLayout="row" fxLayoutAlign="start center" class="w-100-p">
+      <ng-container [formGroup]="camForm">
+        <div class="noc-edit-field p-4" fxFlex="">
+          <mat-form-field appearance="outline" class="noc-sm w-100-p">
+            <mat-label>Title</mat-label>
+            <textarea type="text" matInput formControlName="title" rows="2"></textarea>
+          </mat-form-field>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="space-between center">
+    <span fxFlex></span>
+    <button (click)='close()' type="button" mat-raised-button color="" class="mr-8">Cancel</button>
+    <button (click)='save()' type="button" mat-raised-button color="primary">Save</button>
+  </div>
+</div>

@@ -1,3 +1,4 @@
+@use '@angular/material' as mat;
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
 
@@ -36,7 +37,7 @@
     background-color: #fff;
     font-size: 12px;
 
-    @include mat-elevation(2);
+    @include mat.elevation(2);
 
     .noc-cam-title {
       max-width: 500px !important;

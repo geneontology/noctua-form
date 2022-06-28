@@ -1,3 +1,4 @@
+@use '@angular/material' as mat;
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
 
@@ -7,7 +8,7 @@ $accent: map-get($theme, accent);
 :host {
   width: 100%;
   background-color: white;
-  @include mat-elevation(4);
+  @include mat.elevation(4);
 
   .noc-drawer {
     @include deep-width(520px);
@@ -16,7 +17,7 @@ $accent: map-get($theme, accent);
       padding: 0 12px;
       @include deep-height(30px);
       background-color: #fff;
-      @include mat-elevation(2);
+      @include mat.elevation(2);
       z-index: 1000;
 
       .noc-drawer-header-title {

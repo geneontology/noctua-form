@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewChild, OnDestroy, AfterViewInit, ViewChildren, QueryList, Input } from '@angular/core';
-import * as _ from 'lodash';
 import * as joint from 'jointjs';
-import { ContextMenuComponent } from 'ngx-contextmenu';
 import { CamGraphService } from './services/cam-graph.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -20,7 +18,6 @@ import { NoctuaGraphEditorService } from '@noctua.graph/services/graphEditorServ
 export class CamGraphComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChildren('stencils') stencilContainers: QueryList<any>;
-  @ViewChild(ContextMenuComponent, { static: true }) public basicMenu: ContextMenuComponent;
 
   @Input('cam')
   public cam: Cam;
@@ -94,7 +91,7 @@ export class CamGraphComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._unsubscribeAll.next();
+    this._unsubscribeAll.next(null);
     this._unsubscribeAll.complete();
   }
 

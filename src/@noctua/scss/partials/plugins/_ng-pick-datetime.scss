@@ -9,6 +9,7 @@
   font-weight: normal;
   font-style: normal;
 }*/
+@use '@angular/material' as mat;
 
 owl-date-time {
 
@@ -138,7 +139,7 @@ owl-date-time {
         top: 24px !important;
         right: 0 !important;
         left: auto !important;
-        @include mat-elevation(4);
+        @include mat.elevation(4);
     }
 
     .owl-dateTime-dialogHeader {

@@ -5,7 +5,6 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class StartupService {
-  onDataReady: BehaviorSubject<boolean>;
 
   constructor(
     private dataService: NoctuaDataService

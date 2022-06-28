@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
-import { ContextMenuModule } from 'ngx-contextmenu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { NoctuaModule } from '@noctua/noctua.module';
 import { NoctuaProgressBarModule } from '@noctua/components';
@@ -90,7 +89,6 @@ const appRoutes: Routes = [
         RouterModule.forRoot(appRoutes, { relativeLinkResolution: 'legacy' }),
         // Noctua Main and Shared modules
         NoctuaModule.forRoot(noctuaConfig),
-        ContextMenuModule.forRoot(),
         NoctuaSharedModule,
         LayoutModule,
         RouterModule,

@@ -1,10 +1,11 @@
+@use '@angular/material' as mat;
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
 
 :host {
   padding-top: 8px;
   width: 100%;
-  @include mat-elevation(4);
+  @include mat.elevation(4);
 
   background-color: #fbf9de;
 

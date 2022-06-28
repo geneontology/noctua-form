@@ -1,7 +1,8 @@
+@use '@angular/material' as mat;
 .ngx-datatable {
 
     &.material {
-        @include mat-elevation(4);
+        @include mat.elevation(4);
 
         .empty-row {
             display: flex;

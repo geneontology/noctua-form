@@ -1,3 +1,4 @@
+@use '@angular/material' as mat;
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
 
@@ -36,7 +37,7 @@ $accent: map-get($theme, accent);
       @include deep-width(150px);
       @include deep-height(110px);
       font-size: 12px;
-      @include mat-elevation(1);
+      @include mat.elevation(1);
       text-align: center;
       z-index: 4;
       border: 1px solid #2e6f9a;
@@ -59,11 +60,11 @@ $accent: map-get($theme, accent);
     }
 
     &:hover {
-      @include mat-elevation(2);
+      @include mat.elevation(2);
       background-color: #e2e2e2;
 
       .noc-activity-box {
-        @include mat-elevation(6);
+        @include mat.elevation(6);
         border: 1px solid darken(#2e6f9a, 10%);
         background-color: #f2f2f2;
       }

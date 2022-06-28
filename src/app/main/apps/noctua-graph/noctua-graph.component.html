@@ -1,6 +1,6 @@
 <div class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
 
-  <div class="noc-sidemenu" fxLayout="column" fxLayoutAlign="start center">
+  <div *ngIf="false" class="noc-sidemenu" fxLayout="column" fxLayoutAlign="start center">
     <button mat-icon-button color="" class="noc-rounded-button"
       [ngClass]="{'noc-active': noctuaCommonMenuService.selectedMiddlePanel === MiddlePanel.camGraph}"
       (click)="openGraph()" matTooltip="Filter" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
@@ -50,6 +50,10 @@
           <fa-icon [icon]="['fas', 'pen']"></fa-icon>
         </div>
       </div>
+      <button mat-icon-button color="" class="noc-rounded-button" (click)="openCopyModel()"
+        matTooltip="Make a copy of this model" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
+        <fa-icon [icon]="['fas', 'clone']"></fa-icon>
+      </button>
       <div *ngIf="cam.state" class="noc-model-state" fxLayout="row" fxLayoutAlign="start center">
         <mat-chip class="noc-table-chip noc-state-chip" [ngClass]="{'noc-development': cam.state.name === 'development',
         'noc-production': cam.state.name === 'production',
@@ -122,6 +126,8 @@
           </noc-cam-form>
           <noc-activity-form [panelDrawer]="leftDrawer" *ngSwitchCase="LeftPanel.activityForm">
           </noc-activity-form>
+          <noc-copy-model [panelDrawer]="leftDrawer" [panelSide]="'left'" *ngSwitchCase="LeftPanel.copyModel">
+          </noc-copy-model>
         </div>
       </mat-drawer>
       <mat-drawer-content class="w-100-p h-100-p" fxLayout="column" fxLayoutAlign="start stretch">

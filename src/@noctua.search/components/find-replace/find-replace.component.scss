@@ -1,3 +1,4 @@
+@use '@angular/material' as mat;
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
 
@@ -7,7 +8,7 @@ $accent: map-get($theme, accent);
 :host {
   width: 100%;
   background-color: white;
-  @include mat-elevation(4);
+  @include mat.elevation(4);
 
   .noc-cam-progress {
     position: absolute;
@@ -25,14 +26,14 @@ $accent: map-get($theme, accent);
       padding: 0;
       @include deep-height(280px);
       background-color: #fff;
-      @include mat-elevation(2);
+      @include mat.elevation(2);
       z-index: 1000;
 
       .noc-header {
         padding: 0 12px;
         @include deep-height(40px);
         border-bottom: #bbb solid 1px;
-        @include mat-elevation(2);
+        @include mat.elevation(2);
         background-color: #fff;
       }
 
@@ -54,7 +55,7 @@ $accent: map-get($theme, accent);
     max-height: 500px;
     border-bottom: #ccc solid 1px;
     font-size: 12px;
-    @include mat-elevation(1);
+    @include mat.elevation(1);
 
     .noc-modified-header {
       padding: 0 12px;
@@ -104,7 +105,7 @@ $accent: map-get($theme, accent);
       background-color: #ffffff;
       color: map-get($primary, default);
       border: rgba(map-get($primary, default), 0.5) solid 1px;
-      @include mat-elevation(1);
+      @include mat.elevation(1);
     }
 
     .noc-more-details-button {
@@ -142,7 +143,7 @@ $accent: map-get($theme, accent);
     overflow: hidden;
     z-index: 10;
 
-    @include mat-elevation(2);
+    @include mat.elevation(2);
 
     .noc-art-tools {
       //background-color: ;

@@ -1,3 +1,4 @@
+@use '@angular/material' as mat;
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
 
@@ -7,7 +8,7 @@ $accent: map-get($theme, accent);
 :host {
   width: 100%; // display: block;
   background-color: white;
-  @include mat-elevation(4);
+  @include mat.elevation(4);
 
   .noc-drawer-body {
     min-height: calc(100% - 80px);
@@ -50,7 +51,7 @@ $accent: map-get($theme, accent);
       width: 100%;
       padding: 12px;
       //box-shadow: 0 1px 40px 0 #B0C1D9;
-      @include mat-elevation(2);
+      @include mat.elevation(2);
       z-index: 4;
       border: 1px solid #2e6f9a;
       background-color: white;
@@ -145,7 +146,7 @@ $accent: map-get($theme, accent);
     width: 200px;
     // padding: 12px;
     //box-shadow: 0 1px 40px 0 #B0C1D9;
-    @include mat-elevation(2);
+    @include mat.elevation(2);
     z-index: 4;
     border: 1px solid #2e6f9a;
     opacity: 1;
@@ -186,7 +187,7 @@ $accent: map-get($theme, accent);
       @include deep-width(180px);
       @include deep-height(110px);
       font-size: 12px;
-      @include mat-elevation(1);
+      @include mat.elevation(1);
       text-align: center;
       z-index: 4;
       border: 1px solid #2e6f9a;
@@ -253,6 +254,6 @@ $accent: map-get($theme, accent);
   .noc-summary-row {
     @include deep-height(150px);
     background-color: #f5f5f5;
-    @include mat-elevation(2);
+    @include mat.elevation(2);
   }
 }
