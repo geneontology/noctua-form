@@ -156,19 +156,19 @@ export class NoctuaGraphService {
     }, 10);
   }
 
-  getMetadata(response) {
+  getMetadata(responseData) {
     const self = this;
     const noctua_graph = model.graph;
     const cam = new Cam()
 
     cam.graph = new noctua_graph();
-    cam.graph.load_data_basic(response.data);
+    cam.graph.load_data_basic(responseData);
 
-    cam.id = response.data.id;
+    cam.id = responseData.id;
     cam.model = Object.assign({}, {
       modelInfo: this.noctuaFormConfigService.getModelUrls(cam.id)
     });
-    cam.modified = response.data['modified-p'];
+    cam.modified = responseData['modified-p'];
 
     const titleAnnotations = cam.graph.get_annotations_by_key('title');
     const stateAnnotations = cam.graph.get_annotations_by_key('state');
@@ -796,9 +796,9 @@ export class NoctuaGraphService {
 
         activity.postRunUpdateCompliment();
 
-        if (environment.isGraph) {
-          activity.postRunUpdate();
-        }
+        // if (environment.isGraph) {
+        activity.postRunUpdate();
+        // }
 
         activities.push(activity);
       }
@@ -885,18 +885,23 @@ export class NoctuaGraphService {
     cam.groupId = groupId;
   }
 
-  copyModelMinervaTemp(cam: Cam) {
+  copyModel(cam: Cam, title) {
     const self = this;
     const reqs = new minerva_requests.request_set(self.noctuaUserService.baristaToken, cam.id);
     const req = new minerva_requests.request('model', 'copy');
 
     req.model(cam.id);
-    reqs.remove_annotation_from_model('title', 'i am copy');
+    req.special('title', title);
     reqs.add(req, 'query');
+
+    if (self.noctuaUserService.user && self.noctuaUserService.user.groups.length > 0) {
+      reqs.use_groups([self.noctuaUserService.user.group.id]);
+    }
+
     return cam.copyModelManager.request_with(reqs);
   }
 
-  copyModel(cam: Cam, title) {
+  copyModelHttp(cam: Cam, title) {
     const baristaUrl = environment.globalBaristaLocation
     const globalMinervaDefinitionName = environment.globalMinervaDefinitionName
 
