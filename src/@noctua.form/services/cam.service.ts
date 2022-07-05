@@ -256,8 +256,8 @@ export class CamService {
   copyModel(cam: Cam, title) {
     const self = this;
 
-    return self._noctuaGraphService.copyModel(cam, title).then((response) => {
-      const cam: Cam = self._noctuaGraphService.getMetadata(response.data())
+    return self._noctuaGraphService.copyModelRaw(cam, title).subscribe((response) => {
+      const cam: Cam = self._noctuaGraphService.getMetadata(response['data'])
       self.onCopyModelChanged.next(cam)
     });
   }
