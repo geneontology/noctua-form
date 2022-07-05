@@ -106,7 +106,6 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
           this.noctuaSearchService.organisms = organism
           this._onValueOrganismChanges();
 
-          console.log('loaded')
         }
       });
   }

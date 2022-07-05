@@ -128,7 +128,7 @@ export class Cam {
   causalRelations: Triple<Activity>[] = [];
   sortBy: CamSortBy = new CamSortBy();
   error = false;
-  date;
+  date: string;
   modified = false;
   modifiedStats = new CamStats();
   matchedCount = 0;

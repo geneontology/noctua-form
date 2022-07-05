@@ -15,14 +15,6 @@ export class StartupService {
 
   loadData() {
     return this.dataService.setup();
-    /* return new Promise<void>((resolve, reject) => {
-      console.log("AppInitService.init() called");
-      setTimeout(() => {
-        console.log('AppInitService Finished');
-        resolve();
-      }, 6000);
-
-    }); */
   }
 
 }

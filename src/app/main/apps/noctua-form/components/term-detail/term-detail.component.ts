@@ -30,7 +30,6 @@ export class NoctuaTermDetailComponent implements OnInit, OnDestroy {
     this.formControl = this.termData.formControl;
     this.termDetail = this.termData.termDetail;
 
-    console.log(this.termDetail)
   }
 
   ngOnInit(): void {

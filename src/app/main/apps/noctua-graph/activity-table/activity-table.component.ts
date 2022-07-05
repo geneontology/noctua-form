@@ -87,11 +87,6 @@ export class ActivityTableComponent implements OnInit, OnDestroy {
           this.activity = activity
         }, 100);
 
-        //this.changeDetectorRef.markForCheck()
-        //this.ngZone.run(() => {
-
-        //   console.log('zone ran')
-        //   });
       });
 
   }

@@ -16,8 +16,8 @@ import { Violation } from './error/violation-error';
 import { TermsSummary } from './summary';
 
 
-import * as moment_ from 'moment';
-const moment = moment_;
+import moment from 'moment';
+//const moment = moment_;
 
 
 
@@ -71,7 +71,7 @@ export class ActivityPosition {
 export class Activity extends SaeGraph<ActivityNode> {
   gp;
   label: string;
-  date: string;
+  date: moment.Moment;
 
   validateEvidence = true;
 
@@ -229,13 +229,35 @@ export class Activity extends SaeGraph<ActivityNode> {
 
 
   updateDate() {
+    const self = this;
     const rootNode = this.rootNode;
 
-    if (rootNode) {
-      const date = (moment as any)(rootNode.date, 'YYYY-MM-DD')
-      this.date = rootNode.date
-      this.formattedDate = date.format('ll');
-    }
+    if (!rootNode) return;
+
+    self.date = (moment as any)(rootNode.date, 'YYYY-MM-DD')
+    // self.date = rootNode.date
+
+    each(self.nodes, (node: ActivityNode) => {
+      const nodeDate = (moment as any)(node.date, 'YYYY-MM-DD')
+
+      if (nodeDate > self.date) {
+        self.date = nodeDate
+      }
+    });
+
+    // remove the subject menu
+    each(self.edges, (triple: Triple<ActivityNode>) => {
+      each(triple.predicate.evidence, (evidence: Evidence) => {
+
+        const evidenceDate = (moment as any)(evidence.date, 'YYYY-MM-DD')
+
+        if (evidenceDate > self.date) {
+          self.date = evidenceDate
+        }
+      })
+    });
+
+    this.formattedDate = self.date.format('ll');
   }
 
   updateSummary() {
