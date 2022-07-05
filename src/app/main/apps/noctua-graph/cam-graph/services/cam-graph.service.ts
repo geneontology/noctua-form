@@ -108,8 +108,6 @@ export class CamGraphService {
     const self = this;
     const node = element.get('node') as StencilItemNode;
 
-    console.log(x, y)
-
     self.placeholderElement.position(x, y);
     self._activityFormService.setActivityType(node.type)
     self._activityFormService.activity.validateEvidence = false;

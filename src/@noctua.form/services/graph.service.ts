@@ -891,7 +891,7 @@ export class NoctuaGraphService {
     const req = new minerva_requests.request('model', 'copy');
 
     req.model(cam.id);
-    req.special('title', title);
+    reqs.add_annotation_to_model('title', title);
     reqs.add(req, 'query');
 
     if (self.noctuaUserService.user && self.noctuaUserService.user.groups.length > 0) {
@@ -899,27 +899,6 @@ export class NoctuaGraphService {
     }
 
     return cam.copyModelManager.request_with(reqs);
-  }
-
-  copyModelHttp(cam: Cam, title) {
-    const baristaUrl = environment.globalBaristaLocation
-    const globalMinervaDefinitionName = environment.globalMinervaDefinitionName
-
-    let headers = new HttpHeaders();
-    headers = headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-
-    const requests = [
-      {
-        "entity": "model",
-        "operation": "copy",
-        "arguments":
-        {
-          "model-id": cam.id,
-          "title": title
-        }
-      }]
-    const payload = `token=${this.noctuaUserService.baristaToken}&intention=query&requests=${encodeURIComponent(JSON.stringify(requests))}`
-    return this.httpClient.post(`${baristaUrl}/api/${globalMinervaDefinitionName}/m3BatchPrivileged`, payload, { headers });
   }
 
   resetModel(cam: Cam) {

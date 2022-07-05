@@ -129,7 +129,7 @@ export class NoctuaDataService {
   private getColor(name: string) {
     const colors = Object.keys(MatColors.all);
     const index = (name.charCodeAt(0) - 65) % (colors.length - 5);
-    // console.log(colors)
+
     if (index && index > 0) {
       return MatColors.getColor(colors[index])[100];
     } else {

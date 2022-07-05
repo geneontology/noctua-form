@@ -64,7 +64,6 @@ export class CopyModelComponent implements OnInit, OnDestroy {
         this.loading = false;
 
         this.ngZone.run(() => {
-          console.log('zone ran')
           this.duplicatedCam = cam
         });
       });

@@ -224,11 +224,6 @@ export class CamCanvas {
             const targetId = link.get('target').id;
 
             if (targetId && sourceId) {
-                // const source = self.canvasGraph.getCell(sourceId) as NodeCell;
-                // const target = self.canvasGraph.getCell(targetId) as NodeCell;
-
-                //  console.log(targetId)
-                //  console.log(sourceId)
 
                 self.onLinkCreated(sourceId, targetId, link)
             }

@@ -120,8 +120,6 @@ export class ActivityTreeComponent implements OnInit, OnDestroy {
   toggleExpand(activity: Activity) {
     activity.expanded = !activity.expanded;
 
-
-    console.log(activity)
   }
 
   toggleNodeExpand(node: ActivityNode) {
