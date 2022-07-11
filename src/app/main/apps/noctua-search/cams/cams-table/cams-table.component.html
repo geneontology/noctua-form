@@ -182,7 +182,7 @@
       <th mat-header-cell *matHeaderCellDef fxFlex="100px" fxLayout="row" fxLayoutAlign="start center">Open In</th>
       <td mat-cell *matCellDef="let cam" fxFlex="100px" fxLayout="row" fxLayoutAlign="start center">
         <a mat-icon-button [href]='cam?.model?.modelInfo?.noctuaFormUrl' target="_blank"
-          class="noc-edit-button noc-rounded-button noc-sm  mr-4 noc-half-button noc-r" matTooltip="Noctua Form"
+          class="noc-edit-button noc-rounded-button noc-sm  mr-4 noc-half-button noc-r" matTooltip="Form Editor"
           [matTooltipPosition]="'after'" [matTooltipShowDelay]="1000">
           <fa-icon [icon]="['fas', 'list-alt']"></fa-icon>
         </a>
@@ -201,16 +201,20 @@
           <mat-icon>more_horiz</mat-icon>
         </button>
         <mat-menu #optionsMenu="matMenu">
-          <a mat-menu-item [href]="cam?.model?.modelInfo?.workbenches['noctua-gocam-pathway']?.url" target="_blank"
-            class="">
+          <a mat-menu-item [href]="cam?.model?.modelInfo?.workbenches['noctua-alliance-pathway-preview']?.url"
+            target="_blank" class="">
             Alliance Pathway Preview
+          </a>
+          <a mat-menu-item [href]="cam?.model?.modelInfo?.workbenches['noctua-visual-pathway-editor']?.url"
+            target="_blank" class="">
+            Visual Pathway Editor
           </a>
           <button mat-menu-item (click)="openCamForm(cam)" class="">
             Model Info
           </button>
-          <!--   <button mat-menu-item (click)="openDuplicateCamForm(cam)" class="">
-            Duplicate Model
-          </button> -->
+          <button mat-menu-item (click)="openCopyModel(cam)" class="">
+            Copy Model
+          </button>
           <button mat-menu-item [matMenuTriggerFor]="exportMenu" class="">
             Export As
           </button>

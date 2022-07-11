@@ -115,6 +115,16 @@ mat-chip {
   }
 }
 
+.noc-add-evidence-dialog {
+  @include deep-height(200px);
+  @include deep-width(600px);
+}
+
+.noc-confirm-copy-model-dialog {
+  @include deep-height(200px);
+  @include deep-width(600px);
+}
+
 .noc-search-evidence-dialog {
   @include deep-height(90%);
   @include deep-width(1000px);

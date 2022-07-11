@@ -106,7 +106,7 @@ export class ActivityTreeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._unsubscribeAll.next();
+    this._unsubscribeAll.next(null);
     this._unsubscribeAll.complete();
   }
 
@@ -120,8 +120,6 @@ export class ActivityTreeComponent implements OnInit, OnDestroy {
   toggleExpand(activity: Activity) {
     activity.expanded = !activity.expanded;
 
-
-    console.log(activity)
   }
 
   toggleNodeExpand(node: ActivityNode) {
@@ -288,14 +286,6 @@ export class ActivityTreeComponent implements OnInit, OnDestroy {
         'You are about to delete an activity.',
         success);
     }
-  }
-
-  cloneActivity(activity: Activity) {
-    const self = this;
-
-    self.noctuaActivityFormService.initializeForm(activity);
-    self.noctuaFormDialogService.openCreateActivityDialog(FormType.ACTIVITY);
-
   }
 
   cleanId(dirtyId: string) {

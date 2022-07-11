@@ -30,6 +30,7 @@ import { find } from 'lodash';
 import { InlineEditorService } from '@noctua.editor/inline-editor/inline-editor.service';
 import { NoctuaUtils } from '@noctua/utils/noctua-utils';
 import { MatTableDataSource } from '@angular/material/table';
+import { NoctuaConfirmDialogService } from '@noctua/components/confirm-dialog/confirm-dialog.service';
 
 @Component({
   selector: 'noc-activity-tree-node',
@@ -66,6 +67,7 @@ export class ActivityTreeNodeComponent implements OnInit, OnDestroy {
 
   constructor(
     public camService: CamService,
+    private confirmDialogService: NoctuaConfirmDialogService,
     public noctuaFormMenuService: NoctuaFormMenuService,
     public noctuaUserService: NoctuaUserService,
     public noctuaFormConfigService: NoctuaFormConfigService,
@@ -137,6 +139,28 @@ export class ActivityTreeNodeComponent implements OnInit, OnDestroy {
     this.inlineEditorService.open(this.currentMenuEvent.target, { data });
 
     self.noctuaActivityFormService.initializeForm();
+  }
+
+  deleteEntity(entity: ActivityNode) {
+    const self = this;
+
+    const success = () => {
+      this.noctuaActivityEntityService.deleteActivityNode(self.activity, entity).then(() => {
+        self.noctuaFormDialogService.openInfoToast(`${entity.term.label} successfully deleted.`, 'OK');
+
+      });
+    };
+
+    const descendants = this.activity.descendants(entity.id).map((node: ActivityNode) => {
+      return node.term.label
+    }).join(", ");
+    let message = `You are about to delete an ${entity.term.label}`;
+    if (descendants) {
+      message += ` and its descendants ${descendants}`;
+    }
+
+    this.confirmDialogService.openConfirmDialog('Confirm Delete?',
+      `${message}`, success);
   }
 
   removeEvidence(entity: ActivityNode, index: number) {
@@ -251,7 +275,7 @@ export class ActivityTreeNodeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.unsubscribeAll.next();
+    this.unsubscribeAll.next(null);
     this.unsubscribeAll.complete();
   }
 

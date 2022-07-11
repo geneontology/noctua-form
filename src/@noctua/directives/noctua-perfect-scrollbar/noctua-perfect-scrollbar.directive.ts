@@ -127,7 +127,7 @@ export class NoctuaPerfectScrollbarDirective implements OnInit, AfterViewInit, O
     ngOnDestroy(): void {
         this._destroy();
 
-        this._unsubscribeAll.next();
+        this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
     }
 

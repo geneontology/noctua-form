@@ -1,3 +1,4 @@
+@use '@angular/material' as mat;
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
 @import "src/@noctua.common/scss/noctua-form.common";
@@ -59,7 +60,7 @@ $accent: map-get($theme, accent);
       .noc-action-button {
         background-color: map-get($primary, 400);
         color: #fff;
-        @include mat-elevation(2);
+        @include mat.elevation(2);
       }
     }
   }
@@ -101,6 +102,11 @@ $accent: map-get($theme, accent);
         .noc-cell-floating-title {
           color: map-get($primary, default);
         }
+
+        .noc-edit-button,
+        .noc-delete-button {
+          visibility: visible;
+        }
       }
 
       &.noc-aspect-cell {
@@ -139,9 +145,28 @@ $accent: map-get($theme, accent);
       }
 
       .noc-edit-button {
+        visibility: hidden;
         position: absolute;
         bottom: 0;
         right: 0;
+      }
+
+      .noc-delete-button {
+        visibility: hidden;
+        @include deep-height(20px);
+        @include deep-width(20px);
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        line-height: 15px;
+        color: #ee7979;
+        border-radius: 0;
+
+        &:hover {
+          background-color: #ee7979;
+          color: #fff;
+        }
       }
 
       &.noc-highlight-match {

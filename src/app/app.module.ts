@@ -3,17 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
-import { ContextMenuModule } from 'ngx-contextmenu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { NoctuaModule } from '@noctua/noctua.module';
 import { NoctuaProgressBarModule } from '@noctua/components';
-
 import { NoctuaSharedModule } from '@noctua/shared.module';
 import { noctuaConfig } from './noctua-config';
 import { AppComponent } from './app.component';
 import { LayoutModule } from 'app/layout/layout.module';
-
-import { PagesModule } from './main/pages/pages.module';
 import { AppsModule } from './main/apps/apps.module';
 import {
     faAngleDoubleDown,
@@ -58,11 +54,12 @@ import {
     faTable,
     faTasks,
     faTimes,
+
     faUndo,
     faUser,
     faUsers,
 } from '@fortawesome/free-solid-svg-icons';
-import { faCheckCircle, faTimesCircle } from '@fortawesome/free-regular-svg-icons';
+import { faCheckCircle, faTimesCircle, faTrashAlt, } from '@fortawesome/free-regular-svg-icons';
 import { faGithub, faFacebook, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { NoctuaDataService } from '@noctua.common/services/noctua-data.service';
@@ -92,7 +89,6 @@ const appRoutes: Routes = [
         RouterModule.forRoot(appRoutes, { relativeLinkResolution: 'legacy' }),
         // Noctua Main and Shared modules
         NoctuaModule.forRoot(noctuaConfig),
-        ContextMenuModule.forRoot(),
         NoctuaSharedModule,
         LayoutModule,
         RouterModule,
@@ -104,7 +100,6 @@ const appRoutes: Routes = [
         MatSidenavModule,
 
         //Noctua App 
-        PagesModule,
         AppsModule
     ],
     providers: [
@@ -166,6 +161,7 @@ export class AppModule {
             faSitemap,
             faSortAlphaDown,
             faSortAlphaDownAlt,
+            faTrashAlt,
             faTable,
             faTasks,
             faTimes,

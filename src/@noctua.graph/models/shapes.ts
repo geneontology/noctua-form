@@ -1,16 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, AfterViewInit, Injectable } from '@angular/core';
-import * as jQuery from 'jquery';
-import 'jqueryui';
-import * as _ from 'lodash';
 import * as joint from 'jointjs';
-import * as Backbone from 'backbone';
 
 declare module 'jointjs' {
   namespace shapes {
     namespace noctua {
       class StencilNode extends joint.dia.Link { }
       class NodeCell extends joint.dia.Element { }
-      class NodeCellList extends joint.dia.Element { }
+      // class NodeCellList extends joint.dia.Element { }
       class NodeLink extends joint.dia.Link { }
     }
   }
@@ -20,23 +15,6 @@ export const enum NodeCellType {
   link = 'noctua.NodeLink',
   cell = 'noctua.NodeCellList',
 }
-
-const Link = joint.dia.Link;
-const portAttrs = {
-  '.port-body': {
-    fill: '#16A085',
-    r: 10,
-    magnet: true
-  },
-  'text': {
-    'text': '',
-    'font-size': 12,
-    'ref-x': '50%',
-    'ref-y': .5,
-    'text-anchor': 'middle',
-    'y-alignment': 'middle',
-  }
-};
 
 export const StencilNode = joint.dia.Element.define('noctua.StencilNode', {
   size: { width: 80, height: 80 },
@@ -253,7 +231,6 @@ export const NodeCellList = joint.dia.Element.define('noctua.NodeCellList', {
       cursor: 'pointer',
       visibility: 'hidden',
     },
-
     '.activity-mf-rect': {
       fill: '#d5fdd5',
       stroke: '#fff',
@@ -345,6 +322,9 @@ export const NodeCellList = joint.dia.Element.define('noctua.NodeCellList', {
 
     this.on('change:name change:attributes change:gp', function () {
       this.updateRectangles();
+
+      //this.set('size', { height: 500, width: 120 });
+
       this.trigger('activity-update');
     }, this);
 

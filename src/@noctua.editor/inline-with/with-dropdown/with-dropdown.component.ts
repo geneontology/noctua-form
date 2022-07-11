@@ -123,7 +123,7 @@ export class NoctuaWithDropdownComponent implements OnInit, OnDestroy {
   }
 
   addNewCompany() {
-    let control = <FormArray>this.myForm.controls.companies;
+    let control = <FormArray>this.myForm.controls['companies'];
     control.push(
       this.fb.group({
         company: [''],
@@ -133,7 +133,7 @@ export class NoctuaWithDropdownComponent implements OnInit, OnDestroy {
   }
 
   deleteCompany(index) {
-    let control = <FormArray>this.myForm.controls.companies;
+    let control = <FormArray>this.myForm.controls['companies'];
     control.removeAt(index)
   }
 
@@ -149,7 +149,7 @@ export class NoctuaWithDropdownComponent implements OnInit, OnDestroy {
   }
 
   setCompanies() {
-    let control = <FormArray>this.myForm.controls.companies;
+    let control = <FormArray>this.myForm.controls['companies'];
     this.indata.companies.forEach(x => {
       control.push(this.fb.group({
         projects: this.setProjects(x)
@@ -240,7 +240,7 @@ export class NoctuaWithDropdownComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._unsubscribeAll.next();
+    this._unsubscribeAll.next(null);
     this._unsubscribeAll.complete();
   }
 }

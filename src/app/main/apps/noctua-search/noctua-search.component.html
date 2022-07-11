@@ -7,10 +7,10 @@
       [matTooltipShowDelay]="1500">
       <fa-icon [icon]="['fas', 'search']"></fa-icon>
     </button>
-    <button mat-icon-button color="" class="noc-rounded-button" (click)="toggleLeftDrawer(LeftPanel.relation)"
+    <!--    <button mat-icon-button color="" class="noc-rounded-button" (click)="toggleLeftDrawer(LeftPanel.relation)"
       matTooltip="Relation Search" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
       <mat-icon class="icon-rotate-relation"> linear_scale </mat-icon>
-    </button>
+    </button> -->
     <button mat-icon-button color="" class="noc-rounded-button" (click)="
       toggleLeftDrawer(LeftPanel.contributor)" matTooltip="Browse by contributor"
       [ngClass]="{'noc-active': noctuaSearchMenuService.selectedLeftPanel === LeftPanel.contributor}"
@@ -77,21 +77,29 @@
           to create or edit models. Models may be viewed without login.
         </h4>
         <div *ngIf="noctuaUserService.user" class="noc-create" fxLayout="row" fxLayoutAlign="start center">
-          <button mat-raised-button (click)="createModel('noctua-form')" color=""
+          <button mat-raised-button (click)="createModel(WorkbenchId.VISUAL_PATHWAY_EDITOR)" color=""
             class="noc-rounded-button mr-4 noc-half-button noc-r">
-            CREATE MODEL IN FORM
+            Create Model In <br> <strong>
+              PATHWAY EDITOR
+            </strong>
+            <div class="noc-badge" fxLayout="row" fxLayoutAlign="center center">
+              new
+            </div>
           </button>
-          <button mat-raised-button (click)="createModel('graph-editor')" color=""
+          <button mat-raised-button (click)="createModel(WorkbenchId.FORM)" color=""
             class="noc-rounded-button mr-4 noc-half-button noc-m">
-            CREATE MODEL IN GRAPH EDITOR
+            Create Model In <br><strong>FORM EDITOR</strong>
+          </button>
+          <button mat-raised-button (click)="createModel(WorkbenchId.GRAPH_EDITOR)" color=""
+            class="noc-rounded-button mr-4 noc-half-button noc-m">
+            Create Model In <br> <strong>
+              GRAPH EDITOR
+            </strong>
           </button>
           <button mat-raised-button (click)="toggleReviewMode()" color=""
             class="noc-rounded-button noc-half-button noc-l noc-review-mode-button"
-            [ngClass]="{'noc-selected': noctuaSearchMenuService.reviewMode !== ReviewMode.off}" fxLayout="row"
-            fxLayoutAlign="start center">
-            <div class="noc-title">
-              ANNOTATION REVIEW
-            </div>
+            [ngClass]="{'noc-selected': noctuaSearchMenuService.reviewMode !== ReviewMode.off}">
+            ANNOTATION REVIEW
           </button>
         </div>
       </div>
@@ -143,8 +151,8 @@
       <div [ngSwitch]="noctuaSearchMenuService.selectedRightPanel" class="h-100-p">
         <noc-cam-form [panelDrawer]="rightDrawer" *ngSwitchCase="RightPanel.camForm">
         </noc-cam-form>
-        <noc-duplicate-cam-form [panelDrawer]="rightDrawer" *ngSwitchCase="RightPanel.duplicateCamForm">
-        </noc-duplicate-cam-form>
+        <noc-copy-model [panelDrawer]="rightDrawer" [panelSide]="'right'" *ngSwitchCase="RightPanel.copyModel">
+        </noc-copy-model>
       </div>
     </mat-drawer>
   </mat-drawer-container>

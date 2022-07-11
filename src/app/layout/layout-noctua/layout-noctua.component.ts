@@ -33,7 +33,7 @@ import { NoctuaCommonMenuService } from '@noctua.common/services/noctua-common-m
         this.noctuaCommonMenuService.setLeftSidenav(this.leftSidenav);
     }
     ngOnDestroy(): void {
-        this._unsubscribeAll.next();
+        this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
     }
 }

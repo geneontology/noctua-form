@@ -1,15 +1,13 @@
 import { Component, OnDestroy, OnInit, ViewChild, ChangeDetectorRef, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { noctuaAnimations } from '@noctua/animations';
-import { takeUntil } from 'rxjs/internal/operators';
 import { NoctuaSearchService } from '@noctua.search/services/noctua-search.service';
 
 import {
   NoctuaFormConfigService,
   NoctuaUserService,
   CamService,
-
   Cam,
   ActivityDisplayType,
 } from '@geneontology/noctua-form-base';
@@ -281,11 +279,13 @@ export class CamsTableComponent implements OnInit, OnDestroy {
     this.openRightDrawer(RightPanel.camForm)
   }
 
-  openDuplicateCamForm(cam: Cam) {
+  openCopyModel(cam: Cam) {
+    this.camService.loadCamMeta(cam)
     this.camService.cam = cam;
+
     this.camService.onCamChanged.next(cam);
 
-    this.openRightDrawer(RightPanel.duplicateCamForm)
+    this.openRightDrawer(RightPanel.copyModel)
   }
 
   openLeftDrawer(panel: LeftPanel) {
@@ -307,7 +307,7 @@ export class CamsTableComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._unsubscribeAll.next();
+    this._unsubscribeAll.next(null);
     this._unsubscribeAll.complete();
   }
 

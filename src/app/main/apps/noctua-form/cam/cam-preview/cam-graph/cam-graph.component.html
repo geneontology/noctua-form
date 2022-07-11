@@ -22,10 +22,6 @@
                 <strong>{{ node.data.activity.presentation.gpText}}</strong>
               </div>
               <div class="noc-node-actions" fxFlex="40px" fxLayout="column" fxLayoutAlign="start center">
-                <div mat-button (click)="openActivityForm(node.data.activity)" matTooltip="Details"
-                  [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
-                  <mat-icon>edit </mat-icon>
-                </div>
                 <div (click)="openActivityConnectorList(node.data.activity)" class="noc-connector" action="p"
                   matTooltip="connect" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500" fxLayout="column"
                   fxLayoutAlign="center center">

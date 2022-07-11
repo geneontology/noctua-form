@@ -1,10 +1,8 @@
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
 import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
 import { map, finalize } from 'rxjs/operators';
-
 import {
     Cam,
     Contributor,
@@ -13,14 +11,13 @@ import {
     NoctuaFormConfigService,
     NoctuaUserService,
     Entity,
-
     NoctuaGraphService,
     CamService,
     NoctuaLookupService
 } from '@geneontology/noctua-form-base';
 import { SearchCriteria, SearchFilterType } from './../models/search-criteria';
 import { saveAs } from 'file-saver';
-import { forOwn, each, find, groupBy } from 'lodash';
+import { find, groupBy } from 'lodash';
 import { CurieService } from '@noctua.curie/services/curie.service';
 import { CamPage } from './../models/cam-page';
 import { SearchHistory } from './../models/search-history';
@@ -28,16 +25,10 @@ import { NoctuaDataService } from '@noctua.common/services/noctua-data.service';
 import { NoctuaSearchMenuService } from './search-menu.service';
 import { MiddlePanel } from '../models/menu-panels';
 
-declare const require: any;
-
-const amigo = require('amigo2');
-
 @Injectable({
     providedIn: 'root'
 })
 export class NoctuaSearchService {
-    linker = new amigo.linker();
-
     searchHistory: SearchHistory[] = [];
     contributors: Contributor[] = [];
     groups: Group[] = [];
@@ -113,7 +104,9 @@ export class NoctuaSearchService {
 
         self.noctuaDataService.onOrganismsChanged
             .subscribe(organisms => {
-                this.organisms = organisms;
+                if (organisms) {
+                    this.organisms = organisms;
+                }
             });
 
         //For testing
@@ -142,7 +135,7 @@ export class NoctuaSearchService {
             promises.push(self.noctuaLookupService.getTermDetail(term.id))
         })
 
-        forkJoin(promises).subscribe((response: []) => {
+        forkJoin(promises).subscribe((response: any[]) => {
             if (response) {
                 terms.forEach((term) => {
                     const found = find(response, { id: term.id })

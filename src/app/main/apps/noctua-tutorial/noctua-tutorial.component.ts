@@ -130,7 +130,7 @@ export class NoctuaTutorialComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._unsubscribeAll.next();
+    this._unsubscribeAll.next(null);
     this._unsubscribeAll.complete();
   }
 
@@ -153,8 +153,8 @@ export class NoctuaTutorialComponent implements OnInit, OnDestroy {
     this.noctuaFormMenuService.openLeftDrawer(LeftPanel.findReplace);
   }
 
-  openDuplicateCamForm() {
-    this.noctuaFormMenuService.openLeftDrawer(LeftPanel.duplicateCamForm);
+  openCopyModel() {
+    this.noctuaFormMenuService.openLeftDrawer(LeftPanel.copyModel);
   }
 
   resetCam(cam: Cam) {

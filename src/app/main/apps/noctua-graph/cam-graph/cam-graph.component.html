@@ -22,6 +22,20 @@
         matTooltip="Automatic Tree Layout" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
         Automatic Layout
       </button>
+      <span class='mr-4'>
+        <strong>Layout Detail</strong> :
+      </span>
+      <button mat-stroked-button class="noc-rounded-button noc-action-button noc-half-button noc-xs" color="primary"
+        [matMenuTriggerFor]="graphLayoutDetailMenu">
+        {{noctuaGraphEditorService.selectedGraphLayoutDetail.label}} <fa-icon *ngIf="cam.expanded"
+          [icon]="['fas', 'caret-down']"></fa-icon>
+      </button>
+      <mat-menu #graphLayoutDetailMenu="matMenu" class="noc-dropdown-menu">
+        <button mat-menu-item *ngFor="let graphLayoutDetail of noctuaFormConfigService.graphLayoutDetail.options"
+          class="" (click)="selectLayoutDetail(graphLayoutDetail)">
+          {{graphLayoutDetail.label}}
+        </button>
+      </mat-menu>
 
       <button mat-icon-button (click)="zoomOut()" color="" class="noc-rounded-button noc-half-button noc-l">
         <fa-icon class="" [icon]="['fas', 'search-minus']"></fa-icon>

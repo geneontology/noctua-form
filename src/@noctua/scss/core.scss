@@ -1,8 +1,9 @@
+@use '@angular/material' as mat;
 @import '~perfect-scrollbar/css/perfect-scrollbar';
 @import "noctua";
-@include mat-core();
-@include angular-material-typography($typography);
-@include angular-material-theme($theme);
+@include mat.core();
+@include mat.all-component-typographies($typography);
+@include mat.all-component-themes($theme);
 @import "partials/reset";
 @import "partials/normalize";
 @import "partials/scrollbars";

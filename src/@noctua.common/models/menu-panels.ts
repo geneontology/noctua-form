@@ -8,7 +8,8 @@ export enum LeftPanel {
     replace = 'replace',
     artBasket = 'artBasket',
     activityForm = 'activityForm',
-    camForm = 'camForm'
+    camForm = 'camForm',
+    copyModel = 'copyModel',
 };
 
 export enum MiddlePanel {

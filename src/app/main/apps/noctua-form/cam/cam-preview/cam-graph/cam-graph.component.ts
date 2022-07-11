@@ -199,29 +199,6 @@ export class CamGraphComponent implements OnInit, OnDestroy {
     // this.noctuaFormMenuService.openRightDrawer(LeftPanel.connectorForm);
   }
 
-  openActivityForm(activity: Activity) {
-    this.camService.onCamChanged.next(this.cam);
-    this.camService.activity = activity;
-    this.noctuaActivityFormService.initializeForm(activity);
-    //this.noctuaFormMenuService.openRightDrawer(LeftPanel.activityForm);
-  }
-
-
-
-  deleteActivity(activity: Activity) {
-    const self = this;
-
-    const success = () => {
-      this.camService.deleteActivity(activity).then(() => {
-        self.noctuaFormDialogService.openInfoToast('Activity successfully deleted.', 'OK');
-      });
-    };
-
-    this.confirmDialogService.openConfirmDialog('Confirm Delete?',
-      'You are about to delete an activity.',
-      success);
-  }
-
   public getStyles(node: Node): any {
     return {
       "background-color": node.data.backgroundColor,
@@ -229,7 +206,7 @@ export class CamGraphComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.unsubscribeAll.next();
+    this.unsubscribeAll.next(null);
     this.unsubscribeAll.complete();
   }
 }

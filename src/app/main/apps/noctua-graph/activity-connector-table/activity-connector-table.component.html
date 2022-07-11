@@ -42,13 +42,20 @@
               <div fxFlex="180px">
                 <p>Effect Direction</p>
               </div>
-              <mat-radio-group fxFlex="" formControlName="causalEffect" fxLayout="column" fxLayoutAlign="start start">
+              <mat-radio-group fxFlex="135px" formControlName="causalEffect" fxLayout="column"
+                fxLayoutAlign="start start">
                 <mat-radio-button *ngFor="let causalEffect of noctuaFormConfigService.causalEffect.options"
                   class="noc-radio-button-rounded mb-8" [value]="causalEffect"
                   [checked]="causalEffect.name === connectorActivity?.rule.effectDirection.direction.name">
                   {{causalEffect.label}}
                 </mat-radio-button>
               </mat-radio-group>
+              <div fxFlex="" fxLayout="column" fxLayoutAlign="center start">
+                <div class="noc-hint noc-sm">
+                  The mechanism regulation should be known, so it should be possible to pick the direction of the
+                  regulation.
+                </div>
+              </div>
             </div>
             <div class="px-8 noc-group-row" fxLayout="row" fxLayoutAlign="start center">
               <div fxFlex="180px" class="pr-8">
@@ -112,13 +119,20 @@
             <div fxFlex="180px">
               <p>Effect Direction</p>
             </div>
-            <mat-radio-group fxFlex="" formControlName="causalEffect" fxLayout="column" fxLayoutAlign="start start">
+            <mat-radio-group fxFlex="135px" formControlName="causalEffect" fxLayout="column"
+              fxLayoutAlign="start start">
               <mat-radio-button *ngFor="let causalEffect of noctuaFormConfigService.causalEffect.options"
                 class="noc-radio-button-rounded mb-8" [value]="causalEffect"
                 [checked]="causalEffect.name === connectorActivity?.rule.effectDirection.direction.name">
                 {{causalEffect.label}}
               </mat-radio-button>
             </mat-radio-group>
+            <div fxFlex="" fxLayout="column" fxLayoutAlign="center start">
+              <div class="noc-hint noc-sm">
+                The mechanism regulation should be known, so it should be possible to pick the direction of the
+                regulation.
+              </div>
+            </div>
           </div>
         </div>
         <div class="noc-section-header noc-bt" fxLayout="row" fxLayoutAlign="start center">
@@ -139,6 +153,10 @@
         <noc-evidence-form-table class="w-100-p" [settings]="settings" [options]="evidenceOptions" [cam]="cam"
           [activity]="connectorActivity" [entity]="connectorActivity.subjectNode">
         </noc-evidence-form-table>
+        <!--
+        <noc-activity-form-table-node [settings]="settings" [options]="evidenceOptions" [cam]="cam"
+          [activity]="connectorActivity" [entity]="connectorActivity.subjectNode" class="w-100-p">
+        </noc-activity-form-table-node>-->
       </div>
     </div>
   </div>

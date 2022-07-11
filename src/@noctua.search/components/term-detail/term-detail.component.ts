@@ -61,7 +61,7 @@ export class TermDetailComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
-    this._unsubscribeAll.next();
+    this._unsubscribeAll.next(null);
     this._unsubscribeAll.complete();
   }
 
@@ -103,7 +103,6 @@ export class TermDetailComponent implements OnInit, OnDestroy {
     const searchCriteria = new SearchCriteria()
     searchCriteria.terms = [node.term]
     const url = `${environment.noctuaLandingPageUrl}?${searchCriteria.build()}`
-    console.log(url)
     window.open(url, '_blank');
   }
 
@@ -112,7 +111,6 @@ export class TermDetailComponent implements OnInit, OnDestroy {
     searchCriteria.terms = [node.term]
     searchCriteria.contributors = [this.noctuaUserService.user]
     const url = `${environment.noctuaLandingPageUrl}?${searchCriteria.build()}`
-    console.log(url)
     window.open(url, '_blank')
 
   }

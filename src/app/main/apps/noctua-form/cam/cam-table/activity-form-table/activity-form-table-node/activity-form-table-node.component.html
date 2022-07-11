@@ -10,12 +10,9 @@
       <div class="noc-cell-floating-title">
         {{entity.label}}
       </div>
-      <span class="noc-old-term" *ngIf="entity.term?.modified && entity.term?.termHistory?.length>0">
-        {{entity.term?.termHistory[0]?.label}}
-        <a (click)="$event.stopPropagation()" href="{{entity.term?.termHistory[0]?.url}}" target="_blank">
-          {{ entity.term?.termHistory[0]?.id }}
-        </a>
-      </span>
+      <button mat-icon-button *ngIf="entity.canDelete" (click)="deleteEntity(entity)" class="noc-delete-button">
+        <fa-icon [icon]="['far', 'trash-alt']"></fa-icon>
+      </button>
       <span class="">
         {{entity.term?.label}} <br>
         <a (click)="$event.stopPropagation()" href="{{entity.term?.url}}" target="_blank">
@@ -25,20 +22,6 @@
       <noctua-inline-editor *ngIf="noctuaUserService.user && entity.term && options.editableTerms" [cam]="cam"
         [activity]='activity' [entity]="entity" [category]="EditorCategory.term" class="noc-edit-button">
       </noctua-inline-editor>
-    </div>
-    <div *ngIf="settings.showAspect" class="noc-aspect-cell noc-entity-cell" fxLayout="column"
-      fxLayoutAlign="start stretch">
-      <mat-chip *ngIf="entity.aspect" class="noc-chip-xs noc-aspect {{entity.aspect}}" fxLayout="column"
-        fxLayoutAlign="center center">
-        <span>{{entity.aspect}}</span>
-      </mat-chip>
-    </div>
-    <div *ngIf="settings.showIsExtension" class="noc-extension-cell noc-entity-cell" fxLayout="column"
-      fxLayoutAlign="start stretch">
-      <mat-chip *ngIf="entity.isExtension" class="noc-chip-xs noc-extension" fxLayout="column"
-        fxLayoutAlign="center center">
-        <span>ext.</span>
-      </mat-chip>
     </div>
     <div *ngIf="settings.showEvidence" fxFlex="" class="noc-evidence-cell p-0" fxLayout="row"
       fxLayoutAlign="start stretch">
@@ -64,11 +47,17 @@
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #entityMenu="matMenu" class="noc-dropdown-menu">
-        <button mat-menu-item *ngIf="entity.aspect" class="" (click)="editEntity(entity)">
-          Edit
+        <button mat-menu-item *ngIf="entity.aspect" class="" (click)="openSearchDatabaseDialog(entity)">
+          Search Annotations
         </button>
+        <!-- <button mat-menu-item *ngIf="entity.aspect" class="" (click)="editEntity(entity)">
+          Edit
+        </button> -->
         <button mat-menu-item *ngIf="entity.insertMenuNodes" [matMenuTriggerFor]="addMenu">Add</button>
         <button mat-menu-item [matMenuTriggerFor]="evidenceMenu">Evidence</button>
+        <button mat-menu-item *ngIf="entity.canDelete" class="" color="warn" (click)="deleteEntity(entity)">
+          Delete
+        </button>
       </mat-menu>
       <mat-menu #addMenu="matMenu">
         <button mat-menu-item *ngFor="let insertMenuItem of entity.insertMenuNodes" class=""

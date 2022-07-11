@@ -1,3 +1,4 @@
+@use '@angular/material' as mat;
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
 
@@ -5,22 +6,24 @@ $primary: map-get($theme, primary);
 $accent: map-get($theme, accent);
 
 noc-noctua-apps {
-  @include deep-width(500px);
+  display: block;
+  @include deep-width(370px);
   z-index: 100;
   background-color: white;
-  @include mat-elevation(4);
+  @include mat.elevation(4);
 
   .noc-create {
     padding: 8px;
 
     button {
       color: map-get($accent, default);
-      @include mat-elevation(4);
+      font-size: 10px;
+      @include mat.elevation(4);
     }
   }
 
   .noc-cam-form {
-    @include deep-width(300px);
+    @include deep-width(100%);
   }
 
   .noc-beta {
@@ -29,8 +32,8 @@ noc-noctua-apps {
 
   .noc-header {
     @include deep-height(40px);
-    background-color: #EEE;
-    border-bottom: #CCC solid 1px;
+    background-color: #eee;
+    border-bottom: #ccc solid 1px;
 
     mat-icon-button {
       @include deep-height(40px);
@@ -109,7 +112,6 @@ noc-noctua-apps {
           color: #222;
           background-color: rgba(#000000, 0.2);
         }
-
       }
 
       @include noc-chip-color(#bbc9cc);
@@ -118,7 +120,7 @@ noc-noctua-apps {
         @include noc-chip-color(#bbc9cc);
 
         .noc-icon {
-          color: #59939e
+          color: #59939e;
         }
       }
 
@@ -142,7 +144,6 @@ noc-noctua-apps {
           // border: #d59f80 solid 1px;/
         }
       }
-
     }
   }
 }

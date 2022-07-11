@@ -16,6 +16,10 @@
       [ngClass]="{'noc-highlight-match': entity.term?.highlight,
             'noc-highlight-modified': entity.term?.modified,
             'noc-highlight-match-current': camService.currentMatch?.uuid && entity.term?.uuid===camService.currentMatch?.uuid}">
+      <!--   <button mat-icon-button *ngIf="entity.canDelete" (click)="deleteEntity(entity)" class="noc-delete-button">
+        <fa-icon [icon]="['far', 'trash-alt']"></fa-icon>
+      </button> -->
+
       <span class="noc-old-term" *ngIf="entity.term?.modified && entity.term?.termHistory?.length>0">
         {{entity.term?.termHistory[0]?.label}}
         <a (click)="$event.stopPropagation()" href="{{entity.term?.termHistory[0]?.url}}" target="_blank">
@@ -56,9 +60,9 @@
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #entityMenu="matMenu" class="noc-dropdown-menu">
-        <button mat-menu-item *ngIf="entity.aspect" class="" (click)="editEntity(entity)">
+        <!--   <button mat-menu-item *ngIf="entity.aspect" class="" (click)="editEntity(entity)">
           Edit
-        </button>
+        </button> -->
         <button mat-menu-item *ngIf="entity.treeLevel===0" class="" (click)="toggleIsComplement(entity)">
           NOT Qualifier
         </button>

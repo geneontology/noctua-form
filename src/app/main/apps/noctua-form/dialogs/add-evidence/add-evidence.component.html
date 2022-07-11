@@ -9,14 +9,82 @@
       </button>
     </mat-toolbar-row>
   </mat-toolbar>
-  <div mat-dialog-content class="noc-dialog-body" noctuaPerfectScrollbar>
-    <div fxLayout="column" fxLayoutAlign="start center" class="w-100-p">
-
+  <div mat-dialog-content class="noc-dialog-body">
+    <div fxLayout="row" fxLayoutAlign="start center" class="w-100-p">
+      <ng-container [formGroup]="evidenceFormGroup">
+        <div class="noc-edit-field p-4" fxFlex="250px">
+          <mat-form-field appearance="outline" class="noc-sm w-100-p">
+            <mat-label>Evidence</mat-label>
+            <textarea type="text" matInput formControlName="evidence" [matAutocomplete]="evidenceAuto" rows="2"
+              (focus)="updateEvidenceList()"></textarea>
+            <mat-autocomplete #evidenceAuto="matAutocomplete" [displayWith]="evidenceDisplayFn"
+              class="noc-term-autocomplete">
+              <mat-option *ngFor="let item of entity?.predicate?.evidenceLookup.results" [value]="item">
+                <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
+                  <div class="noc-term-label">
+                    {{ item.label }}
+                  </div>
+                  <span fxFlex></span>
+                  <div class="noc-term-id mr-8">
+                    <strong>
+                      {{ item.xref }}
+                    </strong>
+                  </div>
+                  <div class="noc-term-id">
+                    <a *ngIf="item.link" (click)="$event.stopPropagation()" href="{{item.link}}" target="_blank">
+                      {{ item.id }}
+                    </a>
+                    <span *ngIf="!item.link">
+                      {{ item.id }}
+                    </span>
+                  </div>
+                </div>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="noc-edit-field p-4" fxFlex="150px">
+          <mat-form-field appearance="outline" class="noc-sm w-100-p">
+            <mat-label>Reference</mat-label>
+            <textarea matInput formControlName="reference" [matAutocomplete]="referenceAuto" rows="2" autocomplete="off"
+              (focus)="updateReferenceList()"></textarea>
+            <button mat-icon-button matSuffix (click)="openAddReference($event, 'reference')"
+              class="noc-evidence-db-trigger">
+              <mat-icon>playlist_add</mat-icon>
+            </button>
+            <mat-autocomplete #referenceAuto="matAutocomplete" class="noc-term-autocomplete">
+              <mat-option *ngFor="let item of entity?.predicate?.referenceLookup.results" [value]="item">
+                <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
+                  <div class="noc-term-label">
+                    {{ item }}
+                  </div>
+                </div>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="noc-edit-field p-4" fxFlex fxFlex="150px">
+          <mat-form-field appearance="outline" class="noc-sm w-100-p">
+            <mat-label>With</mat-label>
+            <textarea matInput formControlName="with" [matAutocomplete]="withAuto" rows="2" (focus)="updateWithList()"
+              autocomplete="off"></textarea>
+            <mat-autocomplete #withAuto="matAutocomplete" class="noc-term-autocomplete">
+              <mat-option *ngFor="let item of entity?.predicate?.withLookup.results" [value]="item">
+                <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
+                  <div class="noc-term-label">
+                    {{ item }}
+                  </div>
+                </div>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+      </ng-container>
     </div>
   </div>
   <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="space-between center">
     <span fxFlex></span>
     <button (click)='close()' type="button" mat-raised-button color="" class="mr-8">Cancel</button>
-    <button type="button" mat-raised-button color="primary">Save</button>
+    <button (click)='save()' type="button" mat-raised-button color="primary">Save</button>
   </div>
 </div>

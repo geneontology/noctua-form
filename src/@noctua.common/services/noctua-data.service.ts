@@ -18,7 +18,7 @@ export class NoctuaDataService {
   constructor(
     private httpClient: HttpClient,
     private noctuaUserService: NoctuaUserService) {
-    this.onOrganismsChanged = new BehaviorSubject([]);
+    this.onOrganismsChanged = new BehaviorSubject(null);
 
   }
 
@@ -104,7 +104,7 @@ export class NoctuaDataService {
 
         const organisms = response.map((item) => {
           const organism: Organism = {
-            taxonName: item.label,
+            taxonName: item.label ? item.label : '',
             taxonIri: item.id
           };
 
@@ -129,7 +129,7 @@ export class NoctuaDataService {
   private getColor(name: string) {
     const colors = Object.keys(MatColors.all);
     const index = (name.charCodeAt(0) - 65) % (colors.length - 5);
-    // console.log(colors)
+
     if (index && index > 0) {
       return MatColors.getColor(colors[index])[100];
     } else {

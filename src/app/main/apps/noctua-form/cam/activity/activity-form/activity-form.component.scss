@@ -1,3 +1,4 @@
+@use '@angular/material' as mat;
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
 
@@ -8,7 +9,7 @@ $accent: map-get($theme, accent);
   //width: 100%; // display: block;
   @include deep-width(40px);
   background-color: white;
-  @include mat-elevation(4);
+  @include mat.elevation(4);
 
   noc-entity-form {
     display: block;
@@ -52,7 +53,7 @@ $accent: map-get($theme, accent);
     height: 100px;
     // padding: 12px;
     //box-shadow: 0 1px 40px 0 #B0C1D9;
-    @include mat-elevation(2);
+    @include mat.elevation(2);
     text-align: center;
     z-index: 4;
     border: 1px solid #2e6f9a;

@@ -175,7 +175,7 @@ dfn {
  */
 
 mark {
-  background-color: #FF0;
+  background-color: #ff0;
   color: #000;
 }
 
@@ -484,5 +484,5 @@ template {
  */
 
 [hidden] {
-  display: none;
+  display: none !important;
 }

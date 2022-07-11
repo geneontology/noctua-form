@@ -16,13 +16,17 @@
         </div>
         <span fxFlex></span>
       </div>
-      <div class="noc-section-body p-8" fxLayout="row" fxLayoutAlign="start center">
+      <div class="noc-section-body p-8" fxLayout="column" fxLayoutAlign="start center">
         <div class="noc-create w-100-p" fxLayout="row" fxLayoutAlign="start center">
-          <button mat-raised-button (click)="createModel('noctua-form')" fxFlex="50"
-            class="noc-rounded-button mr-4 noc-half-button noc-r">
-            NOCTUA FORM
+          <button mat-raised-button (click)="createModel(WorkbenchId.VISUAL_PATHWAY_EDITOR)" fxFlex="33"
+            class="noc-rounded-button noc-half-button noc-r">
+            PATHWAY EDITOR
           </button>
-          <button mat-raised-button (click)="createModel('graph-editor')" fxFlex="50"
+          <button mat-raised-button (click)="createModel(WorkbenchId.FORM)" fxFlex="33"
+            class="noc-rounded-button mr-4 noc-half-button noc-m">
+            FORM EDITOR
+          </button>
+          <button mat-raised-button (click)="createModel(WorkbenchId.GRAPH_EDITOR)" fxFlex="33"
             class="noc-rounded-button noc-half-button noc-l">
             GRAPH EDITOR
           </button>
@@ -44,7 +48,7 @@
                 <fa-icon [icon]="['fas', 'list-alt']"></fa-icon>
               </div>
               <div fxFlex="" class="noc-chip-label">
-                Noctua Form
+                Form Editor
               </div>
             </mat-chip>
           </a>

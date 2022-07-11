@@ -8,8 +8,6 @@ import {
   CamService,
   Entity,
   noctuaFormConfig,
-
-  NoctuaGraphService,
   ActivityError,
   ErrorType,
   ErrorLevel,
@@ -62,7 +60,6 @@ export class NoctuaEditorDropdownComponent implements OnInit, OnDestroy {
     public dialogRef: EditorDropdownOverlayRef,
     @Inject(editorDropdownData) public data: any,
     private noctuaFormDialogService: NoctuaFormDialogService,
-    private noctuaGraphService: NoctuaGraphService,
     private camService: CamService,
     private noctuaActivityEntityService: NoctuaActivityEntityService,
     private inlineReferenceService: InlineReferenceService,
@@ -132,6 +129,12 @@ export class NoctuaEditorDropdownComponent implements OnInit, OnDestroy {
 
           });
         break;
+      case EditorCategory.evidenceAll:
+        self.noctuaActivityEntityService.addEvidence().then(() => {
+          this.close();
+          self.noctuaFormDialogService.openInfoToast('Activity successfully updated.', 'OK');
+        });
+        break;
       default:
         self.noctuaActivityEntityService.saveActivity().then(() => {
           this.close();
@@ -139,25 +142,6 @@ export class NoctuaEditorDropdownComponent implements OnInit, OnDestroy {
         });
     }
   }
-
-  addEvidence() {
-    const self = this;
-
-    self.entity.predicate.addEvidence();
-    self.noctuaActivityFormService.initializeForm();
-  }
-
-  removeEvidence(index: number) {
-    const self = this;
-
-    self.entity.predicate.removeEvidence(index);
-    self.noctuaActivityFormService.initializeForm();
-  }
-
-  toggleIsComplement() {
-
-  }
-
 
   openSearchDatabaseDialog(entity: ActivityNode) {
     const self = this;
@@ -230,17 +214,24 @@ export class NoctuaEditorDropdownComponent implements OnInit, OnDestroy {
     self.noctuaActivityFormService.initializeForm();
   }
 
-  openSelectEvidenceDialog() {
+  updateTermList() {
     const self = this;
-    const evidences: Evidence[] = this.camService.getUniqueEvidence(self.noctuaActivityFormService.activity);
-    const success = (selected) => {
-      if (selected.evidences && selected.evidences.length > 0) {
-        self.entity.predicate.setEvidence(selected.evidences);
-        self.noctuaActivityFormService.initializeForm();
-      }
-    };
+    this.camService.updateTermList(self.noctuaActivityFormService.activity, this.entity);
+  }
 
-    self.noctuaFormDialogService.openSelectEvidenceDialog(evidences, success);
+  updateEvidenceList() {
+    const self = this;
+    this.camService.updateEvidenceList(self.noctuaActivityFormService.activity, this.entity);
+  }
+
+  updateReferenceList() {
+    const self = this;
+    this.camService.updateReferenceList(self.noctuaActivityFormService.activity, this.entity);
+  }
+
+  updateWithList() {
+    const self = this;
+    this.camService.updateWithList(self.noctuaActivityFormService.activity, this.entity);
   }
 
 
@@ -292,7 +283,7 @@ export class NoctuaEditorDropdownComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._unsubscribeAll.next();
+    this._unsubscribeAll.next(null);
     this._unsubscribeAll.complete();
   }
 }

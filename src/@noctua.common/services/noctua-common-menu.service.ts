@@ -7,6 +7,7 @@ import { LeftPanel, MiddlePanel, RightPanel } from './../models/menu-panels';
 import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 import { BehaviorSubject } from 'rxjs';
 import { SettingsOptions } from './../models/graph-settings';
+import { WorkbenchId } from '@noctua.common/models/workench-id';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +33,7 @@ export class NoctuaCommonMenuService {
     this.onCamSettingsChanged = new BehaviorSubject(settings);
   }
 
-  createModel(type: 'graph-editor' | 'noctua-form') {
+  createModel(type: WorkbenchId) {
     const self = this;
 
     const _newModelBbopManager = this._noctuaGraphService.registerManager();
@@ -42,16 +43,16 @@ export class NoctuaCommonMenuService {
       let params = new HttpParams();
       params = params.append('model_id', modelId);
       params = params.append('barista_token', self.noctuaUserService.baristaToken);
+
       const paramsString = params.toString();
-
-      const graphEditorUrl = environment.noctuaUrl + '/editor/graph/' + modelId + '?' + paramsString;
-      const noctuaFormUrl = environment.workbenchUrl + 'noctua-form?' + paramsString;
-
-      if (type === 'graph-editor') {
-        window.open(graphEditorUrl, '_blank');
-      } else if (type === 'noctua-form') {
-        window.open(noctuaFormUrl, '_blank');
+      const urls =
+      {
+        [WorkbenchId.GRAPH_EDITOR]: `${environment.noctuaUrl}/editor/graph/${modelId}?${paramsString}`,
+        [WorkbenchId.FORM]: `${environment.workbenchUrl}${WorkbenchId.FORM}?${paramsString}`,
+        [WorkbenchId.VISUAL_PATHWAY_EDITOR]: `${environment.workbenchUrl}${WorkbenchId.VISUAL_PATHWAY_EDITOR}?${paramsString}`
       }
+
+      window.open(urls[type], '_blank');
     });
   }
 

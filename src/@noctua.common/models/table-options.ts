@@ -11,4 +11,5 @@ export interface TableOptions {
   editableRelation?: boolean;
   showMenu?: boolean;
   showEvidenceMenu?: boolean;
+  showAddEvidenceButton?: boolean;
 };

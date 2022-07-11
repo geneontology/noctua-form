@@ -23,6 +23,7 @@ import { ArtBasket } from '@noctua.search/models/art-basket';
 import { NoctuaReviewSearchService } from '@noctua.search/services/noctua-review-search.service';
 import { NgScrollbar } from 'ngx-scrollbar';
 import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
+import { WorkbenchId } from '@noctua.common/models/workench-id';
 
 @Component({
   selector: 'noc-noctua-search',
@@ -52,16 +53,16 @@ export class NoctuaSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   scrollbarConfig = {
     suppressScrollX: true
   }
-
+  WorkbenchId = WorkbenchId;
   ReviewMode = ReviewMode;
   LeftPanel = LeftPanel;
   MiddlePanel = MiddlePanel;
   RightPanel = RightPanel;
   artBasket: ArtBasket = new ArtBasket();
 
-  camPage: CamPage;
-  public cam: Cam;
-  public user: Contributor;
+  camPage: CamPage | undefined;
+  cam: Cam | undefined;
+  user: Contributor | undefined;
 
   cams: any[] = [];
 
@@ -138,12 +139,12 @@ export class NoctuaSearchComponent implements OnInit, AfterViewInit, OnDestroy {
     this.noctuaSearchMenuService.resultsViewScrollbar = this.scrollbarRef;
   }
 
-  openLeftDrawer(panel) {
+  openLeftDrawer(panel: LeftPanel) {
     this.noctuaSearchMenuService.selectLeftPanel(panel);
     this.noctuaSearchMenuService.openLeftDrawer();
   }
 
-  selectMiddlePanel(panel) {
+  selectMiddlePanel(panel: MiddlePanel) {
     const self = this;
     this.noctuaSearchMenuService.selectMiddlePanel(panel);
 
@@ -162,17 +163,17 @@ export class NoctuaSearchComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  openRightDrawer(panel) {
+  openRightDrawer(panel: RightPanel) {
     this.noctuaSearchMenuService.selectRightPanel(panel);
     this.noctuaSearchMenuService.openRightDrawer();
   }
 
-  toggleLeftDrawer(panel) {
+  toggleLeftDrawer(panel: LeftPanel) {
     this.noctuaSearchMenuService.toggleLeftDrawer(panel);
     this.noctuaSearchMenuService.selectMiddlePanel(MiddlePanel.cams);
   }
 
-  createModel(type: 'graph-editor' | 'noctua-form') {
+  createModel(type: WorkbenchId) {
     this.noctuaCommonMenuService.createModel(type);
   }
 
@@ -208,7 +209,7 @@ export class NoctuaSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._unsubscribeAll.next();
+    this._unsubscribeAll.next(null);
     this._unsubscribeAll.complete();
   }
 }

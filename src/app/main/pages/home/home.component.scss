@@ -1,9 +1,0 @@
-@import "src/@noctua/scss/noctua";
-:host {
-  width: 100%;
-}
-
-.noc-search-form {
-  padding: 15px;
-  @include deep-width(500px);
-}
