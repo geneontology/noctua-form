@@ -14,7 +14,7 @@ import { NoctuaFormDialogService } from 'app/main/apps/noctua-form';
 import { NoctuaConfirmDialogService } from '@noctua/components/confirm-dialog/confirm-dialog.service';
 import { CamCanvas } from '@noctua.graph/models/cam-canvas';
 import { CamStencil } from '@noctua.graph/models/cam-stencil';
-import { NoctuaGraphEditorService } from '@noctua.graph/services/graphEditorService';
+import { NoctuaGraphEditorService } from '@noctua.graph/services/graph-editor-service';
 
 @Injectable({
   providedIn: 'root'

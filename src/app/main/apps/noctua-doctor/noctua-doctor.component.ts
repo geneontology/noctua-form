@@ -23,7 +23,7 @@ import { ArtBasket } from '@noctua.search/models/art-basket';
 import { NoctuaReviewSearchService } from '@noctua.search/services/noctua-review-search.service';
 import { NgScrollbar } from 'ngx-scrollbar';
 import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
-import { NoctuaDoctorMenuService } from '@noctua-doctor/services/doctor-menu.service';
+import { NoctuaDoctorMenuService } from '@noctua.doctor/services/doctor-menu.service';
 import { WorkbenchId } from '@noctua.common/models/workench-id';
 
 @Component({

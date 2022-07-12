@@ -114,7 +114,6 @@ export class CamsTableComponent implements OnInit, OnDestroy {
       'date',
       'contributor',
       'edit',
-      'export',
     ];
 
     if (isReviewMode) {

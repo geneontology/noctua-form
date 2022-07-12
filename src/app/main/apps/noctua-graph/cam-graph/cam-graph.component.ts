@@ -8,7 +8,7 @@ import { NoctuaDataService } from '@noctua.common/services/noctua-data.service';
 import { Activity, Cam, CamOperation, NoctuaFormConfigService, NoctuaGraphService } from '@geneontology/noctua-form-base';
 import { NoctuaShapesService } from '@noctua.graph/services/shapes.service';
 import { noctuaStencil } from '@noctua.graph/data/cam-stencil';
-import { NoctuaGraphEditorService } from '@noctua.graph/services/graphEditorService';
+import { NoctuaGraphEditorService } from '@noctua.graph/services/graph-editor-service';
 
 @Component({
   selector: 'noc-cam-graph',

@@ -57,7 +57,6 @@ export class CamService {
     private curieService: CurieService) {
 
     this.onCamChanged = new BehaviorSubject(null);
-    this.curieUtil = this.curieService.getCurieUtil();
     this.camFormGroup = new BehaviorSubject(null);
     this.camFormGroup$ = this.camFormGroup.asObservable();
 
