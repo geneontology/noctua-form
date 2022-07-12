@@ -4,14 +4,11 @@ $primary: map-get($theme, primary);
 $accent: map-get($theme, accent);
 
 :host {
-
-
-
-  @include media-breakpoint('xs') {
+  @include media-breakpoint("xs") {
     width: 100%;
   }
 
-  @include media-breakpoint-up('sm') {
+  @include media-breakpoint-up("sm") {
     width: 600px;
   }
 
@@ -42,7 +39,6 @@ $accent: map-get($theme, accent);
       text-transform: uppercase;
     }
 
-
     .noc-paginator {
       @include deep-height(0);
     }
@@ -53,7 +49,6 @@ $accent: map-get($theme, accent);
       min-height: 40px;
       font-size: 12px;
     }
-
 
     .mat-cell {
       min-width: 0;
@@ -89,9 +84,8 @@ $accent: map-get($theme, accent);
   .noc-left-panel {
     // min-height: 800px;
     // padding: 12px 8px;
-    background-color: #EEE;
+    background-color: #eee;
     border-right: rgba(map-get($primary, default), 0.6) solid 1px;
-
 
     .noc-term-box {
       font-size: 10px;
@@ -105,7 +99,7 @@ $accent: map-get($theme, accent);
       }
 
       &.noc-term-selected {
-        // background-color: 
+        // background-color:
         color: #000;
         font-weight: bold;
 
@@ -130,7 +124,8 @@ $accent: map-get($theme, accent);
     padding: 0;
   }
 
-  .mat-dialog-content {}
+  .mat-dialog-content {
+  }
 
   .dialog-content-wrapper {
     @include deep-width(100%);

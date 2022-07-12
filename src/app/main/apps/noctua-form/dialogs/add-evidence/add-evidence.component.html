@@ -1,15 +1,14 @@
-<div class="dialog-content-wrapper">
-  <mat-toolbar class="mat-primary m-0">
-    <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="start center">
-      <span class="title dialog-title">
-        Add Evidence</span>
-      <span fxFlex></span>
-      <button mat-icon-button (click)="close()" aria-label="Close dialog">
-        <mat-icon>close</mat-icon>
-      </button>
-    </mat-toolbar-row>
-  </mat-toolbar>
-  <div mat-dialog-content class="noc-dialog-body">
+<div class="dialog-content-wrapper  noc-dialog">
+  <div class="m-0 noc-dialog-header" fxLayout="row" fxLayoutAlign="start center">
+    <span class="noc-dialog-header-title">
+      Add Evidence
+    </span>
+    <span fxFlex></span>
+    <button mat-stroked-button (click)="close()" class="noc-rounded-button noc-sm" aria-label="Close dialog">
+      <mat-icon>close</mat-icon> Close
+    </button>
+  </div>
+  <div class="noc-dialog-body pt-20">
     <div fxLayout="row" fxLayoutAlign="start center" class="w-100-p">
       <ng-container [formGroup]="evidenceFormGroup">
         <div class="noc-edit-field p-4" fxFlex="250px">
@@ -82,7 +81,7 @@
       </ng-container>
     </div>
   </div>
-  <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="space-between center">
+  <div class="m-0 p-8 noc-dialog-footer" fxLayout="row" fxLayoutAlign="space-between center">
     <span fxFlex></span>
     <button (click)='close()' type="button" mat-raised-button color="" class="mr-8">Cancel</button>
     <button (click)='save()' type="button" mat-raised-button color="primary">Save</button>
