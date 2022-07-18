@@ -25,7 +25,7 @@ import { NoctuaSharedModule } from '@noctua/shared.module';
 
 const routes = [
   {
-    path: 'p',
+    path: '',
     component: NoctuaPathwayComponent
   }
 ];
