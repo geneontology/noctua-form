@@ -25,10 +25,11 @@ import { Article } from './../models/article';
 import { Contributor, equalContributor } from '../models/contributor';
 import * as moment from 'moment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { graph as bbopGraph } from 'bbop-graph-noctua';
 
 declare const require: any;
 
-const model = require('bbop-graph-noctua');
+//const model = require('bbop-graph-noctua');
 const barista_client = require('bbop-client-barista');
 const amigo = require('amigo2');
 const barista_response = require('bbop-response-barista');
@@ -158,10 +159,9 @@ export class NoctuaGraphService {
 
   getMetadata(responseData) {
     const self = this;
-    const noctua_graph = model.graph;
     const cam = new Cam()
 
-    cam.graph = new noctua_graph();
+    cam.graph = new bbopGraph();
     cam.graph.load_data_basic(responseData);
 
     cam.id = responseData.id;
@@ -197,18 +197,17 @@ export class NoctuaGraphService {
 
   rebuild(cam: Cam, response) {
     const self = this;
-    const noctua_graph = model.graph;
 
     // cam.loading.status = true;
     // cam.loading.message = 'Loading Model Entities Metadata...';
 
     if (cam.graph) {
-      const inGraph = new noctua_graph();
+      const inGraph = new bbopGraph();
 
       inGraph.load_data_basic(response.data());
       cam.graph.merge_special(inGraph);
     } else {
-      cam.graph = new noctua_graph();
+      cam.graph = new bbopGraph();
       cam.graph.load_data_basic(response.data());
     }
 
@@ -265,9 +264,8 @@ export class NoctuaGraphService {
 
   rebuildFromStoredApi(cam: Cam, activeModel) {
     const self = this;
-    const noctua_graph = model.graph;
 
-    cam.graph = new noctua_graph();
+    cam.graph = new bbopGraph();
     cam.graph.load_data_basic(activeModel);
 
     cam.id = activeModel.id;

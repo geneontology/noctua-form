@@ -3,16 +3,15 @@ import { NavigationEnd, NavigationStart, Router, ActivatedRoute } from '@angular
 
 import {
     Cam,
-    Contributor,
     CamService,
     NoctuaUserService,
     NoctuaFormConfigService,
-    NoctuaGraphService,
     NoctuaActivityFormService,
     ActivityType,
     NoctuaFormMenuService,
     LeftPanel,
 } from '@geneontology/noctua-form-base';
+import { LeftPanel as CommonLeftPanel } from '@noctua.common/models/menu-panels';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -22,6 +21,9 @@ import { NoctuaConfirmDialogService } from '@noctua/components/confirm-dialog/co
 import { ArtBasket } from '@noctua.search/models/art-basket';
 import { NoctuaReviewSearchService } from '@noctua.search/services/noctua-review-search.service';
 import { NoctuaSearchDialogService } from '@noctua.search/services/dialog.service';
+import { NoctuaAnnouncementService } from '@noctua.announcement/services/cam.service';
+import { Announcement } from '@noctua.announcement/models/announcement';
+import { NoctuaSearchMenuService } from '@noctua.search/services/search-menu.service';
 
 @Component({
     selector: 'noctua-toolbar',
@@ -32,6 +34,8 @@ import { NoctuaSearchDialogService } from '@noctua.search/services/dialog.servic
 export class NoctuaToolbarComponent implements OnInit, OnDestroy {
     ActivityType = ActivityType;
     artBasket: ArtBasket
+    announcements: Announcement[];
+    announcement: Announcement;
     public cam: Cam;
     userStatusOptions: any[];
     showLoadingBar: boolean;
@@ -53,18 +57,17 @@ export class NoctuaToolbarComponent implements OnInit, OnDestroy {
 
     constructor(
         private router: Router,
-        private route: ActivatedRoute,
         private camService: CamService,
         private noctuaCommonMenuService: NoctuaCommonMenuService,
+        private noctuaAnnouncementService: NoctuaAnnouncementService,
         public noctuaUserService: NoctuaUserService,
-        private confirmDialogService: NoctuaConfirmDialogService,
         private noctuaSearchDialogService: NoctuaSearchDialogService,
         public noctuaConfigService: NoctuaFormConfigService,
         public noctuaActivityFormService: NoctuaActivityFormService,
         public noctuaFormMenuService: NoctuaFormMenuService,
         public noctuaReviewSearchService: NoctuaReviewSearchService,
+        public noctuaSearchMenuService: NoctuaSearchMenuService,
     ) {
-        const self = this;
         this._unsubscribeAll = new Subject();
 
         this.router.events.pipe(takeUntil(this._unsubscribeAll))
@@ -80,6 +83,17 @@ export class NoctuaToolbarComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.noctuaAnnouncementService.getAnnouncement();
+        this.camService.onCamChanged
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((cam) => {
+                if (!cam) {
+                    return;
+                }
+
+                this.cam = cam;
+            });
+
         this.camService.onCamChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((cam) => {
@@ -98,6 +112,22 @@ export class NoctuaToolbarComponent implements OnInit, OnDestroy {
                 }
             });
 
+        this.noctuaAnnouncementService.onAnnouncementsChanged.pipe(
+            takeUntil(this._unsubscribeAll))
+            .subscribe((announcements: Announcement[]) => {
+                if (announcements) {
+                    this.announcements = announcements
+                }
+            });
+
+        this.noctuaAnnouncementService.onAnnouncementChanged.pipe(
+            takeUntil(this._unsubscribeAll))
+            .subscribe((announcement: Announcement) => {
+                if (announcement) {
+                    this.announcement = announcement
+                }
+            });
+
         if (this.isDev && this.isBeta) {
             this.betaText = 'beta dev'
         } else if (this.isDev) {
@@ -108,6 +138,12 @@ export class NoctuaToolbarComponent implements OnInit, OnDestroy {
     }
 
     openApps() {
+        this.noctuaCommonMenuService.selectLeftSidenav(CommonLeftPanel.apps)
+        this.noctuaCommonMenuService.openLeftSidenav();
+    }
+
+    openAnnouncements() {
+        this.noctuaCommonMenuService.selectLeftSidenav(CommonLeftPanel.announcement)
         this.noctuaCommonMenuService.openLeftSidenav();
     }
 

@@ -73,7 +73,7 @@
         {{camPage?.total}}
       </button>
       <button mat-stroked-button (click)="refresh()" class="noc-rounded-button noc-half-button noc-sm noc-l"
-        color="primary" matTooltip="Refresh Search" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1000">
+        color="primary" matTooltip="Refresh Search" [matTooltipPosition]="'above'" [matTooltipShowDelay]="1000">
         <mat-icon class="">
           youtube_searched_for
         </mat-icon>
@@ -179,35 +179,31 @@
       </td>
     </ng-container>
     <ng-container matColumnDef="edit">
-      <th mat-header-cell *matHeaderCellDef fxFlex="100px" fxLayout="row" fxLayoutAlign="start center">Open In</th>
-      <td mat-cell *matCellDef="let cam" fxFlex="100px" fxLayout="row" fxLayoutAlign="start center">
+      <th mat-header-cell *matHeaderCellDef fxFlex="180px" fxLayout="row" fxLayoutAlign="start center">Open In</th>
+      <td mat-cell *matCellDef="let cam" fxFlex="180px" fxLayout="row" fxLayoutAlign="start center">
+        <a mat-icon-button [href]="cam?.model?.modelInfo?.workbenches['noctua-visual-pathway-editor']?.url"
+          target="_blank" class="noc-edit-button noc-rounded-button noc-sm noc-half-button noc-r"
+          matTooltip="Pathway Editor" [matTooltipPosition]="'above'" [matTooltipShowDelay]="1500">
+          <img width="15" src="assets/icons/pathway.png">
+        </a>
         <a mat-icon-button [href]='cam?.model?.modelInfo?.noctuaFormUrl' target="_blank"
-          class="noc-edit-button noc-rounded-button noc-sm  mr-4 noc-half-button noc-r" matTooltip="Form Editor"
-          [matTooltipPosition]="'after'" [matTooltipShowDelay]="1000">
+          class="noc-edit-button noc-rounded-button noc-sm  mr-4 noc-half-button noc-m" matTooltip="Form Editor"
+          [matTooltipPosition]="'above'" [matTooltipShowDelay]="1500">
           <fa-icon [icon]="['fas', 'list-alt']"></fa-icon>
         </a>
         <a mat-icon-button [href]='cam?.model?.modelInfo?.graphEditorUrl' target="_blank"
-          class="noc-edit-button noc-rounded-button noc-sm noc-half-button noc-l" matTooltip="Graph Editor"
-          [matTooltipPosition]="'after'" [matTooltipShowDelay]="1000">
+          class="noc-edit-button noc-rounded-button noc-sm noc-half-button noc-m" matTooltip="Graph Editor"
+          [matTooltipPosition]="'above'" [matTooltipShowDelay]="1500">
           <fa-icon [icon]="['fas', 'sitemap']"></fa-icon>
         </a>
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="export">
-      <th mat-header-cell *matHeaderCellDef fxFlex="60px" fxLayout="row" fxLayoutAlign="start center"></th>
-      <td mat-cell *matCellDef="let cam" fxFlex="60px" fxLayout="row" fxLayoutAlign="start center">
-        <button mat-icon-button [matMenuTriggerFor]="optionsMenu" class="noc-edit-button noc-rounded-button noc-sm"
-          color="primary">
+        <a mat-icon-button [matMenuTriggerFor]="optionsMenu"
+          class="noc-edit-button noc-rounded-button noc-sm noc-half-button noc-l" color="primary">
           <mat-icon>more_horiz</mat-icon>
-        </button>
+        </a>
         <mat-menu #optionsMenu="matMenu">
           <a mat-menu-item [href]="cam?.model?.modelInfo?.workbenches['noctua-alliance-pathway-preview']?.url"
             target="_blank" class="">
             Alliance Pathway Preview
-          </a>
-          <a mat-menu-item [href]="cam?.model?.modelInfo?.workbenches['noctua-visual-pathway-editor']?.url"
-            target="_blank" class="">
-            Visual Pathway Editor
           </a>
           <button mat-menu-item (click)="openCamForm(cam)" class="">
             Model Info
@@ -219,7 +215,6 @@
             Export As
           </button>
         </mat-menu>
-
         <mat-menu #exportMenu="matMenu">
           <a [href]='cam?.model?.modelInfo?.gpadUrl' target="_blank" mat-menu-item>
             GPAD

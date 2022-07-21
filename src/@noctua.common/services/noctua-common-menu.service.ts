@@ -15,6 +15,7 @@ import { WorkbenchId } from '@noctua.common/models/workench-id';
 export class NoctuaCommonMenuService {
 
   onCamSettingsChanged: BehaviorSubject<SettingsOptions>;
+  selectedLeftSidenav: LeftPanel = LeftPanel.apps;
   selectedLeftPanel: LeftPanel;
   selectedMiddlePanel: MiddlePanel;
   selectedRightPanel: RightPanel;
@@ -62,6 +63,10 @@ export class NoctuaCommonMenuService {
 
   public openLeftSidenav() {
     return this._leftSidenav.open();
+  }
+
+  selectLeftSidenav(panel: LeftPanel) {
+    this.selectedLeftSidenav = panel;
   }
 
 

@@ -10,6 +10,8 @@ export enum LeftPanel {
     activityForm = 'activityForm',
     camForm = 'camForm',
     copyModel = 'copyModel',
+    apps = 'apps',
+    announcement = 'announcement'
 };
 
 export enum MiddlePanel {

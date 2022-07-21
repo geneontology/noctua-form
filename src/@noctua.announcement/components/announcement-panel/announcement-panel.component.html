@@ -1,0 +1,20 @@
+<form fxLayout="column" fxLayoutAlign="start stretch" class="noc-cam-form noc-drawer h-100-p">
+  <div class="noc-drawer-header" fxLayout="row" fxLayoutAlign="start center">
+    <span class="noc-drawer-header-title">
+      Announcements</span>
+    <span fxFlex></span>
+    <button mat-stroked-button (click)="close()" class="noc-rounded-button noc-sm" color="primary"
+      aria-label="Close dialog">
+      <mat-icon>close</mat-icon> Close
+    </button>
+  </div>
+  <div class="noc-drawer-body w-100-p p-8" noctuaPerfectScrollbar>
+    <div *ngFor="let announcement of announcements" class="alert alert-{{announcement.level}} w-100-p my-8">
+      <strong>{{announcement.title}}</strong><br>
+      {{announcement.description}}
+      <a *ngIf="announcement.descriptionUrl" href="{{announcement.descriptionUrl}}" target="_banl">
+        More Details
+      </a>
+    </div>
+  </div>
+</form>

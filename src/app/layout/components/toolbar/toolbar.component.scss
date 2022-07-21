@@ -20,6 +20,23 @@ $accent: map-get($theme, accent);
     }
   }
 
+  .noc-announcement {
+    padding: 0 10px 0 5px;
+    //background-color: rgb(168, 225, 238);
+    @include deep-height(50px);
+    color: inherit;
+    position: relative;
+    padding: 5px !important;
+    margin-bottom: 0 !important;
+    // border:none!
+    noc-announcement-header {
+      @include deep-height(100%);
+      width: 1000px;
+    }
+
+    //.noc-rounded-button
+  }
+
   .mat-toolbar {
     padding: 0 10px 0 5px;
     background-color: #fff;
@@ -128,6 +145,33 @@ $accent: map-get($theme, accent);
       left: 0;
       right: 0;
       width: 100%;
+    }
+  }
+
+  .noc-announcement-button {
+    @include deep-width(50px);
+    @include deep-height(50px);
+
+    font-size: 28px;
+    color: rgba(map-get($primary, default), 0.5);
+
+    &.noc-active {
+      font-size: 28px;
+      color: map-get($primary, default);
+    }
+
+    .noc-badge {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      color: #fff;
+      background-color: #2b463b;
+      font-size: 10px;
+      text-align: center;
+      line-height: 20px;
     }
   }
 

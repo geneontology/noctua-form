@@ -59,7 +59,7 @@ import {
     faUser,
     faUsers,
 } from '@fortawesome/free-solid-svg-icons';
-import { faCheckCircle, faTimesCircle, faTrashAlt, } from '@fortawesome/free-regular-svg-icons';
+import { faBell, faCheckCircle, faTimesCircle, faTrashAlt, } from '@fortawesome/free-regular-svg-icons';
 import { faGithub, faFacebook, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { NoctuaDataService } from '@noctua.common/services/noctua-data.service';
@@ -128,6 +128,7 @@ export class AppModule {
             faAngleLeft,
             faAngleRight,
             faBars,
+            faBell,
             faCalendarDay,
             faCalendarWeek,
             faCaretDown,

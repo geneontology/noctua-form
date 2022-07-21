@@ -102,6 +102,20 @@ export class NoctuaActivityEntityService {
       saveData.removeIds);
   }
 
+  addIndividual() {
+    const self = this;
+
+    self.activityEntityFormToActivity();
+
+    const saveData = self.activity.createAddIndividual(self.currentActivity, self.entity.predicate);
+
+    return self.noctuaGraphService.editActivity(self.cam,
+      [self.entity],
+      [saveData.addTriples],
+      [],
+      []);
+  }
+
   saveSearchDatabase() {
     const self = this;
 

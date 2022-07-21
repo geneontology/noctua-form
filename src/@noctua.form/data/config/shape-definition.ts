@@ -248,7 +248,7 @@ export const canInsertEntity = {
             label: 'Add Happens During (Biological Phase)',
             id: ActivityNodeType.GoBiologicalPhase,
             node: <ActivityNodeDisplay>{
-                category: [EntityDefinition.GoBiologicalPhase],
+                category: [EntityDefinition.GoBiologicalPhase, EntityDefinition.UberonStage],
                 type: ActivityNodeType.GoBiologicalPhase,
                 label: 'happens during (Biological Phase)',
                 displaySection: noctuaFormConfig.displaySection.fd,
