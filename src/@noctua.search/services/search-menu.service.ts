@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
-import { NoctuaPerfectScrollbarDirective } from '@noctua/directives/noctua-perfect-scrollbar/noctua-perfect-scrollbar.directive';
 import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 import { LeftPanel, MiddlePanel, RightPanel } from './../models/menu-panels';
 import { ReviewMode } from './../models/review-mode';

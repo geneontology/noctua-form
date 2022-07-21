@@ -20,6 +20,23 @@ $accent: map-get($theme, accent);
     }
   }
 
+  .noc-announcement {
+    padding: 0 10px 0 5px;
+    //background-color: rgb(168, 225, 238);
+    @include deep-height(50px);
+    color: inherit;
+    position: relative;
+    padding: 5px !important;
+    margin-bottom: 0 !important;
+    // border:none!
+    noc-announcement-header {
+      @include deep-height(100%);
+      width: 1000px;
+    }
+
+    //.noc-rounded-button
+  }
+
   .mat-toolbar {
     padding: 0 10px 0 5px;
     background-color: #fff;

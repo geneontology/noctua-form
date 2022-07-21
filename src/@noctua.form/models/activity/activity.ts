@@ -634,6 +634,17 @@ export class Activity extends SaeGraph<ActivityNode> {
     return saveData;
   }
 
+  createAddIndividual(srcActivity: Activity, predicate: Predicate) {
+    const self = this;
+
+    const addTriples = self.getEdge(predicate.subjectId, predicate.objectId)
+
+    const saveData = {
+      addTriples: addTriples,
+    };
+
+    return saveData;
+  }
 
   createDelete() {
     const self = this;

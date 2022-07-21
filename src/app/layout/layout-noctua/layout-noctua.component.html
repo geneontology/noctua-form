@@ -1,7 +1,9 @@
 <div id="noctua-main">
   <mat-sidenav-container>
-    <mat-sidenav #leftSidenav>
-      <noc-noctua-apps [sidenav]="leftSidenav"></noc-noctua-apps>
+    <mat-sidenav #leftSidenav [ngSwitch]="noctuaCommonMenuService.selectedLeftSidenav" class="h-100-p">
+      <noc-announcement-panel [sidenav]="leftSidenav" *ngSwitchCase="LeftPanel.announcement">
+      </noc-announcement-panel>
+      <noc-noctua-apps [sidenav]="leftSidenav" *ngSwitchCase="LeftPanel.apps"></noc-noctua-apps>
     </mat-sidenav>
     <div id="noctua-main-content">
       <ng-container>

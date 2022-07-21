@@ -19,4 +19,5 @@ export enum MiddlePanel {
 export enum RightPanel {
     camForm = 'camForm',
     copyModel = 'copyModel',
+    announcement = 'announcement',
 }

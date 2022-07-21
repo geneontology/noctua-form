@@ -32,33 +32,36 @@ export class NoctuaUserService {
     return this._baristaToken;
   }
 
+  /* Pass in the barista token, i.e. from the url params */
   getUser(baristaTokenParam?: string) {
-    const self = this;
+
+    //Check if there is any in the local storage
     const baristaToken = baristaTokenParam ? baristaTokenParam : localStorage.getItem('barista_token');
 
     if (!baristaToken) {
+      //Log them out
       this.baristaToken = null;
       this.user = null;
       this.onUserChanged.next(this.user);
     } else {
-      return this.httpClient.get(`${self.baristaUrl}/user_info_by_token/${baristaToken}`)
+      // Check if indeed it is a legit token
+      return this.httpClient.get(`${this.baristaUrl}/user_info_by_token/${baristaToken}`)
         .subscribe((response: any) => {
           if (response) {
             if (response.token) {
-              this.user = new Contributor();
-              this.user.orcid = response.uri;
-              this.user.name = response.nickname;
-              this.user.groups = response.groups;
+              //add the token on the local storage           
+              this.user = Contributor.fromResponse(response);
               this.user.token = this.baristaToken = response.token;
               localStorage.setItem('barista_token', this.baristaToken);
-              this.onUserChanged.next(this.user);
             } else {
+              //log them out
               this.user = null;
               this.baristaToken = null;
               localStorage.removeItem('barista_token');
-              this.onUserChanged.next(this.user);
-            }
 
+            }
+            this.onUserChanged.next(this.user);
+            // remove the token on the url
             const url = new URL(window.location.href);
             url.searchParams.delete('barista_token');
             window.history.replaceState(null, null, url.href);
