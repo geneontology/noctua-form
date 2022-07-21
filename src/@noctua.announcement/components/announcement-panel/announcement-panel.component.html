@@ -8,14 +8,13 @@
       <mat-icon>close</mat-icon> Close
     </button>
   </div>
-  <div class="noc-drawer-body w-100-p" noctuaPerfectScrollbar>
-    <div *ngFor="let announcement of announcements" class="alert alert-warning w-100-p">
+  <div class="noc-drawer-body w-100-p p-8" noctuaPerfectScrollbar>
+    <div *ngFor="let announcement of announcements" class="alert alert-{{announcement.level}} w-100-p my-8">
       <strong>{{announcement.title}}</strong><br>
-      {{announcement.content}}
+      {{announcement.description}}
+      <a *ngIf="announcement.descriptionUrl" href="{{announcement.descriptionUrl}}" target="_banl">
+        More Details
+      </a>
     </div>
-  </div>
-  <div fxLayout="row" fxLayoutAlign="start center" class="noc-drawer-footer noc-submit-row">
-    <span fxFlex></span>
-
   </div>
 </form>

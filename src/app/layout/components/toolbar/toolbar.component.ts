@@ -35,6 +35,7 @@ export class NoctuaToolbarComponent implements OnInit, OnDestroy {
     ActivityType = ActivityType;
     artBasket: ArtBasket
     announcements: Announcement[];
+    announcement: Announcement;
     public cam: Cam;
     userStatusOptions: any[];
     showLoadingBar: boolean;
@@ -111,13 +112,21 @@ export class NoctuaToolbarComponent implements OnInit, OnDestroy {
                 }
             });
 
-        /*    this.noctuaAnnouncementService.onAnnouncementChanged.pipe(
-               takeUntil(this._unsubscribeAll))
-               .subscribe((announcements: Announcement[]) => {
-                   if (announcements) {
-                       //     this.announcements = announcements
-                   }
-               }); */
+        this.noctuaAnnouncementService.onAnnouncementsChanged.pipe(
+            takeUntil(this._unsubscribeAll))
+            .subscribe((announcements: Announcement[]) => {
+                if (announcements) {
+                    this.announcements = announcements
+                }
+            });
+
+        this.noctuaAnnouncementService.onAnnouncementChanged.pipe(
+            takeUntil(this._unsubscribeAll))
+            .subscribe((announcement: Announcement) => {
+                if (announcement) {
+                    this.announcement = announcement
+                }
+            });
 
         if (this.isDev && this.isBeta) {
             this.betaText = 'beta dev'

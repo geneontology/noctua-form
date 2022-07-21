@@ -32,7 +32,7 @@ export class AnnouncementPanelComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.noctuaAnnouncementService.onAnnouncementChanged.pipe(
+    this.noctuaAnnouncementService.onAnnouncementsChanged.pipe(
       takeUntil(this._unsubscribeAll))
       .subscribe((announcements: Announcement[]) => {
         if (announcements) {
