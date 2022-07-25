@@ -15,8 +15,7 @@ import { WorkbenchId } from '@noctua.common/models/workench-id';
 })
 export class NoctuaAppsComponent implements OnInit, OnDestroy {
     WorkbenchId = WorkbenchId;
-    @Input('sidenav')
-    sidenav: MatSidenav;
+    @Input('sidenav') sidenav: MatSidenav;
 
     public cam: Cam;
     date: Date;

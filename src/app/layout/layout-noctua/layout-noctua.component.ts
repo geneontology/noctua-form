@@ -4,6 +4,7 @@ import { takeUntil } from 'rxjs/operators';
 import { NoctuaConfigService } from '@noctua/services/config.service';
 import { MatSidenav } from '@angular/material/sidenav';
 import { NoctuaCommonMenuService } from '@noctua.common/services/noctua-common-menu.service';
+import { LeftPanel } from '@noctua.common/models/menu-panels';
 
 @Component({
     selector: 'layout-noctua',
@@ -13,6 +14,7 @@ import { NoctuaCommonMenuService } from '@noctua.common/services/noctua-common-m
 }
 
 ) export class LayoutNoctuaComponent implements OnInit, OnDestroy {
+    LeftPanel = LeftPanel;
     noctuaConfig: any;
     navigation: any;
     @ViewChild('leftSidenav', { static: true })

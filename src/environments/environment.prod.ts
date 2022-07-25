@@ -67,5 +67,6 @@ export const environment = {
 
   amigoTerm: 'http://amigo.geneontology.org/amigo/term/',
   wikidataSparqlUrl: 'https://query.wikidata.org/sparql',
-  pubMedSummaryApi: 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&retmode=json&id='
+  pubMedSummaryApi: 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&retmode=json&id=',
+  announcementUrl: 'https://raw.githubusercontent.com/geneontology/noctua-announcements/dev/notification.json'
 };

@@ -132,14 +132,15 @@ export class NoctuaEditorDropdownComponent implements OnInit, OnDestroy {
       case EditorCategory.evidenceAll:
         self.noctuaActivityEntityService.addEvidence().then(() => {
           this.close();
-          self.noctuaFormDialogService.openInfoToast('Activity successfully updated.', 'OK');
+          self.noctuaFormDialogService.openInfoToast('Evidence successfully updated.', 'OK');
         });
         break;
-      default:
-        self.noctuaActivityEntityService.saveActivity().then(() => {
+      case EditorCategory.all:
+        self.noctuaActivityEntityService.addIndividual().then(() => {
           this.close();
           self.noctuaFormDialogService.openInfoToast('Activity successfully updated.', 'OK');
         });
+        break;
     }
   }
 
