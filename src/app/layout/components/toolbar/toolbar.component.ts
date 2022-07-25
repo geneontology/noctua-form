@@ -83,7 +83,7 @@ export class NoctuaToolbarComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.noctuaAnnouncementService.getAnnouncement();
+        //this.noctuaAnnouncementService.getAnnouncement();
         this.camService.onCamChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((cam) => {
@@ -111,23 +111,23 @@ export class NoctuaToolbarComponent implements OnInit, OnDestroy {
                     this.artBasket = artBasket;
                 }
             });
-
-        this.noctuaAnnouncementService.onAnnouncementsChanged.pipe(
-            takeUntil(this._unsubscribeAll))
-            .subscribe((announcements: Announcement[]) => {
-                if (announcements) {
-                    this.announcements = announcements
-                }
-            });
-
-        this.noctuaAnnouncementService.onAnnouncementChanged.pipe(
-            takeUntil(this._unsubscribeAll))
-            .subscribe((announcement: Announcement) => {
-                if (announcement) {
-                    this.announcement = announcement
-                }
-            });
-
+        /* 
+                this.noctuaAnnouncementService.onAnnouncementsChanged.pipe(
+                    takeUntil(this._unsubscribeAll))
+                    .subscribe((announcements: Announcement[]) => {
+                        if (announcements) {
+                            this.announcements = announcements
+                        }
+                    });
+        
+                this.noctuaAnnouncementService.onAnnouncementChanged.pipe(
+                    takeUntil(this._unsubscribeAll))
+                    .subscribe((announcement: Announcement) => {
+                        if (announcement) {
+                            this.announcement = announcement
+                        }
+                    });
+         */
         if (this.isDev && this.isBeta) {
             this.betaText = 'beta dev'
         } else if (this.isDev) {
@@ -177,6 +177,5 @@ export class NoctuaToolbarComponent implements OnInit, OnDestroy {
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
     }
-
 
 }
