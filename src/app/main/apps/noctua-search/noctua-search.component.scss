@@ -1,4 +1,4 @@
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
 $primary: map-get($theme, primary);
@@ -166,13 +166,51 @@ $noc-art-badge: mat.get-color-from-palette(mat.$orange-palette, 500);
     margin-top: 20px;
     padding: 8px;
 
+    .noc-create-section {
+      margin: 8px;
+      padding: 8px;
+      background-color: rgba(map-get($accent, default), 0.5);
+    }
+
+    .noc-heading {
+      width: 100%;
+      color: #eee;
+      font-size: 16px;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      overflow: hidden;
+
+      &:before,
+      &:after {
+        background-color: #ddd;
+        content: "";
+        display: inline-block;
+        height: 1px;
+        position: relative;
+        vertical-align: middle;
+        width: 50%;
+      }
+
+      &:before {
+        right: 0.5em;
+        margin-left: -50%;
+      }
+
+      &:after {
+        left: 0.5em;
+        margin-right: -50%;
+      }
+    }
+
     button {
       padding: 0 8px;
       color: map-get($accent, default);
-      @include deep-height(60px);
+      @include deep-height(50px);
       line-height: 20px;
       width: 140px;
       font-size: 12px;
+      text-transform: capitalize !important;
 
       @include mat.elevation(4);
 

@@ -157,6 +157,7 @@ export class NoctuaGraphService {
     }, 10);
   }
 
+
   getMetadata(responseData) {
     const self = this;
     const cam = new Cam()
@@ -171,6 +172,7 @@ export class NoctuaGraphService {
     cam.modified = responseData['modified-p'];
 
     const titleAnnotations = cam.graph.get_annotations_by_key('title');
+    const commentAnnotations = cam.graph.get_annotations_by_key('comment');
     const stateAnnotations = cam.graph.get_annotations_by_key('state');
     const dateAnnotations = cam.graph.get_annotations_by_key('date');
     const groupAnnotations = cam.graph.get_annotations_by_key('providedBy');
@@ -186,6 +188,10 @@ export class NoctuaGraphService {
     if (titleAnnotations.length > 0) {
       cam.title = titleAnnotations[0].value();
     }
+
+    cam.comments = commentAnnotations.map(c => {
+      return c.value();
+    })
 
     if (stateAnnotations.length > 0) {
       cam.state = self.noctuaFormConfigService.findModelState(stateAnnotations[0].value());
@@ -220,6 +226,7 @@ export class NoctuaGraphService {
     }
 
     const titleAnnotations = cam.graph.get_annotations_by_key('title');
+    const commentAnnotations = cam.graph.get_annotations_by_key('comment');
     const stateAnnotations = cam.graph.get_annotations_by_key('state');
     const dateAnnotations = cam.graph.get_annotations_by_key('date');
     const groupAnnotations = cam.graph.get_annotations_by_key('providedBy');
@@ -235,6 +242,10 @@ export class NoctuaGraphService {
     if (titleAnnotations.length > 0) {
       cam.title = titleAnnotations[0].value();
     }
+
+    cam.comments = commentAnnotations.map(c => {
+      return c.value();
+    })
 
     if (stateAnnotations.length > 0) {
       cam.state = self.noctuaFormConfigService.findModelState(stateAnnotations[0].value());
@@ -271,6 +282,7 @@ export class NoctuaGraphService {
     cam.id = activeModel.id;
 
     const titleAnnotations = cam.graph.get_annotations_by_key('title');
+    const commentAnnotations = cam.graph.get_annotations_by_key('comment');
     const stateAnnotations = cam.graph.get_annotations_by_key('state');
     const dateAnnotations = cam.graph.get_annotations_by_key('date');
     const groupAnnotations = cam.graph.get_annotations_by_key('providedBy');
@@ -286,6 +298,10 @@ export class NoctuaGraphService {
     if (titleAnnotations.length > 0) {
       cam.title = titleAnnotations[0].value();
     }
+
+    cam.comments = commentAnnotations.map(c => {
+      return c.value();
+    })
 
     if (stateAnnotations.length > 0) {
       cam.state = self.noctuaFormConfigService.findModelState(stateAnnotations[0].value());
@@ -992,6 +1008,7 @@ export class NoctuaGraphService {
 
     const titleAnnotations = cam.graph.get_annotations_by_key('title');
     const stateAnnotations = cam.graph.get_annotations_by_key('state');
+    const commentAnnotations = cam.graph.get_annotations_by_key('comment');
     const reqs = new minerva_requests.request_set(self.noctuaUserService.baristaToken, cam.id);
 
     each(titleAnnotations, function (annotation) {
@@ -1002,8 +1019,16 @@ export class NoctuaGraphService {
       reqs.remove_annotation_from_model('state', annotation.value());
     });
 
+    each(commentAnnotations, function (annotation) {
+      reqs.remove_annotation_from_model('comment', annotation.value());
+    });
+
     reqs.add_annotation_to_model('title', annotations.title);
     reqs.add_annotation_to_model('state', annotations.state);
+
+    annotations.comments.forEach(comment => {
+      reqs.add_annotation_to_model('comment', comment);
+    });
 
     reqs.store_model(cam.id);
     cam.manager.request_with(reqs);

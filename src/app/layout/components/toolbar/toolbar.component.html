@@ -86,12 +86,12 @@
             Noctua User's Guide
           </a>
         </mat-menu>
-        <button mat-icon-button (click)="openAnnouncements()" class="noc-announcement-button">
+        <!--    <button mat-icon-button (click)="openAnnouncements()" class="noc-announcement-button">
           <fa-icon [icon]="['far', 'bell']"></fa-icon>
           <div *ngIf="announcements?.length > 0" class="noc-badge">
             {{announcements.length}}
           </div>
-        </button>
+        </button> -->
       </div>
       <div class="noc-br pr-12" fxLayout="row" fxLayoutAlign="start center">
         <button *ngIf="noctuaUserService.user" mat-button class="noc-name-button" [matMenuTriggerFor]="userMenu">

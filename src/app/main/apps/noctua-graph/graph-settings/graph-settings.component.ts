@@ -1,16 +1,14 @@
-import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import {
   NoctuaUserService,
   NoctuaFormConfigService,
-  NoctuaFormMenuService,
   NoctuaActivityFormService,
 
   CamService
 } from '@geneontology/noctua-form-base';
 import { noctuaAnimations } from '@noctua/animations';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { distinctUntilChanged, debounceTime, takeUntil } from 'rxjs/operators';
 import { NoctuaCommonMenuService } from '@noctua.common/services/noctua-common-menu.service';
 import { SettingsOptions } from '@noctua.common/models/graph-settings';
@@ -43,8 +41,8 @@ export class GraphSettingsComponent implements OnInit, OnDestroy {
     private noctuaCommonMenuService: NoctuaCommonMenuService,
     public noctuaUserService: NoctuaUserService,
     public noctuaFormConfigService: NoctuaFormConfigService,
-    public noctuaActivityFormService: NoctuaActivityFormService,
-    public noctuaFormMenuService: NoctuaFormMenuService) {
+    public noctuaActivityFormService: NoctuaActivityFormService
+  ) {
 
     this._unsubscribeAll = new Subject();
   }

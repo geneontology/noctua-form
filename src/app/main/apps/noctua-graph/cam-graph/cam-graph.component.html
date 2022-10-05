@@ -22,8 +22,8 @@
         matTooltip="Automatic Tree Layout" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
         Automatic Layout
       </button>
-      <span class='mr-4'>
-        <strong>Layout Detail</strong> :
+      <span class='noc-title mr-4'>
+        Layout Detail :
       </span>
       <button mat-stroked-button class="noc-rounded-button noc-action-button noc-half-button noc-xs" color="primary"
         [matMenuTriggerFor]="graphLayoutDetailMenu">
@@ -37,16 +37,22 @@
         </button>
       </mat-menu>
 
-      <button mat-icon-button (click)="zoomOut()" color="" class="noc-rounded-button noc-half-button noc-l">
-        <fa-icon class="" [icon]="['fas', 'search-minus']"></fa-icon>
-      </button>
-      <button mat-icon-button (click)="zoomIn()" color="" class="noc-rounded-button noc-half-button noc-l">
-        <fa-icon class="" [icon]="['fas', 'search-plus']"></fa-icon>
-      </button>
-      <button mat-icon-button (click)="noctuaCamGraphService.reset()" color=""
-        class="noc-rounded-button noc-half-button noc-l">
-        <mat-icon>youtube_searched_for</mat-icon>
-      </button>
+      <div class="noc-button-row ml-12">
+        <span class='noc-title mr-4'>
+          Zoom :
+        </span>
+        <button mat-stroked-button (click)="zoomOut()" color="" class="noc-rounded-button noc-half-button noc-xs noc-r">
+          <fa-icon class="" [icon]="['fas', 'search-minus']"></fa-icon>
+        </button>
+        <button mat-stroked-button (click)="zoomIn()" color="" class="noc-rounded-button noc-half-button noc-xs noc-m">
+          <fa-icon class="" [icon]="['fas', 'search-plus']"></fa-icon>
+        </button>
+        <button mat-stroked-button (click)="noctuaCamGraphService.reset()" color=""
+          class="noc-rounded-button noc-half-button noc-xs noc-l">
+          <mat-icon>youtube_searched_for</mat-icon>
+        </button>
+      </div>
+
     </div>
     <div class="noc-paper-container" (wheel)="onCtrlScroll($event)">
       <div #paper id="noc-paper" class="">

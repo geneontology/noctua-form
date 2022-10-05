@@ -3,7 +3,9 @@
 @import "src/@noctua.common/scss/noctua.common";
 
 $grid-line-color: rgba(#000, 0.1);
-$primary: #324c74;
+
+$primary: map-get($theme, primary);
+$accent: map-get($theme, accent);
 
 :host {
   width: 100%;
@@ -27,6 +29,28 @@ $primary: #324c74;
     @include deep-height(35px);
     @include mat.elevation(2);
     //  border-bottom: 1px solid #002255;
+
+    .noc-title {
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .noc-button-row {
+      button {
+        padding: 0;
+        color: map-get($primary, 400);
+        font-size: 14px;
+        @include deep-width(40px);
+        &:hover {
+          font-size: 16px;
+          color: map-get($primary, default);
+        }
+
+        .mat-icon {
+          @include noc-icon-size(18px);
+        }
+      }
+    }
   }
 
   .noc-paper-container {

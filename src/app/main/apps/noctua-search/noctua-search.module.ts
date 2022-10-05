@@ -11,7 +11,6 @@ import { CamsReviewComponent } from './cams/cams-review/cams-review.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CamsReviewChangesComponent } from './cams/cams-review-changes/cams-review-changes.component';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-
 const routes = [
   {
     path: 's',

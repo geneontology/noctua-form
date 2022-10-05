@@ -6,20 +6,14 @@ import { Edge, Node, Layout } from '@swimlane/ngx-graph';
 import { noctuaAnimations } from './../../../../../../../@noctua/animations';
 
 
-import { NoctuaFormDialogService } from './../../../services/dialog.service';
 import {
-  noctuaFormConfig,
   NoctuaActivityConnectorService,
   NoctuaFormConfigService,
   NoctuaActivityFormService,
   CamService,
   Cam,
   Activity,
-  ConnectorActivity,
-  NoctuaFormMenuService,
-  LeftPanel
 } from '@geneontology/noctua-form-base';
-import { NoctuaConfirmDialogService } from '@noctua/components/confirm-dialog/confirm-dialog.service';
 
 @Component({
   selector: 'noc-cam-graph',
@@ -121,12 +115,9 @@ export class CamGraphComponent implements OnInit, OnDestroy {
   private unsubscribeAll: Subject<any>;
 
   constructor(public camService: CamService,
-    public noctuaFormMenuService: NoctuaFormMenuService,
     public noctuaFormConfigService: NoctuaFormConfigService,
-    private confirmDialogService: NoctuaConfirmDialogService,
     private noctuaActivityConnectorService: NoctuaActivityConnectorService,
     public noctuaActivityFormService: NoctuaActivityFormService,
-    private noctuaFormDialogService: NoctuaFormDialogService,
   ) {
 
     this.unsubscribeAll = new Subject();
@@ -188,7 +179,6 @@ export class CamGraphComponent implements OnInit, OnDestroy {
   openForm(location?) {
     this.noctuaActivityFormService.mfLocation = location;
     this.noctuaActivityFormService.initializeForm();
-    //this.noctuaFormMenuService.openRightDrawer(LeftPanel.activityForm);
   }
 
   openActivityConnectorList(activity: Activity) {
@@ -196,7 +186,6 @@ export class CamGraphComponent implements OnInit, OnDestroy {
     this.camService.activity = activity;
     this.noctuaActivityConnectorService.subjectActivity = activity;
     this.noctuaActivityConnectorService.onActivityChanged.next(activity);
-    // this.noctuaFormMenuService.openRightDrawer(LeftPanel.connectorForm);
   }
 
   public getStyles(node: Node): any {

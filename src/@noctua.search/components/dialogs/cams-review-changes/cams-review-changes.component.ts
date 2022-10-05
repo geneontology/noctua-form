@@ -3,12 +3,10 @@ import { Subject } from 'rxjs';
 import {
   NoctuaUserService,
   NoctuaFormConfigService,
-  NoctuaFormMenuService,
   NoctuaActivityFormService,
 
   CamStats
 } from '@geneontology/noctua-form-base';
-import { takeUntil } from 'rxjs/operators';
 import { noctuaAnimations } from '@noctua/animations';
 import { NoctuaReviewSearchService } from './../../../services/noctua-review-search.service';
 import { ReviewMode } from './../../../models/review-mode';
@@ -53,8 +51,7 @@ export class CamsReviewChangesDialogComponent implements OnInit, OnDestroy {
     public noctuaSearchMenuService: NoctuaSearchMenuService,
     public noctuaUserService: NoctuaUserService,
     public noctuaFormConfigService: NoctuaFormConfigService,
-    public noctuaActivityFormService: NoctuaActivityFormService,
-    public noctuaFormMenuService: NoctuaFormMenuService) {
+    public noctuaActivityFormService: NoctuaActivityFormService) {
 
     this._unsubscribeAll = new Subject();
 

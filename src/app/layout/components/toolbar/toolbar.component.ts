@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NavigationEnd, NavigationStart, Router, ActivatedRoute } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 
 import {
     Cam,
@@ -8,7 +8,6 @@ import {
     NoctuaFormConfigService,
     NoctuaActivityFormService,
     ActivityType,
-    NoctuaFormMenuService,
     LeftPanel,
 } from '@geneontology/noctua-form-base';
 import { LeftPanel as CommonLeftPanel } from '@noctua.common/models/menu-panels';
@@ -17,7 +16,6 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { environment } from 'environments/environment';
 import { NoctuaCommonMenuService } from '@noctua.common/services/noctua-common-menu.service';
-import { NoctuaConfirmDialogService } from '@noctua/components/confirm-dialog/confirm-dialog.service';
 import { ArtBasket } from '@noctua.search/models/art-basket';
 import { NoctuaReviewSearchService } from '@noctua.search/services/noctua-review-search.service';
 import { NoctuaSearchDialogService } from '@noctua.search/services/dialog.service';
@@ -64,7 +62,6 @@ export class NoctuaToolbarComponent implements OnInit, OnDestroy {
         private noctuaSearchDialogService: NoctuaSearchDialogService,
         public noctuaConfigService: NoctuaFormConfigService,
         public noctuaActivityFormService: NoctuaActivityFormService,
-        public noctuaFormMenuService: NoctuaFormMenuService,
         public noctuaReviewSearchService: NoctuaReviewSearchService,
         public noctuaSearchMenuService: NoctuaSearchMenuService,
     ) {
@@ -83,7 +80,7 @@ export class NoctuaToolbarComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.noctuaAnnouncementService.getAnnouncement();
+        //this.noctuaAnnouncementService.getAnnouncement();
         this.camService.onCamChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((cam) => {
@@ -111,7 +108,6 @@ export class NoctuaToolbarComponent implements OnInit, OnDestroy {
                     this.artBasket = artBasket;
                 }
             });
-
         this.noctuaAnnouncementService.onAnnouncementsChanged.pipe(
             takeUntil(this._unsubscribeAll))
             .subscribe((announcements: Announcement[]) => {
@@ -149,12 +145,14 @@ export class NoctuaToolbarComponent implements OnInit, OnDestroy {
 
     openCamForm() {
         this.camService.initializeForm(this.cam);
-        this.noctuaFormMenuService.openLeftDrawer(LeftPanel.camForm);
+        this.noctuaCommonMenuService.selectLeftPanel(LeftPanel.camForm);
+        this.noctuaCommonMenuService.openLeftDrawer();
     }
 
     openActivityForm(activityType: ActivityType) {
         this.noctuaActivityFormService.setActivityType(activityType);
-        this.noctuaFormMenuService.openLeftDrawer(LeftPanel.activityForm);
+        this.noctuaCommonMenuService.selectLeftPanel(LeftPanel.activityForm);
+        this.noctuaCommonMenuService.openLeftDrawer();
     }
 
     logout() {
@@ -177,6 +175,5 @@ export class NoctuaToolbarComponent implements OnInit, OnDestroy {
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
     }
-
 
 }

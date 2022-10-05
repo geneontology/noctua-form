@@ -118,6 +118,7 @@ export class CamRebuildRule {
 
 export class Cam {
   title: string;
+  comments: string[] = [];
   state: any;
   groups: Group[] = [];
   contributors: Contributor[] = [];

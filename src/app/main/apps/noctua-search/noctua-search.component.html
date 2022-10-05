@@ -77,30 +77,40 @@
           to create or edit models. Models may be viewed without login.
         </h4>
         <div *ngIf="noctuaUserService.user" class="noc-create" fxLayout="row" fxLayoutAlign="start center">
-          <button mat-raised-button (click)="createModel(WorkbenchId.VISUAL_PATHWAY_EDITOR)" color=""
-            class="noc-rounded-button mr-4 noc-half-button noc-r">
-            Create Model In <br> <strong>
-              PATHWAY EDITOR
-            </strong>
-            <div class="noc-badge" fxLayout="row" fxLayoutAlign="center center">
-              new
+          <div fxLayout="column" fxLayoutAlign="start center" fxFlex="75" class="noc-create-section">
+            <div class="noc-heading">
+              Create
             </div>
-          </button>
-          <button mat-raised-button (click)="createModel(WorkbenchId.FORM)" color=""
-            class="noc-rounded-button mr-4 noc-half-button noc-m">
-            Create Model In <br><strong>FORM EDITOR</strong>
-          </button>
-          <button mat-raised-button (click)="createModel(WorkbenchId.GRAPH_EDITOR)" color=""
-            class="noc-rounded-button mr-4 noc-half-button noc-m">
-            Create Model In <br> <strong>
-              GRAPH EDITOR
-            </strong>
-          </button>
-          <button mat-raised-button (click)="toggleReviewMode()" color=""
-            class="noc-rounded-button noc-half-button noc-l noc-review-mode-button"
-            [ngClass]="{'noc-selected': noctuaSearchMenuService.reviewMode !== ReviewMode.off}">
-            ANNOTATION REVIEW
-          </button>
+            <div fxLayout="row" fxLayoutAlign="start center">
+              <button mat-raised-button (click)="createModel(WorkbenchId.VISUAL_PATHWAY_EDITOR)" color=""
+                class="noc-rounded-button mr-4 noc-half-button noc-r">
+                PATHWAY <br> EDITOR
+                <div class="noc-badge" fxLayout="row" fxLayoutAlign="center center">
+                  new
+                </div>
+              </button>
+              <button mat-raised-button (click)="createModel(WorkbenchId.FORM)" color=""
+                class="noc-rounded-button mr-4 noc-half-button noc-m">
+                FORM <br>EDITOR
+              </button>
+              <button mat-raised-button (click)="createModel(WorkbenchId.GRAPH_EDITOR)" color=""
+                class="noc-rounded-button mr-4 noc-half-button noc-l">
+                GRAPH <br> EDITOR
+              </button>
+            </div>
+          </div>
+          <div fxLayout="column" fxLayoutAlign="start center" fxFlex="25" class="noc-create-section">
+            <div class="noc-heading">
+              <span>Review</span>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center">
+              <button mat-raised-button (click)="toggleReviewMode()" color=""
+                class="noc-rounded-button noc-half-button noc-review-mode-button"
+                [ngClass]="{'noc-selected': noctuaSearchMenuService.reviewMode !== ReviewMode.off}">
+                ANNOTATION REVIEW <br> TOOL
+              </button>
+            </div>
+          </div>
         </div>
       </div>
       <div *ngIf="noctuaSearchMenuService.reviewMode !== ReviewMode.off" class="noc-art-info" fxLayout="row"
