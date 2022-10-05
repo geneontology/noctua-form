@@ -7,8 +7,7 @@ import {
   NoctuaFormConfigService,
   NoctuaActivityFormService,
   CamService,
-  Cam,
-  NoctuaFormMenuService
+  Cam
 } from '@geneontology/noctua-form-base';
 
 @Component({
@@ -31,7 +30,6 @@ export class CamPreviewComponent implements OnInit, OnDestroy {
   private unsubscribeAll: Subject<any>;
 
   constructor(public camService: CamService,
-    public noctuaFormMenuService: NoctuaFormMenuService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     public noctuaActivityFormService: NoctuaActivityFormService,
   ) {

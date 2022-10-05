@@ -1,6 +1,9 @@
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
+
+$primary: map-get($theme, primary);
+$accent: map-get($theme, accent);
 
 :host {
   padding: 0px;
@@ -74,6 +77,16 @@
 
       strong {
         font-size: 12px;
+      }
+    }
+
+    .noc-toolbar-button {
+      font-size: 18px;
+      color: map-get($primary, 400);
+
+      &:hover {
+        font-size: 20px;
+        color: map-get($primary, default);
       }
     }
 

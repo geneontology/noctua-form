@@ -1,10 +1,7 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { MatDrawer, MatSidenav } from '@angular/material/sidenav';
+import { MatSidenav } from '@angular/material/sidenav';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import {
-  NoctuaFormMenuService
-} from '@geneontology/noctua-form-base';
 import { NoctuaSearchMenuService } from '@noctua.search/services/search-menu.service';
 import { NoctuaAnnouncementService } from '@noctua.announcement/services/cam.service';
 import { Announcement } from '@noctua.announcement/models/announcement';
@@ -25,7 +22,6 @@ export class AnnouncementPanelComponent implements OnInit, OnDestroy {
 
   constructor(
     public noctuaSearchMenuService: NoctuaSearchMenuService,
-    public noctuaFormMenuService: NoctuaFormMenuService,
     private noctuaAnnouncementService: NoctuaAnnouncementService,
   ) {
     this._unsubscribeAll = new Subject();

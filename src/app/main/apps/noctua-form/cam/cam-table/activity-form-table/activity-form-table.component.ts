@@ -9,33 +9,25 @@ import {
   NoctuaActivityFormService,
   NoctuaActivityEntityService,
   CamService,
-  Evidence,
-  Entity,
   noctuaFormConfig,
   NoctuaUserService,
-  NoctuaFormMenuService,
-
   ActivityType,
   ActivityTreeNode,
-  ActivityNodeType,
   ActivityDisplayType,
-  NoctuaGraphService,
-  compareNodeWeight
+  NoctuaGraphService
 } from '@geneontology/noctua-form-base';
 
 import {
   Cam,
   Activity,
-  ActivityNode,
-  ShapeDefinition
+  ActivityNode
 } from '@geneontology/noctua-form-base';
 
 import { EditorCategory } from '@noctua.editor/models/editor-category';
-import { cloneDeep, find } from 'lodash';
+import { cloneDeep } from 'lodash';
 import { InlineEditorService } from '@noctua.editor/inline-editor/inline-editor.service';
 import { NoctuaUtils } from '@noctua/utils/noctua-utils';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { NoctuaConfirmDialogService } from '@noctua/components/confirm-dialog/confirm-dialog.service';
 import { takeUntil } from 'rxjs/operators';
 import { NoctuaCommonMenuService } from '@noctua.common/services/noctua-common-menu.service';
 import { SettingsOptions } from '@noctua.common/models/graph-settings';
@@ -104,8 +96,6 @@ export class ActivityFormTableComponent implements OnInit, OnDestroy, OnChanges,
     public camService: CamService,
     private _noctuaGraphService: NoctuaGraphService,
     private noctuaCommonMenuService: NoctuaCommonMenuService,
-    private confirmDialogService: NoctuaConfirmDialogService,
-    public noctuaFormMenuService: NoctuaFormMenuService,
     public noctuaUserService: NoctuaUserService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaFormDialogService: NoctuaFormDialogService,

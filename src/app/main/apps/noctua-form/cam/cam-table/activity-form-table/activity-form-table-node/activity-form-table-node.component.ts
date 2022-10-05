@@ -13,8 +13,6 @@ import {
   Entity,
   noctuaFormConfig,
   NoctuaUserService,
-  NoctuaFormMenuService,
-
   ActivityType,
   ActivityError,
   ErrorLevel,
@@ -29,10 +27,9 @@ import {
 } from '@geneontology/noctua-form-base';
 
 import { EditorCategory } from '@noctua.editor/models/editor-category';
-import { cloneDeep, find } from 'lodash';
+import { find } from 'lodash';
 import { InlineEditorService } from '@noctua.editor/inline-editor/inline-editor.service';
 import { NoctuaUtils } from '@noctua/utils/noctua-utils';
-import { MatTableDataSource } from '@angular/material/table';
 import { SettingsOptions } from '@noctua.common/models/graph-settings';
 import { NoctuaConfirmDialogService } from '@noctua/components/confirm-dialog/confirm-dialog.service';
 
@@ -73,8 +70,6 @@ export class ActivityFormTableNodeComponent implements OnInit, OnDestroy {
 
   constructor(
     public camService: CamService,
-
-    public noctuaFormMenuService: NoctuaFormMenuService,
     private confirmDialogService: NoctuaConfirmDialogService,
     public noctuaUserService: NoctuaUserService,
     public noctuaFormConfigService: NoctuaFormConfigService,

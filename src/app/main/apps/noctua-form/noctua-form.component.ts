@@ -11,7 +11,6 @@ import {
   Contributor,
   NoctuaUserService,
   NoctuaFormConfigService,
-  NoctuaFormMenuService,
   NoctuaActivityFormService,
   CamService,
 
@@ -32,6 +31,8 @@ import { TableOptions } from '@noctua.common/models/table-options';
 import { NoctuaSearchDialogService } from '@noctua.search/services/dialog.service';
 import { NoctuaReviewSearchService } from '@noctua.search/services/noctua-review-search.service';
 import { ResizeEvent } from 'angular-resizable-element';
+import { NoctuaCommonMenuService } from '@noctua.common/services/noctua-common-menu.service';
+import { CamToolbarOptions } from '@noctua.common/models/cam-toolbar-options';
 
 @Component({
   selector: 'app-noctua-form',
@@ -52,6 +53,10 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
 
   @ViewChild('rightDrawer', { static: true })
   rightDrawer: MatDrawer;
+
+  camToolbarOptions: CamToolbarOptions = {
+    showCreateButton: true
+  }
 
   summary;
   public cam: Cam;
@@ -84,7 +89,7 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
     public noctuaUserService: NoctuaUserService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     public noctuaActivityFormService: NoctuaActivityFormService,
-    public noctuaFormMenuService: NoctuaFormMenuService) {
+    public noctuaCommonMenuService: NoctuaCommonMenuService) {
 
     this._unsubscribeAll = new Subject();
 
@@ -112,9 +117,9 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const self = this;
-
-    self.noctuaFormMenuService.setLeftDrawer(self.leftDrawer);
-    self.noctuaFormMenuService.setRightDrawer(self.rightDrawer);
+    this.noctuaCommonMenuService.selectedMiddlePanel = MiddlePanel.camTable;
+    self.noctuaCommonMenuService.setLeftDrawer(self.leftDrawer);
+    self.noctuaCommonMenuService.setRightDrawer(self.rightDrawer);
 
     this._noctuaGraphService.onCamGraphChanged
       .pipe(takeUntil(this._unsubscribeAll))
@@ -182,30 +187,43 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
     this.cam = this.camService.getCam(modelId);
   }
 
+
+  openSearch() {
+    this.noctuaCommonMenuService.selectLeftPanel(LeftPanel.findReplace);
+    this.noctuaCommonMenuService.closeRightDrawer();
+    this.noctuaCommonMenuService.openLeftDrawer();
+  }
+
+  openTermsSummary() {
+    this.noctuaCommonMenuService.selectLeftPanel(LeftPanel.camTermsSummary);
+    this.noctuaCommonMenuService.closeRightDrawer();
+    this.noctuaCommonMenuService.openLeftDrawer();
+  }
+
+  openCamStats() {
+    this.noctuaCommonMenuService.selectLeftPanel(LeftPanel.camStats);
+    this.noctuaCommonMenuService.closeRightDrawer();
+    this.noctuaCommonMenuService.openLeftDrawer();
+  }
+
   openCamForm() {
     this.camService.initializeForm(this.cam);
-    this.noctuaFormMenuService.openLeftDrawer(LeftPanel.camForm);
+    this.noctuaCommonMenuService.selectLeftPanel(LeftPanel.camForm);
+    this.noctuaCommonMenuService.closeRightDrawer();
+    this.noctuaCommonMenuService.openLeftDrawer();
   }
 
   openActivityForm(activityType: ActivityType) {
     this.noctuaActivityFormService.setActivityType(activityType);
-    this.noctuaFormMenuService.openLeftDrawer(LeftPanel.activityForm);
-  }
-
-  openSearch() {
-    this.noctuaFormMenuService.openLeftDrawer(LeftPanel.findReplace);
-  }
-
-  openTermsSummary() {
-    this.noctuaFormMenuService.openLeftDrawer(LeftPanel.camTermsSummary);
-  }
-
-  openCamStats() {
-    this.noctuaFormMenuService.openLeftDrawer(LeftPanel.camStats);
+    this.noctuaCommonMenuService.selectLeftPanel(LeftPanel.activityForm);
+    this.noctuaCommonMenuService.closeRightDrawer();
+    this.noctuaCommonMenuService.openLeftDrawer();
   }
 
   openCopyModel() {
-    this.noctuaFormMenuService.openLeftDrawer(LeftPanel.copyModel);
+    this.noctuaCommonMenuService.selectLeftPanel(LeftPanel.copyModel);
+    this.noctuaCommonMenuService.closeRightDrawer();
+    this.noctuaCommonMenuService.openLeftDrawer();
   }
 
   resetCam(cam: Cam) {

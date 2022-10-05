@@ -13,12 +13,9 @@ import {
   Entity,
   noctuaFormConfig,
   NoctuaUserService,
-  NoctuaFormMenuService,
-
   ActivityType,
   ActivityTreeNode,
-  ActivityNodeType,
-  FormType
+  ActivityNodeType
 } from '@geneontology/noctua-form-base';
 
 import {
@@ -33,7 +30,6 @@ import { find } from 'lodash';
 import { InlineEditorService } from '@noctua.editor/inline-editor/inline-editor.service';
 import { NoctuaUtils } from '@noctua/utils/noctua-utils';
 import { NoctuaConfirmDialogService } from '@noctua/components/confirm-dialog/confirm-dialog.service';
-import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'noc-activity-tree',
@@ -82,7 +78,6 @@ export class ActivityTreeComponent implements OnInit, OnDestroy {
   constructor(
     public camService: CamService,
     private confirmDialogService: NoctuaConfirmDialogService,
-    public noctuaFormMenuService: NoctuaFormMenuService,
     public noctuaUserService: NoctuaUserService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaFormDialogService: NoctuaFormDialogService,

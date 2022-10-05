@@ -14,6 +14,7 @@ import { RelationPreviewComponent } from './relation-preview/relation-preview.co
 import { ActivityTableComponent } from './activity-table/activity-table.component';
 import { ActivityConnectorTableComponent } from './activity-connector-table/activity-connector-table.component';
 
+
 const routes = [
   {
     path: 'g',

@@ -1,16 +1,15 @@
-import { Component, OnInit, OnDestroy, NgZone, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subject } from 'rxjs';
-import { ActivityNode, Cam, CamLoadingIndicator, CamService, CamStats, LeftPanel, NoctuaFormConfigService, NoctuaFormMenuService, NoctuaGraphService, NoctuaLookupService, NoctuaUserService, TermsSummary } from '@geneontology/noctua-form-base';
+import { ActivityNode, CamService, LeftPanel, NoctuaFormConfigService, NoctuaLookupService, NoctuaUserService } from '@geneontology/noctua-form-base';
 import { NoctuaSearchService } from './../..//services/noctua-search.service';
 import { NoctuaSearchMenuService } from '../../services/search-menu.service';
-import { finalize, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { NoctuaReviewSearchService } from './../../services/noctua-review-search.service';
-import { NoctuaConfirmDialogService } from '@noctua/components/confirm-dialog/confirm-dialog.service';
-import { MiddlePanel } from './../../models/menu-panels';
 import { NoctuaSearchDialogService } from './../../services/dialog.service';
 import { MatDrawer } from '@angular/material/sidenav';
 import { SearchCriteria } from '@noctua.search/models/search-criteria';
 import { environment } from 'environments/environment';
+import { NoctuaCommonMenuService } from '@noctua.common/services/noctua-common-menu.service';
 
 @Component({
   selector: 'noc-term-detail',
@@ -34,12 +33,9 @@ export class TermDetailComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any>;
 
   constructor(
-    private zone: NgZone,
-    private _noctuaGraphService: NoctuaGraphService,
     private noctuaLookupService: NoctuaLookupService,
-    public noctuaFormMenuService: NoctuaFormMenuService,
+    public noctuaCommonMenuService: NoctuaCommonMenuService,
     public camService: CamService,
-    private confirmDialogService: NoctuaConfirmDialogService,
     public noctuaSearchDialogService: NoctuaSearchDialogService,
     public noctuaUserService: NoctuaUserService,
     public noctuaReviewSearchService: NoctuaReviewSearchService,
@@ -85,7 +81,8 @@ export class TermDetailComponent implements OnInit, OnDestroy {
       .subscribe((term) => {
         if (!term) return;
         this.noctuaReviewSearchService.onCamTermSearch.next(term)
-        this.noctuaFormMenuService.openLeftDrawer(LeftPanel.findReplace);
+        this.noctuaCommonMenuService.selectLeftPanel(LeftPanel.findReplace);
+        this.noctuaCommonMenuService.openLeftDrawer();
       })
 
     this.noctuaLookupService.getTermDetail(replaceBy)

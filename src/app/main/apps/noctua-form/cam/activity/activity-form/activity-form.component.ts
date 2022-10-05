@@ -13,7 +13,6 @@ import {
   ActivityState,
   ActivityType,
   NoctuaUserService,
-  NoctuaFormMenuService,
 } from '@geneontology/noctua-form-base';
 import { ResizeEvent } from 'angular-resizable-element';
 
@@ -55,8 +54,8 @@ export class ActivityFormComponent implements OnInit, OnDestroy {
     private noctuaFormDialogService: NoctuaFormDialogService,
     public noctuaUserService: NoctuaUserService,
     public noctuaFormConfigService: NoctuaFormConfigService,
-    public noctuaActivityFormService: NoctuaActivityFormService,
-    public noctuaFormMenuService: NoctuaFormMenuService) {
+    public noctuaActivityFormService: NoctuaActivityFormService
+  ) {
     this._unsubscribeAll = new Subject();
 
     // this.activity = self.noctuaActivityFormService.activity;

@@ -1,8 +1,6 @@
 
 
-import { Component, OnDestroy, OnInit, Input, NgZone } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { MatDrawer } from '@angular/material/sidenav';
+import { Component, OnDestroy, OnInit, NgZone } from '@angular/core';
 import { EMPTY, Subject } from 'rxjs';
 
 
@@ -11,7 +9,6 @@ import {
   ActivityType,
   NoctuaUserService,
   NoctuaFormConfigService,
-  NoctuaFormMenuService,
   NoctuaActivityFormService,
   noctuaFormConfig,
 
@@ -30,7 +27,7 @@ import { takeUntil, distinctUntilChanged, debounceTime, take, concatMap, finaliz
 import { noctuaAnimations } from '@noctua/animations';
 import { FormGroup, FormControl } from '@angular/forms';
 import { NoctuaReviewSearchService } from '@noctua.search/services/noctua-review-search.service';
-import { cloneDeep, each, groupBy } from 'lodash';
+import { cloneDeep, groupBy } from 'lodash';
 import { ArtReplaceCategory } from '@noctua.search/models/review-mode';
 import { NoctuaConfirmDialogService } from '@noctua/components/confirm-dialog/confirm-dialog.service';
 import { InlineReferenceService } from '@noctua.editor/inline-reference/inline-reference.service';
@@ -74,7 +71,6 @@ export class ReviewFormComponent implements OnInit, OnDestroy {
     private noctuaLookupService: NoctuaLookupService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     public noctuaActivityFormService: NoctuaActivityFormService,
-    public noctuaFormMenuService: NoctuaFormMenuService,
     private inlineReferenceService: InlineReferenceService,) {
 
     this._unsubscribeAll = new Subject();
