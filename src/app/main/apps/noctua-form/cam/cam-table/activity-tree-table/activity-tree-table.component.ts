@@ -9,14 +9,9 @@ import {
   NoctuaActivityFormService,
   NoctuaActivityEntityService,
   CamService,
-  Evidence,
-  Entity,
   noctuaFormConfig,
   NoctuaUserService,
-  NoctuaFormMenuService,
-
-  ActivityType,
-  ActivityTreeNode
+  ActivityType
 } from '@geneontology/noctua-form-base';
 
 import {
@@ -62,7 +57,6 @@ export class ActivityTreeTableComponent implements OnInit, OnDestroy {
 
   constructor(
     public camService: CamService,
-    public noctuaFormMenuService: NoctuaFormMenuService,
     public noctuaUserService: NoctuaUserService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaFormDialogService: NoctuaFormDialogService,

@@ -11,9 +11,7 @@ import {
   NoctuaActivityConnectorService,
   NoctuaActivityFormService,
   NoctuaFormConfigService,
-  CamService,
   NoctuaUserService,
-  NoctuaFormMenuService,
   ConnectorType
 } from '@geneontology/noctua-form-base';
 import { NoctuaFormDialogService } from '../../../services/dialog.service';
@@ -51,7 +49,6 @@ export class ActivityConnectorFormComponent implements OnInit, OnDestroy {
     private noctuaFormDialogService: NoctuaFormDialogService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     public noctuaActivityFormService: NoctuaActivityFormService,
-    public noctuaFormMenuService: NoctuaFormMenuService,
   ) {
     this._unsubscribeAll = new Subject();
   }

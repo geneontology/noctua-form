@@ -1,0 +1,248 @@
+@use "@angular/material" as mat;
+@import "src/@noctua/scss/noctua";
+@import "src/@noctua.common/scss/noctua.common";
+
+$primary: map-get($theme, primary);
+$accent: map-get($theme, accent);
+
+:host {
+  padding: 0px;
+  width: 100%;
+
+  noc-cam-table {
+    display: block;
+  }
+
+  noc-activity-connector {
+    display: block;
+    @include deep-width(600px);
+  }
+
+  noc-graph-settings {
+    display: block;
+    @include deep-width(500px);
+  }
+
+  noc-graph-activity-table {
+    display: block;
+    min-width: 400px;
+  }
+
+  .mat-drawer-content {
+    width: 100%;
+  }
+
+  .noc-drawer-container {
+    background-color: #e2e2e2;
+  }
+
+  .noc-not-loggedin {
+    margin-bottom: 4px;
+    padding: 0 10px;
+    @include deep-height(40px);
+    width: 100%;
+    //min-height: 35px;
+    background-color: rgb(229, 194, 194);
+    font-size: 12px;
+  }
+
+  .noc-cam-heading {
+    margin-bottom: 4px;
+    padding: 0 10px;
+    @include deep-height(40px);
+    width: 100%;
+    //min-height: 35px;
+    background-color: #fff;
+    font-size: 12px;
+
+    @include mat.elevation(2);
+
+    .noc-cam-title {
+      max-width: 400px !important;
+    }
+
+    .noc-cam-heading-section {
+      height: 100%;
+
+      .noc-section-label {
+        font-size: 12px;
+        color: #555;
+      }
+    }
+
+    .noc-title {
+      padding-left: 8px;
+      padding-right: 8px;
+      max-width: 250px;
+
+      strong {
+        font-size: 12px;
+      }
+    }
+
+    .noc-toolbar-button {
+      font-size: 18px;
+      color: map-get($primary, 400);
+
+      &:hover {
+        font-size: 20px;
+        color: map-get($primary, default);
+      }
+    }
+
+    .noc-model-state {
+      padding-left: 8px;
+      padding-right: 8px;
+      max-width: 150px;
+    }
+
+    mat-icon-button {
+      border-radius: 0 !important;
+    }
+  }
+
+  mat-chip {
+    font-size: 12px;
+    font-weight: normal;
+    @include deep-height(25px);
+    max-width: 200px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    .noc-chip-label {
+      padding: 0 8px 0 4px;
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      .noc-icon-action {
+        font-size: 10px;
+        background-color: transparent;
+
+        &:hover {
+          font-size: 14px;
+          color: #222;
+        }
+      }
+    }
+
+    &.noc-table-chip {
+      padding: 0;
+      @include deep-height(25px);
+      font-size: 10px;
+
+      .noc-icon,
+      .noc-icon-action {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 25px;
+        width: 25px;
+        border-radius: 50%;
+        color: #777;
+        font-size: 14px;
+      }
+
+      .noc-icon-action {
+        font-size: 10px;
+        background-color: transparent;
+
+        &:hover {
+          font-size: 14px;
+          color: #222;
+          background-color: rgba(#000000, 0.2);
+        }
+      }
+
+      @include noc-chip-color(#ddd);
+
+      &.noc-user-chip {
+        @include noc-chip-color(#bbc9cc);
+
+        .noc-icon {
+          color: #59939e;
+        }
+      }
+
+      &.noc-date-chip {
+        @include noc-chip-color(#aee9f5);
+      }
+
+      &.noc-state-chip {
+        &.noc-development {
+          @include noc-chip-color(#f4c89c);
+          // border: #d59f80 solid 1px;/
+        }
+
+        &.noc-production {
+          @include noc-chip-color(#b6f1cc);
+          // border: #d59f80 solid 1px;/
+        }
+
+        &.noc-review {
+          @include noc-chip-color(#d8f6a3);
+          // border: #d59f80 solid 1px;/
+        }
+      }
+    }
+  }
+
+  .noc-sidemenu {
+    padding: 0;
+    margin-right: 5px;
+    @include deep-height(100%);
+    @include deep-width(60px);
+    @include mat.elevation(2);
+    border-right: #999 solid 1px;
+
+    button {
+      @include deep-width(60px);
+      @include deep-height(60px);
+
+      mat-icon {
+        @include noc-icon-size(28px);
+        color: $noc-primary-color-light;
+      }
+
+      &.noc-active {
+        mat-icon {
+          color: #555;
+        }
+      }
+    }
+  }
+
+  .noc-form-container {
+    background-color: #eee;
+    padding: 20px 10px;
+  }
+
+  .noc-toolbar {
+    padding: 0px 20px;
+    height: 40px;
+    width: 100%;
+    background-color: #f2f2f2;
+    border-bottom: #bbb solid 1px;
+
+    .noc-title {
+      line-height: 38px;
+      color: #555;
+      font-size: 14px;
+      font-weight: bold;
+    }
+  }
+
+  .noc-left-drawer {
+    @include deep-height(100%);
+    background-color: #fff;
+    border-right: #bbb solid 1px;
+    @include mat.elevation(4);
+  }
+
+  .noc-right-drawer {
+    @include deep-height(100%);
+    background-color: #fff;
+    border-left: #bbb solid 1px;
+  }
+}

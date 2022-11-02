@@ -11,13 +11,16 @@ export enum LeftPanel {
     camForm = 'camForm',
     copyModel = 'copyModel',
     apps = 'apps',
-    announcement = 'announcement'
+    announcement = 'announcement',
+    findReplace = 'findReplace',
+    camTermsSummary = 'camTermsSummary',
+    camStats = 'camStats'
 };
 
 export enum MiddlePanel {
     camPreview = 'camPreview',
     camTable = 'camTable',
-    camGraph = 'camGraph'
+    camGraph = 'camGraph',
 };
 
 export enum RightPanel {
@@ -26,7 +29,7 @@ export enum RightPanel {
     camForm = 'camForm',
     camTable = 'camTable',
     activityTable = 'activityTable',
-    tripleTable = 'tripleTable',
     activityConnectorTable = 'activityConnectorTable',
-    graphSettings = 'graphSettings'
+    graphSettings = 'graphSettings',
+    termDetail = 'termDetail'
 }

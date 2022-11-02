@@ -1,5 +1,5 @@
 
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDrawer } from '@angular/material/sidenav';
 import { Subject } from 'rxjs';
@@ -12,24 +12,20 @@ import {
   Contributor,
   NoctuaUserService,
   NoctuaFormConfigService,
-  NoctuaFormMenuService,
   NoctuaActivityFormService,
   CamService,
   noctuaFormConfig,
   MiddlePanel,
   LeftPanel,
-  Activity,
   NoctuaGraphService,
-  ActivityDisplayType,
-  CamLoadingIndicator,
-  ReloadType
+  ActivityDisplayType
 } from '@geneontology/noctua-form-base';
 
 import { takeUntil, distinctUntilChanged } from 'rxjs/operators';
-import { NoctuaDataService } from '@noctua.common/services/noctua-data.service';
 import { TableOptions } from '@noctua.common/models/table-options';
 import { NoctuaSearchDialogService } from '@noctua.search/services/dialog.service';
 import { NoctuaReviewSearchService } from '@noctua.search/services/noctua-review-search.service';
+import { NoctuaCommonMenuService } from '@noctua.common/services/noctua-common-menu.service';
 
 @Component({
   selector: 'app-noctua-tutorial',
@@ -73,13 +69,12 @@ export class NoctuaTutorialComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private camService: CamService,
     private _noctuaGraphService: NoctuaGraphService,
-    private noctuaDataService: NoctuaDataService,
     private noctuaReviewSearchService: NoctuaReviewSearchService,
     public noctuaSearchDialogService: NoctuaSearchDialogService,
     public noctuaUserService: NoctuaUserService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     public noctuaActivityFormService: NoctuaActivityFormService,
-    public noctuaFormMenuService: NoctuaFormMenuService) {
+    public noctuaCommonMenuService: NoctuaCommonMenuService) {
 
     this._unsubscribeAll = new Subject();
 
@@ -109,8 +104,8 @@ export class NoctuaTutorialComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     const self = this;
 
-    self.noctuaFormMenuService.setLeftDrawer(self.leftDrawer);
-    self.noctuaFormMenuService.setRightDrawer(self.rightDrawer);
+    self.noctuaCommonMenuService.setLeftDrawer(self.leftDrawer);
+    self.noctuaCommonMenuService.setRightDrawer(self.rightDrawer);
 
     this._noctuaGraphService.onCamGraphChanged
       .pipe(takeUntil(this._unsubscribeAll))
@@ -139,72 +134,6 @@ export class NoctuaTutorialComponent implements OnInit, OnDestroy {
 
   }
 
-  openCamForm() {
-    this.camService.initializeForm(this.cam);
-    this.noctuaFormMenuService.openLeftDrawer(LeftPanel.camForm);
-  }
-
-  openActivityForm(activityType: ActivityType) {
-    this.noctuaActivityFormService.setActivityType(activityType);
-    this.noctuaFormMenuService.openLeftDrawer(LeftPanel.activityForm);
-  }
-
-  openSearch() {
-    this.noctuaFormMenuService.openLeftDrawer(LeftPanel.findReplace);
-  }
-
-  openCopyModel() {
-    this.noctuaFormMenuService.openLeftDrawer(LeftPanel.copyModel);
-  }
-
-  resetCam(cam: Cam) {
-    const self = this;
-
-    const summary = self.camService.reviewCamChanges(cam);
-    const success = (ok) => {
-      if (ok) {
-        cam.loading = new CamLoadingIndicator(true, 'Resetting Model ...');
-        self.camService.reloadCam(cam, ReloadType.RESET)
-        self.noctuaReviewSearchService.onClearForm.next(true);
-        self.noctuaReviewSearchService.clear();
-        self.cam.clearHighlight()
-      }
-    }
-
-    const options = {
-      title: 'Discard Unsaved Changes',
-      message: `All your changes will be discarded for model. Model Name:"${cam.title}"`,
-      cancelLabel: 'Cancel',
-      confirmLabel: 'OK'
-    }
-
-    self.noctuaSearchDialogService.openCamReviewChangesDialog(success, summary, options)
-  }
-
-  storeCam(cam: Cam) {
-
-    const self = this;
-    const summary = self.camService.reviewCamChanges(cam);
-
-    const success = (replace) => {
-      if (replace) {
-        cam.loading = new CamLoadingIndicator(true, 'Saving Model ...');
-        self.camService.reloadCam(cam, ReloadType.STORE)
-        self.noctuaReviewSearchService.onClearForm.next(true);
-        self.noctuaReviewSearchService.clear();
-        self.cam.clearHighlight()
-      }
-    };
-
-    const options = {
-      title: 'Save Changes?',
-      message: `All your changes will be saved for model. Model Name:"${cam.title}"`,
-      cancelLabel: 'Go Back',
-      confirmLabel: 'Submit'
-    }
-
-    self.noctuaSearchDialogService.openCamReviewChangesDialog(success, summary, options)
-  }
 }
 
 

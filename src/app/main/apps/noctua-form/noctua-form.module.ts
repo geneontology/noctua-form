@@ -18,7 +18,6 @@ import { SelectEvidenceDialogComponent } from './dialogs/select-evidence/select-
 import { SearchDatabaseDialogComponent } from './dialogs/search-database/search-database.component';
 import { ActivityConnectorFormComponent } from './cam/activity/activity-connector-form/activity-connector-form.component';
 import { ActivityTableComponent } from './cam/cam-table/activity-table/activity-table.component';
-import { TripleTableComponent } from './cam/cam-table/triple-table/triple-table.component';
 import { GraphPreviewComponent } from './cam/cam-preview/graph-preview/graph-preview.component';
 import { NoctuaConfirmDialogModule } from '@noctua/components';
 import { CamPreviewComponent } from './cam/cam-preview/cam-preview.component';
@@ -68,6 +67,7 @@ import { ActivityFormTableNodeComponent } from './cam/cam-table/activity-form-ta
 import { ActivityFormTableComponent } from './cam/cam-table/activity-form-table/activity-form-table.component';
 import { EvidenceFormTableComponent } from './cam/cam-table/activity-form-table/evidence-table/evidence-table.component';
 import { ConfirmCopyModelDialogComponent } from './dialogs/confirm-copy-model/confirm-copy-model.component';
+import { CamToolbarComponent } from './cam/cam-toolbar/cam-toolbar.component';
 
 const routes = [
   {
@@ -131,7 +131,6 @@ const routes = [
     ActivityTableComponent,
     ActivityTreeComponent,
     ActivityTreeTableComponent,
-    TripleTableComponent,
     ActivityTreeNodeComponent,
     ActivityFormTableComponent,
     ActivityFormTableNodeComponent,
@@ -139,7 +138,8 @@ const routes = [
     PreviewActivityComponent,
     GraphPreviewComponent,
     EvidenceFormTableComponent,
-    ConfirmCopyModelDialogComponent
+    ConfirmCopyModelDialogComponent,
+    CamToolbarComponent,
   ],
   providers: [
     NoctuaFormDialogService,
@@ -163,7 +163,6 @@ const routes = [
     CamFormComponent,
     CopyModelComponent,
     ActivityConnectorFormComponent,
-    TripleTableComponent,
     ActivityTableComponent,
     ActivityTreeTableComponent,
     EvidenceTableComponent,
@@ -184,7 +183,8 @@ const routes = [
     ContributionStatsComponent,
     StatementStatsComponent,
     EvidenceFormTableComponent,
-    ConfirmCopyModelDialogComponent
+    ConfirmCopyModelDialogComponent,
+    CamToolbarComponent
   ],
 })
 

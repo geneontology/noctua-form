@@ -13,8 +13,6 @@ import {
   Entity,
   noctuaFormConfig,
   NoctuaUserService,
-  NoctuaFormMenuService,
-
   ActivityType
 } from '@geneontology/noctua-form-base';
 
@@ -29,7 +27,6 @@ import { EditorCategory } from '@noctua.editor/models/editor-category';
 import { find } from 'lodash';
 import { InlineEditorService } from '@noctua.editor/inline-editor/inline-editor.service';
 import { NoctuaUtils } from '@noctua/utils/noctua-utils';
-import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'noc-activity-table',
@@ -62,7 +59,6 @@ export class ActivityTableComponent implements OnInit, OnDestroy {
 
   constructor(
     public camService: CamService,
-    public noctuaFormMenuService: NoctuaFormMenuService,
     public noctuaUserService: NoctuaUserService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     private noctuaFormDialogService: NoctuaFormDialogService,

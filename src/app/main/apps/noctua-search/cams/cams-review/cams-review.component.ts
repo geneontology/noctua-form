@@ -7,7 +7,6 @@ import {
   Cam,
   NoctuaUserService,
   NoctuaFormConfigService,
-  NoctuaFormMenuService,
   noctuaFormConfig,
   CamService,
   ActivityDisplayType
@@ -70,8 +69,7 @@ export class CamsReviewComponent implements OnInit, OnDestroy {
     public noctuaSearchMenuService: NoctuaSearchMenuService,
     public noctuaReviewSearchService: NoctuaReviewSearchService,
     public noctuaUserService: NoctuaUserService,
-    public noctuaFormConfigService: NoctuaFormConfigService,
-    public noctuaFormMenuService: NoctuaFormMenuService) {
+    public noctuaFormConfigService: NoctuaFormConfigService) {
 
     this._unsubscribeAll = new Subject();
 

@@ -6,7 +6,6 @@ import {
   Contributor,
   NoctuaActivityFormService,
   NoctuaFormConfigService,
-  NoctuaFormMenuService,
   NoctuaGraphService,
   NoctuaUserService
 } from '@geneontology/noctua-form-base';
@@ -31,7 +30,7 @@ export class NoctuaPathwayComponent implements OnInit, OnDestroy {
     public noctuaUserService: NoctuaUserService,
     public noctuaFormConfigService: NoctuaFormConfigService,
     public noctuaActivityFormService: NoctuaActivityFormService,
-    public noctuaFormMenuService: NoctuaFormMenuService) {
+  ) {
 
     this._unsubscribeAll = new Subject();
 

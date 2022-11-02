@@ -17,9 +17,6 @@ import { TermsSummary } from './summary';
 
 
 import moment from 'moment';
-//const moment = moment_;
-
-
 
 export enum ActivityState {
   creation = 1,
@@ -118,7 +115,6 @@ export class Activity extends SaeGraph<ActivityNode> {
 
   private _backgroundColor = 'green'
   private _presentation: any;
-  private _grid: any[] = [];
   private _id: string;
 
   constructor() {
@@ -226,8 +222,6 @@ export class Activity extends SaeGraph<ActivityNode> {
     return noctuaFormConfig.activityType.options[this.activityType];
   }
 
-
-
   updateDate() {
     const self = this;
     const rootNode = this.rootNode;
@@ -265,12 +259,6 @@ export class Activity extends SaeGraph<ActivityNode> {
     let summary = new TermsSummary()
     let coverage = 0;
     const filteredNodes = self.nodes.filter(node => node.term.hasValue())
-
-    /*  summary.nodes = chain(self.nodes)
-       .filter(node => node.term.hasValue())
-       .groupBy(node => node.type)
-       .value(); */
-
 
     each(filteredNodes, (node: ActivityNode) => {
       if (node.type === ActivityNodeType.GoMolecularFunction) {
@@ -513,16 +501,6 @@ export class Activity extends SaeGraph<ActivityNode> {
   setActivityType(type) {
     this.activityType = type;
   }
-
-  get grid() {
-    const self = this;
-
-    if (self._grid.length === 0) {
-      this.generateGrid();
-    }
-    return this._grid;
-  }
-
 
   getEdgesByEdgeId(edgeId: string): Triple<ActivityNode>[] {
     const self = this;
@@ -831,130 +809,6 @@ export class Activity extends SaeGraph<ActivityNode> {
     this._presentation = null;
   }
 
-  resetGrid() {
-    this._grid = [];
-  }
-
-  generateGrid() {
-    const self = this;
-    self._grid = [];
-
-    each(self.presentation.fd, function (nodeGroup) {
-      each(nodeGroup.nodes, function (node: ActivityNode) {
-        const term = node.getTerm();
-
-        if (node.id !== ActivityNodeType.GoMolecularEntity && term.id) {
-          self.generateGridRow(node);
-        }
-      });
-    });
-  }
-
-  generateGridRow(node: ActivityNode) {
-    const self = this;
-    const term = node.getTerm();
-
-    self._grid.push({
-      treeLevel: node.treeLevel,
-      gp: self.tableDisplayGp(node),
-      qualifier: node.isExtension ? '' : self.tableDisplayQualifier(node),
-      relationship: node.isExtension ? '' : self.tableDisplayRelationship(node),
-      relationshipExt: node.isExtension ? node.predicate.edge.label : '',
-      term: node.isExtension ? null : term,
-      extension: node.isExtension ? term : null,
-      aspect: node.aspect,
-      evidence: node.predicate.evidence.length > 0 ? node.predicate.evidence[0].evidence : {},
-      reference: node.predicate.evidence.length > 0 ? node.predicate.evidence[0].reference : '',
-      referenceEntity: node.predicate.evidence.length > 0 ? node.predicate.evidence[0].referenceEntity : {},
-      with: node.predicate.evidence.length > 0 ? node.predicate.evidence[0].with : '',
-      withEntity: node.predicate.evidence.length > 0 ? node.predicate.evidence[0].withEntity : {},
-      groups: node.predicate.evidence.length > 0 ? node.predicate.evidence[0].groups : [],
-      contributors: node.predicate.evidence.length > 0 ? node.predicate.evidence[0].contributors : [],
-      evidenceIndex: 0,
-      relationEditable: node.relationEditable,
-      node: node
-    });
-
-    for (let i = 1; i < node.predicate.evidence.length; i++) {
-      self._grid.push({
-        treeLevel: node.treeLevel,
-        evidence: node.predicate.evidence[i].evidence,
-        reference: node.predicate.evidence[i].reference,
-        referenceEntity: node.predicate.evidence[i].referenceEntity,
-        referenceUrl: node.predicate.evidence[i].referenceUrl,
-        with: node.predicate.evidence[i].with,
-        withEntity: node.predicate.evidence[i].withEntity,
-        groups: node.predicate.evidence[i].groups,
-        contributors: node.predicate.evidence[i].contributors,
-        evidenceIndex: i,
-        node: node,
-      });
-    }
-  }
-
-  tableDisplayGp(node: ActivityNode) {
-    const self = this;
-
-    let display = false;
-
-    switch (self.activityType) {
-      case noctuaFormConfig.activityType.options.default.name:
-      case noctuaFormConfig.activityType.options.bpOnly.name:
-        display = node.id === ActivityNodeType.GoMolecularFunction;
-        break;
-      case noctuaFormConfig.activityType.options.ccOnly.name:
-        display = node.id === 'cc';
-        break;
-    }
-    return display ? self.gp : '';
-  }
-
-  tableCanDisplayEnabledBy(node: ActivityNode) {
-
-    return node.predicate.edge && node.predicate.edge.id === noctuaFormConfig.edge.enabledBy.id;
-  }
-
-  tableDisplayQualifier(node: ActivityNode) {
-
-    if (node.id === ActivityNodeType.GoMolecularFunction) {
-      return '';
-    } else if (node.isComplement) {
-      return 'NOT';
-    } else {
-      return '';
-    }
-  }
-
-  tableDisplayRelationship(node: ActivityNode) {
-    if (node.id === ActivityNodeType.GoMolecularFunction) {
-      return '';
-    } else {
-      return node.predicate.edge.label;
-    }
-  }
-
-  print() {
-    const result = []
-    this.nodes.forEach((node) => {
-      const a = [];
-
-      node.predicate.evidence.forEach((evidence: Evidence) => {
-        a.push({
-          evidence: evidence.evidence,
-          reference: evidence.reference,
-          with: evidence.with
-        });
-      });
-
-      result.push({
-        id: node.id,
-        term: node.term,
-        evidence: a
-      });
-    });
-
-    return result;
-  }
 }
 
 export class ActivityTreeNode {
