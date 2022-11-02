@@ -1,0 +1,402 @@
+{
+  "CHEBI:33695": {
+    "id": "CHEBI:33695",
+    "label": "goinformationbiomacromolecule",
+    "closure_type": "isa_closure"
+  },
+  "CHEBI:36080": {
+    "id": "CHEBI:36080",
+    "label": "goprotein",
+    "closure_type": "isa_closure"
+  },
+  "GO:0032991": {
+    "id": "GO:0032991",
+    "label": "goproteincontainingcomplex",
+    "closure_type": "isa_closure"
+  },
+  "GO:0005575": {
+    "id": "GO:0005575",
+    "label": "gocellularcomponent",
+    "closure_type": "isa_closure"
+  },
+  "GO:0008150": {
+    "id": "GO:0008150",
+    "label": "gobiologicalprocess",
+    "closure_type": "isa_closure"
+  },
+  "GO:0048856": {
+    "id": "GO:0048856",
+    "label": "goanatomicalstructuredevelopment",
+    "closure_type": "isa_closure"
+  },
+  "GO:0048646": {
+    "id": "GO:0048646",
+    "label": "goanatomicalstructureformationinvolvedinmorphogenesis",
+    "closure_type": "isa_closure"
+  },
+  "GO:0009653": {
+    "id": "GO:0009653",
+    "label": "goanatomicalstructuremorphogenesis",
+    "closure_type": "isa_closure"
+  },
+  "GO:0030154": {
+    "id": "GO:0030154",
+    "label": "gocelldifferentiation",
+    "closure_type": "isa_closure"
+  },
+  "GO:0051301": {
+    "id": "GO:0051301",
+    "label": "gocelldivision",
+    "closure_type": "isa_closure"
+  },
+  "GO:0045165": {
+    "id": "GO:0045165",
+    "label": "gocellfatecommitment",
+    "closure_type": "isa_closure"
+  },
+  "GO:0001709": {
+    "id": "GO:0001709",
+    "label": "gocellfatedetermination",
+    "closure_type": "isa_closure"
+  },
+  "GO:0001708": {
+    "id": "GO:0001708",
+    "label": "gocellfatespecification",
+    "closure_type": "isa_closure"
+  },
+  "GO:0022607": {
+    "id": "GO:0022607",
+    "label": "gocellularcomponentassembly",
+    "closure_type": "isa_closure"
+  },
+  "GO:0022411": {
+    "id": "GO:0022411",
+    "label": "gocellularcomponentdisassembly",
+    "closure_type": "isa_closure"
+  },
+  "GO:0016043": {
+    "id": "GO:0016043",
+    "label": "gocellularcomponentorganization",
+    "closure_type": "isa_closure"
+  },
+  "GO:0021700": {
+    "id": "GO:0021700",
+    "label": "godevelopmentalmaturation",
+    "closure_type": "isa_closure"
+  },
+  "GO:0040007": {
+    "id": "GO:0040007",
+    "label": "gogrowth",
+    "closure_type": "isa_closure"
+  },
+  "GO:0051179": {
+    "id": "GO:0051179",
+    "label": "golocalization",
+    "closure_type": "isa_closure"
+  },
+  "GO:0040011": {
+    "id": "GO:0040011",
+    "label": "golocomotion",
+    "closure_type": "isa_closure"
+  },
+  "GO:0006928": {
+    "id": "GO:0006928",
+    "label": "gomovementofcellorsubcellularcomponent",
+    "closure_type": "isa_closure"
+  },
+  "GO:0034367": {
+    "id": "GO:0034367",
+    "label": "goproteincontainingcomplexremodeling",
+    "closure_type": "isa_closure"
+  },
+  "GO:0007389": {
+    "id": "GO:0007389",
+    "label": "gopatternspecificationprocess",
+    "closure_type": "isa_closure"
+  },
+  "GO:0003674": {
+    "id": "GO:0003674",
+    "label": "gomolecularfunction",
+    "closure_type": "isa_closure"
+  },
+  "GO:0005215": {
+    "id": "GO:0005215",
+    "label": "gotransporteractivity",
+    "closure_type": "isa_closure"
+  },
+  "CHEBI:24431": {
+    "id": "CHEBI:24431",
+    "label": "gochemicalentity",
+    "closure_type": "isa_closure"
+  },
+  "ECO:0000000": {
+    "id": "ECO:0000000",
+    "label": "goevidence",
+    "closure_type": "isa_closure"
+  },
+  "CARO:0000000": {
+    "id": "CARO:0000000",
+    "label": "goanatomicalentity",
+    "closure_type": "isa_closure"
+  },
+  "CL:0000003": {
+    "id": "CL:0000003",
+    "label": "gonativecell",
+    "closure_type": "isa_closure"
+  },
+  "NCBITaxon:1": {
+    "id": "NCBITaxon:1",
+    "label": "goorganism",
+    "closure_type": "isa_closure"
+  },
+  "GO:0044848": {
+    "id": "GO:0044848",
+    "label": "gobiologicalphase",
+    "closure_type": "isa_closure"
+  },
+  "UBERON:0000105": {
+    "id": "UBERON:0000105",
+    "label": "golifecyclestage",
+    "closure_type": "isa_closure"
+  },
+  "PO:0009012": {
+    "id": "PO:0009012",
+    "label": "goplantstructuredevelopmentstage",
+    "closure_type": "isa_closure"
+  },
+  "BFO:0000050": {
+    "id": "BFO:0000050",
+    "label": "part_of",
+    "closure_type": "isa_closure"
+  },
+  "BFO:0000051": {
+    "id": "BFO:0000051",
+    "label": "has_part",
+    "closure_type": "isa_closure"
+  },
+  "BFO:0000066": {
+    "id": "BFO:0000066",
+    "label": "occurs_in",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002220": {
+    "id": "RO:0002220",
+    "label": "adjacent_to",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002131": {
+    "id": "RO:0002131",
+    "label": "overlaps",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002490": {
+    "id": "RO:0002490",
+    "label": "existence_overlaps",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002491": {
+    "id": "RO:0002491",
+    "label": "existence_starts_and_ends_during",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002333": {
+    "id": "RO:0002333",
+    "label": "enabled_by",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002326": {
+    "id": "RO:0002326",
+    "label": "contributes_to",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002233": {
+    "id": "RO:0002233",
+    "label": "has_input",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002234": {
+    "id": "RO:0002234",
+    "label": "has_output",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002339": {
+    "id": "RO:0002339",
+    "label": "has_target_end_location",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002338": {
+    "id": "RO:0002338",
+    "label": "has_target_start_location",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002313": {
+    "id": "RO:0002313",
+    "label": "transports_or_maintains_localization_of",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002413": {
+    "id": "RO:0002413",
+    "label": "directly_provides_input_for",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002629": {
+    "id": "RO:0002629",
+    "label": "directly_positively_regulates",
+    "closure_type": "isa_closure"
+  },
+  "RO:0001025": {
+    "id": "RO:0001025",
+    "label": "located_in",
+    "closure_type": "isa_closure"
+  },
+  "RO:0001015": {
+    "id": "RO:0001015",
+    "label": "location_of",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002432": {
+    "id": "RO:0002432",
+    "label": "is_active_in",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002092": {
+    "id": "RO:0002092",
+    "label": "happens_during",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002211": {
+    "id": "RO:0002211",
+    "label": "regulates",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002212": {
+    "id": "RO:0002212",
+    "label": "negatively_regulates",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002213": {
+    "id": "RO:0002213",
+    "label": "positively_regulates",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002578": {
+    "id": "RO:0002578",
+    "label": "directly_regulates",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002630": {
+    "id": "RO:0002630",
+    "label": "directly_negatively_regulates",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002406": {
+    "id": "RO:0002406",
+    "label": "directly_activates",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002418": {
+    "id": "RO:0002418",
+    "label": "causally_upstream_of_or_within",
+    "closure_type": "isa_closure"
+  },
+  "RO:0004046": {
+    "id": "RO:0004046",
+    "label": "causally_upstream_of_or_within_negative_effect",
+    "closure_type": "isa_closure"
+  },
+  "RO:0004047": {
+    "id": "RO:0004047",
+    "label": "causally_upstream_of_or_within_positive_effect",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002411": {
+    "id": "RO:0002411",
+    "label": "causally_upstream_of",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002305": {
+    "id": "RO:0002305",
+    "label": "causally_upstream_of_negative_effect",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002304": {
+    "id": "RO:0002304",
+    "label": "causally_upstream_of_positive_effect",
+    "closure_type": "isa_closure"
+  },
+  "RO:0012003": {
+    "id": "RO:0012003",
+    "label": "acts_on_population_of",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002296": {
+    "id": "RO:0002296",
+    "label": "results_in_development_of",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002297": {
+    "id": "RO:0002297",
+    "label": "results_in_formation_of",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002298": {
+    "id": "RO:0002298",
+    "label": "results_in_morphogenesis_of",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002315": {
+    "id": "RO:0002315",
+    "label": "results_in_acquisition_of_features_of",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002348": {
+    "id": "RO:0002348",
+    "label": "results_in_commitment_to",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002349": {
+    "id": "RO:0002349",
+    "label": "results_in_determination_of",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002356": {
+    "id": "RO:0002356",
+    "label": "results_in_specification_of",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002588": {
+    "id": "RO:0002588",
+    "label": "results_in_assembly_of",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002590": {
+    "id": "RO:0002590",
+    "label": "results_in_disassembly_of",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002592": {
+    "id": "RO:0002592",
+    "label": "results_in_organization_of",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002299": {
+    "id": "RO:0002299",
+    "label": "results_in_maturation_of",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002343": {
+    "id": "RO:0002343",
+    "label": "results_in_growth_of",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002565": {
+    "id": "RO:0002565",
+    "label": "results_in_movement_of",
+    "closure_type": "isa_closure"
+  },
+  "RO:0002591": {
+    "id": "RO:0002591",
+    "label": "results_in_remodeling_of",
+    "closure_type": "isa_closure"
+  }
+}
