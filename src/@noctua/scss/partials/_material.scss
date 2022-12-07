@@ -50,6 +50,51 @@ mat-radio-button {
   }
 }
 
+.mat-menu-panel {
+  &.noc-menu-panel {
+    background-color: #d2e8f8;
+    max-width: none !important;
+
+    .mat-menu-item {
+      //@include deep-height(25px !important);
+      //max-width: 300px !important;
+      font-size: 10px;
+
+      border-bottom: rgba(map-get($primary, default), 0.6) solid 1px;
+      height: auto !important;
+      line-height: 18px !important;
+      white-space: normal !important;
+
+      .noc-terms-description {
+        font-weight: bold;
+        text-transform: capitalize;
+      }
+    }
+  }
+
+  &.noc-extensions-menu-panel {
+    background-color: #d2e8f8;
+    max-width: none !important;
+
+    .mat-menu-item {
+      padding: 4px 12px;
+      //@include deep-height(25px !important);
+      //max-width: 300px !important;
+      font-size: 10px;
+
+      border-bottom: rgba(map-get($primary, default), 0.6) solid 1px;
+      height: auto !important;
+      line-height: 12px !important;
+      white-space: normal !important;
+
+      .noc-terms-description {
+        font-weight: bold;
+        text-transform: capitalize;
+      }
+    }
+  }
+}
+
 .mat-autocomplete-panel {
   &.noc-term-autocomplete {
     background-color: #fbf9de;

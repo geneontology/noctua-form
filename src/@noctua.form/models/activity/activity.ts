@@ -312,13 +312,46 @@ export class Activity extends SaeGraph<ActivityNode> {
       });
     });
 
-    // remove the subject menu
-    each(self.edges, function (triple: Triple<ActivityNode>) {
-      if (triple.subject.type === triple.object.type) {
-        //triple.subject.canInsertNodes = [];
-        // triple.subject.insertMenuNodes = [];
+  }
+
+  updateShapeMenuShex(rootTypes?) {
+    const self = this;
+
+    each(self.nodes, (node: ActivityNode) => {
+      const subjectIds = node.category.map((category) => {
+        return category.category
+      });
+
+      if (rootTypes) {
+        subjectIds.push(...rootTypes.map(rootType => rootType.id))
       }
+
+      const canInsertNodes = ShapeDescription.getShexJson(subjectIds);
+      const insertNodes: ShapeDescription.ShapeDescription[] = [];
+
+      each(canInsertNodes, (nodeDescription: ShapeDescription.ShapeDescription) => {
+        /*  if (nodeDescription.cardinality === ShapeDescription.CardinalityType.oneToOne) {
+           const edgeTypeExist = self.edgeTypeExist(node.id, nodeDescription.predicate.id, node.type, nodeDescription.node.type);
+ 
+           if (!edgeTypeExist) {
+             insertNodes.push(nodeDescription);
+           }
+         } else { */
+        insertNodes.push(nodeDescription);
+        // }
+      });
+
+
+      node.canInsertNodes = insertNodes;
+      node.insertMenuNodes = filter(insertNodes, (insertNode: ShapeDescription.ShapeDescription) => {
+        return true;
+      });
+
+      /* node.insertMenuNodes = filter(insertNodes, (insertNode: ShapeDescription.ShapeDescription) => {
+       return insertNode.node.showInMenu;
+     }); */
     });
+
   }
 
   updateEdges(subjectNode: ActivityNode, insertNode: ActivityNode, predicate: Predicate) {
@@ -351,20 +384,6 @@ export class Activity extends SaeGraph<ActivityNode> {
 
   }
 
-  edgeList(node: ActivityNode, object: ActivityNode) {
-    const self = this;
-    const canInsertNodes = ShapeDescription.canInsertEntity[node.type] || [];
-
-    const insertNodes: ShapeDescription.ShapeDescription[] = [];
-
-    each(canInsertNodes, (nodeDescription: ShapeDescription.ShapeDescription) => {
-      if (nodeDescription.node.category === object.category) {
-        insertNodes.push(nodeDescription);
-      }
-    });
-
-    return insertNodes;
-  }
 
   getNodesByType(type: ActivityNodeType): ActivityNode[] {
     const self = this;

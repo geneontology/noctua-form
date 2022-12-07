@@ -1,13 +1,17 @@
 import { noctuaFormConfig } from './../../noctua-form-config';
 
 import * as EntityDefinition from './entity-definition';
-import * as ShapeDescription from './shape-definition';
-import { each, find } from 'lodash';
-import { ActivityNodeType, ActivityNodeDisplay, ActivityNode } from './../../models/activity/activity-node';
+import * as ShapeDescription from './../../data/config/shape-definition';
+import { each, } from 'lodash';
+import { ActivityNodeType, ActivityNodeDisplay, ActivityNode, GoCategory } from './../../models/activity/activity-node';
 import { Entity } from '../../models/activity/entity';
 import { Predicate } from '../../models/activity/predicate';
 import { ActivityType, Activity } from '../../models/activity/activity';
 import { v4 as uuid } from 'uuid';
+import shexJson from './../shapes.json'
+import shapeTerms from './../shape-terms.json'
+import { DataUtils } from './data-utils';
+import { ShexShapeAssociation } from '../shape';
 
 
 export interface ActivityDescription {
@@ -21,6 +25,20 @@ export interface ActivityDescription {
 export interface InsertNodeDescription {
     node: ActivityNodeDisplay;
     predicate: Entity;
+}
+
+const getNodeDefaults = (subjectNode: ActivityNode, predExpr: ShapeDescription.PredicateExpression, ranges: GoCategory[]) => {
+    const node = {
+        type: ActivityNodeType.GoMolecularEntity,
+        category: ranges,
+        label: predExpr.label,
+        canDelete: true,
+        displaySection: subjectNode.displaySection,
+        displayGroup: subjectNode.displayGroup,
+        weight: subjectNode.weight + 2
+    } as ActivityNodeDisplay
+
+    return node
 }
 
 export const activityUnitBaseDescription: ActivityDescription = {
@@ -424,6 +442,36 @@ export const createActivity = (activityDescription: ActivityDescription): Activi
     return activity;
 };
 
+export const createActivityShex = (activityDescription: ActivityDescription): Activity => {
+    const self = this;
+    const activity = new Activity();
+
+    activity.activityType = activityDescription.type;
+
+    each(activityDescription.nodes, (node: ActivityNodeDisplay) => {
+        const activityNode = EntityDefinition.generateBaseTerm(node.category, node);
+
+        activity.addNode(activityNode);
+    });
+
+    each(activityDescription.triples, (triple) => {
+        const objectNode = activity.getNode(triple.object);
+
+        if (objectNode) {
+            const predicate: Predicate = objectNode.predicate;
+
+            predicate.edge = Entity.createEntity(triple.predicate);
+            objectNode.treeLevel++;
+            activity.addEdgeById(triple.subject, triple.object, predicate);
+        }
+    });
+
+    //activity.postRunUpdate();
+    activity.updateShapeMenuShex();
+    activity.enableSubmit();
+    return activity;
+};
+
 export const insertNode = (activity: Activity, subjectNode: ActivityNode, nodeDescription: InsertNodeDescription): ActivityNode => {
     const objectNode = EntityDefinition.generateBaseTerm(nodeDescription.node.category, nodeDescription.node);
 
@@ -441,6 +489,48 @@ export const insertNode = (activity: Activity, subjectNode: ActivityNode, nodeDe
     predicate.subjectId = subjectNode.id;
     predicate.objectId = objectNode.id;
     predicate.edge = Entity.createEntity(nodeDescription.predicate);
+
+    activity.updateEdges(subjectNode, objectNode, predicate);
+    activity.resetPresentation();
+    return objectNode;
+};
+
+export const insertNodeShex = (activity: Activity,
+    subjectNode: ActivityNode,
+    predExpr: ShapeDescription.PredicateExpression): ActivityNode => {
+    const lookupTable = DataUtils.genTermLookupTable();
+    const shapes = shexJson.goshapes as ShexShapeAssociation[];
+
+    const ranges = []
+    subjectNode.category.forEach((category: GoCategory) => {
+        //const subjectShapes = DataUtils.getSubjectShapes(shapes, category.category);
+        const shape = DataUtils.getRangeBySubject(shapes, category.category, predExpr.id);
+        if (shape) {
+            const range = shape.object.map(inNode => {
+                const node = lookupTable[inNode]
+                const category = new GoCategory()
+                category.category = node.id
+
+                return category;
+            })
+            ranges.push(...range)
+        }
+    })
+
+    const overrides = getNodeDefaults(subjectNode, predExpr, ranges)
+    const objectNode = EntityDefinition.generateBaseTerm(ranges, overrides);
+
+    objectNode.id = uuid()
+    objectNode.subjectId = subjectNode.id
+
+    // objectNode.type = nodeDescription.node.type;
+    activity.addNode(objectNode);
+    objectNode.treeLevel = subjectNode.treeLevel + 1;
+
+    const predicate: Predicate = activity.getNode(objectNode.id).predicate;
+    predicate.subjectId = subjectNode.id;
+    predicate.objectId = objectNode.id;
+    predicate.edge = Entity.createEntity(predExpr);
 
     activity.updateEdges(subjectNode, objectNode, predicate);
     activity.resetPresentation();

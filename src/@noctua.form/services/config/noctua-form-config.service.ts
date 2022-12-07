@@ -334,6 +334,8 @@ export class NoctuaFormConfigService {
 
     return predicate;
   }
+
+  //For reading the table
   createActivityBaseModel(modelType: ActivityType): Activity {
     switch (modelType) {
       case ActivityType.default:
@@ -349,18 +351,19 @@ export class NoctuaFormConfigService {
     }
   }
 
+  // For the form
   createActivityModel(activityType: ActivityType): Activity {
     switch (activityType) {
       case ActivityType.default:
-        return ModelDefinition.createActivity(ModelDefinition.activityUnitDescription);
+        return ModelDefinition.createActivityShex(ModelDefinition.activityUnitDescription);
       case ActivityType.bpOnly:
-        return ModelDefinition.createActivity(ModelDefinition.bpOnlyAnnotationDescription);
+        return ModelDefinition.createActivityShex(ModelDefinition.bpOnlyAnnotationDescription);
       case ActivityType.ccOnly:
-        return ModelDefinition.createActivity(ModelDefinition.ccOnlyAnnotationDescription);
+        return ModelDefinition.createActivityShex(ModelDefinition.ccOnlyAnnotationDescription);
       case ActivityType.molecule:
-        return ModelDefinition.createActivity(ModelDefinition.moleculeDescription);
+        return ModelDefinition.createActivityShex(ModelDefinition.moleculeDescription);
       case ActivityType.proteinComplex:
-        return ModelDefinition.createActivity(ModelDefinition.proteinComplexDescription);
+        return ModelDefinition.createActivityShex(ModelDefinition.proteinComplexDescription);
     }
   }
 
@@ -368,6 +371,12 @@ export class NoctuaFormConfigService {
     subjectNode: ActivityNode,
     nodeDescription: ShapeDescription.ShapeDescription): ActivityNode {
     return ModelDefinition.insertNode(activity, subjectNode, nodeDescription);
+  }
+
+  insertActivityNodeShex(activity: Activity,
+    subjectNode: ActivityNode,
+    predExpr: ShapeDescription.PredicateExpression): ActivityNode {
+    return ModelDefinition.insertNodeShex(activity, subjectNode, predExpr);
   }
 
   insertActivityNodeByPredicate(activity: Activity, subjectNode: ActivityNode, bbopPredicateId: string,
