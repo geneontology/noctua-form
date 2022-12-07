@@ -10,10 +10,10 @@ import { Predicate } from './predicate';
 import { PendingChange } from './pending-change';
 import { CamStats } from './cam';
 
-export interface GoCategory {
+export class GoCategory {
   id: ActivityNodeType;
   category: string;
-  categoryType: string;
+  categoryType = 'isa_closure';
   suffix: string;
 }
 
