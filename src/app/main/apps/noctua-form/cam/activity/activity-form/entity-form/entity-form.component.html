@@ -20,8 +20,9 @@
       <textarea type="text" matInput formControlName="term" (focus)="updateTermList()" [matAutocomplete]="termAuto"
         row="2">
       </textarea>
-      <mat-autocomplete #termAuto="matAutocomplete" [displayWith]="termDisplayFn" class="noc-term-autocomplete "
-        fxLayout="row" fxLayoutAlign="start start">
+      <mat-autocomplete #termAuto="matAutocomplete" [displayWith]="termDisplayFn"
+        (optionSelected)="updateMenu($event.option.value)" class="noc-term-autocomplete " fxLayout="row"
+        fxLayoutAlign="start start">
         <div class="" fxFlex="400px">
           <mat-option *ngFor="let item of entity?.termLookup.results" [value]="item">
             <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
@@ -131,23 +132,10 @@
           [matMenuTriggerFor]="entityMenu">
           <mat-icon>more_vert</mat-icon>
         </button>
-        <mat-menu #entityMenu="matMenu" class="noc-dropdown-menu">
+        <mat-menu #entityMenu="matMenu" class="noc-dropdown-menu noc-menu-panel">
           <button mat-menu-item *ngIf="entity.aspect" class="" (click)="openSearchDatabaseDialog(entity)">
             Search Annotations
           </button>
-          <!--  <button mat-menu-item *ngIf="entity.aspect" class="" (click)="openSearchEvidenceDialog(entity)">
-                Search Evidence
-              </button>
-               <button mat-menu-item *ngIf="entity.aspect" class="" (click)="openSearchModels()">
-            Search Models
-             </button> 
-              <button mat-menu-item *ngIf="entity.aspect==='P' && !entity.linkedNode" class="" (click)="linkNode(entity)">
-                Choose From an Existing Process
-              </button>
-              <button mat-menu-item *ngIf="entity.linkedNode" class="" (click)="unlinkNode(entity)">
-                Unlink Node
-              </button>
-            -->
           <button mat-menu-item *ngIf="true" class="" (click)="toggleIsComplement(entity)">
             NOT Qualifier
           </button>
@@ -165,13 +153,16 @@
             Remove
           </button> -->
         </mat-menu>
-        <mat-menu #addMenu="matMenu">
-          <button mat-menu-item *ngFor="let insertMenuItem of entity.insertMenuNodes" class=""
-            (click)="insertEntity(insertMenuItem)">
-            {{insertMenuItem.label}}
+        <mat-menu #addMenu="matMenu" class="noc-extensions-menu-panel">
+          <button mat-menu-item *ngFor="let insertMenuItem of entity.insertMenuNodes" fxLayout="column"
+            fxLayoutAlign="start start" class="w-100-p" (click)="insertEntityShex(insertMenuItem)">
+            {{insertMenuItem?.label}}
+            <div class="noc-terms-description">
+              {{insertMenuItem?.rangeLabel}}
+            </div>
           </button>
         </mat-menu>
-        <mat-menu #evidenceMenu="matMenu">
+        <mat-menu #evidenceMenu="matMenu" class="noc-menu-panel">
           <button mat-menu-item class="" (click)="addEvidence()">
             Add Evidence
           </button>
@@ -189,10 +180,13 @@
     [matMenuTriggerFor]="ccOnlyAddMenu">
     <fa-icon [icon]="['fas', 'plus']"></fa-icon>
   </button>
-  <mat-menu #ccOnlyAddMenu="matMenu">
-    <button mat-menu-item *ngFor="let insertMenuItem of entity.insertMenuNodes" class=""
-      (click)="insertEntity(insertMenuItem)">
-      {{insertMenuItem.label}}
+  <mat-menu #ccOnlyAddMenu="matMenu" class="noc-extensions-menu-panel">
+    <button mat-menu-item *ngFor="let insertMenuItem of entity.insertMenuNodes" fxLayout="column"
+      fxLayoutAlign="start start" class="w-100-p" (click)="insertEntityShex(insertMenuItem)">
+      {{insertMenuItem?.label}}
+      <div class="noc-terms-description">
+        {{insertMenuItem?.rangeLabel}}
+      </div>
     </button>
   </mat-menu>
 </div>

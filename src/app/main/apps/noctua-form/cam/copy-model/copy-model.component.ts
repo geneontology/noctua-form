@@ -27,7 +27,7 @@ export class CopyModelComponent implements OnInit, OnDestroy {
   @Input('panelSide') panelSide: string
   cam: Cam;
   loading = false;
-  camForm: FormGroup;
+  includeEvidence = false;
 
   duplicatedCam;
 
@@ -47,7 +47,6 @@ export class CopyModelComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.camForm = this.createCamForm();
     this.camService.onCamChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((cam) => {
@@ -75,12 +74,6 @@ export class CopyModelComponent implements OnInit, OnDestroy {
     this._unsubscribeAll.complete();
   }
 
-  createCamForm() {
-    return new FormGroup({
-      title: new FormControl(),
-    });
-  }
-
   copyModel() {
 
     const self = this;
@@ -88,7 +81,7 @@ export class CopyModelComponent implements OnInit, OnDestroy {
     const success = (value) => {
       if (value) {
         this.loading = true;
-        this.camService.copyModel(this.cam, value?.title);
+        this.camService.copyModel(this.cam, value?.title, this.includeEvidence);
       } else {
         this.loading = false;
       };

@@ -1,4 +1,4 @@
-<form fxLayout="column" fxLayoutAlign="start stretch" class="noc-cam-form noc-drawer h-100-p">
+<div fxLayout="column" fxLayoutAlign="start stretch" class="noc-cam-form noc-drawer h-100-p">
   <div class="noc-drawer-header" fxLayout="row" fxLayoutAlign="start center">
     <span class="noc-drawer-header-title">
       Copy Model</span>
@@ -64,6 +64,10 @@
                   Graph Editor
                 </a>
               </div>
+            </div>
+
+            <div>
+              <mat-checkbox class="example-margin" [(ngModel)]="includeEvidence">Include Evidence</mat-checkbox>
             </div>
           </div>
         </div>
@@ -136,4 +140,4 @@
     <button (click)="copyModel()" type="submit" class="noc-rounded-button" mat-raised-button color="primary">Copy
       Model</button>
   </div>
-</form>
+</div>

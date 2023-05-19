@@ -1,5 +1,6 @@
 import { environment } from './../environments/environment';
 import { Entity } from './models/activity/entity';
+import vpeJson from './data/vpe-decision.json'
 
 const edge = {
   placeholder: {
@@ -74,6 +75,11 @@ const edge = {
     id: 'RO:0004046',
     label: 'causally upstream of or within, negative effect',
   },
+  constitutivelyUpstreamOf: {
+    id: 'RO:0012009',
+    label: 'constitutively upstream of',
+  },
+
   directlyProvidesInput: {
     id: 'RO:0002413',
     label: 'directly provides input for'
@@ -102,6 +108,14 @@ const edge = {
     id: 'RO:0002630',
     label: 'directly negatively regulates'
   },
+  indirectlyPositivelyRegulates: {
+    id: 'RO:0002407',
+    label: 'indirectly positively regulates'
+  },
+  indirectlyNegativelyRegulates: {
+    id: 'RO:0002409',
+    label: 'indirectly negatively regulates'
+  },
   isSmallMoleculeRegulator: {
     id: 'RO:0012004',
     label: 'is small molecule regulator'
@@ -113,6 +127,10 @@ const edge = {
   isSmallMoleculeInhibitor: {
     id: 'RO:0012006',
     label: 'is small molecule inhibitor'
+  },
+  removesInputFor: {
+    id: 'RO:0012010',
+    label: 'removes input for'
   },
 }
 
@@ -227,23 +245,6 @@ export const noctuaFormConfig = {
       }
     }
   },
-  'causalEffect': {
-    'options': {
-      'positive': {
-        'name': 'positive',
-        'label': 'Positive',
-      },
-      'neutral': {
-        'name': 'neutral',
-        'label': 'Unknown/neutral',
-      },
-      'negative': {
-        'name': 'negative',
-        'label': 'Negative',
-      },
-
-    }
-  },
   'findReplaceCategory': {
     'options': {
       'term': {
@@ -260,51 +261,12 @@ export const noctuaFormConfig = {
       },
     }
   },
-  'directness': {
-    'options': {
-      'known': {
-        'name': 'known',
-        'label': 'Direct',
-      },
-      'unknown': {
-        'name': 'unknown',
-        'label': 'Indirect/Unknown',
-      },
-      'chemicalProduct': {
-        'name': 'chemicalProduct',
-        'label': 'Product',
-        'description': 'The activity creates the molecule as a reaction product'
-      }
-    }
-  },
-  'activityRelationship': {
-    'options': {
-      'regulation': {
-        'name': 'regulation',
-        'label': 'Regulation',
-        'description': 'The upstream activity regulates the downstream activity',
-      },
-      'outputInput': {
-        'name': 'outputInput',
-        'label': 'Output-Input',
-        'description': 'The molecular output produced by the upstream activity is the molecular input of the downstream activity'
-      },
-    }
-  },
-  'chemicalRelationship': {
-    'options': {
-      'chemicalRegulates': {
-        'name': 'chemicalRegulates',
-        'label': 'Regulation',
-        'description': 'The chemical regulates the activity'
-      },
-      'chemicalSubstrate': {
-        'name': 'chemicalSubstrate',
-        'label': 'Substrate',
-        'description': 'The chemical is the substrate that the activity acts upon'
-      },
-    }
-  },
+  'decisionTree': vpeJson.decisionTree,
+  'directness': vpeJson.definitions.directness,
+  'effectDirection': vpeJson.definitions.effectDirection,
+  'activityRelationship': vpeJson.definitions.activityRelationship,
+  'activityMoleculeRelationship': vpeJson.definitions.activityMoleculeRelationship,
+  'moleculeActivityRelationship': vpeJson.definitions.moleculeActivityRelationship,
   'displaySection': {
     'gp': {
       id: 'gp',
@@ -372,11 +334,15 @@ export const noctuaFormConfig = {
   },
 
 
+
   // This array is arrange for matrice decison tree for causal edge 0-8 index, don't rearrange
   causalEdges: [
+    Entity.createEntity(edge.constitutivelyUpstreamOf),
     Entity.createEntity(edge.directlyNegativelyRegulates),
     Entity.createEntity(edge.directlyRegulates),
     Entity.createEntity(edge.directlyPositivelyRegulates),
+    Entity.createEntity(edge.indirectlyNegativelyRegulates),
+    Entity.createEntity(edge.indirectlyPositivelyRegulates),
     Entity.createEntity(edge.negativelyRegulates),
     Entity.createEntity(edge.regulates),
     Entity.createEntity(edge.positivelyRegulates),
@@ -387,6 +353,7 @@ export const noctuaFormConfig = {
     Entity.createEntity(edge.causallyUpstreamOfOrWithinPositiveEffect),
     Entity.createEntity(edge.causallyUpstreamOfOrWithin),
     Entity.createEntity(edge.directlyProvidesInput),
+    Entity.createEntity(edge.removesInputFor),
   ],
 
   moleculeEdges: [
@@ -404,3 +371,4 @@ export const noctuaFormConfig = {
   ],
 
 };
+

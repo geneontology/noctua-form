@@ -252,7 +252,6 @@ export class EntityFormComponent implements OnInit, OnDestroy {
 
     // const url = this.noctuaFormConfigService.getUniversalWorkbenchUrl('noctua-search', searchCriteria.buildEncoded());
 
-    // console.log(url);
 
     // window.open(url, '_blank');
 
@@ -260,6 +259,11 @@ export class EntityFormComponent implements OnInit, OnDestroy {
 
   insertEntity(nodeDescription: ShapeDefinition.ShapeDescription) {
     this.noctuaFormConfigService.insertActivityNode(this.noctuaActivityFormService.activity, this.entity, nodeDescription);
+    this.noctuaActivityFormService.initializeForm();
+  }
+
+  insertEntityShex(predExpr: ShapeDefinition.PredicateExpression) {
+    this.noctuaFormConfigService.insertActivityNodeShex(this.noctuaActivityFormService.activity, this.entity, predExpr);
     this.noctuaActivityFormService.initializeForm();
   }
 
@@ -309,6 +313,10 @@ export class EntityFormComponent implements OnInit, OnDestroy {
     };
 
     self.noctuaFormDialogService.openSelectEvidenceDialog(evidences, success);
+  }
+  updateMenu(entity) {
+    console.log(entity.rootTypes)
+    this.noctuaActivityFormService.initializeForm(entity.rootTypes);
   }
 
   updateTermList() {

@@ -39,6 +39,7 @@ export class ActivityConnectorFormComponent implements OnInit, OnDestroy {
   connectorFormSub: Subscription;
   searchCriteria: any = {};
   evidenceFormArray: FormArray;
+  relationshipOptions;
 
   private _unsubscribeAll: Subject<any>;
 
@@ -62,6 +63,8 @@ export class ActivityConnectorFormComponent implements OnInit, OnDestroy {
         }
         this.connectorFormGroup = connectorFormGroup;
         this.connectorActivity = this.noctuaActivityConnectorService.connectorActivity;
+        this.relationshipOptions = this.noctuaFormConfigService[this.connectorActivity.connectorType + 'Relationship']['options']
+
       });
 
   }

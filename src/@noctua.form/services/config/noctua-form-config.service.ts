@@ -157,11 +157,10 @@ export class NoctuaFormConfigService {
     };
   }
 
-  get causalEffect() {
+  get effectDirection() {
     const options = [
-      noctuaFormConfig.causalEffect.options.positive,
-      noctuaFormConfig.causalEffect.options.negative,
-      noctuaFormConfig.causalEffect.options.neutral
+      noctuaFormConfig.effectDirection.positive,
+      noctuaFormConfig.effectDirection.negative
     ];
 
     return {
@@ -185,19 +184,8 @@ export class NoctuaFormConfigService {
 
   get directness() {
     const options = [
-      noctuaFormConfig.directness.options.known,
-      noctuaFormConfig.directness.options.unknown,
-    ];
-
-    return {
-      options: options,
-      selected: options[0]
-    };
-  }
-
-  get directnessActivityMolecule() {
-    const options = [
-      noctuaFormConfig.directness.options.chemicalProduct
+      noctuaFormConfig.directness.direct,
+      noctuaFormConfig.directness.indirect,
     ];
 
     return {
@@ -208,8 +196,11 @@ export class NoctuaFormConfigService {
 
   get activityRelationship() {
     const options = [
-      noctuaFormConfig.activityRelationship.options.regulation,
-      noctuaFormConfig.activityRelationship.options.outputInput,
+      noctuaFormConfig.activityRelationship.regulation,
+      noctuaFormConfig.activityRelationship.constitutivelyUpstream,
+      noctuaFormConfig.activityRelationship.providesInputFor,
+      noctuaFormConfig.activityRelationship.removesInputFor,
+      noctuaFormConfig.activityRelationship.undetermined
     ];
 
     return {
@@ -218,10 +209,21 @@ export class NoctuaFormConfigService {
     };
   }
 
-  get chemicalRelationship() {
+  get activityMoleculeRelationship() {
     const options = [
-      noctuaFormConfig.chemicalRelationship.options.chemicalRegulates,
-      noctuaFormConfig.chemicalRelationship.options.chemicalSubstrate,
+      noctuaFormConfig.activityMoleculeRelationship.product,
+    ];
+
+    return {
+      options: options,
+      selected: options[0]
+    };
+  }
+
+  get moleculeActivityRelationship() {
+    const options = [
+      noctuaFormConfig.moleculeActivityRelationship.regulates,
+      noctuaFormConfig.moleculeActivityRelationship.substrate,
     ];
 
     return {
@@ -334,6 +336,8 @@ export class NoctuaFormConfigService {
 
     return predicate;
   }
+
+  //For reading the table
   createActivityBaseModel(modelType: ActivityType): Activity {
     switch (modelType) {
       case ActivityType.default:
@@ -349,18 +353,19 @@ export class NoctuaFormConfigService {
     }
   }
 
+  // For the form
   createActivityModel(activityType: ActivityType): Activity {
     switch (activityType) {
       case ActivityType.default:
-        return ModelDefinition.createActivity(ModelDefinition.activityUnitDescription);
+        return ModelDefinition.createActivityShex(ModelDefinition.activityUnitDescription);
       case ActivityType.bpOnly:
-        return ModelDefinition.createActivity(ModelDefinition.bpOnlyAnnotationDescription);
+        return ModelDefinition.createActivityShex(ModelDefinition.bpOnlyAnnotationDescription);
       case ActivityType.ccOnly:
-        return ModelDefinition.createActivity(ModelDefinition.ccOnlyAnnotationDescription);
+        return ModelDefinition.createActivityShex(ModelDefinition.ccOnlyAnnotationDescription);
       case ActivityType.molecule:
-        return ModelDefinition.createActivity(ModelDefinition.moleculeDescription);
+        return ModelDefinition.createActivityShex(ModelDefinition.moleculeDescription);
       case ActivityType.proteinComplex:
-        return ModelDefinition.createActivity(ModelDefinition.proteinComplexDescription);
+        return ModelDefinition.createActivityShex(ModelDefinition.proteinComplexDescription);
     }
   }
 
@@ -368,6 +373,12 @@ export class NoctuaFormConfigService {
     subjectNode: ActivityNode,
     nodeDescription: ShapeDescription.ShapeDescription): ActivityNode {
     return ModelDefinition.insertNode(activity, subjectNode, nodeDescription);
+  }
+
+  insertActivityNodeShex(activity: Activity,
+    subjectNode: ActivityNode,
+    predExpr: ShapeDescription.PredicateExpression): ActivityNode {
+    return ModelDefinition.insertNodeShex(activity, subjectNode, predExpr);
   }
 
   insertActivityNodeByPredicate(activity: Activity, subjectNode: ActivityNode, bbopPredicateId: string,

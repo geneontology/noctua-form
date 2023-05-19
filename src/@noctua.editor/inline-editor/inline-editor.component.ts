@@ -12,8 +12,7 @@ import {
     NoctuaActivityEntityService,
     ActivityNode,
     Activity,
-    Cam,
-    NoctuaActivityFormService
+    Cam
 } from '@geneontology/noctua-form-base';
 import { EditorCategory } from './../models/editor-category';
 
@@ -38,7 +37,6 @@ export class NoctuaInlineEditorComponent implements OnInit, OnDestroy {
 
     constructor(private inlineEditorService: InlineEditorService,
         private camService: CamService,
-        public noctuaActivityFormService: NoctuaActivityFormService,
         private noctuaActivityEntityService: NoctuaActivityEntityService) {
         this._unsubscribeAll = new Subject();
     }
