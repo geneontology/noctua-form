@@ -1,18 +1,14 @@
 import { FormControl, FormBuilder, FormArray } from '@angular/forms';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { ActivityNode } from './../activity/activity-node';
 import { ActivityFormMetadata } from './../forms/activity-form-metadata';
 import { EvidenceForm } from './evidence-form';
 import { Evidence } from './../../models/activity/evidence';
-import { EntityLookup } from '../activity/entity-lookup';
 import { Predicate } from '..';
 
 export class ActivityConnectorForm {
   edge = new FormControl();
-  activityRelationship = new FormControl();
-  chemicalRelationship = new FormControl();
+  relationship = new FormControl();
   directness = new FormControl();
-  causalEffect = new FormControl();
+  effectDirection = new FormControl();
   evidenceForms: EvidenceForm[] = [];
   evidenceFormArray = new FormArray([]);
   _metadata: ActivityFormMetadata;

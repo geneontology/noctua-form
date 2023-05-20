@@ -180,10 +180,13 @@
     [matMenuTriggerFor]="ccOnlyAddMenu">
     <fa-icon [icon]="['fas', 'plus']"></fa-icon>
   </button>
-  <mat-menu #ccOnlyAddMenu="matMenu">
-    <button mat-menu-item *ngFor="let insertMenuItem of entity.insertMenuNodes" class=""
-      (click)="insertEntity(insertMenuItem)">
-      {{insertMenuItem?.longLabel}}
+  <mat-menu #ccOnlyAddMenu="matMenu" class="noc-extensions-menu-panel">
+    <button mat-menu-item *ngFor="let insertMenuItem of entity.insertMenuNodes" fxLayout="column"
+      fxLayoutAlign="start start" class="w-100-p" (click)="insertEntityShex(insertMenuItem)">
+      {{insertMenuItem?.label}}
+      <div class="noc-terms-description">
+        {{insertMenuItem?.rangeLabel}}
+      </div>
     </button>
   </mat-menu>
 </div>

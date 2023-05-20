@@ -271,10 +271,6 @@ export const globalKnownRelations = [
     "relevant": false
   },
   {
-    "id": "BFO:0000056",
-    "relevant": false
-  },
-  {
     "id": "BFO:0000060",
     "label": "obsolete preceded by",
     "relevant": false
@@ -300,175 +296,157 @@ export const globalKnownRelations = [
     "relevant": false
   },
   {
-    "id": "BFO:0000068",
-    "relevant": false
-  },
-  {
-    "id": "BFO:0000069",
-    "relevant": false
-  },
-  {
     "id": "BFO:0000070",
     "relevant": false
   },
   {
     "id": "BSPO:0000096",
-    "label": "anterior_to",
+    "label": "anterior to",
     "relevant": false
   },
   {
     "id": "BSPO:0000097",
-    "label": "distal_to",
+    "label": "distal to",
     "relevant": false
   },
   {
     "id": "BSPO:0000098",
-    "label": "dorsal_to",
+    "label": "dorsal to",
     "relevant": false
   },
   {
     "id": "BSPO:0000099",
-    "label": "posterior_to",
+    "label": "posterior to",
     "relevant": false
   },
   {
     "id": "BSPO:0000100",
-    "label": "proximal_to",
+    "label": "proximal to",
     "relevant": false
   },
   {
     "id": "BSPO:0000102",
-    "label": "ventral_to",
+    "label": "ventral to",
     "relevant": false
   },
   {
     "id": "BSPO:0000107",
-    "label": "deep_to",
+    "label": "deep to",
     "relevant": false
   },
   {
     "id": "BSPO:0000108",
-    "label": "superficial_to",
+    "label": "superficial to",
     "relevant": false
   },
   {
     "id": "BSPO:0000120",
-    "label": "in_left_side_of",
+    "label": "in left side of",
     "relevant": false
   },
   {
     "id": "BSPO:0000121",
-    "label": "in_right_side_of",
+    "label": "in right side of",
     "relevant": false
   },
   {
     "id": "BSPO:0000122",
-    "label": "in_posterior_side_of",
+    "label": "in posterior side of",
     "relevant": false
   },
   {
     "id": "BSPO:0000123",
-    "label": "in_anterior_side_of",
+    "label": "in anterior side of",
     "relevant": false
   },
   {
     "id": "BSPO:0000124",
-    "label": "in_proximal_side_of",
+    "label": "in proximal side of",
     "relevant": false
   },
   {
     "id": "BSPO:0000125",
-    "label": "in_distal_side_of",
+    "label": "in distal side of",
     "relevant": false
   },
   {
     "id": "BSPO:0000126",
-    "label": "in_lateral_side_of",
+    "label": "in lateral side of",
     "relevant": false
   },
   {
     "id": "BSPO:0001100",
-    "label": "in_superficial_part_of",
+    "label": "in superficial part of",
     "relevant": false
   },
   {
     "id": "BSPO:0001101",
-    "label": "in_deep_part_of",
+    "label": "in deep part of",
     "relevant": false
   },
   {
     "id": "BSPO:0001106",
-    "label": "proximalmost_part_of",
+    "label": "proximalmost part of",
     "relevant": false
   },
   {
     "id": "BSPO:0001107",
-    "label": "immediately_deep_to",
+    "label": "immediately deep to",
     "relevant": false
   },
   {
     "id": "BSPO:0001108",
-    "label": "distalmost_part_of",
+    "label": "distalmost part of",
     "relevant": false
   },
   {
     "id": "BSPO:0001113",
-    "label": "preaxialmost_part_of",
-    "relevant": false
-  },
-  {
-    "id": "BSPO:0001114",
-    "label": "postaxial_to",
+    "label": "preaxialmost part of",
     "relevant": false
   },
   {
     "id": "BSPO:0001115",
-    "label": "postaxialmost_part_of",
+    "label": "postaxialmost part of",
     "relevant": false
   },
   {
     "id": "BSPO:0005001",
-    "label": "intersects_midsagittal_plane_of",
+    "label": "intersects midsagittal plane of",
     "relevant": false
   },
   {
     "id": "BSPO:0015009",
-    "label": "immediately_anterior_to",
+    "label": "immediately anterior to",
     "relevant": false
   },
   {
     "id": "BSPO:0015012",
-    "label": "immediately_posterior_to",
+    "label": "immediately posterior to",
     "relevant": false
   },
   {
     "id": "BSPO:0015014",
-    "label": "immediately_superficial_to",
+    "label": "immediately superficial to",
     "relevant": false
   },
   {
     "id": "BSPO:0015101",
-    "label": "in_dorsal_side_of",
+    "label": "in dorsal side of",
     "relevant": false
   },
   {
     "id": "BSPO:0015102",
-    "label": "in_ventral_side_of",
-    "relevant": false
-  },
-  {
-    "id": "BSPO:0015201",
-    "label": "oral_to",
+    "label": "in ventral side of",
     "relevant": false
   },
   {
     "id": "BSPO:0015202",
-    "label": "aboral_to",
+    "label": "aboral to",
     "relevant": false
   },
   {
-    "id": "BSPO:1000000",
-    "label": "preaxial_to",
+    "id": "BSPO:0020001",
+    "label": "in central side of",
     "relevant": false
   },
   {
@@ -508,7 +486,7 @@ export const globalKnownRelations = [
   },
   {
     "id": "obo:GOREL_0002003",
-    "label": "results_in_distribution_of",
+    "label": "results in distribution of",
     "relevant": false
   },
   {
@@ -552,13 +530,17 @@ export const globalKnownRelations = [
     "relevant": false
   },
   {
+    "id": "OBI:0000295",
+    "relevant": false
+  },
+  {
     "id": "RO:0000052",
     "label": "inheres in",
     "relevant": false
   },
   {
     "id": "RO:0000053",
-    "label": "bearer of",
+    "label": "has characteristic",
     "relevant": false
   },
   {
@@ -638,7 +620,7 @@ export const globalKnownRelations = [
   },
   {
     "id": "RO:0001000",
-    "label": "derives_from",
+    "label": "derives from",
     "relevant": false
   },
   {
@@ -648,7 +630,7 @@ export const globalKnownRelations = [
   },
   {
     "id": "RO:0001015",
-    "label": "location_of",
+    "label": "location of",
     "relevant": false
   },
   {
@@ -688,7 +670,7 @@ export const globalKnownRelations = [
   },
   {
     "id": "RO:0002000",
-    "label": "boundary of",
+    "label": "2D boundary of",
     "relevant": false
   },
   {
@@ -698,7 +680,7 @@ export const globalKnownRelations = [
   },
   {
     "id": "RO:0002002",
-    "label": "has boundary",
+    "label": "has 2D boundary",
     "relevant": false
   },
   {
@@ -748,7 +730,7 @@ export const globalKnownRelations = [
   },
   {
     "id": "RO:0002012",
-    "label": "occurent part of",
+    "label": "occurrent part of",
     "relevant": false
   },
   {
@@ -868,12 +850,12 @@ export const globalKnownRelations = [
   },
   {
     "id": "RO:0002090",
-    "label": "immediately_precedes",
+    "label": "immediately precedes",
     "relevant": false
   },
   {
     "id": "RO:0002091",
-    "label": "starts_during",
+    "label": "starts during",
     "relevant": false
   },
   {
@@ -883,7 +865,7 @@ export const globalKnownRelations = [
   },
   {
     "id": "RO:0002093",
-    "label": "ends_during",
+    "label": "ends during",
     "relevant": false
   },
   {
@@ -1018,12 +1000,12 @@ export const globalKnownRelations = [
   },
   {
     "id": "RO:0002158",
-    "label": "homologous_to",
+    "label": "shares ancestor with",
     "relevant": false
   },
   {
     "id": "RO:0002159",
-    "label": "serially_homologous_to",
+    "label": "serially homologous to",
     "relevant": false
   },
   {
@@ -1203,7 +1185,7 @@ export const globalKnownRelations = [
   },
   {
     "id": "RO:0002226",
-    "label": "develops_in",
+    "label": "develops in",
     "relevant": false
   },
   {
@@ -1259,6 +1241,11 @@ export const globalKnownRelations = [
   {
     "id": "RO:0002237",
     "label": "hemiparasite of",
+    "relevant": false
+  },
+  {
+    "id": "RO:0002238",
+    "label": "has component participant",
     "relevant": false
   },
   {
@@ -1323,7 +1310,7 @@ export const globalKnownRelations = [
   },
   {
     "id": "RO:0002255",
-    "label": "developmentally_contributes_to",
+    "label": "developmentally contributes to",
     "relevant": false
   },
   {
@@ -1443,12 +1430,12 @@ export const globalKnownRelations = [
   },
   {
     "id": "RO:0002304",
-    "label": "causally upstream of with a positive effect",
+    "label": "causally upstream of, positive effect",
     "relevant": false
   },
   {
     "id": "RO:0002305",
-    "label": "causally upstream of with a negative effect",
+    "label": "causally upstream of, negative effect",
     "relevant": false
   },
   {
@@ -1468,7 +1455,7 @@ export const globalKnownRelations = [
   },
   {
     "id": "RO:0002314",
-    "label": "inheres in part of",
+    "label": "characteristic of part of",
     "relevant": false
   },
   {
@@ -1508,7 +1495,7 @@ export const globalKnownRelations = [
   },
   {
     "id": "RO:0002326",
-    "label": "contributes_to",
+    "label": "contributes to",
     "relevant": false
   },
   {
@@ -1573,7 +1560,7 @@ export const globalKnownRelations = [
   },
   {
     "id": "RO:0002339",
-    "label": "has_target_end_location",
+    "label": "has target end location",
     "relevant": false
   },
   {
@@ -1668,12 +1655,12 @@ export const globalKnownRelations = [
   },
   {
     "id": "RO:0002372",
-    "label": "has_muscle_origin",
+    "label": "has muscle origin",
     "relevant": false
   },
   {
     "id": "RO:0002373",
-    "label": "has_muscle_insertion",
+    "label": "has muscle insertion",
     "relevant": false
   },
   {
@@ -1688,7 +1675,7 @@ export const globalKnownRelations = [
   },
   {
     "id": "RO:0002376",
-    "label": "tributary_of",
+    "label": "tributary of",
     "relevant": false
   },
   {
@@ -1783,22 +1770,27 @@ export const globalKnownRelations = [
   },
   {
     "id": "RO:0002406",
-    "label": "directly activates (process to process)",
+    "label": "obsolete directly activates",
     "relevant": true
   },
   {
     "id": "RO:0002407",
-    "label": "indirectly activates",
+    "label": "indirectly positively regulates",
     "relevant": false
   },
   {
     "id": "RO:0002408",
-    "label": "directly inhibits (process to process)",
+    "label": "obsolete directly inhibits",
     "relevant": true
   },
   {
+    "id": "RO:0002407",
+    "label": "indirectly positively regulates",
+    "relevant": false
+  },
+  {
     "id": "RO:0002409",
-    "label": "indirectly inhibits",
+    "label": "indirectly negatively regulates",
     "relevant": false
   },
   {
@@ -1818,7 +1810,7 @@ export const globalKnownRelations = [
   },
   {
     "id": "RO:0002413",
-    "label": "directly provides input for (process to process)",
+    "label": "directly provides input for",
     "relevant": true
   },
   {
@@ -2408,7 +2400,7 @@ export const globalKnownRelations = [
   },
   {
     "id": "RO:0002568",
-    "label": "has_muscle_antagonist",
+    "label": "has muscle antagonist",
     "relevant": false
   },
   {
@@ -2498,7 +2490,7 @@ export const globalKnownRelations = [
   },
   {
     "id": "RO:0002592",
-    "label": "results_in_organization_of",
+    "label": "results in organization of",
     "relevant": false
   },
   {
@@ -2677,13 +2669,18 @@ export const globalKnownRelations = [
     "relevant": false
   },
   {
+    "id": "RO:0002801",
+    "label": "co-roosts with",
+    "relevant": false
+  },
+  {
     "id": "RO:0003000",
     "label": "produces",
     "relevant": false
   },
   {
     "id": "RO:0003001",
-    "label": "produced_by",
+    "label": "produced by",
     "relevant": false
   },
   {
@@ -2903,7 +2900,7 @@ export const globalKnownRelations = [
   },
   {
     "id": "RO:0004030",
-    "label": "disease arises from structure",
+    "label": "disease arises from alteration in structure",
     "relevant": false
   },
   {
@@ -2939,6 +2936,26 @@ export const globalKnownRelations = [
   {
     "id": "RO:0004047",
     "label": "causally upstream of or within, positive effect",
+    "relevant": false
+  },
+  {
+    "id": "RO:0004096",
+    "label": "DEPRECATED inheres in",
+    "relevant": false
+  },
+  {
+    "id": "RO:0004097",
+    "label": "DEPRECATED bearer of",
+    "relevant": false
+  },
+  {
+    "id": "RO:0007000",
+    "label": "has driver",
+    "relevant": false
+  },
+  {
+    "id": "RO:0007001",
+    "label": "has disease driver",
     "relevant": false
   },
   {
@@ -3118,32 +3135,62 @@ export const globalKnownRelations = [
   },
   {
     "id": "RO:0012004",
-    "label": "is small molecule regulator",
+    "label": "is small molecule regulator of",
     "relevant": false
   },
   {
     "id": "RO:0012005",
-    "label": "is small molecule activator",
+    "label": "is small molecule activator of",
     "relevant": false
   },
   {
     "id": "RO:0012006",
-    "label": "is small molecule inhibitor",
+    "label": "is small molecule inhibitor of",
+    "relevant": false
+  },
+  {
+    "id": "RO:0012007",
+    "label": "results in adhesion of",
+    "relevant": false
+  },
+  {
+    "id": "RO:0012008",
+    "label": "results in fusion of",
+    "relevant": false
+  },
+  {
+    "id": "RO:0012009",
+    "label": "constitutively upstream of",
+    "relevant": false
+  },
+  {
+    "id": "RO:0012010",
+    "label": "removes input for",
+    "relevant": false
+  },
+  {
+    "id": "RO:0012011",
+    "label": "indirectly causally upstream of",
+    "relevant": false
+  },
+  {
+    "id": "RO:0012012",
+    "label": "indirectly regulates",
     "relevant": false
   },
   {
     "id": "RO:0013001",
-    "label": "has synaptic IO in",
+    "label": "has synaptic IO in region",
     "relevant": false
   },
   {
     "id": "RO:0013002",
-    "label": "receives synaptic input in",
+    "label": "receives synaptic input in region",
     "relevant": false
   },
   {
     "id": "RO:0013003",
-    "label": "sends synaptic output to",
+    "label": "sends synaptic output to region",
     "relevant": false
   },
   {
@@ -3162,13 +3209,153 @@ export const globalKnownRelations = [
     "relevant": false
   },
   {
+    "id": "RO:0013007",
+    "label": "has sensory dendrite in",
+    "relevant": false
+  },
+  {
+    "id": "RO:0013008",
+    "label": "receives synaptic input from neuron",
+    "relevant": false
+  },
+  {
+    "id": "RO:0013009",
+    "label": "sends synaptic output to cell",
+    "relevant": false
+  },
+  {
+    "id": "RO:0014001",
+    "label": "disease has infectious agent",
+    "relevant": false
+  },
+  {
+    "id": "RO:0015001",
+    "label": "has exemplar data",
+    "relevant": false
+  },
+  {
+    "id": "RO:0015002",
+    "label": "exemplar data of",
+    "relevant": false
+  },
+  {
+    "id": "RO:0015003",
+    "label": "subcluster of",
+    "relevant": false
+  },
+  {
+    "id": "RO:0015004",
+    "label": "has characterizing marker set",
+    "relevant": false
+  },
+  {
+    "id": "RO:0015006",
+    "label": "different in magnitude relative to",
+    "relevant": false
+  },
+  {
+    "id": "RO:0015007",
+    "label": "increased in magnitude relative to",
+    "relevant": false
+  },
+  {
+    "id": "RO:0015008",
+    "label": "decreased in magnitude relative to",
+    "relevant": false
+  },
+  {
+    "id": "RO:0015009",
+    "label": "similar in magnitude relative to",
+    "relevant": false
+  },
+  {
+    "id": "RO:0015010",
+    "label": "has relative magnitude",
+    "relevant": false
+  },
+  {
+    "id": "RO:0015011",
+    "label": "has cross section",
+    "relevant": false
+  },
+  {
+    "id": "RO:0015012",
+    "label": "reciprocal of",
+    "relevant": false
+  },
+  {
+    "id": "RO:0015015",
+    "label": "has high plasma membrane amount",
+    "relevant": false
+  },
+  {
+    "id": "RO:0015016",
+    "label": "has low plasma membrane amount",
+    "relevant": false
+  },
+  {
+    "id": "RO:0016001",
+    "label": "has phenotype or disease",
+    "relevant": false
+  },
+  {
+    "id": "RO:0016002",
+    "label": "has disease",
+    "relevant": false
+  },
+  {
+    "id": "RO:0016004",
+    "label": "has exposure medium",
+    "relevant": false
+  },
+  {
+    "id": "RO:0017001",
+    "label": "device utilizes material",
+    "relevant": false
+  },
+  {
+    "id": "RO:0018001",
+    "label": "is myristoyltransferase activity",
+    "relevant": false
+  },
+  {
+    "id": "RO:0018002",
+    "label": "myristoylates",
+    "relevant": false
+  },
+  {
+    "id": "RO:0018003",
+    "label": "myristoylated by",
+    "relevant": false
+  },
+  {
+    "id": "RO:0019000",
+    "label": "regulates characteristic",
+    "relevant": false
+  },
+  {
+    "id": "RO:0019001",
+    "label": "positively regulates characteristic",
+    "relevant": false
+  },
+  {
+    "id": "RO:0019002",
+    "label": "negatively regulates characteristic",
+    "relevant": false
+  },
+  {
+    "id": "RO:0019501",
+    "label": "confers susceptibility to condition",
+    "relevant": false
+  },
+  {
     "id": "RO:0040035",
     "label": "disease relationship",
     "relevant": false
   },
   {
     "id": "RO:0040036",
-    "label": "has anatomical participant",
+    "label": "results in changes to anatomical or cellular structure",
     "relevant": false
   },
   {
@@ -3502,20 +3689,38 @@ export const globalKnownRelations = [
     "relevant": false
   },
   {
-    "id": "obo:UBPROP_0000004",
-    "label": "obsolete provenance_notes",
+    "id": "obo:chebi#has_functional_parent",
+    "label": "has functional parent",
     "relevant": false
   },
   {
-    "id": "obo:UBREL_0000002",
+    "id": "obo:chebi#has_parent_hydride",
+    "label": "has parent hydride",
     "relevant": false
   },
   {
-    "id": "obo:caro#develops_from",
+    "id": "obo:chebi#is_conjugate_acid_of",
+    "label": "is conjugate acid of",
     "relevant": false
   },
   {
-    "id": "obo:caro#part_of",
+    "id": "obo:chebi#is_conjugate_base_of",
+    "label": "is conjugate base of",
+    "relevant": false
+  },
+  {
+    "id": "obo:chebi#is_enantiomer_of",
+    "label": "is enantiomer of",
+    "relevant": false
+  },
+  {
+    "id": "obo:chebi#is_substituent_group_from",
+    "label": "is substituent group from",
+    "relevant": false
+  },
+  {
+    "id": "obo:chebi#is_tautomer_of",
+    "label": "is tautomer of",
     "relevant": false
   },
   {
@@ -3525,12 +3730,12 @@ export const globalKnownRelations = [
   },
   {
     "id": "obo:cl#has_high_plasma_membrane_amount",
-    "label": "has_high_plasma_membrane_amount",
+    "label": "obsolete has_high_plasma_membrane_amount",
     "relevant": false
   },
   {
     "id": "obo:cl#has_low_plasma_membrane_amount",
-    "label": "has_low_plasma_membrane_amount",
+    "label": "obsolete has_low_plasma_membrane_amount",
     "relevant": false
   },
   {
@@ -3546,22 +3751,6 @@ export const globalKnownRelations = [
   {
     "id": "obo:cl#lacks_plasma_membrane_part",
     "label": "lacks_plasma_membrane_part",
-    "relevant": false
-  },
-  {
-    "id": "obo:core#connected_to",
-    "relevant": false
-  },
-  {
-    "id": "obo:core#distally_connected_to",
-    "relevant": false
-  },
-  {
-    "id": "obo:core#innervated_by",
-    "relevant": false
-  },
-  {
-    "id": "obo:core#subdivision_of",
     "relevant": false
   },
   {
@@ -3620,6 +3809,10 @@ export const globalKnownRelations = [
     "relevant": false
   },
   {
+    "id": "obo:go/chebi/role#has_part",
+    "relevant": false
+  },
+  {
     "id": "obo:go/extensions/ro_pending#alters_location_of",
     "label": "obsolete alters location of",
     "relevant": false
@@ -3635,8 +3828,8 @@ export const globalKnownRelations = [
     "relevant": false
   },
   {
-    "id": "obo:pato#has_cross_section",
-    "label": "has_cross_section",
+    "id": "obo:pr#has_gene_template",
+    "label": "has_gene_template",
     "relevant": false
   },
   {
@@ -3674,10 +3867,6 @@ export const globalKnownRelations = [
     "relevant": false
   },
   {
-    "id": "obo:uberon/core#developmentally_succeeded_by",
-    "relevant": false
-  },
-  {
     "id": "obo:uberon/core#distally_connected_to",
     "label": "distally connected to",
     "relevant": false
@@ -3695,11 +3884,6 @@ export const globalKnownRelations = [
   {
     "id": "obo:uberon/core#has_start",
     "label": "has_start",
-    "relevant": false
-  },
-  {
-    "id": "obo:uberon/core#in_central_side_of",
-    "label": "in_central_side_of",
     "relevant": false
   },
   {
@@ -3783,14 +3967,6 @@ export const globalKnownRelations = [
     "relevant": false
   },
   {
-    "id": "obo:wbbt#develops_from",
-    "relevant": false
-  },
-  {
-    "id": "obo:wbbt#part_of",
-    "relevant": false
-  },
-  {
     "id": "obo:wbbt#xunion_of",
     "label": "exclusive_union_of",
     "relevant": false
@@ -3828,11 +4004,6 @@ export const globalKnownRelations = [
   {
     "id": "obo:xao#start_stage",
     "label": "starts during",
-    "relevant": false
-  },
-  {
-    "id": "http://semanticscience.org/resource/SIO_000658",
-    "label": "immediate_transformation_of",
     "relevant": false
   }
 ]

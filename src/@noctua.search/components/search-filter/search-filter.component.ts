@@ -69,6 +69,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
 
   gpNode: ActivityNode;
   termNode: ActivityNode;
+  obsoleteTermNode: ActivityNode;
 
   private _unsubscribeAll: Subject<any>;
 
@@ -92,6 +93,8 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
       EntityDefinition.GoCellTypeEntity,
       EntityDefinition.UberonStage,
     ]);
+    this.obsoleteTermNode = EntityDefinition.generateBaseTerm([EntityDefinition.ObsoleteTerm]);
+
     this._unsubscribeAll = new Subject();
     this.filterForm = this.createAnswerForm();
     this._onValueChanges();
@@ -114,6 +117,7 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
     return new FormGroup({
       ids: new FormControl(),
       gps: new FormControl(),
+      obsoleteTerms: new FormControl(),
       terms: new FormControl(),
       pmids: new FormControl(),
       contributors: new FormControl(),
@@ -239,6 +243,17 @@ export class SearchFilterComponent implements OnInit, OnDestroy {
       debounceTime(400)
     ).subscribe(data => {
       const lookup: EntityLookup = self.termNode.termLookup;
+
+      lookupFunc.termLookup(data, lookup.requestParams).subscribe(response => {
+        lookup.results = response;
+      });
+    });
+
+    this.filterForm.get('obsoleteTerms').valueChanges.pipe(
+      distinctUntilChanged(),
+      debounceTime(400)
+    ).subscribe(data => {
+      const lookup: EntityLookup = self.obsoleteTermNode.termLookup;
 
       lookupFunc.termLookup(data, lookup.requestParams).subscribe(response => {
         lookup.results = response;

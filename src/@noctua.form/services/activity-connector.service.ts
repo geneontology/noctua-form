@@ -83,20 +83,20 @@ export class NoctuaActivityConnectorService {
     this.connectorFormGroup.next(this._fb.group(this.connectorForm));
 
     if (this.connectorActivity.connectorType === ConnectorType.ACTIVITY_ACTIVITY) {
-      this.connectorForm.activityRelationship.setValue(this.connectorActivity.rule.activityRelationship.relation);
-      this.connectorForm.causalEffect.setValue(this.connectorActivity.rule.effectDirection.direction);
-      this.connectorForm.directness.setValue(this.connectorActivity.rule.directness.directness);
+      this.connectorForm.relationship.setValue(this.connectorActivity.rule.relationship);
+      this.connectorForm.effectDirection.setValue(this.connectorActivity.rule.effectDirection);
+      this.connectorForm.directness.setValue(this.connectorActivity.rule.directness);
     } else if (this.connectorActivity.connectorType === ConnectorType.ACTIVITY_MOLECULE) {
-      this.connectorForm.directness.setValue(this.connectorActivity.rule.directness.directness);
+      this.connectorForm.relationship.setValue(this.connectorActivity.rule.relationship);
     } else if (this.connectorActivity.connectorType === ConnectorType.MOLECULE_ACTIVITY) {
-      this.connectorForm.chemicalRelationship.setValue(this.connectorActivity.rule.chemicalRelationship.relation);
-      this.connectorForm.causalEffect.setValue(this.connectorActivity.rule.effectDirection.direction);
+      this.connectorForm.relationship.setValue(this.connectorActivity.rule.relationship);
+      this.connectorForm.effectDirection.setValue(this.connectorActivity.rule.effectDirection);
     }
 
     this._onActivityFormChanges();
 
     // just to trigger the on Changes event
-    this.connectorForm.causalEffect.setValue(this.connectorActivity.rule.effectDirection.direction);
+    this.connectorForm.effectDirection.setValue(this.connectorActivity.rule.effectDirection);
   }
 
   updateEvidence(node: ActivityNode) {
@@ -138,10 +138,11 @@ export class NoctuaActivityConnectorService {
     return self.noctuaGraphService.deleteActivity(self.cam, [], deleteData.triples);
   }
 
+
   private _onActivityFormChanges(): void {
     this.connectorFormGroup.getValue().valueChanges.subscribe(value => {
       this.connectorActivity.checkConnection(value);
-      if (this._allowRequestWatch && (this.connectorActivity.state === ConnectorState.editing)) {
+      if (this.connectorActivity.predicate?.edge?.id && this._allowRequestWatch && (this.connectorActivity.state === ConnectorState.editing)) {
         this.saveActivity()
       }
       this._allowRequestWatch = true

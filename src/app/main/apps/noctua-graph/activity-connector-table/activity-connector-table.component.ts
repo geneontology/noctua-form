@@ -60,6 +60,7 @@ export class ActivityConnectorTableComponent implements OnInit, OnDestroy {
   evidenceFormArray: FormArray;
 
   private _unsubscribeAll: Subject<any>;
+  relationshipOptions: any;
 
   constructor(
     private confirmDialogService: NoctuaConfirmDialogService,
@@ -83,7 +84,10 @@ export class ActivityConnectorTableComponent implements OnInit, OnDestroy {
           return;
         }
         this.connectorFormGroup = connectorFormGroup;
+        this.currentConnectorActivity = this.noctuaActivityConnectorService.currentConnectorActivity;
         this.connectorActivity = this.noctuaActivityConnectorService.connectorActivity;
+        this.relationshipOptions = this.noctuaFormConfigService[this.connectorActivity.connectorType + 'Relationship']['options']
+
       });
 
     this.noctuaCommonMenuService.onCamSettingsChanged
@@ -130,7 +134,7 @@ export class ActivityConnectorTableComponent implements OnInit, OnDestroy {
   deleteConnectorEdge() {
     const self = this;
     const success = () => {
-      self.noctuaActivityConnectorService.deleteConnectorEdge(this.connectorActivity).then(() => {
+      self.noctuaActivityConnectorService.deleteConnectorEdge(this.currentConnectorActivity).then(() => {
         self.noctuaFormDialogService.openInfoToast('Causal relation successfully deleted.', 'OK');
       });
     };
