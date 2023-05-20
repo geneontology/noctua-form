@@ -319,14 +319,22 @@ export class ActivityNode implements ActivityNodeDisplay {
   }
 }
 
-export function categoryToClosure(categories) {
-  return categories.map((category) => {
-    let result = `${category.categoryType}:"${category.category}"`;
+export function categoryToClosure(categories: GoCategory[]) {
+
+  let results = categories.map((category) => {
+    let result
+    if (category.categoryType === 'is_obsolete') {
+      result = `${category.categoryType}:${category.category}`;
+    } else {
+      result = `${category.categoryType}:"${category.category}"`;
+    }
     if (category.suffix) {
       result += ' ' + category.suffix;
     }
     return result
   }).join(' OR ');
+
+  return results;
 }
 
 export function compareTerm(a: ActivityNode, b: ActivityNode) {

@@ -1,4 +1,4 @@
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 @import "src/@noctua/scss/noctua";
 @import "src/@noctua.common/scss/noctua.common";
 
@@ -30,6 +30,26 @@ $accent: map-get($theme, accent);
       border-bottom: rgba(map-get($primary, default), 0.6) solid 1px;
       color: #000;
       font-size: 12px;
+    }
+
+    .noc-radio-row {
+      width: 100%;
+      padding: 5px;
+      &:not(:last-child) {
+        border-bottom: rgba(map-get($primary, default), 0.6) solid 1px;
+      }
+    }
+
+    .noc-border-0 {
+      border: none !important;
+    }
+
+    .noc-title {
+      @include deep-width(100px);
+    }
+
+    .noc-label {
+      @include deep-width(170px);
     }
 
     .noc-hint {

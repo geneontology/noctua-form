@@ -31,6 +31,12 @@ const baseRequestParams = {
     _: Date.now()
 };
 
+export const ObsoleteTerm = {
+    id: null,
+    category: 'true',
+    categoryType: 'is_obsolete',
+} as GoCategory;
+
 export const GoProteinContainingComplex = {
     id: ActivityNodeType.GoProteinContainingComplex,
     category: 'GO:0032991',

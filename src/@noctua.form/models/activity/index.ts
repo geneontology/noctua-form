@@ -40,8 +40,7 @@ export {
 } from './entity';
 export { Predicate } from './predicate';
 export { Triple } from './triple';
-export { Rule } from './rules/rule';
-export { ConnectorRule } from './rules/connector-rule';
+export { ConnectorRule } from './connector-rule';
 export { PendingChange } from './pending-change';
 export { CamSummary, TermsSummary } from './summary';
 

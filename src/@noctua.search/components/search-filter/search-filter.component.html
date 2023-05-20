@@ -55,6 +55,42 @@
         </div>
         <div class="noc-activity-group-row" fxLayout="column">
           <mat-form-field appearance="outline" class="noc-sm w-100-p">
+            <mat-label>Filter by Obsolete Term</mat-label>
+            <mat-chip-list #obsoleteTermChipList>
+              <mat-chip class="noc-form-chip"
+                *ngFor="let obsoleteTerm of noctuaSearchService.searchCriteria.obsoleteTerms" [selectable]="true"
+                [removable]="true" (removed)="remove(obsoleteTerm, SearchFilterType.obsoleteTerms)" fxLayout="row"
+                fxLayoutAlign="start center" matTooltip="Term: {{obsoleteTerm.label}} ({{obsoleteTerm.id}})"
+                [matTooltipPosition]="'below'" [matTooltipShowDelay]="1000">
+                <div fxFlex="" class="noc-chip-label">
+                  {{obsoleteTerm.label}}
+                </div>
+                <mat-icon matChipRemove>cancel</mat-icon>
+              </mat-chip>
+              <input #searchInput formControlName="obsoleteTerms" placeholder="Add Obsolete Term Filter"
+                [matAutocomplete]="obsoleteTermAuto" [matChipInputFor]="obsoleteTermChipList"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="false">
+            </mat-chip-list>
+            <mat-autocomplete #obsoleteTermAuto="matAutocomplete"
+              (optionSelected)="selected($event, SearchFilterType.obsoleteTerms)" [displayWith]="termDisplayFn"
+              class="noc-term-autocomplete">
+              <mat-option class="noc-term-autocomplete" *ngFor="let item of obsoleteTermNode.termLookup.results"
+                [value]="item">
+                <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
+                  <div class="noc-term-label">
+                    {{ item.label }}
+                  </div>
+                  <span fxFlex></span>
+                  <div class="noc-term-id">
+                    {{ item.id }}
+                  </div>
+                </div>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="noc-activity-group-row" fxLayout="column">
+          <mat-form-field appearance="outline" class="noc-sm w-100-p">
             <mat-label>Filter by Gene Product</mat-label>
             <mat-chip-list #gpChipList>
               <mat-chip class="noc-form-chip" *ngFor="let gp of noctuaSearchService.searchCriteria.gps"
