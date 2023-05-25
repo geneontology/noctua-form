@@ -866,26 +866,22 @@ export class NoctuaGraphService {
         const evidence = self.edgeToEvidence(cam.graph, bbopEdge);
         const objectId = bbopEdge.object_id();
         const objectInfo = self.nodeToActivityNode(cam.graph, objectId);
-        const edges = [...noctuaFormConfig.causalEdges, ...noctuaFormConfig.moleculeEdges];
-        const causalEdge = <Entity>find(edges, {
-          id: predicateId
-        });
+        const edges = noctuaFormConfig.allEdges
+        const causalEdge = this.noctuaFormConfigService.findEdge(predicateId)
 
-        if (causalEdge) {
-          if (objectInfo.hasRootType(EntityDefinition.GoMolecularFunction)
-            || objectInfo.hasRootType(EntityDefinition.GoChemicalEntity)) {
-            const objectActivity = cam.findActivityById(objectId);
-            const predicate = new Predicate(causalEdge, evidence)
+        if (objectInfo.hasRootType(EntityDefinition.GoMolecularFunction)
+          || objectInfo.hasRootType(EntityDefinition.GoChemicalEntity)) {
+          const objectActivity = cam.findActivityById(objectId);
+          const predicate = new Predicate(causalEdge, evidence)
 
-            if (causalEdge.id === noctuaFormConfig.edge.hasInput.id) {
-              predicate.isReverseLink = true;
-              predicate.reverseLinkTitle = 'input of'
-            }
-            const triple = new Triple<Activity>(subjectActivity, objectActivity, predicate);
+          if (causalEdge.id === noctuaFormConfig.edge.hasInput.id) {
+            predicate.isReverseLink = true;
+            predicate.reverseLinkTitle = 'input of'
+          }
+          const triple = new Triple<Activity>(subjectActivity, objectActivity, predicate);
 
-            if (triple.subject && triple.object) {
-              triples.push(triple);
-            }
+          if (triple.subject && triple.object) {
+            triples.push(triple);
           }
         }
       });
@@ -915,7 +911,7 @@ export class NoctuaGraphService {
     return cam.copyModelManager.request_with(reqs);
   }
 
-  copyModelRaw(cam: Cam, title) {
+  copyModelRaw(cam: Cam, title, includeEvidence = false) {
     const self = this;
     const baristaUrl = environment.globalBaristaLocation
     const globalMinervaDefinitionName = environment.globalMinervaDefinitionName
@@ -930,6 +926,7 @@ export class NoctuaGraphService {
         "arguments":
         {
           "model-id": cam.id,
+          "preserve-evidence": includeEvidence,
           "values": [
             {
               "key": "title",
@@ -942,42 +939,6 @@ export class NoctuaGraphService {
     if (self.noctuaUserService.user && self.noctuaUserService.user.groups.length > 0) {
       payload = payload + '&provided-by=' + self.noctuaUserService.user.group.id;
     }
-    return this.httpClient.post(`${baristaUrl}/api/${globalMinervaDefinitionName}/m3BatchPrivileged`, payload, { headers });
-  }
-
-  copyModelRaw2(cam: Cam, title) {
-    const self = this;
-    const baristaUrl = environment.globalBaristaLocation
-    const globalMinervaDefinitionName = environment.globalMinervaDefinitionName
-
-    let headers = new HttpHeaders();
-    headers = headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-
-    const requests = [
-      {
-        "entity": "model",
-        "operation": "copy",
-        "arguments":
-        {
-          "model-id": cam.id,
-          "title": title
-        }
-      }]
-
-    const requestParams = {
-      token: this.noctuaUserService.baristaToken,
-      intention: 'query',
-      //requests: requests
-    }
-
-    if (self.noctuaUserService.user && self.noctuaUserService.user.groups.length > 0) {
-      //  requestParams['provided-by'] = self.noctuaUserService.user.group.id
-    }
-
-    const params = new HttpParams({
-      fromObject: requestParams
-    });
-    const payload = params.toString();
     return this.httpClient.post(`${baristaUrl}/api/${globalMinervaDefinitionName}/m3BatchPrivileged`, payload, { headers });
   }
 

@@ -7,6 +7,7 @@ export enum SearchFilterType {
     titles = 'titles',
     gps = 'gps',
     terms = 'terms',
+    obsoleteTerms = 'obsoleteTerms',
     pmids = 'pmids',
     contributors = 'contributors',
     groups = 'groups',
@@ -23,6 +24,7 @@ export class SearchCriteria {
     ids: any[] = [];
     gps: any[] = [];
     terms: any[] = [];
+    obsoleteTerms: any[] = []
     pmids: any[] = [];
     contributors: Contributor[] = [];
     groups: Group[] = [];
@@ -42,6 +44,7 @@ export class SearchCriteria {
             this.groups = searchCriteria.groups || [];
             this.pmids = searchCriteria.pmids || [];
             this.terms = searchCriteria.terms || [];
+            this.obsoleteTerms = searchCriteria.obsoleteTerms || [];
             this.ids = searchCriteria.ids || [];
             this.gps = searchCriteria.gps || [];
             this.organisms = searchCriteria.organisms || [];
@@ -60,6 +63,7 @@ export class SearchCriteria {
             self.ids.length +
             self.gps.length +
             self.terms.length +
+            self.obsoleteTerms.length +
             self.pmids.length +
             self.contributors.length +
             self.groups.length +
@@ -85,6 +89,10 @@ export class SearchCriteria {
 
         each(self.terms, (term) => {
             query.push(`term=${term.id}`);
+        });
+
+        each(self.obsoleteTerms, (obsoleteTerm) => {
+            query.push(`term=${obsoleteTerm.id}`);
         });
 
         each(self.groups, (group: Group) => {

@@ -171,6 +171,7 @@ export class NoctuaSearchService {
         searchCriteria.group ? this.searchCriteria.groups.push(searchCriteria.group) : null;
         searchCriteria.pmid ? this.searchCriteria.pmids.push(searchCriteria.pmid) : null;
         searchCriteria.term ? this.searchCriteria.terms.push(searchCriteria.term) : null;
+        searchCriteria.obsoleteTerm ? this.searchCriteria.obsoleteTerms.push(searchCriteria.obsoleteTerm) : null;
         searchCriteria.id ? this.searchCriteria.ids.push(searchCriteria.id) : null;
         searchCriteria.gp ? this.searchCriteria.gps.push(searchCriteria.gp) : null;
         searchCriteria.organism ? this.searchCriteria.organisms.push(searchCriteria.organism) : null;
@@ -195,6 +196,7 @@ export class NoctuaSearchService {
         this.searchCriteria.groups = this.makeArray(param.group, SearchFilterType.groups)
         this.searchCriteria.pmids = this.makeArray(param.pmid)
         this.searchCriteria.terms = this.makeArray(param.term, SearchFilterType.terms)
+        this.searchCriteria.obsoleteTerms = this.makeArray(param.term, SearchFilterType.obsoleteTerms)
         this.searchCriteria.gps = this.makeArray(param.gp, SearchFilterType.gps)
         this.searchCriteria.organisms = this.makeArray(param.organism, SearchFilterType.organisms)
         this.searchCriteria.states = this.makeArray(param.state)
@@ -308,6 +310,9 @@ export class NoctuaSearchService {
         }
         if (searchCriteria.terms) {
             this.searchCriteria.terms = searchCriteria.terms;
+        }
+        if (searchCriteria.obsoleteTerms) {
+            this.searchCriteria.obsoleteTerms = searchCriteria.obsoleteTerms;
         }
         if (searchCriteria.gps) {
             this.searchCriteria.gps = searchCriteria.gps;

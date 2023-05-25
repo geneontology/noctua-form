@@ -484,6 +484,7 @@ export class NoctuaLookupService {
       };
     });
 
+    console.log(result?.rootTypes)
     return result;
   }
 
