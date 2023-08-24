@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { getColor } from '@noctua.common/data/noc-colors';
-import { TermsSummary, CamStatsService, NoctuaGraphService } from '@geneontology/noctua-form-base';
+import { TermsSummary, CamStatsService, BbopGraphService } from '@geneontology/noctua-form-base';
 import { Subject } from 'rxjs';
 
 @Component({

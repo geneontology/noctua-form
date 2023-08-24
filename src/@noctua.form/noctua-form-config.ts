@@ -167,13 +167,13 @@ export const noctuaFormConfig = {
         'id': 'preview',
         'label': 'Preview'
       },
-      'activity': {
+      'simple': {
         'id': 'activity',
-        'label': 'Default'
+        'label': 'Simple view'
       },
       'detailed': {
         'id': 'detailed',
-        'label': 'Detailed'
+        'label': 'Default'
       },
     }
   },

@@ -6,11 +6,11 @@ import { CamsTableComponent } from './cams/cams-table/cams-table.component';
 import { NoctuaSearchComponent } from './noctua-search.component';
 import { NoctuaSearchBaseModule } from '@noctua.search';
 import { NoctuaFooterModule } from 'app/layout/components/footer/footer.module';
-import { NoctuaFormModule } from '../noctua-form';
 import { CamsReviewComponent } from './cams/cams-review/cams-review.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CamsReviewChangesComponent } from './cams/cams-review-changes/cams-review-changes.component';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { NoctuaFormModule } from '../noctua-form/noctua-form.module';
 const routes = [
   {
     path: 's',

@@ -11,7 +11,7 @@ import {
     NoctuaFormConfigService,
     NoctuaUserService,
     Entity,
-    NoctuaGraphService,
+    BbopGraphService,
     CamService,
     NoctuaLookupService
 } from '@geneontology/noctua-form-base';
@@ -55,7 +55,7 @@ export class NoctuaSearchService {
     constructor(
         private httpClient: HttpClient,
         private noctuaDataService: NoctuaDataService,
-        private _noctuaGraphService: NoctuaGraphService,
+        private _bbopGraphService: BbopGraphService,
         private noctuaLookupService: NoctuaLookupService,
         private camService: CamService,
         public noctuaFormConfigService: NoctuaFormConfigService,
@@ -149,7 +149,7 @@ export class NoctuaSearchService {
 
     loadCamRebuild() {
         const self = this;
-        self._noctuaGraphService.onCamRebuildChange.subscribe((inCam: Cam) => {
+        self._bbopGraphService.onCamRebuildChange.subscribe((inCam: Cam) => {
             if (!inCam) {
                 return;
             }

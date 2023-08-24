@@ -23,6 +23,7 @@ import { CamErrorsDialogComponent } from '../dialogs/cam-errors/cam-errors.compo
 import { CreateActivityDialogComponent } from '../dialogs/create-activity/create-activity.component';
 import { AddEvidenceDialogComponent } from '../dialogs/add-evidence/add-evidence.component';
 import { ConfirmCopyModelDialogComponent } from '../dialogs/confirm-copy-model/confirm-copy-model.component';
+import { CommentsDialogComponent } from '../dialogs/comments/comments.component';
 
 
 @Injectable({
@@ -137,6 +138,22 @@ export class NoctuaFormDialogService {
             panelClass: 'noc-confirm-copy-model-dialog',
             data: {
                 cam: cam
+            },
+            width: '600px',
+        });
+        this.dialogRef.afterClosed()
+            .subscribe(response => {
+                if (response) {
+                    success(response);
+                }
+            });
+    }
+
+    openCommentsDialog(predicate, success): void {
+        this.dialogRef = this._matDialog.open(CommentsDialogComponent, {
+            panelClass: 'noc-comments-dialog',
+            data: {
+                predicate
             },
             width: '600px',
         });

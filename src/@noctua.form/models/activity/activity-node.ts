@@ -235,7 +235,7 @@ export class ActivityNode implements ActivityNodeDisplay {
     let modified = false;
 
     if (self.term.modified) {
-      if (self.id === ActivityNodeType.GoMolecularEntity) {
+      if (self.type === ActivityNodeType.GoMolecularEntity) {
         modifiedStats.gpsCount++;
         stat.gpsCount++;
       } else {

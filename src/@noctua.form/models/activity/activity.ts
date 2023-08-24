@@ -50,19 +50,11 @@ export enum ActivityType {
 export class ActivitySize {
   width: number = 150;
   height: number = 150;
-
-  constructor() {
-
-  }
 }
 
 export class ActivityPosition {
   x: number = 0;
   y: number = 0;
-
-  constructor() {
-
-  }
 }
 
 export class Activity extends SaeGraph<ActivityNode> {
@@ -113,6 +105,9 @@ export class Activity extends SaeGraph<ActivityNode> {
 
   formattedDate: string
 
+  enabledByEdge: Triple<ActivityNode>
+  bpPartOfEdge: Triple<ActivityNode>
+
   private _backgroundColor = 'green'
   private _presentation: any;
   private _id: string;
@@ -128,12 +123,7 @@ export class Activity extends SaeGraph<ActivityNode> {
   updateProperties() {
     this.updateSummary()
     this.updateDate()
-
-    this.gpNode = this.getGPNode()
-    this.mfNode = this.getMFNode()
-    this.bpNode = this.getRootNodeByType(ActivityNodeType.GoBiologicalProcess)
-    this.ccNode = this.getRootNodeByType(ActivityNodeType.GoCellularComponent)
-
+    this.updateRootNodes();
   }
 
   get id() {
@@ -162,41 +152,18 @@ export class Activity extends SaeGraph<ActivityNode> {
     throw new Error('Method not implemented');
   }
 
-  get rootNodeType(): ActivityNodeType {
-    if (this.activityType === ActivityType.ccOnly) {
-      return ActivityNodeType.GoMolecularEntity
-    } else if (this.activityType === ActivityType.molecule) {
-      return ActivityNodeType.GoChemicalEntity;
-    } else {
-      return ActivityNodeType.GoMolecularFunction
-    }
-  }
-
   get rootNode(): ActivityNode {
-    return this.getNode(this.rootNodeType);
+    return this.sourceNodes()[0]
   }
 
-  get rootEdge(): Triple<ActivityNode> {
-    let edge;
-
-    if (this.activityType === ActivityType.proteinComplex) {
-      edge = this.getEdge(ActivityNodeType.GoMolecularFunction, ActivityNodeType.GoProteinContainingComplex);
-    } else {
-      edge = this.getEdge(ActivityNodeType.GoMolecularFunction, ActivityNodeType.GoMolecularEntity);
-    }
-
-    return edge
-  }
 
   postRunUpdateCompliment() {
     const self = this;
 
     if (this.activityType === ActivityType.default || this.activityType === ActivityType.bpOnly) {
-      const mfNode = self.getMFNode();
-      const edge = self.getEdge(ActivityNodeType.GoMolecularFunction, ActivityNodeType.GoMolecularEntity);
 
-      if (mfNode && edge && mfNode.isComplement) {
-        edge.predicate.isComplement = true;
+      if (this.mfNode && this.enabledByEdge && this.mfNode.isComplement) {
+        this.enabledByEdge.predicate.isComplement = true;
       }
     }
   }
@@ -205,12 +172,12 @@ export class Activity extends SaeGraph<ActivityNode> {
   postRunUpdate() {
     const self = this;
 
+    // for enabled by
     if (this.activityType !== ActivityType.ccOnly) {
-      const mfNode = self.getMFNode();
-      const edge = self.rootEdge;
+      const edge = self.enabledByEdge;
 
-      if (mfNode && edge) {
-        mfNode.predicate = edge.predicate;
+      if (this.mfNode && edge) {
+        this.mfNode.predicate = edge.predicate;
         if (edge.predicate.edge) {
           edge.predicate.edge.label = ''
         }
@@ -222,6 +189,33 @@ export class Activity extends SaeGraph<ActivityNode> {
     return noctuaFormConfig.activityType.options[this.activityType];
   }
 
+  updateRootNodes() {
+    const mfTriples = this.getEdges(this.rootNode.id)
+
+    mfTriples.forEach(mfTriple => {
+      switch (mfTriple.predicate.edge?.id) {
+        case (noctuaFormConfig.edge.enabledBy.id):
+          this.mfNode = mfTriple.subject
+          this.gpNode = mfTriple.object
+          this.enabledByEdge = mfTriple
+          break;
+        case (noctuaFormConfig.edge.partOf.id):
+          this.bpNode = mfTriple.object
+          break;
+        case (noctuaFormConfig.edge.occursIn.id):
+          this.ccNode = mfTriple.object
+          break;
+      }
+
+      if (this.activityType === ActivityType.bpOnly) {
+        if (find(noctuaFormConfig.causalEdges, { id: mfTriple.predicate.edge?.id })) {
+          this.bpNode = mfTriple.object
+          this.bpPartOfEdge = mfTriple
+        }
+      }
+    })
+  }
+
   updateDate() {
     const self = this;
     const rootNode = this.rootNode;
@@ -229,7 +223,7 @@ export class Activity extends SaeGraph<ActivityNode> {
     if (!rootNode) return;
 
     self.date = (moment as any)(rootNode.date, 'YYYY-MM-DD')
-    // self.date = rootNode.date
+
 
     each(self.nodes, (node: ActivityNode) => {
       const nodeDate = (moment as any)(node.date, 'YYYY-MM-DD')
@@ -239,7 +233,6 @@ export class Activity extends SaeGraph<ActivityNode> {
       }
     });
 
-    // remove the subject menu
     each(self.edges, (triple: Triple<ActivityNode>) => {
       each(triple.predicate.evidence, (evidence: Evidence) => {
 
@@ -287,32 +280,6 @@ export class Activity extends SaeGraph<ActivityNode> {
     this.summary = summary
   }
 
-  updateEntityInsertMenu() {
-    const self = this;
-
-    each(self.nodes, (node: ActivityNode) => {
-      const canInsertNodes = ShapeDescription.canInsertEntity[node.type] || [];
-      const insertNodes: ShapeDescription.ShapeDescription[] = [];
-
-      each(canInsertNodes, (nodeDescription: ShapeDescription.ShapeDescription) => {
-        if (nodeDescription.cardinality === ShapeDescription.CardinalityType.oneToOne) {
-          const edgeTypeExist = self.edgeTypeExist(node.id, nodeDescription.predicate.id, node.type, nodeDescription.node.type);
-
-          if (!edgeTypeExist) {
-            insertNodes.push(nodeDescription);
-          }
-        } else {
-          insertNodes.push(nodeDescription);
-        }
-      });
-
-      node.canInsertNodes = insertNodes;
-      node.insertMenuNodes = filter(insertNodes, (insertNode: ShapeDescription.ShapeDescription) => {
-        return insertNode.node.showInMenu;
-      });
-    });
-
-  }
 
   updateShapeMenuShex(rootTypes?) {
     const self = this;
@@ -351,6 +318,36 @@ export class Activity extends SaeGraph<ActivityNode> {
        return insertNode.node.showInMenu;
      }); */
     });
+
+  }
+
+  updateEdgesShex(subjectNode: ActivityNode, insertNode: ActivityNode, predicate: Predicate) {
+    const self = this;
+    const canInsertSubjectNodes = ShapeDescription.canInsertEntity[subjectNode.type] || [];
+    let updated = false;
+
+    each(canInsertSubjectNodes, (nodeDescription: ShapeDescription.ShapeDescription) => {
+
+      if (predicate.edge.id === nodeDescription.predicate.id) {
+        if (nodeDescription.cardinality === ShapeDescription.CardinalityType.oneToOne) {
+          const edgeTypeExist = self.edgeTypeExist(subjectNode.id, nodeDescription.predicate.id, subjectNode.type, nodeDescription.node.type);
+
+          if (edgeTypeExist) {
+            edgeTypeExist.object.treeLevel++;
+            self.removeEdge(edgeTypeExist.subject, edgeTypeExist.object, edgeTypeExist.predicate);
+            self.addEdge(edgeTypeExist.subject, insertNode, edgeTypeExist.predicate);
+            self.addEdge(insertNode, edgeTypeExist.object, predicate);
+            updated = true;
+
+            return false;
+          }
+        }
+      }
+    });
+
+    if (!updated) {
+      self.addEdgeById(subjectNode.id, insertNode.id, predicate);
+    }
 
   }
 
@@ -394,47 +391,8 @@ export class Activity extends SaeGraph<ActivityNode> {
     return result;
   }
 
-  getGPNode() {
-    const self = this;
 
-    if (self.activityType === ActivityType.proteinComplex) {
-      return self.getNode(ActivityNodeType.GoProteinContainingComplex);
-    }
 
-    if (self.activityType === ActivityType.molecule) {
-      return self.getNode(ActivityNodeType.GoChemicalEntity);
-    }
-
-    return self.getNode(ActivityNodeType.GoMolecularEntity);
-  }
-
-  getFDRootNode() {
-    const self = this;
-
-    if (self.activityType === ActivityType.molecule) {
-      return self.getNode(ActivityNodeType.GoCellularComponent);
-    }
-
-    return self.getNode(ActivityNodeType.GoMolecularFunction);
-  }
-
-  getMFNode() {
-    const self = this;
-
-    return self.getNode(ActivityNodeType.GoMolecularFunction);
-  }
-
-  getBPNode() {
-    const self = this;
-
-    return self.getNode(ActivityNodeType.GoBiologicalProcess);
-  }
-
-  getCCNode() {
-    const self = this;
-
-    return self.getNode(ActivityNodeType.GoCellularComponent);
-  }
 
   getRootNodeByType(type: ActivityNodeType): ActivityNode {
     const self = this;
@@ -449,18 +407,14 @@ export class Activity extends SaeGraph<ActivityNode> {
   }
 
   adjustCC() {
-    const self = this;
-    const ccNode = self.getNode(ActivityNodeType.GoCellularComponent);
-
-    if (ccNode && !ccNode.hasValue()) {
-      const ccEdges: Triple<ActivityNode>[] = this.getEdges(ccNode.id);
+    if (this.ccNode && !this.ccNode.hasValue()) {
+      const ccEdges: Triple<ActivityNode>[] = this.getEdges(this.ccNode.id);
 
       if (ccEdges.length > 0) {
         const firstEdge = ccEdges[0];
         const rootCC = noctuaFormConfig.rootNode.cc;
-        ccNode.term = new Entity(rootCC.id, rootCC.label);
-        ccNode.predicate.evidence = firstEdge.predicate.evidence;
-
+        this.ccNode.term = new Entity(rootCC.id, rootCC.label);
+        this.ccNode.predicate.evidence = firstEdge.predicate.evidence;
       }
     }
   }
@@ -481,26 +435,22 @@ export class Activity extends SaeGraph<ActivityNode> {
 
     if (self.activityType === noctuaFormConfig.activityType.options.bpOnly.name) {
       const rootMF = noctuaFormConfig.rootNode.mf;
-      const mfNode = self.getMFNode();
-      const bpNode = self.getNode(ActivityNodeType.GoBiologicalProcess);
-      const bpEdge = self.getEdge(mfNode.id, bpNode.id);
+      const mfNode = self.mfNode;
+      const bpNode = self.bpNode
 
       mfNode.term = new Entity(rootMF.id, rootMF.label);
       mfNode.predicate.evidence = bpNode.predicate.evidence;
 
       if (self.bpOnlyEdge) {
-        bpEdge.predicate.edge.id = bpNode.predicate.edge.id = self.bpOnlyEdge.id;
-        bpEdge.predicate.edge.label = bpNode.predicate.edge.label = self.bpOnlyEdge.label;
+        this.bpPartOfEdge.predicate.edge.id = bpNode.predicate.edge.id = self.bpOnlyEdge.id;
+        this.bpPartOfEdge.predicate.edge.label = bpNode.predicate.edge.label = self.bpOnlyEdge.label;
       }
-
     }
 
     if (self.activityType !== ActivityType.ccOnly && self.activityType !== ActivityType.molecule) {
-      const mfNode = self.getMFNode();
-      const edge = self.rootEdge;
 
-      if (mfNode && edge) {
-        edge.predicate.evidence = mfNode.predicate.evidence;
+      if (this.mfNode && this.enabledByEdge) {
+        this.enabledByEdge.predicate.evidence = this.mfNode.predicate.evidence;
       }
     }
   }
@@ -566,7 +516,7 @@ export class Activity extends SaeGraph<ActivityNode> {
   createSave() {
     const self = this;
     const saveData = {
-      title: 'enabled by ' + self.getNode(ActivityNodeType.GoMolecularEntity)?.term.label,
+      title: 'enabled by ' + self.gpNode?.term.label,
       triples: [],
       nodes: [],
       graph: null
@@ -575,17 +525,20 @@ export class Activity extends SaeGraph<ActivityNode> {
     self.adjustCC();
     self.adjustActivity();
 
-    const graph = self.getTrimmedGraph(this.rootNodeType);
-    const keyNodes = getNodes(graph);
-    const edges: Edge<Triple<ActivityNode>>[] = getEdges(graph);
+    // const graph = self.getTrimmedGraph(this.rootNodeType);
+    //const keyNodes = getNodes(graph);
+    //const edges: Edge<Triple<ActivityNode>>[] = getEdges(graph);
 
-    saveData.nodes = Object.values(keyNodes);
+    //saveData.nodes = Object.values(keyNodes);
 
-    saveData.triples = edges.map((edge: Edge<Triple<ActivityNode>>) => {
-      return edge.metadata;
-    });
+    saveData.nodes = self.nodes;
+    saveData.triples = self.edges
 
-    saveData.graph = graph;
+    /*     saveData.triples = self.edges.map((edge: Edge<Triple<ActivityNode>>) => {
+          return edge.metadata;
+        }); */
+
+    // saveData.graph = graph;
 
     return saveData;
   }
@@ -705,7 +658,7 @@ export class Activity extends SaeGraph<ActivityNode> {
 
   get title() {
     const self = this;
-    const gp = self.getGPNode();
+    const gp = self.gpNode;
     const gpText = gp ? gp.getTerm().label : '';
     let title = '';
 
@@ -722,10 +675,9 @@ export class Activity extends SaeGraph<ActivityNode> {
   buildTrees(): ActivityTreeNode[] {
     const self = this;
     const sortedEdges = self.edges.sort(compareTripleWeight);
-    const fdRootNode = self.getFDRootNode();
 
-    if (!fdRootNode) return [];
-    return [self._buildTree(sortedEdges, fdRootNode)];
+    if (!this.rootNode) return [];
+    return [self._buildTree(sortedEdges, this.rootNode)];
   }
 
   buildGPTrees(): ActivityTreeNode[] {
@@ -769,8 +721,8 @@ export class Activity extends SaeGraph<ActivityNode> {
       return this._presentation;
     }
 
-    const gp = self.getNode(ActivityNodeType.GoMolecularEntity);
-    const mf = self.getNode(ActivityNodeType.GoMolecularFunction);
+    const gp = self.gpNode;
+    const mf = self.mfNode;
     const gpText = gp ? gp.getTerm().label : '';
     const mfText = mf ? mf.getTerm().label : '';
     let qualifier = '';
@@ -794,7 +746,6 @@ export class Activity extends SaeGraph<ActivityNode> {
       mfText: mfText,
       gp: {},
       fd: {},
-      extra: []
     };
 
     const sortedNodes = self.nodes.sort(compareNodeWeight);

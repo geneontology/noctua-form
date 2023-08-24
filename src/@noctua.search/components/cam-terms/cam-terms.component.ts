@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Input, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
-import { ActivityNode, Article, Cam, CamService, EntityType, Evidence, LeftPanel, NoctuaFormConfigService, NoctuaGraphService, NoctuaLookupService, NoctuaUserService, RightPanel, TermsSummary } from '@geneontology/noctua-form-base';
+import { ActivityNode, Article, Cam, CamService, EntityType, Evidence, LeftPanel, NoctuaFormConfigService, BbopGraphService, NoctuaLookupService, NoctuaUserService, RightPanel, TermsSummary } from '@geneontology/noctua-form-base';
 import { NoctuaSearchService } from './../..//services/noctua-search.service';
 import { NoctuaSearchMenuService } from '../../services/search-menu.service';
 import { takeUntil } from 'rxjs/operators';
@@ -43,7 +43,7 @@ export class CamTermsComponent implements OnInit, OnDestroy {
 
   constructor(
     private noctuaLookupService: NoctuaLookupService,
-    private _noctuaGraphService: NoctuaGraphService,
+    private _bbopGraphService: BbopGraphService,
     public noctuaCommonMenuService: NoctuaCommonMenuService,
     public camService: CamService,
     public noctuaSearchDialogService: NoctuaSearchDialogService,
@@ -56,14 +56,14 @@ export class CamTermsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this._noctuaGraphService.onCamGraphChanged
+    this._bbopGraphService.onCamGraphChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((cam: Cam) => {
         if (!cam) {
           return;
         }
         this.cam = cam;
-        this.termsSummary = this._noctuaGraphService.getTerms(this.cam.graph)
+        this.termsSummary = this._bbopGraphService.getTerms(this.cam.graph)
         this.treeNodes = this.camService.buildTermsTree(this.termsSummary)
         const pmids = this.termsSummary.papers.nodes.map((article: Article) => {
           return Evidence.getReferenceNumber(article.id)

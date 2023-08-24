@@ -68,6 +68,7 @@ import { ActivityFormTableComponent } from './cam/cam-table/activity-form-table/
 import { EvidenceFormTableComponent } from './cam/cam-table/activity-form-table/evidence-table/evidence-table.component';
 import { ConfirmCopyModelDialogComponent } from './dialogs/confirm-copy-model/confirm-copy-model.component';
 import { CamToolbarComponent } from './cam/cam-toolbar/cam-toolbar.component';
+import { CommentsDialogComponent } from './dialogs/comments/comments.component';
 
 const routes = [
   {
@@ -139,6 +140,7 @@ const routes = [
     GraphPreviewComponent,
     EvidenceFormTableComponent,
     ConfirmCopyModelDialogComponent,
+    CommentsDialogComponent,
     CamToolbarComponent,
   ],
   providers: [
@@ -184,6 +186,7 @@ const routes = [
     StatementStatsComponent,
     EvidenceFormTableComponent,
     ConfirmCopyModelDialogComponent,
+    CommentsDialogComponent,
     CamToolbarComponent
   ],
 })

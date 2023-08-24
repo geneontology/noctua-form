@@ -48,6 +48,17 @@
         <span>ext.</span>
       </mat-chip>
     </div>
+
+    <div class="noc-comments-cell noc-entity-cell" fxLayout="column" fxLayoutAlign="start stretch">
+      <button *ngIf="entity.predicate.comments.length>0" mat-icon-button class="noc-toolbar-button noc-rounded-button"
+        (click)="openCommentsForm(entity)" matTooltip="{{entity.predicate?.comments}}" [matTooltipPosition]="'after'"
+        [matTooltipShowDelay]="1000">
+        <fa-icon [icon]="['fas', 'comment']"></fa-icon>
+        <div class="noc-comments-badge">
+          {{entity.predicate?.comments.length}}
+        </div>
+      </button>
+    </div>
     <div class="noc-evidence-cell p-0" fxLayout="column" fxLayoutAlign="start stretch">
       <noc-evidence-table *ngIf="!entity.skipEvidenceCheck" class="w-100-p" [options]="optionsDisplay" [cam]="cam"
         [entity]="entity">
@@ -68,6 +79,9 @@
         </button>
         <button mat-menu-item *ngIf="entity.insertMenuNodes" [matMenuTriggerFor]="addMenu">Add</button>
         <button mat-menu-item [matMenuTriggerFor]="evidenceMenu">Evidence</button>
+        <button mat-menu-item (click)="openCommentsForm(entity)" class="">
+          Add Comment
+        </button>
       </mat-menu>
       <mat-menu #addMenu="matMenu">
         <button mat-menu-item *ngFor="let insertMenuItem of entity.insertMenuNodes" class=""

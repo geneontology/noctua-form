@@ -11,7 +11,7 @@ import {
 
     CamQueryMatch,
     NoctuaUserService,
-    NoctuaGraphService,
+    BbopGraphService,
     CamStats,
     CamService,
     CamLoadingIndicator,
@@ -68,7 +68,7 @@ export class NoctuaReviewSearchService {
     constructor(
         private zone: NgZone,
         private noctuaUserService: NoctuaUserService,
-        private _noctuaGraphService: NoctuaGraphService,
+        private _bbopGraphService: BbopGraphService,
         private _noctuaSearchService: NoctuaSearchService,
         private noctuaSearchMenuService: NoctuaSearchMenuService,
         private confirmDialogService: NoctuaConfirmDialogService,
@@ -145,7 +145,7 @@ export class NoctuaReviewSearchService {
 
     loadCamRebuild() {
         const self = this;
-        self._noctuaGraphService.onCamRebuildChange.subscribe((cam: Cam) => {
+        self._bbopGraphService.onCamRebuildChange.subscribe((cam: Cam) => {
             if (!cam) {
                 return;
             }
@@ -203,7 +203,7 @@ export class NoctuaReviewSearchService {
 
                     if (!cam) return;
 
-                    self._noctuaGraphService.rebuildFromStoredApi(cam, response.activeModel);
+                    self._bbopGraphService.rebuildFromStoredApi(cam, response.activeModel);
                     self.camService.populateStoredModel(cam, response.storedModel)
                     cam.loading.status = false;
                     self.camService.sortCams();
@@ -273,7 +273,7 @@ export class NoctuaReviewSearchService {
 
                     if (!cam) return;
 
-                    //self._noctuaGraphService.rebuild(cam, response);
+                    //self._bbopGraphService.rebuild(cam, response);
                     self.camService.populateStoredModel(cam, response.data())
                     cam.loading.status = false;
                     self.camService.updateDisplayNumber(reviewCams);
@@ -321,7 +321,7 @@ export class NoctuaReviewSearchService {
 
                     if (!cam) return;
                     cam.rebuildRule.reset();
-                    self._noctuaGraphService.rebuildFromStoredApi(cam, response.activeModel);
+                    self._bbopGraphService.rebuildFromStoredApi(cam, response.activeModel);
                     self.camService.populateStoredModel(cam, response.storedModel)
                     cam.loading.status = false;
                     self.camService.sortCams();
