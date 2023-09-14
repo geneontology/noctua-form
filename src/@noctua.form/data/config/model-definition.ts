@@ -9,7 +9,6 @@ import { Predicate } from '../../models/activity/predicate';
 import { ActivityType, Activity } from '../../models/activity/activity';
 import { v4 as uuid } from 'uuid';
 import shexJson from './../shapes.json'
-import shapeTerms from './../shape-terms.json'
 import { DataUtils } from './data-utils';
 import { ShexShapeAssociation } from '../shape';
 

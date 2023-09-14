@@ -16,6 +16,7 @@ import { Entity } from './../../models/activity/entity';
 import { Evidence } from './../../models/activity/evidence';
 import { Predicate } from './../../models/activity/predicate';
 import { DataUtils } from '@noctua.form/data/config/data-utils';
+import shexJson from './../../data/shapes.json';
 
 @Injectable({
   providedIn: 'root'
@@ -29,10 +30,12 @@ export class NoctuaFormConfigService {
   homeUrl: string;
   onSetupReady: BehaviorSubject<any>;
   termLookupTable
+  shapePredicates: string[];
 
   constructor(private noctuaUserService: NoctuaUserService) {
     this.onSetupReady = new BehaviorSubject(null);
     this.termLookupTable = DataUtils.genTermLookupTable();
+    this.shapePredicates = DataUtils.getPredicates(shexJson.goshapes);
   }
 
   get edges() {

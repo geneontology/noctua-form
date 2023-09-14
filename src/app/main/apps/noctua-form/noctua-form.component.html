@@ -2,7 +2,7 @@
   <div class="noc-sidemenu" fxLayout="column" fxLayoutAlign="start center">
     <button mat-icon-button color="" class="noc-rounded-button"
       [ngClass]="{'noc-active': noctuaCommonMenuService.selectedLeftPanel === LeftPanel.activityForm}" color="primary"
-      matTooltip="Add New Activity/Annotation" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500"
+      matTooltip="Add New Activity/Annotation" [matTooltipPosition]="'above'" [matTooltipShowDelay]="1500"
       [matMenuTriggerFor]="createOptionsLeftMenu">
       <fa-icon [icon]="['fas', 'plus']"></fa-icon>
     </button>
@@ -19,29 +19,29 @@
     </mat-menu>
     <button mat-icon-button color="" class="noc-rounded-button"
       [ngClass]="{'noc-active': noctuaCommonMenuService.selectedLeftPanel === LeftPanel.camForm}"
-      (click)="openCamForm()" matTooltip="Model Details" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
+      (click)="openCamForm()" matTooltip="Model Details" [matTooltipPosition]="'above'" [matTooltipShowDelay]="1500">
       <fa-icon [icon]="['fas', 'info-circle']"></fa-icon>
     </button>
     <button mat-icon-button color="" class="noc-rounded-button"
       [ngClass]="{'noc-active': noctuaCommonMenuService.selectedLeftPanel === LeftPanel.findReplace}"
-      (click)="openSearch()" matTooltip="Find and replace" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
+      (click)="openSearch()" matTooltip="Find and replace" [matTooltipPosition]="'above'" [matTooltipShowDelay]="1500">
       <fa-icon [icon]="['fas', 'search']"></fa-icon>
     </button>
     <button mat-icon-button color="" class="noc-rounded-button"
       [ngClass]="{'noc-active': noctuaCommonMenuService.selectedLeftPanel === LeftPanel.camTermsSummary}"
-      (click)="openTermsSummary()" matTooltip="terms summary" [matTooltipPosition]="'after'"
+      (click)="openTermsSummary()" matTooltip="terms summary" [matTooltipPosition]="'above'"
       [matTooltipShowDelay]="1500">
       <fa-icon [icon]="['fas', 'list']"></fa-icon>
     </button>
     <button mat-icon-button color="" class="noc-rounded-button"
       [ngClass]="{'noc-active': noctuaCommonMenuService.selectedLeftPanel === LeftPanel.camStats}"
-      (click)="openCamStats()" matTooltip="GO CAM Statistics" [matTooltipPosition]="'after'"
+      (click)="openCamStats()" matTooltip="GO CAM Statistics" [matTooltipPosition]="'above'"
       [matTooltipShowDelay]="1500">
       <fa-icon [icon]="['fas', 'chart-bar']"></fa-icon>
     </button>
     <button mat-icon-button color="" class="noc-rounded-button" (click)="openCopyModel()"
       [ngClass]="{'noc-active': noctuaCommonMenuService.selectedLeftPanel === LeftPanel.copyModel}"
-      matTooltip="Make a copy of this model" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1500">
+      matTooltip="Make a copy of this model" [matTooltipPosition]="'above'" [matTooltipShowDelay]="1500">
       <fa-icon [icon]="['fas', 'clone']"></fa-icon>
     </button>
   </div>
