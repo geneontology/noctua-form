@@ -167,13 +167,13 @@ export const noctuaFormConfig = {
         'id': 'preview',
         'label': 'Preview'
       },
-      'activity': {
+      'simple': {
         'id': 'activity',
-        'label': 'Default'
+        'label': 'Simple view'
       },
       'detailed': {
         'id': 'detailed',
-        'label': 'Detailed'
+        'label': 'Default'
       },
     }
   },
@@ -333,6 +333,15 @@ export const noctuaFormConfig = {
     }
   },
 
+  bpOnlyCausalEdges: [
+    Entity.createEntity(edge.causallyUpstreamOfNegativeEffect),
+    Entity.createEntity(edge.causallyUpstreamOf),
+    Entity.createEntity(edge.causallyUpstreamOfPositiveEffect),
+    Entity.createEntity(edge.causallyUpstreamOfOrWithinNegativeEffect),
+    Entity.createEntity(edge.causallyUpstreamOfOrWithinPositiveEffect),
+    Entity.createEntity(edge.causallyUpstreamOfOrWithin),
+  ],
+
 
 
   // This array is arrange for matrice decison tree for causal edge 0-8 index, don't rearrange
@@ -369,6 +378,13 @@ export const noctuaFormConfig = {
     Entity.createEntity(edge.partOf),
     Entity.createEntity(edge.occursIn),
   ],
+
+  edgePriority: [
+    edge.enabledBy.id,
+    edge.partOf.id,
+    edge.occursIn.id,
+    edge.hasInput.id,
+    edge.hasOutput.id]
 
 };
 

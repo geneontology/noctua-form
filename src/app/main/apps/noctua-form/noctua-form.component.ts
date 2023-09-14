@@ -18,7 +18,7 @@ import {
   MiddlePanel,
   LeftPanel,
   Activity,
-  NoctuaGraphService,
+  BbopGraphService,
   ActivityDisplayType,
   CamLoadingIndicator,
   ReloadType,
@@ -82,7 +82,7 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private camService: CamService,
-    private _noctuaGraphService: NoctuaGraphService,
+    private _bbopGraphService: BbopGraphService,
     private noctuaDataService: NoctuaDataService,
     private noctuaReviewSearchService: NoctuaReviewSearchService,
     public noctuaSearchDialogService: NoctuaSearchDialogService,
@@ -121,7 +121,7 @@ export class NoctuaFormComponent implements OnInit, OnDestroy {
     self.noctuaCommonMenuService.setLeftDrawer(self.leftDrawer);
     self.noctuaCommonMenuService.setRightDrawer(self.rightDrawer);
 
-    this._noctuaGraphService.onCamGraphChanged
+    this._bbopGraphService.onCamGraphChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((cam: Cam) => {
         if (!cam || cam.id !== self.cam.id) {

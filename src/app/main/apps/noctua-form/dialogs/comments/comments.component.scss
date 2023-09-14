@@ -1,0 +1,24 @@
+@use "@angular/material" as mat;
+@import "src/@noctua/scss/noctua";
+@import "src/@noctua.common/scss/noctua.common";
+$primary: map-get($theme, primary);
+$accent: map-get($theme, accent);
+
+:host {
+  .noc-no-info {
+    font-size: 16px;
+  }
+  .noc-form-field-container {
+    position: relative;
+    .noc-delete-float-button {
+      margin-top: 5px;
+      // z-index: 0;
+      visibility: hidden;
+    }
+    &:hover {
+      .noc-delete-float-button {
+        visibility: visible;
+      }
+    }
+  }
+}

@@ -2,7 +2,7 @@
   "goshapes": [
     {
       "subject": "GO:0008150",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0008150"
       ],
@@ -14,7 +14,7 @@
     },
     {
       "subject": "GO:0008150",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "CHEBI:24431",
         "CARO:0000000",
@@ -29,7 +29,7 @@
     },
     {
       "subject": "GO:0008150",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "CHEBI:24431",
         "CARO:0000000",
@@ -43,7 +43,7 @@
     },
     {
       "subject": "GO:0008150",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "CHEBI:24431",
         "CARO:0000000",
@@ -58,7 +58,7 @@
     },
     {
       "subject": "GO:0008150",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "CHEBI:24431",
         "CARO:0000000",
@@ -72,7 +72,7 @@
     },
     {
       "subject": "GO:0008150",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "CARO:0000000"
       ],
@@ -84,7 +84,7 @@
     },
     {
       "subject": "GO:0008150",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "CHEBI:33695",
         "GO:0032991"
@@ -97,7 +97,7 @@
     },
     {
       "subject": "GO:0008150",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "CARO:0000000"
       ],
@@ -109,7 +109,7 @@
     },
     {
       "subject": "GO:0008150",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "CARO:0000000"
       ],
@@ -121,7 +121,7 @@
     },
     {
       "subject": "GO:0008150",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0008150",
         "GO:0003674",
@@ -135,7 +135,7 @@
     },
     {
       "subject": "GO:0008150",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0008150",
         "GO:0003674",
@@ -149,7 +149,7 @@
     },
     {
       "subject": "GO:0008150",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0008150",
         "GO:0003674",
@@ -163,7 +163,7 @@
     },
     {
       "subject": "GO:0008150",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0008150"
       ],
@@ -175,7 +175,7 @@
     },
     {
       "subject": "GO:0008150",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0008150"
       ],
@@ -187,7 +187,7 @@
     },
     {
       "subject": "GO:0008150",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0008150"
       ],
@@ -199,7 +199,7 @@
     },
     {
       "subject": "GO:0008150",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "CARO:0000000",
         "NCBITaxon:1"
@@ -495,7 +495,7 @@
     },
     {
       "subject": "GO:0003674",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "CHEBI:33695",
         "GO:0032991"
@@ -508,7 +508,7 @@
     },
     {
       "subject": "GO:0003674",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0008150"
       ],
@@ -520,7 +520,7 @@
     },
     {
       "subject": "GO:0003674",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0003674"
       ],
@@ -532,7 +532,7 @@
     },
     {
       "subject": "GO:0003674",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "CARO:0000000"
       ],
@@ -544,7 +544,7 @@
     },
     {
       "subject": "GO:0003674",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "CHEBI:24431",
         "GO:0032991"
@@ -557,7 +557,7 @@
     },
     {
       "subject": "GO:0003674",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "CHEBI:24431",
         "GO:0032991"
@@ -570,7 +570,7 @@
     },
     {
       "subject": "GO:0003674",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0003674",
         "http://purl.obolibrary.org/obo/go/shapes/MolecularEvent"
@@ -583,7 +583,7 @@
     },
     {
       "subject": "GO:0003674",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0003674",
         "http://purl.obolibrary.org/obo/go/shapes/MolecularEvent"
@@ -596,7 +596,7 @@
     },
     {
       "subject": "GO:0003674",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0003674",
         "http://purl.obolibrary.org/obo/go/shapes/MolecularEvent"
@@ -609,7 +609,7 @@
     },
     {
       "subject": "GO:0003674",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0003674",
         "http://purl.obolibrary.org/obo/go/shapes/MolecularEvent"
@@ -622,7 +622,7 @@
     },
     {
       "subject": "GO:0003674",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0003674",
         "http://purl.obolibrary.org/obo/go/shapes/MolecularEvent"
@@ -635,7 +635,7 @@
     },
     {
       "subject": "GO:0003674",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0003674",
         "http://purl.obolibrary.org/obo/go/shapes/MolecularEvent"
@@ -648,7 +648,7 @@
     },
     {
       "subject": "GO:0003674",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0003674",
         "http://purl.obolibrary.org/obo/go/shapes/MolecularEvent"
@@ -661,7 +661,7 @@
     },
     {
       "subject": "GO:0003674",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0003674",
         "http://purl.obolibrary.org/obo/go/shapes/MolecularEvent"
@@ -674,7 +674,7 @@
     },
     {
       "subject": "GO:0003674",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0003674",
         "http://purl.obolibrary.org/obo/go/shapes/MolecularEvent"
@@ -687,7 +687,7 @@
     },
     {
       "subject": "GO:0003674",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0003674",
         "http://purl.obolibrary.org/obo/go/shapes/MolecularEvent"
@@ -700,7 +700,7 @@
     },
     {
       "subject": "GO:0003674",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0003674",
         "http://purl.obolibrary.org/obo/go/shapes/MolecularEvent"
@@ -713,7 +713,7 @@
     },
     {
       "subject": "GO:0003674",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0003674",
         "http://purl.obolibrary.org/obo/go/shapes/MolecularEvent"
@@ -726,7 +726,7 @@
     },
     {
       "subject": "GO:0003674",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0003674",
         "http://purl.obolibrary.org/obo/go/shapes/MolecularEvent",
@@ -740,7 +740,7 @@
     },
     {
       "subject": "GO:0003674",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0008150"
       ],
@@ -752,7 +752,7 @@
     },
     {
       "subject": "GO:0003674",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0008150"
       ],
@@ -764,7 +764,7 @@
     },
     {
       "subject": "GO:0003674",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0008150",
         "GO:0003674",
@@ -778,7 +778,7 @@
     },
     {
       "subject": "GO:0003674",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0008150",
         "GO:0003674",
@@ -792,7 +792,7 @@
     },
     {
       "subject": "GO:0003674",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0008150",
         "GO:0003674",
@@ -806,7 +806,7 @@
     },
     {
       "subject": "GO:0003674",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0044848",
         "UBERON:0000105",
@@ -858,7 +858,7 @@
     },
     {
       "subject": "CARO:0000000",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "CARO:0000000"
       ],
@@ -870,7 +870,7 @@
     },
     {
       "subject": "CARO:0000000",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "CHEBI:33695",
         "GO:0032991"
@@ -883,7 +883,7 @@
     },
     {
       "subject": "CL:0000003",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "CARO:0000000"
       ],
@@ -895,7 +895,7 @@
     },
     {
       "subject": "GO:0005575",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "CARO:0000000"
       ],
@@ -907,7 +907,7 @@
     },
     {
       "subject": "GO:0005575",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "CARO:0000000"
       ],
@@ -919,7 +919,7 @@
     },
     {
       "subject": "GO:0005575",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "CARO:0000000"
       ],
@@ -931,7 +931,7 @@
     },
     {
       "subject": "GO:0005575",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0008150",
         "UBERON:0000105",
@@ -945,7 +945,7 @@
     },
     {
       "subject": "GO:0005575",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0008150",
         "UBERON:0000105",
@@ -959,7 +959,7 @@
     },
     {
       "subject": "GO:0032991",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "CARO:0000000"
       ],
@@ -971,10 +971,10 @@
     },
     {
       "subject": "GO:0032991",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "CARO:0000000",
-        "http://purl.obolibrary.org/obo/go/shapes/RootCellularComponent"
+        "GO:0005575"
       ],
       "is_multivalued": false,
       "is_required": false,
@@ -984,7 +984,7 @@
     },
     {
       "subject": "GO:0032991",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "CHEBI:33695",
         "GO:0032991"
@@ -997,7 +997,7 @@
     },
     {
       "subject": "GO:0032991",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0008150",
         "UBERON:0000105",
@@ -1011,7 +1011,7 @@
     },
     {
       "subject": "GO:0032991",
-      "root_subject": "http://purl.obolibrary.org/obo/go/shapes/GoCamEntity",
+      "root_subject": null,
       "object": [
         "GO:0008150",
         "UBERON:0000105",
@@ -1040,7 +1040,7 @@
       "root_subject": "CHEBI:24431",
       "object": [
         "CARO:0000000",
-        "http://purl.obolibrary.org/obo/go/shapes/RootCellularComponent"
+        "GO:0005575"
       ],
       "is_multivalued": false,
       "is_required": false,
@@ -1089,7 +1089,7 @@
       "root_subject": "CHEBI:24431",
       "object": [
         "CARO:0000000",
-        "http://purl.obolibrary.org/obo/go/shapes/RootCellularComponent"
+        "GO:0005575"
       ],
       "is_multivalued": false,
       "is_required": false,

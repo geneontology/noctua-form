@@ -19,9 +19,9 @@ import {
 import { NoctuaConfirmDialogService } from '@noctua/components/confirm-dialog/confirm-dialog.service';
 import { takeUntil } from 'rxjs/operators';
 import { TableOptions } from '@noctua.common/models/table-options';
-import { NoctuaFormDialogService } from 'app/main/apps/noctua-form';
 import { SettingsOptions } from '@noctua.common/models/graph-settings';
 import { NoctuaCommonMenuService } from '@noctua.common/services/noctua-common-menu.service';
+import { NoctuaFormDialogService } from '../../noctua-form/services/dialog.service';
 
 @Component({
   selector: 'noc-activity-connector-table',

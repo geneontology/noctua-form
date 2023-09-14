@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, NgZone, Input } from '@angular/core';
 import { Subject } from 'rxjs';
-import { ActivityNode, Cam, CamService, EntityType, LeftPanel, NoctuaFormConfigService, NoctuaGraphService, NoctuaLookupService, NoctuaUserService, RightPanel, TermsSummary } from '@geneontology/noctua-form-base';
+import { ActivityNode, Cam, CamService, EntityType, LeftPanel, NoctuaFormConfigService, BbopGraphService, NoctuaLookupService, NoctuaUserService, RightPanel, TermsSummary } from '@geneontology/noctua-form-base';
 import { takeUntil } from 'rxjs/operators';
 import { MatDrawer } from '@angular/material/sidenav';
 import { SearchCriteria } from '@noctua.search/models/search-criteria';
@@ -73,7 +73,7 @@ export class CamStatsComponent implements OnInit, OnDestroy {
   constructor(
     private zone: NgZone,
     private noctuaLookupService: NoctuaLookupService,
-    private _noctuaGraphService: NoctuaGraphService,
+    private _bbopGraphService: BbopGraphService,
     public noctuaCommonMenuService: NoctuaCommonMenuService,
     public camService: CamService,
     public noctuaUserService: NoctuaUserService,
@@ -84,14 +84,14 @@ export class CamStatsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this._noctuaGraphService.onCamGraphChanged
+    this._bbopGraphService.onCamGraphChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((cam: Cam) => {
         if (!cam) {
           return;
         }
         this.cam = cam;
-        this.termsSummary = this._noctuaGraphService.getTerms(this.cam.graph)
+        this.termsSummary = this._bbopGraphService.getTerms(this.cam.graph)
       });
 
   }

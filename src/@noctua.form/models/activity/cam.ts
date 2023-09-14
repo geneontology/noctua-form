@@ -581,7 +581,7 @@ export class Cam {
   updateProperties() {
     const self = this;
 
-    each(self.activities, (activity: Activity, key) => {
+    each(self._activities, (activity: Activity, key) => {
       activity.updateProperties()
     });
 

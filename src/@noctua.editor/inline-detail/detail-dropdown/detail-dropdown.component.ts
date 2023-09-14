@@ -9,7 +9,7 @@ import {
 
 import { detailDropdownData } from './detail-dropdown.tokens';
 import { DetailDropdownOverlayRef } from './detail-dropdown-ref';
-import { NoctuaFormDialogService } from 'app/main/apps/noctua-form';
+import { NoctuaFormDialogService } from 'app/main/apps/noctua-form/services/dialog.service';
 
 @Component({
   selector: 'noc-detail-dropdown',

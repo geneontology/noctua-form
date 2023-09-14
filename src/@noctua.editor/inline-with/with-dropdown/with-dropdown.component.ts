@@ -17,9 +17,9 @@ import {
 
 import { withDropdownData } from './with-dropdown.tokens';
 import { WithDropdownOverlayRef } from './with-dropdown-ref';
-import { NoctuaFormDialogService } from 'app/main/apps/noctua-form';
 import { SparqlService } from '@noctua.sparql/services/sparql/sparql.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { NoctuaFormDialogService } from 'app/main/apps/noctua-form/services/dialog.service';
 
 @Component({
   selector: 'noc-with-dropdown',

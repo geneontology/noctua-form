@@ -14,7 +14,7 @@ import {
   ActivityType,
   ActivityTreeNode,
   ActivityDisplayType,
-  NoctuaGraphService
+  BbopGraphService
 } from '@geneontology/noctua-form-base';
 
 import {
@@ -94,7 +94,7 @@ export class ActivityFormTableComponent implements OnInit, OnDestroy, OnChanges,
 
   constructor(
     public camService: CamService,
-    private _noctuaGraphService: NoctuaGraphService,
+    private _bbopGraphService: BbopGraphService,
     private noctuaCommonMenuService: NoctuaCommonMenuService,
     public noctuaUserService: NoctuaUserService,
     public noctuaFormConfigService: NoctuaFormConfigService,
@@ -143,7 +143,7 @@ export class ActivityFormTableComponent implements OnInit, OnDestroy, OnChanges,
       this.editableTerms = this.options.editableTerms
     }
 
-    this._noctuaGraphService.onCamGraphChanged
+    this._bbopGraphService.onCamGraphChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((cam: Cam) => {
         if (!cam || cam.id !== this.cam.id) {
@@ -176,7 +176,7 @@ export class ActivityFormTableComponent implements OnInit, OnDestroy, OnChanges,
 
   loadTree() {
     if (!this.activity) return;
-    this.gpNode = this.activity.getGPNode();
+    this.gpNode = this.activity.gpNode;
     this.optionsDisplay = { ...this.options, hideHeader: true };
     this.treeNodes = this.activity.buildTrees();
     this.gpTreeNodes = this.activity.buildGPTrees();

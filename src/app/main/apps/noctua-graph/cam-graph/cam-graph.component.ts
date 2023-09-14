@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { NoctuaCommonMenuService } from '@noctua.common/services/noctua-common-menu.service';
 import { NoctuaDataService } from '@noctua.common/services/noctua-data.service';
-import { Activity, Cam, CamOperation, NoctuaFormConfigService, NoctuaGraphService } from '@geneontology/noctua-form-base';
+import { Activity, Cam, CamOperation, NoctuaFormConfigService, BbopGraphService } from '@geneontology/noctua-form-base';
 import { NoctuaShapesService } from '@noctua.graph/services/shapes.service';
 import { noctuaStencil } from '@noctua.graph/data/cam-stencil';
 import { NoctuaGraphEditorService } from '@noctua.graph/services/graph-editor-service';
@@ -32,7 +32,7 @@ export class CamGraphComponent implements OnInit, AfterViewInit, OnDestroy {
     public noctuaFormConfigService: NoctuaFormConfigService,
     public noctuaGraphEditorService: NoctuaGraphEditorService,
     // public noctuaCamEditorService: NoctuaCamEditorService,
-    private _noctuaGraphService: NoctuaGraphService,
+    private _bbopGraphService: BbopGraphService,
     public noctuaCommonMenuService: NoctuaCommonMenuService,
     public noctuaCamGraphService: CamGraphService,
     private noctuaCamShapesService: NoctuaShapesService) {
@@ -60,7 +60,7 @@ export class CamGraphComponent implements OnInit, AfterViewInit, OnDestroy {
     self.noctuaCamGraphService.initializeGraph();
     self.noctuaCamGraphService.initializeStencils();
 
-    self._noctuaGraphService.onCamGraphChanged
+    self._bbopGraphService.onCamGraphChanged
       .pipe(takeUntil(self._unsubscribeAll))
       .subscribe((cam: Cam) => {
         if (!cam || cam.id !== self.cam.id) {
@@ -78,7 +78,7 @@ export class CamGraphComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     const self = this;
 
-    self._noctuaGraphService.onActivityAdded
+    self._bbopGraphService.onActivityAdded
       .pipe(takeUntil(self._unsubscribeAll))
       .subscribe((activity: Activity) => {
         if (!activity) {

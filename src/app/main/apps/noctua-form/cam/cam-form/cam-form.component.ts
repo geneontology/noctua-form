@@ -8,7 +8,7 @@ import {
   Cam,
   NoctuaUserService,
   NoctuaFormConfigService,
-  NoctuaGraphService,
+  BbopGraphService,
   CamService,
   Entity,
 } from '@geneontology/noctua-form-base';
@@ -34,7 +34,7 @@ export class CamFormComponent implements OnInit, OnDestroy {
   constructor(public noctuaUserService: NoctuaUserService,
     private sparqlService: SparqlService,
     private camService: CamService,
-    private noctuaGraphService: NoctuaGraphService,
+    private bbopGraphService: BbopGraphService,
     public noctuaFormConfigService: NoctuaFormConfigService
   ) {
     this._unsubscribeAll = new Subject();
@@ -84,8 +84,8 @@ export class CamFormComponent implements OnInit, OnDestroy {
     };
 
 
-    this.noctuaGraphService.saveModelGroup(this.cam, value.group.id);
-    this.noctuaGraphService.saveCamAnnotations(this.cam, annotations);
+    this.bbopGraphService.saveModelGroup(this.cam, value.group.id);
+    this.bbopGraphService.saveCamAnnotations(this.cam, annotations);
   }
 
   termDisplayFn(term): string | undefined {

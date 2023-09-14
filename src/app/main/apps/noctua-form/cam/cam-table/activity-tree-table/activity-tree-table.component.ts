@@ -69,7 +69,7 @@ export class ActivityTreeTableComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.gpNode = this.activity.getGPNode();
+    this.gpNode = this.activity.gpNode
 
     this.dataSource.data = this.activity.nodes.sort(compareNodeWeight);
   }

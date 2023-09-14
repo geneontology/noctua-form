@@ -1,4 +1,4 @@
-export { NoctuaFormModule } from './noctua-form.module';
+/* export { NoctuaFormModule } from './noctua-form.module';
 export * from './cam';
 
 export { NoctuaFormDialogService } from './services/dialog.service';
@@ -10,3 +10,4 @@ export { LinkToExistingDialogComponent } from './dialogs/link-to-existing/link-t
 export { SelectEvidenceDialogComponent } from './dialogs/select-evidence/select-evidence.component';
 export { SearchDatabaseDialogComponent } from './dialogs/search-database/search-database.component';
 export { CamFormComponent } from './cam/cam-form/cam-form.component';
+ */

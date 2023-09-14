@@ -8,6 +8,7 @@ export class SettingsOptions {
   showEvidenceSummary = true;
   showReference = true;
   showEvidenceCode = true;
+  showComments = true;
   showWith = true;
   showGroup = true;
   showContributor = true;
@@ -22,6 +23,7 @@ export class SettingsOptions {
       showEvidenceCode: new FormControl(this.showEvidenceCode),
       showReference: new FormControl(this.showReference),
       showWith: new FormControl(this.showWith),
+      showComments: new FormControl(this.showComments),
       showGroup: new FormControl(this.showGroup),
       showContributor: new FormControl(this.showContributor),
     });
@@ -35,6 +37,7 @@ export class SettingsOptions {
     this.showEvidenceCode = value.showEvidenceCode;
     this.showEvidenceSummary = value.showEvidenceSummary;
     this.showWith = value.showWith;
+    this.showComments = value.showComments
     this.showGroup = value.showGroup;
     this.showContributor = value.showContributor;
   }
@@ -46,6 +49,7 @@ export class SettingsOptions {
     this.showEvidenceSummary = true;
     this.showReference = true;
     this.showEvidenceCode = true;
+    this.showComments = true;
     this.showWith = true;
     this.showGroup = false;
     this.showContributor = false;

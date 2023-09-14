@@ -4,17 +4,17 @@ import * as joint from 'jointjs';
 import { each } from 'lodash';
 import { NoctuaCommonMenuService } from '@noctua.common/services/noctua-common-menu.service';
 import { NoctuaDataService } from '@noctua.common/services/noctua-data.service';
-import { Activity, Cam, CamService, FormType, NoctuaActivityConnectorService, NoctuaActivityFormService, noctuaFormConfig, NoctuaFormConfigService, NoctuaGraphService, NoctuaUserService } from '@geneontology/noctua-form-base';
+import { Activity, Cam, CamService, FormType, NoctuaActivityConnectorService, NoctuaActivityFormService, noctuaFormConfig, NoctuaFormConfigService, BbopGraphService, NoctuaUserService } from '@geneontology/noctua-form-base';
 import { NodeLink, NodeCellList, NoctuaShapesService } from '@noctua.graph/services/shapes.service';
 import { NodeType } from 'scard-graph-ts';
 import { NodeCellType } from '@noctua.graph/models/shapes';
 import { noctuaStencil, StencilItemNode } from '@noctua.graph/data/cam-stencil';
 import { RightPanel } from '@noctua.common/models/menu-panels';
-import { NoctuaFormDialogService } from 'app/main/apps/noctua-form';
 import { NoctuaConfirmDialogService } from '@noctua/components/confirm-dialog/confirm-dialog.service';
 import { CamCanvas } from '@noctua.graph/models/cam-canvas';
 import { CamStencil } from '@noctua.graph/models/cam-stencil';
 import { NoctuaGraphEditorService } from '@noctua.graph/services/graph-editor-service';
+import { NoctuaFormDialogService } from 'app/main/apps/noctua-form/services/dialog.service';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +38,7 @@ export class CamGraphService {
   constructor(
     private _camService: CamService,
     private noctuaGraphEditorService: NoctuaGraphEditorService,
-    private _noctuaGraphService: NoctuaGraphService,
+    private _bbopGraphService: BbopGraphService,
     private _noctuaFormDialogService: NoctuaFormDialogService,
     private _noctuaUserService: NoctuaUserService,
     private confirmDialogService: NoctuaConfirmDialogService,
@@ -101,7 +101,7 @@ export class CamGraphService {
   }
 
   updateCamLocations(cam: Cam) {
-    this._noctuaGraphService.setActivityLocations(cam);
+    this._bbopGraphService.setActivityLocations(cam);
   }
 
   createActivity(element: joint.shapes.noctua.NodeCellList, x: number, y: number) {
@@ -135,7 +135,7 @@ export class CamGraphService {
 
     self.camCanvas.canvasGraph.addCell(el);
 
-    this._noctuaGraphService.addActivityLocation(self.cam, activity);
+    this._bbopGraphService.addActivityLocation(self.cam, activity);
   }
 
   deleteActivity(element: joint.shapes.noctua.NodeCellList) {

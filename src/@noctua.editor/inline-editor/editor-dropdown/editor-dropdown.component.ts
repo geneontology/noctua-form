@@ -20,11 +20,11 @@ import { Evidence } from '@geneontology/noctua-form-base';
 
 import { editorDropdownData } from './editor-dropdown.tokens';
 import { EditorDropdownOverlayRef } from './editor-dropdown-ref';
-import { NoctuaFormDialogService } from 'app/main/apps/noctua-form';
 import { EditorCategory } from './../../models/editor-category';
 import { concatMap, finalize, take, takeUntil } from 'rxjs/operators';
 import { find } from 'lodash';
 import { InlineReferenceService } from './../../inline-reference/inline-reference.service';
+import { NoctuaFormDialogService } from 'app/main/apps/noctua-form/services/dialog.service';
 
 @Component({
   selector: 'noc-editor-dropdown',
@@ -146,7 +146,7 @@ export class NoctuaEditorDropdownComponent implements OnInit, OnDestroy {
 
   openSearchDatabaseDialog(entity: ActivityNode) {
     const self = this;
-    const gpNode = this.activity.getGPNode();
+    const gpNode = this.activity.gpNode;
 
     if (gpNode && gpNode.hasValue()) {
       const data = {
@@ -167,16 +167,6 @@ export class NoctuaEditorDropdownComponent implements OnInit, OnDestroy {
           if (selected.evidences && selected.evidences.length > 0) {
             self.noctuaActivityEntityService.reinitializeForm(term, selected.evidences);
 
-            /*  selected.evidences.forEach((evidence: Evidence) => {
-               evidence.evidenceExts.forEach((evidenceExt) => {
-                 evidenceExt.relations.forEach((relation) => {
-                   const node = self.noctuaFormConfigService.insertActivityNodeByPredicate(self.noctuaActivityFormService.activity, self.entity, relation.id);
-                   node.term = new Entity(evidenceExt.term.id, evidenceExt.term.id);
-                   node.predicate.setEvidence([evidence]);
-                 });
-               });
- 
-             }); */
           }
         }
       };

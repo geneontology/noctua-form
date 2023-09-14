@@ -2,7 +2,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { BehaviorSubject, EMPTY, forkJoin, from, Observable } from 'rxjs';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { CurieService } from './../../@noctua.curie/services/curie.service';
-import { NoctuaGraphService } from './../services/graph.service';
+import { BbopGraphService } from './../services/bbop-graph.service';
 import { NoctuaFormConfigService } from './../services/config/noctua-form-config.service';
 import { NoctuaLookupService } from './lookup.service';
 import { NoctuaUserService } from './user.service';
@@ -53,7 +53,7 @@ export class CamService {
     private noctuaUserService: NoctuaUserService,
     private _fb: FormBuilder,
     private noctuaLookupService: NoctuaLookupService,
-    private _noctuaGraphService: NoctuaGraphService,
+    private _bbopGraphService: BbopGraphService,
     private curieService: CurieService) {
 
     this.onCamChanged = new BehaviorSubject(null);
@@ -117,7 +117,7 @@ export class CamService {
       modelInfo: this.noctuaFormConfigService.getModelUrls(modelId)
     });
     cam.expanded = true;
-    this._noctuaGraphService.getGraphInfo(cam, modelId);
+    this._bbopGraphService.getGraphInfo(cam, modelId);
     cam.manager.get_model(cam.id);
     this.onCamChanged.next(cam);
 
@@ -125,7 +125,7 @@ export class CamService {
   }
 
   reload(cam: Cam) {
-    this._noctuaGraphService.onCamRebuildChange.next(cam);
+    this._bbopGraphService.onCamRebuildChange.next(cam);
   }
 
   //loads an existing cam
@@ -139,7 +139,7 @@ export class CamService {
       modelInfo: this.noctuaFormConfigService.getModelUrls(cam.id)
     });
 
-    this._noctuaGraphService.getGraphInfo(cam, cam.id);
+    this._bbopGraphService.getGraphInfo(cam, cam.id);
     this.cam = cam;
 
     cam.manager.get_model(cam.id);
@@ -154,7 +154,7 @@ export class CamService {
       modelInfo: this.noctuaFormConfigService.getModelUrls(cam.id)
     });
 
-    this._noctuaGraphService.getGraphInfo(cam, cam.id);
+    this._bbopGraphService.getGraphInfo(cam, cam.id);
   }
 
   buildTermsTree(termsSummary: TermsSummary) {
@@ -197,7 +197,7 @@ export class CamService {
     const self = this;
     const promises = [];
 
-    promises.push(self._noctuaGraphService.bulkEditActivity(cam));
+    promises.push(self._bbopGraphService.bulkEditActivity(cam));
 
     return forkJoin(promises);
   }
@@ -206,7 +206,7 @@ export class CamService {
     const self = this;
     const deleteData = activity.createDelete();
 
-    return self._noctuaGraphService.deleteActivity(self.cam, deleteData.uuids, deleteData.triples);
+    return self._bbopGraphService.deleteActivity(self.cam, deleteData.uuids, deleteData.triples);
   }
 
   updateTermList(formActivity: Activity, entity: ActivityNode) {
@@ -255,8 +255,8 @@ export class CamService {
   copyModel(cam: Cam, title: string, includeEvidence = false) {
     const self = this;
 
-    return self._noctuaGraphService.copyModelRaw(cam, title, includeEvidence).subscribe((response) => {
-      const cam: Cam = self._noctuaGraphService.getMetadata(response['data'])
+    return self._bbopGraphService.copyModelRaw(cam, title, includeEvidence).subscribe((response) => {
+      const cam: Cam = self._bbopGraphService.getMetadata(response['data'])
       self.onCopyModelChanged.next(cam)
     });
   }
@@ -264,7 +264,7 @@ export class CamService {
   resetModel(cam: Cam) {
     const self = this;
 
-    return self._noctuaGraphService.resetModel(cam);
+    return self._bbopGraphService.resetModel(cam);
   }
 
   reviewChangesCam(cam: Cam, stats: CamStats): boolean {
@@ -295,7 +295,7 @@ export class CamService {
 
     cam.storedGraph = new noctua_graph();
     cam.storedGraph.load_data_basic(storedCam);
-    cam.storedActivities = self._noctuaGraphService.graphToActivities(cam.storedGraph)
+    cam.storedActivities = self._bbopGraphService.graphToActivities(cam.storedGraph)
     cam.checkStored();
     cam.reviewCamChanges();
   }
@@ -310,7 +310,7 @@ export class CamService {
         next: (response) => {
           if (!response || !response.storedModel || !response.activeModel) return;
 
-          //self._noctuaGraphService.rebuildFromStoredApi(cam, response.activeModel);
+          //self._bbopGraphService.rebuildFromStoredApi(cam, response.activeModel);
           self.populateStoredModel(cam, response.storedModel)
           const summary = self.reviewCamChanges(cam);
           self.onCamsCheckoutChanged.next(summary);
@@ -333,7 +333,7 @@ export class CamService {
       responses.forEach(response => {
         const cam: Cam = find(cams, { id: response.data().id });
         if (cam) {
-          self._noctuaGraphService.rebuild(cam, response);
+          self._bbopGraphService.rebuild(cam, response);
           cam.checkStored()
         }
       })
@@ -390,7 +390,7 @@ export class CamService {
     const self = this;
     const promises = [];
 
-    promises.push(self._noctuaGraphService.bulkEditActivityNode(cam, node));
+    promises.push(self._bbopGraphService.bulkEditActivityNode(cam, node));
 
     return forkJoin(promises).pipe(
       map(res => self.updateModel([cam], res)),
@@ -402,7 +402,7 @@ export class CamService {
     const promises = [];
 
     each(cams, (cam: Cam) => {
-      promises.push(self._noctuaGraphService.bulkEditActivity(cam));
+      promises.push(self._bbopGraphService.bulkEditActivity(cam));
     });
 
     return forkJoin(promises).pipe(
@@ -415,7 +415,7 @@ export class CamService {
 
     return from(cams).pipe(
       mergeMap((cam: Cam) => {
-        return self._noctuaGraphService.storeCam(cam);
+        return self._bbopGraphService.storeCam(cam);
       }));
 
   }
@@ -470,7 +470,7 @@ export class CamService {
 
     return from(cams).pipe(
       mergeMap((cam: Cam) => {
-        return self._noctuaGraphService.resetModel(cam);
+        return self._bbopGraphService.resetModel(cam);
       }))
   }
 

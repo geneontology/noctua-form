@@ -7,7 +7,7 @@ import { CamService } from './../services/cam.service';
 import { Cam, CamLoadingIndicator } from './../models/activity/cam';
 import { EntityForm } from './../models/forms/entity-form';
 import { ActivityFormMetadata } from './../models/forms/activity-form-metadata';
-import { NoctuaGraphService } from './graph.service';
+import { BbopGraphService } from './bbop-graph.service';
 import { cloneDeep } from 'lodash';
 import { Activity } from './../models/activity/activity';
 import { ActivityNode } from './../models/activity/activity-node';
@@ -30,7 +30,7 @@ export class NoctuaActivityEntityService {
   constructor(private _fb: FormBuilder,
     private zone: NgZone,
     public noctuaFormConfigService: NoctuaFormConfigService,
-    private noctuaGraphService: NoctuaGraphService,
+    private bbopGraphService: BbopGraphService,
     private camService: CamService,
 
     private noctuaLookupService: NoctuaLookupService) {
@@ -96,7 +96,7 @@ export class NoctuaActivityEntityService {
 
     const saveData = self.activity.createEdit(self.currentActivity);
 
-    return self.noctuaGraphService.editActivity(self.cam,
+    return self.bbopGraphService.editActivity(self.cam,
       saveData.addNodes,
       saveData.addTriples,
       saveData.removeIds);
@@ -109,7 +109,7 @@ export class NoctuaActivityEntityService {
 
     const saveData = self.activity.createAddIndividual(self.currentActivity, self.entity.predicate);
 
-    return self.noctuaGraphService.editActivity(self.cam,
+    return self.bbopGraphService.editActivity(self.cam,
       [self.entity],
       [saveData.addTriples],
       [],
@@ -126,7 +126,7 @@ export class NoctuaActivityEntityService {
       self.entity.predicate.subjectId,
       self.entity.predicate.objectId)
 
-    return self.noctuaGraphService.editActivity(self.cam,
+    return self.bbopGraphService.editActivity(self.cam,
       [],
       [addTriples],
       [],
@@ -140,7 +140,7 @@ export class NoctuaActivityEntityService {
 
     const saveData = self.activity.createEditEvidence(self.currentActivity, self.entity.predicate);
 
-    return self.noctuaGraphService.editActivity(self.cam,
+    return self.bbopGraphService.editActivity(self.cam,
       [],
       [saveData.addTriples],
       [],
@@ -154,7 +154,7 @@ export class NoctuaActivityEntityService {
 
     const saveData = self.activity.createEditEvidence(self.currentActivity, self.entity.predicate);
 
-    return self.noctuaGraphService.editActivity(self.cam,
+    return self.bbopGraphService.editActivity(self.cam,
       [],
       [saveData.addTriples],
       [],
@@ -166,20 +166,20 @@ export class NoctuaActivityEntityService {
     const self = this;
     const deleteData = activity.createActivityNodeDelete(activityNode);
 
-    return self.noctuaGraphService.deleteActivity(self.cam, deleteData.uuids, []);
+    return self.bbopGraphService.deleteActivity(self.cam, deleteData.uuids, []);
   }
 
   deleteEvidence(uuid: string) {
-    return this.noctuaGraphService.deleteEvidence(this.cam, uuid);
+    return this.bbopGraphService.deleteEvidence(this.cam, uuid);
   }
 
 
   deleteEvidenceReference(uuid: string, oldReference: string) {
-    return this.noctuaGraphService.deleteEvidenceAnnotation(this.cam, uuid, 'source', oldReference);
+    return this.bbopGraphService.deleteEvidenceAnnotation(this.cam, uuid, 'source', oldReference);
   }
 
   deleteEvidenceWith(uuid: string, oldWith: string) {
-    return this.noctuaGraphService.deleteEvidenceAnnotation(this.cam, uuid, 'with', oldWith);
+    return this.bbopGraphService.deleteEvidenceAnnotation(this.cam, uuid, 'with', oldWith);
   }
 
 

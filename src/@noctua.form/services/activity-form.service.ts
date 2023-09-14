@@ -7,7 +7,7 @@ import { Activity, ActivityState, ActivityType } from './../models/activity/acti
 import { ActivityNode } from './../models/activity/activity-node';
 import { ActivityForm } from './../models/forms/activity-form';
 import { ActivityFormMetadata } from './../models/forms/activity-form-metadata';
-import { NoctuaGraphService } from './graph.service';
+import { BbopGraphService } from './bbop-graph.service';
 import { CamService } from './cam.service';
 import { Entity } from '../models/activity/entity';
 import { Evidence } from '../models/activity/evidence';
@@ -33,7 +33,7 @@ export class NoctuaActivityFormService {
 
   constructor(private _fb: FormBuilder, public noctuaFormConfigService: NoctuaFormConfigService,
     private camService: CamService,
-    private noctuaGraphService: NoctuaGraphService,
+    private bbopGraphService: BbopGraphService,
     private noctuaLookupService: NoctuaLookupService) {
 
     this.camService.onCamChanged.subscribe((cam) => {
@@ -143,14 +143,18 @@ export class NoctuaActivityFormService {
       const activities = self.createCCAnnotations(self.activity);
       each(activities, (activity: Activity) => {
         const saveData = activity.createSave();
-        promises.push(self.noctuaGraphService.addActivity(self.cam, saveData.nodes, saveData.triples, saveData.title))
+        promises.push(self.bbopGraphService.addActivity(self.cam, saveData.nodes, saveData.triples, saveData.title))
       })
 
       return forkJoin(promises)
 
     } else {
+      console.log(self.activity.edges)
       const saveData = self.activity.createSave();
-      return forkJoin(self.noctuaGraphService.addActivity(self.cam, saveData.nodes, saveData.triples, saveData.title));
+      console.log(saveData)
+      console.log(saveData.triples)
+      console.log(saveData.triples[3])
+      return forkJoin(self.bbopGraphService.addActivity(self.cam, saveData.nodes, saveData.triples, saveData.title));
     }
   }
 

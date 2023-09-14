@@ -5,10 +5,11 @@ import { NoctuaSharedModule } from '@noctua/shared.module';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NoctuaSearchBaseModule } from '@noctua.search';
 import { NoctuaFooterModule } from 'app/layout/components/footer/footer.module';
-import { NoctuaFormModule } from '../noctua-form';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BasicTutorialComponent } from './basic-tutorial/basic-tutorial.component';
 import { NoctuaTutorialComponent } from './noctua-tutorial.component';
+import { NoctuaFormModule } from '../noctua-form/noctua-form.module';
 
 
 const routes = [

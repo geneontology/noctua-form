@@ -28,13 +28,14 @@ export class DataUtils {
   }
 
   public static getPredicates(shapes: ShexShapeAssociation[]): string[] {
+
     const predicates = shapes.map((shape) => {
       return shape.predicate
     });
 
     return [...new Set(predicates)]
-
   }
+
 
   public static getRangeBySubject(shapes: ShexShapeAssociation[], subjectId: string, predicateId: string): ShexShapeAssociation {
     return shapes.find(shape => {
@@ -54,10 +55,8 @@ export class DataUtils {
       result['rangeLabel'] = range.join(', ');
 
       return result;
-
     });
 
     return predicates;
-
   }
 }

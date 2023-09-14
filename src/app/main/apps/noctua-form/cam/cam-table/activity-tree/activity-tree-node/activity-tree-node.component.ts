@@ -13,7 +13,9 @@ import {
   Entity,
   noctuaFormConfig,
   NoctuaUserService,
-  ActivityType
+  ActivityType,
+  Predicate,
+  BbopGraphService
 } from '@geneontology/noctua-form-base';
 
 import {
@@ -64,6 +66,7 @@ export class ActivityTreeNodeComponent implements OnInit, OnDestroy {
 
   constructor(
     public camService: CamService,
+    private bbopGraphService: BbopGraphService,
     private confirmDialogService: NoctuaConfirmDialogService,
     public noctuaUserService: NoctuaUserService,
     public noctuaFormConfigService: NoctuaFormConfigService,
@@ -172,7 +175,7 @@ export class ActivityTreeNodeComponent implements OnInit, OnDestroy {
 
   openSearchDatabaseDialog(entity: ActivityNode) {
     const self = this;
-    const gpNode = this.noctuaActivityFormService.activity.getGPNode();
+    const gpNode = this.noctuaActivityFormService.activity.gpNode;
 
     if (gpNode) {
       const data = {
@@ -206,8 +209,9 @@ export class ActivityTreeNodeComponent implements OnInit, OnDestroy {
   }
 
 
-  insertEntity(entity: ActivityNode, nodeDescription: ShapeDefinition.ShapeDescription) {
-    const insertedNode = this.noctuaFormConfigService.insertActivityNode(this.activity, entity, nodeDescription);
+  insertEntity(entity: ActivityNode, predExpr: ShapeDefinition.PredicateExpression) {
+    const insertedNode = this.noctuaFormConfigService.insertActivityNodeShex(this.activity, entity, predExpr);
+
     //  this.noctuaActivityFormService.initializeForm();
 
     const data = {
@@ -264,6 +268,17 @@ export class ActivityTreeNodeComponent implements OnInit, OnDestroy {
     };
 
     self.noctuaFormDialogService.openSelectEvidenceDialog(evidences, success);
+  }
+
+  openCommentsForm(entity: ActivityNode) {
+    const self = this;
+
+    const success = (comments) => {
+      if (comments) {
+        this.bbopGraphService.savePredicateComments(self.cam, entity.predicate, comments);
+      }
+    };
+    self.noctuaFormDialogService.openCommentsDialog(entity.predicate, success)
   }
 
   updateCurrentMenuEvent(event) {
