@@ -30,7 +30,7 @@ import { SearchFilterType } from '@noctua.search/models/search-criteria';
 export function CustomPaginator() {
   const customPaginatorIntl = new MatPaginatorIntl();
 
-  customPaginatorIntl.itemsPerPageLabel = 'GO CAMs per page:';
+  customPaginatorIntl.itemsPerPageLabel = 'GO-CAMs per page:';
 
   return customPaginatorIntl;
 }
