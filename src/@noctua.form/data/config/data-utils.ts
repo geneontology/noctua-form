@@ -21,21 +21,50 @@ export class DataUtils {
     return result;
   }
 
-  public static getSubjectShapes(shapes: ShexShapeAssociation[], subjectId): ShexShapeAssociation[] {
+  public static getPredicates(shapes: ShexShapeAssociation[], subjectIds?: string[], objectIds?: string[]): string[] {
+    const matchedPredicates = new Set<string>();
+
+    // If neither subjectIds nor objectIds is provided, return all predicates
+    if (!subjectIds && !objectIds) {
+      shapes.forEach((shape) => {
+        matchedPredicates.add(shape.predicate);
+      });
+      return [...matchedPredicates];
+    }
+
+    shapes.forEach((shape) => {
+      const subjectMatch = !subjectIds || subjectIds.length === 0 || subjectIds.includes(shape.subject);
+      const objectMatch = !objectIds || objectIds.length === 0 || shape.object.some(objId => objectIds.includes(objId));
+
+      if (subjectMatch && objectMatch) {
+        matchedPredicates.add(shape.predicate);
+      }
+    });
+
+    return [...matchedPredicates];
+  }
+
+  public static getObjects(shapes: ShexShapeAssociation[], subjectIds: string[]): string[] {
+    const objectsSet = new Set<string>();
+
+    shapes.forEach(shape => {
+      if (subjectIds.includes(shape.subject)) {
+        shape.object.forEach(obj => objectsSet.add(obj));
+      }
+    });
+
+    return [...objectsSet];
+  }
+
+
+  public static getSubjectShapes(shapes: ShexShapeAssociation[], subjectId, excludeFromExtensions = true): ShexShapeAssociation[] {
     return shapes.filter(shape => {
+      if (!excludeFromExtensions) {
+        return shape.subject === subjectId
+      }
       return shape.subject === subjectId && !shape.exclude_from_extensions;
     });
   }
-
-  public static getPredicates(shapes: ShexShapeAssociation[]): string[] {
-
-    const predicates = shapes.map((shape) => {
-      return shape.predicate
-    });
-
-    return [...new Set(predicates)]
-  }
-
 
   public static getRangeBySubject(shapes: ShexShapeAssociation[], subjectId: string, predicateId: string): ShexShapeAssociation {
     return shapes.find(shape => {

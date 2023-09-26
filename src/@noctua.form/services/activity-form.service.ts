@@ -149,11 +149,7 @@ export class NoctuaActivityFormService {
       return forkJoin(promises)
 
     } else {
-      console.log(self.activity.edges)
       const saveData = self.activity.createSave();
-      console.log(saveData)
-      console.log(saveData.triples)
-      console.log(saveData.triples[3])
       return forkJoin(self.bbopGraphService.addActivity(self.cam, saveData.nodes, saveData.triples, saveData.title));
     }
   }

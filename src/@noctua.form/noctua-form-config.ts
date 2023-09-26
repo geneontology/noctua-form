@@ -134,6 +134,21 @@ const edge = {
   },
 }
 
+const inverseEdge = {
+  enables:
+  {
+    "id": "RO:0002327",
+    "label": "enables",
+  },
+  isActiveIn: {
+    id: 'RO:0002432',
+    label: 'is active in'
+  },
+  involvedIn: {
+    "id": "RO:0002331",
+    "label": "involved in",
+  },
+}
 
 
 export const noctuaFormConfig = {
@@ -305,6 +320,7 @@ export const noctuaFormConfig = {
     }
   },
   edge: edge,
+  inverseEdge: inverseEdge,
   allEdges: environment.globalKnownRelations,
   evidenceAutoPopulate: {
     nd: {
@@ -332,6 +348,7 @@ export const noctuaFormConfig = {
       'aspect': 'C'
     }
   },
+
 
   bpOnlyCausalEdges: [
     Entity.createEntity(edge.causallyUpstreamOfNegativeEffect),

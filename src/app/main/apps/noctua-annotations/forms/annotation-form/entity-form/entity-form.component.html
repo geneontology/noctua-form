@@ -1,0 +1,40 @@
+<div *ngIf="entity" [formGroup]="entityFormGroup" fxLayout="row" fxLayoutAlign="start stretch" class="w-100-p">
+
+  <div class="p-4" fxFlex="flex" fxLayout="row" fxLayoutAlign="start stretch">
+    <mat-form-field class="noc-sm w-100-p" appearance="outline">
+      <mat-label>{{entity.label}}</mat-label>
+      <textarea type="text" matInput formControlName="term" (focus)="updateTermList()" [matAutocomplete]="termAuto"
+        row="2">
+      </textarea>
+      <mat-autocomplete #termAuto="matAutocomplete" [displayWith]="termDisplayFn"
+        (optionSelected)="selectTerm($event.option.value)" class="noc-term-autocomplete " fxLayout="row"
+        fxLayoutAlign="start start">
+        <div class="" fxFlex="400px">
+          <mat-option *ngFor="let item of entity?.termLookup.results" [value]="item">
+            <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
+              <div class="noc-term-label">
+                {{ item.label }}
+              </div>
+              <span fxFlex></span>
+              <div class="noc-term-id">
+                <a *ngIf="item.link" (click)="$event.stopPropagation()" href="{{item.link}}" target="_blank">
+                  {{ item.id }}
+                </a>
+                <span *ngIf="!item.link">
+                  {{ item.id }}
+                </span>
+              </div>
+              <button mat-stroked-button (click)="openTermDetails($event, item)"
+                class="noc-term-detail-trigger noc-rounded-button noc-sm ml-8">
+                <fa-icon [icon]="['fas', 'chevron-right']"></fa-icon>
+              </button>
+            </div>
+          </mat-option>
+        </div>
+        <!-- <div fxFlex="" class="scard-more-info">
+          <noc-term-detail *ngIf="termData" [termData]="termData"></noc-term-detail>
+        </div> -->
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+</div>

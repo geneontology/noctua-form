@@ -5,10 +5,10 @@ import { SaeGraph } from './sae-graph';
 import { ActivityError, ErrorLevel, ErrorType } from './parser/activity-error';
 import { ActivityNode, ActivityNodeType, compareNodeWeight } from './activity-node';
 import { Evidence } from './evidence';
-import { compareTripleWeight, Triple } from './triple';
+import { Triple } from './triple';
 import { Entity } from './entity';
 import { Predicate } from './predicate';
-import { getEdges, Edge, getNodes, subtractNodes } from './noctua-form-graph';
+import { subtractNodes } from './noctua-form-graph';
 import * as ShapeDescription from './../../data/config/shape-definition';
 import { each, filter, find, orderBy } from 'lodash';
 import { NoctuaFormUtils } from './../../utils/noctua-form-utils';
@@ -44,7 +44,8 @@ export enum ActivityType {
   bpOnly = 'bpOnly',
   ccOnly = 'ccOnly',
   molecule = 'molecule',
-  proteinComplex = 'proteinComplex'
+  proteinComplex = 'proteinComplex',
+  simpleAnnoton = 'simpleAnnoton'
 }
 
 export class ActivitySize {
@@ -792,7 +793,6 @@ export class Activity extends SaeGraph<ActivityNode> {
       }
     ]);
 
-    console.log('sortedList', sortedList)
     return sortedList;
   }
 }

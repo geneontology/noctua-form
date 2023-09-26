@@ -133,6 +133,7 @@ export const generateBaseTerm = (goCategories: GoCategory[], override: Partial<A
     const predicate = new Predicate(null);
     const fqTermCategory = categoryToClosure(goCategories);
     const fqEvidenceCategory = categoryToClosure([GoEvidence]);
+    activityNode.overrideValues(override);
 
     predicate.setEvidenceMeta('eco', Object.assign({}, JSON.parse(JSON.stringify(baseRequestParams)), {
         fq: [
@@ -154,10 +155,23 @@ export const generateBaseTerm = (goCategories: GoCategory[], override: Partial<A
         );
     }
 
-    activityNode.overrideValues(override);
-
     return activityNode;
 };
+
+export const setTermLookup = (activityNode: ActivityNode, goCategories: GoCategory[]) => {
+    if (goCategories && goCategories.length > 0) {
+        const fqTermCategory = categoryToClosure(goCategories);
+        activityNode.termLookup = new EntityLookup(null,
+            Object.assign({}, JSON.parse(JSON.stringify(baseRequestParams)), {
+                fq: [
+                    'document_category:"ontology_class"',
+                    fqTermCategory
+                ],
+            })
+        );
+    }
+}
+
 
 
 

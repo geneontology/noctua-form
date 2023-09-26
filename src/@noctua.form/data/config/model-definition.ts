@@ -47,7 +47,8 @@ export const rootNodes = {
     [ActivityType.default]: <ActivityNodeDisplay>{
         type: ActivityNodeType.GoMolecularFunction,
         label: 'Molecular Function',
-        aspect: 'F',
+        aspect: '',
+        category: [EntityDefinition.GoMolecularFunction],
         displaySection: noctuaFormConfig.displaySection.fd,
         displayGroup: noctuaFormConfig.displayGroup.mf,
         skipEvidenceCheck: true,
@@ -57,6 +58,7 @@ export const rootNodes = {
     },
     [ActivityType.bpOnly]: <ActivityNodeDisplay>{
         type: ActivityNodeType.GoMolecularFunction,
+        category: [EntityDefinition.GoMolecularFunction],
         label: 'Molecular Function',
         aspect: 'F',
         displaySection: noctuaFormConfig.displaySection.fd,
@@ -67,6 +69,7 @@ export const rootNodes = {
         weight: 1
     }, [ActivityType.ccOnly]: <ActivityNodeDisplay>{
         type: ActivityNodeType.GoMolecularEntity,
+        category: [EntityDefinition.GoMolecularEntity],
         label: 'Gene Product',
         skipEvidenceCheck: true,
         termRequired: true,
@@ -76,6 +79,7 @@ export const rootNodes = {
         weight: 1
     }, [ActivityType.proteinComplex]: <ActivityNodeDisplay>{
         type: ActivityNodeType.GoMolecularFunction,
+        category: [EntityDefinition.GoMolecularFunction],
         label: 'Molecular Function',
         aspect: 'F',
         displaySection: noctuaFormConfig.displaySection.fd,
@@ -86,6 +90,7 @@ export const rootNodes = {
         weight: 1
     }, [ActivityType.molecule]: <ActivityNodeDisplay>{
         type: ActivityNodeType.GoChemicalEntity,
+        category: [EntityDefinition.GoChemicalEntity],
         label: 'Molecule',
         skipEvidenceCheck: true,
         showEvidence: false,
@@ -97,6 +102,57 @@ export const rootNodes = {
     }
 };
 
+
+export const simpleAnnotonDescription: ActivityDescription = {
+    type: ActivityType.simpleAnnoton,
+    nodes: {
+        gp: <ActivityNodeDisplay>{
+            id: 'gp',
+            type: ActivityNodeType.GoMolecularEntity,
+            category: [EntityDefinition.GoMolecularEntity, EntityDefinition.GoProteinContainingComplex],
+            label: 'Gene Product',
+            displaySection: noctuaFormConfig.displaySection.gp,
+            displayGroup: noctuaFormConfig.displayGroup.gp,
+            termRequired: true,
+            skipEvidenceCheck: true,
+            canDelete: false,
+            weight: 2
+        },
+        goterm: <ActivityNodeDisplay>{
+            id: 'goterm',
+            type: ActivityNodeType.GoMolecularFunction,
+            category: [
+                EntityDefinition.GoMolecularFunction,
+                EntityDefinition.GoBiologicalProcess,
+                EntityDefinition.GoCellularComponent
+            ],
+            label: 'GO Term',
+            aspect: 'F',
+            displaySection: noctuaFormConfig.displaySection.gp,
+            displayGroup: noctuaFormConfig.displayGroup.gp,
+            termRequired: true,
+            canDelete: false,
+            weight: 1
+        },
+        'extension': <ActivityNodeDisplay>{
+            id: 'extension',
+            type: ActivityNodeType.GoCellularComponent,
+            category: [],
+            label: 'Extension',
+            displaySection: noctuaFormConfig.displaySection.gp,
+            displayGroup: noctuaFormConfig.displayGroup.gp,
+            termRequired: false,
+            skipEvidenceCheck: true,
+            canDelete: false,
+            weight: 1
+        },
+    },
+    triples: [{
+        subject: ActivityNodeType.GoMolecularFunction,
+        object: ActivityNodeType.GoMolecularEntity,
+        predicate: noctuaFormConfig.edge.enabledBy
+    }],
+};
 
 export const activityUnitDescription: ActivityDescription = {
     type: ActivityType.default,
@@ -358,7 +414,7 @@ export const createBaseActivity = (activityType: ActivityType, rootNode: Activit
     const activity = new Activity();
 
     activity.activityType = activityType;
-    const activityNode = EntityDefinition.generateBaseTerm([], rootNode);
+    const activityNode = EntityDefinition.generateBaseTerm(rootNode.category, rootNode);
     activity.addNode(activityNode);
 
     activity.updateShapeMenuShex();
@@ -398,6 +454,33 @@ export const createActivityShex = (activityDescription: ActivityDescription): Ac
 }
 
 
+export const addNodeShex = (activity: Activity,
+    subjectNode: ActivityNode,
+    predExpr: ShapeDescription.PredicateExpression,
+    partialObjectNode: Partial<ActivityNode>): ActivityNode => {
+
+    const overrides = getNodeDefaults(subjectNode, predExpr, partialObjectNode.category)
+    const objectNode = EntityDefinition.generateBaseTerm(partialObjectNode.category, overrides);
+
+    objectNode.subjectId = subjectNode.id
+    objectNode.id = partialObjectNode.id ? partialObjectNode.id : uuid()
+
+    // objectNode.type = nodeDescription.node.type;
+    activity.addNode(objectNode);
+    objectNode.treeLevel = subjectNode.treeLevel + 1;
+
+    const predicate: Predicate = activity.getNode(objectNode.id).predicate;
+    predicate.subjectId = subjectNode.id;
+    predicate.objectId = objectNode.id;
+    predicate.edge = Entity.createEntity(predExpr);
+
+    activity.addEdge(subjectNode, objectNode, predicate);
+    activity.updateProperties();
+    activity.resetPresentation();
+    return objectNode;
+}
+
+
 export const insertNodeShex = (activity: Activity,
     subjectNode: ActivityNode,
     predExpr: ShapeDescription.PredicateExpression,
@@ -408,7 +491,6 @@ export const insertNodeShex = (activity: Activity,
     const ranges = []
     subjectNode.category.forEach((category: GoCategory) => {
         //const subjectShapes = DataUtils.getSubjectShapes(shapes, category.category);
-        console.log(category.category)
         const shape = DataUtils.getRangeBySubject(shapes, category.category, predExpr.id);
         if (shape) {
             const range = shape.object.map(inNode => {

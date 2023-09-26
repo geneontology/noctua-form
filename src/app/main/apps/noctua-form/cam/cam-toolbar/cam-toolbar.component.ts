@@ -43,6 +43,7 @@ export class CamToolbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log(this.camToolbarOptions)
   }
 
   openGraph() {

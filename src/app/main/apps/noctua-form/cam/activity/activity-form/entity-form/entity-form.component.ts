@@ -311,7 +311,6 @@ export class EntityFormComponent implements OnInit, OnDestroy {
     self.noctuaFormDialogService.openSelectEvidenceDialog(evidences, success);
   }
   updateMenu(entity) {
-    console.log(entity.rootTypes)
     this.noctuaActivityFormService.initializeForm(entity.rootTypes);
   }
 

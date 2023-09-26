@@ -62,7 +62,6 @@ export class ActivityFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('save')
     this.activityFormSub = this.noctuaActivityFormService.activityFormGroup$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(activityFormGroup => {
