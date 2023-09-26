@@ -84,7 +84,6 @@ export class ActivityNode implements ActivityNodeDisplay {
   activity: Activity;
   ontologyClass: any = [];
   isComplement = false;
-  closures: any = [];
   assignedBy: boolean = null;
   contributor: Contributor = null;
   isCatalyticActivity = false;
@@ -107,7 +106,6 @@ export class ActivityNode implements ActivityNodeDisplay {
   showInMenu = false;
   insertMenuNodes = [];
   linkedNode = false;
-  familyNodes = [];
   displayId: string;
   expandable: boolean = true;
   expanded: boolean = false;

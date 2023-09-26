@@ -1,5 +1,6 @@
 <div *ngIf="cam" class="noc-cam-heading" fxFlex="1 1 auto" fxLayout="row" fxLayoutAlign="start center">
-  <div *ngIf="noctuaCommonMenuService.selectedMiddlePanel===RightPanel.camTable" class="" fxFlex="180px">
+  <div *ngIf="noctuaCommonMenuService.selectedMiddlePanel===RightPanel.camTable && camToolbarOptions.showCreateButton"
+    class="" fxFlex="180px">
     <button mat-flat-button (click)="openActivityForm(ActivityType.default)" color="primary"
       class="noc-rounded-button noc-half-button noc-r noc-sm">
       <mat-icon class=""> add </mat-icon> Create Activity

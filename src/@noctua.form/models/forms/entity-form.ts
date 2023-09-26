@@ -68,6 +68,7 @@ export class EntityForm {
 
         if (self.term.value && self.term.value.id) {
             self.node.term = new Entity(self.term.value.id, self.term.value.label);
+            self.node.rootTypes = self.term.value.rootTypes;
 
             self.evidenceForms.forEach((evidenceForm: EvidenceForm, index: number) => {
                 const evidence: Evidence = self.node.predicate.evidence[index];
@@ -96,8 +97,8 @@ export class EntityForm {
             distinctUntilChanged(),
             debounceTime(400)
         ).subscribe(data => {
-            self._metadata.lookupFunc.termLookup(data, lookup.requestParams).subscribe(response => {
-                lookup.results = response;
+            self._metadata.lookupFunc.termLookup(data, self.node.termLookup.requestParams).subscribe(response => {
+                self.node.termLookup.results = response;
             });
         });
     }

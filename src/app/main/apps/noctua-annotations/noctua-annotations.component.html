@@ -1,0 +1,88 @@
+<div class="w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start">
+  <div class="noc-sidemenu" fxLayout="column" fxLayoutAlign="start center">
+    <button mat-icon-button color="" class="noc-rounded-button"
+      [ngClass]="{'noc-active': noctuaCommonMenuService.selectedLeftPanel === LeftPanel.activityForm}" color="primary"
+      matTooltip="Add New Activity/Annotation" [matTooltipPosition]="'above'" [matTooltipShowDelay]="1500"
+      (click)="openAnnotationForm(ActivityType.simpleAnnoton)">
+      <fa-icon [icon]="['fas', 'plus']"></fa-icon>
+    </button>
+
+    <button mat-icon-button color="" class="noc-rounded-button"
+      [ngClass]="{'noc-active': noctuaCommonMenuService.selectedLeftPanel === LeftPanel.camForm}"
+      (click)="openCamForm()" matTooltip="Model Details" [matTooltipPosition]="'above'" [matTooltipShowDelay]="1500">
+      <fa-icon [icon]="['fas', 'info-circle']"></fa-icon>
+    </button>
+    <button mat-icon-button color="" class="noc-rounded-button"
+      [ngClass]="{'noc-active': noctuaCommonMenuService.selectedLeftPanel === LeftPanel.findReplace}"
+      (click)="openSearch()" matTooltip="Find and replace" [matTooltipPosition]="'above'" [matTooltipShowDelay]="1500">
+      <fa-icon [icon]="['fas', 'search']"></fa-icon>
+    </button>
+    <button mat-icon-button color="" class="noc-rounded-button"
+      [ngClass]="{'noc-active': noctuaCommonMenuService.selectedLeftPanel === LeftPanel.camTermsSummary}"
+      (click)="openTermsSummary()" matTooltip="terms summary" [matTooltipPosition]="'above'"
+      [matTooltipShowDelay]="1500">
+      <fa-icon [icon]="['fas', 'list']"></fa-icon>
+    </button>
+    <button mat-icon-button color="" class="noc-rounded-button"
+      [ngClass]="{'noc-active': noctuaCommonMenuService.selectedLeftPanel === LeftPanel.camStats}"
+      (click)="openCamStats()" matTooltip="GO CAM Statistics" [matTooltipPosition]="'above'"
+      [matTooltipShowDelay]="1500">
+      <fa-icon [icon]="['fas', 'chart-bar']"></fa-icon>
+    </button>
+    <button mat-icon-button color="" class="noc-rounded-button" (click)="openCopyModel()"
+      [ngClass]="{'noc-active': noctuaCommonMenuService.selectedLeftPanel === LeftPanel.copyModel}"
+      matTooltip="Make a copy of this model" [matTooltipPosition]="'above'" [matTooltipShowDelay]="1500">
+      <fa-icon [icon]="['fas', 'clone']"></fa-icon>
+    </button>
+  </div>
+
+  <div class="w-100-p h-100-p" fxLayout="column" fxLayoutAlign="start start">
+    <div *ngIf="!noctuaUserService.user" class="noc-not-loggedin" fxLayout="row" fxLayoutAlign="center center">
+      Not Logged In: You can only view existing annotations
+    </div>
+    <div *ngIf="noctuaUserService.user && cam?.modified && cam?.activities.length>0" class="noc-not-loggedin"
+      fxLayout="row" fxLayoutAlign="center center">
+      <small class="mr-16">Not Saved</small>
+      <button mat-raised-button fxFlex="100px" (click)="resetCam(cam)" color="warn"
+        class="noc-rounded-button noc-half-button noc-r noc-sm">
+        Reset
+      </button>
+      <button mat-raised-button fxFlex="100px" color="primary" (click)="storeCam(cam)"
+        class="noc-rounded-button noc-half-button noc-l noc-sm mr-8 p-0">
+        Save
+      </button>
+    </div>
+    <noc-cam-toolbar [cam]="cam" [options]="camToolbarOptions"></noc-cam-toolbar>
+    <mat-drawer-container class="noc-drawer-container w-100-p h-100-p" fxLayout="row" fxLayoutAlign="start start"
+      autosize>
+      <mat-drawer #leftDrawer class="noc-left-drawer" mode="side" position="start">
+        <div [ngSwitch]="noctuaCommonMenuService.selectedLeftPanel" class="h-100-p">
+          <noc-cam-form [panelDrawer]="leftDrawer" *ngSwitchCase="LeftPanel.camForm">
+          </noc-cam-form>
+          <noc-copy-model [panelDrawer]="leftDrawer" [panelSide]="'left'" *ngSwitchCase="LeftPanel.copyModel">
+          </noc-copy-model>
+          <noc-annotation-form [panelDrawer]="leftDrawer" *ngSwitchCase="LeftPanel.activityForm">
+          </noc-annotation-form>
+          <noc-find-replace [panelDrawer]="leftDrawer"
+            [hidden]="noctuaCommonMenuService.selectedLeftPanel !== LeftPanel.findReplace">
+          </noc-find-replace>
+
+          <noc-cam-terms [panelDrawer]="leftDrawer"
+            [hidden]="noctuaCommonMenuService.selectedLeftPanel !== LeftPanel.camTermsSummary"></noc-cam-terms>
+        </div>
+      </mat-drawer>
+      <mat-drawer-content class="w-100-p h-100-p" fxLayout="column" fxLayoutAlign="start stretch">
+        <div *ngIf="cam" [ngSwitch]="noctuaCommonMenuService.selectedMiddlePanel" class="w-100-p h-100-p"
+          noctuaPerfectScrollbar>
+          <noc-cam-table *ngSwitchCase="MiddlePanel.camTable" [cam]="cam" [options]="tableOptions"></noc-cam-table>
+        </div>
+      </mat-drawer-content>
+      <mat-drawer #rightDrawer class="noc-right-drawer" mode="side" position="end">
+        <div [ngSwitch]="noctuaCommonMenuService.selectedRightPanel" class="h-100-p">
+          <noc-term-detail [panelDrawer]="rightDrawer" *ngSwitchCase="RightPanel.termDetail">
+          </noc-term-detail>
+        </div>
+      </mat-drawer>
+    </mat-drawer-container>
+  </div>
+</div>
