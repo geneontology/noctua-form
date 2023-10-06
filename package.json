@@ -73,7 +73,7 @@
     "http-proxy": "^1.18.1",
     "jointjs": "3.5.5",
     "jquery": "^3.6.0",
-    "jquery-ui": "^1.13.1",
+    "jquery-ui": "^1.13.2",
     "jqueryui": "^1.11.1",
     "jsonformatter": "^0.7.0",
     "jsplumb": "^2.15.6",
