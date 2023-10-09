@@ -63,6 +63,8 @@ export class ActivityFormTableNodeComponent implements OnInit, OnDestroy {
 
   optionsDisplay: any = {}
 
+  termEditable = true
+
   editableTerms = false;
   currentMenuEvent: any = {};
 
@@ -81,6 +83,8 @@ export class ActivityFormTableNodeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+    // this.termEditable = (this.activity.activityType !== ActivityType.bpOnly) && this.entity.term.id !== noctuaFormConfig.rootNode.mf.id
 
     if (this.options?.editableTerms) {
       this.editableTerms = this.options.editableTerms

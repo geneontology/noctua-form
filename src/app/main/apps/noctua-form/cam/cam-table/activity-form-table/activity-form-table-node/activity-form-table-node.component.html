@@ -19,9 +19,12 @@
           {{ entity.term?.id }}
         </a>
       </span>
-      <noctua-inline-editor *ngIf="noctuaUserService.user && entity.term && options.editableTerms" [cam]="cam"
-        [activity]='activity' [entity]="entity" [category]="EditorCategory.term" class="noc-edit-button">
-      </noctua-inline-editor>
+      <ng-container *ngIf="termEditable">
+        <noctua-inline-editor *ngIf="noctuaUserService.user && entity.term && options.editableTerms" [cam]="cam"
+          [activity]='activity' [entity]="entity" [category]="EditorCategory.term" class="noc-edit-button">
+        </noctua-inline-editor>
+      </ng-container>
+
     </div>
     <div *ngIf="settings.showEvidence" fxFlex="" class="noc-evidence-cell p-0" fxLayout="row"
       fxLayoutAlign="start stretch">
