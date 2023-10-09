@@ -216,6 +216,11 @@ export class Activity extends SaeGraph<ActivityNode> {
           this.bpPartOfEdge = mfTriple
         }
       }
+
+      if (this.activityType === ActivityType.ccOnly) {
+        this.gpNode = this.rootNode
+      }
+
     })
   }
 

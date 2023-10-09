@@ -8,6 +8,7 @@
         <span *ngIf="entity.showEvidence">{{entity.predicate?.edge?.label}}</span>
 
       </span>
+
       <noctua-inline-editor *ngIf="noctuaUserService.user && entity.relationEditable" [cam]="cam" [activity]='activity'
         [entity]="entity" [category]="EditorCategory.relationship" class="noc-edit-button">
       </noctua-inline-editor>
@@ -33,9 +34,11 @@
           {{ entity.term?.id }}
         </a>
       </span>
-      <noctua-inline-editor *ngIf="noctuaUserService.user && entity.term && options.editableTerms" [cam]="cam"
-        [activity]='activity' [entity]="entity" [category]="EditorCategory.term" class="noc-edit-button">
-      </noctua-inline-editor>
+      <ng-container *ngIf="!termNotEditable">
+        <noctua-inline-editor *ngIf="noctuaUserService.user && entity.term && options.editableTerms" [cam]="cam"
+          [activity]='activity' [entity]="entity" [category]="EditorCategory.term" class="noc-edit-button">
+        </noctua-inline-editor>
+      </ng-container>
     </div>
     <div class="noc-aspect-cell noc-entity-cell" fxLayout="column" fxLayoutAlign="start stretch">
       <mat-chip *ngIf="entity.aspect" class="noc-chip-xs noc-aspect {{entity.aspect}}" fxLayout="column"
@@ -64,9 +67,9 @@
         </div>
       </button>
     </div>
-    <div *ngIf="noctuaUserService.user &&  options.showMenu && entity.showEvidence" class="noc-cell noc-action-cell"
-      fxLayout="column" fxLayoutAlign="start center">
-      <button mat-icon-button (click)="updateCurrentMenuEvent($event)" class="noc-action-button" fxFlex="40px"
+    <div class="noc-cell noc-action-cell" fxLayout="column" fxLayoutAlign="start center">
+      <button mat-icon-button *ngIf="noctuaUserService.user &&  options.showMenu && entity.showEvidence"
+        (click)="updateCurrentMenuEvent($event)" class="noc-action-button" fxFlex="40px"
         [matMenuTriggerFor]="entityMenu">
         <mat-icon>more_vert</mat-icon>
       </button>
