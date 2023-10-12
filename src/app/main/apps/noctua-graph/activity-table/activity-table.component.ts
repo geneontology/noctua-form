@@ -21,8 +21,8 @@ import { EditorCategory } from '@noctua.editor/models/editor-category';
 import { takeUntil } from 'rxjs/operators';
 import { MatDrawer } from '@angular/material/sidenav';
 import { NoctuaConfirmDialogService } from '@noctua/components/confirm-dialog/confirm-dialog.service';
-import { NoctuaFormDialogService } from '../../noctua-form';
 import { NoctuaCommonMenuService } from '@noctua.common/services/noctua-common-menu.service';
+import { NoctuaFormDialogService } from '../../noctua-form/services/dialog.service';
 
 @Component({
   selector: 'noc-graph-activity-table',

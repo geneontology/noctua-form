@@ -462,7 +462,7 @@ export class CamCanvas {
 
             const fdNodes = activity.buildTrees();
             fdNodes.forEach(fdNode => this._addFDEntity(fdNode, el));
-        } else if (graphLayoutDetail === noctuaFormConfig.graphLayoutDetail.options.activity.id) {
+        } else if (graphLayoutDetail === noctuaFormConfig.graphLayoutDetail.options.simple.id) {
 
             if (activity.mfNode) {
                 const activityNodes = activity.getEdges(activity.mfNode.id)

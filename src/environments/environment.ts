@@ -44,7 +44,7 @@ const globalKnownRelations = typeof global_known_relations !== 'undefined'
   : enviromnenetData.globalKnownRelations;
 
 export const environment = {
-  production: false,
+  production: true,
   isDev: false,
   isBeta: false,
   isGraph: false,

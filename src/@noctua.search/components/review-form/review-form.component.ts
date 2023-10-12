@@ -18,7 +18,7 @@ import {
   EntityDefinition,
   Entity,
   Evidence,
-  NoctuaGraphService,
+  BbopGraphService,
   CamLoadingIndicator,
   CamService
 } from '@geneontology/noctua-form-base';
@@ -63,7 +63,7 @@ export class ReviewFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private zone: NgZone,
-    private noctuaGraphService: NoctuaGraphService,
+    private bbopGraphService: BbopGraphService,
     private camService: CamService,
     private confirmDialogService: NoctuaConfirmDialogService,
     public noctuaReviewSearchService: NoctuaReviewSearchService,

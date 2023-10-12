@@ -1,0 +1,106 @@
+<div [formGroup]="entityFormGroup" fxLayout="row" fxLayoutAlign="start stretch" class="w-100-p">
+
+  <div fxFlex="" fxLayout="column" fxLayoutAlign="start stretch">
+    <div formArrayName="evidenceFormArray"
+      *ngFor="let evidence of entityFormGroup.get('evidenceFormArray')?.controls; let i = index;">
+      <div [formGroupName]="i" fxLayout="row" fxLayoutAlign="start stretch" class="w-100-p">
+        <div class="p-4" fxFlex="55">
+          <mat-form-field appearance="outline" class="noc-sm w-100-p">
+            <mat-label>Evidence</mat-label>
+            <textarea type="text" matInput formControlName="evidence" (focus)="updateEvidenceList(entity)"
+              [matAutocomplete]="evidenceAuto" rows="2"></textarea>
+            <mat-autocomplete #evidenceAuto="matAutocomplete" [displayWith]="evidenceDisplayFn"
+              class="noc-term-autocomplete">
+              <mat-option *ngFor="let item of entity?.predicate?.evidenceLookup.results" [value]="item">
+                <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
+                  <div class="noc-term-label">
+                    {{ item.label }}
+                  </div>
+                  <span fxFlex></span>
+                  <div class="noc-term-id mr-8">
+                    <strong>
+                      {{ item.xref }}
+                    </strong>
+                  </div>
+                  <div class="noc-term-id">
+                    <a *ngIf="item.link" (click)="$event.stopPropagation()" href="{{item.link}}" target="_blank">
+                      {{ item.id }}
+                    </a>
+                    <span *ngIf="!item.link">
+                      {{ item.id }}
+                    </span>
+                  </div>
+                </div>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="p-4" fxFlex="25">
+          <mat-form-field appearance="outline" class="noc-sm w-100-p">
+            <mat-label>Reference</mat-label>
+            <textarea matInput formControlName="reference" [matAutocomplete]="referenceAuto" rows="2" autocomplete="off"
+              (focus)="updateReferenceList()"></textarea>
+            <button mat-icon-button matSuffix (click)="openAddReference($event, evidence, 'reference')"
+              class="noc-evidence-db-trigger">
+              <mat-icon>playlist_add</mat-icon>
+            </button>
+            <mat-autocomplete #referenceAuto="matAutocomplete" class="noc-term-autocomplete">
+              <mat-option *ngFor="let item of entity?.predicate?.referenceLookup.results" [value]="item">
+                <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
+                  <div class="noc-term-label">
+                    {{ item }}
+                  </div>
+                </div>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="p-4" fxFlex fxFlex="20">
+          <mat-form-field appearance="outline" class="noc-sm w-100-p">
+            <mat-label>With</mat-label>
+            <textarea matInput formControlName="with" [matAutocomplete]="withAuto" rows="2" (focus)="updateWithList()"
+              autocomplete="off"></textarea>
+            <!--  <button mat-icon-button matSuffix (click)="openAddWith($event, evidence, 'with')"
+                  class="noc-evidence-db-trigger">
+                  <mat-icon>playlist_add</mat-icon>
+                </button> -->
+            <mat-autocomplete #withAuto="matAutocomplete" class="noc-term-autocomplete">
+              <mat-option *ngFor="let item of entity?.predicate?.withLookup.results" [value]="item">
+                <div class="w-100-p" fxLayout="row" fxLayoutAlign="start center">
+                  <div class="noc-term-label">
+                    {{ item }}
+                  </div>
+                </div>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <span fxFlex=""></span>
+        <button *ngIf="!displayAddButton" mat-icon-button class="noc-action-button" fxFlex="40px"
+          [matMenuTriggerFor]="entityMenu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #entityMenu="matMenu" class="noc-dropdown-menu noc-menu-panel">
+          <button mat-menu-item class="" (click)="clearValues()">
+            Clear Values
+          </button>
+        </mat-menu>
+        <mat-menu #evidenceMenu="matMenu" class="noc-menu-panel">
+          <button mat-menu-item class="" (click)="addEvidence()">
+            Add Evidence
+          </button>
+          <button (click)="removeEvidence(i)" mat-menu-item>
+            Remove Evidence
+          </button>
+          <button mat-menu-item class="" (click)="openSelectEvidenceDialog()">
+            Clone Evidence
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </div>
+  <button *ngIf="displayAddButton" mat-icon-button class="noc-action-button" fxFlex="40px"
+    [matMenuTriggerFor]="ccOnlyAddMenu">
+    <fa-icon [icon]="['fas', 'plus']"></fa-icon>
+  </button>
+</div>

@@ -5,7 +5,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { NoctuaFormConfigService } from './config/noctua-form-config.service';
 import { NoctuaLookupService } from './lookup.service';
 import { CamService } from './cam.service';
-import { NoctuaGraphService } from './graph.service';
+import { BbopGraphService } from './bbop-graph.service';
 import { ActivityConnectorForm } from './../models/forms/activity-connector-form';
 import { ActivityFormMetadata } from './../models/forms/activity-form-metadata';
 import { Activity } from './../models/activity/activity';
@@ -41,7 +41,7 @@ export class NoctuaActivityConnectorService {
   constructor(private _fb: FormBuilder, public noctuaFormConfigService: NoctuaFormConfigService,
     private camService: CamService,
     private noctuaLookupService: NoctuaLookupService,
-    private noctuaGraphService: NoctuaGraphService) {
+    private bbopGraphService: BbopGraphService) {
 
     this.onActivityChanged = new BehaviorSubject(null);
     this.onLinkChanged = new BehaviorSubject(null);
@@ -119,7 +119,7 @@ export class NoctuaActivityConnectorService {
 
     if (self.connectorActivity.state === ConnectorState.editing) {
       const saveData = self.connectorActivity.createEdit(self.currentConnectorActivity);
-      return self.noctuaGraphService.editConnection(
+      return self.bbopGraphService.editConnection(
         self.cam,
         saveData.removeTriples,
         saveData.addTriples).then(() => {
@@ -127,7 +127,7 @@ export class NoctuaActivityConnectorService {
         });
     } else { // creation
       const saveData = self.connectorActivity.createSave();
-      return self.noctuaGraphService.addActivity(self.cam, [], saveData.triples, '', CamOperation.ADD_CAUSAL_RELATION);
+      return self.bbopGraphService.addActivity(self.cam, [], saveData.triples, '', CamOperation.ADD_CAUSAL_RELATION);
     }
   }
 
@@ -135,7 +135,7 @@ export class NoctuaActivityConnectorService {
     const self = this;
     const deleteData = connectorActivity.createDelete();
 
-    return self.noctuaGraphService.deleteActivity(self.cam, [], deleteData.triples);
+    return self.bbopGraphService.deleteActivity(self.cam, [], deleteData.triples);
   }
 
 

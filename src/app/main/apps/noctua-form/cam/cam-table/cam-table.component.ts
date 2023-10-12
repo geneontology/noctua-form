@@ -16,7 +16,7 @@ import {
 
   CamRebuildSignal,
   ActivityDisplayType,
-  NoctuaGraphService,
+  BbopGraphService,
   ActivitySortField
 } from '@geneontology/noctua-form-base';
 import { NoctuaConfirmDialogService } from '@noctua/components/confirm-dialog/confirm-dialog.service';
@@ -69,7 +69,7 @@ export class CamTableComponent implements OnInit, OnDestroy {
 
   constructor(
     public camService: CamService,
-    private _noctuaGraphService: NoctuaGraphService,
+    private _bbopGraphService: BbopGraphService,
     public noctuaCommonMenuService: NoctuaCommonMenuService,
     public noctuaUserService: NoctuaUserService,
     public noctuaFormConfigService: NoctuaFormConfigService,

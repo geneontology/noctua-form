@@ -2,7 +2,7 @@ import { environment } from 'environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { MatDrawer, MatSidenav } from '@angular/material/sidenav';
-import { NoctuaGraphService, NoctuaUserService } from '@geneontology/noctua-form-base';
+import { BbopGraphService, NoctuaUserService } from '@geneontology/noctua-form-base';
 import { LeftPanel, MiddlePanel, RightPanel } from './../models/menu-panels';
 import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 import { BehaviorSubject } from 'rxjs';
@@ -26,7 +26,7 @@ export class NoctuaCommonMenuService {
   private _leftSidenav: MatSidenav;
 
   constructor(
-    private _noctuaGraphService: NoctuaGraphService,
+    private _bbopGraphService: BbopGraphService,
     private noctuaUserService: NoctuaUserService) {
 
     const settings = new SettingsOptions()
@@ -37,7 +37,7 @@ export class NoctuaCommonMenuService {
   createModel(type: WorkbenchId) {
     const self = this;
 
-    const _newModelBbopManager = this._noctuaGraphService.registerManager();
+    const _newModelBbopManager = this._bbopGraphService.registerManager();
     _newModelBbopManager.register('rebuild', function (resp) { }, 10);
     _newModelBbopManager.add_model().then((resp) => {
       const modelId = resp.data().id;

@@ -85,8 +85,8 @@ export class ConnectorActivity extends SaeGraph<ActivityNode> {
       activity = this.subject
     }
 
-    const mfNode = activity.getMFNode()
-    const gpNode = activity.getGPNode()
+    const mfNode = activity.mfNode
+    const gpNode = activity.gpNode
     if (gpNode && mfNode) {
       const edge = activity.getEdge(mfNode.id, gpNode.id)
       this.predicate.evidence = cloneDeep(edge.predicate.evidence)
@@ -228,7 +228,7 @@ export class ConnectorActivity extends SaeGraph<ActivityNode> {
 
 
     nodes = <NgxNode[]>activityNodes.map((activity: Activity) => {
-      const node = activity.getMFNode()
+      const node = activity.mfNode
       return {
         id: activity.id,
         label: node ? node?.term.label : '',

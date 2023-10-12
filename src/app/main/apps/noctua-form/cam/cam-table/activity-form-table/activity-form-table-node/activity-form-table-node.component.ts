@@ -63,6 +63,8 @@ export class ActivityFormTableNodeComponent implements OnInit, OnDestroy {
 
   optionsDisplay: any = {}
 
+  termEditable = true
+
   editableTerms = false;
   currentMenuEvent: any = {};
 
@@ -81,6 +83,8 @@ export class ActivityFormTableNodeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+    // this.termEditable = (this.activity.activityType !== ActivityType.bpOnly) && this.entity.term.id !== noctuaFormConfig.rootNode.mf.id
 
     if (this.options?.editableTerms) {
       this.editableTerms = this.options.editableTerms
@@ -156,7 +160,7 @@ export class ActivityFormTableNodeComponent implements OnInit, OnDestroy {
 
   openSearchDatabaseDialog(entity: ActivityNode) {
     const self = this;
-    const gpNode = this.activity.getGPNode();
+    const gpNode = this.activity.gpNode;
 
     if (gpNode && gpNode.hasValue()) {
       const data = {
@@ -195,9 +199,8 @@ export class ActivityFormTableNodeComponent implements OnInit, OnDestroy {
   }
 
 
-  insertEntity(entity: ActivityNode, nodeDescription: ShapeDefinition.ShapeDescription) {
-    const insertedNode = this.noctuaFormConfigService.insertActivityNode(this.activity, entity, nodeDescription);
-    //  this.noctuaActivityFormService.initializeForm();
+  insertEntity(entity: ActivityNode, predExpr: ShapeDefinition.PredicateExpression) {
+    const insertedNode = this.noctuaFormConfigService.insertActivityNodeShex(this.activity, entity, predExpr);
 
     const data = {
       cam: this.cam,

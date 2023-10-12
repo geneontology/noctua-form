@@ -5,8 +5,10 @@
     <div *ngIf="!options.slimViewer" class="noc-relation-cell noc-entity-cell" fxFlex="{{relationWidth}}">
       <span class="">
         <strong *ngIf="entity.predicate?.isComplement"> NOT </strong>
-        {{entity.predicate?.edge?.label}}
+        <span *ngIf="entity.showEvidence">{{entity.predicate?.edge?.label}}</span>
+
       </span>
+
       <noctua-inline-editor *ngIf="noctuaUserService.user && entity.relationEditable" [cam]="cam" [activity]='activity'
         [entity]="entity" [category]="EditorCategory.relationship" class="noc-edit-button">
       </noctua-inline-editor>
@@ -32,9 +34,11 @@
           {{ entity.term?.id }}
         </a>
       </span>
-      <noctua-inline-editor *ngIf="noctuaUserService.user && entity.term && options.editableTerms" [cam]="cam"
-        [activity]='activity' [entity]="entity" [category]="EditorCategory.term" class="noc-edit-button">
-      </noctua-inline-editor>
+      <ng-container *ngIf="!termNotEditable">
+        <noctua-inline-editor *ngIf="noctuaUserService.user && entity.term && options.editableTerms" [cam]="cam"
+          [activity]='activity' [entity]="entity" [category]="EditorCategory.term" class="noc-edit-button">
+        </noctua-inline-editor>
+      </ng-container>
     </div>
     <div class="noc-aspect-cell noc-entity-cell" fxLayout="column" fxLayoutAlign="start stretch">
       <mat-chip *ngIf="entity.aspect" class="noc-chip-xs noc-aspect {{entity.aspect}}" fxLayout="column"
@@ -49,13 +53,23 @@
       </mat-chip>
     </div>
     <div class="noc-evidence-cell p-0" fxLayout="column" fxLayoutAlign="start stretch">
-      <noc-evidence-table *ngIf="!entity.skipEvidenceCheck" class="w-100-p" [options]="optionsDisplay" [cam]="cam"
+      <noc-evidence-table *ngIf="entity.showEvidence" class="w-100-p" [options]="optionsDisplay" [cam]="cam"
         [entity]="entity">
       </noc-evidence-table>
     </div>
-    <div *ngIf="noctuaUserService.user &&  options.showMenu" class="noc-cell noc-action-cell" fxLayout="column"
-      fxLayoutAlign="start center">
-      <button mat-icon-button (click)="updateCurrentMenuEvent($event)" class="noc-action-button" fxFlex="40px"
+    <div class="noc-comments-cell noc-entity-cell" fxLayout="column" fxLayoutAlign="start stretch">
+      <button *ngIf="entity.showEvidence && entity.predicate.comments.length>0" mat-icon-button
+        class="noc-toolbar-button noc-rounded-button" (click)="openCommentsForm(entity)"
+        matTooltip="{{entity.predicate?.comments}}" [matTooltipPosition]="'after'" [matTooltipShowDelay]="1000">
+        <fa-icon [icon]="['fas', 'comment']"></fa-icon>
+        <div class="noc-comments-badge">
+          {{entity.predicate?.comments.length}}
+        </div>
+      </button>
+    </div>
+    <div class="noc-cell noc-action-cell" fxLayout="column" fxLayoutAlign="start center">
+      <button mat-icon-button *ngIf="noctuaUserService.user &&  options.showMenu && entity.showEvidence"
+        (click)="updateCurrentMenuEvent($event)" class="noc-action-button" fxFlex="40px"
         [matMenuTriggerFor]="entityMenu">
         <mat-icon>more_vert</mat-icon>
       </button>
@@ -68,6 +82,9 @@
         </button>
         <button mat-menu-item *ngIf="entity.insertMenuNodes" [matMenuTriggerFor]="addMenu">Add</button>
         <button mat-menu-item [matMenuTriggerFor]="evidenceMenu">Evidence</button>
+        <button mat-menu-item (click)="openCommentsForm(entity)" class="">
+          Add Comment
+        </button>
       </mat-menu>
       <mat-menu #addMenu="matMenu">
         <button mat-menu-item *ngFor="let insertMenuItem of entity.insertMenuNodes" class=""

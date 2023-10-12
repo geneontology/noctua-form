@@ -17,7 +17,7 @@ import {
   noctuaFormConfig,
   MiddlePanel,
   LeftPanel,
-  NoctuaGraphService,
+  BbopGraphService,
   ActivityDisplayType
 } from '@geneontology/noctua-form-base';
 
@@ -68,7 +68,7 @@ export class NoctuaTutorialComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private camService: CamService,
-    private _noctuaGraphService: NoctuaGraphService,
+    private _bbopGraphService: BbopGraphService,
     private noctuaReviewSearchService: NoctuaReviewSearchService,
     public noctuaSearchDialogService: NoctuaSearchDialogService,
     public noctuaUserService: NoctuaUserService,
@@ -107,7 +107,7 @@ export class NoctuaTutorialComponent implements OnInit, OnDestroy {
     self.noctuaCommonMenuService.setLeftDrawer(self.leftDrawer);
     self.noctuaCommonMenuService.setRightDrawer(self.rightDrawer);
 
-    this._noctuaGraphService.onCamGraphChanged
+    this._bbopGraphService.onCamGraphChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((cam: Cam) => {
         if (!cam || cam.id !== self.cam.id) {

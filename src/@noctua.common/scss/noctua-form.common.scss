@@ -54,6 +54,9 @@ $noc-breakpoints: (
   .noc-extension-cell {
     @include deep-width(30px);
   }
+  .noc-comments-cell {
+    @include deep-width(50px);
+  }
 
   .noc-evidence-cell {
     @include deep-width(600px);

@@ -134,6 +134,21 @@ const edge = {
   },
 }
 
+const inverseEdge = {
+  enables:
+  {
+    "id": "RO:0002327",
+    "label": "enables",
+  },
+  isActiveIn: {
+    id: 'RO:0002432',
+    label: 'is active in'
+  },
+  involvedIn: {
+    "id": "RO:0002331",
+    "label": "involved in",
+  },
+}
 
 
 export const noctuaFormConfig = {
@@ -167,13 +182,13 @@ export const noctuaFormConfig = {
         'id': 'preview',
         'label': 'Preview'
       },
-      'activity': {
+      'simple': {
         'id': 'activity',
-        'label': 'Default'
+        'label': 'Simple view'
       },
       'detailed': {
         'id': 'detailed',
-        'label': 'Detailed'
+        'label': 'Default'
       },
     }
   },
@@ -305,6 +320,7 @@ export const noctuaFormConfig = {
     }
   },
   edge: edge,
+  inverseEdge: inverseEdge,
   allEdges: environment.globalKnownRelations,
   evidenceAutoPopulate: {
     nd: {
@@ -332,6 +348,16 @@ export const noctuaFormConfig = {
       'aspect': 'C'
     }
   },
+
+
+  bpOnlyCausalEdges: [
+    Entity.createEntity(edge.causallyUpstreamOfNegativeEffect),
+    Entity.createEntity(edge.causallyUpstreamOf),
+    Entity.createEntity(edge.causallyUpstreamOfPositiveEffect),
+    Entity.createEntity(edge.causallyUpstreamOfOrWithinNegativeEffect),
+    Entity.createEntity(edge.causallyUpstreamOfOrWithinPositiveEffect),
+    Entity.createEntity(edge.causallyUpstreamOfOrWithin),
+  ],
 
 
 
@@ -369,6 +395,13 @@ export const noctuaFormConfig = {
     Entity.createEntity(edge.partOf),
     Entity.createEntity(edge.occursIn),
   ],
+
+  edgePriority: [
+    edge.enabledBy.id,
+    edge.partOf.id,
+    edge.occursIn.id,
+    edge.hasInput.id,
+    edge.hasOutput.id]
 
 };
 

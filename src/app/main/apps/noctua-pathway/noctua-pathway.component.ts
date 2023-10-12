@@ -6,7 +6,7 @@ import {
   Contributor,
   NoctuaActivityFormService,
   NoctuaFormConfigService,
-  NoctuaGraphService,
+  BbopGraphService,
   NoctuaUserService
 } from '@geneontology/noctua-form-base';
 import { NoctuaSearchDialogService } from '@noctua.search/services/dialog.service';
@@ -25,7 +25,7 @@ export class NoctuaPathwayComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private camService: CamService,
-    private _noctuaGraphService: NoctuaGraphService,
+    private _bbopGraphService: BbopGraphService,
     public noctuaSearchDialogService: NoctuaSearchDialogService,
     public noctuaUserService: NoctuaUserService,
     public noctuaFormConfigService: NoctuaFormConfigService,
@@ -58,7 +58,7 @@ export class NoctuaPathwayComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const self = this;
-    this._noctuaGraphService.onCamGraphChanged
+    this._bbopGraphService.onCamGraphChanged
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((cam: Cam) => {
         if (!cam || cam.id !== self.cam.id) {

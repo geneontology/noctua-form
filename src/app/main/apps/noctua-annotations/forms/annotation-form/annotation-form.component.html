@@ -1,0 +1,117 @@
+<div class="h-100-p">
+  <form name="annotationFormGroup" [formGroup]="annotationFormGroup" fxLayout="column" fxLayoutAlign="start stretch"
+    class="noc-drawer w-100-p h-100-p">
+    <div class="noc-drawer-header" fxLayout="row" fxLayoutAlign="start center">
+      <div class="noc-drawer-header-title">
+        <ng-container [ngSwitch]="noctuaAnnotationFormService.activity.activityType">
+          <span> Annotation Form </span>
+        </ng-container>
+      </div>
+      <span fxFlex></span>
+      <button mat-stroked-button (click)="close()" class="noc-rounded-button noc-sm" color="primary"
+        aria-label="Close dialog">
+        <mat-icon>close</mat-icon> Close
+      </button>
+    </div>
+    <div class="noc-drawer-body noc-activity-form" noctuaPerfectScrollbar>
+      <div *ngIf="!noctuaUserService.user" class="noc-draw-body-disabled" fxLayoutAlign="center center">
+        Log in to Continue
+      </div>
+      <div class="noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+
+        <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
+          <div class="noc-section-heading">
+            {{annotatedSectionTitle }}
+          </div>
+          <span fxFlex></span>
+          <button mat-icon-button (click)="createExample()">
+            .
+          </button>
+        </div>
+        <div class="noc-section-body p-0" fxLayout="row" fxLayoutAlign="start center">
+          <div fxFlex="50" class="">
+            <noc-annotation-entity-form [entityFormGroup]="annotationFormGroup.get('gp')" fxLayout="row"
+              fxLayoutAlign="start center" class="w-100-p">
+            </noc-annotation-entity-form>
+          </div>
+          <div fxFlex="50" class="">
+            <noc-annotation-entity-form [entityFormGroup]="annotationFormGroup.get('goterm')" [selectTerm]="updateMenu"
+              fxLayout="row" fxLayoutAlign="start center" class="w-100-p">
+            </noc-annotation-entity-form>
+          </div>
+        </div>
+      </div>
+      <div class="noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+        <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
+          <div class="noc-section-heading">
+            Evidence
+          </div>
+          <span fxFlex></span>
+        </div>
+        <div class="noc-section-body p-0" fxLayout="column" fxLayoutAlign="start stretch">
+          <noc-annotation-evidence-form [entityFormGroup]="annotationFormGroup.get('goterm')" fxLayout="row"
+            fxLayoutAlign="start center" class="w-100-p">
+          </noc-annotation-evidence-form>
+        </div>
+      </div>
+      <div class="noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+        <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
+          <div class="noc-section-heading">
+            GP to Term Relation
+          </div>
+          <span fxFlex></span>
+        </div>
+        <div class="noc-section-body p-0" fxLayout="column" fxLayoutAlign="start stretch">
+          <div class="mat-elevation-z1 noc-term-group mb-4 px-8 mf" fxLayout="row" fxLayoutAlign="start center">
+            <div class="p-4" fxFlex="600px" fxLayout="row" fxLayoutAlign="start stretch">
+              <mat-form-field appearance="outline" class="noc-sm w-100-p">
+                <mat-label>GP to Term Relation</mat-label>
+                <mat-select placeholder="" formControlName="gpToTermEdge" [compareWith]="compareFn">
+                  <mat-option *ngFor="let gpToTermEdge of annotationActivity.gpToTermEdges" [value]="gpToTermEdge">
+                    {{gpToTermEdge.label}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="noc-form-section" fxLayout="column" fxLayoutAlign="start stretch">
+        <div class="noc-section-header" fxLayout="row" fxLayoutAlign="start center">
+          <div class="noc-section-heading">
+            Extension
+          </div>
+          <span fxFlex></span>
+        </div>
+        <div class="noc-section-body p-0" fxLayout="row" fxLayoutAlign="start center">
+          <div fxFlex="50" class="">
+            <mat-form-field appearance="outline" class="noc-sm w-100-p">
+              <mat-label>Extension Edge</mat-label>
+              <mat-select placeholder="" formControlName="extensionEdge" [compareWith]="compareFn">
+                <mat-option *ngFor="let extensionEdge of annotationActivity.extensionEdges" [value]="extensionEdge">
+                  {{extensionEdge.label}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div fxFlex="50" class="">
+            <noc-annotation-entity-form [entityFormGroup]="annotationFormGroup.get('extension')" fxLayout="row"
+              fxLayoutAlign="start center" class="w-100-p">
+            </noc-annotation-entity-form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" class="noc-drawer-footer noc-submit-row">
+      <button *ngIf="noctuaAnnotationFormService.activity.submitErrors.length>0" (click)='checkErrors()' mat-button
+        color="warn" class="noc-rounded-button noc-sm">
+        Why is the "Save" button disabled?
+      </button>
+      <span fxFlex></span>
+      <button (click)='clear()' type="button" mat-raised-button color="" class="mr-8">Clear</button>
+      <button [disabled]="noctuaAnnotationFormService.activity.submitErrors.length>0" (click)="save()" type="submit"
+        class="" mat-raised-button color="primary">Save</button>
+    </div>
+  </form>
+</div>

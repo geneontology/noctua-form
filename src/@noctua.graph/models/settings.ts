@@ -7,6 +7,7 @@ export class GraphSettingsOptions {
   showEvidenceSummary = true;
   showReference = true;
   showEvidenceCode = true;
+  showComments = true;
   showWith = true;
   showGroup = true;
   showContributor = true;
@@ -19,6 +20,7 @@ export class GraphSettingsOptions {
       showEvidenceSummary: new FormControl(this.showEvidenceSummary),
       showEvidenceCode: new FormControl(this.showEvidenceCode),
       showReference: new FormControl(this.showReference),
+      showComments: new FormControl(this.showComments),
       showWith: new FormControl(this.showWith),
       showGroup: new FormControl(this.showGroup),
       showContributor: new FormControl(this.showContributor),
@@ -32,6 +34,7 @@ export class GraphSettingsOptions {
     this.showReference = value.showReference;
     this.showEvidenceCode = value.showEvidenceCode;
     this.showEvidenceSummary = value.showEvidenceSummary;
+    this.showComments = value.showComments;
     this.showWith = value.showWith;
     this.showGroup = value.showGroup;
     this.showContributor = value.showContributor;
@@ -44,6 +47,7 @@ export class GraphSettingsOptions {
     this.showEvidenceSummary = true;
     this.showReference = true;
     this.showEvidenceCode = true;
+    this.showComments = true;
     this.showWith = true;
     this.showGroup = false;
     this.showContributor = false;
